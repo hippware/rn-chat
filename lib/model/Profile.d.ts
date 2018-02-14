@@ -8,6 +8,7 @@ export declare const Profile: IModelType<{
     id?: any;
     avatar?: any;
     handle?: any;
+    status?: any;
     firstName?: any;
     lastName?: any;
     isBlocked?: any;
@@ -78,6 +79,7 @@ export declare const Profile: IModelType<{
         readonly $treenode?: any;
     }) | null;
     handle: string;
+    status: string;
     firstName: string;
     lastName: string;
     isBlocked: boolean;
@@ -89,7 +91,6 @@ export declare const Profile: IModelType<{
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
     isNew: boolean;
-    status: string;
 } & {
     afterAttach: () => void;
     follow: () => Promise<{}>;
@@ -98,6 +99,7 @@ export declare const Profile: IModelType<{
     unblock: () => Promise<{}>;
     setStatus: (status: string) => void;
 } & {
+    readonly snapshot: any;
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;

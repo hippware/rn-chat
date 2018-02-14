@@ -113,9 +113,6 @@ export default types
             const status = stanza.type || 'available'
             const profile = self.profiles.get(id)
             profile.setStatus(status)
-            if (profile.isOwn) {
-              self.profile!.setStatus(status)
-            }
           }
         } catch (e) {
           logger.log('error onPresence: ', e)
@@ -171,12 +168,6 @@ export default types
         handler2 = autorun('roster.handler2', () => {
           if (self.connected) {
             self.requestRoster()
-          } else {
-            self.roster.forEach(p => {
-              if (isAlive(p)) {
-                p.status = 'unavailable'
-              }
-            })
           }
         })
         provider.onPresence = self.onPresence

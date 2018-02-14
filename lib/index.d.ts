@@ -176,7 +176,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -237,6 +237,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -248,7 +249,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -257,6 +257,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -359,7 +360,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -621,6 +622,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -632,7 +634,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -641,6 +642,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -852,6 +854,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -863,7 +866,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -872,6 +874,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -980,7 +983,7 @@ export declare const Wocky: IModelType<{
     afterCreate: () => void;
     _registerReferences: (type: any, data: {
         [key: string]: any;
-    }) => void;
+    }) => any;
 } & {
     readonly map: any;
 } & {
@@ -1061,6 +1064,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1072,7 +1076,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1081,6 +1084,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1280,6 +1284,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1291,7 +1296,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1300,6 +1304,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1465,6 +1470,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1476,7 +1482,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1485,6 +1490,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1650,6 +1656,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1661,7 +1668,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1670,6 +1676,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1834,6 +1841,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1845,7 +1853,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1854,6 +1861,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2018,6 +2026,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2029,7 +2038,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2038,6 +2046,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2202,6 +2211,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2213,7 +2223,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2222,6 +2231,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2386,6 +2396,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2397,7 +2408,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2406,6 +2416,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2570,6 +2581,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2581,7 +2593,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2590,6 +2601,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2768,6 +2780,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2779,7 +2792,6 @@ export declare const Wocky: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2788,6 +2800,7 @@ export declare const Wocky: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2971,6 +2984,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -2982,7 +2996,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2991,6 +3004,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3178,6 +3192,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -3189,7 +3204,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -3198,6 +3212,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3457,6 +3472,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -3468,7 +3484,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -3477,6 +3492,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3728,6 +3744,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -3739,7 +3756,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -3748,6 +3764,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3985,6 +4002,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -3996,7 +4014,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4005,6 +4022,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4193,6 +4211,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -4204,7 +4223,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -4213,6 +4231,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4460,6 +4479,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -4471,7 +4491,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -4480,6 +4499,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4731,6 +4751,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -4742,7 +4763,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -4751,6 +4771,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4975,6 +4996,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -4986,7 +5008,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4995,6 +5016,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5192,6 +5214,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -5203,7 +5226,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5212,6 +5234,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5399,6 +5422,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -5410,7 +5434,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -5419,6 +5442,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5678,6 +5702,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -5689,7 +5714,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -5698,6 +5722,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5949,6 +5974,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -5960,7 +5986,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -5969,6 +5994,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6206,6 +6232,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -6217,7 +6244,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6226,6 +6252,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6414,6 +6441,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -6425,7 +6453,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -6434,6 +6461,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6681,6 +6709,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -6692,7 +6721,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -6701,6 +6729,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6952,6 +6981,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -6963,7 +6993,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -6972,6 +7001,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7196,6 +7226,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -7207,7 +7238,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7216,6 +7246,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7401,6 +7432,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -7412,7 +7444,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7421,6 +7452,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7608,6 +7640,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -7619,7 +7652,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -7628,6 +7660,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7887,6 +7920,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -7898,7 +7932,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -7907,6 +7940,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -8158,6 +8192,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -8169,7 +8204,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -8178,6 +8212,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -8415,6 +8450,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -8426,7 +8462,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8435,6 +8470,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -8623,6 +8659,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -8634,7 +8671,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -8643,6 +8679,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -8890,6 +8927,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -8901,7 +8939,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -8910,6 +8947,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -9161,6 +9199,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -9172,7 +9211,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9181,6 +9219,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -9405,6 +9444,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9416,7 +9456,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9425,6 +9464,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9610,6 +9650,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9621,7 +9662,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9630,6 +9670,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9817,6 +9858,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -9828,7 +9870,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9837,6 +9878,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10096,6 +10138,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10107,7 +10150,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10116,6 +10158,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10367,6 +10410,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10378,7 +10422,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10387,6 +10430,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10624,6 +10668,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -10635,7 +10680,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10644,6 +10688,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -10832,6 +10877,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10843,7 +10889,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10852,6 +10897,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -11099,6 +11145,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -11110,7 +11157,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11119,6 +11165,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -11370,6 +11417,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -11381,7 +11429,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11390,6 +11437,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -11614,6 +11662,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11625,7 +11674,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11634,6 +11682,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -11819,6 +11868,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11830,7 +11880,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11839,6 +11888,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -12026,6 +12076,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12037,7 +12088,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12046,6 +12096,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12305,6 +12356,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12316,7 +12368,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12325,6 +12376,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12576,6 +12628,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12587,7 +12640,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12596,6 +12648,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12833,6 +12886,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -12844,7 +12898,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12853,6 +12906,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -13041,6 +13095,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -13052,7 +13107,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13061,6 +13115,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13308,6 +13363,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -13319,7 +13375,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13328,6 +13383,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13579,6 +13635,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -13590,7 +13647,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13599,6 +13655,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13823,6 +13880,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -13834,7 +13892,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13843,6 +13900,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14027,6 +14085,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -14038,7 +14097,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14047,6 +14105,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14234,6 +14293,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14245,7 +14305,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14254,6 +14313,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -14513,6 +14573,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14524,7 +14585,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14533,6 +14593,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -14784,6 +14845,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14795,7 +14857,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14804,6 +14865,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15041,6 +15103,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -15052,7 +15115,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15061,6 +15123,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -15249,6 +15312,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15260,7 +15324,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15269,6 +15332,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15516,6 +15580,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15527,7 +15592,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15536,6 +15600,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15787,6 +15852,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15798,7 +15864,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15807,6 +15872,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -16031,6 +16097,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16042,7 +16109,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16051,6 +16117,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16235,6 +16302,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16246,7 +16314,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16255,6 +16322,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16442,6 +16510,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -16453,7 +16522,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16462,6 +16530,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -16721,6 +16790,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -16732,7 +16802,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16741,6 +16810,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -16992,6 +17062,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17003,7 +17074,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17012,6 +17082,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17249,6 +17320,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -17260,7 +17332,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17269,6 +17340,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -17457,6 +17529,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17468,7 +17541,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17477,6 +17549,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17724,6 +17797,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17735,7 +17809,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17744,6 +17817,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17995,6 +18069,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -18006,7 +18081,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18015,6 +18089,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -18239,6 +18314,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -18250,7 +18326,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18259,6 +18334,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -18442,6 +18518,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -18453,7 +18530,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18462,6 +18538,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -18649,6 +18726,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -18660,7 +18738,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18669,6 +18746,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -18928,6 +19006,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -18939,7 +19018,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18948,6 +19026,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19199,6 +19278,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19210,7 +19290,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19219,6 +19298,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19456,6 +19536,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -19467,7 +19548,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -19476,6 +19556,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -19664,6 +19745,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19675,7 +19757,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19684,6 +19765,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19931,6 +20013,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19942,7 +20025,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19951,6 +20033,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -20202,6 +20285,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -20213,7 +20297,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20222,6 +20305,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -20446,6 +20530,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -20457,7 +20542,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20466,6 +20550,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -20656,6 +20741,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -20667,7 +20753,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -20676,6 +20761,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -20863,6 +20949,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -20874,7 +20961,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20883,6 +20969,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -21142,6 +21229,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -21153,7 +21241,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21162,6 +21249,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -21413,6 +21501,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -21424,7 +21513,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21433,6 +21521,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -21670,6 +21759,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -21681,7 +21771,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -21690,6 +21779,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -21878,6 +21968,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -21889,7 +21980,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21898,6 +21988,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -22145,6 +22236,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -22156,7 +22248,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22165,6 +22256,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -22416,6 +22508,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -22427,7 +22520,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22436,6 +22528,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -22660,6 +22753,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -22671,7 +22765,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -22680,6 +22773,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -22873,6 +22967,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -22884,7 +22979,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -22893,6 +22987,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -23143,6 +23238,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -23154,7 +23250,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -23163,6 +23258,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -23360,7 +23456,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -23421,6 +23517,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -23432,7 +23529,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -23441,6 +23537,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -23543,7 +23640,7 @@ export declare const Wocky: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -23805,6 +23902,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -23816,7 +23914,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -23825,6 +23922,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -23994,7 +24092,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -24055,6 +24153,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -24066,7 +24165,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -24075,6 +24173,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -24177,7 +24276,7 @@ export declare const Wocky: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -24439,6 +24538,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -24450,7 +24550,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24459,6 +24558,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -24627,7 +24727,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -24688,6 +24788,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -24699,7 +24800,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: any;
@@ -24708,6 +24808,7 @@ export declare const Wocky: IModelType<{
             unblock: any;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -24810,7 +24911,7 @@ export declare const Wocky: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -25072,6 +25173,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -25083,7 +25185,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: any;
@@ -25092,6 +25193,7 @@ export declare const Wocky: IModelType<{
                 unblock: any;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -25263,7 +25365,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -25324,6 +25426,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -25335,7 +25438,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -25344,6 +25446,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -25446,7 +25549,7 @@ export declare const Wocky: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -25708,6 +25811,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -25719,7 +25823,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -25728,6 +25831,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -26004,6 +26108,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -26015,7 +26120,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -26024,6 +26128,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -26157,10 +26262,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -26222,6 +26323,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -26233,7 +26335,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -26242,6 +26343,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -26374,7 +26476,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -26435,6 +26537,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -26446,7 +26549,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -26455,6 +26557,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -26557,7 +26660,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -26819,6 +26922,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -26830,7 +26934,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -26839,6 +26942,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -27039,6 +27143,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -27050,7 +27155,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -27059,6 +27163,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -27181,10 +27286,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -27246,6 +27347,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -27257,7 +27359,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -27266,6 +27367,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -27398,7 +27500,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -27459,6 +27561,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -27470,7 +27573,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -27479,6 +27581,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -27581,7 +27684,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -27843,6 +27946,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -27854,7 +27958,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -27863,6 +27966,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -28063,6 +28167,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -28074,7 +28179,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -28083,6 +28187,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -28322,6 +28427,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -28333,7 +28439,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -28342,6 +28447,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -28469,10 +28575,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -28534,6 +28636,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -28545,7 +28648,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -28554,6 +28656,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -28686,7 +28789,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -28747,6 +28850,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -28758,7 +28862,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -28767,6 +28870,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -28869,7 +28973,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -29131,6 +29235,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -29142,7 +29247,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -29151,6 +29255,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -29351,6 +29456,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29362,7 +29468,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29371,6 +29476,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -29493,10 +29599,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -29558,6 +29660,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29569,7 +29672,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29578,6 +29680,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -29710,7 +29813,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -29771,6 +29874,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -29782,7 +29886,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -29791,6 +29894,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -29893,7 +29997,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -30155,6 +30259,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -30166,7 +30271,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -30175,6 +30279,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -30375,6 +30480,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -30386,7 +30492,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -30395,6 +30500,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -30583,6 +30689,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -30594,7 +30701,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -30603,6 +30709,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -30828,6 +30935,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -30839,7 +30947,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -30848,6 +30955,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -30968,10 +31076,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -31033,6 +31137,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -31044,7 +31149,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -31053,6 +31157,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -31185,7 +31290,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -31246,6 +31351,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -31257,7 +31363,6 @@ export declare const Wocky: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -31266,6 +31371,7 @@ export declare const Wocky: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -31368,7 +31474,7 @@ export declare const Wocky: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -31630,6 +31736,7 @@ export declare const Wocky: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -31641,7 +31748,6 @@ export declare const Wocky: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -31650,6 +31756,7 @@ export declare const Wocky: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -31850,6 +31957,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -31861,7 +31969,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -31870,6 +31977,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32036,6 +32144,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -32047,7 +32156,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -32056,6 +32164,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32221,6 +32330,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -32232,7 +32342,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -32241,6 +32350,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32361,10 +32471,6 @@ export declare const Wocky: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -32426,6 +32532,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -32437,7 +32544,6 @@ export declare const Wocky: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -32446,6 +32552,7 @@ export declare const Wocky: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32558,8 +32665,6 @@ export declare const Wocky: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         created?: any;
@@ -32567,8 +32672,6 @@ export declare const Wocky: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         bot?: any;
     } & {
@@ -32578,8 +32681,6 @@ export declare const Wocky: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         note?: any;
@@ -32587,8 +32688,6 @@ export declare const Wocky: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         bot?: any;
     } & {
@@ -32598,8 +32697,6 @@ export declare const Wocky: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         isEnter?: any;
@@ -32608,8 +32705,6 @@ export declare const Wocky: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         delete?: any;
     }))[]>;
@@ -32662,6 +32757,7 @@ export declare const Profile: IModelType<{
     id?: any;
     avatar?: any;
     handle?: any;
+    status?: any;
     firstName?: any;
     lastName?: any;
     isBlocked?: any;
@@ -32732,6 +32828,7 @@ export declare const Profile: IModelType<{
         readonly $treenode?: any;
     }) | null;
     handle: string;
+    status: string;
     firstName: string;
     lastName: string;
     isBlocked: boolean;
@@ -32743,7 +32840,6 @@ export declare const Profile: IModelType<{
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
     isNew: boolean;
-    status: string;
 } & {
     afterAttach: () => void;
     follow: () => Promise<{}>;
@@ -32752,6 +32848,7 @@ export declare const Profile: IModelType<{
     unblock: () => Promise<{}>;
     setStatus: (status: string) => void;
 } & {
+    readonly snapshot: any;
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;

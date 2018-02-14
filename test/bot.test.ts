@@ -5,7 +5,7 @@ import {IBot} from '../src/model/Bot'
 const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
-let bot: IBot, bot2: IBot, user2bot: IBot
+let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
 describe('BotStore', () => {
   before(async done => {
     try {
@@ -98,6 +98,7 @@ describe('BotStore', () => {
       expect(bot.image).to.be.not.null
       expect(bot.uploaded).to.be.true
       expect(bot.uploading).to.be.false
+      await bot.save()
       await waitFor(() => bot.updated)
       await waitFor(() => bot.image!.source !== null)
       expect(expectedImage()).to.be.equal(fs.readFileSync(bot.image!.source!.uri).toString())
@@ -248,18 +249,31 @@ describe('BotStore', () => {
       await waitFor(() => user2.events.list.length === 3)
       expect(user2.updates.length).to.be.equal(0)
       // verify 2 live notifications
-      await user1.removeBot(bot.id)
-      bot2.shareToFollowers('hello followers2!') // just swap remove and share and you will not receive 'delete' notifications, why?
-      await waitFor(() => user2.updates.length > 0) // should be 4, but sometimes it fails(?), and why we have 3 updates for single delete?
+      // await user1.removeBot(bot.id)
+
+      bot3 = await user1.createBot()
+      await bot3.update({title: 'Test bot3', location: {latitude: 1.1, longitude: 2.1}})
+      bot3.setPublic(false)
+      await bot3.save()
+      bot3.shareToFollowers('hello followers2!') // just swap remove and share and you will not receive 'delete' notifications, why?
+      await waitFor(() => user2.updates.length === 1) // should be 4, but sometimes it fails(?), and why we have 3 updates for single delete?
       done()
     } catch (e) {
       done(e)
     }
   })
 
-  it('delete bots', async done => {
+  it('incorporate updates and check bot loading', async done => {
     try {
-      await user1.removeBot(bot2.id)
+      expect(user2.events.list.length).to.be.equal(3)
+      await user2.incorporateUpdates()
+      expect(user2.updates.length).to.be.equal(0)
+      expect(user2.events.list.length).to.be.equal(4)
+      const user2bot3 = user2.events.list[0].bot
+      expect(user2bot3.owner.id).to.be.equal(user1.username)
+      expect(user2bot3.location.latitude).to.be.equal(1.1)
+      expect(user2bot3.location.longitude).to.be.equal(2.1)
+      expect(user2bot3.title).to.be.equal('Test bot3')
       done()
     } catch (e) {
       done(e)
@@ -267,6 +281,15 @@ describe('BotStore', () => {
   })
 
   after('remove', async done => {
+    try {
+      await user1.removeBot(bot2.id)
+    } catch (e) {}
+    try {
+      await user1.removeBot(bot.id)
+    } catch (e) {}
+    try {
+      await user1.removeBot(bot3.id)
+    } catch (e) {}
     await user1.remove()
     await user2.remove()
     done()

@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {clone, types, getType, applySnapshot} from 'mobx-state-tree'
-import {EventList, processHomestreamResponse} from '../src/store/EventStore'
+import {EventList, processItem, processHomestreamResponse} from '../src/store/EventStore'
 import {FileSource} from '../src/model/File'
 import {Base} from '../src/model/Base'
 import {BotPost} from '../src/model/BotPost'
@@ -61,5 +61,30 @@ describe('Home stream', () => {
     expect(bots.length).to.be.equal(2)
     expect(version).to.be.equal('2018-02-04T14:04:10.944022Z')
     expect(count).to.be.equal(2)
+  })
+
+  it('parse live data', () => {
+    const data = {
+      id: 'testing.dev.tinyrobot.com/bot/3d577dbe-09b4-11e8-b7e5-0a580a02057d',
+      version: '2018-02-04T14:03:56.742476Z',
+      from: '39e09af8-09b4-11e8-80d4-0a580a02057d@testing.dev.tinyrobot.com/testing',
+      message: {
+        from: '39e09af8-09b4-11e8-80d4-0a580a02057d@testing.dev.tinyrobot.com',
+        type: 'headline',
+        to: 'testing.dev.tinyrobot.com',
+        body: 'hello followers!',
+        bot: {
+          xmlns: 'hippware.com/hxep/bot',
+          jid: 'testing.dev.tinyrobot.com/bot/3d577dbe-09b4-11e8-b7e5-0a580a02057d',
+          id: '3d577dbe-09b4-11e8-b7e5-0a580a02057d',
+          server: 'testing.dev.tinyrobot.com',
+          action: 'share'
+        }
+      }
+    }
+    const testModel = TestModel.create({id: 'testmodel'}, env)
+    const item = processItem(data, null, '39e09af8-09b4-11e8-80d4-0a580a02057d', testModel)
+    testModel.home.addToTop(item)
+    expect(testModel.home.list[0].bot.id).to.be.equal('3d577dbe-09b4-11e8-b7e5-0a580a02057d')
   })
 })

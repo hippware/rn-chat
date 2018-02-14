@@ -6,6 +6,17 @@ import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot} from '../model/Bot'
 
+function createProxy(obj: any) {
+  return new Proxy(obj, {
+    get: (target: any, name: string) => {
+      if (isAlive(target)) {
+        return target[name]
+      } else {
+        return getSnapshot(target)[name]
+      }
+    }
+  })
+}
 export function createFactory<T>(type: IModelType<any, T>) {
   return types
     .model({
@@ -26,19 +37,10 @@ export function createFactory<T>(type: IModelType<any, T>) {
         } else {
           const entity: any = self.storage.get(id)!
           if (entity.load && data && Object.keys(data).length) {
-            getParent(self)._registerReferences(type, data)
-            entity.load(data)
+            entity.load(getParent(self)._registerReferences(type, data))
           }
         }
-        return new Proxy(self.storage.get(id), {
-          get: (target: any, name: string) => {
-            if (isAlive(target)) {
-              return target[name]
-            } else {
-              return getSnapshot(target)[name]
-            }
-          }
-        })
+        return createProxy(self.storage.get(id))
       }
     }))
 }
@@ -60,20 +62,25 @@ export const Storages = types
         },
         _registerReferences: (type: any, data: {[key: string]: any}) => {
           const props = type['properties']
+          const res: any = {}
           Object.keys(props).forEach((key: string) => {
             if (data[key] !== undefined) {
-              if (props[key].types && props[key].types[0].targetType) {
-                const field = map[props[key].types[0].targetType.name]
+              const targetType = props[key].targetType || (props[key].types && props[key].types[0].targetType)
+              if (targetType) {
+                const field = map[targetType.name]
                 if (field && self[field] && data[key]) {
                   let value = data[key]
                   if (typeof value === 'object') {
                     value = value.id
                   }
-                  self[field].get(value)
+                  res[key] = self[field].get(value)
                 }
+              } else {
+                res[key] = data[key]
               }
             }
           })
+          return res
         }
       },
       views: {
@@ -85,7 +92,6 @@ export const Storages = types
   })
   .actions(self => ({
     create: <T>(type: IModelType<any, T>, data: {[key: string]: any}) => {
-      self._registerReferences(type, data)
-      return type.create(data, getEnv(self))
+      return type.create(self._registerReferences(type, data), getEnv(self))
     }
   }))

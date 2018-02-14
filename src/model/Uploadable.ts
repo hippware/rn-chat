@@ -21,13 +21,7 @@ export function createUploadable(property: string, access: string | Function) {
             const url = yield self.service._requestUpload({file, size, width, height, access: typeof access === 'function' ? access(self) : access})
             self.service.files.get(url)
             self.uploaded = true
-            if (self.update) {
-              const data: any = {}
-              data[property] = url
-              self.update(data)
-            } else {
-              self[property] = url
-            }
+            self[property] = url
             // show local image first
             if (file.uri) {
               self[property].setSource({uri: file.uri, size, width, height})

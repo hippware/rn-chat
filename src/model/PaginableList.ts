@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, destroy, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, destroy, getEnv, flow, getParent, IModelType, isAlive, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {IBase} from './Base'
@@ -38,7 +38,7 @@ export function createPaginable(type: any) {
             return self.result.length
           },
           get list(): Array<any> {
-            return self.result
+            return self.result.filter((x: any) => isAlive(x))
           },
           get first(): any {
             return self.result.length > 0 ? self.result[0] : null

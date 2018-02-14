@@ -4,8 +4,6 @@ export declare const Event: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {
-    loaded?: any;
 }, {
     id: string;
 } & {
@@ -20,10 +18,6 @@ export declare const Event: IModelType<{
     readonly date: Date;
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
-} & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
 } & {
     readonly target: {
         id: string;
@@ -86,6 +80,7 @@ export declare const Event: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -97,7 +92,6 @@ export declare const Event: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -106,6 +100,7 @@ export declare const Event: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;

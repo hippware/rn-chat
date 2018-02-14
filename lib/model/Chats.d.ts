@@ -79,6 +79,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -90,7 +91,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -99,6 +99,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -286,6 +287,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -297,7 +299,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -306,6 +307,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -565,6 +567,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -576,7 +579,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -585,6 +587,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -836,6 +839,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -847,7 +851,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -856,6 +859,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1093,6 +1097,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -1104,7 +1109,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1113,6 +1117,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1301,6 +1306,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -1312,7 +1318,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1321,6 +1326,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1568,6 +1574,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -1579,7 +1586,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1588,6 +1594,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1839,6 +1846,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -1850,7 +1858,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1859,6 +1866,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2083,6 +2091,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -2094,7 +2103,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2103,6 +2111,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2300,6 +2309,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -2311,7 +2321,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2320,6 +2329,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2507,6 +2517,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -2518,7 +2529,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2527,6 +2537,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2786,6 +2797,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -2797,7 +2809,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2806,6 +2817,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3057,6 +3069,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -3068,7 +3081,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3077,6 +3089,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3314,6 +3327,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -3325,7 +3339,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -3334,6 +3347,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -3522,6 +3536,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -3533,7 +3548,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3542,6 +3556,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3789,6 +3804,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -3800,7 +3816,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3809,6 +3824,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4060,6 +4076,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -4071,7 +4088,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4080,6 +4096,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4304,6 +4321,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -4315,7 +4333,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4324,6 +4341,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -4509,6 +4527,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -4520,7 +4539,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4529,6 +4547,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -4716,6 +4735,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -4727,7 +4747,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4736,6 +4755,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4995,6 +5015,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -5006,7 +5027,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5015,6 +5035,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5266,6 +5287,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -5277,7 +5299,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5286,6 +5307,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5523,6 +5545,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -5534,7 +5557,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -5543,6 +5565,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -5731,6 +5754,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -5742,7 +5766,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5751,6 +5774,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5998,6 +6022,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -6009,7 +6034,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6018,6 +6042,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6269,6 +6294,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -6280,7 +6306,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6289,6 +6314,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6513,6 +6539,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -6524,7 +6551,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6533,6 +6559,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -6718,6 +6745,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -6729,7 +6757,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6738,6 +6765,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -6925,6 +6953,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -6936,7 +6965,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6945,6 +6973,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7204,6 +7233,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -7215,7 +7245,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7224,6 +7253,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7475,6 +7505,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -7486,7 +7517,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7495,6 +7525,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7732,6 +7763,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -7743,7 +7775,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7752,6 +7783,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -7940,6 +7972,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -7951,7 +7984,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7960,6 +7992,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -8207,6 +8240,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -8218,7 +8252,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8227,6 +8260,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -8478,6 +8512,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -8489,7 +8524,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8498,6 +8532,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -8722,6 +8757,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -8733,7 +8769,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8742,6 +8777,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -8927,6 +8963,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -8938,7 +8975,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8947,6 +8983,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -9134,6 +9171,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9145,7 +9183,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9154,6 +9191,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9413,6 +9451,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9424,7 +9463,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9433,6 +9471,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9684,6 +9723,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9695,7 +9735,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9704,6 +9743,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9941,6 +9981,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -9952,7 +9993,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -9961,6 +10001,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -10149,6 +10190,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -10160,7 +10202,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10169,6 +10210,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -10416,6 +10458,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -10427,7 +10470,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10436,6 +10478,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -10687,6 +10730,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -10698,7 +10742,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10707,6 +10750,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -10931,6 +10975,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -10942,7 +10987,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10951,6 +10995,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -11135,6 +11180,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -11146,7 +11192,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -11155,6 +11200,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -11342,6 +11388,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11353,7 +11400,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11362,6 +11408,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -11621,6 +11668,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11632,7 +11680,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11641,6 +11688,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -11892,6 +11940,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11903,7 +11952,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11912,6 +11960,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -12149,6 +12198,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -12160,7 +12210,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -12169,6 +12218,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -12357,6 +12407,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -12368,7 +12419,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12377,6 +12427,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -12624,6 +12675,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -12635,7 +12687,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12644,6 +12695,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -12895,6 +12947,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -12906,7 +12959,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12915,6 +12967,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -13139,6 +13192,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -13150,7 +13204,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -13159,6 +13212,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -13343,6 +13397,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -13354,7 +13409,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -13363,6 +13417,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -13550,6 +13605,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -13561,7 +13617,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13570,6 +13625,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -13829,6 +13885,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -13840,7 +13897,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13849,6 +13905,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14100,6 +14157,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -14111,7 +14169,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14120,6 +14177,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14357,6 +14415,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -14368,7 +14427,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -14377,6 +14435,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -14565,6 +14624,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -14576,7 +14636,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14585,6 +14644,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14832,6 +14892,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -14843,7 +14904,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14852,6 +14912,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -15103,6 +15164,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -15114,7 +15176,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15123,6 +15184,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -15347,6 +15409,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -15358,7 +15421,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -15367,6 +15429,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -15550,6 +15613,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -15561,7 +15625,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -15570,6 +15633,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -15757,6 +15821,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -15768,7 +15833,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15777,6 +15841,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16036,6 +16101,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16047,7 +16113,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16056,6 +16121,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16307,6 +16373,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16318,7 +16385,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16327,6 +16393,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16564,6 +16631,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -16575,7 +16643,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -16584,6 +16651,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -16772,6 +16840,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16783,7 +16852,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16792,6 +16860,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -17039,6 +17108,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -17050,7 +17120,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17059,6 +17128,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -17310,6 +17380,7 @@ export declare const Chats: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -17321,7 +17392,6 @@ export declare const Chats: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17330,6 +17400,7 @@ export declare const Chats: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -17554,6 +17625,7 @@ export declare const Chats: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -17565,7 +17637,6 @@ export declare const Chats: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -17574,6 +17645,7 @@ export declare const Chats: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;

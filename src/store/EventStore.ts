@@ -40,7 +40,7 @@ export function processHomestreamResponse(data: any, username: string, self: any
   }
 }
 
-function processItem(item: any, delay: any, username: string, self: any): any {
+export function processItem(item: any, delay: any, username: string, self: any): any {
   try {
     const time = utils.iso8601toDate(item.version).getTime()
     if (item.message) {
@@ -157,6 +157,10 @@ export const EventStore = types
         self.version = notification['reference-changed'].version
       } else if (notification.item) {
         const item = processItem(notification.item, delay, self.username!, self)
+        // load bot if it doesn't exist
+        if (item && item.bot && !item.bot.owner) {
+          yield self.loadBot(item.bot.id, null)
+        }
         self.version = notification.item.version
         if (item) {
           self.updates.push(item)
@@ -196,9 +200,13 @@ export const EventStore = types
             self._subscribeToHomestream(self.version)
           }
         )
-        handler2 = autorun('EventStore notification', () => {
+        handler2 = autorun('EventStore notification', async () => {
           if (self.message && self.message.notification) {
-            self._onNotification(self.message)
+            try {
+              await self._onNotification(self.message)
+            } catch (e) {
+              console.warn('EventStore notification ERROR', e)
+            }
           }
         })
       },

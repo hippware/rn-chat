@@ -149,7 +149,7 @@ declare const profileStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -210,6 +210,7 @@ declare const profileStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -221,7 +222,6 @@ declare const profileStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -230,6 +230,7 @@ declare const profileStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -332,7 +333,7 @@ declare const profileStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -594,6 +595,7 @@ declare const profileStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -605,7 +607,6 @@ declare const profileStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -614,6 +615,7 @@ declare const profileStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -825,6 +827,7 @@ declare const profileStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -836,7 +839,6 @@ declare const profileStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -845,6 +847,7 @@ declare const profileStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -953,7 +956,7 @@ declare const profileStore: IModelType<{
     afterCreate: () => void;
     _registerReferences: (type: any, data: {
         [key: string]: any;
-    }) => void;
+    }) => any;
 } & {
     readonly map: any;
 } & {
@@ -1034,6 +1037,7 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1045,7 +1049,6 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1054,6 +1057,7 @@ declare const profileStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;

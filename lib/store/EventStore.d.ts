@@ -5,8 +5,6 @@ export declare const EventEntity: IType<({
 } & {
     time?: any;
 } & {
-    loaded?: any;
-} & {
     bot?: any;
 } & {
     created?: any;
@@ -14,8 +12,6 @@ export declare const EventEntity: IType<({
     id?: any;
 } & {
     time?: any;
-} & {
-    loaded?: any;
 } & {
     bot?: any;
 } & {
@@ -25,8 +21,6 @@ export declare const EventEntity: IType<({
 } & {
     time?: any;
 } & {
-    loaded?: any;
-} & {
     bot?: any;
 } & {
     note?: any;
@@ -34,8 +28,6 @@ export declare const EventEntity: IType<({
     id?: any;
 } & {
     time?: any;
-} & {
-    loaded?: any;
 } & {
     bot?: any;
 } & {
@@ -45,8 +37,6 @@ export declare const EventEntity: IType<({
 } & {
     time?: any;
 } & {
-    loaded?: any;
-} & {
     bot?: any;
 } & {
     isEnter?: any;
@@ -55,8 +45,6 @@ export declare const EventEntity: IType<({
     id?: any;
 } & {
     time?: any;
-} & {
-    loaded?: any;
 } & {
     delete?: any;
 }), ({
@@ -73,10 +61,6 @@ export declare const EventEntity: IType<({
     readonly date: Date;
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
-} & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
 } & {
     readonly target: {
         id: string;
@@ -139,6 +123,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -150,7 +135,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -159,6 +143,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -291,7 +276,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -352,6 +337,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -363,7 +349,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -372,6 +357,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -474,7 +460,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -736,6 +722,7 @@ export declare const EventEntity: IType<({
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -747,7 +734,6 @@ export declare const EventEntity: IType<({
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -756,6 +742,7 @@ export declare const EventEntity: IType<({
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -956,6 +943,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -967,7 +955,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -976,6 +963,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1098,10 +1086,6 @@ export declare const EventEntity: IType<({
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
-} & {
     readonly target: {
         id: string;
     } & {
@@ -1163,6 +1147,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1174,7 +1159,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1183,6 +1167,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1315,7 +1300,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -1376,6 +1361,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -1387,7 +1373,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1396,6 +1381,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1498,7 +1484,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -1760,6 +1746,7 @@ export declare const EventEntity: IType<({
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -1771,7 +1758,6 @@ export declare const EventEntity: IType<({
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1780,6 +1766,7 @@ export declare const EventEntity: IType<({
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1980,6 +1967,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -1991,7 +1979,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2000,6 +1987,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2239,6 +2227,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -2250,7 +2239,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2259,6 +2247,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2386,10 +2375,6 @@ export declare const EventEntity: IType<({
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
-} & {
     readonly target: {
         id: string;
     } & {
@@ -2451,6 +2436,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -2462,7 +2448,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2471,6 +2456,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -2603,7 +2589,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -2664,6 +2650,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -2675,7 +2662,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2684,6 +2670,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2786,7 +2773,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -3048,6 +3035,7 @@ export declare const EventEntity: IType<({
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -3059,7 +3047,6 @@ export declare const EventEntity: IType<({
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3068,6 +3055,7 @@ export declare const EventEntity: IType<({
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3268,6 +3256,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -3279,7 +3268,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -3288,6 +3276,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -3410,10 +3399,6 @@ export declare const EventEntity: IType<({
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
-} & {
     readonly target: {
         id: string;
     } & {
@@ -3475,6 +3460,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -3486,7 +3472,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -3495,6 +3480,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -3627,7 +3613,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -3688,6 +3674,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -3699,7 +3686,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -3708,6 +3694,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -3810,7 +3797,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -4072,6 +4059,7 @@ export declare const EventEntity: IType<({
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -4083,7 +4071,6 @@ export declare const EventEntity: IType<({
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4092,6 +4079,7 @@ export declare const EventEntity: IType<({
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4292,6 +4280,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -4303,7 +4292,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4312,6 +4300,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -4500,6 +4489,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -4511,7 +4501,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4520,6 +4509,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -4745,6 +4735,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -4756,7 +4747,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4765,6 +4755,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -4885,10 +4876,6 @@ export declare const EventEntity: IType<({
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
-} & {
     readonly target: {
         id: string;
     } & {
@@ -4950,6 +4937,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -4961,7 +4949,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4970,6 +4957,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -5102,7 +5090,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -5163,6 +5151,7 @@ export declare const EventEntity: IType<({
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -5174,7 +5163,6 @@ export declare const EventEntity: IType<({
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -5183,6 +5171,7 @@ export declare const EventEntity: IType<({
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -5285,7 +5274,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -5547,6 +5536,7 @@ export declare const EventEntity: IType<({
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -5558,7 +5548,6 @@ export declare const EventEntity: IType<({
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5567,6 +5556,7 @@ export declare const EventEntity: IType<({
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5767,6 +5757,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -5778,7 +5769,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -5787,6 +5777,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -5953,6 +5944,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -5964,7 +5956,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -5973,6 +5964,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -6138,6 +6130,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -6149,7 +6142,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -6158,6 +6150,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -6278,10 +6271,6 @@ export declare const EventEntity: IType<({
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
-    loaded: boolean;
-} & {
-    load: (data: any) => void;
-} & {
     readonly target: {
         id: string;
     } & {
@@ -6343,6 +6332,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -6354,7 +6344,6 @@ export declare const EventEntity: IType<({
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -6363,6 +6352,7 @@ export declare const EventEntity: IType<({
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -6504,6 +6494,7 @@ export declare function processHomestreamResponse(data: any, username: string, s
     version: any;
     count: number;
 };
+export declare function processItem(item: any, delay: any, username: string, self: any): any;
 export declare const EventStore: IModelType<{
     id?: any;
 } & {
@@ -6663,7 +6654,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -6724,6 +6715,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -6735,7 +6727,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6744,6 +6735,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6846,7 +6838,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -7108,6 +7100,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -7119,7 +7112,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -7128,6 +7120,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7339,6 +7332,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -7350,7 +7344,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7359,6 +7352,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -7467,7 +7461,7 @@ export declare const EventStore: IModelType<{
     afterCreate: () => void;
     _registerReferences: (type: any, data: {
         [key: string]: any;
-    }) => void;
+    }) => any;
 } & {
     readonly map: any;
 } & {
@@ -7548,6 +7542,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -7559,7 +7554,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -7568,6 +7562,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -7767,6 +7762,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -7778,7 +7774,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -7787,6 +7782,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -7952,6 +7948,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -7963,7 +7960,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -7972,6 +7968,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -8137,6 +8134,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -8148,7 +8146,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -8157,6 +8154,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -8321,6 +8319,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -8332,7 +8331,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -8341,6 +8339,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -8505,6 +8504,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -8516,7 +8516,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -8525,6 +8524,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -8689,6 +8689,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -8700,7 +8701,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -8709,6 +8709,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -8873,6 +8874,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -8884,7 +8886,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -8893,6 +8894,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -9057,6 +9059,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -9068,7 +9071,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -9077,6 +9079,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -9255,6 +9258,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
         handle: string;
+        status: string;
         firstName: string;
         lastName: string;
         isBlocked: boolean;
@@ -9266,7 +9270,6 @@ export declare const EventStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         isNew: boolean;
-        status: string;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -9275,6 +9278,7 @@ export declare const EventStore: IModelType<{
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
     } & {
+        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -9458,6 +9462,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -9469,7 +9474,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9478,6 +9482,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -9665,6 +9670,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -9676,7 +9682,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9685,6 +9690,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -9944,6 +9950,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -9955,7 +9962,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9964,6 +9970,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10215,6 +10222,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10226,7 +10234,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10235,6 +10242,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10472,6 +10480,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -10483,7 +10492,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10492,6 +10500,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -10680,6 +10689,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10691,7 +10701,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10700,6 +10709,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -10947,6 +10957,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -10958,7 +10969,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -10967,6 +10977,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -11218,6 +11229,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -11229,7 +11241,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11238,6 +11249,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -11462,6 +11474,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11473,7 +11486,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11482,6 +11494,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -11679,6 +11692,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -11690,7 +11704,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11699,6 +11712,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -11886,6 +11900,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -11897,7 +11912,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11906,6 +11920,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12165,6 +12180,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12176,7 +12192,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12185,6 +12200,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12436,6 +12452,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12447,7 +12464,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12456,6 +12472,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -12693,6 +12710,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -12704,7 +12722,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12713,6 +12730,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -12901,6 +12919,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -12912,7 +12931,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12921,6 +12939,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13168,6 +13187,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -13179,7 +13199,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13188,6 +13207,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13439,6 +13459,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -13450,7 +13471,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13459,6 +13479,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -13683,6 +13704,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -13694,7 +13716,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13703,6 +13724,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -13888,6 +13910,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -13899,7 +13922,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13908,6 +13930,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -14095,6 +14118,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14106,7 +14130,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14115,6 +14138,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -14374,6 +14398,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14385,7 +14410,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14394,6 +14418,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -14645,6 +14670,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -14656,7 +14682,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14665,6 +14690,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -14902,6 +14928,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -14913,7 +14940,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14922,6 +14948,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -15110,6 +15137,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15121,7 +15149,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15130,6 +15157,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15377,6 +15405,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15388,7 +15417,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15397,6 +15425,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15648,6 +15677,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -15659,7 +15689,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15668,6 +15697,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -15892,6 +15922,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -15903,7 +15934,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15912,6 +15942,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16097,6 +16128,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -16108,7 +16140,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16117,6 +16148,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -16304,6 +16336,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -16315,7 +16348,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16324,6 +16356,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -16583,6 +16616,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -16594,7 +16628,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16603,6 +16636,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -16854,6 +16888,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -16865,7 +16900,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16874,6 +16908,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17111,6 +17146,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -17122,7 +17158,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17131,6 +17166,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -17319,6 +17355,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17330,7 +17367,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17339,6 +17375,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17586,6 +17623,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17597,7 +17635,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17606,6 +17643,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -17857,6 +17895,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -17868,7 +17907,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17877,6 +17915,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -18101,6 +18140,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -18112,7 +18152,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18121,6 +18160,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -18306,6 +18346,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -18317,7 +18358,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18326,6 +18366,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -18513,6 +18554,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -18524,7 +18566,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18533,6 +18574,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -18792,6 +18834,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -18803,7 +18846,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18812,6 +18854,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19063,6 +19106,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19074,7 +19118,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19083,6 +19126,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19320,6 +19364,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -19331,7 +19376,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -19340,6 +19384,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -19528,6 +19573,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19539,7 +19585,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19548,6 +19593,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -19795,6 +19841,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -19806,7 +19853,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19815,6 +19861,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -20066,6 +20113,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -20077,7 +20125,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20086,6 +20133,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -20310,6 +20358,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -20321,7 +20370,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20330,6 +20378,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -20514,6 +20563,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -20525,7 +20575,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20534,6 +20583,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -20721,6 +20771,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -20732,7 +20783,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20741,6 +20791,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -21000,6 +21051,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -21011,7 +21063,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21020,6 +21071,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -21271,6 +21323,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -21282,7 +21335,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21291,6 +21343,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -21528,6 +21581,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -21539,7 +21593,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21548,6 +21601,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -21736,6 +21790,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -21747,7 +21802,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21756,6 +21810,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -22003,6 +22058,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -22014,7 +22070,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22023,6 +22078,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -22274,6 +22330,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -22285,7 +22342,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22294,6 +22350,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -22518,6 +22575,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -22529,7 +22587,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22538,6 +22595,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -22722,6 +22780,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -22733,7 +22792,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22742,6 +22800,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -22929,6 +22988,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -22940,7 +23000,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22949,6 +23008,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -23208,6 +23268,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -23219,7 +23280,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -23228,6 +23288,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -23479,6 +23540,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -23490,7 +23552,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -23499,6 +23560,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -23736,6 +23798,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -23747,7 +23810,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -23756,6 +23818,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -23944,6 +24007,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -23955,7 +24019,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -23964,6 +24027,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -24211,6 +24275,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -24222,7 +24287,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -24231,6 +24295,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -24482,6 +24547,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -24493,7 +24559,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -24502,6 +24567,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -24726,6 +24792,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -24737,7 +24804,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24746,6 +24812,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -24929,6 +24996,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -24940,7 +25008,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24949,6 +25016,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -25136,6 +25204,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -25147,7 +25216,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -25156,6 +25224,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -25415,6 +25484,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -25426,7 +25496,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -25435,6 +25504,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -25686,6 +25756,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -25697,7 +25768,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -25706,6 +25776,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -25943,6 +26014,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -25954,7 +26026,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -25963,6 +26034,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -26151,6 +26223,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -26162,7 +26235,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -26171,6 +26243,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -26418,6 +26491,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -26429,7 +26503,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -26438,6 +26511,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -26689,6 +26763,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -26700,7 +26775,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -26709,6 +26783,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -26933,6 +27008,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -26944,7 +27020,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -26953,6 +27028,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -27143,6 +27219,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -27154,7 +27231,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -27163,6 +27239,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -27350,6 +27427,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -27361,7 +27439,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -27370,6 +27447,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -27629,6 +27707,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -27640,7 +27719,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -27649,6 +27727,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -27900,6 +27979,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -27911,7 +27991,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -27920,6 +27999,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -28157,6 +28237,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -28168,7 +28249,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -28177,6 +28257,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -28365,6 +28446,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -28376,7 +28458,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -28385,6 +28466,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -28632,6 +28714,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -28643,7 +28726,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -28652,6 +28734,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -28903,6 +28986,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -28914,7 +28998,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -28923,6 +29006,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -29147,6 +29231,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29158,7 +29243,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29167,6 +29251,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -29360,6 +29445,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29371,7 +29457,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29380,6 +29465,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -29630,6 +29716,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29641,7 +29728,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29650,6 +29736,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -29847,7 +29934,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -29908,6 +29995,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -29919,7 +30007,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -29928,6 +30015,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -30030,7 +30118,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -30292,6 +30380,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -30303,7 +30392,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -30312,6 +30400,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -30481,7 +30570,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -30542,6 +30631,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -30553,7 +30643,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -30562,6 +30651,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -30664,7 +30754,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -30926,6 +31016,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -30937,7 +31028,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -30946,6 +31036,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -31114,7 +31205,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -31175,6 +31266,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -31186,7 +31278,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: any;
@@ -31195,6 +31286,7 @@ export declare const EventStore: IModelType<{
             unblock: any;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -31297,7 +31389,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -31559,6 +31651,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -31570,7 +31663,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: any;
@@ -31579,6 +31671,7 @@ export declare const EventStore: IModelType<{
                 unblock: any;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -31750,7 +31843,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: {
+        owner: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -31811,6 +31904,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -31822,7 +31916,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -31831,6 +31924,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -31933,7 +32027,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         image: ({
             id: string;
         } & {
@@ -32195,6 +32289,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -32206,7 +32301,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -32215,6 +32309,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -32491,6 +32586,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -32502,7 +32598,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -32511,6 +32606,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32644,10 +32740,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -32709,6 +32801,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -32720,7 +32813,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -32729,6 +32821,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -32861,7 +32954,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -32922,6 +33015,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -32933,7 +33027,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -32942,6 +33035,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -33044,7 +33138,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -33306,6 +33400,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -33317,7 +33412,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -33326,6 +33420,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -33526,6 +33621,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -33537,7 +33633,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -33546,6 +33641,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -33668,10 +33764,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -33733,6 +33825,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -33744,7 +33837,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -33753,6 +33845,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -33885,7 +33978,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -33946,6 +34039,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -33957,7 +34051,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -33966,6 +34059,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -34068,7 +34162,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -34330,6 +34424,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -34341,7 +34436,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -34350,6 +34444,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -34550,6 +34645,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -34561,7 +34657,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -34570,6 +34665,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -34809,6 +34905,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -34820,7 +34917,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -34829,6 +34925,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -34956,10 +35053,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -35021,6 +35114,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -35032,7 +35126,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -35041,6 +35134,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -35173,7 +35267,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -35234,6 +35328,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -35245,7 +35340,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -35254,6 +35348,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -35356,7 +35451,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -35618,6 +35713,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -35629,7 +35725,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -35638,6 +35733,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -35838,6 +35934,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -35849,7 +35946,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -35858,6 +35954,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -35980,10 +36077,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -36045,6 +36138,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -36056,7 +36150,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -36065,6 +36158,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -36197,7 +36291,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -36258,6 +36352,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -36269,7 +36364,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -36278,6 +36372,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -36380,7 +36475,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -36642,6 +36737,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -36653,7 +36749,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -36662,6 +36757,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -36862,6 +36958,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -36873,7 +36970,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -36882,6 +36978,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -37070,6 +37167,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -37081,7 +37179,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -37090,6 +37187,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -37315,6 +37413,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -37326,7 +37425,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -37335,6 +37433,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -37455,10 +37554,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -37520,6 +37615,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -37531,7 +37627,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -37540,6 +37635,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -37672,7 +37768,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: {
+            owner: ({
                 id: string;
             } & {
                 readonly pageId: string;
@@ -37733,6 +37829,7 @@ export declare const EventStore: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 handle: string;
+                status: string;
                 firstName: string;
                 lastName: string;
                 isBlocked: boolean;
@@ -37744,7 +37841,6 @@ export declare const EventStore: IModelType<{
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
             } & {
                 isNew: boolean;
-                status: string;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -37753,6 +37849,7 @@ export declare const EventStore: IModelType<{
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
             } & {
+                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -37855,7 +37952,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            };
+            }) | null;
             image: ({
                 id: string;
             } & {
@@ -38117,6 +38214,7 @@ export declare const EventStore: IModelType<{
                         readonly $treenode?: any;
                     }) | null;
                     handle: string;
+                    status: string;
                     firstName: string;
                     lastName: string;
                     isBlocked: boolean;
@@ -38128,7 +38226,6 @@ export declare const EventStore: IModelType<{
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
                 } & {
                     isNew: boolean;
-                    status: string;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -38137,6 +38234,7 @@ export declare const EventStore: IModelType<{
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
                 } & {
+                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -38337,6 +38435,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -38348,7 +38447,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -38357,6 +38455,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -38523,6 +38622,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -38534,7 +38634,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -38543,6 +38642,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -38708,6 +38808,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -38719,7 +38820,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -38728,6 +38828,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -38848,10 +38949,6 @@ export declare const EventStore: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
         readonly target: {
             id: string;
         } & {
@@ -38913,6 +39010,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             handle: string;
+            status: string;
             firstName: string;
             lastName: string;
             isBlocked: boolean;
@@ -38924,7 +39022,6 @@ export declare const EventStore: IModelType<{
             roles: IObservableArray<string> & ISnapshottable<string[]>;
         } & {
             isNew: boolean;
-            status: string;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -38933,6 +39030,7 @@ export declare const EventStore: IModelType<{
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
         } & {
+            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -39045,8 +39143,6 @@ export declare const EventStore: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         created?: any;
@@ -39054,8 +39150,6 @@ export declare const EventStore: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         bot?: any;
     } & {
@@ -39065,8 +39159,6 @@ export declare const EventStore: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         note?: any;
@@ -39074,8 +39166,6 @@ export declare const EventStore: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         bot?: any;
     } & {
@@ -39085,8 +39175,6 @@ export declare const EventStore: IModelType<{
     } & {
         time?: any;
     } & {
-        loaded?: any;
-    } & {
         bot?: any;
     } & {
         isEnter?: any;
@@ -39095,8 +39183,6 @@ export declare const EventStore: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        loaded?: any;
     } & {
         delete?: any;
     }))[]>;

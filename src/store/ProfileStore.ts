@@ -235,9 +235,14 @@ const profileStore = types
     let handler1: any = null
     return {
       afterCreate: () =>
-        (handler1 = autorun('ProfileStore', () => {
+        (handler1 = autorun('ProfileStore', async () => {
           if (self.connected && self.username) {
-            self.loadProfile(self.username)
+            await self.loadProfile(self.username)
+            self.profile!.setStatus('available')
+          } else {
+            if (self.profile) {
+              self.profile!.setStatus('unavailable')
+            }
           }
         })),
       beforeDestroy: () => {

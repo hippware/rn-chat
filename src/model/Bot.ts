@@ -29,7 +29,7 @@ export const Bot = types
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 30,
-      owner: types.reference(Profile),
+      owner: types.maybe(types.reference(Profile)),
       image: types.maybe(types.reference(File)),
       description: types.maybe(types.string),
       visibility: VISIBILITY_PUBLIC,

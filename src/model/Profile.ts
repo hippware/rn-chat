@@ -16,6 +16,7 @@ export const Profile = types
       id: types.identifier(types.string),
       avatar: types.maybe(types.reference(File)),
       handle: '',
+      status: 'unavailable',
       firstName: '',
       lastName: '',
       isBlocked: false,
@@ -29,8 +30,7 @@ export const Profile = types
   )
   .named('Profile')
   .volatile(self => ({
-    isNew: false,
-    status: 'unavailable'
+    isNew: false
   }))
   .extend(self => {
     let followers: IProfilePaginableList, followed: IProfilePaginableList, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
@@ -73,6 +73,11 @@ export const Profile = types
         }
       },
       views: {
+        get snapshot() {
+          const res: any = {...self._snapshot}
+          delete res.status
+          return res
+        },
         get isOwn(): boolean {
           const ownProfile = self.service.profile
           return ownProfile && self.id === ownProfile.id
