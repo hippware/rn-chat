@@ -6,7 +6,6 @@ import {when, autorun, autorunAsync} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
 import {colors} from '../constants';
-import {timeoutWhen} from '../../utils/timeouts';
 
 import {settings} from '../globals';
 import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
@@ -104,6 +103,7 @@ const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
+// TODO: deep link
 const onDeepLink = ({action, params}) => {
   analytics.track('deeplink', {action, params});
   // when(
@@ -122,13 +122,6 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-type Props = {
-  // TODO: figure out how to type these (with typescript?)
-  // https://github.com/mobxjs/mobx-react#with-flow
-  // store: any,
-  // wocky: any,
-};
-
 // prevent keyboard from persisting across scene transitions
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
@@ -136,7 +129,7 @@ autorun(() => {
 
 @inject('store', 'wocky', 'firebaseStore', 'locationStore')
 @observer
-class TinyRobotRouter extends React.Component<Props> {
+class TinyRobotRouter extends React.Component<{}> {
   componentDidMount() {
     autorunAsync(() => {
       const {wocky, locationStore} = this.props;
