@@ -9,21 +9,18 @@ type Props = {
   bot: Bot,
 };
 
-export default class extends React.Component {
-  props: Props;
+class BotPostOptions extends React.Component<Props> {
   actionSheet: any;
 
-  onTap = (index) => {
-    const post = this.props.item;
-    const bot = this.props.bot;
+  onTap = async (index: number) => {
     // delete post
     if (index === 0) {
-      // botStore.removeItem(post.id, bot);
+      await this.props.bot.removePost(this.props.item.id);
     }
   };
   render() {
     const post = this.props.item;
-    const bot = this.props.bot;
+    const {bot} = this.props;
     if (bot.owner.isOwn || post.profile.isOwn) {
       return (
         <TouchableOpacity onPress={() => this.actionSheet.show()} style={{width: 40, justifyContent: 'center', alignItems: 'center'}}>
@@ -35,3 +32,5 @@ export default class extends React.Component {
     return null;
   }
 }
+
+export default BotPostOptions;

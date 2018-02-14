@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {TextInput, Image, View} from 'react-native';
 import {k} from '../Global';

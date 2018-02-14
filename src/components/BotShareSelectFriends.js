@@ -24,7 +24,7 @@ type State = {
 @inject('wocky', 'notificationStore')
 @observer
 export default class BotShareSelectFriends extends React.Component<Props, State> {
-  @observable selection: SelectableProfileList;
+  @observable selection: SelectableProfileList = SelectableProfileList.create({});
   @observable bot: Bot;
   mounted: boolean = false;
 
@@ -33,13 +33,10 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
     this.state = {height: 0, message: ''};
   }
 
-  componentWillMount() {
-    // this.bot = botFactory.create({id: this.props.botId});
+  componentDidMount() {
     const {friends, getBot} = this.props.wocky;
     this.bot = getBot({id: this.props.botId});
-    this.selection = SelectableProfileList.create({
-      list: friends.map(f => ({profile: f})),
-    });
+    this.selection.setList(friends.map(f => ({profile: f})));
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     this.mounted = true;

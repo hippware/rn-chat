@@ -4,7 +4,6 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
-import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {Profile} from 'wocky-client';
 import {k} from '../Global';
@@ -22,7 +21,7 @@ class Right extends React.Component<Props> {
     this.profile = await this.props.wocky.loadProfile(this.props.item);
   }
   render() {
-    if (!this.profile || !isAlive(this.profile)) {
+    if (!this.profile) {
       return null;
     }
     if (this.profile.isOwn) {

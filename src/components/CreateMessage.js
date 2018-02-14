@@ -1,16 +1,25 @@
-import React, {Component} from 'react';
+// @flow
+
+import React from 'react';
 import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
 import Screen from './Screen';
 import {k} from './Global';
 import {ProfileList} from './people-lists';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
+import SelectableProfileList from '../store/SelectableProfileList';
 
+@inject('wocky')
 @observer
-export default class CreateMessage extends Component {
-  @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
+class CreateMessage extends React.Component<{}> {
+  // @observable selection: SelectableProfileList = new SelectableProfileList(wocky.friends, false);
+  @observable selection = SelectableProfileList.create({});
+
+  componentDidMount() {
+    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})));
+  }
 
   static backButton = ({state, style, textButtonStyle}) => (
     <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
@@ -36,7 +45,7 @@ export default class CreateMessage extends Component {
           <TextInput
             autoCorrect={false}
             autoCapitalize='none'
-            onChangeText={text => (this.selection.filter = text)}
+            onChangeText={text => this.selection.setFilter(text)}
             value={this.selection.filter}
             placeholder='Search Friends'
             placeholderColor='rgb(211,211,211)'
@@ -47,7 +56,7 @@ export default class CreateMessage extends Component {
               flex: 1,
             }}
           />
-          <TouchableOpacity onPress={() => (this.selection.filter = '')}>
+          <TouchableOpacity onPress={() => this.selection.setFilter('')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
               <Image source={require('../../images/iconClose.png')} />
             </View>
@@ -82,6 +91,8 @@ export default class CreateMessage extends Component {
     //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }
 }
+
+export default CreateMessage;
 
 const styles = StyleSheet.create({
   button: {

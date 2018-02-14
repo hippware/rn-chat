@@ -4,7 +4,6 @@ import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {when, observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
-import {isAlive} from 'mobx-state-tree';
 import {k, width} from '../Global';
 import {colors} from '../../constants';
 import {Profile} from 'wocky-client';
@@ -48,7 +47,7 @@ class BotDetails extends React.Component<Props> {
   static rightButton = props => <Right {...props} />;
 
   componentDidMount() {
-    this.loadBot()
+    this.loadBot();
   }
 
   componentWillUnmount() {
@@ -60,6 +59,7 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
     this.bot = wocky.getBot({id: this.props.item});
+    console.log('BotDetails loadbot', this.bot);
     this.bot.posts.load();
 
     this.viewTimeout = setTimeout(() => {
@@ -95,6 +95,7 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
+    console.log('BotDetails bot', bot);
     if (!bot) {
       return (
         <View style={{flex: 1}}>
@@ -102,7 +103,7 @@ class BotDetails extends React.Component<Props> {
         </View>
       );
     }
-    if (bot.error || !isAlive(bot)) {
+    if (bot.error) {
       return <BotUnavailable />;
     }
     return (

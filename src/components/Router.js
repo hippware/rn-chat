@@ -2,11 +2,10 @@
 
 import React from 'react';
 import {TouchableOpacity, Text, Keyboard} from 'react-native';
-import {when, autorun} from 'mobx';
+import {when, autorun, autorunAsync} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
 import {colors} from '../constants';
-import {timeoutWhen} from '../../utils/timeouts';
 
 import {settings} from '../globals';
 import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
@@ -17,7 +16,7 @@ import analytics from '../utils/analytics';
 
 import Camera from './Camera';
 import SideMenu from './SideMenu';
-// import CreateMessage from './CreateMessage';
+import CreateMessage from './CreateMessage';
 import Launch from './Launch';
 import SignUp from './SignUp';
 import Home from './Home';
@@ -36,7 +35,7 @@ import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
-// import LocationWarning from './LocationWarning';
+import LocationWarning from './LocationWarning';
 import BotAddressScene from './map/BotAddressScene';
 import * as peopleLists from './people-lists';
 import ReportUser from './report-modals/ReportUser';
@@ -104,6 +103,7 @@ const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
+// TODO: deep link
 const onDeepLink = ({action, params}) => {
   analytics.track('deeplink', {action, params});
   // when(
@@ -122,21 +122,23 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-type Props = {
-  // TODO: figure out how to type these (with typescript?)
-  // https://github.com/mobxjs/mobx-react#with-flow
-  // store: any,
-  // wocky: any,
-};
-
 // prevent keyboard from persisting across scene transitions
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
 });
 
-@inject('store', 'wocky', 'firebaseStore')
+@inject('store', 'wocky', 'firebaseStore', 'locationStore')
 @observer
-class TinyRobotRouter extends React.Component<Props> {
+class TinyRobotRouter extends React.Component<{}> {
+  componentDidMount() {
+    autorunAsync(() => {
+      const {wocky, locationStore} = this.props;
+      if (wocky.connected && !locationStore.enabled) {
+        Actions.locationWarning && Actions.locationWarning();
+      }
+    }, 1000);
+  }
+
   render() {
     const {store, wocky, firebaseStore} = this.props;
 
@@ -189,7 +191,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     </Stack>
                   </Tabs>
 
-                  {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} /> */}
+                  <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
                   <Scene
                     key='searchUsers'
                     component={peopleLists.SearchUsers}
@@ -200,7 +202,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     wrap
                   />
                   <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                    <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                  <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                 </Modal>
               </Drawer>
             </Stack>
@@ -222,7 +224,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
-          {/* <Scene key='locationWarning' component={LocationWarning} /> */}
+          <Scene key='locationWarning' component={LocationWarning} />
         </Lightbox>
       </Router>
     );

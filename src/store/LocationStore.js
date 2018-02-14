@@ -18,7 +18,8 @@ const LocationStore = types
     location: types.maybe(Location),
     enabled: true,
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
-  })).views(self => ({
+  }))
+  .views(self => ({
     distance: (lat1, lon1, lat2, lon2) => {
       var R = 6371000; // Radius of the earth in m
       var dLat = (lat2 - lat1) * Math.PI / 180; // deg2rad below
@@ -37,12 +38,11 @@ const LocationStore = types
       // } else {
       //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
       // }
-    }
-
+    },
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
-    const {wocky} = self;
+    // const {wocky} = self;
     let watch;
 
     function afterCreate() {
@@ -51,19 +51,11 @@ const LocationStore = types
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
       setMetricSystem(system);
 
-      watch = geolocation.watchPosition(
-        (position) => {
-          logger.log('GLOCATION:', position.coords, {level: logger.levels.VERBOSE});
-          this.location = position.coords;
-          // this.share(this.location);
-        },
-        () => {},
-        {
-          timeout: 20000,
-          maximumAge: 20000,
-          enableHighAccuracy: false,
-        },
-      );
+      watch = geolocation.watchPosition(self.setPosition, self.positionError, {
+        timeout: 20000,
+        maximumAge: 60000,
+        enableHighAccuracy: false,
+      });
     }
 
     function setMetricSystem(type) {
@@ -101,6 +93,7 @@ const LocationStore = types
       logger.log('SLOCATION:', position.coords);
       self.enabled = true;
       self.location = position.coords;
+      // TODO: share location via wocky-client
       // this.share(this.location);
     }
 
@@ -112,7 +105,6 @@ const LocationStore = types
       // @TODO: how do we handle timeout or other error?
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR});
     }
-
 
     return {afterCreate, beforeDestroy, setPosition, positionError, getCurrentPosition};
   });
