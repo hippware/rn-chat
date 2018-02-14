@@ -5,6 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.4 - 2018 February 13
+
+* Update wocky-client
+* Fix crashes
+  * TypeError: null is not an object (#1792)
+  * e.search is not a function. (#1793)
+* Nav: Rename `Bots` to `Favorites` (#1750)
+* Rename Bots header to Favorites (#1751)
+
+
 # 2.0.3 - 2018 February 12
 
 * Fixes for building on Nevercode
