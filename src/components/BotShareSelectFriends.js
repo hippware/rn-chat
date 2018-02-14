@@ -75,7 +75,7 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
   render() {
     return (
       <Screen>
-        <SelectFriends selection={this.selection} />
+        <SelectFriends selection={this.selection.filteredList} />
         {!!this.selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>

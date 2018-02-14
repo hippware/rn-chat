@@ -17,7 +17,7 @@ import analytics from '../utils/analytics';
 
 import Camera from './Camera';
 import SideMenu from './SideMenu';
-// import CreateMessage from './CreateMessage';
+import CreateMessage from './CreateMessage';
 import Launch from './Launch';
 import SignUp from './SignUp';
 import Home from './Home';
@@ -189,7 +189,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     </Stack>
                   </Tabs>
 
-                  {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} /> */}
+                  <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
                   <Scene
                     key='searchUsers'
                     component={peopleLists.SearchUsers}
@@ -200,7 +200,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     wrap
                   />
                   <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                    <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                  <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                 </Modal>
               </Drawer>
             </Stack>

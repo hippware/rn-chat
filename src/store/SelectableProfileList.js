@@ -40,6 +40,10 @@ const SelectableProfileList = types
       );
     }
 
+    function setList(list: Array<any>) {
+      self.list.replace(list);
+    }
+
     function setFilter(text: string) {
       self.filter = text;
     }
@@ -71,7 +75,7 @@ const SelectableProfileList = types
       row.selected = !row.selected;
     }
 
-    return {selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn, setFilter};
+    return {selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn, setFilter, setList};
   });
 
 export default SelectableProfileList;
