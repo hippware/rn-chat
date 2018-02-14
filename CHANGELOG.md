@@ -41,6 +41,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 Major rewrite.
 
+* Refactor app to use custom elements for bot and user objects (#1724)
+* Modify app to take advantage of pre-generated image URLs (#1737)
+
 
 # 1.65.3 - 2017 December 20
 
