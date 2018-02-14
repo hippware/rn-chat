@@ -63,7 +63,7 @@ export const Bot = types
     },
     removePost: flow(function*(postId: string) {
       if (self.posts.list.find(el => el.id === postId)) {
-        yield self.service._removeBostPost(self.id, postId)
+        yield self.service._removeBotPost(self.id, postId)
         self.posts.remove(postId)
       }
     }),
