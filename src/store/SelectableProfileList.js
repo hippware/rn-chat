@@ -25,21 +25,10 @@ const SelectableProfileList = types
     },
 
     get filteredList(): SelectableProfile[] {
-      return self.list.length ? self.list.filter(self._filterFn) : [];
+      return self.list.filter(el => _filterFn(el, self.filter));
     },
   }))
   .actions((self) => {
-    function _filterFn(el) {
-      const {isOwn, firstName, lastName, handle} = el.profile;
-      return (
-        !isOwn &&
-        (!self.filter ||
-          (firstName && firstName.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())) ||
-          (lastName && lastName.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())) ||
-          (handle && handle.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())))
-      );
-    }
-
     function setList(list: Array<any>) {
       self.list.replace(list);
     }
@@ -75,7 +64,18 @@ const SelectableProfileList = types
       row.selected = !row.selected;
     }
 
-    return {selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn, setFilter, setList};
+    return {selectAll, deselectAll, switchRowSelected, replace, clear, setFilter, setList};
   });
+
+function _filterFn(el, filter) {
+  const {isOwn, firstName, lastName, handle} = el.profile;
+  return (
+    !isOwn &&
+    (!filter ||
+      (firstName && firstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())) ||
+      (lastName && lastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())) ||
+      (handle && handle.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())))
+  );
+}
 
 export default SelectableProfileList;
