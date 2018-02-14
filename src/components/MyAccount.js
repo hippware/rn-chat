@@ -17,6 +17,7 @@ import FormTextInput from './FormTextInput';
 import {colors} from '../constants';
 import {RText} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const Title = inject('wocky')(observer(({wocky}) =>
   (wocky.profile ? (
@@ -37,12 +38,19 @@ const Right = inject('profileValidationStore', 'wocky')(observer(({profileValida
     return null;
   }
   return (
-    <TouchableOpacity onPress={profileValidationStore.save} disabled={profile.updating} style={{opacity: profile.updating ? 0.5 : 1}}>
+    <TouchableOpacity
+      onPress={async () => {
+        await profileValidationStore.save();
+        Actions.pop();
+      }}
+      disabled={profile.updating}
+    >
       <RText
         size={16}
         style={{
           marginRight: 10 * k,
           color: colors.PINK,
+          opacity: profile.updating ? 0.5 : 1,
         }}
       >
           Save
@@ -78,45 +86,47 @@ export default class MyAccount extends React.Component<{}> {
     const {handle, firstName, lastName, email, avatar} = profile;
     return (
       <Screen>
-        <SignUpAvatar
-          style={{
-            top: 5,
-            backgroundColor: 'rgb(243,244,246)',
-            borderRadius: 33 * k,
-            width: 66 * k,
-            height: 66 * k,
-          }}
-        />
-        <Card isDay style={{opacity: 0.95}}>
-          <View style={{padding: 15 * k}}>
-            <RText size={16} weight='Medium' style={{color: colors.navBarTextColorDay}}>
-              Profile Info
-            </RText>
-          </View>
-          <Separator width={1} />
-          <FormTextInput label='First Name' store={this.vProfile && this.vProfile.firstName} icon={require('../../images/iconSubsNew.png')} />
-          <FormTextInput label='Last Name' store={this.vProfile && this.vProfile.lastName} />
-          <FormTextInput label='Username' store={this.vProfile && this.vProfile.handle} autoCapitalize='none' icon={require('../../images/iconUsernameNew.png')} />
-          {/* TODO: phoneStore.format
+        <KeyboardAwareScrollView>
+          <SignUpAvatar
+            style={{
+              top: 5,
+              backgroundColor: 'rgb(243,244,246)',
+              borderRadius: 33 * k,
+              width: 66 * k,
+              height: 66 * k,
+            }}
+          />
+          <Card isDay style={{opacity: 0.95}}>
+            <View style={{padding: 15 * k}}>
+              <RText size={16} weight='Medium' style={{color: colors.navBarTextColorDay}}>
+                Profile Info
+              </RText>
+            </View>
+            <Separator width={1} />
+            <FormTextInput label='First Name' store={this.vProfile && this.vProfile.firstName} icon={require('../../images/iconSubsNew.png')} />
+            <FormTextInput label='Last Name' store={this.vProfile && this.vProfile.lastName} />
+            <FormTextInput label='Username' store={this.vProfile && this.vProfile.handle} autoCapitalize='none' icon={require('../../images/iconUsernameNew.png')} />
+            {/* TODO: phoneStore.format
             <Cell image={require('../../images/iconPhoneSmall.png')}>{format(props.profile.phoneNumber)}</Cell>
           <Separator width={1} /> */}
-          <FormTextInput label='Email' store={this.vProfile && this.vProfile.email} icon={require('../../images/iconEmailNew.png')} />
-          <Cell
-            image={require('../../images/block.png')}
-            onPress={Actions.blocked}
-            imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}
-            style={{marginTop: 10 * k}}
-          >
-            <RText numberOfLines={1} size={18} style={{flex: 1, color: colors.DARK_PURPLE}}>
-              Blocked Users
-            </RText>
-          </Cell>
-          {/* <Cell image={icon} style={{justifyContent: 'center'}} imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}> */}
-        </Card>
+            <FormTextInput label='Email' store={this.vProfile && this.vProfile.email} icon={require('../../images/iconEmailNew.png')} />
+            <Cell
+              image={require('../../images/block.png')}
+              onPress={Actions.blocked}
+              imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}
+              style={{marginTop: 10 * k}}
+            >
+              <RText numberOfLines={1} size={18} style={{flex: 1, color: colors.DARK_PURPLE}}>
+                Blocked Users
+              </RText>
+            </Cell>
+            {/* <Cell image={icon} style={{justifyContent: 'center'}} imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}> */}
+          </Card>
 
-        <View style={{height: 100}}>
-          <LogoutButton />
-        </View>
+          <View style={{height: 100}}>
+            <LogoutButton />
+          </View>
+        </KeyboardAwareScrollView>
       </Screen>
     );
   }
