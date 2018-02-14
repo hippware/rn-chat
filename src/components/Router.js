@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {TouchableOpacity, Text, Keyboard} from 'react-native';
-import {when, autorun} from 'mobx';
+import {when, autorun, autorunAsync} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
 import {colors} from '../constants';
@@ -36,7 +36,7 @@ import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
-// import LocationWarning from './LocationWarning';
+import LocationWarning from './LocationWarning';
 import BotAddressScene from './map/BotAddressScene';
 import * as peopleLists from './people-lists';
 import ReportUser from './report-modals/ReportUser';
@@ -134,9 +134,18 @@ autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
 });
 
-@inject('store', 'wocky', 'firebaseStore')
+@inject('store', 'wocky', 'firebaseStore', 'locationStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
+  componentDidMount() {
+    autorunAsync(() => {
+      const {wocky, locationStore} = this.props;
+      if (wocky.connected && !locationStore.enabled) {
+        Actions.locationWarning && Actions.locationWarning();
+      }
+    }, 1000);
+  }
+
   render() {
     const {store, wocky, firebaseStore} = this.props;
 
@@ -222,7 +231,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
-          {/* <Scene key='locationWarning' component={LocationWarning} /> */}
+          <Scene key='locationWarning' component={LocationWarning} />
         </Lightbox>
       </Router>
     );

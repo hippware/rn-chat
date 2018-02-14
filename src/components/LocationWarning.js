@@ -1,17 +1,21 @@
+// @flow
+
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
-import locationStore from '../store/locationStore';
 import {k} from './Global';
 import PopupBlur from './PopupBlur';
+import {observer, inject} from 'mobx-react/native';
 
 const botIcon = require('../../images/iconBot.png');
 
-class LocationWarning extends React.Component {
+@inject('locationStore')
+@observer
+class LocationWarning extends React.Component<{}> {
   componentDidMount() {
-    when(() => locationStore.enabled, Actions.pop);
+    when(() => this.props.locationStore.enabled, Actions.pop);
   }
 
   render() {
