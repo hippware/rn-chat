@@ -5,6 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.5 - 2018 February 14
+
+* Re-activate chat button (#1798)
+* Re-enable location warning screen (#1799)
+* Re-enable bot post photo uploads (#1800)
+* Re-enable bot post deletes (#1801)
+* Fix filtering of friends on Bot Share (#1803)
+* Fix MyAccount screen (#1804)
+
+
 # 2.0.4 - 2018 February 13
 
 * Update wocky-client
