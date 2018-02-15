@@ -57,18 +57,12 @@ class ChatScreen extends React.Component<Props, State> {
 
   static renderTitle = ({item}) => <ChatTitle item={item} />;
 
-  componentWillMount() {
-    const {item} = this.props;
-    this.chat = this.props.wocky.createChat(item);
+  componentDidMount() {
+    const {item, wocky} = this.props;
+    this.chat = wocky.createChat(item);
     this.chat.setActive(true);
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-    this.handler = autorun('ChatScreen', () => {
-      this.chat && this.createDatasource();
-    });
-  }
-
-  componentDidMount() {
     this.mounted = true;
   }
 
@@ -121,77 +115,79 @@ class ChatScreen extends React.Component<Props, State> {
     return this.messages.length > i + 1 ? this.messages[i + 1] : null;
   };
 
-  createDatasource = () => {
-    this.messages = this.chat.messages
-      .map(el => ({
-        uniqueId: el.id,
-        text: el.body || '',
-        isDay: true,
-        title: el.from.displayName,
-        media: el.media,
-        size: 40,
-        position: el.from.isOwn ? 'right' : 'left',
-        status: '',
-        name: el.from.isOwn ? '' : el.from.displayName,
-        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-        profile: el.from,
-        imageView: Avatar,
-        view: ChatBubble,
-        date: new Date(el.time),
-      }))
-      .reverse();
-  };
+  renderItem = ({item}) => (
+    <View>
+      {this.renderDate(item)}
+      <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
+    </View>
+  );
 
   render() {
-    const {wocky} = this.props;
-    if (!this.props.item) {
-      return <Screen isDay />;
-    }
-    return (
-      <Screen isDay>
-        <View style={styles.container}>
-          <FlatList
-            inverted
-            data={this.messages}
-            // data={[]}
-            ref={l => (this.list = l)}
-            renderItem={({item}) => (
-              <View>
-                {this.renderDate(item)}
-                <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
-              </View>
-            )}
-            keyExtractor={item => item.uniqueId}
-            onEndReached={() => this.chat.load()}
-            onEndReachedThreshold={0.5}
-            ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
-          />
-          <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
-            <AttachButton message={this.chat.message} />
-            <AutoExpandingTextInput
-              style={[styles.textInput, styles.textInputDay]}
-              placeholder='Write a message'
-              placeholderTextColor={colors.DARK_GREY}
-              multiline
-              autoFocus
-              returnKeyType='default'
-              enablesReturnKeyAutomatically
-              onChangeText={this.chat.message.setBody}
-              value={this.chat.message.body}
-              blurOnSubmit={false}
-              maxHeight={100}
-              maxLength={500}
-            />
-            <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image source={this.chat.message.body.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
-            </TouchableOpacity>
-          </View>
-          <View style={{height: this.state.height}} />
-        </View>
+    const {wocky, item} = this.props;
+    if (this.chat) console.log('messages', this.chat.messages);
+    return this.chat ? (
+      <Screen>
+        <FlatList
+          inverted
+          data={this.chat.messages
+            .map(el => ({
+              uniqueId: el.id,
+              text: el.body || '',
+              isDay: true,
+              title: el.from.displayName,
+              media: el.media,
+              size: 40,
+              position: el.from.isOwn ? 'right' : 'left',
+              status: '',
+              name: el.from.isOwn ? '' : el.from.displayName,
+              image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+              profile: el.from,
+              imageView: Avatar,
+              view: ChatBubble,
+              date: new Date(el.time),
+            }))
+            .reverse()}
+          ref={l => (this.list = l)}
+          renderItem={this.renderItem}
+          keyExtractor={i => i.uniqueId}
+          onEndReached={() => this.chat.load()}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
+        />
+        <InputArea chat={this.chat} onSend={this.onSend} />
+        <View style={{height: this.state.height}} />
       </Screen>
+    ) : (
+      <Screen />
     );
   }
 }
+
+// separating text input here prevents unnecessary re-renders of the entire list when user enters text
+const InputArea = inject('wocky')(observer(({wocky, chat, onSend}) => {
+  return (
+    <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
+      <AttachButton message={chat.message} />
+      <AutoExpandingTextInput
+        style={[styles.textInput, styles.textInputDay]}
+        placeholder='Write a message'
+        placeholderTextColor={colors.DARK_GREY}
+        multiline
+        autoFocus
+        returnKeyType='default'
+        enablesReturnKeyAutomatically
+        onChangeText={chat.message.setBody}
+        value={chat.message.body}
+        blurOnSubmit={false}
+        maxHeight={100}
+        maxLength={500}
+      />
+      <TouchableOpacity onPress={onSend}>
+        <Image source={chat.message.body.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
+      </TouchableOpacity>
+    </View>
+  );
+}));
 
 const onAttach = (message) => {
   showImagePicker('Select Image', async (source, response) => {
