@@ -5,6 +5,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.6 - 2018 February 15
+
+* Fix messages/chats (#1806)
+* Re-add welcome banner to homestream for new user's first session (#1807)
+* Re-enable push notifications (#1809)
+* Show avatar on profile lists (#1813)
+* Homestream: Default cover image on creation notifications. Cover images are not displaying. (#1814)
+
+
 # 2.0.5 - 2018 February 14
 
 * Re-activate chat button (#1798)
