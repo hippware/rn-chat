@@ -8,7 +8,7 @@ export declare function processMessage(stanza: any, ownUserId: string): {
     isArchived: boolean;
     to: string;
     id: any;
-    time: number;
+    time: any;
     unread: any;
     media: any;
 };
@@ -19,6 +19,7 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
+    sessionCount?: any;
 } & {} & {
     files?: any;
     bots?: any;
@@ -42,6 +43,7 @@ declare const _default: IModelType<{
     password: string | null;
     resource: string;
     host: string;
+    sessionCount: number;
 } & {
     connected: boolean;
     connecting: boolean;
@@ -49,6 +51,7 @@ declare const _default: IModelType<{
     onConnect: () => void;
     onDisconnect: () => void;
 } & {
+    setSessionCount: (count: number) => void;
     afterCreate: () => void;
     beforeDestroy: () => void;
     login: () => Promise<{}>;
@@ -74,6 +77,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -132,6 +139,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -777,6 +788,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -2911,7 +2926,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -3648,7 +3662,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -4652,6 +4665,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -5121,7 +5138,6 @@ declare const _default: IModelType<{
             loaded?: any;
             requestedId?: any;
             isPrivate?: any;
-            time?: any;
             participants?: any;
             _messages?: any;
             message?: any;
@@ -5141,7 +5157,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -5878,7 +5893,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -6882,6 +6896,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -7359,7 +7377,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -8096,7 +8113,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -9100,6 +9116,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -9577,7 +9597,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -10314,7 +10333,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -11318,6 +11336,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -11795,7 +11817,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -12532,7 +12553,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -13536,6 +13556,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -14012,7 +14036,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -14749,7 +14772,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -15753,6 +15775,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -16229,7 +16255,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -16966,7 +16991,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -17970,6 +17994,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -18445,7 +18473,6 @@ declare const _default: IModelType<{
             loaded: boolean;
             requestedId: string | null;
             isPrivate: boolean;
-            time: number;
             participants: IObservableArray<{
                 id: string;
             } & {
@@ -19182,7 +19209,6 @@ declare const _default: IModelType<{
         } & {
             loading: boolean;
         } & {
-            readonly date: any;
             readonly messages: IObservableArray<{
                 id: string;
             } & {
@@ -20186,6 +20212,10 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+        } & {
+            readonly time: number;
+        } & {
+            readonly date: any;
         } & {
             setActive: (active: boolean) => boolean;
             readAll: () => void;
@@ -20668,7 +20698,6 @@ declare const _default: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -21405,7 +21434,6 @@ declare const _default: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -22409,6 +22437,10 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;

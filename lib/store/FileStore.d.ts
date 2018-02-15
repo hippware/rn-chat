@@ -18,6 +18,7 @@ export declare const FileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
+    sessionCount?: any;
 } & {} & {
     files?: any;
     bots?: any;
@@ -35,6 +36,7 @@ export declare const FileStore: IModelType<{
     password: string | null;
     resource: string;
     host: string;
+    sessionCount: number;
 } & {
     connected: boolean;
     connecting: boolean;
@@ -42,6 +44,7 @@ export declare const FileStore: IModelType<{
     onConnect: () => void;
     onDisconnect: () => void;
 } & {
+    setSessionCount: (count: number) => void;
     afterCreate: () => void;
     beforeDestroy: () => void;
     login: () => Promise<{}>;
@@ -67,6 +70,10 @@ export declare const FileStore: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -125,6 +132,10 @@ export declare const FileStore: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -770,6 +781,10 @@ export declare const FileStore: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;

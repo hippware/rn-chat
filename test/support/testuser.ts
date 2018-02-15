@@ -27,7 +27,16 @@ export async function createXmpp(num: number): Promise<IWocky> {
       {provider, fileService, logger: {log: (msg: string, ...params: Array<any>) => console.log(msg, ...params)}}
     )
     addMiddleware(service, simpleActionLogger)
-    await service.testRegister({phoneNumber})
+    await service.register({
+      userID: `000000${phoneNumber}`,
+      phoneNumber: `+1555${phoneNumber}`,
+      authTokenSecret: '',
+      authToken: '',
+      emailAddressIsVerified: false,
+      'X-Auth-Service-Provider': 'http://localhost:9999',
+      emailAddress: '',
+      'X-Verify-Credentials-Authorization': ''
+    })
     await service.login()
     return service
   } catch (e) {

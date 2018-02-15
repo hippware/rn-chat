@@ -20,7 +20,7 @@ export const Bot = types
   .compose(
     Base,
     types.compose(
-      createUploadable('image', (self: any) => `redirect:${self.server}/bot/${self.id}`),
+      createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
       createUpdatable(self => self.service._updateBot(self))
     ),
     types.model('Bot', {

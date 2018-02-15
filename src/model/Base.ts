@@ -17,14 +17,6 @@ export const Base = types
       Object.keys(data).forEach((key: string) => {
         if (typeof data[key] !== 'object') {
           res[key] = data[key]
-        } else if ((self as any)[key] && isStateTreeNode((self as any)[key]) && getType((self as any)[key]).name.startsWith('map<')) {
-          const sub: any = {}
-          const m = (self as any)[key]
-          const keys = (self as any)[key].keys()
-          keys.forEach((key2: string) => {
-            sub[key2] = m.get(key2).snapshot
-          })
-          res[key] = sub
         } else if ((self as any)[key] && (self as any)[key].snapshot) {
           res[key] = (self as any)[key].snapshot
         } else {

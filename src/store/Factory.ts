@@ -5,6 +5,7 @@ import {IObservableArray} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot} from '../model/Bot'
+import {IBase} from '../model/Base'
 
 function createProxy(obj: any) {
   return new Proxy(obj, {
@@ -17,12 +18,21 @@ function createProxy(obj: any) {
     }
   })
 }
-export function createFactory<T>(type: IModelType<any, T>) {
+export function createFactory<T extends IBase>(type: IModelType<any, T>) {
   return types
     .model({
       storage: types.optional(types.map(type), {})
     })
     .named('Factory' + type.name)
+    .views(self => ({
+      get snapshot() {
+        const storage: any = {}
+        self.storage.keys().forEach((key: string) => {
+          storage[key] = self.storage.get(key)!.snapshot
+        })
+        return {storage}
+      }
+    }))
     .actions(self => ({
       clear: () => {
         self.storage.clear()

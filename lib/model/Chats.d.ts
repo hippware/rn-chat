@@ -17,7 +17,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -754,7 +753,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -1758,6 +1756,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -2227,7 +2229,6 @@ export declare const Chats: IModelType<{
         loaded?: any;
         requestedId?: any;
         isPrivate?: any;
-        time?: any;
         participants?: any;
         _messages?: any;
         message?: any;
@@ -2247,7 +2248,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -2984,7 +2984,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -3988,6 +3987,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -4465,7 +4468,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -5202,7 +5204,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -6206,6 +6207,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -6683,7 +6688,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -7420,7 +7424,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -8424,6 +8427,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -8901,7 +8908,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -9638,7 +9644,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -10642,6 +10647,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -11118,7 +11127,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -11855,7 +11863,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -12859,6 +12866,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -13335,7 +13346,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -14072,7 +14082,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -15076,6 +15085,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;
@@ -15551,7 +15564,6 @@ export declare const Chats: IModelType<{
         loaded: boolean;
         requestedId: string | null;
         isPrivate: boolean;
-        time: number;
         participants: IObservableArray<{
             id: string;
         } & {
@@ -16288,7 +16300,6 @@ export declare const Chats: IModelType<{
     } & {
         loading: boolean;
     } & {
-        readonly date: any;
         readonly messages: IObservableArray<{
             id: string;
         } & {
@@ -17292,6 +17303,10 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+    } & {
+        readonly time: number;
+    } & {
+        readonly date: any;
     } & {
         setActive: (active: boolean) => boolean;
         readAll: () => void;

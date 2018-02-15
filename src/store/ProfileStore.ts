@@ -120,7 +120,7 @@ const profileStore = types
         const data = self._processMap(stanza)
         let res: IProfile = self.profiles.get(id, data)
         if (isOwn) {
-          self.profile = OwnProfile.create(getSnapshot(res))
+          self.profile = OwnProfile.create({id, ...data, status: 'available'})
         }
 
         return res

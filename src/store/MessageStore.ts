@@ -17,7 +17,7 @@ const MAXINT = 1000
 export function processMessage(stanza: any, ownUserId: string) {
   let id = stanza.id
   let archiveId
-  let time = Date.now()
+  let time = stanza.time || Date.now()
   let unread = stanza.unread
   let isArchived = false
   if (stanza.result && stanza.result.forwarded) {

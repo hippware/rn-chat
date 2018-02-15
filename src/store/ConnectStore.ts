@@ -10,7 +10,8 @@ export default types
       username: types.maybe(types.string),
       password: types.maybe(types.string),
       resource: types.string,
-      host: types.string
+      host: types.string,
+      sessionCount: 0
     })
   )
   .named('ConnectStore')
@@ -32,6 +33,9 @@ export default types
   .actions(self => {
     const {provider} = getEnv(self)
     return {
+      setSessionCount: (count: number) => {
+        self.sessionCount = count
+      },
       afterCreate: () => {
         provider.onConnected = self.onConnect
         provider.onDisconnected = self.onDisconnect
@@ -53,6 +57,7 @@ export default types
           }
           self.connecting = true
           yield provider.login(self.username, self.password, self.host, self.resource)
+          self.sessionCount++
           return true
         } catch (e) {
           throw e

@@ -16,7 +16,6 @@ export const Chat = types
       loaded: false,
       requestedId: types.maybe(types.string),
       isPrivate: true,
-      time: types.optional(types.number, () => Date.now()),
       participants: types.optional(types.array(types.reference(Profile)), []),
       _messages: types.optional(types.array(Message), []),
       message: types.optional(Message, {})
@@ -27,9 +26,6 @@ export const Chat = types
   }))
   .named('Chat')
   .views(self => ({
-    get date() {
-      return moment(self.time).calendar()
-    },
     get messages() {
       return self._messages.sort((a, b) => a.time - b.time)
     },
@@ -46,6 +42,16 @@ export const Chat = types
     },
     get first(): IMessage | null {
       return self.messages.length ? self.messages[0] : null
+    }
+  }))
+  .views(self => ({
+    get time() {
+      return self.last ? self.last!.time : Date.now()
+    }
+  }))
+  .views(self => ({
+    get date() {
+      return moment(self.time).calendar()
     }
   }))
   .actions(self => {

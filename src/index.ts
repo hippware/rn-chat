@@ -10,6 +10,9 @@ import {Base as B, SERVICE_NAME} from './model/Base'
 export const Base = B
 export type IWocky = typeof Wocky.Type
 export type IProfile = typeof P.Type
+
+const PUSH_NS = 'hippware.com/hxep/notifications'
+
 export const Wocky = types
   .compose(
     EventStore,
@@ -30,6 +33,20 @@ export const Wocky = types
   .named(SERVICE_NAME)
   .actions(self => {
     return {
+      enablePush: flow(function*(token: string) {
+        const iq = $iq({type: 'set'}).c('enable', {
+          xmlns: PUSH_NS,
+          platform: 'apple',
+          device: token
+        })
+        const data = yield self.sendIQ(iq)
+        if (!data || !(data.enabled || data.enabled === '')) throw data
+      }),
+      disablePush: flow(function*() {
+        const iq = $iq({type: 'set'}).c('disable', {xmlns: PUSH_NS})
+        const data = yield self.sendIQ(iq)
+        if (!data || !(data.disabled || data.disabled === '')) throw data
+      }),
       logout: flow(function*() {
         yield self.disconnect()
         if (!self.profile) {

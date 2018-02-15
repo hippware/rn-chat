@@ -43,6 +43,7 @@ export const Message = types
   }))
   .actions(self => ({
     send: () => {
+      self.time = Date.now()
       self.service._sendMessage(self)
       self.clear()
     }

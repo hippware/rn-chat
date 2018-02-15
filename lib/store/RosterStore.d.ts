@@ -7,6 +7,7 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
+    sessionCount?: any;
 } & {} & {
     files?: any;
     bots?: any;
@@ -28,6 +29,7 @@ declare const _default: IModelType<{
     password: string | null;
     resource: string;
     host: string;
+    sessionCount: number;
 } & {
     connected: boolean;
     connecting: boolean;
@@ -35,6 +37,7 @@ declare const _default: IModelType<{
     onConnect: () => void;
     onDisconnect: () => void;
 } & {
+    setSessionCount: (count: number) => void;
     afterCreate: () => void;
     beforeDestroy: () => void;
     login: () => Promise<{}>;
@@ -60,6 +63,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -118,6 +125,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -763,6 +774,10 @@ declare const _default: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;

@@ -6,6 +6,7 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
+    sessionCount?: any;
 } & {}, {
     id: string;
 } & {
@@ -19,6 +20,7 @@ declare const _default: IModelType<{
     password: string | null;
     resource: string;
     host: string;
+    sessionCount: number;
 } & {
     connected: boolean;
     connecting: boolean;
@@ -26,6 +28,7 @@ declare const _default: IModelType<{
     onConnect: () => void;
     onDisconnect: () => void;
 } & {
+    setSessionCount: (count: number) => void;
     afterCreate: () => void;
     beforeDestroy: () => void;
     login: () => Promise<{}>;

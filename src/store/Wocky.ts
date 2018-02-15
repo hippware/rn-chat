@@ -1,0 +1,277 @@
+// tslint:disable-next-line:no_unused-variable
+import {IModelType, types, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
+// tslint:disable-next-line:no_unused-variable
+import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
+import {XmppTransport} from './XmppTransport'
+import {OwnProfile} from '../model/OwnProfile'
+import {Profile, IProfile} from '../model/Profile'
+import {Storages} from './Factory'
+import {Base as B, SERVICE_NAME} from '../model/Base'
+import {Bot, IBot} from '../model/Bot'
+import {BotPost, IBotPost} from '../model/BotPost'
+import {EventBotCreate} from '../model/EventBotCreate'
+import {EventBotPost} from '../model/EventBotPost'
+import {EventBotNote} from '../model/EventBotNote'
+import {EventBotShare} from '../model/EventBotShare'
+import {EventBotGeofence} from '../model/EventBotGeofence'
+import {EventDelete} from '../model/EventDelete'
+import {createPaginable} from '../model/PaginableList'
+export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
+export type IEventEntity = typeof EventEntity.Type
+export const EventList = createPaginable(EventEntity)
+export type IEventList = typeof EventList.Type
+
+export const Wocky = types
+  .compose(
+    B,
+    Storages,
+    types.model({
+      id: 'wocky',
+      username: types.maybe(types.string),
+      password: types.maybe(types.string),
+      resource: types.string,
+      host: types.string,
+      sessionCount: 0,
+      roster: types.optional(types.map(types.reference(Profile)), {}),
+      profile: types.maybe(OwnProfile),
+      updates: types.optional(types.array(EventEntity), []),
+      events: types.optional(EventList, {}),
+      geoBots: types.optional(types.map(types.reference(Bot)), {}),
+      version: ''
+    })
+  )
+  .named(SERVICE_NAME)
+  .extend(self => {
+    const {provider, fileService} = getEnv(self)
+    let transport: XmppTransport
+    return {
+      views: {
+        get snapshot() {
+          const data = {...self._snapshot}
+          if (self.events.length > 10) {
+            data.events = {result: data.events.result.slice(0, 10)}
+          }
+          delete data.geoBots
+          return data
+        },
+        get transport() {
+          return transport
+        },
+        get connected() {
+          return transport.connected
+        },
+        get connecting() {
+          return transport.connecting
+        },
+        get sortedRoster() {
+          return self.roster
+            .values()
+            .filter(x => x.handle)
+            .sort((a, b) => {
+              return a.handle.toLocaleLowerCase().localeCompare(b.handle.toLocaleLowerCase())
+            })
+        }
+      },
+      actions: {
+        afterCreate: () => {
+          transport = new XmppTransport(provider, fileService, self.resource)
+        },
+        login: flow(function*(user?: string, password?: string, host?: string) {
+          if (user) {
+            self.username = user
+          }
+          if (password) {
+            self.password = password
+          }
+          if (host) {
+            self.host = host
+          }
+          yield transport.login(self.username!, self.password!, self.host)
+        }),
+        disconnect: flow(function*() {
+          yield transport.disconnect()
+        }),
+        remove: flow(function*() {
+          yield transport.remove()
+        }),
+        register: flow(function*(data: any, providerName = 'digits') {
+          const res = yield transport.register(data, self.host, providerName)
+          Object.assign(self, res)
+        }),
+        loadProfile: flow(function*(id: string) {
+          const isOwn = id === self.username
+          const data = yield transport.loadProfile(id)
+          let res: IProfile = self.profiles.get(id, data)
+          if (isOwn) {
+            self.profile = OwnProfile.create({id, ...data, status: 'available'})
+          }
+          return res
+        }),
+        _requestProfiles: flow(function*(users: string[]) {
+          const arr = yield transport.requestProfiles(users)
+          return arr.map((user: any) => self.profiles.get(user.id, user))
+        }),
+        _updateProfile: flow(function*(d: Object) {
+          yield transport.updateProfile(d)
+        }),
+        lookup: flow<string>(function*(handle: string) {
+          const profile = yield transport.lookup(handle)
+          return self.profiles.get(profile.id, profile)
+        })
+      }
+    }
+  })
+  .views(self => ({
+    get all() {
+      return self.sortedRoster.filter(x => !x.isBlocked)
+    },
+    get blocked() {
+      return self.sortedRoster.filter(x => x.isBlocked)
+    },
+    get friends() {
+      return self.sortedRoster.filter(x => x.isMutual)
+    },
+    get followers() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower)
+    },
+    get newFollowers() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower && x.isNew)
+    },
+    get followed() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollowed)
+    }
+  }))
+  .actions(self => ({
+    addRosterItem: (profile: any) => {
+      self.roster.put(self.profiles.get(profile.id, profile))
+    },
+    getProfile: flow(function*(id: string) {
+      return self.profiles.get(id) || (yield self.loadProfile(id))
+    }),
+    getBot: ({id, server, ...data}: any): IBot => {
+      const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
+      if (data && Object.keys(data).length) {
+        self._registerReferences(Bot, data)
+        bot.load(data)
+      }
+      return bot
+    }
+  }))
+  .actions(self => ({
+    _follow: flow(function*(username: string) {
+      yield self.transport.follow(username)
+    }),
+    _unfollow: flow(function*(username: string) {
+      yield self.transport.unfollow(username)
+    }),
+    _block: flow(function*(username: string) {
+      yield self.transport.block(username)
+    }),
+    _unblock: flow(function*(username: string) {
+      yield self.transport.unblock(username)
+    }),
+    requestRoster: flow(function*() {
+      const roster = yield self.transport.requestRoster()
+      roster.forEach(self.addRosterItem)
+    })
+  }))
+  .actions(self => ({
+    afterCreate: () => {
+      autorun('ProfileStore', async () => {
+        if (self.connected && self.username) {
+          try {
+            await self.loadProfile(self.username)
+            self.profile!.setStatus('available')
+            self.requestRoster()
+          } catch (e) {
+            console.error(e)
+          }
+        } else {
+          if (self.profile) {
+            self.profile!.setStatus('unavailable')
+          }
+        }
+      })
+      reaction(
+        () => self.transport.geoBot,
+        (bot: any) => {
+          self.geoBots.put(self.getBot(bot))
+        }
+      )
+      reaction(
+        () => self.transport.presence,
+        ({id, status}) => {
+          const profile = self.profiles.get(id)
+          profile.setStatus(status)
+        }
+      )
+      reaction(() => self.transport.rosterItem, self.addRosterItem)
+    },
+    createBot: flow<IBot>(function*() {
+      const id = yield self.transport.generateId()
+      const bot = self.getBot({id, owner: self.username})
+      bot.setNew(true)
+      return bot
+    }),
+    removeBot: flow(function*(id: string) {
+      yield self.transport.removeBot(id)
+      self.bots.delete(id)
+    }),
+    _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+      const {list, count} = yield self.transport.loadOwnBots(userId, lastId, max)
+      return {list: list.map((bot: any) => self.getBot(bot)), count}
+    }),
+    _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
+      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+    }),
+    _loadBotPosts: flow(function*(id: string, before?: string) {
+      const {list, count} = yield self.transport.loadBotPosts(id, before)
+      return {list: list.map((post: any) => self.create(BotPost, post)), count}
+    }),
+    _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+      const {list, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
+      return {list: list.map((bot: any) => self.getBot(bot)), count}
+    }),
+    _updateBot: flow(function*(bot: IBot) {
+      yield self.transport.updateBot(bot)
+      return {isNew: false}
+    }),
+    loadBot: flow(function*(id: string, server: any) {
+      return self.getBot(yield self.transport.loadBot(id, server))
+    }),
+    _removeBotPost: flow(function*(id: string, postId: string) {
+      yield self.transport.removeBotPost(id, postId)
+    }),
+    _shareBot: (id: string, server: string, recepients: string[], message: string, type: string) => {
+      self.transport.shareBot(id, server, recepients, message, type)
+    },
+    _publishBotPost: flow(function*(post: IBotPost) {
+      let parent = getParent(post)
+      while (!parent.id) parent = getParent(parent)
+      const botId = parent.id
+      yield self.transport.publishBotPost(botId, post)
+    }),
+    _subscribeBot: flow(function*(id: string) {
+      yield self.transport.subscribeBot(id)
+    }),
+    _unsubscribeBot: flow(function*(id: string) {
+      yield self.transport.unsubscribeBot(id)
+    }),
+    geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+      yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
+    }),
+    _loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
+      const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
+      const res: any = []
+      for (let i = 0; i < list.length; i++) {
+        const {id} = list[i]
+        // TODO avoid extra request to load profile (server-side)
+        const profile = yield self.getProfile(id)
+        list.push(profile)
+      }
+      return {list: res, count}
+    })
+  }))
+
+export type IWocky = typeof Wocky.Type

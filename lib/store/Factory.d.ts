@@ -1,6 +1,7 @@
 import { ISnapshottable, IExtendedObservableMap, IModelType } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare function createFactory<T>(type: IModelType<any, T>): IModelType<{
+import { IBase } from '../model/Base';
+export declare function createFactory<T extends IBase>(type: IModelType<any, T>): IModelType<{
     storage?: any;
 }, {
     storage: IExtendedObservableMap<T & {
@@ -8,6 +9,10 @@ export declare function createFactory<T>(type: IModelType<any, T>): IModelType<{
     }> & ISnapshottable<{
         [key: string]: any;
     }>;
+} & {
+    readonly snapshot: {
+        storage: any;
+    };
 } & {
     clear: () => void;
     delete: (id: string) => void;
@@ -26,6 +31,10 @@ export declare const Storages: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -84,6 +93,10 @@ export declare const Storages: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
@@ -729,6 +742,10 @@ export declare const Storages: IModelType<{
         }> & ISnapshottable<{
             [key: string]: any;
         }>;
+    } & {
+        readonly snapshot: {
+            storage: any;
+        };
     } & {
         clear: () => void;
         delete: (id: string) => void;
