@@ -45,52 +45,17 @@ export default class ChatCard extends React.Component<Props> {
           >
             <View style={{flex: 1, flexDirection: 'row'}}>{participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}</View>
 
-            {this.props.onPostOptions && (
-              <TouchableOpacity
-                ref={b => (this.button = b)}
-                onPress={e => this.props.onPostOptions(e, this.button)}
+            <Date {...this.props}>
+              <Text
                 style={{
-                  position: 'absolute',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  top: 20 * k,
-                  right: 20 * k,
+                  fontFamily: 'Roboto-Light',
+                  fontSize: 12 * k,
+                  color: colors.DARK_GREY,
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    fontSize: 12,
-                    color: colors.DARK_GREY,
-                  }}
-                >
-                  {msg.date}{' '}
-                </Text>
-                <Image source={require('../../images/iconPostOptions.png')} />
-              </TouchableOpacity>
-            )}
-            {!this.props.onPostOptions && (
-              <View
-                style={{
-                  position: 'absolute',
-                  backgroundColor: 'transparent',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  top: 20 * k,
-                  right: 20 * k,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    fontSize: 12 * k,
-                    color: colors.DARK_GREY,
-                  }}
-                >
-                  {msg.date}
-                </Text>
-              </View>
-            )}
+                {msg.date}
+              </Text>
+            </Date>
           </View>
         }
       >
@@ -151,10 +116,38 @@ export default class ChatCard extends React.Component<Props> {
   }
 }
 
+const Date = ({onPostOptions, children}) =>
+  (onPostOptions ? (
+    <TouchableOpacity onPress={e => onPostOptions(e, e.nativeEvent.target)} style={styles.date}>
+      {children}
+      <Image style={{marginLeft: 5 * k}} source={require('../../images/iconPostOptions.png')} />
+    </TouchableOpacity>
+  ) : (
+    <View
+      style={{
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+        alignItems: 'center',
+        top: 20 * k,
+        right: 20 * k,
+      }}
+    >
+      {children}
+    </View>
+  ));
+
 const styles = StyleSheet.create({
   smallText: {
     fontFamily: 'Roboto-Regular',
     fontSize: 12,
     color: colors.DARK_GREY,
+  },
+  date: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    top: 20 * k,
+    right: 20 * k,
   },
 });
