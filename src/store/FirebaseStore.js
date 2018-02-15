@@ -55,12 +55,12 @@ const FirebaseStore = types
       if (self.token) {
         try {
           yield auth.signOut();
+          yield wocky.logout();
         } catch (err) {
-          analytics.track('logout_error');
+          analytics.track('logout_error', {error: err.toString()});
           logger.log('Firebase logout error...maybe this is a bypass user?', err);
         }
       }
-      yield wocky.logout();
       return true;
     });
 
