@@ -5,6 +5,7 @@ import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ChatScreen from '../src/components/ChatScreen';
+import {Provider} from 'mobx-react/native';
 
 // mock autofocus: https://github.com/facebook/jest/issues/3707#issuecomment-311169259
 jest.mock('TextInput', () => {
@@ -35,7 +36,11 @@ describe('ChatScreen', () => {
         },
       },
     };
-    const tree = renderer.create(<ChatScreen wocky={wocky} item='1234' />).toJSON();
+    const tree = renderer
+      .create(<Provider wocky={wocky}>
+        <ChatScreen item='1234' />
+      </Provider>)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
   // TODO
