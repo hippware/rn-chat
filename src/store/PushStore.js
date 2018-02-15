@@ -21,11 +21,16 @@ class PushStore {
     PushNotification.configure({
       onRegister({token}) {
         this.pushNotificationToken = token;
-        try {
-          // TODO await this.wocky.enablePush(this.pushNotificationToken);
-        } catch (err) {
-          log.warn('Push Notification enable error', err);
-        }
+        when(
+          () => this.wocky.connected,
+          () => {
+            try {
+              this.wocky.enablePush(this.pushNotificationToken);
+            } catch (err) {
+              log.warn('Push Notification enable error', err);
+            }
+          },
+        );
       },
       onNotification(notification) {
         log.log('Push Notification:', notification);
@@ -62,7 +67,7 @@ class PushStore {
 
   disable = async () => {
     try {
-      // TODO: await this.wocky.disablePush();
+      await this.wocky.disablePush();
     } catch (err) {
       log.warn('Push Notification disable error', err);
     }

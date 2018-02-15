@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -26,9 +26,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"],
     "globalSetup": "./__tests__/setupJest.js"
   },
   "dependencies": {
@@ -80,7 +78,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#4c8edab407405b3ab80026b015dbdf938f306804"
+    "wocky-client": "github:hippware/wocky-client#36e8a2e7a8fd921b8a810994d5c9fcf677901b5f"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
