@@ -55,3 +55,4 @@ android/app/libs
 */fastlane/Preview.html
 */fastlane/screenshots
 .tmp/
+.project 

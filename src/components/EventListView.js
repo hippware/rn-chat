@@ -13,22 +13,22 @@ import Swipeable from 'react-native-swipeable';
 import {RText} from './common';
 
 const leftContent = <Text />;
-const HomeStreamHeader = observer(({visible}) => {
+const HomeStreamHeader = inject('wocky')(observer(({visible, wocky}) => {
   return visible ? (
-    <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
+    <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => wocky.setSessionCount(3)} onRightActionRelease={() => wocky.setSessionCount(3)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
         <View style={{flex: 1}}>
           <Text style={styles.welcome}>
             {'Welcome to '}
             <Text style={{fontFamily: 'Roboto-Bold'}}>tinyrobot</Text>
-            ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+              ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
           </Text>
         </View>
       </LinearGradient>
     </Swipeable>
   ) : null;
-});
+}));
 
 @inject('wocky')
 @observer
@@ -40,11 +40,11 @@ class EventList extends Component {
   };
 
   render() {
-    const {events, connected} = this.props.wocky;
+    const {sessionCount, events, connected} = this.props.wocky;
     const backgroundColor = colors.LIGHT_GREY;
     const footerImage = require('../../images/graphicEndHome.png');
     const {finished} = events.list;
-    const isFirstSession = false; // TODO session count model.sessionCount <= 2 && profileStore.isNew;
+    const isFirstSession = sessionCount <= 2;
 
     return (
       <View style={{flex: 1, backgroundColor}}>

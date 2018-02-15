@@ -30,7 +30,9 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
         style,
       ]}
     >
-      <View style={{padding: 5 * k}}>{/* <Avatar size={40} profile={profile} tappable={tappable !== false} /> */}</View>
+      <View style={{padding: 5 * k}}>
+        <Avatar size={40} profile={profile} tappable={tappable !== false} />
+      </View>
       <View style={{flex: 1, padding: 7 * k}}>
         <ProfileHandle size={15} profile={profile} />
         <Text
