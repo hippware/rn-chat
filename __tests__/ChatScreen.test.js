@@ -24,7 +24,7 @@ jest.mock('TextInput', () => {
 describe('ChatScreen', () => {
   test('renders with no data', () => {
     const wocky = {
-      createChat: () => ({messages: [], message: {body: '', setBody: () => {}}, setActive: () => {}}),
+      createChat: () => ({messages: [], message: {body: '', setBody: () => {}}, readAll: () => {}, setActive: () => {}}),
       chats: {
         list: [],
         get: () => {
