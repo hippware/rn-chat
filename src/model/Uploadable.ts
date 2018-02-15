@@ -27,6 +27,7 @@ export function createUploadable(property: string, access: string | Function) {
               self[property].setSource({uri: file.uri, size, width, height})
             }
           } catch (e) {
+            console.error(e)
             self.uploadError = e
           } finally {
             self.uploading = false

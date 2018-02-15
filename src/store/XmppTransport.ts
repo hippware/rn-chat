@@ -27,7 +27,7 @@ export class XmppTransport {
   @observable connecting: boolean = false
   @observable iq: any = {}
   @observable rosterItem: any = {}
-  @observable message: any = {}
+  @observable message: {id: string; message: any}
   @observable presence: {status: string; id: string}
   @observable username: string
   @observable password: string
@@ -55,7 +55,7 @@ export class XmppTransport {
     provider.onMessage = (msg: any) => {
       if (msg.body || msg.media || msg.image || msg.result) {
         const {chatId, ...message} = processMessage({...msg, unread: true}, this.username!)
-        this.message = {chatId, message}
+        this.message = {id: chatId, message}
       } else if (msg[EXPLORE_NEARBY]) {
         const bot = msg[EXPLORE_NEARBY].bot
         this.geoBot = {id: bot.id, ...processMap(bot)}
@@ -492,7 +492,7 @@ export class XmppTransport {
     let count = MAXINT
     let last
     while (items.length < count) {
-      const iq = $iq({type: 'get', to: this.username})
+      const iq = $iq({type: 'get', to: this.username + '@' + this.host})
         .c('query', {xmlns: CONVERSATION_NS})
         .c('set', {xmlns: RSM_NS})
 

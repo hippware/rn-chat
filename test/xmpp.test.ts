@@ -72,17 +72,17 @@ describe('ConnectStore', () => {
     }
   })
   it('make them friends', async done => {
-    expect(user1.roster.length).to.be.equal(0)
-    expect(user2.roster.length).to.be.equal(0)
+    expect(user1.sortedRoster.length).to.be.equal(0)
+    expect(user2.sortedRoster.length).to.be.equal(0)
     await (await user1.loadProfile(user2.username!)).follow()
     await (await user2.loadProfile(user1.username!)).follow()
     when(
-      () => user1.roster.length === 1 && user2.roster.length === 1,
+      () => user1.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
       () => {
-        expect(user1.roster[0].id).to.be.equal(user2.username)
-        expect(user2.roster[0].id).to.be.equal(user1.username)
+        expect(user1.sortedRoster[0].id).to.be.equal(user2.username)
+        expect(user2.sortedRoster[0].id).to.be.equal(user1.username)
         // check profile is online
-        when(() => user2.roster[0].status === 'available', done)
+        when(() => user2.sortedRoster[0].status === 'available', done)
       }
     )
   })
@@ -122,7 +122,7 @@ describe('ConnectStore', () => {
     try {
       await user2.disconnect()
       expect(user2.profile!.status).to.be.equal('unavailable')
-      when(() => user1.roster[0].status === 'unavailable', done)
+      when(() => user1.sortedRoster[0].status === 'unavailable', done)
     } catch (e) {
       done(e)
     }
@@ -131,10 +131,10 @@ describe('ConnectStore', () => {
     try {
       await user2.login()
       when(
-        () => user2.roster.length === 1,
+        () => user2.sortedRoster.length === 1,
         () => {
-          expect(user2.roster[0].id === user1.username)
-          expect(user2.roster[0].status === 'available')
+          expect(user2.sortedRoster[0].id === user1.username)
+          expect(user2.sortedRoster[0].status === 'available')
           done()
         }
       )

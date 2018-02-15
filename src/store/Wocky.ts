@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {IModelType, types, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
+import {IModelType, types, clone, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {XmppTransport} from './XmppTransport'
@@ -16,6 +16,9 @@ import {EventBotShare} from '../model/EventBotShare'
 import {EventBotGeofence} from '../model/EventBotGeofence'
 import {EventDelete} from '../model/EventDelete'
 import {createPaginable} from '../model/PaginableList'
+import {Chats} from '../model/Chats'
+import {Chat, IChat} from '../model/Chat'
+import {Message, IMessage} from '../model/Message'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 export const EventList = createPaginable(EventEntity)
@@ -37,6 +40,7 @@ export const Wocky = types
       updates: types.optional(types.array(EventEntity), []),
       events: types.optional(EventList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {}),
+      chats: types.optional(Chats, Chats.create()),
       version: ''
     })
   )
@@ -101,6 +105,8 @@ export const Wocky = types
         loadProfile: flow(function*(id: string) {
           const isOwn = id === self.username
           const data = yield transport.loadProfile(id)
+          if (data.avatar) {
+          }
           let res: IProfile = self.profiles.get(id, data)
           if (isOwn) {
             if (!self.profile) {
@@ -121,7 +127,8 @@ export const Wocky = types
         lookup: flow<string>(function*(handle: string) {
           const profile = yield transport.lookup(handle)
           return self.profiles.get(profile.id, profile)
-        })
+        }),
+        createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id}))
       }
     }
   })
@@ -146,6 +153,22 @@ export const Wocky = types
     }
   }))
   .actions(self => ({
+    logout: flow(function*() {
+      yield self.disconnect()
+      if (!self.profile) {
+        destroy(self.profile!)
+      }
+      self.profile = null
+      self.profiles.clear()
+      self.roster.clear()
+      self.chats.clear()
+      self.bots.clear()
+      self.version = ''
+      self.events.refresh()
+      self.updates.clear()
+      self.username = null
+      self.password = null
+    }),
     addRosterItem: (profile: any) => {
       self.roster.put(self.profiles.get(profile.id, profile))
     },
@@ -159,6 +182,19 @@ export const Wocky = types
         bot.load(data)
       }
       return bot
+    },
+    _addMessage: ({id, message}: {id: string; message: any}) => {
+      const existingChat = self.chats.get(id)
+      const msg = self.create(Message, message)
+      if (existingChat) {
+        existingChat.addMessage(msg)
+        if (existingChat.active) {
+          msg.read()
+        }
+      } else {
+        const chat = self.createChat(id)
+        chat.addMessage(msg)
+      }
     }
   }))
   .actions(self => ({
@@ -177,6 +213,14 @@ export const Wocky = types
     requestRoster: flow(function*() {
       const roster = yield self.transport.requestRoster()
       roster.forEach(self.addRosterItem)
+    }),
+    loadChats: flow(function*(max: number = 50) {
+      const items = yield self.transport.loadChats(max)
+      items.forEach((item: {id: string; message: any}) => {
+        const msg = self.create(Message, item.message)
+        const chat = self.createChat(item.id)
+        chat.addMessage(msg)
+      })
     })
   }))
   .actions(self => ({
@@ -186,6 +230,7 @@ export const Wocky = types
           try {
             await self.loadProfile(self.username)
             self.profile!.setStatus('available')
+            await self.loadChats()
             self.requestRoster()
           } catch (e) {
             console.error(e)
@@ -210,6 +255,7 @@ export const Wocky = types
         }
       )
       reaction(() => self.transport.rosterItem, self.addRosterItem)
+      reaction(() => self.transport.message, self._addMessage)
     },
     createBot: flow<IBot>(function*() {
       const id = yield self.transport.generateId()
@@ -275,6 +321,29 @@ export const Wocky = types
         list.push(profile)
       }
       return {list: res, count}
+    }),
+    _sendMessage: (msg: IMessage) => {
+      self.transport.sendMessage(msg)
+      console.log('SEND MESSAGE:', JSON.stringify(msg))
+      self._addMessage({id: msg.to, message: msg})
+    },
+    loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
+      yield self.transport.loadChat(userId, lastId, max)
+    }),
+    downloadURL: flow(function*(tros: string) {
+      return yield self.transport.downloadURL(tros)
+    }),
+    downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
+      return yield self.transport.downloadFile(tros, name, sourceUrl)
+    }),
+    downloadThumbnail: flow(function*(url: string, tros: string) {
+      return yield self.transport.downloadThumbnail(url, tros)
+    }),
+    downloadTROS: flow(function*(tros: string) {
+      return yield self.transport.downloadTROS(tros)
+    }),
+    _requestUpload: flow(function*({file, size, width, height, access}: any) {
+      return yield self.transport.requestUpload({file, size, width, height, access})
     })
   }))
 

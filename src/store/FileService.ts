@@ -13,9 +13,6 @@ export async function upload({method, headers, url, file}: any) {
     request.open(method, url, true)
     const resheaders: any = {}
     let headerArr = headers.header ? headers.header : []
-    if (!Array.isArray(headerArr)) {
-      headerArr = [headerArr]
-    }
     for (const header of headerArr) {
       resheaders[header.name] = header.value
       request.setRequestHeader(header.name, header.value)
