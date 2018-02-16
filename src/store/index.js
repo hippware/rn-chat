@@ -1,7 +1,7 @@
 // @flow
 
 import {autorun} from 'mobx';
-import {types, getEnv, addMiddleware} from 'mobx-state-tree';
+import {types, flow, getEnv, addMiddleware} from 'mobx-state-tree';
 import {actionLogger, simpleActionLogger} from 'mst-middlewares';
 import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
@@ -61,7 +61,17 @@ const Store = types
       return getEnv(self).fileService.getImageSize;
     },
   }))
-  .actions(self => ({}));
+  .actions(self => ({
+    logout: flow(function* () {
+      try {
+        yield self.wocky.logout();
+        yield self.firebaseStore.logout();
+      } catch (e) {
+        console.error(e);
+      }
+      return true;
+    }),
+  }));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
 const theStore = PersistableStore.create(

@@ -40,8 +40,12 @@ const Right = inject('profileValidationStore', 'wocky')(observer(({profileValida
   return (
     <TouchableOpacity
       onPress={async () => {
-        await profileValidationStore.save();
-        Actions.pop();
+        try {
+          await profileValidationStore.save();
+          Actions.pop();
+        } catch (e) {
+          alert(e);
+        }
       }}
       disabled={profile.updating}
     >
