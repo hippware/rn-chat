@@ -30,14 +30,14 @@ class PushStore {
       },
       onNotification(notification) {
         log.log('Push Notification:', notification);
-        this.analytics.track('push_notification_received', {notification});
+        analytics.track('push_notification_received', {notification});
         if (notification.data && notification.data.uri) {
           try {
-            this.analytics.track('push_notification_try', {notification});
+            analytics.track('push_notification_try', {notification});
             Linking.openURL(notification.data.uri);
-            this.analytics.track('push_notification_success', {notification});
+            analytics.track('push_notification_success', {notification});
           } catch (err) {
-            this.analytics.track('push_notification_fail', {notification, error: err});
+            analytics.track('push_notification_fail', {notification, error: err});
           }
         }
       },
