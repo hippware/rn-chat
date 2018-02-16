@@ -51,14 +51,15 @@ const FirebaseStore = types
     }
 
     const logout = flow(function* logout() {
-      analytics.track('logout');
       if (self.token) {
+        self.token = null;
+        analytics.track('logout');
         try {
-          self.token = null;
+          // NOTE: this will fail for bypass accounts
           yield auth.signOut();
         } catch (err) {
-          analytics.track('logout_error', {error: err.toString()});
           logger.log('Firebase logout error...maybe this is a bypass user?', err);
+          wocky.logout();
         }
       }
       return true;
@@ -124,7 +125,7 @@ const FirebaseStore = types
     // const register = flow(function* register(token: string) {
     function register(): void {
       self.buttonText = 'Registering...';
-      // TODO: set a timeout here
+      // TODO: set a timeout on firebase register
       when(() => self.token, registerWithToken);
     }
 
@@ -138,6 +139,7 @@ const FirebaseStore = types
       } catch (err) {
         logger.warn('RegisterWithToken error', err);
         self.errorMessage = 'Error registering, please try again';
+        analytics.track('error_firebase_register', err);
       } finally {
         self.buttonText = 'Verify';
         self.errorMessage = null;

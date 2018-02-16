@@ -15,7 +15,7 @@ import Button from 'apsl-react-native-button';
 import {RText, Spinner} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
 
-@inject('wocky')
+@inject('wocky', 'analytics')
 @observer
 class SignUp extends React.Component<{}> {
   @observable vProfile: ValidatableProfile;
@@ -31,8 +31,18 @@ class SignUp extends React.Component<{}> {
 
   done = () => {
     const {profile} = this.props.wocky;
-    profile.update(this.vProfile.asObject);
-    this.when = when(() => !profile.updating && !profile.updateError, () => Actions.logged());
+    try {
+      profile.update(this.vProfile.asObject);
+      this.when = when(
+        () => !profile.updating && !profile.updateError,
+        () => {
+          this.props.analytics.track('createprofile_complete', {profile: this.props.wocky.profile.toJSON()});
+          Actions.logged();
+        },
+      );
+    } catch (err) {
+      this.props.analytics.track('createprofile_fail', {profile: this.props.wocky.profile.toJSON(), error: err});
+    }
   };
 
   render() {

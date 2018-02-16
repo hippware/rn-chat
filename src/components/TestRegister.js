@@ -17,7 +17,7 @@ type State = {
   text: string,
 };
 
-@inject('wocky')
+@inject('wocky', 'analytics')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -26,12 +26,12 @@ class TestRegister extends React.Component<Props, State> {
   };
 
   onRegister = async () => {
-    // Actions.testRegister({phoneNumber: this.state.text});
     try {
       await this.props.wocky.testRegister({phoneNumber: this.state.text});
       Actions.connect();
     } catch (err) {
       console.warn('Test Register error', err);
+      this.props.analytics.track('error_bypass_register', err);
       // TODO: notificationStore.showNotification with error message
     }
   };

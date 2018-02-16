@@ -127,7 +127,7 @@ autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
 });
 
-@inject('store', 'wocky', 'firebaseStore', 'locationStore')
+@inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics')
 @observer
 class TinyRobotRouter extends React.Component<{}> {
   componentDidMount() {
@@ -149,7 +149,7 @@ class TinyRobotRouter extends React.Component<{}> {
             <Stack key='root' tabs hideTabBar hideNavBar lazy>
               <Stack key='launch' hideNavBar lightbox type='replace'>
                 <Scene key='load' component={Launch} on={store.hydrate} success='connect' failure='onboarding' />
-                <Scene key='connect' on={() => wocky.login()} success='checkProfile' failure='onboarding' />
+                <Scene key='connect' on={() => this.login()} success='checkProfile' failure='onboarding' />
                 <Scene key='checkProfile' on={() => wocky.loadProfile(wocky.username)} success='checkHandle' failure='onboarding' />
                 <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
                 <Scene key='logout' on={store.logout} success='onboarding' />
@@ -233,6 +233,16 @@ class TinyRobotRouter extends React.Component<{}> {
   resetSearchStore = () => {
     this.props.store.searchStore.setGlobal('');
     Actions.pop();
+  };
+
+  login = async () => {
+    try {
+      await this.props.wocky.login();
+      return true;
+    } catch (error) {
+      this.props.analytics.track('error_connection', {error});
+    }
+    return false;
   };
 }
 

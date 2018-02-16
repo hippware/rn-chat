@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Profile} from 'wocky-client';
 import {k} from '../Global';
@@ -14,11 +14,12 @@ type Props = {
 const imgFollowing = require('../../../images/buttonFollowing.png');
 const imgFollow = require('../../../images/buttonFollow.png');
 
+@inject('analytics')
 @observer
 class FollowButton extends React.Component<Props> {
   @observable pendingFollowChange: boolean = false;
 
-  toggleFollow = () => {
+  toggleFollow = async () => {
     const {profile} = this.props;
     this.pendingFollowChange = true;
     if (profile.isFollowed) {
@@ -27,16 +28,18 @@ class FollowButton extends React.Component<Props> {
         {
           text: 'Unfollow',
           style: 'destructive',
-          onPress: () => {
+          onPress: async () => {
             this.pendingFollowChange = true;
-            profile.unfollow(profile).then(() => (this.pendingFollowChange = false));
+            await profile.unfollow();
+            this.props.analytics.track('user_unfollow', profile.toJSON());
+            this.pendingFollowChange = false;
           },
         },
       ]);
     } else {
-      profile.follow().then(() => {
-        this.pendingFollowChange = false;
-      });
+      await profile.follow();
+      this.props.analytics.track('user_follow', profile.toJSON());
+      this.pendingFollowChange = false;
     }
   };
 
