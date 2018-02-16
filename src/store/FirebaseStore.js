@@ -51,16 +51,21 @@ const FirebaseStore = types
     }
 
     const logout = flow(function* logout() {
+      analytics.track('logout');
       if (self.token) {
         self.token = null;
-        analytics.track('logout');
         try {
-          // NOTE: this will fail for bypass accounts
           yield auth.signOut();
         } catch (err) {
-          logger.log('Firebase logout error...maybe this is a bypass user?', err);
-          wocky.logout();
+          analytics.track('error_firebase_logout', {error: err});
+          logger.warn('firebase logout error', err);
         }
+      }
+      try {
+        yield wocky.logout();
+      } catch (err) {
+        analytics.track('error_wocky_logout', {error: err});
+        logger.warn('wocky logout error', err);
       }
       return true;
     });
@@ -96,7 +101,7 @@ const FirebaseStore = types
       if (!confirmResult) {
         throw new Error('Phone not verified');
       }
-      analytics.track('verify_confirmation_try');
+      analytics.track('verify_confirmation_try', {code, resource});
       try {
         yield confirmResult.confirm(code);
         self.register();
