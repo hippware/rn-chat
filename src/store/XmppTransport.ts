@@ -78,7 +78,6 @@ export class XmppTransport {
     }
     provider.onPresence = (stanza: any) => {
       const id = Utils.getNodeJid(stanza.from)!
-      console.log('ONPRESENCE:', JSON.stringify(stanza))
       if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
         const status = stanza.type || 'available'
         this.presence = {status, id}

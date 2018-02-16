@@ -43,15 +43,14 @@ describe('ConnectStore', () => {
   })
 
   it('update profile with invalid handle', async done => {
+    expect(user1.profile!.updated).to.be.false
     try {
-      expect(user1.profile!.updated).to.be.false
-      user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
-      expect(user1.profile!.updated).to.be.false
-      await waitFor(() => user1.profile!.updateError !== '')
-      expect(user1.profile!.updateError).to.be.equal('Handle should be at least 3 character(s).')
-      done()
+      await user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
+      done('Exception should be thrown')
     } catch (e) {
-      done(e)
+      expect(user1.profile!.updated).to.be.false
+      expect(e).to.be.equal('Handle should be at least 3 character(s).')
+      done()
     }
   })
   it('update profile', async done => {
