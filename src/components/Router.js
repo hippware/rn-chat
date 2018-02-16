@@ -152,7 +152,7 @@ class TinyRobotRouter extends React.Component<{}> {
                 <Scene key='connect' on={() => wocky.login()} success='checkProfile' failure='onboarding' />
                 <Scene key='checkProfile' on={() => wocky.loadProfile(wocky.username)} success='checkHandle' failure='onboarding' />
                 <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
-                <Scene key='logout' on={firebaseStore.logout} success='onboarding' />
+                <Scene key='logout' on={store.logout} success='onboarding' />
               </Stack>
               <Stack key='onboarding' navTransparent>
                 <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />

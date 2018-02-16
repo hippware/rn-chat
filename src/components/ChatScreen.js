@@ -125,7 +125,6 @@ class ChatScreen extends React.Component<Props, State> {
 
   render() {
     const {wocky, item} = this.props;
-    if (this.chat) console.log('messages', this.chat.messages);
     return this.chat ? (
       <Screen>
         <FlatList

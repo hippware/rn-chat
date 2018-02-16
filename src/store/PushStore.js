@@ -14,18 +14,14 @@ class PushStore {
   constructor(wocky, analytics) {
     this.wocky = wocky;
     this.analytics = analytics;
-    this.start();
-  }
-
-  start = () => {
     PushNotification.configure({
       onRegister({token}) {
         this.pushNotificationToken = token;
         when(
-          () => this.wocky.connected,
+          () => wocky.connected,
           () => {
             try {
-              this.wocky.enablePush(this.pushNotificationToken);
+              wocky.enablePush(this.pushNotificationToken);
             } catch (err) {
               log.warn('Push Notification enable error', err);
             }
@@ -55,21 +51,13 @@ class PushStore {
       requestPermissions: false,
     });
     PushNotification.setApplicationIconBadgeNumber(0);
-    when(() => this.wocky.connected, this.requestPushPermissions);
-  };
+    when(() => wocky.connected, this.requestPushPermissions);
+  }
 
   requestPushPermissions = async () => {
     if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
       const res = await PushNotification.requestPermissions();
       this.requestedPermissions = true;
-    }
-  };
-
-  disable = async () => {
-    try {
-      await this.wocky.disablePush();
-    } catch (err) {
-      log.warn('Push Notification disable error', err);
     }
   };
 }
