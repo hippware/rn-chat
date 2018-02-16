@@ -409,7 +409,6 @@ export const Wocky = types
       reaction(
         () => self.transport.presence,
         ({id, status}) => {
-          console.log("CHANGE PRESENCE:", id, status)
           const profile = self.profiles.get(id)
           profile.setStatus(status)
         }
