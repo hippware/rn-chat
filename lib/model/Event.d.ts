@@ -61,10 +61,10 @@ export declare const Event: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;

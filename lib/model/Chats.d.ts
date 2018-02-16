@@ -59,10 +59,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -267,10 +267,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -439,10 +439,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -473,6 +473,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -547,10 +549,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -719,10 +721,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -818,10 +820,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -990,10 +992,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -1024,6 +1026,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1076,10 +1080,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -1285,10 +1289,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -1457,10 +1461,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -1553,10 +1557,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -1725,10 +1729,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -1829,10 +1833,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -2001,10 +2005,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -2074,10 +2078,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -2290,10 +2294,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -2498,10 +2502,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -2670,10 +2674,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -2704,6 +2708,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2778,10 +2784,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -2950,10 +2956,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -3049,10 +3055,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -3221,10 +3227,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -3255,6 +3261,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3307,10 +3315,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -3516,10 +3524,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -3688,10 +3696,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -3784,10 +3792,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -3956,10 +3964,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -4060,10 +4068,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -4232,10 +4240,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -4305,10 +4313,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -4510,10 +4518,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -4718,10 +4726,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -4890,10 +4898,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -4924,6 +4932,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4998,10 +5008,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -5170,10 +5180,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -5269,10 +5279,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -5441,10 +5451,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -5475,6 +5485,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5527,10 +5539,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -5736,10 +5748,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -5908,10 +5920,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -6004,10 +6016,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -6176,10 +6188,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -6280,10 +6292,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -6452,10 +6464,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -6525,10 +6537,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -6730,10 +6742,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -6938,10 +6950,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -7110,10 +7122,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -7144,6 +7156,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -7218,10 +7232,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -7390,10 +7404,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -7489,10 +7503,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -7661,10 +7675,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -7695,6 +7709,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -7747,10 +7763,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -7956,10 +7972,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -8128,10 +8144,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -8224,10 +8240,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -8396,10 +8412,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -8500,10 +8516,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -8672,10 +8688,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -8745,10 +8761,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -8950,10 +8966,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -9158,10 +9174,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -9330,10 +9346,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -9364,6 +9380,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9438,10 +9456,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -9610,10 +9628,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -9709,10 +9727,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -9881,10 +9899,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -9915,6 +9933,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9967,10 +9987,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -10176,10 +10196,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -10348,10 +10368,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -10444,10 +10464,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -10616,10 +10636,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -10720,10 +10740,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -10892,10 +10912,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -10965,10 +10985,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -11169,10 +11189,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -11377,10 +11397,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -11549,10 +11569,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -11583,6 +11603,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -11657,10 +11679,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -11829,10 +11851,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -11928,10 +11950,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -12100,10 +12122,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -12134,6 +12156,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -12186,10 +12210,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -12395,10 +12419,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -12567,10 +12591,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -12663,10 +12687,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -12835,10 +12859,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -12939,10 +12963,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -13111,10 +13135,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -13184,10 +13208,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -13388,10 +13412,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -13596,10 +13620,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -13768,10 +13792,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -13802,6 +13826,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -13876,10 +13902,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -14048,10 +14074,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -14147,10 +14173,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -14319,10 +14345,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -14353,6 +14379,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -14405,10 +14433,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -14614,10 +14642,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -14786,10 +14814,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -14882,10 +14910,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -15054,10 +15082,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -15158,10 +15186,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -15330,10 +15358,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -15403,10 +15431,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -15606,10 +15634,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -15814,10 +15842,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -15986,10 +16014,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -16020,6 +16048,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -16094,10 +16124,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -16266,10 +16296,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -16365,10 +16395,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -16537,10 +16567,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -16571,6 +16601,8 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -16623,10 +16655,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -16832,10 +16864,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -17004,10 +17036,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -17100,10 +17132,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -17272,10 +17304,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -17376,10 +17408,10 @@ export declare const Chats: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -17548,10 +17580,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -17621,10 +17653,10 @@ export declare const Chats: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;

@@ -18,7 +18,9 @@ export declare const OwnProfile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {} & {
+} & {
+    id?: any;
+} & {} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {
@@ -63,10 +65,10 @@ export declare const OwnProfile: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
+        url: string;
     } & {
         loading: boolean;
         isNew: boolean;
-        url: string;
         error: string;
     } & {
         readonly loaded: boolean;

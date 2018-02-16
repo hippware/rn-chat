@@ -1,12 +1,10 @@
-import { ISnapshottable, IExtendedObservableMap, IModelType } from 'mobx-state-tree';
+import { ISnapshottable, IModelType, IExtendedObservableMap, IType } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 import { IBase } from '../model/Base';
-export declare function createFactory<T extends IBase>(type: IModelType<any, T>): IModelType<{
+export declare function createFactory<T extends IBase>(type: IType<any, T>): IModelType<{
     storage?: any;
 }, {
-    storage: IExtendedObservableMap<T & {
-        readonly $treenode?: any;
-    }> & ISnapshottable<{
+    storage: IExtendedObservableMap<T> & ISnapshottable<{
         [key: string]: any;
     }>;
 } & {
@@ -26,9 +24,7 @@ export declare const Storages: IModelType<{
     profiles?: any;
 }, {
     files: {
-        storage: IExtendedObservableMap<T & {
-            readonly $treenode?: any;
-        }> & ISnapshottable<{
+        storage: IExtendedObservableMap<T> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -68,10 +64,10 @@ export declare const Storages: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -83,14 +79,14 @@ export declare const Storages: IModelType<{
             download: () => Promise<{}>;
         } & {
             afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
         };
     } & {
         readonly $treenode?: any;
     };
     bots: {
-        storage: IExtendedObservableMap<T & {
-            readonly $treenode?: any;
-        }> & ISnapshottable<{
+        storage: IExtendedObservableMap<T> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -172,10 +168,10 @@ export declare const Storages: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -343,10 +339,10 @@ export declare const Storages: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -497,10 +493,10 @@ export declare const Storages: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -557,10 +553,10 @@ export declare const Storages: IModelType<{
                         } & {
                             readonly $treenode?: any;
                         }) | null;
+                        url: string;
                     } & {
                         loading: boolean;
                         isNew: boolean;
-                        url: string;
                         error: string;
                     } & {
                         readonly loaded: boolean;
@@ -712,6 +708,8 @@ export declare const Storages: IModelType<{
                 time?: any;
             } & {
                 loaded?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -732,14 +730,14 @@ export declare const Storages: IModelType<{
             readonly isPublic: boolean;
             readonly coverColor: number;
             readonly snapshot: any;
+        } & {
+            readonly $treenode?: any;
         };
     } & {
         readonly $treenode?: any;
     };
     profiles: {
-        storage: IExtendedObservableMap<T & {
-            readonly $treenode?: any;
-        }> & ISnapshottable<{
+        storage: IExtendedObservableMap<T> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -793,10 +791,10 @@ export declare const Storages: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -933,6 +931,8 @@ export declare const Storages: IModelType<{
                 readonly $treenode?: any;
             };
             readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
         };
     } & {
         readonly $treenode?: any;
@@ -945,9 +945,10 @@ export declare const Storages: IModelType<{
 } & {
     readonly map: any;
 } & {
-    create: <T>(type: IModelType<any, T>, data: {
+    create: <T>(type: IType<any, T>, data: {
         [key: string]: any;
-    }) => T & {
-        readonly $treenode?: any;
-    } & ISnapshottable<any>;
+    }) => T;
+    load: (instance: any, data: {
+        [key: string]: any;
+    }) => void;
 }>;

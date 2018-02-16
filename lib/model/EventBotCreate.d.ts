@@ -65,10 +65,10 @@ export declare const EventBotCreate: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -279,10 +279,10 @@ export declare const EventBotCreate: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -450,10 +450,10 @@ export declare const EventBotCreate: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -604,10 +604,10 @@ export declare const EventBotCreate: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -664,10 +664,10 @@ export declare const EventBotCreate: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -819,6 +819,8 @@ export declare const EventBotCreate: IModelType<{
             time?: any;
         } & {
             loaded?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -885,10 +887,10 @@ export declare const EventBotCreate: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;

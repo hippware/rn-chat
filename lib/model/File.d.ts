@@ -19,6 +19,7 @@ export declare const File: IModelType<{
     id?: any;
     source?: any;
     thumbnail?: any;
+    url?: any;
 }, {
     id: string;
 } & {
@@ -47,10 +48,10 @@ export declare const File: IModelType<{
     } & {
         readonly $treenode?: any;
     }) | null;
+    url: string;
 } & {
     loading: boolean;
     isNew: boolean;
-    url: string;
     error: string;
 } & {
     readonly loaded: boolean;

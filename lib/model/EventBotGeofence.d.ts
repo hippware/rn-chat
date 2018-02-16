@@ -66,10 +66,10 @@ export declare const EventBotGeofence: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -280,10 +280,10 @@ export declare const EventBotGeofence: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -451,10 +451,10 @@ export declare const EventBotGeofence: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -605,10 +605,10 @@ export declare const EventBotGeofence: IModelType<{
                 } & {
                     readonly $treenode?: any;
                 }) | null;
+                url: string;
             } & {
                 loading: boolean;
                 isNew: boolean;
-                url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
@@ -665,10 +665,10 @@ export declare const EventBotGeofence: IModelType<{
                     } & {
                         readonly $treenode?: any;
                     }) | null;
+                    url: string;
                 } & {
                     loading: boolean;
                     isNew: boolean;
-                    url: string;
                     error: string;
                 } & {
                     readonly loaded: boolean;
@@ -820,6 +820,8 @@ export declare const EventBotGeofence: IModelType<{
             time?: any;
         } & {
             loaded?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -886,10 +888,10 @@ export declare const EventBotGeofence: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -1073,10 +1075,10 @@ export declare const EventBotGeofence: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;
@@ -1259,10 +1261,10 @@ export declare const EventBotGeofence: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
+            url: string;
         } & {
             loading: boolean;
             isNew: boolean;
-            url: string;
             error: string;
         } & {
             readonly loaded: boolean;

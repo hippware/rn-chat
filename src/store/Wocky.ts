@@ -1,12 +1,14 @@
 // tslint:disable-next-line:no_unused-variable
-import {IModelType, types, clone, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
+import {IModelType, types, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {XmppTransport} from './XmppTransport'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
+export {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
-import {Base as B, SERVICE_NAME} from '../model/Base'
+import {Base, SERVICE_NAME} from '../model/Base'
+export {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {EventBotCreate} from '../model/EventBotCreate'
@@ -26,7 +28,7 @@ export type IEventList = typeof EventList.Type
 
 export const Wocky = types
   .compose(
-    B,
+    Base,
     Storages,
     types.model({
       id: 'wocky',
@@ -91,6 +93,8 @@ export const Wocky = types
             self.host = host
           }
           yield transport.login(self.username!, self.password!, self.host)
+          self.sessionCount++
+          return true
         }),
         disconnect: flow(function*() {
           yield transport.disconnect()
@@ -101,18 +105,22 @@ export const Wocky = types
         register: flow(function*(data: any, providerName = 'digits') {
           const res = yield transport.register(data, self.host, providerName)
           Object.assign(self, res)
+          return true
+        }),
+        testRegister: flow(function*(data: any) {
+          const res = yield transport.testRegister(data)
+          Object.assign(self, res)
+          return true
         }),
         loadProfile: flow(function*(id: string) {
           const isOwn = id === self.username
           const data = yield transport.loadProfile(id)
-          if (data.avatar) {
-          }
           let res: IProfile = self.profiles.get(id, data)
           if (isOwn) {
             if (!self.profile) {
-              self.profile = OwnProfile.create({id, ...data, status: 'available'})
+              self.profile = self.create(OwnProfile, {id, ...data, status: 'available'})
             } else {
-              self.profile!.load(data)
+              self.load(self.profile, data)
             }
           }
           return res
@@ -153,22 +161,6 @@ export const Wocky = types
     }
   }))
   .actions(self => ({
-    logout: flow(function*() {
-      yield self.disconnect()
-      if (!self.profile) {
-        destroy(self.profile!)
-      }
-      self.profile = null
-      self.profiles.clear()
-      self.roster.clear()
-      self.chats.clear()
-      self.bots.clear()
-      self.version = ''
-      self.events.refresh()
-      self.updates.clear()
-      self.username = null
-      self.password = null
-    }),
     addRosterItem: (profile: any) => {
       self.roster.put(self.profiles.get(profile.id, profile))
     },
@@ -178,8 +170,7 @@ export const Wocky = types
     getBot: ({id, server, ...data}: any): IBot => {
       const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
       if (data && Object.keys(data).length) {
-        self._registerReferences(Bot, data)
-        bot.load(data)
+        self.load(bot, data)
       }
       return bot
     },
@@ -221,42 +212,12 @@ export const Wocky = types
         const chat = self.createChat(item.id)
         chat.addMessage(msg)
       })
+    }),
+    loadBot: flow(function*(id: string, server: any) {
+      return self.getBot(yield self.transport.loadBot(id, server))
     })
   }))
   .actions(self => ({
-    afterCreate: () => {
-      autorun('ProfileStore', async () => {
-        if (self.connected && self.username) {
-          try {
-            await self.loadProfile(self.username)
-            self.profile!.setStatus('available')
-            await self.loadChats()
-            self.requestRoster()
-          } catch (e) {
-            console.error(e)
-          }
-        } else {
-          if (self.profile) {
-            self.profile!.setStatus('unavailable')
-          }
-        }
-      })
-      reaction(
-        () => self.transport.geoBot,
-        (bot: any) => {
-          self.geoBots.put(self.getBot(bot))
-        }
-      )
-      reaction(
-        () => self.transport.presence,
-        ({id, status}) => {
-          const profile = self.profiles.get(id)
-          profile.setStatus(status)
-        }
-      )
-      reaction(() => self.transport.rosterItem, self.addRosterItem)
-      reaction(() => self.transport.message, self._addMessage)
-    },
     createBot: flow<IBot>(function*() {
       const id = yield self.transport.generateId()
       const bot = self.getBot({id, owner: self.username})
@@ -287,9 +248,6 @@ export const Wocky = types
       yield self.transport.updateBot(bot)
       return {isNew: false}
     }),
-    loadBot: flow(function*(id: string, server: any) {
-      return self.getBot(yield self.transport.loadBot(id, server))
-    }),
     _removeBotPost: flow(function*(id: string, postId: string) {
       yield self.transport.removeBotPost(id, postId)
     }),
@@ -318,13 +276,12 @@ export const Wocky = types
         const {id} = list[i]
         // TODO avoid extra request to load profile (server-side)
         const profile = yield self.getProfile(id)
-        list.push(profile)
+        res.push(profile)
       }
       return {list: res, count}
     }),
     _sendMessage: (msg: IMessage) => {
       self.transport.sendMessage(msg)
-      console.log('SEND MESSAGE:', JSON.stringify(msg))
       self._addMessage({id: msg.to, message: msg})
     },
     loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
@@ -344,7 +301,123 @@ export const Wocky = types
     }),
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       return yield self.transport.requestUpload({file, size, width, height, access})
-    })
+    }),
+    _loadUpdates: flow(function*() {
+      const {list, count, bots, version} = yield self.transport.loadUpdates(self.version)
+      bots.forEach(self.getBot)
+      self.version = version
+      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+    }),
+    _loadHomestream: flow(function*(lastId: any, max: number = 3) {
+      const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
+      bots.forEach(self.getBot)
+      self.version = version
+      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+    }),
+    _subscribeToHomestream: (version: string) => {
+      self.transport.subscribeToHomestream(version)
+    },
+    _onNotification: flow(function*({changed, version, ...data}: any) {
+      if (changed && data.bot) {
+        yield self.loadBot(data.bot.id, data.bot.server)
+      } else {
+        const item: any = self.create(EventEntity, data)
+        if (item.bot && !item.bot.owner) {
+          yield self.loadBot(item.bot.id, null)
+        }
+        self.updates.push(item)
+      }
+      if (!version) {
+        console.error('No version for notification:', JSON.stringify(data))
+      }
+      self.version = version
+    }),
+    incorporateUpdates: () => {
+      for (let i = self.updates.length - 1; i >= 0; i--) {
+        const id = self.updates[i].id
+        // delete item
+        self.events.remove(id)
+        if (getType(self.updates[i]).name !== EventDelete.name) {
+          self.events.addToTop(clone(self.updates[i]))
+        }
+      }
+      self.updates.clear()
+    },
+    _onGeoBot: (bot: any) => {
+      self.geoBots.put(self.getBot(bot))
+    },
+    enablePush: flow(function*(token: string) {
+      yield self.transport.enablePush(token)
+    }),
+    disablePush: flow(function*() {
+      yield self.transport.disablePush()
+    }),
+    setSessionCount: (value: number) => {
+      self.sessionCount = value
+    }
+  }))
+  .actions(self => ({
+    logout: flow(function*() {
+      yield self.disablePush()
+      yield self.disconnect()
+      self.username = null
+      self.password = null
+      self.profile = null
+      self.profiles.clear()
+      self.roster.clear()
+      self.chats.clear()
+      self.bots.clear()
+      self.geoBots.clear()
+      self.sessionCount = 0
+      self.version = ''
+      self.events.refresh()
+      self.updates.clear()
+      self.files.clear()
+      self.username = null
+      self.password = null
+    }),
+    afterCreate: () => {
+      self.events.setRequest(self._loadHomestream)
+      autorun('ProfileStore', async () => {
+        if (self.connected && self.username) {
+          try {
+            await self.loadProfile(self.username)
+            self.profile!.setStatus('available')
+            await self.loadChats()
+            self.requestRoster()
+          } catch (e) {
+            console.error(e)
+          }
+        } else {
+          if (self.profile) {
+            self.profile!.setStatus('unavailable')
+          }
+        }
+      })
+      reaction(
+        () => self.connected,
+        async () => {
+          if (!self.version) {
+            await self.events.load()
+          } else {
+            await self._loadUpdates()
+          }
+          self._subscribeToHomestream(self.version)
+        }
+      )
+      reaction(() => self.transport.geoBot, self._onGeoBot)
+      reaction(
+        () => self.transport.presence,
+        ({id, status}) => {
+          console.log("CHANGE PRESENCE:", id, status)
+          const profile = self.profiles.get(id)
+          profile.setStatus(status)
+        }
+      )
+      reaction(() => self.transport.rosterItem, self.addRosterItem)
+      reaction(() => self.transport.message, self._addMessage)
+      reaction(() => self.transport.notification, self._onNotification)
+    }
   }))
 
 export type IWocky = typeof Wocky.Type

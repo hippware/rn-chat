@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {createXmpp, testFile, expectedImage, waitFor} from './support/testuser'
-import {IWocky} from '../src'
+import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
 const fs = require('fs')
 
@@ -143,7 +143,7 @@ describe('BotStore', () => {
     try {
       expect(user1.geoBots.keys().length).to.be.equal(0)
       await user1.geosearch({latitude: 1.2, longitude: 2.2, latitudeDelta: 0.5, longitudeDelta: 0.5})
-      await waitFor(() => user1.geoBots.keys().length === 2)
+      await waitFor(() => user1.geoBots.keys().length >= 2)
       done()
     } catch (e) {
       done(e)
@@ -153,7 +153,7 @@ describe('BotStore', () => {
   it('list own bots', async done => {
     try {
       await user1.profile!.ownBots.load()
-      expect(user1.profile!.ownBots.list.length).to.be.equal(2)
+      expect(user1.profile!.ownBots.list.length).to.be.greaterThan(1)
       expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
       expect(user1.profile!.ownBots.list[0].owner).to.be.not.null
       expect(user1.profile!.ownBots.list[0].owner.isOwn).to.be.true
@@ -247,6 +247,7 @@ describe('BotStore', () => {
       expect(user2.updates.length).to.be.equal(0)
       user2 = await createXmpp(27)
       await waitFor(() => user2.events.list.length === 3)
+      expect(user2.events.list[0].bot.title).to.be.equal('Test bot!!')
       expect(user2.updates.length).to.be.equal(0)
       // verify 2 live notifications
       // await user1.removeBot(bot.id)
@@ -283,15 +284,25 @@ describe('BotStore', () => {
   after('remove', async done => {
     try {
       await user1.removeBot(bot2.id)
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
     try {
       await user1.removeBot(bot.id)
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
     try {
       await user1.removeBot(bot3.id)
-    } catch (e) {}
-    await user1.remove()
-    await user2.remove()
+    } catch (e) {
+      console.log(e)
+    }
+    try {
+      await user1.remove()
+      await user2.remove()
+    } catch (e) {
+      console.log(e)
+    }
     done()
   })
 })

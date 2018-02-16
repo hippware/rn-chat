@@ -66,6 +66,7 @@ export function createPaginable(type: any) {
             self.loading = true
             try {
               const {list, count, ...data} = yield request(lastId(), max)
+              console.log('GOT LIST:', JSON.stringify(list))
               self.count = count
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))

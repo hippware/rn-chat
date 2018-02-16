@@ -27,9 +27,6 @@ export function createUpdatable(update: (self: any, data: any) => Function) {
               Object.assign(self, res)
             }
             self.updated = true
-          } catch (e) {
-            console.error(e)
-            self.updateError = e
           } finally {
             self.updating = false
           }

@@ -1,4 +1,4 @@
-import {observable, when} from 'mobx'
+import {observable, when, isObservableArray} from 'mobx'
 import Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
@@ -45,7 +45,7 @@ export class XmppTransport {
     provider.onIQ = (iq: any) => {
       this.iq = iq
       try {
-        if (iq.query && iq.query.item && !Array.isArray(iq.query.item) && iq.query.item.jid) {
+        if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid) {
           this.rosterItem = processRosterItem(iq.query.item, this.host)
         }
       } catch (e) {
@@ -56,9 +56,11 @@ export class XmppTransport {
       if (msg.body || msg.media || msg.image || msg.result) {
         const {chatId, ...message} = processMessage({...msg, unread: true}, this.username!)
         this.message = {id: chatId, message}
-      } else if (msg[EXPLORE_NEARBY]) {
-        const bot = msg[EXPLORE_NEARBY].bot
-        this.geoBot = {id: bot.id, ...processMap(bot)}
+      } else if (msg[EXPLORE_NEARBY] && msg[EXPLORE_NEARBY].bot) {
+        if (msg[EXPLORE_NEARBY].bot) {
+          const bot = msg[EXPLORE_NEARBY].bot
+          this.geoBot = {id: bot.id, ...processMap(bot)}
+        }
       } else if (msg.notification) {
         if (msg.notification['reference-changed']) {
           this.notification = {changed: true, ...msg.notification['reference-changed']}
@@ -68,7 +70,7 @@ export class XmppTransport {
             this.notification = {...item, version: msg.notification.item.version}
           }
         } else if (msg.notification.delete) {
-          this.notification = {id: msg.notification.delete.id, delete: true}
+          this.notification = {...msg.notification.delete, delete: true}
         } else {
           console.warn('& notification: unhandled homestream notification', msg.notification)
         }
@@ -76,6 +78,7 @@ export class XmppTransport {
     }
     provider.onPresence = (stanza: any) => {
       const id = Utils.getNodeJid(stanza.from)!
+      console.log('ONPRESENCE:', JSON.stringify(stanza))
       if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
         const status = stanza.type || 'available'
         this.presence = {status, id}
@@ -137,6 +140,19 @@ export class XmppTransport {
     }
     throw 'register must throw exception'
   }
+  async testRegister({phoneNumber}: {phoneNumber: string}) {
+    return await this.register({
+      userID: `000000${phoneNumber}`,
+      phoneNumber: `+1555${phoneNumber}`,
+      authTokenSecret: '',
+      authToken: '',
+      emailAddressIsVerified: false,
+      'X-Auth-Service-Provider': 'http://localhost:9999',
+      emailAddress: '',
+      'X-Verify-Credentials-Authorization': ''
+    })
+  }
+
   async disconnect() {
     this.provider.disconnectAfterSending()
     await new Promise(resolve => when(() => !this.connected, resolve))
@@ -160,7 +176,7 @@ export class XmppTransport {
         () => {
           const stanza = this.iq
           if (stanza.type === 'error') {
-            reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error)
+            reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error['#text'] || stanza.error)
             // reject('ERROR for stanza: ' + data.toString() + ' ' + (stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error))
           } else {
             resolve(stanza)
@@ -195,7 +211,7 @@ export class XmppTransport {
     })
     const stanza = await this.sendIQ(iq)
     let arr = stanza.users.user
-    if (!Array.isArray(arr)) {
+    if (!isArray(arr)) {
       arr = [arr]
     }
     return arr.map((user: any) => ({id: user.user, ...processMap(user)}))
@@ -263,7 +279,7 @@ export class XmppTransport {
     }
     const stanza = await this.sendIQ(iq)
     let children = stanza.contacts.contact || []
-    if (!Array.isArray(children)) {
+    if (!isArray(children)) {
       children = [children]
     }
     const list = children.filter(({jid}: any) => Strophe.getDomainFromJid(jid)).map(({jid}: any) => ({id: Strophe.getNodeFromJid(jid)}))
@@ -286,7 +302,7 @@ export class XmppTransport {
     const headers: any = {}
     if (data.headers && data.headers.header) {
       let arr = data.headers.header
-      if (!Array.isArray(arr)) {
+      if (!isArray(arr)) {
         arr = [arr]
       }
       for (const header of arr) {
@@ -421,7 +437,7 @@ export class XmppTransport {
     })
     const stanza = await this.sendIQ(iq)
     let children = stanza.query.item
-    if (children && !Array.isArray(children)) {
+    if (children && !isArray(children)) {
       children = [children]
     }
     return children.map((rec: any) => processRosterItem(rec, this.host))
@@ -510,7 +526,7 @@ export class XmppTransport {
       let res = data.query.item
       count = data.query.set.count
       last = data.query.set.last
-      if (!Array.isArray(res)) {
+      if (!isArray(res)) {
         res = [res]
       }
       for (const item of res) {
@@ -566,7 +582,7 @@ export class XmppTransport {
     if (!bots) {
       bots = []
     }
-    if (!Array.isArray(bots)) {
+    if (!isArray(bots)) {
       bots = [bots]
     }
     return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
@@ -590,7 +606,7 @@ export class XmppTransport {
     }
     const data = await this.sendIQ(iq)
     let arr = data.subscribers.subscriber || []
-    if (!Array.isArray(arr)) {
+    if (!isArray(arr)) {
       arr = [arr]
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
@@ -620,7 +636,7 @@ export class XmppTransport {
     if (!res) {
       res = []
     }
-    if (!Array.isArray(res)) {
+    if (!isArray(res)) {
       res = [res]
     }
     return {
@@ -667,7 +683,7 @@ export class XmppTransport {
     if (!bots) {
       bots = []
     }
-    if (!Array.isArray(bots)) {
+    if (!isArray(bots)) {
       bots = [bots]
     }
     return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
@@ -936,7 +952,7 @@ function processMap(data: {[key: string]: any}) {
     try {
       if (value && value !== 'null' && key !== 'field') {
         if (key === 'roles') {
-          res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
+          res.roles = isArray(data.roles.role) ? data.roles.role : [data.roles.role]
         } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
           res[key + 'Size'] = parseInt(data[key].size)
         } else if (data[key].thumbnail_url !== undefined) {
@@ -993,10 +1009,10 @@ function addValues(iq: any, values: any) {
 export function processHomestreamResponse(data: any, username: string) {
   let items = data.items && data.items.item ? data.items.item : []
   let bots = data.items && data.items['extra-data'] ? data.items['extra-data'].bot : []
-  if (!Array.isArray(bots)) {
+  if (!isArray(bots)) {
     bots = [bots]
   }
-  if (!Array.isArray(items)) {
+  if (!isArray(items)) {
     items = [items]
   }
   return {
@@ -1074,7 +1090,7 @@ function processRosterItem(item: any = {}, host: string) {
   const createdTime = Utils.iso8601toDate(created_at).getTime()
   const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
   const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group]
-  const rolesArr = roles && roles.role ? (Array.isArray(roles.role) ? roles.role : [roles.role]) : []
+  const rolesArr = roles && roles.role ? (isArray(roles.role) ? roles.role : [roles.role]) : []
   return {
     id,
     firstName,
@@ -1087,4 +1103,8 @@ function processRosterItem(item: any = {}, host: string) {
     isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
     isFollower: subscription === 'from' || subscription === 'both'
   }
+}
+
+function isArray(res: any) {
+  return Array.isArray(res) || isObservableArray(res)
 }

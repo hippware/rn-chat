@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
-import {IWocky} from '../src'
+import {IWocky} from '../src/store/Wocky'
 const fs = require('fs')
 let user1: IWocky
 let expectBuf: any

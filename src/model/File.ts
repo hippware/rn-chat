@@ -19,14 +19,14 @@ export const File = types
     types.model('File', {
       id: types.identifier(types.string),
       source: types.maybe(FileSource),
-      thumbnail: types.maybe(FileSource)
+      thumbnail: types.maybe(FileSource),
+      url: ''
     })
   )
   .named('File')
   .volatile(self => ({
     loading: false,
     isNew: false,
-    url: '',
     error: ''
   }))
   .views(self => ({
@@ -37,6 +37,7 @@ export const File = types
       const res: any = {...self._snapshot}
       delete res.source
       delete res.thumbnail
+      delete res.url
       return res
     }
   }))

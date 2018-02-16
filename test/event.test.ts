@@ -1,9 +1,9 @@
 import {expect} from 'chai'
-import {clone, types, getType, applySnapshot} from 'mobx-state-tree'
-import {EventList, processItem, processHomestreamResponse} from '../src/store/EventStore'
+import {types, getType, applySnapshot} from 'mobx-state-tree'
+import {processItem, processHomestreamResponse} from '../src/store/XmppTransport'
 import {FileSource} from '../src/model/File'
+import {EventList, EventEntity} from '../src/store/Wocky'
 import {Base} from '../src/model/Base'
-import {BotPost} from '../src/model/BotPost'
 import {EventBotNote} from '../src/model/EventBotNote'
 import {EventBotPost} from '../src/model/EventBotPost'
 import {Storages} from '../src/store/Factory'
@@ -28,10 +28,8 @@ describe('Home stream', () => {
       const avatar = testModel.files.get('123', {source})
       const target = testModel.profiles.get('1', {handle: 'test', avatar})
       const bot = testModel.bots.get('123', {title: 'testBot', owner: target})
-      const post = testModel.create(BotPost, {id: '1', content: 'Really?', profile: target})
-      bot.posts.add(post)
       const eventNote = testModel.create(EventBotNote, {id: '1', bot: bot.id, note: 'Wow!'})
-      const eventBotPost = testModel.create(EventBotPost, {id: '2', bot: bot.id, post: clone(post)})
+      const eventBotPost = testModel.create(EventBotPost, {id: '2', bot: bot.id, post: {id: '1', content: 'Really?', profile: target}})
       testModel.home.add(eventNote)
       testModel.home.add(eventBotPost)
 
@@ -56,8 +54,7 @@ describe('Home stream', () => {
   })
 
   it('parse HS data', () => {
-    const testModel2 = TestModel.create({id: 'testmodel'}, env)
-    const {list, count, version, bots} = processHomestreamResponse(homestreamTestData, homestreamTestData.to.split('@')[0], testModel2)
+    const {list, count, version, bots} = processHomestreamResponse(homestreamTestData, homestreamTestData.to.split('@')[0])
     expect(list.length).to.be.equal(3)
     expect(bots.length).to.be.equal(2)
     expect(version).to.be.equal('2018-02-04T14:04:10.944022Z')
@@ -84,7 +81,8 @@ describe('Home stream', () => {
       }
     }
     const testModel = TestModel.create({id: 'testmodel'}, env)
-    const item = processItem(data, null, '39e09af8-09b4-11e8-80d4-0a580a02057d', testModel)
+    const itemData = processItem(data, null, '39e09af8-09b4-11e8-80d4-0a580a02057d')
+    const item = testModel.create(EventEntity, itemData)
     testModel.home.addToTop(item)
     expect(testModel.home.list[0].bot.id).to.be.equal('3d577dbe-09b4-11e8-b7e5-0a580a02057d')
   })

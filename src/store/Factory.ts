@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, ISnapshottable, IExtendedObservableMap, flow, getEnv, getParent, getType, isAlive, IModelType, getSnapshot} from 'mobx-state-tree'
+import {types, ISnapshottable, IModelType, IExtendedObservableMap, getEnv, getParent, getType, isAlive, IType, getSnapshot, applySnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile} from '../model/Profile'
@@ -18,7 +18,7 @@ function createProxy(obj: any) {
     }
   })
 }
-export function createFactory<T extends IBase>(type: IModelType<any, T>) {
+export function createFactory<T extends IBase>(type: IType<any, T>) {
   return types
     .model({
       storage: types.optional(types.map(type), {})
@@ -71,19 +71,28 @@ export const Storages = types
           map['Bot'] = 'bots'
         },
         _registerReferences: (type: any, data: {[key: string]: any}) => {
-          const props = type['properties']
+          let props = type['properties']
+          if (!props) {
+            // union type doesn't have properties so let's determine concrete type
+            props = (getType(type.create(data)) as any)['properties']
+          }
           const res: any = {}
           Object.keys(props).forEach((key: string) => {
             if (data[key] !== undefined) {
               const targetType = props[key].targetType || (props[key].types && props[key].types[0].targetType)
               if (targetType) {
                 const field = map[targetType.name]
+                // found reference storage
                 if (field && self[field] && data[key]) {
                   let value = data[key]
                   if (typeof value === 'object') {
+                    // we have object instead of reference, let's create it!
+                    self[field].get(value.id, value)
                     value = value.id
                   }
                   res[key] = self[field].get(value)
+                } else if (data[key] && typeof data[key] === 'object') {
+                  console.log('FOUND REFERENCE!', key)
                 }
               } else {
                 res[key] = data[key]
@@ -101,7 +110,10 @@ export const Storages = types
     }
   })
   .actions(self => ({
-    create: <T>(type: IModelType<any, T>, data: {[key: string]: any}) => {
+    create: <T>(type: IType<any, T>, data: {[key: string]: any}) => {
       return type.create(self._registerReferences(type, data), getEnv(self))
+    },
+    load: (instance: any, data: {[key: string]: any}) => {
+      instance.load(self._registerReferences(getType(instance), data))
     }
   }))
