@@ -20,11 +20,14 @@ describe('Signup', () => {
         updateError: '',
       },
     };
+    const analytics = {
+      track: () => {},
+    };
     const profileValidationStore = {
       setProfile: () => {},
     };
     const tree = renderer
-      .create(<Provider wocky={wocky} profileValidationStore={profileValidationStore}>
+      .create(<Provider wocky={wocky} profileValidationStore={profileValidationStore} analytics={analytics}>
         <SignUp />
       </Provider>)
       .toJSON();
