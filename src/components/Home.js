@@ -6,7 +6,7 @@ import BotButton from './BotButton';
 import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
-import Connectivity from './Connectivity'
+import Connectivity from './Connectivity';
 
 @autobind
 @observer
