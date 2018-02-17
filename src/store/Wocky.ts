@@ -122,6 +122,7 @@ export const Wocky = types
             } else {
               self.load(self.profile, data)
             }
+            if (self.profile.handle) self.setSessionCount(3)
           }
           return res
         }),
@@ -357,7 +358,7 @@ export const Wocky = types
     }
   }))
   .actions(self => ({
-    logout: flow(function*() {
+    logout: flow(function* logout() {
       yield self.disablePush()
       yield self.disconnect()
       self.username = null
@@ -375,6 +376,7 @@ export const Wocky = types
       self.files.clear()
       self.username = null
       self.password = null
+      console.log('wocky logout done')
     }),
     afterCreate: () => {
       self.events.setRequest(self._loadHomestream)
