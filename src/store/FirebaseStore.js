@@ -18,7 +18,7 @@ const FirebaseStore = types
     const {auth, logger, analytics} = getEnv(self);
     let wocky;
 
-    let unsubscribe, confirmResult, user, password;
+    let unsubscribe, confirmResult;
 
     function afterAttach() {
       unsubscribe = auth.onAuthStateChanged(processFirebaseAuthChange);
@@ -67,8 +67,16 @@ const FirebaseStore = types
         analytics.track('error_wocky_logout', {error: err});
         logger.warn('wocky logout error', err);
       }
+      self.reset();
       return true;
     });
+
+    function reset() {
+      self.registered = false;
+      self.errorMessage = null;
+      self.buttonText = 'Verify';
+      confirmResult = null;
+    }
 
     const verifyPhone = flow(function* verifyPhone({phone}) {
       self.phone = phone;
@@ -98,11 +106,11 @@ const FirebaseStore = types
       self.errorMessage = null;
       self.buttonText = 'Verifying...';
       self.resource = resource;
-      if (!confirmResult) {
-        throw new Error('Phone not verified');
-      }
-      analytics.track('verify_confirmation_try', {code, resource});
       try {
+        if (!confirmResult) {
+          throw new Error('Phone not verified');
+        }
+        analytics.track('verify_confirmation_try', {code, resource});
         yield confirmResult.confirm(code);
         self.register();
         analytics.track('verify_confirmation_success');
@@ -151,7 +159,7 @@ const FirebaseStore = types
       }
     });
 
-    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken};
+    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken, reset};
   });
 
 export default FirebaseStore;
