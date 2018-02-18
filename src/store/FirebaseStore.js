@@ -18,7 +18,7 @@ const FirebaseStore = types
     const {auth, logger, analytics} = getEnv(self);
     let wocky;
 
-    let unsubscribe, confirmResult, user, password;
+    let unsubscribe, confirmResult;
 
     function afterAttach() {
       unsubscribe = auth.onAuthStateChanged(processFirebaseAuthChange);
@@ -53,16 +53,30 @@ const FirebaseStore = types
     const logout = flow(function* logout() {
       analytics.track('logout');
       if (self.token) {
+        self.token = null;
         try {
-          self.token = null;
           yield auth.signOut();
         } catch (err) {
-          analytics.track('logout_error', {error: err.toString()});
-          logger.log('Firebase logout error...maybe this is a bypass user?', err);
+          analytics.track('error_firebase_logout', {error: err});
+          logger.warn('firebase logout error', err);
         }
       }
+      try {
+        yield wocky.logout();
+      } catch (err) {
+        analytics.track('error_wocky_logout', {error: err});
+        logger.warn('wocky logout error', err);
+      }
+      self.reset();
       return true;
     });
+
+    function reset() {
+      self.registered = false;
+      self.errorMessage = null;
+      self.buttonText = 'Verify';
+      confirmResult = null;
+    }
 
     const verifyPhone = flow(function* verifyPhone({phone}) {
       self.phone = phone;
@@ -92,11 +106,11 @@ const FirebaseStore = types
       self.errorMessage = null;
       self.buttonText = 'Verifying...';
       self.resource = resource;
-      if (!confirmResult) {
-        throw new Error('Phone not verified');
-      }
-      analytics.track('verify_confirmation_try');
       try {
+        if (!confirmResult) {
+          throw new Error('Phone not verified');
+        }
+        analytics.track('verify_confirmation_try', {code, resource});
         yield confirmResult.confirm(code);
         self.register();
         analytics.track('verify_confirmation_success');
@@ -124,7 +138,7 @@ const FirebaseStore = types
     // const register = flow(function* register(token: string) {
     function register(): void {
       self.buttonText = 'Registering...';
-      // TODO: set a timeout here
+      // TODO: set a timeout on firebase register
       when(() => self.token, registerWithToken);
     }
 
@@ -138,13 +152,14 @@ const FirebaseStore = types
       } catch (err) {
         logger.warn('RegisterWithToken error', err);
         self.errorMessage = 'Error registering, please try again';
+        analytics.track('error_firebase_register', err);
       } finally {
         self.buttonText = 'Verify';
         self.errorMessage = null;
       }
     });
 
-    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken};
+    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken, reset};
   });
 
 export default FirebaseStore;

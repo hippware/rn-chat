@@ -23,7 +23,7 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-@inject('wocky', 'notificationStore')
+@inject('wocky', 'notificationStore', 'analytics')
 @observer
 class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
@@ -85,8 +85,10 @@ class BotCompose extends React.Component<Props> {
       } else {
         Actions.pop();
       }
+      this.props.analytics.track('botcreate_complete', this.bot.toJSON());
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.');
+      this.props.analytics.track('botcreate_fail', {bot: this.bot.toJSON(), error: e});
       log.log('BotCompose save problem', e);
     } finally {
       this.isLoading = false;

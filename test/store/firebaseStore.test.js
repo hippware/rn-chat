@@ -12,7 +12,7 @@ import {Wocky} from 'wocky-client';
 // };
 
 const auth = {
-  onAuthStateChanged: (cb) => {},
+  onAuthStateChanged: () => {},
   signInWithPhoneNumber: () => Promise.resolve({confirm: code => Promise.resolve()}),
 };
 // mock for xmpp provider

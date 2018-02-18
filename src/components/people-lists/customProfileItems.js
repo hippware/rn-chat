@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {Profile} from 'wocky-client';
 import {Actions} from 'react-native-router-flux';
@@ -10,8 +10,14 @@ import ProfileItem from './ProfileItem';
 import {RText} from '../common';
 import {k} from '../Global';
 
-const FollowButton = ({profile}) => (
-  <TouchableOpacity style={[styles.button, styles.follow]} onPress={profile.follow}>
+const FollowButton = inject('analytics')(({profile, analytics}) => (
+  <TouchableOpacity
+    style={[styles.button, styles.follow]}
+    onPress={async () => {
+      await profile.follow();
+      analytics.track('user_follow', profile.toJSON());
+    }}
+  >
     <View style={{flexDirection: 'row'}}>
       <Image source={require('../../../images/followPlus.png')} style={{marginRight: 7 * k}} />
       <RText size={10} color={colors.DARK_GREY}>
@@ -19,15 +25,21 @@ const FollowButton = ({profile}) => (
       </RText>
     </View>
   </TouchableOpacity>
-);
+));
 
-const FollowingButton = ({profile}) => (
-  <TouchableOpacity style={[styles.button, styles.following]} onPress={() => unfollow(profile)}>
+const FollowingButton = inject('analytics')(({profile, analytics}) => (
+  <TouchableOpacity
+    style={[styles.button, styles.following]}
+    onPress={async () => {
+      await unfollow(profile);
+      analytics.track('user_unfollow', profile.toJSON());
+    }}
+  >
     <RText size={10} color={colors.WHITE}>
       FOLLOWING
     </RText>
   </TouchableOpacity>
-);
+));
 
 const BlockedButton = ({profile}) => (
   <TouchableOpacity style={[styles.button, styles.following]} onPress={() => unblock(profile)}>
@@ -37,15 +49,20 @@ const BlockedButton = ({profile}) => (
   </TouchableOpacity>
 );
 
-const unfollow = (profile: Profile) => {
-  Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
-    {text: 'Cancel', style: 'cancel'},
-    {
-      text: 'Unfollow',
-      style: 'destructive',
-      onPress: profile.unfollow,
-    },
-  ]);
+const unfollow = async (profile: Profile) => {
+  return new Promise((resolve) => {
+    Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Unfollow',
+        style: 'destructive',
+        onPress: async () => {
+          await profile.unfollow();
+          resolve();
+        },
+      },
+    ]);
+  });
 };
 
 const unblock = (profile) => {

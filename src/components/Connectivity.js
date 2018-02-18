@@ -6,7 +6,7 @@ import {when} from 'mobx';
 import {inject} from 'mobx-react/native';
 import * as log from '../utils/log';
 
-@inject('wocky')
+@inject('wocky', 'notificationStore')
 export default class Connectivity extends React.Component {
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -46,9 +46,11 @@ export default class Connectivity extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
+      this.props.notificationStore.start();
     }
     if (currentAppState === 'background') {
       this.props.wocky.disconnect();
+      this.props.notificationStore.finish();
     }
   };
 

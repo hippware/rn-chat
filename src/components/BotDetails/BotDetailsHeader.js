@@ -23,7 +23,7 @@ type State = {
 
 const DOUBLE_PRESS_DELAY = 300;
 
-@inject('notificationStore')
+@inject('notificationStore', 'analytics')
 @observer
 class BotDetailsHeader extends React.Component<Props, State> {
   lastImagePress: ?number;
@@ -66,11 +66,11 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   subscribe = () => {
     this.props.bot.subscribe();
-    // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
       Animated.timing(this.state.fadeAnim, {toValue: 0}).start();
     }, 500);
+    this.props.analytics.track('bot_save', this.props.bot.toJSON());
   };
 
   copyAddress = () => {

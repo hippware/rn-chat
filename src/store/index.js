@@ -60,17 +60,6 @@ const Store = types
     get getImageSize() {
       return getEnv(self).fileService.getImageSize;
     },
-  }))
-  .actions(self => ({
-    logout: flow(function* () {
-      try {
-        yield self.wocky.logout();
-        yield self.firebaseStore.logout();
-      } catch (e) {
-        console.error(e);
-      }
-      return true;
-    }),
   }));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
@@ -95,7 +84,7 @@ export const pushStore = new PushStore(theStore.wocky, analytics);
 // bugsnag(theStore.wocky);
 
 // simple logging
-// addMiddleware(theStore, simpleActionLogger);
+addMiddleware(theStore, simpleActionLogger);
 
 // verbose action logging
 // addMiddleware(theStore, actionLogger);
