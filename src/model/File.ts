@@ -94,7 +94,7 @@ export type IFile = typeof File.Type
 export const FileRef = types.maybe(
   types.reference(File, {
     get(id: string, parent: any) {
-      return parent.service.files.get(id) || parent.service.createFile(id)
+      return parent.service.files.get(id)
     },
     set(value: IFile) {
       return value.id

@@ -1,5 +1,5 @@
 /* tslint:disable */
-import Utils from './utils'
+import * as Utils from './utils'
 
 import './strophe'
 

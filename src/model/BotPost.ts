@@ -2,7 +2,7 @@
 import {types, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {File} from './File'
+import {FileRef} from './File'
 import {Profile} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -13,12 +13,12 @@ import {Timeable} from './Timeable'
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
-    createUploadable('image', (self: any) => `redirect:${getParent(self).server}/bot/${getParent(self).id}`),
+    createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${getParent(getParent(getParent(self))).id}`),
     types.model('BotPost', {
       id: types.identifier(types.string),
       content: '',
       title: '',
-      image: types.maybe(types.reference(File)),
+      image: FileRef,
       profile: types.maybe(types.reference(Profile))
     })
   )

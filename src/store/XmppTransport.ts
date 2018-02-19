@@ -1,7 +1,8 @@
-import {observable, when, isObservableArray} from 'mobx'
-import Utils from './utils'
+import {observable, when} from 'mobx'
+import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
+import {isArray, processMap} from './utils'
 
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
@@ -422,7 +423,6 @@ export class XmppTransport {
   }
   async unfollow(username: string) {
     this.sendPresence({to: `${username}@${this.host}`, type: 'unsubscribe'})
-    await this.removeFromRoster(username)
   }
   async block(username: string) {
     await this.addToRoster(username, BLOCKED_GROUP)
@@ -935,54 +935,6 @@ function fromCamelCase(data: any = {}) {
   return result
 }
 
-function camelize(str: string): string {
-  return str
-    .replace(/\W|_|\d/g, ' ')
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
-      return index === 0 ? letter.toLowerCase() : letter.toUpperCase()
-    })
-    .replace(/\s+/g, '')
-}
-
-function processMap(data: {[key: string]: any}) {
-  const res: {[key: string]: any} = {}
-  Object.keys(data).forEach(key => {
-    const value = data[key]
-    try {
-      if (value && value !== 'null' && key !== 'field') {
-        if (key === 'roles') {
-          res.roles = isArray(data.roles.role) ? data.roles.role : [data.roles.role]
-        } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
-          res[key + 'Size'] = parseInt(data[key].size)
-        } else if (data[key].thumbnail_url !== undefined) {
-          // we have image here!
-          if (data[key]['#text']) {
-            res[key] = {id: data[key]['#text'], url: data[key].thumbnail_url}
-          }
-        } else if (key === 'subscribed') {
-          res.isSubscribed = value === 'true'
-        } else if (key === 'owner') {
-          res.owner = Strophe.getNodeFromJid(value)
-        } else if (key === 'subscribers') {
-          res.followersSize = parseInt(value.size)
-        } else if (key === 'location') {
-          res.location = {latitude: parseFloat(value.geoloc.lat), longitude: parseFloat(value.geoloc.lon)}
-        } else if (key === 'updated') {
-          res.time = Utils.iso8601toDate(value).getTime()
-        } else if (key === 'radius') {
-          res.radius = parseFloat(value)
-        } else {
-          const numbers = ['image_items', 'total_items', 'visibility']
-          res[camelize(key)] = numbers.indexOf(key) !== -1 ? parseInt(value) : value
-        }
-      }
-    } catch (e) {
-      console.error(`Cannot process key ${key} value: ${value}`)
-    }
-  })
-  delete res.id
-  return res
-}
 function addField(iq: any, name: string, type: string) {
   iq.c('field', {var: name, type})
 }
@@ -1102,8 +1054,4 @@ function processRosterItem(item: any = {}, host: string) {
     isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
     isFollower: subscription === 'from' || subscription === 'both'
   }
-}
-
-function isArray(res: any) {
-  return Array.isArray(res) || isObservableArray(res)
 }

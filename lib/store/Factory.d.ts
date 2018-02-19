@@ -140,52 +140,7 @@ export declare const Storages: IModelType<{
                 load: (data: any) => void;
             } & {
                 id: string;
-                avatar: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                avatar: any;
                 handle: string;
                 status: string;
                 firstName: string;
@@ -311,52 +266,7 @@ export declare const Storages: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) | null;
-            image: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            image: any;
             description: string | null;
             visibility: number;
             location: ({
@@ -465,52 +375,7 @@ export declare const Storages: IModelType<{
                 id: string;
                 content: string;
                 title: string;
-                image: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                image: any;
                 profile: ({
                     id: string;
                 } & {
@@ -525,52 +390,7 @@ export declare const Storages: IModelType<{
                     load: (data: any) => void;
                 } & {
                     id: string;
-                    avatar: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        id: string;
-                        source: ({
-                            uri: string;
-                            contentType: string | null;
-                            width: number | null;
-                            height: number | null;
-                            cached: boolean;
-                        } & {
-                            readonly $treenode?: any;
-                        }) | null;
-                        thumbnail: ({
-                            uri: string;
-                            contentType: string | null;
-                            width: number | null;
-                            height: number | null;
-                            cached: boolean;
-                        } & {
-                            readonly $treenode?: any;
-                        }) | null;
-                        url: string;
-                    } & {
-                        loading: boolean;
-                        isNew: boolean;
-                        error: string;
-                    } & {
-                        readonly loaded: boolean;
-                        readonly snapshot: any;
-                    } & {
-                        setURL: (url: string) => void;
-                        setSource: (source: any) => void;
-                        downloadThumbnail: () => Promise<{}>;
-                        download: () => Promise<{}>;
-                    } & {
-                        afterAttach: () => Promise<{}>;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
+                    avatar: any;
                     handle: string;
                     status: string;
                     firstName: string;
@@ -763,52 +583,7 @@ export declare const Storages: IModelType<{
             load: (data: any) => void;
         } & {
             id: string;
-            avatar: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            avatar: any;
             handle: string;
             status: string;
             firstName: string;

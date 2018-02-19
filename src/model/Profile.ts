@@ -2,7 +2,7 @@
 import {types, flow, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {File} from './File'
+import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
@@ -14,7 +14,7 @@ export const Profile = types
     Loadable,
     types.model('Profile', {
       id: types.identifier(types.string),
-      avatar: types.maybe(types.reference(File)),
+      avatar: FileRef,
       handle: '',
       status: 'unavailable',
       firstName: '',

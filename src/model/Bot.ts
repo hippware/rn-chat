@@ -1,13 +1,13 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, getSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, onSnapshot, getParent, getSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile, ProfilePaginableList} from './Profile'
-import {File} from './File'
+import {FileRef} from './File'
 import {Location} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
-import utils from '../store/utils'
+import * as utils from '../store/utils'
 import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
 import {createPaginable} from './PaginableList'
@@ -19,10 +19,7 @@ export const VISIBILITY_PUBLIC = 100
 export const Bot = types
   .compose(
     Base,
-    types.compose(
-      createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
-      createUpdatable(self => self.service._updateBot(self))
-    ),
+    types.compose(createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`), createUpdatable(self => self.service._updateBot(self))),
     types.model('Bot', {
       id: types.identifier(types.string),
       isSubscribed: false,
@@ -30,7 +27,7 @@ export const Bot = types
       server: types.maybe(types.string),
       radius: 30,
       owner: types.maybe(types.reference(Profile)),
-      image: types.maybe(types.reference(File)),
+      image: FileRef,
       description: types.maybe(types.string),
       visibility: VISIBILITY_PUBLIC,
       location: types.maybe(Location),
@@ -65,6 +62,7 @@ export const Bot = types
       if (self.posts.list.find(el => el.id === postId)) {
         yield self.service._removeBotPost(self.id, postId)
         self.posts.remove(postId)
+        self.totalItems -= 1
       }
     }),
     subscribe: flow(function*() {

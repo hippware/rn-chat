@@ -28,7 +28,9 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
       get snapshot() {
         const storage: any = {}
         self.storage.keys().forEach((key: string) => {
-          storage[key] = self.storage.get(key)!.snapshot
+          if (isAlive(self.storage.get(key)!)) {
+            storage[key] = self.storage.get(key)!.snapshot
+          }
         })
         return {storage}
       }
@@ -50,7 +52,8 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
             entity.load(getParent(self)._registerReferences(type, data))
           }
         }
-        return createProxy(self.storage.get(id))
+        return self.storage.get(id)!
+        // return createProxy(self.storage.get(id))
       }
     }))
 }
@@ -92,7 +95,7 @@ export const Storages = types
                   }
                   res[key] = self[field].get(value)
                 } else if (data[key] && typeof data[key] === 'object') {
-                  console.log('FOUND REFERENCE!', key)
+                  res[key] = self.create(targetType, data[key])
                 }
               } else {
                 res[key] = data[key]

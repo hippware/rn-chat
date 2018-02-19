@@ -21,6 +21,7 @@ import {createPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
+import {processMap} from './utils'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 export const EventList = createPaginable(EventEntity)
@@ -58,6 +59,7 @@ export const Wocky = types
             data.events = {result: data.events.result.slice(0, 10)}
           }
           delete data.geoBots
+          delete data.files
           return data
         },
         get transport() {
@@ -164,8 +166,12 @@ export const Wocky = types
     addRosterItem: (profile: any) => {
       self.roster.put(self.profiles.get(profile.id, profile))
     },
-    getProfile: flow(function*(id: string) {
-      return self.profiles.get(id) || (yield self.loadProfile(id))
+    getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
+      const profile = self.profiles.get(id, processMap(data))
+      if (!profile.handle) {
+        yield self.loadProfile(id)
+      }
+      return profile
     }),
     getBot: ({id, server, ...data}: any): IBot => {
       const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
@@ -226,6 +232,11 @@ export const Wocky = types
     }),
     removeBot: flow(function*(id: string) {
       yield self.transport.removeBot(id)
+      // const events = self.events.list.filter(event => event.bot && event.bot === id)
+      // events.forEach(event => self.events.remove(event.id))
+      self.profile!.ownBots.remove(id)
+      self.profiles.get(self.username!)!.ownBots.remove(id)
+      self.geoBots.delete(id)
       self.bots.delete(id)
     }),
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
@@ -246,6 +257,8 @@ export const Wocky = types
     }),
     _updateBot: flow(function*(bot: IBot) {
       yield self.transport.updateBot(bot)
+      self.profile!.ownBots.addToTop(bot)
+      self.profiles.get(self.username!)!.ownBots.addToTop(bot)
       return {isNew: false}
     }),
     _removeBotPost: flow(function*(id: string, postId: string) {
@@ -261,10 +274,10 @@ export const Wocky = types
       yield self.transport.publishBotPost(botId, post)
     }),
     _subscribeBot: flow(function*(id: string) {
-      yield self.transport.subscribeBot(id)
+      return yield self.transport.subscribeBot(id)
     }),
     _unsubscribeBot: flow(function*(id: string) {
-      yield self.transport.unsubscribeBot(id)
+      return yield self.transport.unsubscribeBot(id)
     }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
@@ -372,7 +385,6 @@ export const Wocky = types
       self.version = ''
       self.events.refresh()
       self.updates.clear()
-      self.files.clear()
       self.username = null
       self.password = null
     }),
@@ -406,13 +418,13 @@ export const Wocky = types
         }
       )
       reaction(() => self.transport.geoBot, self._onGeoBot)
-      reaction(
-        () => self.transport.presence,
-        ({id, status}) => {
-          const profile = self.profiles.get(id)
-          profile.setStatus(status)
-        }
-      )
+      // reaction(
+      //   () => self.transport.presence,
+      //   ({id, status}) => {
+      //     const profile = self.profiles.get(id)
+      //     profile.setStatus(status)
+      //   }
+      // )
       reaction(() => self.transport.rosterItem, self.addRosterItem)
       reaction(() => self.transport.message, self._addMessage)
       reaction(() => self.transport.notification, self._onNotification)
