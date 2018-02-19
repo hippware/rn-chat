@@ -388,7 +388,6 @@ export const Wocky = types
       self.updates.clear()
       self.username = null
       self.password = null
-      console.log('wocky logout done')
     }),
     afterCreate: () => {
       self.events.setRequest(self._loadHomestream)
@@ -420,13 +419,13 @@ export const Wocky = types
         }
       )
       reaction(() => self.transport.geoBot, self._onGeoBot)
-      // reaction(
-      //   () => self.transport.presence,
-      //   ({id, status}) => {
-      //     const profile = self.profiles.get(id)
-      //     profile.setStatus(status)
-      //   }
-      // )
+      reaction(
+        () => self.transport.presence,
+        ({id, status}) => {
+          const profile = self.profiles.get(id)
+          profile.setStatus(status)
+        }
+      )
       reaction(() => self.transport.rosterItem, self.addRosterItem)
       reaction(() => self.transport.message, self._addMessage)
       reaction(() => self.transport.notification, self._onNotification)
