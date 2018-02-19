@@ -9,6 +9,7 @@ import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
 import {RText, ProgressiveImage} from '../common';
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   item: BotPost,
@@ -18,6 +19,9 @@ type Props = {
 const BotPostCard = (props: Props) => {
   const post = props.item;
   const {bot} = props;
+  if (!isAlive(bot)) {
+    return null
+  }
   const timestamp = post.relativeDateAsString;
   return (
     <View style={{backgroundColor: 'white'}}>

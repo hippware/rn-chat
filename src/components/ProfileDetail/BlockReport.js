@@ -31,7 +31,7 @@ class BlockReport extends React.Component<Props> {
             onPress: async () => {
               // TODO: spinner
               await this.props.profile.block();
-              Actions.reset('root');
+              Actions.pop()
             },
           },
         ],

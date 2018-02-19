@@ -8,6 +8,7 @@ import {Profile} from 'wocky-client';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import {ProfileHandle} from '../common';
+import {isAlive} from 'mobx-state-tree';
 
 @inject('wocky')
 @observer
@@ -17,7 +18,7 @@ class Title extends React.Component {
     this.profile = await this.props.wocky.getProfile(this.props.item);
   }
   render() {
-    if (!this.profile) {
+    if (!this.profile || !isAlive(this.profile)) {
       return null;
     }
     return <ProfileHandle profile={this.profile} size={18} />;

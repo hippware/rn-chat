@@ -78,7 +78,7 @@ const SearchStore = types
       } else {
         try {
           const data = yield _search(text);
-          const profileArr = yield Promise.all(data.hits.map(hit => wocky.getProfile(hit.objectID)));
+          const profileArr = yield Promise.all(data.hits.map(hit => wocky.getProfile(hit.objectID, hit)));
           self.globalResult.replace(profileArr);
         } catch (err) {
           console.log('data hit err', err);

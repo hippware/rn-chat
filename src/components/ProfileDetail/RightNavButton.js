@@ -8,6 +8,7 @@ import {Actions} from 'react-native-router-flux';
 import {Profile} from 'wocky-client';
 import {k} from '../Global';
 import BlockReport from './BlockReport';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: string,
@@ -21,7 +22,7 @@ class Right extends React.Component<Props> {
     this.profile = await this.props.wocky.loadProfile(this.props.item);
   }
   render() {
-    if (!this.profile) {
+    if (!this.profile || !isAlive(this.profile)) {
       return null;
     }
     if (this.profile.isOwn) {
