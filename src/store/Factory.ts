@@ -7,17 +7,17 @@ import {File} from '../model/File'
 import {Bot} from '../model/Bot'
 import {IBase} from '../model/Base'
 
-function createProxy(obj: any) {
-  return new Proxy(obj, {
-    get: (target: any, name: string) => {
-      if (isAlive(target)) {
-        return target[name]
-      } else {
-        return getSnapshot(target)[name]
-      }
-    }
-  })
-}
+// function createProxy(obj: any) {
+//   return new Proxy(obj, {
+//     get: (target: any, name: string) => {
+//       if (isAlive(target)) {
+//         return target[name]
+//       } else {
+//         return getSnapshot(target)[name]
+//       }
+//     }
+//   })
+// }
 export function createFactory<T extends IBase>(type: IType<any, T>) {
   return types
     .model({
