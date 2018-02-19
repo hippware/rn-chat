@@ -124,7 +124,7 @@ export const Wocky = types
             } else {
               self.load(self.profile, data)
             }
-            if (self.profile.handle) self.setSessionCount(3)
+            if (self.profile.handle) self.sessionCount = 3
           }
           return res
         }),
