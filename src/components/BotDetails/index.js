@@ -64,7 +64,7 @@ class BotDetails extends React.Component<Props> {
     this.bot.posts.load();
 
     this.viewTimeout = setTimeout(() => {
-      analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
+      if (this.bot && isAlive(this.bot)) analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
     }, 7000);
   };
 
@@ -96,7 +96,7 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
-    console.log('BotDetails bot', bot);
+    console.log('BotDetails bot');
     if (!bot) {
       return (
         <View style={{flex: 1}}>
@@ -105,6 +105,7 @@ class BotDetails extends React.Component<Props> {
       );
     }
     if (!isAlive(bot)) {
+      console.log('Botdetails not alive!');
       return null;
     }
     if (bot.error) {
