@@ -34,7 +34,6 @@ describe('Home stream', () => {
       testModel.home.add(eventBotPost)
 
       console.log(JSON.stringify(testModel.snapshot, null, 2))
-      expect(testModel.snapshot.files.storage['123'].source).to.be.undefined
       snapshot = JSON.stringify(testModel.snapshot)
       done()
     } catch (e) {
