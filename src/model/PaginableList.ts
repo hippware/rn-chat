@@ -81,8 +81,8 @@ export function createPaginable(type: any) {
             self.result.clear()
             self.finished = false
           },
-          load: flow<Array<any>>(function* load() {
-            if (self.loading || self.finished) {
+          load: flow<Array<any>>(function* load(force: boolean = false) {
+            if (self.loading || (self.finished && !force)) {
               return self.result
             }
             self.loading = true
