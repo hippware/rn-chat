@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -25,7 +25,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
+    ],
     "globalSetup": "./__tests__/setupJest.js"
   },
   "dependencies": {
