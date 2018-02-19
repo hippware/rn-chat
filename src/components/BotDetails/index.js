@@ -12,6 +12,7 @@ import {RText, Spinner} from '../common';
 import AddBotPost from './AddBotPost';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
+import {isAlive} from 'mobx-state-tree';
 
 const SEPARATOR_HEIGHT = 20 * k;
 
@@ -102,6 +103,9 @@ class BotDetails extends React.Component<Props> {
           <Loader />
         </View>
       );
+    }
+    if (!isAlive(bot)) {
+      return null;
     }
     if (bot.error) {
       return <BotUnavailable />;

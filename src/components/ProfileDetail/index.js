@@ -10,6 +10,7 @@ import BotButton from '../BotButton';
 import Header from './Header';
 import Right from './RightNavButton';
 import Title from './Title';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: string,
@@ -36,11 +37,14 @@ export default class ProfileDetail extends React.Component<Props> {
   _header = () => <Header profile={this.profile} isDay />;
 
   render() {
-    return this.profile ? (
+    if (!this.profile || !isAlive(this.profile)) {
+      return null;
+    }
+    return (
       <Screen isDay>
         <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} user={this.profile} hideAvatar header={this._header} />
         <BotButton />
       </Screen>
-    ) : null;
+    );
   }
 }

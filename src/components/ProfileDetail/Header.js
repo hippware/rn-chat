@@ -12,6 +12,7 @@ import {colors} from '../../constants';
 import {RText} from '../common';
 import MetaBar from './MetaBar';
 import FollowButton from './FollowButton';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   profile: Profile,
@@ -19,6 +20,9 @@ type Props = {
 
 const Header = observer((props: Props) => {
   const {profile} = props;
+  if (!profile || !isAlive(profile)) {
+    return null;
+  }
   return (
     <View style={{backgroundColor: colors.WHITE}}>
       <Card style={styles.header}>

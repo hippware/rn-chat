@@ -30,12 +30,12 @@ export default class EventBotPostCard extends React.Component {
         <View>
           <EventBotTitle bot={item.bot} action='added a post to' timestamp={item.relativeDateAsString} profile={item.author} />
           <View style={{marginHorizontal: 15}}>
-            {item.text && (
+            {item.post.content && (
               <RText size={15} weight='Light' style={{marginTop: 15}} numberOfLines={4}>
-                {item.text}
+                {item.post.content}
               </RText>
             )}
-            {item.image && <Image source={item.image.source} resizeMode='contain' style={{height: imageWidth, width: imageWidth, marginTop: 15}} />}
+            {item.post.image && <Image source={item.post.image.source} resizeMode='contain' style={{height: imageWidth, width: imageWidth, marginTop: 15}} />}
           </View>
           <EventBotMetabar bot={item.bot} />
         </View>

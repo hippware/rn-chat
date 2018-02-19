@@ -7,6 +7,7 @@ import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import BotImage from './BotImage';
 import {Actions} from 'react-native-router-flux';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: EventBot,
@@ -23,6 +24,9 @@ export default class EventBotCard extends React.Component {
   render() {
     const eventBot = this.props.item;
     const bot = eventBot.bot || {};
+    if (!isAlive(bot)) {
+      return null;
+    }
 
     return (
       <View>
