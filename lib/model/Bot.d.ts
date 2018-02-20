@@ -23,6 +23,7 @@ export declare const Bot: IModelType<{
     addressData?: any;
     subscribers?: any;
     posts?: any;
+    error?: any;
 }, {
     id: string;
 } & {
@@ -267,9 +268,11 @@ export declare const Bot: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+    error: string;
 } & {
     isNew: boolean;
 } & {
+    setError: (value: string) => void;
     setPublic: (value: boolean) => void;
     afterAttach: () => void;
     createPost: (content?: string) => {

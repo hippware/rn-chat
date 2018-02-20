@@ -221,7 +221,13 @@ export const Wocky = types
       })
     }),
     loadBot: flow(function*(id: string, server: any) {
-      return self.getBot(yield self.transport.loadBot(id, server))
+      let bot
+      try {
+        bot = yield self.transport.loadBot(id, server)
+      } catch (e) {
+        bot = {id, server, error: JSON.stringify(e)}
+      }
+      return self.getBot(bot)
     })
   }))
   .actions(self => ({
@@ -317,10 +323,13 @@ export const Wocky = types
       return yield self.transport.requestUpload({file, size, width, height, access})
     }),
     _loadUpdates: flow(function*() {
-      const {list, count, bots, version} = yield self.transport.loadUpdates(self.version)
+      const {list, bots, version} = yield self.transport.loadUpdates(self.version)
       bots.forEach(self.getBot)
       self.version = version
-      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+      list.forEach((data: any) => {
+        const item = self.create(EventEntity, data)
+        self.updates.unshift(item)
+      })
     }),
     _loadHomestream: flow(function*(lastId: any, max: number = 3) {
       const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
@@ -339,7 +348,7 @@ export const Wocky = types
         if (item.bot && !item.bot.owner) {
           yield self.loadBot(item.bot.id, null)
         }
-        self.updates.push(item)
+        self.updates.unshift(item)
       }
       if (!version) {
         console.error('No version for notification:', JSON.stringify(data))

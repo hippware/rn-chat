@@ -406,9 +406,11 @@ export declare const EventBot: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        error: string;
     } & {
         isNew: boolean;
     } & {
+        setError: (value: string) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {

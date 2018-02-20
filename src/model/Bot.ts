@@ -36,7 +36,8 @@ export const Bot = types
       totalItems: 0,
       addressData: types.optional(Address, {}),
       subscribers: types.optional(ProfilePaginableList, {}),
-      posts: types.optional(BotPostPaginableList, {})
+      posts: types.optional(BotPostPaginableList, {}),
+      error: ''
     })
   )
   .volatile(self => ({
@@ -44,6 +45,9 @@ export const Bot = types
   }))
   .named('Bot')
   .actions(self => ({
+    setError: (value: string) => {
+      self.error = value
+    },
     setPublic: (value: boolean) => {
       self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
     },
@@ -105,6 +109,7 @@ export const Bot = types
     get snapshot() {
       const res: any = {...self._snapshot}
       delete res.posts
+      delete res.error
       delete res.subscribers
       return res
     }

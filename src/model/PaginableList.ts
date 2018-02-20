@@ -85,6 +85,10 @@ export function createPaginable(type: any) {
             if (self.loading || (self.finished && !force)) {
               return self.result
             }
+            if (force) {
+              self.result.clear()
+              self.finished = false
+            }
             self.loading = true
             try {
               const {list, count, ...data} = yield request(lastId())
