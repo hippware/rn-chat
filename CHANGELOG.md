@@ -8,7 +8,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 # 2.0.8 - 2018 February 19
 
 * Offline banner when coming from the background (#1843)
-
 * App restarts when a user blocks another user (#1840)
 * Bot List: Infinite Spinner on My Bots & Saved Bots (#1833)
 * Bot Profile: Post count is off by 1 when adding and deleting post (#1828)
