@@ -60,7 +60,7 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
     this.bot = await wocky.loadBot(this.props.item);
-    await this.bot.posts.load(true);
+    await this.bot.posts.load({force: true});
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot)) analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
