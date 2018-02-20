@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -79,7 +79,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#44bb4a23f5571e520570281172ebc91fee17aee7"
+    "wocky-client": "github:hippware/wocky-client#673458b2254da71134938a9bbe0870911f443273"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",

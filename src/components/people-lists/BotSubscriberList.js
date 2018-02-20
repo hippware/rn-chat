@@ -21,7 +21,8 @@ class BotSubscriberList extends React.Component<Props> {
 
   componentWillMount() {
     this.bot = this.props.wocky.getBot({id: this.props.item});
-    this.bot.subscribers.load();
+    this.bot.subscribers.load(true);
+    this.props.wocky.loadBot(this.props.item);
   }
 
   render() {
