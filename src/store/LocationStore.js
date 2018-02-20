@@ -18,6 +18,7 @@ const LocationStore = types
     location: types.maybe(Location),
     enabled: true,
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
+    loading: false,
   }))
   .views(self => ({
     distance: (lat1, lon1, lat2, lon2) => {
@@ -63,15 +64,17 @@ const LocationStore = types
     }
 
     const getCurrentPosition = flow(function* getCurrentPosition() {
+      if (self.loading) return self.location;
+      self.loading = true;
       yield new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             self.setPosition(position);
-            resolve(position);
+            resolve();
           },
           (error) => {
             self.positionError(error);
-            reject(error);
+            reject();
           },
           {timeout: 20000, maximumAge: 1000, enableHighAccuracy: false},
         );
@@ -93,6 +96,7 @@ const LocationStore = types
       logger.log('SLOCATION:', position.coords);
       self.enabled = true;
       self.location = position.coords;
+      self.loading = false;
       // TODO: share location via wocky-client
       // this.share(this.location);
     }
@@ -102,6 +106,7 @@ const LocationStore = types
         // user denied location permissions
         self.enabled = false;
       }
+      self.loading = false;
       // @TODO: how do we handle timeout or other error?
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR});
     }
