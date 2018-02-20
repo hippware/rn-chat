@@ -7,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import Cell from '../Cell';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   edit?: boolean,
@@ -31,6 +32,7 @@ class ComposeCard extends React.Component<Props> {
 
   render() {
     const {bot} = this.props;
+    if (!bot || !isAlive(bot)) return null;
     const address = `${bot.location && bot.location.isCurrent ? 'Current - ' : ''}${bot.address}`;
     const titleColor = {color: colors.navBarTextColorDay};
     return (

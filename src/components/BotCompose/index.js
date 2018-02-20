@@ -4,6 +4,7 @@ import React from 'react';
 import {Alert, TouchableOpacity, Image} from 'react-native';
 import {observer, inject, Provider} from 'mobx-react/native';
 import {observable} from 'mobx';
+import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from '../Global';
@@ -107,7 +108,7 @@ class BotCompose extends React.Component<Props> {
   render() {
     const {edit, titleBlurred} = this.props;
     const {bot} = this;
-    if (!bot) {
+    if (!bot || !isAlive(bot)) {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen />;
     }
@@ -129,6 +130,7 @@ class BotCompose extends React.Component<Props> {
 }
 
 const CreateSaveButton = observer(({bot, isEnabled, isLoading, onSave, bottomPadding}) => {
+  if (!bot || !isAlive(bot)) return null;
   const buttonText = bot.isNew ? (bot.isPublic ? 'Post' : 'Post (Private)') : 'Save Changes';
   return (
     <Button
