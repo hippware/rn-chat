@@ -5,6 +5,18 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.9 - 2018 February 20
+
+* Create Bot: Bot metadata incorrectly listed as current location metadata when panning (#1821)
+* This object has died and is no longer part of a state tree... (Rework #1810)
+* Bot Profile: Post count is off by 1 when adding and deleting post (Rework #1828)
+* Bot Profile: Location Icon does not function (#1829)
+* Save Count remains 0 after users save (#1838)
+* Bot Share: HS share notification not received when user shares bot during creation flow (#1831)
+* HS share notifications are not received with push notifications (app closed or in the background) (#1846)
+* Deleted bots remain on HS and are tappable for subscribers. (#1830)
+
+
 # 2.0.8 - 2018 February 19
 
 * Offline banner when coming from the background (#1843)
