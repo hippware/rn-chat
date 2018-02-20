@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.10 - 2018 February 20
+
+* hot-fix: HS/bot scroll issue fix
+
+
 # 2.0.9 - 2018 February 20
 
 * Create Bot: Bot metadata incorrectly listed as current location metadata when panning (#1821)
