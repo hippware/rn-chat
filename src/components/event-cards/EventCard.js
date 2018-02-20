@@ -21,8 +21,7 @@ const eventCardMap = {
   EventBotNote: EventBotNoteCard,
 };
 @observer
-export default class EventCard extends React.Component {
-  props: Props;
+export default class EventCard extends React.Component<Props> {
   card: any;
 
   render() {
@@ -36,7 +35,7 @@ export default class EventCard extends React.Component {
         return null;
       }
     } catch (err) {
-      console.log('TODO: fix bot delete', err);
+      console.log('TODO: fix bot delete after server-side changes', err);
       return null;
     }
 

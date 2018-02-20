@@ -5,7 +5,7 @@ import MapView from 'react-native-maps';
 import {Alert, StyleSheet, Image, View, InteractionManager} from 'react-native';
 import {k} from '../Global';
 import {observer, inject} from 'mobx-react/native';
-import {observable, computed} from 'mobx';
+import {observable, computed, when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import * as log from '../../utils/log';
@@ -159,8 +159,8 @@ export default class Map extends Component<Props> {
 
   goToUser = async () => {
     const {locationStore} = this.props;
-    await locationStore.getCurrentPosition();
-    this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
+    const {location, loading} = locationStore;
+    when(() => !loading && location, () => this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true));
   };
 
   onCurrentLocation = () => {

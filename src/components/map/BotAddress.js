@@ -34,8 +34,7 @@ class BotAddress extends React.Component<Props> {
         if (!bot.title && data.isPlace) {
           data.title = data.placeName;
         }
-        // TODO: can't load bot and bot.location in one call with wocky-client right now
-        bot.load({...data, location});
+        bot.load({addressData: data.meta, address: data.address, location});
         bot.location.load({isCurrent: false});
       },
       {delay: 500},
