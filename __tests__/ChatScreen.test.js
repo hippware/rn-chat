@@ -6,6 +6,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ChatScreen from '../src/components/ChatScreen';
 import {Provider} from 'mobx-react/native';
+import {Chat} from 'wocky-client';
 
 // mock autofocus: https://github.com/facebook/jest/issues/3707#issuecomment-311169259
 jest.mock('TextInput', () => {
@@ -24,7 +25,7 @@ jest.mock('TextInput', () => {
 describe('ChatScreen', () => {
   test('renders with no data', () => {
     const wocky = {
-      createChat: () => ({messages: [], message: {body: '', setBody: () => {}}, readAll: () => {}, setActive: () => {}}),
+      createChat: () => Chat.create({messages: [], message: {body: '', setBody: () => {}}, readAll: () => {}, setActive: () => {}}),
       chats: {
         list: [],
         get: () => {
