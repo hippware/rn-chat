@@ -5,6 +5,30 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.8 - 2018 February 19
+
+* Offline banner when coming from the background (#1843)
+
+* App restarts when a user blocks another user (#1840)
+* Bot List: Infinite Spinner on My Bots & Saved Bots (#1833)
+* Bot Profile: Post count is off by 1 when adding and deleting post (#1828)
+* Home Stream: Post Added Notifications do not display image or text (#1826)
+* This object has died and is no longer part of a state tree... (#1810)
+* Save Count remains 0 after users save (#1838)
+* Newly created bots are not appearing in the My Bots list or User Profile (#1837)
+* Bypass Accounts are unable to find each other vs. regular accounts when searching for users (#1822)
+* Bot Profile: Bot Posts images display as grey assets (#1825)
+* Unfollow results in both users unfollowing (#1836)
+
+
+# 2.0.7 - 2018 February 16
+
+* Bot Create: A space enables the post CTA (#1820)
+* Logout never leaves loading screen (#1817)
+* Re-enable push notifications (#1809)
+* Implement the rest of the analytics calls (#1812)
+
+
 # 2.0.6 - 2018 February 15
 
 * Fix messages/chats (#1806)
