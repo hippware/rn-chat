@@ -9,6 +9,7 @@ import Avatar from './common/Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
 import {colors} from '../constants';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: any,
@@ -22,11 +23,17 @@ export default class ChatCard extends React.Component<Props> {
   button: any;
 
   render() {
-    // const {isDay} = location;
     const isDay = true;
     const chat = this.props.item;
+    if (!chat || !isAlive(chat)) return null;
     const msg = chat.last;
     const {participants} = chat;
+    let media = null;
+    try {
+      media = msg.media && msg.media.source ? msg.media : null;
+    } catch (err) {
+      console.log('TODO: Fix msg.media reference error', err);
+    }
     return (
       <Card
         style={[this.props.style]}
@@ -73,12 +80,11 @@ export default class ChatCard extends React.Component<Props> {
             </Text>
           </Text>
         )}
-        {!!msg.media &&
-          msg.media.source && (
-            <View style={{paddingTop: 15 * k}}>
-              <ResizedImage image={msg.media.source} />
-            </View>
-          )}
+        {media && (
+          <View style={{paddingTop: 15 * k}}>
+            <ResizedImage image={media.source} />
+          </View>
+        )}
         {!!this.props.item.location && (
           <View
             style={{
