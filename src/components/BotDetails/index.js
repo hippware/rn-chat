@@ -59,7 +59,7 @@ class BotDetails extends React.Component<Props> {
 
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
-    this.bot = wocky.getBot({id: this.props.item});
+    this.bot = await wocky.loadBot(this.props.item);
     await this.bot.posts.load(true);
 
     this.viewTimeout = setTimeout(() => {
@@ -129,6 +129,9 @@ class BotDetails extends React.Component<Props> {
 
 const Header = inject('notificationStore')(observer(({bot, scale, notificationStore}) => {
   const map = scale === 0;
+  if (!bot || !isAlive(bot)) {
+    return null
+  }
   return (
     <TouchableOpacity
       onLongPress={() => {
@@ -162,7 +165,7 @@ const Header = inject('notificationStore')(observer(({bot, scale, notificationSt
 }));
 
 const ShareButton = observer(({bot}) => {
-  if (!bot || bot.error || bot.loading) return null;
+  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null;
   const isOwn = !bot.owner || bot.owner.isOwn;
   return isOwn || bot.isPublic ? (
     <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={{marginRight: 20 * k}}>
