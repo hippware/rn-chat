@@ -26,6 +26,7 @@ class AddBotPost extends React.Component<Props> {
   @observable keyboardHeight: number = 0;
   @observable inputHeight: number = 0;
   @observable focused: boolean = false;
+  // TODO: add `publishing` and `published` props on wocky-client botpost
   @observable sendingPost: boolean = false;
   post: BotPost;
 
@@ -50,6 +51,10 @@ class AddBotPost extends React.Component<Props> {
     this.mounted = false;
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
+    // remove unpublished post
+    if (this.post && this.post.id && this.props.bot) {
+      this.props.bot.removePost(this.post.id);
+    }
   }
 
   onSend = async () => {
@@ -57,11 +62,12 @@ class AddBotPost extends React.Component<Props> {
     this.sendingPost = true;
     const {notificationStore, bot} = this.props;
     try {
-      const botPost = bot.createPost(this.text.trim());
+      this.post = bot.createPost(this.text.trim());
       if (this.image) {
-        await botPost.upload({...this.image, file: this.image.source});
+        await this.post.upload({...this.image, file: this.image.source});
       }
-      await botPost.publish();
+      await this.post.publish();
+      this.post = null;
       this.text = '';
       this.imageSrc = null;
       this.image = null;
@@ -69,8 +75,11 @@ class AddBotPost extends React.Component<Props> {
       Keyboard.dismiss();
       this.props.scrollToEnd();
     } catch (e) {
+      console.log('bot post error', e);
       const message = e.code === '403' ? 'Cannot publish, bot is private now' : 'Something went wrong, please try again';
       notificationStore.flash(message);
+      // TODO: clean up local state by removing bad post? Maybe in componentWillUnmount?
+      // https://github.com/hippware/rn-chat/issues/1828
     } finally {
       this.sendingPost = false;
     }

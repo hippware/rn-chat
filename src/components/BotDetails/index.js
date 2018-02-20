@@ -60,8 +60,7 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
     this.bot = wocky.getBot({id: this.props.item});
-    console.log('BotDetails loadbot', this.bot);
-    this.bot.posts.load();
+    await this.bot.posts.load(true);
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot)) analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
@@ -76,7 +75,7 @@ class BotDetails extends React.Component<Props> {
 
   scrollToEnd = () => {
     when(
-      () => this.bot.postsLoaded,
+      () => this.bot.posts.finished,
       () => {
         this.numToRender = this.bot.posts.length;
         setTimeout(() => this.list && this.list.scrollToEnd(), 500);
@@ -96,7 +95,6 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
-    console.log('BotDetails bot');
     if (!bot) {
       return (
         <View style={{flex: 1}}>
@@ -105,7 +103,6 @@ class BotDetails extends React.Component<Props> {
       );
     }
     if (!isAlive(bot)) {
-      console.log('Botdetails not alive!');
       return null;
     }
     if (bot.error) {
