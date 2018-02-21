@@ -93,14 +93,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
         </View>
         {scale > 0 && (
           <View>
-            <BotButtons
-              isOwn={isOwn}
-              bot={bot}
-              subscribe={this.subscribe}
-              unsubscribe={this.unsubscribe}
-              isSubscribed={bot ? bot.isSubscribed : false}
-              copyAddress={this.copyAddress}
-            />
+            <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} copyAddress={this.copyAddress} />
             <UserInfoRow bot={bot} owner={owner} copyAddress={this.copyAddress} />
             {bot &&
               !!bot.description && (

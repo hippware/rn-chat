@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import AddOrEditButton from './AddOrEditButton';
+import SaveOrEditButton from './SaveOrEditButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import {colors} from '../../constants';
@@ -42,7 +42,7 @@ class BotButtons extends React.Component<Props> {
     const destructiveIndex = actions.findIndex(a => a.destructive);
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <AddOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
+        <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
         {isShareable && <ShareButton bot={bot} />}
         <MultiButton onPress={() => this.actionSheet.show()} />
         <ActionSheet
@@ -60,11 +60,8 @@ class BotButtons extends React.Component<Props> {
 }
 
 const ShareButton = ({bot}) => (
-  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={[styles.button, {marginLeft: 10 * k}]}>
-    <Image source={require('../../../images/shareWhite.png')} resizeMode='contain' />
-    <RText size={13} color={colors.WHITE} style={{marginLeft: 5 * k}}>
-      SHARE
-    </RText>
+  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={[styles.button, {marginLeft: 10 * k, backgroundColor: colors.WHITE}]}>
+    <Image source={require('../../../images/shareIcon.png')} resizeMode='contain' />
   </TouchableOpacity>
 );
 
