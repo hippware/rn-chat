@@ -2,13 +2,10 @@
 import {IModelType, types, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
-import {XmppTransport} from './XmppTransport'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
-export {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
-export {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {EventBotCreate} from '../model/EventBotCreate'
@@ -22,6 +19,7 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap} from './utils'
+import {XmppTransport} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 export const EventList = createPaginable(EventEntity)
@@ -35,7 +33,6 @@ export const Wocky = types
       id: 'wocky',
       username: types.maybe(types.string),
       password: types.maybe(types.string),
-      resource: types.string,
       host: types.string,
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {}),
@@ -49,20 +46,22 @@ export const Wocky = types
   )
   .named(SERVICE_NAME)
   .extend(self => {
-    const {provider, fileService} = getEnv(self)
-    let transport: XmppTransport
+    const {transport} = getEnv(self)
+    if (!transport) {
+      throw 'Server transport is not defined'
+    }
     return {
       views: {
         get snapshot() {
           const data = {...self._snapshot}
-          if (self.events.length > 10) {
-            data.events = {result: data.events.result.slice(0, 10)}
+          if (self.events.length > 20) {
+            data.events = {result: data.events.result.slice(0, 20)}
           }
           delete data.geoBots
           delete data.files
           return data
         },
-        get transport() {
+        get transport(): XmppTransport {
           return transport
         },
         get connected() {
@@ -81,9 +80,6 @@ export const Wocky = types
         }
       },
       actions: {
-        afterCreate: () => {
-          transport = new XmppTransport(provider, fileService, self.resource)
-        },
         login: flow(function*(user?: string, password?: string, host?: string) {
           if (user) {
             self.username = user
@@ -93,6 +89,9 @@ export const Wocky = types
           }
           if (host) {
             self.host = host
+          }
+          if (!self.username || !self.password || !self.host) {
+            throw `Cannot login without username/password/host:${self.username},${self.password},${self.host}`
           }
           yield transport.login(self.username!, self.password!, self.host)
           self.sessionCount++
@@ -110,7 +109,7 @@ export const Wocky = types
           return true
         }),
         testRegister: flow(function*(data: any) {
-          const res = yield transport.testRegister(data)
+          const res = yield transport.testRegister(data, self.host)
           Object.assign(self, res)
           return true
         }),
@@ -418,13 +417,15 @@ export const Wocky = types
       })
       reaction(
         () => self.connected,
-        async () => {
-          if (!self.version) {
-            await self.events.load()
-          } else {
-            await self._loadUpdates()
+        async (connected: boolean) => {
+          if (connected) {
+            if (!self.version) {
+              await self.events.load()
+            } else {
+              await self._loadUpdates()
+            }
+            self._subscribeToHomestream(self.version)
           }
-          self._subscribeToHomestream(self.version)
         }
       )
       reaction(() => self.transport.geoBot, self._onGeoBot)

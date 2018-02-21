@@ -1,23 +1,11 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, ISnapshottable, IModelType, IExtendedObservableMap, getEnv, getParent, getType, isAlive, IType, getSnapshot, applySnapshot} from 'mobx-state-tree'
+import {types, ISnapshottable, IModelType, IExtendedObservableMap, getEnv, getParent, getType, IType, getSnapshot, applySnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot} from '../model/Bot'
 import {IBase} from '../model/Base'
-
-// function createProxy(obj: any) {
-//   return new Proxy(obj, {
-//     get: (target: any, name: string) => {
-//       if (isAlive(target)) {
-//         return target[name]
-//       } else {
-//         return getSnapshot(target)[name]
-//       }
-//     }
-//   })
-// }
 export function createFactory<T extends IBase>(type: IType<any, T>) {
   return types
     .model({
@@ -28,7 +16,7 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
       get snapshot() {
         const storage: any = {}
         self.storage.keys().forEach((key: string) => {
-          if (isAlive(self.storage.get(key)!)) {
+          if (self.storage.get(key)!) {
             storage[key] = self.storage.get(key)!.snapshot
           }
         })
@@ -53,7 +41,6 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
           }
         }
         return self.storage.get(id)!
-        // return createProxy(self.storage.get(id))
       }
     }))
 }

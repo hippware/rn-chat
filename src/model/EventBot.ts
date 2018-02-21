@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, isAlive, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Bot} from './Bot'

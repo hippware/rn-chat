@@ -1,8 +1,6 @@
 import { IModelType, IType, IExtendedObservableMap, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-import { XmppTransport } from './XmppTransport';
-export { Profile, IProfile } from '../model/Profile';
-export { Base, SERVICE_NAME } from '../model/Base';
+import { XmppTransport } from '..';
 export declare const EventEntity: IType<({
     id?: any;
 } & {
@@ -3418,52 +3416,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -4856,7 +4809,6 @@ export declare const Wocky: IModelType<{
     id?: any;
     username?: any;
     password?: any;
-    resource?: any;
     host?: any;
     sessionCount?: any;
     roster?: any;
@@ -5584,7 +5536,6 @@ export declare const Wocky: IModelType<{
     id: string;
     username: string | null;
     password: string | null;
-    resource: string;
     host: string;
     sessionCount: number;
     roster: IExtendedObservableMap<{
@@ -9254,52 +9205,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -11504,52 +11410,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -11741,52 +11602,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -11967,52 +11783,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -12346,52 +12117,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -12569,52 +12295,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -12800,52 +12481,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -13334,52 +12970,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -13571,52 +13162,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -13797,52 +13343,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -14176,52 +13677,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -14399,52 +13855,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -14630,52 +14041,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -15153,52 +14519,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -15390,52 +14711,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -15616,52 +14892,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -15995,52 +15226,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -16218,52 +15404,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -16449,52 +15590,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -16972,52 +16068,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -17209,52 +16260,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -17435,52 +16441,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -17814,52 +16775,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -18037,52 +16953,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -18268,52 +17139,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -18791,52 +17617,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -19028,52 +17809,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -19254,52 +17990,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -19633,52 +18324,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -19856,52 +18502,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -20087,52 +18688,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -20609,52 +19165,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -20846,52 +19357,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -21072,52 +19538,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -21451,52 +19872,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -21674,52 +20050,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -21905,52 +20236,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -22427,52 +20713,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -22664,52 +20905,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -22890,52 +21086,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -23269,52 +21420,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -23492,52 +21598,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -23723,52 +21784,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -24244,52 +22260,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -24481,52 +22452,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -24707,52 +22633,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -25086,52 +22967,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -25309,52 +23145,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -25540,52 +23331,7 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 to: string;
-                media: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    id: string;
-                    source: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    thumbnail: ({
-                        uri: string;
-                        contentType: string | null;
-                        width: number | null;
-                        height: number | null;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    url: string;
-                } & {
-                    loading: boolean;
-                    isNew: boolean;
-                    error: string;
-                } & {
-                    readonly loaded: boolean;
-                    readonly snapshot: any;
-                } & {
-                    setURL: (url: string) => void;
-                    setSource: (source: any) => void;
-                    downloadThumbnail: () => Promise<{}>;
-                    download: () => Promise<{}>;
-                } & {
-                    afterAttach: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                media: any;
                 unread: boolean;
                 body: string;
             } & {
@@ -25749,7 +23495,6 @@ export declare const Wocky: IModelType<{
     };
     version: string;
 } & {
-    afterCreate: () => void;
     login: () => Promise<{}>;
     disconnect: () => Promise<{}>;
     remove: () => Promise<{}>;
@@ -26077,52 +23822,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -26314,52 +24014,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -26540,52 +24195,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -26919,52 +24529,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -27142,52 +24707,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -27373,52 +24893,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             to: string;
-            media: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                id: string;
-                source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                url: string;
-            } & {
-                loading: boolean;
-                isNew: boolean;
-                error: string;
-            } & {
-                readonly loaded: boolean;
-                readonly snapshot: any;
-            } & {
-                setURL: (url: string) => void;
-                setSource: (source: any) => void;
-                downloadThumbnail: () => Promise<{}>;
-                download: () => Promise<{}>;
-            } & {
-                afterAttach: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
+            media: any;
             unread: boolean;
             body: string;
         } & {
@@ -27580,8 +25055,8 @@ export declare const Wocky: IModelType<{
 } & {
     readonly snapshot: any;
     readonly transport: XmppTransport;
-    readonly connected: boolean;
-    readonly connecting: boolean;
+    readonly connected: any;
+    readonly connecting: any;
     readonly sortedRoster: ({
         id: string;
     } & {
@@ -30301,52 +27776,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {

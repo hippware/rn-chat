@@ -30,3 +30,5 @@ export const Chats = types
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
     add: (chat: IChat) => self.get(chat.id) || (self._list.push(chat) && chat)
   }))
+
+export type IChats = typeof Chats.Type

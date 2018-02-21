@@ -3,7 +3,7 @@ import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile} from './Profile'
-import {File} from './File'
+import {FileRef} from './File'
 import * as utils from '../store/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
@@ -19,7 +19,7 @@ export const Message = types
       archiveId: '',
       from: types.maybe(types.reference(Profile)),
       to: '',
-      media: types.maybe(types.reference(File)),
+      media: FileRef,
       unread: false,
       body: ''
     })

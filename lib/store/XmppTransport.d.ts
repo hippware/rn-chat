@@ -31,7 +31,7 @@ export declare class XmppTransport {
     }>;
     testRegister({phoneNumber}: {
         phoneNumber: string;
-    }): Promise<{
+    }, host: string): Promise<{
         username: any;
         host: any;
         password: any;

@@ -119,6 +119,7 @@ export class XmppTransport {
       await this.provider.login('register', password, this.host, this.resource)
     } catch (error) {
       await this.disconnect()
+      console.log('ERROR!:', error)
       let d
       try {
         const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement
@@ -140,17 +141,20 @@ export class XmppTransport {
     }
     throw 'register must throw exception'
   }
-  async testRegister({phoneNumber}: {phoneNumber: string}) {
-    return await this.register({
-      userID: `000000${phoneNumber}`,
-      phoneNumber: `+1555${phoneNumber}`,
-      authTokenSecret: '',
-      authToken: '',
-      emailAddressIsVerified: false,
-      'X-Auth-Service-Provider': 'http://localhost:9999',
-      emailAddress: '',
-      'X-Verify-Credentials-Authorization': ''
-    })
+  async testRegister({phoneNumber}: {phoneNumber: string}, host: string) {
+    return await this.register(
+      {
+        userID: `000000${phoneNumber}`,
+        phoneNumber: `+1555${phoneNumber}`,
+        authTokenSecret: '',
+        authToken: '',
+        emailAddressIsVerified: false,
+        'X-Auth-Service-Provider': 'http://localhost:9999',
+        emailAddress: '',
+        'X-Verify-Credentials-Authorization': ''
+      },
+      host
+    )
   }
 
   async disconnect() {
@@ -340,28 +344,35 @@ export class XmppTransport {
         return res
       }
     }
-    try {
-      let url = sourceUrl,
-        headers = null
-      if (!sourceUrl) {
-        const data = await this.downloadURL(tros)
-        url = data.url
-        headers = data.headers
-      }
-      await this.fileService.downloadHttpFile(url, fileName, headers)
-    } catch (e) {
-      try {
-        await this.fileService.removeFile(fileName)
-      } catch (err) {}
-      throw e
-    }
-    res.cached = true
-    const response = await this.fileService.getImageSize(fileName)
-    if (response) {
-      res.width = response.width
-      res.height = response.height
-    }
-    return res
+    return new Promise((resolve, reject) => {
+      when(
+        () => this.connected,
+        async () => {
+          try {
+            let url = sourceUrl,
+              headers = null
+            if (!sourceUrl) {
+              const data = await this.downloadURL(tros)
+              url = data.url
+              headers = data.headers
+            }
+            await this.fileService.downloadHttpFile(url, fileName, headers)
+          } catch (e) {
+            try {
+              await this.fileService.removeFile(fileName)
+            } catch (err) {}
+            resolve()
+          }
+          res.cached = true
+          // const response = await this.fileService.getImageSize(fileName)
+          // if (response) {
+          //   res.width = response.width
+          //   res.height = response.height
+          // }
+          resolve(res)
+        }
+      )
+    })
   }
   async downloadThumbnail(url: string, tros: string) {
     return await this.downloadFile(tros, 'thumbnail', url)

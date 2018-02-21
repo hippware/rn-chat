@@ -329,52 +329,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -566,52 +521,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -792,52 +702,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -1171,52 +1036,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -1394,52 +1214,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {
@@ -1625,52 +1400,7 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         to: string;
-        media: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        media: any;
         unread: boolean;
         body: string;
     } & {

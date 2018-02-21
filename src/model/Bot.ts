@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, getParent, getSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, isAlive, onSnapshot, getParent, getSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile, ProfilePaginableList} from './Profile'
@@ -118,3 +118,11 @@ export const Bot = types
 export type IBot = typeof Bot.Type
 export const BotPaginableList = createPaginable(types.reference(Bot))
 export type IBotPaginableList = typeof BotPaginableList.Type
+export const BotRef = types.reference(Bot, {
+  get(id: string, parent: any) {
+    return parent.service && parent.service.bots && isAlive(parent.service.bots.get(id)) && parent.service.bots.get(id)
+  },
+  set(value: IBot) {
+    return value.id
+  }
+})

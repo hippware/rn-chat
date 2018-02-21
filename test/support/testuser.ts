@@ -1,5 +1,5 @@
 import XmppStropheV2 from '../../src/store/XmppStropheV2'
-import {Wocky, IWocky} from '../../src/store/Wocky'
+import {Wocky, XmppTransport, IWocky} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
@@ -21,12 +21,10 @@ export function expectedImage() {
 export async function createXmpp(num: number): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()
+    const transport = new XmppTransport(provider, fileService, 'testing')
     // const provider = new XmppStropheV2(console.log)
     const phoneNumber = `000000${num.toString()}`
-    const service = Wocky.create(
-      {resource: 'testing', host: 'testing.dev.tinyrobot.com'},
-      {provider, fileService, logger: {log: (msg: string, ...params: Array<any>) => console.log(msg, ...params)}}
-    )
+    const service = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {transport, fileService, logger: {log: (msg: string, ...params: Array<any>) => console.log(msg, ...params)}})
     addMiddleware(service, simpleActionLogger)
     await service.register({
       userID: `000000${phoneNumber}`,

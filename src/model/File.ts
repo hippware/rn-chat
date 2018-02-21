@@ -1,7 +1,6 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, IType, flow, IModelType} from 'mobx-state-tree'
+import {types, IType, isAlive, flow, IModelType} from 'mobx-state-tree'
 import {Base} from './Base'
-import {waitFor} from './utils'
 
 export const FileSource = types
   .model('FileSource', {
@@ -81,7 +80,6 @@ export const File = types
   })
   .actions(self => ({
     afterAttach: flow(function*() {
-      yield waitFor(() => self.service.connected)
       if (self.url) {
         yield self.downloadThumbnail()
       } else {
@@ -94,7 +92,7 @@ export type IFile = typeof File.Type
 export const FileRef = types.maybe(
   types.reference(File, {
     get(id: string, parent: any) {
-      return parent.service && parent.service.files && parent.service.files.get(id)
+      return parent.service && parent.service.files && isAlive(parent.service.files.get(id)) && parent.service.files.get(id)
     },
     set(value: IFile) {
       return value.id

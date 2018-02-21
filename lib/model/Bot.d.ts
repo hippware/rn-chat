@@ -1,4 +1,4 @@
-import { IModelType, ISnapshottable } from 'mobx-state-tree';
+import { IType, IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
@@ -506,3 +506,4 @@ export declare const BotPaginableList: IModelType<{
     readonly last: any;
 }>;
 export declare type IBotPaginableList = typeof BotPaginableList.Type;
+export declare const BotRef: IType<string | number, any>;
