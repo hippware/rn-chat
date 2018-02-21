@@ -119,7 +119,6 @@ export class XmppTransport {
       await this.provider.login('register', password, this.host, this.resource)
     } catch (error) {
       await this.disconnect()
-      console.log('ERROR!:', error)
       let d
       try {
         const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement
