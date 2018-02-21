@@ -69,7 +69,10 @@ export function createPaginable(type: any) {
               self.count = count
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
-              self.finished = self.result.length === count
+
+              // temporary solution for deletes not working in homestream
+              // self.finished = self.result.length === count
+              self.finished = list.length === 0
             } catch (e) {
               console.log('ERROR:', e)
             } finally {
@@ -95,7 +98,10 @@ export function createPaginable(type: any) {
               self.count = count
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
-              self.finished = self.result.length === count
+
+              // temporary solution for deletes not working in homestream
+              // self.finished = self.result.length === count
+              self.finished = list.length === 0
             } catch (e) {
               console.log('PagingableList.load ERROR:', e)
             } finally {
