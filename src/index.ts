@@ -1,4 +1,4 @@
-export {Wocky, IWocky} from './store/Wocky'
+export {Wocky, IWocky, EventList} from './store/Wocky'
 export {Profile, IProfile} from './model/Profile'
 export {Base, SERVICE_NAME} from './model/Base'
 export {Chat, IChat} from './model/Chat'
