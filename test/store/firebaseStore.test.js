@@ -16,11 +16,11 @@ const auth = {
   signInWithPhoneNumber: () => Promise.resolve({confirm: code => Promise.resolve()}),
 };
 // mock for xmpp provider
-const provider = {};
+const transport = {};
 const analytics = {
   track: () => {},
 };
-const env = {auth, provider, analytics};
+const env = {auth, transport, analytics};
 const wocky = Wocky.create({resource: 'testing', host: 'test'}, env);
 
 describe('FirebaseStore', () => {
