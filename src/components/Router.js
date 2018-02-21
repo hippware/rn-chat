@@ -12,7 +12,6 @@ import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'reac
 
 import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
-import analytics from '../utils/analytics';
 
 import Camera from './Camera';
 import SideMenu from './SideMenu';
@@ -103,25 +102,6 @@ const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
-// TODO: deep link
-const onDeepLink = ({action, params}) => {
-  analytics.track('deeplink', {action, params});
-  // when(
-  //   () => globalStore.loaded,
-  //   () =>
-  //     Actions[action] &&
-  //     setTimeout(() => {
-  //       try {
-  //         analyticsStore.track('deeplink_try', {action, params});
-  //         Actions[action](params);
-  //         analyticsStore.track('deeplink_success', {action, params});
-  //       } catch (err) {
-  //         analyticsStore.track('deeplink_fail', {error: err, action, params});
-  //       }
-  //     }),
-  // );
-};
-
 // prevent keyboard from persisting across scene transitions
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
@@ -143,7 +123,7 @@ class TinyRobotRouter extends React.Component<{}> {
     const {store, wocky, firebaseStore} = this.props;
 
     return (
-      <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Lightbox>
           <Stack key='rootStack' initial hideNavBar>
             <Stack key='root' tabs hideTabBar hideNavBar lazy>
@@ -229,6 +209,24 @@ class TinyRobotRouter extends React.Component<{}> {
       </Router>
     );
   }
+
+  onDeepLink = async ({action, params}) => {
+    const {store, analytics} = this.props;
+    analytics.track('deeplink', {action, params});
+    await store.hydrate();
+    await this.login();
+    // do we need to do any other setup here?
+    Actions[action] &&
+      setTimeout(() => {
+        try {
+          analytics.track('deeplink_try', {action, params});
+          Actions[action](params);
+          analytics.track('deeplink_success', {action, params});
+        } catch (err) {
+          analytics.track('deeplink_fail', {error: err, action, params});
+        }
+      });
+  };
 
   resetSearchStore = () => {
     this.props.store.searchStore.setGlobal('');
