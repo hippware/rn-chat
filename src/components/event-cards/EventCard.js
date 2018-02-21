@@ -3,7 +3,7 @@
 import React from 'react';
 import Card from '../Card';
 import {k} from '../Global';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import EventBotCard from './EventBotCard';
 import EventBotShareCard from './EventBotShareCard';
 import EventBotNoteCard from './EventBotNoteCard';
@@ -20,6 +20,7 @@ const eventCardMap = {
   EventBotShare: EventBotShareCard,
   EventBotNote: EventBotNoteCard,
 };
+@inject('log')
 @observer
 export default class EventCard extends React.Component<Props> {
   card: any;
@@ -35,7 +36,7 @@ export default class EventCard extends React.Component<Props> {
         return null;
       }
     } catch (err) {
-      console.log('TODO: fix bot delete after server-side changes', err);
+      this.props.log('TODO: fix bot delete after server-side changes', err);
       return null;
     }
 

@@ -6,13 +6,13 @@ import {when} from 'mobx';
 import {inject} from 'mobx-react/native';
 import * as log from '../utils/log';
 
-@inject('wocky', 'notificationStore')
+@inject('wocky', 'notificationStore', 'log')
 export default class Connectivity extends React.Component {
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
     NetInfo.getConnectionInfo().then((reach) => {
-      log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
+      this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
   }
@@ -25,13 +25,13 @@ export default class Connectivity extends React.Component {
   tryReconnect = async () => {
     const model = this.props.wocky;
     if (model.profile && !model.connected && !model.connecting && model.username && model.password && model.host) {
-      log.log('TRYING RECONNECT', {level: log.levels.INFO});
+      this.props.log('TRYING RECONNECT', {level: log.levels.INFO});
       await model.login();
     }
   };
 
   _handleConnectionInfoChange = (connectionInfo) => {
-    log.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
+    this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
     if (connectionInfo.type === 'unknown') {
       // @TODO: mixpanel submit info?
       return;
@@ -44,7 +44,7 @@ export default class Connectivity extends React.Component {
   };
 
   _handleAppStateChange = async (currentAppState) => {
-    log.log('CURRENT APPSTATE:', currentAppState, {level: log.levels.INFO});
+    this.props.log('CURRENT APPSTATE:', currentAppState, {level: log.levels.INFO});
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
