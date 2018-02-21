@@ -6,6 +6,7 @@ import {Alert, StyleSheet, Image, View, InteractionManager} from 'react-native';
 import {k} from '../Global';
 import {observer, inject} from 'mobx-react/native';
 import {observable, computed, when} from 'mobx';
+import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import * as log from '../../utils/log';
@@ -66,7 +67,7 @@ export default class Map extends Component<Props> {
   @computed
   get list(): Array<any> {
     const {wocky, bot} = this.props;
-    const list = (wocky.geoBots && wocky.geoBots.values()) || [];
+    const list = (wocky.geoBots && wocky.geoBots.values().filter(bot => isAlive(bot))) || [];
 
     if (bot && list.indexOf(bot) === -1) {
       list.push(bot);
@@ -225,8 +226,9 @@ export default class Map extends Component<Props> {
   };
 
   render() {
-    const {locationStore, location, showUser} = this.props;
+    const {locationStore, showUser} = this.props;
     const currentLoc = locationStore.location;
+    const location = this.props.location && isAlive(this.props.location) ? this.props.location : null;
     const coords = location || currentLoc;
     if (!coords) {
       return <RText>Please enable location</RText>;

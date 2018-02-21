@@ -7,6 +7,7 @@ import {width} from '../Global';
 import {showImagePicker} from '../ImagePicker';
 import Map from '../map/Map';
 import Bubble from '../map/Bubble';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   afterPhotoPost: Function,
@@ -29,6 +30,7 @@ class BotComposePhoto extends React.Component<Props> {
 
   render() {
     const {bot} = this.props;
+    if (!bot || !isAlive(bot)) return null;
     const image = bot.image && bot.image.loaded ? bot.image.source : require('../../../images/addBotPhoto.png');
     const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading);
     return (

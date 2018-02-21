@@ -3,6 +3,7 @@
 import React from 'react';
 import {View, Alert, TextInput, StyleSheet} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
+import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../Global';
 import {colors} from '../../constants';
@@ -41,38 +42,41 @@ class EditControls extends React.Component<Props> {
   render() {
     const {bot} = this.props;
     return (
-      <View>
-        <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
-          <VisibilitySwitch bot={bot} />
-          <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
-            <TextInput
-              multiline
-              style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
-              placeholder='Tell us about this place!'
-              onChangeText={text => bot.load({description: text})}
-              value={bot.description}
-              maxLength={1500}
-              ref={r => (this.input = r)}
-            />
-          </Cell>
+      bot &&
+      isAlive(bot) && (
+        <View>
+          <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
+            <VisibilitySwitch bot={bot} />
+            <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
+              <TextInput
+                multiline
+                style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
+                placeholder='Tell us about this place!'
+                onChangeText={text => bot.load({description: text})}
+                value={bot.description}
+                maxLength={1500}
+                ref={r => (this.input = r)}
+              />
+            </Cell>
+          </View>
+          {bot.isNew ? (
+            <Button
+              onPress={() => {
+                Actions.pop({animated: false});
+                Actions.pop();
+              }}
+              textStyle={{color: colors.PINK}}
+              style={styles.crud}
+            >
+              Cancel Bot
+            </Button>
+          ) : (
+            <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
+              Delete Bot
+            </Button>
+          )}
         </View>
-        {bot.isNew ? (
-          <Button
-            onPress={() => {
-              Actions.pop({animated: false});
-              Actions.pop();
-            }}
-            textStyle={{color: colors.PINK}}
-            style={styles.crud}
-          >
-            Cancel Bot
-          </Button>
-        ) : (
-          <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
-            Delete Bot
-          </Button>
-        )}
-      </View>
+      )
     );
   }
 }

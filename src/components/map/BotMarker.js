@@ -5,6 +5,7 @@ import {defaultCover} from '../Global';
 import Bubble from './Bubble';
 import MapView from 'react-native-maps';
 import {observer} from 'mobx-react/native';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   bot: Bot,
@@ -16,7 +17,7 @@ type Props = {
 const BotMarker = observer(({bot, scale, ...props}: Props) => {
   const fullMap = scale === 0;
   const y = scale === 1 ? 0 : fullMap ? -35 : -106;
-  if (!bot || !bot.location) {
+  if (!bot || !isAlive(bot) || !bot.location) {
     return null;
   }
   const image = bot.image ? bot.image.thumbnail : defaultCover[bot.coverColor % 4];

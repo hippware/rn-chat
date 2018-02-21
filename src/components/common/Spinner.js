@@ -13,8 +13,7 @@ type Props = {
 const Spinner = ({color, size, style}: Props) => {
   const img = color && color === 'white' ? require('../../../images/loader_white.gif') : require('../../../images/loader_pink.gif');
   size = size ? size * k : 36 * k;
-  style = style || {};
-  return <Image source={img} style={[{...style}, {width: size, height: size}]} resizeMode='contain' />;
+  return <Image source={img} style={[style, {width: size, height: size}]} resizeMode='contain' />;
 };
 
 export default Spinner;

@@ -12,7 +12,6 @@ import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'reac
 
 import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
-import analytics from '../utils/analytics';
 
 import Camera from './Camera';
 import SideMenu from './SideMenu';
@@ -103,25 +102,6 @@ const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
-// TODO: deep link
-const onDeepLink = ({action, params}) => {
-  analytics.track('deeplink', {action, params});
-  // when(
-  //   () => globalStore.loaded,
-  //   () =>
-  //     Actions[action] &&
-  //     setTimeout(() => {
-  //       try {
-  //         analyticsStore.track('deeplink_try', {action, params});
-  //         Actions[action](params);
-  //         analyticsStore.track('deeplink_success', {action, params});
-  //       } catch (err) {
-  //         analyticsStore.track('deeplink_fail', {error: err, action, params});
-  //       }
-  //     }),
-  // );
-};
-
 // prevent keyboard from persisting across scene transitions
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
@@ -143,14 +123,15 @@ class TinyRobotRouter extends React.Component<{}> {
     const {store, wocky, firebaseStore} = this.props;
 
     return (
-      <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
+      <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Lightbox>
           <Stack key='rootStack' initial hideNavBar>
             <Stack key='root' tabs hideTabBar hideNavBar lazy>
               <Stack key='launch' hideNavBar lightbox type='replace'>
-                <Scene key='load' component={Launch} on={store.hydrate} success='connect' failure='onboarding' />
+                <Scene key='load' component={Launch} on={store.hydrate} success='checkCredentials' failure='onboarding' />
+                <Scene key='checkCredentials' on={() => wocky.username && wocky.password && wocky.host} success='checkProfile' failure='onboarding' />
                 <Scene key='connect' on={this.login} success='checkProfile' failure='onboarding' />
-                <Scene key='checkProfile' on={() => wocky.loadProfile(wocky.username)} success='checkHandle' failure='onboarding' />
+                <Scene key='checkProfile' on={async () => wocky.profile || await wocky.loadProfile(wocky.username)} success='checkHandle' failure='connect' />
                 <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
                 <Scene key='logout' on={firebaseStore.logout} success='onboarding' />
               </Stack>
@@ -230,12 +211,31 @@ class TinyRobotRouter extends React.Component<{}> {
     );
   }
 
+  onDeepLink = async ({action, params}) => {
+    const {store, analytics} = this.props;
+    analytics.track('deeplink', {action, params});
+    Actions[action] &&
+      // wait until connected
+      when(
+        () => this.props.wocky.connected,
+        () => {
+          try {
+            analytics.track('deeplink_try', {action, params});
+            Actions[action](params);
+            analytics.track('deeplink_success', {action, params});
+          } catch (err) {
+            analytics.track('deeplink_fail', {error: err, action, params});
+          }
+        },
+      );
+  };
+
   resetSearchStore = () => {
     this.props.store.searchStore.setGlobal('');
     Actions.pop();
   };
 
-  login = async () => {
+  login = async (...params) => {
     try {
       await this.props.wocky.login();
       return true;

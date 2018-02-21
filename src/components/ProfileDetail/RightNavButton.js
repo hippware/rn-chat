@@ -36,8 +36,7 @@ class Right extends React.Component<Props> {
         <View style={styles.rightContainer}>
           <TouchableOpacity
             onPress={() => {
-              // messageStore.createChat(profile);
-              // Actions.chat({item: profile.id});
+              Actions.chat({item: this.profile.id});
             }}
             style={styles.rightButton}
           >

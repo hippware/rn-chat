@@ -32,12 +32,14 @@ export default class Connectivity extends React.Component {
 
   _handleConnectionInfoChange = (connectionInfo) => {
     log.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
-    if (connectionInfo === 'unknown') {
+    if (connectionInfo.type === 'unknown') {
       // @TODO: mixpanel submit info?
       return;
     }
-    if (connectionInfo !== 'none') {
-      this.tryReconnect();
+    if (connectionInfo.type !== 'none') {
+      setTimeout(() => this.tryReconnect(), 500);
+    } else if (this.props.wocky.connected && !this.props.wocky.connecting) {
+      this.props.wocky.disconnect();
     }
   };
 

@@ -7,6 +7,7 @@ import moment from 'moment';
 import Button from 'apsl-react-native-button';
 import {autorun, observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
+import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {Chat, Message} from 'wocky-client';
 import Screen from './Screen';
@@ -61,7 +62,7 @@ class ChatScreen extends React.Component<Props, State> {
     const {item, wocky} = this.props;
     this.chat = wocky.createChat(item);
     this.chat.setActive(true);
-    this.chat.readAll()
+    this.chat.readAll();
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     this.mounted = true;
@@ -116,36 +117,47 @@ class ChatScreen extends React.Component<Props, State> {
     return this.messages.length > i + 1 ? this.messages[i + 1] : null;
   };
 
-  renderItem = ({item}) => (
-    <View>
-      {this.renderDate(item)}
-      <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
-    </View>
-  );
+  renderItem = ({item}) =>
+    (item ? (
+      <View>
+        {this.renderDate(item)}
+        <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
+      </View>
+    ) : null);
 
   render() {
-    const {wocky, item} = this.props;
-    return this.chat ? (
+    const {wocky} = this.props;
+    return this.chat && isAlive(this.chat) ? (
       <Screen>
         <FlatList
           inverted
           data={this.chat.messages
-            .map(el => ({
-              uniqueId: el.id,
-              text: el.body || '',
-              isDay: true,
-              title: el.from.displayName,
-              media: el.media,
-              size: 40,
-              position: el.from.isOwn ? 'right' : 'left',
-              status: '',
-              name: el.from.isOwn ? '' : el.from.displayName,
-              image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-              profile: el.from,
-              imageView: Avatar,
-              view: ChatBubble,
-              date: new Date(el.time),
-            }))
+            .map((el) => {
+              let media = null;
+              try {
+                media = el.media;
+              } catch (err) {
+                console.log('TODO: fix Message.media reference error', err);
+              }
+              return el
+                ? {
+                  uniqueId: el.id,
+                  text: el.body || '',
+                  isDay: true,
+                  title: el.from.displayName,
+                  media,
+                  size: 40,
+                  position: el.from.isOwn ? 'right' : 'left',
+                  status: '',
+                  name: el.from.isOwn ? '' : el.from.displayName,
+                  image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+                  profile: el.from,
+                  imageView: Avatar,
+                  view: ChatBubble,
+                  date: new Date(el.time),
+                }
+                : null;
+            })
             .reverse()}
           ref={l => (this.list = l)}
           renderItem={this.renderItem}

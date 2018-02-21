@@ -126,7 +126,7 @@ const FirebaseStore = types
     const resendCode = flow(function* resendCode() {
       try {
         analytics.track('resend_code_try');
-        yield verifyPhone({phone: this.phone});
+        yield verifyPhone({phone: self.phone});
         analytics.track('resend_code_success');
       } catch (err) {
         analytics.track('resend_code_fail', {error: err});

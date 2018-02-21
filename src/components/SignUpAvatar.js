@@ -36,7 +36,8 @@ class SignUpAvatar extends React.Component<Props> {
   render() {
     const {profile} = this.props.wocky;
     const {avatar} = profile;
-    const theAvatar = this.source || (avatar && avatar.source) || require('../../images/addPhoto.png');
+    // TODO: should we switch to source instead of thumbnail?
+    const theAvatar = this.source || (avatar && avatar.thumbnail) || require('../../images/addPhoto.png');
     return (
       <TouchableOpacity style={{alignItems: 'center'}} onPress={() => showImagePicker('Select Avatar', this.imageSelected)}>
         <Image

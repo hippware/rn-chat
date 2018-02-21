@@ -3271,9 +3271,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.56.0:
-  version "0.56.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.56.0.tgz#ce43092203a344ba9bf63c0cabe95d95145f6cad"
+flow-bin@^0.63.0:
+  version "0.63.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.63.1.tgz#ab00067c197169a5fb5b4996c8f6927b06694828"
 
 for-in@^1.0.1:
   version "1.0.2"
@@ -8037,9 +8037,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#cde013ee3c354a7a0c3f6f352fc3e08c7ab3bf73":
+"wocky-client@github:hippware/wocky-client#a5c7276b65a30d1b01a2e67fdbab96ab0b8b3d43":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#cde013ee3c354a7a0c3f6f352fc3e08c7ab3bf73"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#a5c7276b65a30d1b01a2e67fdbab96ab0b8b3d43"
   dependencies:
     classy-mst "github:charto/classy-mst#develop"
     moment "^2.20.1"
