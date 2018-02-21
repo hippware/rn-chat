@@ -236,7 +236,6 @@ class TinyRobotRouter extends React.Component<{}> {
   };
 
   login = async (...params) => {
-    JSON.stringify('LOGINPARAMS:', params);
     try {
       await this.props.wocky.login();
       return true;
