@@ -59,8 +59,14 @@ class BotDetails extends React.Component<Props> {
 
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
-    this.bot = await wocky.loadBot(this.props.item);
-    await this.bot.posts.load({force: true});
+    this.bot = wocky.getBot({id: this.props.item});
+    when(
+      () => wocky.connected,
+      async () => {
+        await wocky.loadBot(this.props.item);
+        await this.bot.posts.load({force: true});
+      },
+    );
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot)) analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
@@ -130,7 +136,7 @@ class BotDetails extends React.Component<Props> {
 const Header = inject('notificationStore')(observer(({bot, scale, notificationStore}) => {
   const map = scale === 0;
   if (!bot || !isAlive(bot)) {
-    return null
+    return null;
   }
   return (
     <TouchableOpacity

@@ -7,7 +7,7 @@ import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
-import {Wocky} from 'wocky-client';
+import {Wocky, XmppTransport} from 'wocky-client';
 import nativeEnv from 'react-native-native-env';
 
 import {settings} from '../globals';
@@ -33,6 +33,8 @@ import PushStore from './PushStore';
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
 const provider = new XmppIOS();
+const transport = new XmppTransport(provider, fileService, DeviceInfo.getUniqueID());
+
 const {geolocation} = navigator;
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
@@ -42,7 +44,7 @@ const {geolocation} = navigator;
 // }
 
 const auth = firebase.auth();
-const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, searchIndex, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
+const env = {transport, storage: AsyncStorage, auth, logger, fileService, geolocation, searchIndex, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
 
 const Store = types
   .model('Store', {
@@ -65,7 +67,7 @@ const Store = types
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
 const theStore = PersistableStore.create(
   {
-    wocky: {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()},
+    wocky: {host: settings.getDomain()},
     firebaseStore: {},
     locationStore: {},
     searchStore: {},

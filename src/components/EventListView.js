@@ -43,7 +43,7 @@ class EventList extends Component {
     const {sessionCount, events, connected} = this.props.wocky;
     const backgroundColor = colors.LIGHT_GREY;
     const footerImage = require('../../images/graphicEndHome.png');
-    const {finished} = events.list;
+    const {finished} = events;
     const isFirstSession = sessionCount <= 2;
 
     return (
