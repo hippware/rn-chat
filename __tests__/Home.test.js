@@ -22,11 +22,12 @@ describe('Home', () => {
       events: EventList.create({}),
       bots: [],
     };
-    const tree = renderer
-      .create(<Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
+    const toRender = (
+      <Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
         <Home />
-      </Provider>)
-      .toJSON();
+      </Provider>
+    );
+    const tree = renderer.create(toRender).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -41,11 +42,13 @@ describe('Home', () => {
     wocky.events.add(eventNote);
     wocky.events.add(eventBotPost);
 
-    const tree = renderer
-      .create(<Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
+    const toRender = (
+      <Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
         <Home />
-      </Provider>)
-      .toJSON();
+      </Provider>
+    );
+
+    const tree = renderer.create(toRender).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
