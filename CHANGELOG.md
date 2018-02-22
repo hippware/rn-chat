@@ -5,6 +5,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.12 - 2018 February 22
+
+* Implement the rest of the analytics calls (#1812)
+* Replace `Save` and `Share` with icons only (#1752)
+* Messages: Images do not display (#1868)
+* New Users with Welcome Banner do not see New Updates CTA (#1867)
+* Various other changes
+
+
 # 2.0.11 - 2018 February 21
 
 * App loaded to bugsnag (#1851, #1852)
