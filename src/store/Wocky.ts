@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {IModelType, types, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
+import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
@@ -347,6 +347,10 @@ export const Wocky = types
         if (item.bot && !item.bot.owner) {
           yield self.loadBot(item.bot.id, null)
         }
+        const existed = self.updates.findIndex((u: any) => u.id === item.id)
+        if (existed) {
+          self.updates.splice(existed, 1)
+        }
         self.updates.unshift(item)
       }
       if (!version) {
@@ -360,7 +364,11 @@ export const Wocky = types
         // delete item
         self.events.remove(id)
         if (getType(self.updates[i]).name !== EventDelete.name) {
-          self.events.addToTop(clone(self.updates[i]))
+          const event: any = clone(self.updates[i])
+          self.events.addToTop(event)
+          if (event.bot && isAlive(event.bot)) {
+            self.events.remove(event.id)
+          }
         }
       }
       self.updates.clear()

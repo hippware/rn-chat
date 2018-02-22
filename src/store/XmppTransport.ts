@@ -100,6 +100,7 @@ export class XmppTransport {
       await this.provider.login(this.username, this.password, this.host, this.resource)
       return true
     } catch (e) {
+      this.connected = false
       throw e
     } finally {
       this.connecting = false
@@ -361,13 +362,14 @@ export class XmppTransport {
               await this.fileService.removeFile(fileName)
             } catch (err) {}
             resolve()
+            return
           }
           res.cached = true
-          // const response = await this.fileService.getImageSize(fileName)
-          // if (response) {
-          //   res.width = response.width
-          //   res.height = response.height
-          // }
+          const response = await this.fileService.getImageSize(fileName)
+          if (response) {
+            res.width = response.width
+            res.height = response.height
+          }
           resolve(res)
         }
       )
