@@ -348,7 +348,7 @@ export const Wocky = types
           yield self.loadBot(item.bot.id, null)
         }
         const existed = self.updates.findIndex((u: any) => u.id === item.id)
-        if (existed) {
+        if (existed !== -1) {
           self.updates.splice(existed, 1)
         }
         self.updates.unshift(item)
@@ -366,7 +366,7 @@ export const Wocky = types
         if (getType(self.updates[i]).name !== EventDelete.name) {
           const event: any = clone(self.updates[i])
           self.events.addToTop(event)
-          if (event.bot && isAlive(event.bot)) {
+          if (event.bot && !isAlive(event.bot)) {
             self.events.remove(event.id)
           }
         }
