@@ -4,24 +4,15 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import BotDetails from '../src/components/BotDetails';
-import BotDetailsHeader from '../src/components/BotDetails';
+import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader';
 import {Provider} from 'mobx-react/native';
 import {Bot} from 'wocky-client';
+import './utils/mockMap';
 import injects from './utils/inject-mocks';
+import mockLocationStore from './utils/mockLocationStore';
 
-describe('BotDetails', () => {
+describe('BotDetailsHeader', () => {
   const wocky = {};
-
-  test('renders with no data', () => {
-    const toRender = (
-      <Provider wocky={wocky} {...injects}>
-        <BotDetails />
-      </Provider>
-    );
-    const tree = renderer.create(toRender).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
 
   test('renders with test bot', () => {
     const bot = Bot.create({
@@ -43,9 +34,15 @@ describe('BotDetails', () => {
       // posts: types.optional(BotPostPaginableList, {}),
       // error: ''
     });
+
+    mockLocationStore.setPosition({
+      coords: {longitude: 2, latitude: 2, accuracy: 2},
+    });
+
+    // TODO: figure out setNativeProps problem
     const toRender = (
-      <Provider wocky={wocky} {...injects}>
-        <BotDetailsHeader bot={bot} scale={0.5} />
+      <Provider wocky={wocky} {...injects} locationStore={mockLocationStore}>
+        <BotDetailsHeader scale={0.5} />
       </Provider>
     );
     const tree = renderer.create(toRender).toJSON();

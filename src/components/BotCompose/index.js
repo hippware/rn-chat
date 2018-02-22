@@ -11,7 +11,6 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 import Screen from '../Screen';
 import Button from '../Button';
-import * as log from '../../utils/log';
 import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
@@ -24,7 +23,7 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-@inject('wocky', 'notificationStore', 'analytics')
+@inject('wocky', 'notificationStore', 'analytics', 'log')
 @observer
 class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
@@ -109,7 +108,7 @@ class BotCompose extends React.Component<Props> {
     const {edit, titleBlurred} = this.props;
     const {bot} = this;
     if (!bot || !isAlive(bot)) {
-      log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
+      this.props.log('NO BOT IS DEFINED');
       return <Screen />;
     }
     const isEnabled = bot.title && bot.title.trim().length > 0 && bot.location && bot.address;
