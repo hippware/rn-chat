@@ -9,9 +9,9 @@ import {k} from './Global';
 import {observer, inject} from 'mobx-react/native';
 import Avatar from './common/Avatar';
 import {colors} from '../constants';
-import Badge from './Badge';
 import {settings} from '../globals';
 import {version} from '../../package.json';
+import {isAlive} from 'mobx-state-tree';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -63,7 +63,7 @@ MenuItem.contextTypes = {
 
 const SideMenu = inject('wocky')(observer(({wocky}) => {
   const {profile} = wocky;
-  if (!profile) {
+  if (!profile || !isAlive(profile)) {
     return null;
   }
   let displayName = ' ';
