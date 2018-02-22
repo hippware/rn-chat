@@ -71,8 +71,11 @@ export function createPaginable(type: any) {
               list.forEach((el: any) => self.add(el))
 
               // temporary solution for deletes not working in homestream
-              // self.finished = self.result.length === count
-              self.finished = list.length === 0
+              self.finished = self.result.length >= count
+              // self.finished = list.length === 0
+              if (self.result.length >= count) {
+                console.warn('WOCKY: result.length > count', self.result.length, count, self)
+              }
             } catch (e) {
               console.log('ERROR:', e)
             } finally {
@@ -100,10 +103,13 @@ export function createPaginable(type: any) {
               list.forEach((el: any) => self.add(el))
 
               // temporary solution for deletes not working in homestream
-              // self.finished = self.result.length === count
-              self.finished = list.length === 0
+              self.finished = self.result.length >= count
+              // self.finished = list.length === 0
+              if (self.result.length >= count) {
+                console.log('WOCKY: result.length > count', self.result.length, count, self)
+              }
             } catch (e) {
-              console.log('PagingableList.load ERROR:', e)
+              console.warn('PagingableList.load ERROR:', e)
             } finally {
               self.loading = false
             }
