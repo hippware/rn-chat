@@ -61,7 +61,7 @@ class EventList extends Component {
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.id}
         />
-        <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
+        <UpdateButton scroll={this.scrollToTop} visible />
         <ReviewButton />
       </View>
     );

@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -77,14 +77,14 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#a5c7276b65a30d1b01a2e67fdbab96ab0b8b3d43"
+    "wocky-client": "github:hippware/wocky-client#d932b1b99046069e815177bf60266711dd3a94bd"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
-    "babel-jest": "^22.1.0",
+    "babel-jest": "^22.4",
     "babel-plugin-mobx-deep-action": "^1.5.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -103,7 +103,7 @@
     "expect": "^1.13.0",
     "flow-bin": "^0.63.0",
     "form-data": "^1.0.0-rc4",
-    "jest": "^22.1.4",
+    "jest": "^22.4",
     "mocha": "^2.3.4",
     "mocha-steps": "^0.0.1",
     "nock": "^3.3.0",

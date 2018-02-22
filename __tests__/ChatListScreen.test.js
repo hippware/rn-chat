@@ -16,14 +16,4 @@ describe('ChatListScreen', () => {
     const tree = renderer.create(<ChatListScreen wocky={wocky} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  // TODO
-  // test('renders with list of chats', () => {
-  //   const wocky = {
-  //     chats: {
-  //       list: [],
-  //     },
-  //   };
-  //   const tree = renderer.create(<ChatListScreen wocky={wocky} />).toJSON();
-  //   expect(tree).toMatchSnapshot();
-  // });
 });

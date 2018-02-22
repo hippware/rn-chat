@@ -12,11 +12,12 @@ import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
-const Right = inject('newBotStore')(observer(({newBotStore}) => (
+const Right = inject('wocky', 'newBotStore', 'analytics')(observer(({newBotStore, wocky, analytics}) => (
   <TouchableOpacity
     onPress={async () => {
-      // const bot = await newBotStore.save();
-      Actions.botCompose({botId: newBotStore.botId});
+      const bot = wocky.getBot({id: newBotStore.botId});
+      Actions.botCompose({botId: bot.id});
+      analytics.track('botcreate_chooselocation', bot.toJSON());
     }}
     style={{marginRight: 20 * k}}
   >
@@ -39,8 +40,9 @@ class BotCreate extends React.Component<{}> {
   }
 
   createBot = async () => {
-    const bot = await this.props.wocky.createBot();
-    const {location} = this.props.locationStore;
+    const {wocky, locationStore} = this.props;
+    const bot = await wocky.createBot();
+    const {location} = locationStore;
     bot.load({location});
     bot.location.load({isCurrent: true});
     this.bot = bot;

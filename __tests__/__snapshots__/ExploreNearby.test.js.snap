@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Explore Nearby renders with no data 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <MapView
+      autoZoom={true}
+      followUser={true}
+      fullMap={true}
+      initialRegion={
+        Object {
+          "latitude": 2,
+          "latitudeDelta": 0.04,
+          "longitude": 2,
+          "longitudeDelta": 0.04,
+        }
+      }
+      locationStore={Object {}}
+      onMarkerSelect={[Function]}
+      onPress={[Function]}
+      onRegionChangeComplete={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      wocky={Object {}}
+    >
+      <Marker
+        coordinate={
+          Object {
+            "latitude": 2,
+            "longitude": 2,
+          }
+        }
+        pointerEvents="none"
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [],
+            }
+          }
+        >
+          <Image
+            source={
+              Object {
+                "testUri": "../../../images/location-indicator.png",
+              }
+            }
+          />
+        </View>
+      </Marker>
+    </MapView>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "bottom": 40,
+          "height": 100,
+          "left": 30,
+          "opacity": 1,
+          "position": "absolute",
+          "width": 100,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../images/iconCurrentLocation.png",
+          }
+        }
+      />
+    </View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "rgb(254,92,108)",
+          "borderRadius": 27,
+          "bottom": 40,
+          "height": 54,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 40,
+          "shadowOffset": Object {
+            "height": 0,
+            "width": 2,
+          },
+          "shadowOpacity": 0.18,
+          "shadowRadius": 4,
+          "width": 54,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/iconCreateBot.png",
+            }
+          }
+          style={undefined}
+        />
+      </View>
+    </View>
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "#007bff",
+          "borderBottomWidth": 1,
+          "borderColor": "#006acd",
+          "bottom": null,
+          "left": 0,
+          "paddingBottom": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "translateY": -1334,
+            },
+          ],
+        }
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        collapsable={undefined}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "flex": 1,
+            "opacity": 1,
+          }
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "flex": 1,
+              "flexDirection": "row",
+              "padding": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "stretch",
+                "flex": 1,
+                "flexDirection": "column",
+                "justifyContent": "center",
+                "marginLeft": 10,
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

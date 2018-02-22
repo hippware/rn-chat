@@ -21,11 +21,12 @@ describe('MyAccount', () => {
     const profileValidationStore = {
       setProfile: () => {},
     };
-    const tree = renderer
-      .create(<Provider wocky={wocky} profileValidationStore={profileValidationStore}>
+    const toRender = (
+      <Provider wocky={wocky} profileValidationStore={profileValidationStore}>
         <MyAccount />
-      </Provider>)
-      .toJSON();
+      </Provider>
+    );
+    const tree = renderer.create(toRender).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
