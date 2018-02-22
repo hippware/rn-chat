@@ -194,7 +194,7 @@ const InputArea = inject('wocky')(observer(({wocky, chat, onSend}) => {
         maxHeight={100}
         maxLength={500}
       />
-      <TouchableOpacity onPress={onSend}>
+      <TouchableOpacity disabled={!chat.message.body.trim() || !wocky.connected} onPress={onSend}>
         <Image source={chat.message.body.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
       </TouchableOpacity>
     </View>

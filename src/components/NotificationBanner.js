@@ -61,8 +61,8 @@ class NotificationBanner extends React.Component<{}, State> {
     const {current} = this.props.notificationStore;
     const {top, pan} = this.state;
     return current ? (
-      <Animated.View style={[styles.container, {top, backgroundColor: current.color}]} {...this._panResponder.panHandlers}>
-        <RText size={15} color={colors.addAlpha(colors.WHITE, 0.75)} style={{textAlign: 'center', letterSpacing: 0.6}}>
+      <Animated.View pointerEvents='none' style={[styles.container, {top, backgroundColor: current.color}]} {...this._panResponder.panHandlers}>
+        <RText size={13} color={colors.addAlpha(colors.WHITE, 0.75)} style={{textAlign: 'center', letterSpacing: 0.6}}>
           {current.message}
         </RText>
       </Animated.View>
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.PINK,
     right: 0,
     left: 0,
-    paddingTop: 30 * k,
-    paddingBottom: 10 * k,
-    height: 64, // TODO: export a variable in RNRF that we can use here instead of hardcoding?
+    paddingTop: 25 * k,
+    paddingBottom: 7 * k,
+    height: 25, // TODO: export a variable in RNRF that we can use here instead of hardcoding?
   },
 });
