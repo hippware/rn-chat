@@ -5,6 +5,18 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.11 - 2018 February 21
+
+* App loaded to bugsnag (#1851, #1852)
+* This object has died and is no longer part of a state tree... (Rework #1810)
+* User Profile settings: Preexisting avatar does not populate (#1862)
+* Resend Code results in error verifying phone number (#1853)
+* User Profile: Chat icon does not function (#1857)
+* Extra Padding on the Saves List (#1834)
+* User tapped on Push Notification and received white/blank screen (#1672)
+* Home Stream: New bypass account has infinite loader, `End of Feed` UI missing (#1859)
+
+
 # 2.0.10 - 2018 February 20
 
 * hot-fix: HS/bot scroll issue fix
