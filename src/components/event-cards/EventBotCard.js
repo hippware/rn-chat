@@ -23,8 +23,8 @@ export default class EventBotCard extends React.Component {
 
   render() {
     const eventBot = this.props.item;
-    const bot = eventBot.bot;
-    if (!bot) {
+    const {bot} = eventBot;
+    if (!bot || !isAlive(bot)) {
       return null;
     }
 
