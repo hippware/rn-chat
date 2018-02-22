@@ -5,10 +5,8 @@ const injects = {
     flash: () => {},
     show: () => {},
   },
-  logger: {
-    log: () => {},
-    warn: () => {},
-  },
+  log: () => {},
+  warn: () => {},
   analytics: {
     track: () => {},
   },

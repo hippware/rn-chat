@@ -7,8 +7,7 @@ import renderer from 'react-test-renderer';
 import ChatScreen from '../src/components/ChatScreen';
 import {Provider} from 'mobx-react/native';
 import {Chat} from 'wocky-client';
-
-require('./utils/mockTextInput');
+import './utils/mockTextInput';
 
 describe('ChatScreen', () => {
   test('renders with no data', () => {

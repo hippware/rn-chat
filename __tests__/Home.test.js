@@ -7,15 +7,9 @@ import renderer from 'react-test-renderer';
 import Home from '../src/components/Home';
 import {Provider} from 'mobx-react/native';
 import {EventList, EventBotNote, EventBotPost} from 'wocky-client';
+import injects from './utils/inject-mocks';
 
 describe('Home', () => {
-  const notificationStore = {
-    flash: () => {},
-  };
-  const logger = {
-    log: () => {},
-  };
-
   test('renders with no data', () => {
     const wocky = {
       updates: [],
@@ -23,7 +17,7 @@ describe('Home', () => {
       bots: [],
     };
     const toRender = (
-      <Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
+      <Provider wocky={wocky} {...injects}>
         <Home />
       </Provider>
     );
@@ -43,7 +37,7 @@ describe('Home', () => {
     wocky.events.add(eventBotPost);
 
     const toRender = (
-      <Provider wocky={wocky} notificationStore={notificationStore} {...logger}>
+      <Provider wocky={wocky} {...injects}>
         <Home />
       </Provider>
     );
