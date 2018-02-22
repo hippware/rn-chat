@@ -4,12 +4,13 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader';
 import {Provider} from 'mobx-react/native';
 import {Bot} from 'wocky-client';
 import './utils/mockMap';
 import injects from './utils/inject-mocks';
 import mockLocationStore from './utils/mockLocationStore';
+
+import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader';
 
 describe('BotDetailsHeader', () => {
   const wocky = {};
@@ -34,15 +35,12 @@ describe('BotDetailsHeader', () => {
       // posts: types.optional(BotPostPaginableList, {}),
       // error: ''
     });
-
     mockLocationStore.setPosition({
       coords: {longitude: 2, latitude: 2, accuracy: 2},
     });
-
-    // TODO: figure out setNativeProps problem
     const toRender = (
       <Provider wocky={wocky} {...injects} locationStore={mockLocationStore}>
-        <BotDetailsHeader scale={0.5} />
+        <BotDetailsHeader bot={bot} scale={0.5} />
       </Provider>
     );
     const tree = renderer.create(toRender).toJSON();

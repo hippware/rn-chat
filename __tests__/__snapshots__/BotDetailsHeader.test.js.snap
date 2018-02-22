@@ -1,3 +1,317 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BotDetailsHeader renders with test bot 1`] = `null`;
+exports[`BotDetailsHeader renders with test bot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "white",
+        "height": 750,
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "bottom": -420,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <MapView
+        autoZoom={true}
+        bot={
+          Object {
+            "address": "",
+            "addressData": Object {
+              "city": "",
+              "country": "",
+              "county": "",
+              "state": "",
+            },
+            "description": null,
+            "error": "",
+            "followersSize": 0,
+            "id": "1234",
+            "image": null,
+            "isSubscribed": false,
+            "location": null,
+            "owner": null,
+            "posts": Object {
+              "count": null,
+              "result": Array [],
+            },
+            "radius": 30,
+            "server": "server",
+            "subscribers": Object {
+              "count": null,
+              "result": Array [],
+            },
+            "title": "title",
+            "totalItems": 0,
+            "visibility": 100,
+          }
+        }
+        fullMap={false}
+        initialRegion={
+          Object {
+            "latitude": 2,
+            "latitudeDelta": 0.2,
+            "longitude": 2,
+            "longitudeDelta": 0.2,
+          }
+        }
+        location={null}
+        locationStore={Object {}}
+        marker={
+          <_class
+            bot={
+              Object {
+                "address": "",
+                "addressData": Object {
+                  "city": "",
+                  "country": "",
+                  "county": "",
+                  "state": "",
+                },
+                "description": null,
+                "error": "",
+                "followersSize": 0,
+                "id": "1234",
+                "image": null,
+                "isSubscribed": false,
+                "location": null,
+                "owner": null,
+                "posts": Object {
+                  "count": null,
+                  "result": Array [],
+                },
+                "radius": 30,
+                "server": "server",
+                "subscribers": Object {
+                  "count": null,
+                  "result": Array [],
+                },
+                "title": "title",
+                "totalItems": 0,
+                "visibility": 100,
+              }
+            }
+            onImagePress={[Function]}
+            onMapPress={[Function]}
+            scale={0.5}
+          />
+        }
+        onImagePress={[Function]}
+        onMapPress={[Function]}
+        onMarkerSelect={[Function]}
+        onPress={[Function]}
+        onRegionChangeComplete={[Function]}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        scale={0.5}
+        scrollEnabled={false}
+        showOnlyBot={true}
+        showUser={false}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+        wocky={Object {}}
+        zoomEnabled={false}
+      />
+      <View
+        collapsable={undefined}
+        style={
+          Object {
+            "backgroundColor": "#007bff",
+            "borderBottomWidth": 1,
+            "borderColor": "#006acd",
+            "bottom": null,
+            "left": 0,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "paddingRight": 0,
+            "paddingTop": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "transform": Array [
+              Object {
+                "translateY": -1334,
+              },
+            ],
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "flex": 1,
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "flex-end",
+                "flex": 1,
+                "flexDirection": "row",
+                "padding": 10,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignSelf": "stretch",
+                  "flex": 1,
+                  "flexDirection": "column",
+                  "justifyContent": "center",
+                  "marginLeft": 10,
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      collapsable={undefined}
+      pointerEvents="none"
+      style={
+        Object {
+          "alignItems": "center",
+          "height": 750,
+          "justifyContent": "center",
+          "left": 0,
+          "opacity": 0,
+          "position": "absolute",
+          "right": 0,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../images/iconBotAdded.png",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View>
+    <View
+      style={
+        Object {
+          "height": 8.5,
+          "width": 750,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "flexDirection": "row",
+          "height": 45,
+          "width": 750,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../images/postsIcon.png",
+          }
+        }
+        style={
+          Object {
+            "height": 14,
+            "marginLeft": 14,
+            "width": 14,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgb(63,50,77)",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 15,
+            },
+            Object {
+              "letterSpacing": 0.3,
+              "marginLeft": 7,
+            },
+          ]
+        }
+      >
+        Posts
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgb(155,155,155)",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 12,
+            },
+            Object {
+              "marginLeft": 7,
+            },
+          ]
+        }
+      >
+        0
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 1,
+          "width": 750,
+        }
+      }
+    />
+  </View>
+</View>
+`;
