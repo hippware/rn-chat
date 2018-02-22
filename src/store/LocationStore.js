@@ -2,7 +2,7 @@
 
 import {types, getEnv, flow} from 'mobx-state-tree';
 
-const Location = types.model('Location', {
+export const Location = types.model('Location', {
   longitude: types.number,
   latitude: types.number,
   accuracy: types.number,
@@ -43,7 +43,6 @@ const LocationStore = types
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
-    // const {wocky} = self;
     let watch;
 
     function afterCreate() {
