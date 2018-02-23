@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {settings} from '../globals';
 import {k} from './Global';
-import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line
+import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpTrack} from './common';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
@@ -50,32 +50,37 @@ const PhoneVerify = () => (
   </View>
 );
 
-const Onboarding = () => (
-  <View style={{flex: 1}}>
-    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
-      <Slide bgImg={discoverBg} iconImg={discoverIcon}>
-        <Text style={styles.title}>
-          <Text style={styles.bold}>Discover</Text>
-          {'\r\ninteresting\r\nplaces.'}
-        </Text>
-        <Text style={styles.muted}>{"We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go."}</Text>
-      </Slide>
-      <Slide bgImg={shareBg} iconImg={shareIcon}>
-        <Text style={styles.title}>
-          <Text style={styles.bold}>Share</Text>
-          {' your\r\nfavorite places.'}
-        </Text>
-        <Text style={styles.muted}>{'Our mission is to connect\r\npeople with the places they\r\nlove.'}</Text>
-      </Slide>
-      <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
-        <Text style={styles.title}>{"Keep up with\r\nwhat's\r\nhappening."}</Text>
-        <Text style={styles.muted}>{'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}</Text>
-      </Slide>
-    </Swiper>
-    <PhoneVerify />
-    <BypassButton />
-  </View>
-);
+class Onboarding extends React.Component {
+  render() {
+    // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
+    return this.props.routeName === 'onboarding' ? (
+      <View style={{flex: 1}}>
+        <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)}>
+          <Slide bgImg={discoverBg} iconImg={discoverIcon}>
+            <Text style={styles.title}>
+              <Text style={styles.bold}>Discover</Text>
+              {'\r\ninteresting\r\nplaces.'}
+            </Text>
+            <Text style={styles.muted}>{"We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go."}</Text>
+          </Slide>
+          <Slide bgImg={shareBg} iconImg={shareIcon}>
+            <Text style={styles.title}>
+              <Text style={styles.bold}>Share</Text>
+              {' your\r\nfavorite places.'}
+            </Text>
+            <Text style={styles.muted}>{'Our mission is to connect\r\npeople with the places they\r\nlove.'}</Text>
+          </Slide>
+          <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
+            <Text style={styles.title}>{"Keep up with\r\nwhat's\r\nhappening."}</Text>
+            <Text style={styles.muted}>{'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}</Text>
+          </Slide>
+        </Swiper>
+        <PhoneVerify />
+        <BypassButton />
+      </View>
+    ) : null;
+  }
+}
 
 export default Onboarding;
 
@@ -83,29 +88,13 @@ const FOOTER_HEIGHT = 75 * k;
 const PERCENT_PAD_TOP = 35;
 
 const styles = StyleSheet.create({
-  absolute: {position: 'absolute', top: 0, left: 0, right: 0, bottom: 0},
-  wrapper: {height: 500},
+  wrapper: {},
   background: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flex: 1,
   },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    width: null,
-    height: null,
-  },
+  backgroundImage: {},
   gradient: {
-    position: 'absolute',
-    bottom: FOOTER_HEIGHT,
-    left: 0,
-    right: 0,
+    flex: 1,
     height: 200 * k,
   },
   slide: {
