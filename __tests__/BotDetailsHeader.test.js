@@ -9,13 +9,13 @@ import {Bot} from 'wocky-client';
 import './utils/mockMap';
 import injects from './utils/inject-mocks';
 import mockLocationStore from './utils/mockLocationStore';
+import wocky from './utils/mockWocky';
 
 import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader';
 
 describe('BotDetailsHeader', () => {
-  const wocky = {};
-
-  test('renders with test bot', () => {
+  test('renders with test bot', async () => {
+    await wocky.login('user', 'password', 'host');
     const bot = Bot.create({
       id: '1234',
       isSubscribed: false,

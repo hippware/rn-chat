@@ -128,7 +128,36 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
             "flex": 1,
           }
         }
-        wocky={Object {}}
+        wocky={
+          Object {
+            "bots": Object {
+              "storage": Object {},
+            },
+            "chats": Object {
+              "_list": Array [],
+            },
+            "events": Object {
+              "count": null,
+              "result": Array [],
+            },
+            "files": Object {
+              "storage": Object {},
+            },
+            "geoBots": Object {},
+            "host": "host",
+            "id": "wocky",
+            "password": "password",
+            "profile": null,
+            "profiles": Object {
+              "storage": Object {},
+            },
+            "roster": Object {},
+            "sessionCount": 1,
+            "updates": Array [],
+            "username": "user",
+            "version": "",
+          }
+        }
         zoomEnabled={false}
       />
       <View
