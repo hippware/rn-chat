@@ -71,10 +71,12 @@ export const Bot = types
     }),
     subscribe: flow(function*() {
       self.isSubscribed = true
+      self.service.profile!.subscribedBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id)
     }),
     unsubscribe: flow(function*() {
       self.isSubscribed = false
+      self.service.profile!.subscribedBots.remove(self.id)
       self.followersSize = yield self.service._unsubscribeBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', type = 'headline') => {
