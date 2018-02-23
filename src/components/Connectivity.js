@@ -35,7 +35,7 @@ export default class Connectivity extends React.Component {
 
   tryReconnect = async () => {
     const model = this.props.wocky;
-    if (model.profile && !model.connected && !model.connecting && model.username && model.password && model.host) {
+    if (!model.connected && !model.connecting && model.username && model.password && model.host) {
       this.props.log('TRYING RECONNECT', {level: log.levels.INFO});
       try {
         await model.login();

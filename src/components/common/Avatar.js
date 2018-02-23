@@ -6,6 +6,7 @@ import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
+import {isAlive} from 'mobx-state-tree';
 
 const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
@@ -39,6 +40,9 @@ class Avatar extends React.Component<Props> {
 
   render() {
     const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
+    if (!profile || !isAlive(profile)) {
+      return null;
+    }
     let title = profile.displayName || ' ';
     const showLoader = !(profile.avatar && profile.avatar.loaded);
     title = title.length > 1 ? title[0] : title;

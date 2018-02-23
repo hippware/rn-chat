@@ -1,4 +1,4 @@
-react-native bundle --platform ios --entry-file index.ios.js --dev false --bundle-output ./ios/main.jsbundle --assets-dest ./ios --sourcemap-output ./sourcemap.js
+react-native bundle --platform ios --entry-file index.ios.js --dev false --bundle-output ./ios/main.jsbundle --sourcemap-output ./sourcemap.js
 curl https://upload.bugsnag.com/ \
   -F apiKey=f108fb997359e5519815d5fc58c79ad3 \
   -F appVersion=2.0.12 \
