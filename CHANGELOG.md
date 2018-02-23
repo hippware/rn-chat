@@ -5,6 +5,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.13 - 2018 February 22
+
+* NEW UPDATE CTA: Logout required to receive HS notifications (#1871)
+* Object has died: own profile (#1872)
+* Object is dead (EventBotCard) (#1873)
+
+
 # 2.0.12 - 2018 February 22
 
 * Implement the rest of the analytics calls (#1812)
