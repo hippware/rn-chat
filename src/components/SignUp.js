@@ -122,7 +122,7 @@ class SignUp extends React.Component<{}> {
           </RText>
           <RText>{', and for us to contact you via email\r\nfor updates and information.'}</RText>
         </RText>
-        <Button onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
+        <Button isDisabled={buttonDisabled || !this.props.wocky.connected} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
           {updating ? <Spinner color='white' size={22} /> : 'Done'}
         </Button>
       </KeyboardAwareScrollView>

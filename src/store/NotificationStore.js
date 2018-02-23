@@ -29,8 +29,8 @@ class NotificationStore {
         return {isOffline: !!profile && !connected, connecting};
       },
       ({isOffline, connecting}) => {
-        if (isOffline && !connecting) {
-          offlineNotification = this.show("You're offline 😰", {color: colors.DARK_GREY});
+        if (isOffline) {
+          offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {color: colors.DARK_GREY});
         } else {
           offlineNotification && offlineNotification.close();
         }

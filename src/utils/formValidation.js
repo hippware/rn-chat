@@ -105,7 +105,7 @@ export class ValidatableProfile {
 
   @computed
   get isValid(): boolean {
-    return !!this.handle.isValid && !!this.firstName.isValid && !!this.lastName.isValid && !!this.email.isValid;
+    return !!this.handle.isValid && !!this.firstName.isValid && !!this.lastName.isValid && (!this.email.value || !!this.email.isValid);
   }
 
   get asObject(): Object {
