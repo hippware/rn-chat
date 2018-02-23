@@ -67,9 +67,16 @@ export const Storages = types
             props = (getType(type.create(data)) as any)['properties']
           }
           const res: any = {}
+          if (!props) {
+            console.warn('No properties for type:', type.name)
+            return
+          }
+          if (!data) {
+            return
+          }
           Object.keys(props).forEach((key: string) => {
             if (data[key] !== undefined) {
-              const targetType = props[key].targetType || (props[key].types && props[key].types[0].targetType)
+              const targetType = props[key].targetType || (props[key].types && props[key].types.length && props[key].types[0].targetType)
               if (targetType) {
                 const field = map[targetType.name]
                 // found reference storage
