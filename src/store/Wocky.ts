@@ -3,7 +3,7 @@ import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, fl
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile, IProfile} from '../model/Profile'
+import {Profile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
@@ -51,16 +51,16 @@ export const Wocky = types
       loadProfile: flow(function*(id: string) {
         const isOwn = id === self.username
         const data = yield transport.loadProfile(id)
-        let res: IProfile = self.profiles.get(id, data)
         if (isOwn) {
           if (!self.profile) {
-            self.profile = self.create(OwnProfile, {id, ...data, status: 'available'})
+            const profile = self.create(OwnProfile, {id, ...self._registerReferences(Profile, data), loaded: true, status: 'available'})
+            self.profile = profile
           } else {
             self.load(self.profile, data)
           }
           if (self.profile.handle) self.sessionCount = 3
         }
-        return res
+        return self.profiles.get(id, data)
       })
     }
   })
@@ -443,20 +443,12 @@ export const Wocky = types
     }),
     afterCreate: () => {
       self.events.setRequest(self._loadHomestream)
-      autorun('ProfileStore', async () => {
-        if (self.connected && self.username) {
-          try {
-            await self.loadChats()
-            self.requestRoster()
-          } catch (e) {
-            console.error(e)
-          }
-        }
-      })
       reaction(
-        () => self.connected,
+        () => self.profile && self.connected,
         async (connected: boolean) => {
           if (connected) {
+            await self.loadChats()
+            self.requestRoster()
             if (!self.version) {
               await self.events.load()
             } else {
@@ -470,10 +462,12 @@ export const Wocky = types
       reaction(
         () => self.transport.presence,
         ({id, status}) => {
-          const profile = self.profiles.get(id)
-          profile.setStatus(status)
-          if (profile.isOwn) {
-            self.profile!.setStatus(status)
+          if (self.profile) {
+            const profile = self.profiles.get(id)
+            profile.setStatus(status)
+            if (profile.isOwn) {
+              self.profile!.setStatus(status)
+            }
           }
         }
       )

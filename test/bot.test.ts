@@ -269,8 +269,6 @@ describe('BotStore', () => {
   it('incorporate updates and check bot loading', async done => {
     try {
       expect(user2.events.list.length).to.be.equal(3)
-      console.log('EVENTS:', JSON.stringify(user2.events.list))
-      console.log('UPDATES:', JSON.stringify(user2.updates))
       await user2.incorporateUpdates()
       expect(user2.updates.length).to.be.equal(0)
       expect(user2.events.list.length).to.be.equal(2)

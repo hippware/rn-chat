@@ -47,6 +47,9 @@ export const Profile = types
             ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             subscribedBots = BotPaginableList.create({})
             subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
+            if (!self.loaded) {
+              self.service.loadProfile(self.id)
+            }
           }
         },
         follow: flow(function*() {

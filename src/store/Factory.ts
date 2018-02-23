@@ -32,7 +32,7 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
       },
       get: (id: string, data?: {[key: string]: any}): T => {
         if (!self.storage.get(id)) {
-          const entity = getParent(self).create(type, {id, ...data})
+          const entity = getParent(self).create(type, {id, ...data, loaded: data && !!Object.keys(data).length})
           self.storage.put(entity)
         } else {
           const entity: any = self.storage.get(id)!
