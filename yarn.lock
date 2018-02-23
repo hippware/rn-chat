@@ -8081,9 +8081,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#a3830abeafd47c8e3b6434916b71dd0063c5f68e":
+"wocky-client@github:hippware/wocky-client#cacc5139f392e53a27ea9dd48467574841b80e98":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#a3830abeafd47c8e3b6434916b71dd0063c5f68e"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#cacc5139f392e53a27ea9dd48467574841b80e98"
   dependencies:
     classy-mst "github:charto/classy-mst#develop"
     moment "^2.20.1"
