@@ -120,7 +120,7 @@ describe('ConnectStore', () => {
   it('check profile status', async done => {
     try {
       await user2.disconnect()
-      expect(user2.profile!.status).to.be.equal('unavailable')
+      await waitFor(() => user2.profile!.status === 'unavailable')
       when(() => user1.sortedRoster[0].status === 'unavailable', done)
     } catch (e) {
       done(e)

@@ -18,7 +18,7 @@ import {createPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
-import {processMap} from './utils'
+import {processMap, waitFor} from './utils'
 import {XmppTransport} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
@@ -45,6 +45,25 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
+  .actions(self => {
+    const {transport} = getEnv(self)
+    return {
+      loadProfile: flow(function*(id: string) {
+        const isOwn = id === self.username
+        const data = yield transport.loadProfile(id)
+        let res: IProfile = self.profiles.get(id, data)
+        if (isOwn) {
+          if (!self.profile) {
+            self.profile = self.create(OwnProfile, {id, ...data, status: 'available'})
+          } else {
+            self.load(self.profile, data)
+          }
+          if (self.profile.handle) self.sessionCount = 3
+        }
+        return res
+      })
+    }
+  })
   .extend(self => {
     const {transport} = getEnv(self)
     if (!transport) {
@@ -94,10 +113,15 @@ export const Wocky = types
             throw `Cannot login without username/password/host:${self.username},${self.password},${self.host}`
           }
           yield transport.login(self.username!, self.password!, self.host)
+          yield self.loadProfile(self.username)
+
           self.sessionCount++
           return true
         }),
         disconnect: flow(function*() {
+          if (self.profile) {
+            self.profile!.status = 'unavailable'
+          }
           yield transport.disconnect()
         }),
         remove: flow(function*() {
@@ -112,20 +136,6 @@ export const Wocky = types
           const res = yield transport.testRegister(data, self.host)
           Object.assign(self, res)
           return true
-        }),
-        loadProfile: flow(function*(id: string) {
-          const isOwn = id === self.username
-          const data = yield transport.loadProfile(id)
-          let res: IProfile = self.profiles.get(id, data)
-          if (isOwn) {
-            if (!self.profile) {
-              self.profile = self.create(OwnProfile, {id, ...data, status: 'available'})
-            } else {
-              self.load(self.profile, data)
-            }
-            if (self.profile.handle) self.sessionCount = 3
-          }
-          return res
         }),
         _requestProfiles: flow(function*(users: string[]) {
           const arr = yield transport.requestProfiles(users)
@@ -196,22 +206,28 @@ export const Wocky = types
   }))
   .actions(self => ({
     _follow: flow(function*(username: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.follow(username)
     }),
     _unfollow: flow(function*(username: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.unfollow(username)
     }),
     _block: flow(function*(username: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.block(username)
     }),
     _unblock: flow(function*(username: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.unblock(username)
     }),
     requestRoster: flow(function*() {
+      yield waitFor(() => self.connected)
       const roster = yield self.transport.requestRoster()
       roster.forEach(self.addRosterItem)
     }),
     loadChats: flow(function*(max: number = 50) {
+      yield waitFor(() => self.connected)
       const items = yield self.transport.loadChats(max)
       items.forEach((item: {id: string; message: any}) => {
         const msg = self.create(Message, item.message)
@@ -220,6 +236,7 @@ export const Wocky = types
       })
     }),
     loadBot: flow(function*(id: string, server: any) {
+      yield waitFor(() => self.connected)
       let bot
       try {
         bot = yield self.transport.loadBot(id, server)
@@ -231,12 +248,14 @@ export const Wocky = types
   }))
   .actions(self => ({
     createBot: flow<IBot>(function*() {
+      yield waitFor(() => self.connected)
       const id = yield self.transport.generateId()
       const bot = self.getBot({id, owner: self.username})
       bot.setNew(true)
       return bot
     }),
     removeBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
       // const events = self.events.list.filter(event => event.bot && event.bot === id)
       // events.forEach(event => self.events.remove(event.id))
@@ -246,49 +265,60 @@ export const Wocky = types
       self.bots.delete(id)
     }),
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadOwnBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
+      yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadBotPosts(id, before)
       return {list: list.map((post: any) => self.create(BotPost, post)), count}
     }),
     _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count}
     }),
     _updateBot: flow(function*(bot: IBot) {
+      yield waitFor(() => self.connected)
       yield self.transport.updateBot(bot)
       self.profile!.ownBots.addToTop(bot)
       self.profiles.get(self.username!)!.ownBots.addToTop(bot)
       return {isNew: false}
     }),
     _removeBotPost: flow(function*(id: string, postId: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.removeBotPost(id, postId)
     }),
     _shareBot: (id: string, server: string, recepients: string[], message: string, type: string) => {
       self.transport.shareBot(id, server, recepients, message, type)
     },
     _publishBotPost: flow(function*(post: IBotPost) {
+      yield waitFor(() => self.connected)
       let parent = getParent(post)
       while (!parent.id) parent = getParent(parent)
       const botId = parent.id
       yield self.transport.publishBotPost(botId, post)
     }),
     _subscribeBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       return yield self.transport.subscribeBot(id)
     }),
     _unsubscribeBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
       return yield self.transport.unsubscribeBot(id)
     }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+      yield waitFor(() => self.connected)
       yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
     }),
     _loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
       const res: any = []
       for (let i = 0; i < list.length; i++) {
@@ -304,6 +334,7 @@ export const Wocky = types
       self._addMessage({id: msg.to, message: msg})
     },
     loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
+      yield waitFor(() => self.connected)
       yield self.transport.loadChat(userId, lastId, max)
     }),
     downloadURL: flow(function*(tros: string) {
@@ -319,9 +350,11 @@ export const Wocky = types
       return yield self.transport.downloadTROS(tros)
     }),
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
+      yield waitFor(() => self.connected)
       return yield self.transport.requestUpload({file, size, width, height, access})
     }),
     _loadUpdates: flow(function*() {
+      yield waitFor(() => self.connected)
       const {list, bots, version} = yield self.transport.loadUpdates(self.version)
       bots.forEach(self.getBot)
       self.version = version
@@ -331,6 +364,7 @@ export const Wocky = types
       })
     }),
     _loadHomestream: flow(function*(lastId: any, max: number = 3) {
+      yield waitFor(() => self.connected)
       const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
       bots.forEach(self.getBot)
       self.version = version
@@ -377,9 +411,11 @@ export const Wocky = types
       self.geoBots.put(self.getBot(bot))
     },
     enablePush: flow(function*(token: string) {
+      yield waitFor(() => self.connected)
       yield self.transport.enablePush(token)
     }),
     disablePush: flow(function*() {
+      yield waitFor(() => self.connected)
       yield self.transport.disablePush()
     }),
     setSessionCount: (value: number) => {
@@ -410,16 +446,10 @@ export const Wocky = types
       autorun('ProfileStore', async () => {
         if (self.connected && self.username) {
           try {
-            await self.loadProfile(self.username)
-            self.profile!.setStatus('available')
             await self.loadChats()
             self.requestRoster()
           } catch (e) {
             console.error(e)
-          }
-        } else {
-          if (self.profile) {
-            self.profile!.setStatus('unavailable')
           }
         }
       })
@@ -442,6 +472,9 @@ export const Wocky = types
         ({id, status}) => {
           const profile = self.profiles.get(id)
           profile.setStatus(status)
+          if (profile.isOwn) {
+            self.profile!.setStatus(status)
+          }
         }
       )
       reaction(() => self.transport.rosterItem, self.addRosterItem)

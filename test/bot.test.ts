@@ -250,14 +250,16 @@ describe('BotStore', () => {
       expect(user2.events.list[0].bot.title).to.be.equal('Test bot!!')
       expect(user2.updates.length).to.be.equal(0)
       // verify 2 live notifications
-      // await user1.removeBot(bot.id)
+      await user1.removeBot(bot.id)
+      // bot3.setPublic(false)
+      // await bot3.save()
 
       bot3 = await user1.createBot()
       await bot3.update({title: 'Test bot3', location: {latitude: 1.1, longitude: 2.1}})
-      bot3.setPublic(false)
-      await bot3.save()
+      // bot3.setPublic(false)
+      // await bot3.save()
       bot3.shareToFollowers('hello followers2!') // just swap remove and share and you will not receive 'delete' notifications, why?
-      await waitFor(() => user2.updates.length === 1) // should be 4, but sometimes it fails(?), and why we have 3 updates for single delete?
+      await waitFor(() => user2.updates.length === 4) // should be 4, but sometimes it fails(?), and why we have 3 updates for single delete?
       done()
     } catch (e) {
       done(e)
@@ -267,9 +269,11 @@ describe('BotStore', () => {
   it('incorporate updates and check bot loading', async done => {
     try {
       expect(user2.events.list.length).to.be.equal(3)
+      console.log('EVENTS:', JSON.stringify(user2.events.list))
+      console.log('UPDATES:', JSON.stringify(user2.updates))
       await user2.incorporateUpdates()
       expect(user2.updates.length).to.be.equal(0)
-      expect(user2.events.list.length).to.be.equal(4)
+      expect(user2.events.list.length).to.be.equal(2)
       const user2bot3 = user2.events.list[0].bot
       expect(user2bot3.owner.id).to.be.equal(user1.username)
       expect(user2bot3.location.latitude).to.be.equal(1.1)
@@ -284,19 +288,13 @@ describe('BotStore', () => {
   after('remove', async done => {
     try {
       await user1.removeBot(bot2.id)
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
     try {
       await user1.removeBot(bot.id)
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
     try {
       await user1.removeBot(bot3.id)
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
     try {
       await user1.remove()
       await user2.remove()

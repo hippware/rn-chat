@@ -1,3 +1,4 @@
+export declare function waitFor(condition: () => boolean): Promise<{}>;
 export declare function isArray(res: any): boolean;
 export declare function camelize(str: string): string;
 export declare function processMap(data: {

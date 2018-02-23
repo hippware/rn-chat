@@ -111,7 +111,7 @@ export const Profile = types
           } else if (self.handle) {
             return self.handle
           } else {
-            return '(Not completed)'
+            return ' (Not completed) '
           }
         }
       }

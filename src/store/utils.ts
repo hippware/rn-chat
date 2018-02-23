@@ -1,4 +1,23 @@
-import {isObservableArray} from 'mobx'
+import {when, isObservableArray} from 'mobx'
+
+export async function waitFor(condition: () => boolean) {
+  return new Promise((resolve, reject) => {
+    when(
+      () => {
+        let res = false
+        try {
+          res = condition()
+        } catch (e) {
+          reject(e)
+        }
+        return res
+      },
+      () => {
+        resolve()
+      }
+    )
+  })
+}
 
 function pad(n: number, width: number, z: string = '0') {
   const str: string = n.toString()
