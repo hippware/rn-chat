@@ -706,40 +706,31 @@ for updates and information.
       </Text>
     </Text>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
-      accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
-      isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "alignItems": "center",
-          "alignSelf": "stretch",
-          "backgroundColor": "rgb(254,92,108)",
-          "borderRadius": 8,
-          "borderWidth": 0,
-          "flexDirection": "row",
-          "height": 100,
-          "justifyContent": "center",
-          "marginBottom": 10,
-          "marginLeft": 75,
-          "marginRight": 75,
-          "opacity": 1,
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "alignSelf": "stretch",
+            "borderRadius": 8,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "height": 44,
+            "justifyContent": "center",
+            "marginBottom": 10,
+          },
+          Object {
+            "backgroundColor": "rgb(254,92,108)",
+            "borderRadius": 8,
+            "borderWidth": 0,
+            "height": 100,
+            "marginLeft": 75,
+            "marginRight": 75,
+          },
+          Object {
+            "opacity": 0.5,
+          },
+        ]
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
         accessible={true}

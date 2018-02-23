@@ -19,7 +19,7 @@ type Props = {
 class Right extends React.Component<Props> {
   @observable profile: Profile;
   async componentWillMount() {
-    this.profile = await this.props.wocky.loadProfile(this.props.item);
+    this.profile = await this.props.wocky.getProfile(this.props.item);
   }
   render() {
     if (!this.profile || !isAlive(this.profile)) {

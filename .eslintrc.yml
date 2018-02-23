@@ -7,25 +7,7 @@ globals:
     expect: true
     describe: true
     __DEV__: true
-    fs: true
-    tempDir: true
-    downloadHttpFile: true
-    fileExists: true
-    readFile: true
-    writeFile: true
-    mkdir: true
-    DOMParser: true
-    $iq: true
-    $pres: true
-    $msg: true
-    XMLHttpRequest: true
-    Strophe: true
     navigator: true
-    fetch: true
-    getImageSize: true
-    FormData: true
-    step: true
-    jest: true
 
 extends:
   - airbnb

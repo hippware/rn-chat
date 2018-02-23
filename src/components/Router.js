@@ -126,12 +126,12 @@ class TinyRobotRouter extends React.Component<{}> {
       <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Lightbox>
           <Stack key='rootStack' initial hideNavBar>
-            <Stack key='root' tabs hideTabBar hideNavBar lazy>
+            <Stack key='root' tabs hideTabBar hideNavBar>
               <Stack key='launch' hideNavBar lightbox type='replace'>
                 <Scene key='load' component={Launch} on={store.hydrate} success='checkCredentials' failure='onboarding' />
                 <Scene key='checkCredentials' on={() => wocky.username && wocky.password && wocky.host} success='checkProfile' failure='onboarding' />
-                <Scene key='connect' on={this.login} success='checkProfile' failure='onboarding' />
-                <Scene key='checkProfile' on={async () => wocky.profile || await wocky.loadProfile(wocky.username)} success='checkHandle' failure='connect' />
+                <Scene key='connect' on={this.login} success='checkHandle' failure='onboarding' />
+                <Scene key='checkProfile' on={() => wocky.profile} success='checkHandle' failure='connect' />
                 <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
                 <Scene key='logout' on={firebaseStore.logout} success='onboarding' />
               </Stack>
