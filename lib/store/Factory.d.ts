@@ -530,6 +530,8 @@ export declare const Storages: IModelType<{
                 time?: any;
             } & {
                 loaded?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;

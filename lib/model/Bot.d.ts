@@ -4,7 +4,9 @@ export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
 export declare const Bot: IModelType<{
     id?: any;
-} & {} & {
+} & {
+    id?: any;
+} & {} & {} & {
     id?: any;
     isSubscribed?: any;
     title?: any;
@@ -454,6 +456,8 @@ export declare const Bot: IModelType<{
         time?: any;
     } & {
         loaded?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         content?: any;
