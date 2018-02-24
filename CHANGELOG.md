@@ -5,6 +5,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.15 - 2018 February 23
+
+* Update bugsnag script
+
+
+# 2.0.14 - 2018 February 23
+
+* Update bugsnag, testing, and unit tests
+* Maintain user session token after internet disconnection (#1741)
+* Incorrect avatar loader and user settings gear icon missing on user profile after a clean install (#1875)
+* Un-saving a bot results in infinite spinner on Saved/My Bots List after a kill/reload (#1876)
+* Error in /Users/aksonov/Documents/rn-chat/src/components/SideMenu.js:30 (#1879)
+
+
 # 2.0.13 - 2018 February 22
 
 * NEW UPDATE CTA: Logout required to receive HS notifications (#1871)
