@@ -5,38 +5,44 @@ import {reaction} from 'mobx';
 import {Base} from 'wocky-client';
 import _ from 'lodash';
 
-// const migrations = {
-//   '2.0.0': {
-//     getState: (storage) => {
-//       storage.getItem(modelName, (error: Object, data: string) => {
-//       return storage.getItem('rnchat:model')
-//     },
-//     migrate: (previousState) => {
-//       return _.pick(previousState, ['user', 'server', 'password', 'resource'])
-//     }
-//   }
-// }
-
-function loadFromStorage(storage, key: string) {
-  return new Promise((resolve, reject) => {
-    storage.getItem(key, (error: Object, data: string) => {
-      if (error) reject(error);
-      else resolve(data);
-    });
-  });
-}
-
 export default types.compose(Base, types.model({id: 'Persistable'})).actions((self) => {
-  const {logger, storage} = getEnv(self);
+  const {logger, storage, analytics} = getEnv(self);
 
-  function loadMinimal(parsed: Object, modelName: string) {
+  function loadFromStorage(key: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      storage.getItem(key, (error: Object, data: string) => {
+        if (error) reject(error);
+        else resolve(data);
+      });
+    });
+  }
+
+  function loadMinimal(parsed: Object) {
     logger.log('loadMinimal');
     try {
-      applySnapshot(self.wocky, _.pick(parsed.wocky, ['username', 'password', 'host', 'resource', 'profile']));
+      const {username, password} = parsed.wocky;
+      applySnapshot(self.wocky, {...self.wocky, username, password});
     } catch (err) {
       logger.warn('Minimal hydration error', err);
-      // TODO: mixpanel
+      analytics.track('loadMinimal_fail', parsed);
       throw err;
+    }
+  }
+
+  // try to migrate cached data from 1.x.x to 2.x.x
+  async function tryMigrate() {
+    let data;
+    try {
+      analytics.track('migration_try');
+      const key = 'rnchat:model';
+      data = await loadFromStorage(key);
+      const {user, password} = JSON.parse(data);
+      applySnapshot(self.wocky, {...self.wocky, username: user, password});
+      storage.removeItem('key');
+      analytics.track('migration_success', self.wocky.toJSON());
+    } catch (err) {
+      logger.warn('Data migration error:', err);
+      analytics.track('migration_fail', data);
     }
   }
 
@@ -44,13 +50,17 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
     const modelName = getType(self).name;
     let parsed;
     try {
-      const data = await loadFromStorage(storage, modelName);
+      const data = await loadFromStorage(modelName);
       parsed = JSON.parse(data);
       // throw new Error('Hydrate minimally');
       applySnapshot(self, parsed);
     } catch (err) {
       logger.log('hydration error', modelName, parsed, err);
-      modelName === 'MainStore' && parsed.wocky && loadMinimal(parsed, modelName);
+      if (modelName === 'MainStore' && parsed && parsed.wocky) {
+        loadMinimal(parsed);
+      } else {
+        tryMigrate();
+      }
     }
   }
 
