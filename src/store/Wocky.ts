@@ -478,6 +478,7 @@ export const Wocky = types
         reaction(() => self.transport.message, self._addMessage)
         reaction(() => self.transport.notification, self._onNotification)
       }
-    })
+    }
+  })
 
 export type IWocky = typeof Wocky.Type
