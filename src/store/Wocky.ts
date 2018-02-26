@@ -426,8 +426,6 @@ export const Wocky = types
     logout: flow(function* logout() {
       yield self.disablePush()
       yield self.disconnect()
-      self.username = null
-      self.password = null
       self.profile = null
       self.profiles.clear()
       self.roster.clear()
