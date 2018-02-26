@@ -4,6 +4,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import ApslButton from 'apsl-react-native-button';
 import {k} from './Global';
+import {colors} from '../constants';
 
 type Props = {
   style?: any,
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonStyle: {backgroundColor: 'rgb(254,92,108)'},
+  buttonStyle: {backgroundColor: colors.PINK},
   disabledStyle: {backgroundColor: 'rgb(247,166,175)'},
   textStyle: {
     fontSize: 15 * k,
