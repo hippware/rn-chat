@@ -29,6 +29,12 @@ class SignUp extends React.Component<{}> {
     this.vProfile = this.props.wocky.profile && new ValidatableProfile(this.props.wocky.profile);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.routeName === 'signUp') {
+      this.vProfile = this.props.wocky.profile && new ValidatableProfile(this.props.wocky.profile);
+    }
+  }
+
   done = () => {
     const {profile} = this.props.wocky;
     try {

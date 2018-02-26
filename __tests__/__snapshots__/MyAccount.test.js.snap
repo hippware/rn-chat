@@ -300,8 +300,7 @@ exports[`MyAccount renders 1`] = `
                       Object {
                         "alignItems": "center",
                         "justifyContent": "center",
-                        "marginRight": 20,
-                        "width": 44,
+                        "width": 30,
                       }
                     }
                   />
@@ -403,8 +402,7 @@ exports[`MyAccount renders 1`] = `
                       Object {
                         "alignItems": "center",
                         "justifyContent": "center",
-                        "marginRight": 20,
-                        "width": 44,
+                        "width": 30,
                       }
                     }
                   />
@@ -530,8 +528,7 @@ exports[`MyAccount renders 1`] = `
                       Object {
                         "alignItems": "center",
                         "justifyContent": "center",
-                        "marginRight": 20,
-                        "width": 44,
+                        "width": 30,
                       }
                     }
                   />
@@ -656,8 +653,7 @@ exports[`MyAccount renders 1`] = `
                       Object {
                         "alignItems": "center",
                         "justifyContent": "center",
-                        "marginRight": 20,
-                        "width": 44,
+                        "width": 30,
                       }
                     }
                   />

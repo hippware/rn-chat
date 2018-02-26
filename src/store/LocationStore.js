@@ -1,6 +1,7 @@
 // @flow
 
-import {types, getEnv, flow} from 'mobx-state-tree';
+import {types, getEnv, flow, getParent} from 'mobx-state-tree';
+import {when} from 'mobx';
 
 export const Location = types.model('Location', {
   longitude: types.number,
@@ -43,9 +44,14 @@ const LocationStore = types
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
-    let watch;
+    let wocky, watch;
 
-    function afterCreate() {
+    function afterAttach() {
+      ({wocky} = getParent(self));
+      when(() => wocky.connected, self.initialize);
+    }
+
+    function initialize() {
       self.getCurrentPosition();
 
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
@@ -110,7 +116,7 @@ const LocationStore = types
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR});
     }
 
-    return {afterCreate, beforeDestroy, setPosition, positionError, getCurrentPosition};
+    return {afterAttach, beforeDestroy, setPosition, positionError, getCurrentPosition, initialize};
   });
 
 export default LocationStore;

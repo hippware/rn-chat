@@ -200,10 +200,11 @@ class FakeFileService {
 
 const transport = new XmppTransport();
 const fileService = new FakeFileService();
-const logger = {
-  log: (msg: string, ...params: Array<any>) => console.log(msg, ...params),
-};
-const wocky = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {transport, fileService, logger});
-addMiddleware(wocky, simpleActionLogger);
+const logger = console;
+export function createWocky(env = {}) {
+  const wocky = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {analytics: {track: () => {}}, transport, fileService, logger, ...env});
+  addMiddleware(wocky, simpleActionLogger);
+  return wocky
+}
 
-export default wocky;
+export default createWocky();

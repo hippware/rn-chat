@@ -249,8 +249,7 @@ your phone number.
                       Object {
                         "alignItems": "center",
                         "justifyContent": "center",
-                        "marginRight": 20,
-                        "width": 44,
+                        "width": 30,
                       }
                     }
                   />
@@ -27365,8 +27364,7 @@ your phone number.
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
-                  "marginRight": 20,
-                  "width": 44,
+                  "width": 30,
                 }
               }
             />

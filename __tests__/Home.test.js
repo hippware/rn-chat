@@ -1,6 +1,6 @@
 // @flow
 /* global test */
-
+jest.useFakeTimers(); // according to https://facebook.github.io/jest/docs/en/timer-mocks.html
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';

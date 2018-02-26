@@ -31,7 +31,7 @@ class BotComposePhoto extends React.Component<Props> {
   render() {
     const {bot} = this.props;
     if (!bot || !isAlive(bot)) return null;
-    const image = bot.image && bot.image.loaded ? bot.image.source : require('../../../images/addBotPhoto.png');
+    const image = bot.image && bot.image.loaded ? bot.image.thumbnail : require('../../../images/addBotPhoto.png');
     const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading);
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
