@@ -59,7 +59,7 @@ class FormTextInput extends React.Component<Props> {
             {...this.props}
           />
           {/* </View> */}
-          <View style={{width: 22 * k, justifyContent: 'center', alignItems: 'center', marginRight: 10 * k}}>
+          <View style={{width: 15 * k, justifyContent: 'center', alignItems: 'center'}}>
             {store && store.isValid !== undefined ? (
               store.isValid ? (
                 <Image source={require('../../images/checkMark.png')} />
