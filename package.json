@@ -20,8 +20,7 @@
     "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
-    "deploy:stage": "npm run version:bump && npm run version:tag && npm run version:push && TARGET_ENV=stage npm run version:promote",
-    "promote:prod": "TARGET_ENV=prod npm run version:promote"
+    "deploy:stage": "babel-node ./scripts/deploy-stage.js"
   },
   "jest": {
     "preset": "react-native",
