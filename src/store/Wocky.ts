@@ -422,57 +422,62 @@ export const Wocky = types
       self.sessionCount = value
     }
   }))
-  .actions(self => ({
-    logout: flow(function* logout() {
-      yield self.disablePush()
-      yield self.disconnect()
-      self.profile = null
+  .actions(self => {
+    function clearCache() {
       self.profiles.clear()
       self.roster.clear()
       self.chats.clear()
       self.bots.clear()
       self.geoBots.clear()
-      self.sessionCount = 0
-      self.version = ''
       self.events.refresh()
       self.updates.clear()
-      self.username = null
-      self.password = null
-    }),
-    afterCreate: () => {
-      self.events.setRequest(self._loadHomestream)
-      reaction(
-        () => self.profile && self.connected,
-        async (connected: boolean) => {
-          if (connected) {
-            await self.loadChats()
-            self.requestRoster()
-            if (!self.version) {
-              await self.events.load()
-            } else {
-              await self._loadUpdates()
-            }
-            self._subscribeToHomestream(self.version)
-          }
-        }
-      )
-      reaction(() => self.transport.geoBot, self._onGeoBot)
-      reaction(
-        () => self.transport.presence,
-        ({id, status}) => {
-          if (self.profile) {
-            const profile = self.profiles.get(id)
-            profile.setStatus(status)
-            if (profile.isOwn) {
-              self.profile!.setStatus(status)
-            }
-          }
-        }
-      )
-      reaction(() => self.transport.rosterItem, self.addRosterItem)
-      reaction(() => self.transport.message, self._addMessage)
-      reaction(() => self.transport.notification, self._onNotification)
     }
-  }))
+    return {
+      clearCache,
+      logout: flow(function* logout() {
+        yield self.disablePush()
+        yield self.disconnect()
+        self.profile = null
+        clearCache()
+        self.sessionCount = 0
+        self.version = ''
+        self.username = null
+        self.password = null
+      }),
+      afterCreate: () => {
+        self.events.setRequest(self._loadHomestream)
+        reaction(
+          () => self.profile && self.connected,
+          async (connected: boolean) => {
+            if (connected) {
+              await self.loadChats()
+              self.requestRoster()
+              if (!self.version) {
+                await self.events.load()
+              } else {
+                await self._loadUpdates()
+              }
+              self._subscribeToHomestream(self.version)
+            }
+          }
+        )
+        reaction(() => self.transport.geoBot, self._onGeoBot)
+        reaction(
+          () => self.transport.presence,
+          ({id, status}) => {
+            if (self.profile) {
+              const profile = self.profiles.get(id)
+              profile.setStatus(status)
+              if (profile.isOwn) {
+                self.profile!.setStatus(status)
+              }
+            }
+          }
+        )
+        reaction(() => self.transport.rosterItem, self.addRosterItem)
+        reaction(() => self.transport.message, self._addMessage)
+        reaction(() => self.transport.notification, self._onNotification)
+      }
+    })
 
 export type IWocky = typeof Wocky.Type
