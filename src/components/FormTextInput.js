@@ -56,6 +56,7 @@ class FormTextInput extends React.Component<Props> {
               if (store) store.value = text;
             }}
             value={store && store.value}
+            autoCorrect={false}
             {...this.props}
           />
           {/* </View> */}
