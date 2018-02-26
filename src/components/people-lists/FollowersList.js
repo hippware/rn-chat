@@ -39,10 +39,7 @@ class FollowersList extends React.Component<Props> {
   }
 
   async getList() {
-    if (!this.props.userId) {
-      console.error('userId is not defined');
-    }
-    this.profile = await this.props.wocky.getProfile(this.props.userId);
+    this.profile = this.props.userId ? await this.props.wocky.getProfile(this.props.userId) : this.props.wocky.profile
     if (!this.profile) {
       console.error(`Cannot load profile for user:${this.props.userId}`);
     }
