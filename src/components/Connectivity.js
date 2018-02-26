@@ -11,6 +11,8 @@ export default class Connectivity extends React.Component {
   @observable lastDisconnected = Date.now();
   retryDelay = 1000;
   isActive = true;
+  handler;
+  intervalId;
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -19,16 +21,18 @@ export default class Connectivity extends React.Component {
       this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
-    setInterval(async () => {
+    this.interval = setInterval(async () => {
       const model = this.props.wocky;
       if (this.isActive && !model.connected && !model.connecting && Date.now() - this.lastDisconnected >= this.retryDelay) {
         await this.tryReconnect();
       }
     }, 1000);
-    reaction(() => !this.props.wocky.connected, () => (this.lastDisconnected = Date.now()));
+    this.handler = reaction(() => !this.props.wocky.connected, () => (this.lastDisconnected = Date.now()));
   }
 
   componentWillUnmount() {
+    clearInterval(this.intervalId);
+    this.handler();
     AppState.removeEventListener('change', this._handleAppStateChange);
     NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange);
   }

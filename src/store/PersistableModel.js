@@ -36,9 +36,9 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
       analytics.track('migration_try');
       const key = 'rnchat:model';
       data = await loadFromStorage(key);
-      const {user, password} = JSON.parse(data);
-      applySnapshot(self.wocky, {...self.wocky, username: user, password});
-      storage.removeItem('key');
+      const {user, password, server} = JSON.parse(data);
+      applySnapshot(self.wocky, {...self.wocky, username: user, password, host: server});
+      storage.removeItem(key);
       analytics.track('migration_success', self.wocky.toJSON());
     } catch (err) {
       logger.warn('Data migration error:', err);
@@ -47,6 +47,15 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
   }
 
   async function load() {
+    // Nice way to impersonate QA (it is Miranda's account)
+    // return loadMinimal({
+    //   wocky: {
+    //     id: 'wocky',
+    //     username: '1a175ee4-55d5-11e6-8fee-0eea5386eb69',
+    //     password: '$T$kpVJzlwJgNw3dX85f6+CVU2/gLeaigUGpjLwFvZBDDo=',
+    //     resource: 'cli-resource-ac35c6fb',
+    //   },
+    // });
     const modelName = getType(self).name;
     let parsed;
     try {
@@ -59,7 +68,7 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
       if (modelName === 'MainStore' && parsed && parsed.wocky) {
         loadMinimal(parsed);
       } else {
-        tryMigrate();
+        await tryMigrate();
       }
     }
   }
@@ -71,7 +80,7 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
         reaction(
           () => self.snapshot,
           (json) => {
-            // console.log('persist state:', JSON.stringify(json));
+            console.log('persist state:', JSON.stringify(json));
             storage.setItem(getType(self).name, JSON.stringify(json));
           },
           {fireImmediately: false, delay: 1000},

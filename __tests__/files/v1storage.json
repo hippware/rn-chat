@@ -1,0 +1,1820 @@
+{
+  "id": "root",
+  "registered": true,
+  "friends": {
+    "_list": [
+      {
+        "user": "c89bd0ea-4d09-11e7-9bd4-0e2ac49618c7",
+        "handle": "aaa3",
+        "loaded": true,
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": true,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "handle": "aksonov2",
+        "loaded": true,
+        "firstName": "Pavlo232",
+        "lastName": "Aksonov2",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": true,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "9a62adee-6798-11e7-ba51-0e2ac49618c7",
+        "handle": "aaa1",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "9729c3ce-6626-11e7-80db-0e2ac49618c7",
+        "handle": "aaa",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "8fca51e6-50e3-11e7-a4ec-0eea5386eb69",
+        "handle": "Aaa9",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "8eb0efdc-6627-11e7-abb4-0eea5386eb69",
+        "handle": "aaa2",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "664a31a2-5047-11e7-90f3-0e2ac49618c7",
+        "handle": "Aaa6",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "5f65d212-5045-11e7-b0df-0e600a8611a9",
+        "handle": "Aaa5",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "53b65c8a-6629-11e7-8de6-0e2ac49618c7",
+        "handle": "aaa7",
+        "loaded": true,
+        "firstName": "a",
+        "lastName": "As",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "464bb7d8-5298-11e7-b2ef-0e2ac49618c7",
+        "handle": "Aaa10",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "123",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "425c470c-5048-11e7-bc57-0eea5386eb69",
+        "handle": "Aaa8",
+        "loaded": true,
+        "firstName": "A8",
+        "lastName": "A",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "24fe2fa2-54fa-11e7-ab86-0e2ac49618c7",
+        "handle": "a12",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "B",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": null,
+        "roles": []
+      },
+      {
+        "user": "668079ea-4d0b-11e7-94b5-0e600a8611a9",
+        "handle": "testytester",
+        "loaded": true,
+        "firstName": "Testy",
+        "lastName": "Tester",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": true,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": {
+          "id": "tros:668079ea-4d0b-11e7-94b5-0e600a8611a9@staging.dev.tinyrobot.com/file/5f8e27d2-d5ef-11e7-8a96-0a580a020315-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/5f8e27d2-d5ef-11e7-8a96-0a580a020315-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "roles": []
+      },
+      {
+        "user": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "handle": "becky",
+        "loaded": true,
+        "firstName": "Rebecka",
+        "lastName": "Zavaleta",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": true,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/19de282a-11f1-11e8-8455-0a580a0206c6-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/19de282a-11f1-11e8-8455-0a580a0206c6-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "roles": ["verified", "queen"]
+      },
+      {
+        "user": "5b28b19c-46fe-11e7-8211-0e2ac49618c7",
+        "handle": "kirkham12",
+        "loaded": true,
+        "firstName": "kirky",
+        "lastName": "mckirky",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": false,
+        "isFollowed": false,
+        "hidePosts": false,
+        "avatar": {
+          "id": "tros:5b28b19c-46fe-11e7-8211-0e2ac49618c7@staging.dev.tinyrobot.com/file/cfe0b69c-0bac-11e8-9856-0a580a0206c6-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/cfe0b69c-0bac-11e8-9856-0a580a0206c6-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "roles": []
+      },
+      {
+        "user": "1085a7d6-b26e-11e7-97b3-0a580a0203b8",
+        "handle": "aksonov",
+        "loaded": true,
+        "firstName": "A",
+        "lastName": "Pavel",
+        "isNew": false,
+        "isBlocked": false,
+        "isFollower": true,
+        "isFollowed": true,
+        "hidePosts": false,
+        "avatar": {
+          "id": "tros:1085a7d6-b26e-11e7-97b3-0a580a0203b8@staging.dev.tinyrobot.com/file/651a1702-1162-11e8-9665-0a580a020584-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/651a1702-1162-11e8-9665-0a580a020584-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "roles": []
+      }
+    ]
+  },
+  "messages": [
+    {
+      "id": "s15193015792730119",
+      "archiveId": "APEBUT6U1501",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1519301585395,
+      "body": "1234444",
+      "isHidden": false
+    },
+    {
+      "id": "s15016860280720595",
+      "from": "d6976ac8-5a3a-11e6-8008-0e2ac49618c7",
+      "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "unread": false,
+      "_time": 1501686028187,
+      "body": ";)&",
+      "isHidden": false
+    },
+    {
+      "id": "s15180075164110190",
+      "archiveId": "AP4ULLACQEG1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1518007559000,
+      "body": "123",
+      "isHidden": false
+    },
+    {
+      "id": "s15180075731480738",
+      "archiveId": "AP4ULOM12O81",
+      "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "unread": false,
+      "_time": 1518007573000,
+      "body": "Qwt",
+      "isHidden": false
+    },
+    {
+      "id": "s15103241201610415",
+      "archiveId": "AND1NINK50O1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510324120000,
+      "body": "123123144",
+      "isHidden": false
+    },
+    {
+      "id": "s15103241704650064",
+      "archiveId": "AND1NUNN4PO1",
+      "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "unread": false,
+      "_time": 1510324170000,
+      "body": "Er",
+      "isHidden": false
+    },
+    {
+      "id": "s15103241745050979",
+      "archiveId": "AND1NVM6A981",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510324174000,
+      "body": "123123",
+      "isHidden": false
+    },
+    {
+      "id": "s15103241824840191",
+      "archiveId": "AND1O1J1TAG1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510324182000,
+      "body": "65646",
+      "isHidden": false
+    },
+    {
+      "id": "s15103282540440462",
+      "archiveId": "AND2MCAI7OG1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328254000,
+      "body": "123",
+      "isHidden": false
+    },
+    {
+      "id": "s15103282658810518",
+      "archiveId": "AND2MF50ULO1",
+      "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "unread": false,
+      "_time": 1510328266000,
+      "body": "1235",
+      "isHidden": false
+    },
+    {
+      "id": "s15103283344730821",
+      "archiveId": "AND2MVG5REG1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328334000,
+      "body": "1234",
+      "isHidden": false
+    },
+    {
+      "id": "s15103283463240180",
+      "archiveId": "AND2N2AJP381",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328346000,
+      "body": "12356",
+      "isHidden": false
+    },
+    {
+      "id": "s15103283588760866",
+      "archiveId": "AND2N5ADIA81",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328358000,
+      "body": "21313",
+      "isHidden": false
+    },
+    {
+      "id": "s15103284534620886",
+      "archiveId": "AND2NRRUSTO1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328453000,
+      "body": "123123",
+      "isHidden": false
+    },
+    {
+      "id": "s15103284686780018",
+      "archiveId": "AND2NVG3OT81",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510328468000,
+      "body": "123123",
+      "isHidden": false
+    },
+    {
+      "id": "s15108195672110370",
+      "archiveId": "ANGL3AN11I81",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510819618000,
+      "body": "1234",
+      "isHidden": false
+    },
+    {
+      "id": "s15108196275530899",
+      "archiveId": "ANGL3CSU8SO1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510819627000,
+      "body": "1231234",
+      "isHidden": false
+    },
+    {
+      "id": "s15108261654160598",
+      "archiveId": "ANGMK3KOQ281",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1510826165000,
+      "body": "123",
+      "isHidden": false
+    },
+    {
+      "id": "s15130798833520007",
+      "archiveId": "AO13BJSA1NO1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1513079883000,
+      "body": "Ffgg",
+      "isHidden": false
+    },
+    {
+      "id": "s15130799100750913",
+      "archiveId": "AO13BQ8606O1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1513079910000,
+      "body": "Gtyuhhf",
+      "isHidden": false
+    },
+    {
+      "id": "s15130799168620647",
+      "archiveId": "AO13BRRSFFO1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1513079916000,
+      "body": "Nngffnnm",
+      "isHidden": false
+    },
+    {
+      "id": "s15130799190980404",
+      "archiveId": "AO13BSCTK101",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1513079919000,
+      "body": "Nngffnnm",
+      "isHidden": false
+    },
+    {
+      "id": "s15130800390800082",
+      "archiveId": "AO13CP098HG1",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1513080039000,
+      "body": "Try\nHhhhff\nNnjjittrdsweryuiop",
+      "isHidden": false
+    },
+    {
+      "id": "s15169528172470891",
+      "archiveId": "AOT9378U8O81",
+      "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+      "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+      "unread": false,
+      "_time": 1516952817000,
+      "body": "12313",
+      "isHidden": false
+    }
+  ],
+  "subscribedBots": {
+    "_list": [
+      {
+        "id": "1629ef26-e185-11e7-85a9-0a580a020622",
+        "fullId": "1629ef26-e185-11e7-85a9-0a580a020622/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "T14",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1519046419208,
+        "owner": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 13.733415,
+          "latitude": 45.547355
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 2,
+        "alerts": 0,
+        "address": "Zlati�eva ulica 3, 6000 Koper - Capodistria, Словени�",
+        "addressData": {
+          "city": "�опе�",
+          "country": "Словени�",
+          "county": "",
+          "neighborhood": "",
+          "route": "Zlati�eva ulica",
+          "state": "Koper",
+          "street": "3",
+          "address": ""
+        }
+      },
+      {
+        "id": "156de03a-e183-11e7-b0a5-0a580a02013a",
+        "fullId": "156de03a-e183-11e7-b0a5-0a580a02013a/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "T13",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1513333890078,
+        "owner": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 13.733415,
+          "latitude": 45.547355
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 0,
+        "alerts": 0,
+        "address": "Zlati�eva ulica 3, 6000 Koper - Capodistria, Словени�",
+        "addressData": {
+          "city": "�опе�",
+          "country": "Словени�",
+          "county": "",
+          "neighborhood": "",
+          "route": "Zlati�eva ulica",
+          "state": "Koper",
+          "street": "3",
+          "address": ""
+        }
+      },
+      {
+        "id": "fc1b780e-cb25-11e7-962b-0a580a020312",
+        "fullId": "fc1b780e-cb25-11e7-962b-0a580a020312/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "November 16 @ 5:29",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1510874990786,
+        "owner": "668079ea-4d0b-11e7-94b5-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": -99.218964,
+          "latitude": 36.421075
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 0,
+        "alerts": 0,
+        "address": "E0410 Rd, Mooreland, OK 73852, USA",
+        "addressData": {
+          "city": "Mooreland",
+          "country": "United States",
+          "county": "Woodward County",
+          "neighborhood": "",
+          "route": "E0410 Rd",
+          "state": "OK",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "f7f781b2-bd4e-11e7-a3be-0a580a020160",
+        "fullId": "f7f781b2-bd4e-11e7-a3be-0a580a020160/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1509354349765,
+        "owner": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "followMe": false,
+        "description": "123",
+        "location": {
+          "longitude": 13.733404,
+          "latitude": 45.547347
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 0,
+        "alerts": 0,
+        "address": "Zlati�eva ulica 3, 6000 Koper - Capodistria, Словени�",
+        "addressData": {
+          "city": "�опе�",
+          "country": "SI",
+          "county": "",
+          "neighborhood": "",
+          "route": "Zlati�eva ulica",
+          "state": "Koper",
+          "street": "3",
+          "address": ""
+        }
+      },
+      {
+        "id": "aad7acb2-9d10-11e7-a672-0a580a020377",
+        "fullId": "aad7acb2-9d10-11e7-a672-0a580a020377/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test ",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1505812135228,
+        "owner": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 13.734815,
+          "latitude": 45.54345
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 4,
+        "alerts": 0,
+        "address": "Kolodvorska cesta 1, 6000 Koper - Capodistria, Словени�",
+        "addressData": {
+          "city": "",
+          "country": "",
+          "county": "",
+          "neighborhood": "",
+          "route": "",
+          "state": "",
+          "street": "",
+          "address": "Kolodvorska cesta 1, 6000 Koper - Capodistria, Словени�"
+        }
+      },
+      {
+        "id": "e974e2c0-9d0e-11e7-be99-0a580a020377",
+        "fullId": "e974e2c0-9d0e-11e7-be99-0a580a020377/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test bot",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1505809630089,
+        "owner": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 13.734742,
+          "latitude": 45.547884
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 0,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 1,
+        "totalItems": 3,
+        "alerts": 0,
+        "address": "Cankarjeva ulica 6, 6000 Koper - Capodistria, Словени�",
+        "addressData": {
+          "city": "",
+          "country": "",
+          "county": "",
+          "neighborhood": "",
+          "route": "",
+          "state": "",
+          "street": "",
+          "address": "Cankarjeva ulica 6, 6000 Koper - Capodistria, Словени�"
+        }
+      },
+      {
+        "id": "cafe28cc-8749-11e7-9e70-0eea5386eb69",
+        "fullId": "cafe28cc-8749-11e7-9e70-0eea5386eb69/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Really Big Bot",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1504811727622,
+        "owner": "668079ea-4d0b-11e7-94b5-0e600a8611a9",
+        "followMe": false,
+        "description":
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, met",
+        "location": {
+          "longitude": -95.991951,
+          "latitude": 36.153276
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "location",
+        "visibility": 0,
+        "subscribers": [],
+        "affiliates": [],
+        "image": {
+          "id": "tros:668079ea-4d0b-11e7-94b5-0e600a8611a9@staging.dev.tinyrobot.com/file/10079fd4-874a-11e7-8319-0e2ac49618c7",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/10079fd4-874a-11e7-8319-0e2ac49618c7/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 1000,
+          "height": 1000
+        },
+        "thumbnail": {
+          "id": "tros:668079ea-4d0b-11e7-94b5-0e600a8611a9@staging.dev.tinyrobot.com/file/10079fd4-874a-11e7-8319-0e2ac49618c7-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/10079fd4-874a-11e7-8319-0e2ac49618c7-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "followersSize": 1,
+        "totalItems": 15,
+        "alerts": 0,
+        "address": "1 W 3rd St, Tulsa, OK 74103, USA",
+        "addressData": {
+          "city": "",
+          "country": "",
+          "county": "",
+          "neighborhood": "",
+          "route": "",
+          "state": "",
+          "street": "",
+          "address": "1 W 3rd St, Tulsa, OK 74103, USA"
+        }
+      }
+    ]
+  },
+  "ownBots": {
+    "_list": []
+  },
+  "eventBots": {
+    "_list": [
+      {
+        "id": "9c29900e-18d0-11e8-8c90-0a580a0206dc",
+        "fullId": "9c29900e-18d0-11e8-8c90-0a580a0206dc/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test 3",
+        "isFollowed": false,
+        "isSubscribed": false,
+        "_updated": 1519414494878,
+        "owner": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": -118.336085,
+          "latitude": 34.323408
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 0,
+        "totalItems": 0,
+        "alerts": 0,
+        "address": "14368-14496 Little Tujunga Canyon Rd, Sylmar, CA 91342, USA",
+        "addressData": {
+          "city": "",
+          "country": "United States",
+          "county": "Los Angeles County",
+          "neighborhood": "",
+          "route": "",
+          "state": "CA",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "a28145aa-18d0-11e8-ba37-0a580a0206dc",
+        "fullId": "a28145aa-18d0-11e8-ba37-0a580a0206dc/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test 4",
+        "isFollowed": false,
+        "isSubscribed": false,
+        "_updated": 1519416061510,
+        "owner": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": -118.314647,
+          "latitude": 34.367925
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": null,
+        "thumbnail": null,
+        "followersSize": 0,
+        "totalItems": 3,
+        "alerts": 0,
+        "address": "Forest Rte 3N32, Sylmar, CA 91342, USA",
+        "addressData": {
+          "city": "",
+          "country": "United States",
+          "county": "Los Angeles County",
+          "neighborhood": "",
+          "route": "",
+          "state": "CA",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "2ea42888-1acd-11e8-b8f6-0a580a0206dc",
+        "fullId": "2ea42888-1acd-11e8-b8f6-0a580a0206dc/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Maruši�eva ulica 23, 6000 Koper - Capodistria, Slovenia",
+        "isFollowed": false,
+        "isSubscribed": true,
+        "_updated": 1519632932485,
+        "owner": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 13.732464,
+          "latitude": 45.546525
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": {
+          "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/35c3bf70-1acd-11e8-a254-0a580a0206dc",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/35c3bf70-1acd-11e8-a254-0a580a0206dc/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 1000,
+          "height": 1000
+        },
+        "thumbnail": {
+          "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/35c3bf70-1acd-11e8-a254-0a580a0206dc-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/35c3bf70-1acd-11e8-a254-0a580a0206dc-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "followersSize": 0,
+        "totalItems": 0,
+        "alerts": 0,
+        "address": "Maruši�eva ulica 23, 6000 Koper - Capodistria, Slovenia",
+        "addressData": {
+          "city": "Koper",
+          "country": "Slovenia",
+          "county": "",
+          "neighborhood": "",
+          "route": "",
+          "state": "Koper",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "81b724f2-18d0-11e8-868e-0a580a0206dc",
+        "fullId": "81b724f2-18d0-11e8-868e-0a580a0206dc/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test 1",
+        "isFollowed": false,
+        "isSubscribed": false,
+        "_updated": 1519415995495,
+        "owner": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": -118.354828,
+          "latitude": 34.221211
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/89705970-18d0-11e8-84ae-0a580a0206dc",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/89705970-18d0-11e8-84ae-0a580a0206dc/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 1000,
+          "height": 1000
+        },
+        "thumbnail": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/89705970-18d0-11e8-84ae-0a580a0206dc-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/89705970-18d0-11e8-84ae-0a580a0206dc-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "followersSize": 0,
+        "totalItems": 1,
+        "alerts": 0,
+        "address": "8305-8309 Valecrest Dr, Sun Valley, CA 91352, USA",
+        "addressData": {
+          "city": "Los Angeles",
+          "country": "United States",
+          "county": "Los Angeles County",
+          "neighborhood": "",
+          "route": "",
+          "state": "CA",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "8f43c3d2-18d0-11e8-900a-0a580a0206dc",
+        "fullId": "8f43c3d2-18d0-11e8-900a-0a580a0206dc/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Test 2",
+        "isFollowed": false,
+        "isSubscribed": false,
+        "_updated": 1519415987431,
+        "owner": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": -118.360297,
+          "latitude": 34.341611
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/981c06ae-18d0-11e8-8dae-0a580a0206dc",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/981c06ae-18d0-11e8-8dae-0a580a0206dc/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 1000,
+          "height": 1000
+        },
+        "thumbnail": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/981c06ae-18d0-11e8-8dae-0a580a0206dc-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/981c06ae-18d0-11e8-8dae-0a580a0206dc-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "followersSize": 0,
+        "totalItems": 2,
+        "alerts": 0,
+        "address": "Kagel Truck Trail, Sylmar, CA 91342, USA",
+        "addressData": {
+          "city": "",
+          "country": "United States",
+          "county": "Los Angeles County",
+          "neighborhood": "",
+          "route": "",
+          "state": "CA",
+          "street": "",
+          "address": ""
+        }
+      },
+      {
+        "id": "7b3abfba-18c8-11e8-938f-0a580a020223",
+        "fullId": "7b3abfba-18c8-11e8-938f-0a580a020223/staging.dev.tinyrobot.com",
+        "server": "staging.dev.tinyrobot.com",
+        "title": "Bangkok",
+        "isFollowed": false,
+        "isSubscribed": false,
+        "_updated": 1519416208159,
+        "owner": "a4b48f7e-8f21-11e6-b86d-0e600a8611a9",
+        "followMe": false,
+        "description": "",
+        "location": {
+          "longitude": 99.192568,
+          "latitude": 18.630148
+        },
+        "tags": [],
+        "radius": 30,
+        "type": "",
+        "visibility": 100,
+        "subscribers": [],
+        "affiliates": [],
+        "image": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/8c49b5b8-18c8-11e8-ba4c-0a580a020223",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/8c49b5b8-18c8-11e8-ba4c-0a580a020223/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 1000,
+          "height": 1000
+        },
+        "thumbnail": {
+          "id": "tros:a4b48f7e-8f21-11e6-b86d-0e600a8611a9@staging.dev.tinyrobot.com/file/8c49b5b8-18c8-11e8-ba4c-0a580a020223-thumbnail",
+          "source": {
+            "uri":
+              "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/8c49b5b8-18c8-11e8-ba4c-0a580a020223-thumbnail/file.jpeg",
+            "contentType": "image/jpeg",
+            "cached": true
+          },
+          "width": 360,
+          "height": 360
+        },
+        "followersSize": 2,
+        "totalItems": 4,
+        "alerts": 0,
+        "address": "Unnamed Road, Tambon Ban Thi, Amphoe Ban Thi, Chang Wat Lamphun 51180, Thailand",
+        "addressData": {
+          "city": "Tambon Ban Thi",
+          "country": "Thailand",
+          "county": "Amphoe Ban Thi",
+          "neighborhood": "",
+          "route": "",
+          "state": "�.ลำ�ู�",
+          "street": "",
+          "address": ""
+        }
+      }
+    ]
+  },
+  "chats": {
+    "_list": [
+      {
+        "id": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+        "loaded": false,
+        "time": 1519637575462,
+        "_messages": [
+          {
+            "id": "s15193015792730119",
+            "archiveId": "APEBUT6U1501",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1519301585395,
+            "body": "1234444",
+            "isHidden": false
+          },
+          {
+            "id": "s15180075164110190",
+            "archiveId": "AP4ULLACQEG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1518007559000,
+            "body": "123",
+            "isHidden": false
+          },
+          {
+            "id": "s15180075731480738",
+            "archiveId": "AP4ULOM12O81",
+            "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "unread": false,
+            "_time": 1518007573000,
+            "body": "Qwt",
+            "isHidden": false
+          },
+          {
+            "id": "s15180076564680928",
+            "archiveId": "AP4UMIB1VCO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/1ea6cd7c-0c05-11e8-ad3e-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/1ea6cd7c-0c05-11e8-ad3e-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518007680000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180118336330839",
+            "archiveId": "AP4VLO6AKRO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/dcd509f4-0c0e-11e8-8c89-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/dcd509f4-0c0e-11e8-8c89-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518011866000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180120284880530",
+            "archiveId": "AP4VNAC7JNG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/5b1de0a6-0c0f-11e8-86f7-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/5b1de0a6-0c0f-11e8-86f7-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518012076000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180123887030442",
+            "archiveId": "AP4VPTISLG81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/2a881280-0c10-11e8-b2c4-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/2a881280-0c10-11e8-b2c4-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518012425000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180129124590834",
+            "archiveId": "AP4VTS4NQC01",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/673cf1ae-0c11-11e8-a8b7-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/673cf1ae-0c11-11e8-a8b7-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518012956000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180138388940016",
+            "archiveId": "AP504MA00F01",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/8893977a-0c13-11e8-a0f2-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/8893977a-0c13-11e8-a0f2-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518013871000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180140645790222",
+            "archiveId": "AP506FJ7HNO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/15e7475c-0c14-11e8-9edb-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/15e7475c-0c14-11e8-9edb-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014111000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180141118840479",
+            "archiveId": "AP506OU3RL81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/2ecb6118-0c14-11e8-9d48-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/2ecb6118-0c14-11e8-9d48-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014151000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180141814770495",
+            "archiveId": "AP5078AJPUG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/55b1c3d0-0c14-11e8-a911-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/55b1c3d0-0c14-11e8-a911-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014215000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180143049270183",
+            "archiveId": "AP5089AU3601",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/9c46776e-0c14-11e8-82b6-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/9c46776e-0c14-11e8-82b6-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014354000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180147919470591",
+            "archiveId": "AP50BPSDUH01",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/c1563462-0c15-11e8-8075-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/c1563462-0c15-11e8-8075-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014826000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180148934640410",
+            "archiveId": "AP50CIE5RSO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/fe591618-0c15-11e8-8540-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/fe591618-0c15-11e8-8540-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518014929000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180150482100626",
+            "archiveId": "AP50DL6LFI81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/58314782-0c16-11e8-8f06-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/58314782-0c16-11e8-8f06-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518015074000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180150747570955",
+            "archiveId": "AP50DR2FEC01",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/66e0dd9c-0c16-11e8-95db-0a580a020584",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/66e0dd9c-0c16-11e8-95db-0a580a020584/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518015099000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180152577810651",
+            "archiveId": "AP50F94IP101",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/d9f8612e-0c16-11e8-b079-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/d9f8612e-0c16-11e8-b079-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518015292000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180157300120214",
+            "archiveId": "AP50JPAJRJ81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/428360a8-0c18-11e8-959b-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/428360a8-0c18-11e8-959b-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518015897000,
+            "isHidden": false
+          },
+          {
+            "id": "s15180165062110882",
+            "archiveId": "AP50ONE4R5G1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "media": {
+              "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/cdc974b2-0c19-11e8-bb82-0a580a0206c6",
+              "source": {
+                "uri":
+                  "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/cdc974b2-0c19-11e8-bb82-0a580a0206c6/file.jpeg",
+                "contentType": "image/jpeg",
+                "cached": true
+              },
+              "width": 1000,
+              "height": 1000
+            },
+            "unread": false,
+            "_time": 1518016560000,
+            "isHidden": false
+          },
+          {
+            "id": "s15103241201610415",
+            "archiveId": "AND1NINK50O1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510324120000,
+            "body": "123123144",
+            "isHidden": false
+          },
+          {
+            "id": "s15103241704650064",
+            "archiveId": "AND1NUNN4PO1",
+            "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "unread": false,
+            "_time": 1510324170000,
+            "body": "Er",
+            "isHidden": false
+          },
+          {
+            "id": "s15103241745050979",
+            "archiveId": "AND1NVM6A981",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510324174000,
+            "body": "123123",
+            "isHidden": false
+          },
+          {
+            "id": "s15103241824840191",
+            "archiveId": "AND1O1J1TAG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510324182000,
+            "body": "65646",
+            "isHidden": false
+          },
+          {
+            "id": "s15103282540440462",
+            "archiveId": "AND2MCAI7OG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328254000,
+            "body": "123",
+            "isHidden": false
+          },
+          {
+            "id": "s15103282658810518",
+            "archiveId": "AND2MF50ULO1",
+            "from": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "unread": false,
+            "_time": 1510328266000,
+            "body": "1235",
+            "isHidden": false
+          },
+          {
+            "id": "s15103283344730821",
+            "archiveId": "AND2MVG5REG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328334000,
+            "body": "1234",
+            "isHidden": false
+          },
+          {
+            "id": "s15103283463240180",
+            "archiveId": "AND2N2AJP381",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328346000,
+            "body": "12356",
+            "isHidden": false
+          },
+          {
+            "id": "s15103283588760866",
+            "archiveId": "AND2N5ADIA81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328358000,
+            "body": "21313",
+            "isHidden": false
+          },
+          {
+            "id": "s15103284534620886",
+            "archiveId": "AND2NRRUSTO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328453000,
+            "body": "123123",
+            "isHidden": false
+          },
+          {
+            "id": "s15103284686780018",
+            "archiveId": "AND2NVG3OT81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510328468000,
+            "body": "123123",
+            "isHidden": false
+          },
+          {
+            "id": "s15108195672110370",
+            "archiveId": "ANGL3AN11I81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510819618000,
+            "body": "1234",
+            "isHidden": false
+          },
+          {
+            "id": "s15108196275530899",
+            "archiveId": "ANGL3CSU8SO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510819627000,
+            "body": "1231234",
+            "isHidden": false
+          },
+          {
+            "id": "s15108261654160598",
+            "archiveId": "ANGMK3KOQ281",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1510826165000,
+            "body": "123",
+            "isHidden": false
+          },
+          {
+            "id": "s15130798833520007",
+            "archiveId": "AO13BJSA1NO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1513079883000,
+            "body": "Ffgg",
+            "isHidden": false
+          },
+          {
+            "id": "s15130799100750913",
+            "archiveId": "AO13BQ8606O1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1513079910000,
+            "body": "Gtyuhhf",
+            "isHidden": false
+          },
+          {
+            "id": "s15130799168620647",
+            "archiveId": "AO13BRRSFFO1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1513079916000,
+            "body": "Nngffnnm",
+            "isHidden": false
+          },
+          {
+            "id": "s15130799190980404",
+            "archiveId": "AO13BSCTK101",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1513079919000,
+            "body": "Nngffnnm",
+            "isHidden": false
+          },
+          {
+            "id": "s15130800390800082",
+            "archiveId": "AO13CP098HG1",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1513080039000,
+            "body": "Try\nHhhhff\nNnjjittrdsweryuiop",
+            "isHidden": false
+          },
+          {
+            "id": "s15169528172470891",
+            "archiveId": "AOT9378U8O81",
+            "from": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "to": "81620fb2-4d06-11e7-bc3d-0eea5386eb69",
+            "unread": false,
+            "_time": 1516952817000,
+            "body": "12313",
+            "isHidden": false
+          }
+        ],
+        "_participants": ["81620fb2-4d06-11e7-bc3d-0eea5386eb69"]
+      },
+      {
+        "id": "d6976ac8-5a3a-11e6-8008-0e2ac49618c7",
+        "loaded": false,
+        "time": 1519637575464,
+        "_messages": [
+          {
+            "id": "s15016860280720595",
+            "from": "d6976ac8-5a3a-11e6-8008-0e2ac49618c7",
+            "to": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+            "unread": false,
+            "_time": 1501686028187,
+            "body": ";)&",
+            "isHidden": false
+          }
+        ],
+        "_participants": ["d6976ac8-5a3a-11e6-8008-0e2ac49618c7"]
+      }
+    ]
+  },
+  "profile": {
+    "user": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+    "handle": "firstUser23",
+    "tagline": "",
+    "loaded": true,
+    "firstName": "Pavlo",
+    "lastName": "Aksonov",
+    "email": "A@a2.com",
+    "phoneNumber": "+15551",
+    "isNew": false,
+    "isBlocked": false,
+    "isFollower": false,
+    "isFollowed": false,
+    "hidePosts": false,
+    "botsSize": "9",
+    "followersSize": "5",
+    "followedSize": "8",
+    "avatar": {
+      "id": "tros:aa6b9246-4ce5-11e7-9306-0e2ac49618c7@staging.dev.tinyrobot.com/file/f12b93c6-118d-11e8-927d-0a580a020584-thumbnail",
+      "source": {
+        "uri":
+          "/Users/aksonov/Library/Developer/CoreSimulator/Devices/54515298-AB1C-4A21-86DA-69051022826C/data/Containers/Data/Application/3089805E-E44F-468A-935C-DBC77CF2ACDD/Library/Caches/f12b93c6-118d-11e8-927d-0a580a020584-thumbnail/file.jpeg",
+        "contentType": "image/jpeg",
+        "cached": true
+      },
+      "width": 360,
+      "height": 360
+    },
+    "roles": []
+  },
+  "events": {
+    "version": "2018-02-26T08:15:32.896722Z",
+    "nextVersion": "2018-02-26T08:15:32.896722Z",
+    "_list": [
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/7b3abfba-18c8-11e8-938f-0a580a020223",
+          "bot": "7b3abfba-18c8-11e8-938f-0a580a020223/staging.dev.tinyrobot.com",
+          "time": 1519411028070,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      },
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/81b724f2-18d0-11e8-868e-0a580a0206dc",
+          "bot": "81b724f2-18d0-11e8-868e-0a580a0206dc/staging.dev.tinyrobot.com",
+          "time": 1519414461731,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      },
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/8f43c3d2-18d0-11e8-900a-0a580a0206dc",
+          "bot": "8f43c3d2-18d0-11e8-900a-0a580a0206dc/staging.dev.tinyrobot.com",
+          "time": 1519414483616,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      },
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/9c29900e-18d0-11e8-8c90-0a580a0206dc",
+          "bot": "9c29900e-18d0-11e8-8c90-0a580a0206dc/staging.dev.tinyrobot.com",
+          "time": 1519414495717,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      },
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/a28145aa-18d0-11e8-ba37-0a580a0206dc",
+          "bot": "a28145aa-18d0-11e8-ba37-0a580a0206dc/staging.dev.tinyrobot.com",
+          "time": 1519414506469,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      },
+      {
+        "unread": true,
+        "bot": {
+          "_id": "staging.dev.tinyrobot.com/bot/2ea42888-1acd-11e8-b8f6-0a580a0206dc",
+          "bot": "2ea42888-1acd-11e8-b8f6-0a580a0206dc/staging.dev.tinyrobot.com",
+          "time": 1519632932896,
+          "_isHidden": false,
+          "isPendingDelete": false
+        }
+      }
+    ]
+  },
+  "user": "aa6b9246-4ce5-11e7-9306-0e2ac49618c7",
+  "server": "staging.dev.tinyrobot.com",
+  "password": "$T$bu7UzdsAw604ihYjnXQa93f1a4WzGfiTDL1XOMkeTRo=",
+  "resource": "8D4E99AE-3273-43C4-B9FA-13CC2277E9F9",
+  "sessionCount": 1,
+  "codePushChannel": null,
+  "botsCreatedCount": 0,
+  "bundleVersion": [1, 65, 3]
+}
