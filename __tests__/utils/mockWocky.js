@@ -204,7 +204,7 @@ const logger = console;
 export function createWocky(env = {}) {
   const wocky = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {analytics: {track: () => {}}, transport, fileService, logger, ...env});
   addMiddleware(wocky, simpleActionLogger);
-  return wocky
+  return wocky;
 }
 
 export default createWocky();
