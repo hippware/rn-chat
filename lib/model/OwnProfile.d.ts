@@ -14,13 +14,12 @@ export declare const OwnProfile: IModelType<{
     isBlocked?: any;
     isFollowed?: any;
     isFollower?: any;
+    isNew?: any;
     followersSize?: any;
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {
-    id?: any;
-} & {} & {} & {
+} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {
@@ -45,12 +44,11 @@ export declare const OwnProfile: IModelType<{
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
+    isNew: boolean;
     followersSize: number;
     followedSize: number;
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
-} & {
-    isNew: boolean;
 } & {
     afterAttach: () => void;
     follow: () => Promise<{}>;

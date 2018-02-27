@@ -39,12 +39,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -202,12 +201,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -338,8 +336,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -394,12 +390,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -575,12 +570,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -711,8 +705,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -745,12 +737,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -909,12 +900,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1087,12 +1077,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1273,12 +1262,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1428,12 +1416,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1599,12 +1586,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1762,12 +1748,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1898,8 +1883,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1954,12 +1937,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2135,12 +2117,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2271,8 +2252,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2305,12 +2284,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2469,12 +2447,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2647,12 +2624,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2833,12 +2809,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2988,12 +2963,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -3148,12 +3122,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -3311,12 +3284,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3447,8 +3419,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3503,12 +3473,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3684,12 +3653,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3820,8 +3788,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3854,12 +3820,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4018,12 +3983,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4196,12 +4160,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4382,12 +4345,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4537,12 +4499,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4697,12 +4658,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4860,12 +4820,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4996,8 +4955,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5052,12 +5009,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5233,12 +5189,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5369,8 +5324,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5403,12 +5356,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -5567,12 +5519,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5745,12 +5696,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5931,12 +5881,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6086,12 +6035,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6246,12 +6194,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6409,12 +6356,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6545,8 +6491,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -6601,12 +6545,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6782,12 +6725,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6918,8 +6860,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -6952,12 +6892,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7116,12 +7055,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7294,12 +7232,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7480,12 +7417,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7635,12 +7571,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7794,12 +7729,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7957,12 +7891,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8093,8 +8026,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8149,12 +8080,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8330,12 +8260,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8466,8 +8395,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8500,12 +8427,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8664,12 +8590,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8842,12 +8767,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9028,12 +8952,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9183,12 +9106,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -9342,12 +9264,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -9505,12 +9426,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9641,8 +9561,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9697,12 +9615,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9878,12 +9795,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10014,8 +9930,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -10048,12 +9962,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10212,12 +10125,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10390,12 +10302,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10576,12 +10487,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -10731,12 +10641,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10889,12 +10798,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -11052,12 +10960,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11188,8 +11095,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -11244,12 +11149,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11425,12 +11329,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11561,8 +11464,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -11595,12 +11496,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -11759,12 +11659,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11937,12 +11836,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12123,12 +12021,11 @@ export declare const Chats: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12278,12 +12175,11 @@ export declare const Chats: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;

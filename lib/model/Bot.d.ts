@@ -4,9 +4,7 @@ export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
 export declare const Bot: IModelType<{
     id?: any;
-} & {
-    id?: any;
-} & {} & {} & {
+} & {} & {
     id?: any;
     isSubscribed?: any;
     title?: any;
@@ -74,12 +72,11 @@ export declare const Bot: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -326,12 +323,11 @@ export declare const Bot: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -456,8 +452,6 @@ export declare const Bot: IModelType<{
         time?: any;
     } & {
         loaded?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         content?: any;

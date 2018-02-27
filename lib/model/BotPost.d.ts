@@ -6,8 +6,6 @@ export declare const BotPost: IModelType<{
     time?: any;
 } & {
     loaded?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     content?: any;
@@ -65,12 +63,11 @@ export declare const BotPost: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;

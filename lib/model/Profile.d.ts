@@ -14,6 +14,7 @@ export declare const Profile: IModelType<{
     isBlocked?: any;
     isFollowed?: any;
     isFollower?: any;
+    isNew?: any;
     followersSize?: any;
     followedSize?: any;
     botsSize?: any;
@@ -40,12 +41,11 @@ export declare const Profile: IModelType<{
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
+    isNew: boolean;
     followersSize: number;
     followedSize: number;
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
-} & {
-    isNew: boolean;
 } & {
     afterAttach: () => void;
     follow: () => Promise<{}>;

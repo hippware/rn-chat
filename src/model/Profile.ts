@@ -22,6 +22,7 @@ export const Profile = types
       isBlocked: false,
       isFollowed: false,
       isFollower: false,
+      isNew: false,
       followersSize: 0,
       followedSize: 0,
       botsSize: 0,
@@ -29,9 +30,6 @@ export const Profile = types
     })
   )
   .named('Profile')
-  .volatile(self => ({
-    isNew: false
-  }))
   .extend(self => {
     let followers: IProfilePaginableList, followed: IProfilePaginableList, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
     const {BotPaginableList} = require('./Bot')

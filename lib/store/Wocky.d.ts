@@ -85,12 +85,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -254,12 +253,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -506,12 +504,11 @@ export declare const EventEntity: IType<({
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -682,12 +679,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -852,12 +848,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1016,12 +1011,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1185,12 +1179,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -1437,12 +1430,11 @@ export declare const EventEntity: IType<({
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -1613,12 +1605,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1772,12 +1763,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -1941,12 +1931,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2193,12 +2182,11 @@ export declare const EventEntity: IType<({
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -2369,12 +2357,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2533,12 +2520,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -2689,12 +2675,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -2846,12 +2831,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -3015,12 +2999,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -3267,12 +3250,11 @@ export declare const EventEntity: IType<({
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -3443,12 +3425,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -3602,12 +3583,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -3771,12 +3751,11 @@ export declare const EventEntity: IType<({
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -4023,12 +4002,11 @@ export declare const EventEntity: IType<({
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -4199,12 +4177,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4341,12 +4318,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4482,12 +4458,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4639,12 +4614,11 @@ export declare const EventEntity: IType<({
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -4942,12 +4916,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -5194,12 +5167,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -5385,12 +5357,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -5548,12 +5519,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -5690,12 +5660,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -5862,12 +5831,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6031,12 +5999,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6283,12 +6250,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -6459,12 +6425,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6629,12 +6594,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -6793,12 +6757,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -6962,12 +6925,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7214,12 +7176,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -7390,12 +7351,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7549,12 +7509,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -7718,12 +7677,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -7970,12 +7928,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -8146,12 +8103,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8310,12 +8266,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -8466,12 +8421,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8623,12 +8577,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -8792,12 +8745,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9044,12 +8996,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9220,12 +9171,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -9379,12 +9329,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -9548,12 +9497,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -9800,12 +9748,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -9976,12 +9923,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10118,12 +10064,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10259,12 +10204,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10416,12 +10360,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10660,12 +10603,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -10912,12 +10854,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11104,12 +11045,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11267,12 +11207,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11457,12 +11396,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11638,12 +11576,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -11806,12 +11743,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -11970,12 +11906,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12148,12 +12083,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12334,12 +12268,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -12489,12 +12422,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12660,12 +12592,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -12823,12 +12754,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13013,12 +12943,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13194,12 +13123,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13362,12 +13290,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -13526,12 +13453,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13704,12 +13630,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -13890,12 +13815,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14045,12 +13969,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14205,12 +14128,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -14368,12 +14290,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14558,12 +14479,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14739,12 +14659,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -14907,12 +14826,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15071,12 +14989,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15249,12 +15166,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15435,12 +15351,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -15590,12 +15505,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15750,12 +15664,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -15913,12 +15826,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16103,12 +16015,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16284,12 +16195,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16452,12 +16362,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -16616,12 +16525,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16794,12 +16702,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -16980,12 +16887,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17135,12 +17041,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17295,12 +17200,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -17458,12 +17362,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17648,12 +17551,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17829,12 +17731,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -17997,12 +17898,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18161,12 +18061,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18339,12 +18238,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18525,12 +18423,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -18680,12 +18577,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -18839,12 +18735,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -19002,12 +18897,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19192,12 +19086,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19373,12 +19266,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19541,12 +19433,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -19705,12 +19596,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -19883,12 +19773,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20069,12 +19958,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20224,12 +20112,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20383,12 +20270,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -20546,12 +20432,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20736,12 +20621,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -20917,12 +20801,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21085,12 +20968,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21249,12 +21131,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21427,12 +21308,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21613,12 +21493,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -21768,12 +21647,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -21926,12 +21804,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22089,12 +21966,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22279,12 +22155,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22460,12 +22335,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22628,12 +22502,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -22792,12 +22665,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -22970,12 +22842,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -23156,12 +23027,11 @@ export declare const Wocky: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
+                    isNew: boolean;
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    isNew: boolean;
                 } & {
                     afterAttach: () => void;
                     follow: () => Promise<{}>;
@@ -23311,12 +23181,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -23485,12 +23354,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -23648,12 +23516,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -23838,12 +23705,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24019,12 +23885,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24187,12 +24052,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -24351,12 +24215,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24529,12 +24392,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24715,12 +24577,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -24870,12 +24731,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -25020,12 +24880,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25161,12 +25020,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25301,12 +25159,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25441,12 +25298,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25581,12 +25437,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25721,12 +25576,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -25861,12 +25715,11 @@ export declare const Wocky: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
+        isNew: boolean;
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        isNew: boolean;
     } & {
         afterAttach: () => void;
         follow: () => Promise<{}>;
@@ -26032,12 +25885,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -26284,12 +26136,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -26500,12 +26351,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: any;
@@ -26752,12 +26602,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: any;
@@ -26960,12 +26809,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -27212,12 +27060,11 @@ export declare const Wocky: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
+                isNew: boolean;
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                isNew: boolean;
             } & {
                 afterAttach: () => void;
                 follow: () => Promise<{}>;
@@ -27418,12 +27265,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
@@ -27592,12 +27438,11 @@ export declare const Wocky: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
+            isNew: boolean;
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            isNew: boolean;
         } & {
             afterAttach: () => void;
             follow: () => Promise<{}>;
