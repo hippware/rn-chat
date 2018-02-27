@@ -15,7 +15,7 @@ const profileConstraints = {
     },
     format: {
       pattern: /\w+/,
-      message: 'can only contain alphanumeric characters',
+      message: 'can only contain alphanumeric characters and _',
     },
     // this validator set in SearchStore.js
     usernameUniqueValidator: true,
