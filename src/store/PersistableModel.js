@@ -80,7 +80,7 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
         reaction(
           () => self.snapshot,
           (json) => {
-            console.log('persist state:', JSON.stringify(json));
+            // console.log('persist state:', JSON.stringify(json));
             storage.setItem(getType(self).name, JSON.stringify(json));
           },
           {fireImmediately: false, delay: 1000},

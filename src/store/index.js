@@ -62,6 +62,12 @@ const Store = types
     get getImageSize() {
       return getEnv(self).fileService.getImageSize;
     },
+  }))
+  .actions(self => ({
+    reload: () => {
+      self.wocky.clearCache();
+      self.firebaseStore.reset();
+    },
   }));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');

@@ -7962,9 +7962,11 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validate.js@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/validate.js/-/validate.js-0.11.1.tgz#f51c3c6c4a56e6380a20a7eb104245037f2a540d"
+"validate.js@github:hippware/validate.js#b8f0dd3879555d0fdd864002aed3be67a5843ca5":
+  version "0.12.0"
+  resolved "https://codeload.github.com/hippware/validate.js/tar.gz/b8f0dd3879555d0fdd864002aed3be67a5843ca5"
+  dependencies:
+    xregexp "^4.1.1"
 
 validator@~3.35.0:
   version "3.35.0"
@@ -8081,9 +8083,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#cacc5139f392e53a27ea9dd48467574841b80e98":
+"wocky-client@github:hippware/wocky-client#0290b50ad2f51668619c6c31481f967d9cb280d9":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#cacc5139f392e53a27ea9dd48467574841b80e98"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#0290b50ad2f51668619c6c31481f967d9cb280d9"
   dependencies:
     classy-mst "github:charto/classy-mst#develop"
     moment "^2.20.1"
@@ -8253,6 +8255,10 @@ xpipe@^1.0.5:
 xregexp@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-2.0.0.tgz#52a63e56ca0b84a7f3a5f3d61872f126ad7a5943"
+
+xregexp@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.1.1.tgz#eb8a032aa028d403f7b1b22c47a5f16c24b21d8d"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"
