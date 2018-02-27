@@ -33,6 +33,8 @@ class FriendListScene extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard isDay profile={item} />;
 
   render() {
+    const {friends} = this.props.wocky;
+    const onlineFriends = friends.filter(f => f.status === 'available');
     return (
       <Screen isDay>
         <SearchBar
@@ -43,8 +45,16 @@ class FriendListScene extends React.Component<Props> {
           autoCorrect={false}
           autoCapitalize='none'
         />
-        <FriendCount count={this.props.wocky.friends.length} />
         <PeopleList
+          ListHeaderComponent={
+            onlineFriends.length > 0 ? (
+              <View>
+                <FriendCount count={onlineFriends.length} suffix='Online' />
+                <PeopleList renderItem={this.renderItem} sections={alphaSectionIndex(this.searchText, onlineFriends)} loadMore={() => {}} />
+                <FriendCount count={friends.length} suffix={friends.length === 1 ? 'Friend' : 'Friends'} />
+              </View>
+            ) : null
+          }
           renderItem={this.renderItem}
           renderSectionHeader={({section}) => (
             <View style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}} key={section.key}>
@@ -61,14 +71,14 @@ class FriendListScene extends React.Component<Props> {
   }
 }
 
-const FriendCount = ({count}) =>
+const FriendCount = ({count, suffix}) =>
   (count > 0 ? (
     <View style={styles.headerBar}>
       <RText size={13}>
         <RText size={16} weight='Bold'>
           {count}
         </RText>
-        {` ${count === 1 ? 'Friend' : 'Friends'}`}
+        {` ${suffix}`}
       </RText>
     </View>
   ) : null);
