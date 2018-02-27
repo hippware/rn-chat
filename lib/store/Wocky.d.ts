@@ -27807,6 +27807,7 @@ export declare const Wocky: IModelType<{
     disablePush: () => Promise<{}>;
     setSessionCount: (value: number) => void;
 } & {
+    clearCache: () => void;
     logout: () => Promise<{}>;
     afterCreate: () => void;
 }>;
