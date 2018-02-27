@@ -37,11 +37,6 @@ class ErrorHandler extends React.Component<{}> {
       // metadata gets discarded like in https://github.com/bugsnag/bugsnag-react-native/issues/132
       report.metadata = errorInfo;
     });
-
-    // TODO: better way of handling errors in production?
-    if (!settings.isStaging) {
-      throw error;
-    }
   }
 
   reload = () => {
