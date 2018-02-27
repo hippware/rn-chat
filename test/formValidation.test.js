@@ -106,11 +106,4 @@ describe('form validation', () => {
     const result = await validateProfile(obj);
     expect(result).to.deep.equal(obj);
   });
-
-  // TODO
-  // it('first name with emoji', async () => {
-  //   const obj = {firstName: '😀 😁 😂 🤣 😃 😄 😅 😆 😉'};
-  //   const result = await validateProfile(obj);
-  //   expect(result).to.deep.equal(obj);
-  // });
 });
