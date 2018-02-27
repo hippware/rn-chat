@@ -5,6 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.16 - 2018 February 26
+
+* Missing the Discover, Share,(1-3 slides) screen with Logout (#1882)
+* Bypass: Logout without killing the app results in new bypass account being pre-populated with last users data and undiscoverable (#1883)
+* One-time migration of users from 1.x.x -> 2.x.x on prod (#1863)
+* "Clear all" icon on Account Settings and Onboarding should be at the end of the field (#1835)
+* Bot Edit: Cover Photo not displaying in bot edit view (#1881)
+* Fix regression for deep linking
+
+
 # 2.0.15 - 2018 February 23
 
 * Update bugsnag script
