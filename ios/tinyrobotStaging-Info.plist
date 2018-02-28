@@ -100,6 +100,12 @@
 	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This application requires access to library to work</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application requires access to bluetooth to work</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This application requires access to calendars to work</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This application requires speech recognition access to work</string>
 	<key>STAGING</key>
 	<true/>
 	<key>UIAppFonts</key>
