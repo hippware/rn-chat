@@ -4,7 +4,7 @@ import {Wocky} from 'wocky-client';
 import {types, getEnv} from 'mobx-state-tree';
 
 describe('PersistableModel', () => {
-  test('test snapshot', async () => {
+  it('test snapshot', async () => {
     const Store = types.model({wocky: Wocky});
     const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
     const wocky = createWocky({

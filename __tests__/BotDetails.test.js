@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -11,7 +10,7 @@ import injects from './utils/inject-mocks';
 describe('BotDetails', () => {
   const wocky = {};
 
-  test('renders with no data', () => {
+  it('renders with no data', () => {
     const toRender = (
       <Provider wocky={wocky} {...injects}>
         <BotDetails />

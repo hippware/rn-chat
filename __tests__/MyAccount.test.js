@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -8,7 +7,7 @@ import MyAccount from '../src/components/MyAccount';
 import {Provider} from 'mobx-react/native';
 
 describe('MyAccount', () => {
-  test('renders', () => {
+  it('renders', () => {
     const wocky = {
       profile: {
         handle: 'jerkham',

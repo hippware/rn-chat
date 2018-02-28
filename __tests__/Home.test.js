@@ -1,5 +1,5 @@
 // @flow
-/* global test */
+
 jest.useFakeTimers(); // according to https://facebook.github.io/jest/docs/en/timer-mocks.html
 import 'react-native';
 import React from 'react';
@@ -10,7 +10,7 @@ import {EventList, EventBotNote, EventBotPost} from 'wocky-client';
 import injects from './utils/inject-mocks';
 
 describe('Home', () => {
-  test('renders with no data', () => {
+  it('renders with no data', () => {
     const wocky = {
       updates: [],
       events: EventList.create({}),
@@ -25,7 +25,7 @@ describe('Home', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('renders with a couple items', () => {
+  it('renders with a couple items', () => {
     const wocky = {
       updates: [],
       events: EventList.create({}),

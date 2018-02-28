@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -10,7 +9,7 @@ import {Chat} from 'wocky-client';
 import './utils/mockTextInput';
 
 describe('ChatScreen', () => {
-  test('renders with no data', () => {
+  it('renders with no data', () => {
     const wocky = {
       createChat: () => Chat.create({id: 'test'}),
       chats: {

@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -14,7 +13,7 @@ import wocky from './utils/mockWocky';
 import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader';
 
 describe('BotDetailsHeader', () => {
-  test('renders with test bot', async () => {
+  it('renders with test bot', async () => {
     await wocky.login('user', 'password', 'host');
     const bot = Bot.create({
       id: '1234',
