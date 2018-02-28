@@ -2,6 +2,8 @@
 
 import {types, getEnv, flow, getParent} from 'mobx-state-tree';
 import {when} from 'mobx';
+import Permissions from 'react-native-permissions';
+import {settings} from '../globals';
 
 export const Location = types.model('Location', {
   longitude: types.number,
@@ -18,6 +20,7 @@ const LocationStore = types
     // TODO: should we persist location?
     location: types.maybe(Location),
     enabled: true,
+    alwaysOn: true,
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
     loading: false,
   }))
@@ -51,17 +54,121 @@ const LocationStore = types
       when(() => wocky.connected, self.initialize);
     }
 
+    // function startBackground() {
+    //   const model = getParent(self).wocky;
+    //   if (typeof navigator !== 'undefined') {
+    //     console.log('BACKGROUND LOCATION START', navigator, model.username, model.password);
+    //     const BackgroundGeolocation = require('react-native-background-geolocation');
+    //     const BackgroundFetch = require('react-native-background-fetch');
+
+    //     BackgroundFetch.configure(
+    //       {
+    //         stopOnTerminate: false,
+    //       },
+    //       () => {
+    //         logger.log('[js] Received background-fetch event');
+
+    //         // To signal completion of your task to iOS, you must call #finish!
+    //         // If you fail to do this, iOS can kill your app.
+    //         BackgroundFetch.finish();
+    //       },
+    //       (error) => {
+    //         logger.log('[js] RNBackgroundFetch failed to start');
+    //       },
+    //     );
+
+    //     // // This handler fires whenever bgGeo receives a location update.
+    //     BackgroundGeolocation.on('location', (position) => {
+    //       logger.log('- [js]location: ', JSON.stringify(position));
+    //       // this.location = position.coords;
+    //       // we don't need it because we have HTTP location share
+    //       // this.share(this.location);
+    //     });
+
+    //     // This handler fires when movement states changes (stationary->moving; moving->stationary)
+    //     BackgroundGeolocation.on('http', (response) => {
+    //       logger.log('- [js]http: ', response.responseText);
+    //       //        logger.log('- [js]http: ', JSON.parse(response.responseText));
+    //     });
+    //     // This handler fires whenever bgGeo receives an error
+    //     BackgroundGeolocation.on('error', (error) => {
+    //       var type = error.type;
+    //       var code = error.code;
+    //       // alert(type + " Error: " + code);
+    //     });
+
+    //     // This handler fires when movement states changes (stationary->moving; moving->stationary)
+    //     BackgroundGeolocation.on('motionchange', (location) => {
+    //       logger.log('- [js]motionchanged: ', JSON.stringify(location));
+    //     });
+
+    //     // This event fires when a chnage in motion activity is detected
+    //     BackgroundGeolocation.on('activitychange', (activityName) => {
+    //       logger.log('- Current motion activity: ', activityName); // eg: 'on_foot', 'still', 'in_vehicle'
+    //     });
+
+    //     // This event fires when the user toggles location-services
+    //     BackgroundGeolocation.on('providerchange', (provider) => {
+    //       logger.log('- Location provider changed: ', provider.enabled);
+    //     });
+    //     const url = `https://${settings.getDomain()}/api/v1/users/${model.user}/location`;
+    //     // logger.log(`LOCATION UPDATE URL: ${url}`);
+    //     BackgroundGeolocation.configure(
+    //       {
+    //         // Geolocation Config
+    //         desiredAccuracy: 0,
+    //         useSignificantChangesOnly: false,
+    //         stationaryRadius: 20,
+    //         distanceFilter: 30,
+    //         // Activity Recognition
+    //         stopTimeout: 1,
+    //         // Application config
+    //         debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
+    //         //        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+    //         stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
+    //         startOnBoot: false, // <-- Auto start tracking when device is powered-up.
+    //         // HTTP / SQLite config
+    //         // url,
+    //         // batchSync: false, // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+    //         // autoSync: true, // <-- [Default: true] Set true to sync each location to server as it arrives.
+    //         // maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
+    //         // headers: {
+    //         //   // <-- Optional HTTP headers
+    //         //   'X-Auth-User': model.user,
+    //         //   'X-Auth-Token': model.password,
+    //         // },
+    //         // params: {
+    //         //   // <-- Optional HTTP params
+    //         //   resource: 'testing',
+    //         // },
+    //       },
+    //       (state) => {
+    //         logger.log('- BackgroundGeolocation is configured and ready: ', state.enabled);
+
+    //         if (!state.enabled) {
+    //           BackgroundGeolocation.start(() => {
+    //             logger.log('- Start success');
+    //           });
+    //         }
+    //       },
+    //     );
+    //   }
+    // }
+
+    // function backgroundStop() {
+    //   const BackgroundGeolocation = require('react-native-background-geolocation');
+    //   if (typeof BackgroundGeolocation !== 'undefined') {
+    //     BackgroundGeolocation.stop();
+    //   }
+    // }
+
     function initialize() {
+      // startBackground();
       self.getCurrentPosition();
 
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
       setMetricSystem(system);
-
-      watch = geolocation.watchPosition(self.setPosition, self.positionError, {
-        timeout: 20000,
-        maximumAge: 60000,
-        enableHighAccuracy: false,
-      });
+      self.start();
     }
 
     function setMetricSystem(type) {
@@ -86,12 +193,17 @@ const LocationStore = types
       });
     });
 
+    function stop() {
+      console.log('STOP', watch);
+      if (watch !== undefined) {
+        geolocation.clearWatch(watch);
+        watch = undefined;
+      }
+    }
+
     function beforeDestroy() {
       // logger.log('LOCATION FINISH');
-      if (watch) {
-        geolocation.clearWatch(watch);
-        watch = null;
-      }
+      stop();
       // if (this.dateInterval) {
       //   clearInterval(this.dateInterval);
       // }
@@ -116,7 +228,30 @@ const LocationStore = types
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR});
     }
 
-    return {afterAttach, beforeDestroy, setPosition, positionError, getCurrentPosition, initialize};
+    function watchPosition() {
+      if (!watch) {
+        watch = geolocation.watchPosition(self.setPosition, self.positionError, {
+          timeout: 20000,
+          maximumAge: 60000,
+          enableHighAccuracy: false,
+        });
+      }
+    }
+
+    function setAlwaysOn(response) {
+      self.alwaysOn = response === 'authorized';
+    }
+
+    function start() {
+      // Permissions.check('location', {type: 'always'}).then((response) => {
+      //   self.setAlwaysOn(response);
+      //   alert(self.alwaysOn);
+      // });
+
+      when(() => wocky.connected, self.watchPosition);
+    }
+
+    return {afterAttach, setAlwaysOn, start, stop, beforeDestroy, watchPosition, setPosition, positionError, getCurrentPosition, initialize};
   });
 
 export default LocationStore;

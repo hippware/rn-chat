@@ -6325,20 +6325,20 @@ react-native-actionsheet@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
-react-native-background-fetch@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.1.0.tgz#e25ce35d6300805de808ee6a2b80313100caf2e4"
+react-native-background-fetch@~2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.3.0.tgz#aa99f8f635999dc3cae1080d323222688c075991"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
     xcode "^0.9.1"
 
-react-native-background-geolocation@^2.9.3:
-  version "2.9.3"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.9.3.tgz#85a9c5772ec0c4e6abfd54432bf3a036ae60030a"
+react-native-background-geolocation@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.11.0.tgz#1a7cf3d9f5ac958de7d43b59cd5ce32dc8ba092d"
   dependencies:
     cocoa-lumberjack "^3.0.3"
-    react-native-background-fetch "~2.1.0"
+    react-native-background-fetch "~2.3.0"
 
 react-native-blur@^3.2.2:
   version "3.2.2"
@@ -6475,6 +6475,10 @@ react-native-parsed-text@^0.0.20:
   dependencies:
     babel-plugin-check-es2015-constants "6.22.0"
     prop-types "^15.5.10"
+
+react-native-permissions@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
 
 react-native-push-notification@^3.0.1:
   version "3.0.1"
