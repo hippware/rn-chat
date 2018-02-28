@@ -31,14 +31,7 @@ class SearchWrapper extends React.Component<Props> {
     const {globalResult, global} = searchStore;
     return (
       <Screen isDay>
-        <SearchBar
-          onChangeText={searchStore.setGlobal}
-          value={searchStore.global}
-          autoCorrect={false}
-          autoCapitalize='none'
-          placeholder='Search name or username'
-          placeholderTextColor='rgb(140,140,140)'
-        />
+        <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' placeholder='Search name or username' />
         {global.length > 0 ? (
           globalResult.list && globalResult.list.length ? (
             <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />

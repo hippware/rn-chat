@@ -7,7 +7,6 @@ import FollowedList from './FollowedList';
 import BotSubscriberList from './BotSubscriberList';
 import SearchUsers from './SearchUsers';
 import AddFriendByUsername from './AddFriendByUsername';
-import SelectFriends from './SelectFriends';
-import ProfileList from './ProfileList';
+import BotShareSelectFriends from './BotShareSelectFriends';
 
-export {FollowersList, FollowedList, SearchUsers, SelectFriends, BlockedList, FriendListScene, AddFriendByUsername, BotSubscriberList, ProfileList};
+export {FollowersList, FollowedList, SearchUsers, BlockedList, FriendListScene, AddFriendByUsername, BotSubscriberList, BotShareSelectFriends};

@@ -3,7 +3,6 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import assert from 'assert';
-import Header from '../Header';
 import CardList from '../CardList';
 import Separator from '../Separator';
 import {k} from '../Global';
@@ -12,7 +11,6 @@ import {observer} from 'mobx-react/native';
 import {RText} from '../common';
 
 type Props = {
-  header: any,
   selection: SelectableProfileList,
   onSelect?: Function,
   renderItem?: Function,
@@ -25,7 +23,6 @@ const ProfileList = observer((props: Props) => {
       <CardList
         keyboardShouldPersistTaps='always'
         data={selection.filteredList}
-        ListHeaderComponent={theHeader}
         ItemSeparatorComponent={() => <Separator width={1} />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
         keyExtractor={item => item.profile.id}
@@ -50,13 +47,3 @@ const SelectableProfileItem = observer((props) => {
     </TouchableOpacity>
   );
 });
-
-const theHeader = ({header, isDay}) =>
-  (header ? (
-    <View>
-      <View style={{flexDirection: 'row'}}>
-        <Header isDay={isDay}>{header}</Header>
-      </View>
-      <Separator width={1} />
-    </View>
-  ) : null);

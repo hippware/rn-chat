@@ -46,9 +46,7 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
         </Text>
       </View>
       {selected !== undefined && (
-        <View style={{width: 40 * k, padding: 10 * k}}>
-          <Image style={{right: 20 * k}} source={selected ? require('../../../images/contactSelect.png') : require('../../../images/addContactUnselectedV2.png')} />
-        </View>
+        <View style={{width: 40 * k, padding: 10 * k}}>{selected && <Image style={{right: 20 * k}} source={require('../../../images/contactSelect.png')} />}</View>
       )}
       {children}
     </View>

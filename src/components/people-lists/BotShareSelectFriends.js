@@ -5,12 +5,15 @@ import {Alert, TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-n
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-import {k} from './Global';
-import AutoExpandingTextInput from './common/AutoExpandingTextInput';
-import {SelectFriends} from './people-lists';
-import Screen from './Screen';
-import {colors} from '../constants';
-import SelectableProfileList from '../store/SelectableProfileList';
+import {k} from '../Global';
+import {AutoExpandingTextInput} from '../common';
+// import {SelectFriends} from './people-lists';
+import Screen from '../Screen';
+import {colors} from '../../constants';
+import SelectableProfileList from '../../store/SelectableProfileList';
+import SearchBar from './SearchBar';
+import ProfileList from './ProfileList';
+import InviteFriendsRow from './InviteFriendsRow';
 
 type Props = {
   botId: string,
@@ -95,6 +98,23 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
     );
   }
 }
+
+const SelectFriends = observer(({selection}) => {
+  return (
+    <View style={{flex: 1}}>
+      <SearchBar
+        autoCorrect={false}
+        autoCapitalize='none'
+        onChangeText={text => selection.setFilter(text)}
+        value={selection.filter}
+        placeholder='Search name or username'
+        clearButtonMode='while-editing'
+      />
+      <InviteFriendsRow style={{borderBottomWidth: StyleSheet.hairlineWidth}} />
+      <ProfileList selection={selection} />
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
