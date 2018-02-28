@@ -5,6 +5,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Onboarding: Disable Auto-correct when user creates user profile (#1889)
+* Bot Edit: Cover Photo not displaying in bot edit view (Rework #1881)
+* [dev] automate Bugsnag symbolication (#1910)
+* Handle errors on Prod (#1811)
+* Some code cleanup and tests cleanup
+* Implement new user validation rules (client side) (#1503)
+* New Follower not at the top of the Followers List (#1912)
+
+
 # 2.0.16 - 2018 February 26
 
 * Missing the Discover, Share,(1-3 slides) screen with Logout (#1882)
