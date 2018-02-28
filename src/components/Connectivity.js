@@ -40,7 +40,6 @@ export default class Connectivity extends React.Component {
   tryReconnect = async () => {
     const model = this.props.wocky;
     if (!model.connected && !model.connecting && model.username && model.password && model.host) {
-      this.props.log('TRYING RECONNECT', {level: log.levels.INFO});
       try {
         await model.login();
         this.retryDelay = 1000;
@@ -69,12 +68,12 @@ export default class Connectivity extends React.Component {
     this.props.log('CURRENT APPSTATE:', currentAppState, {level: log.levels.INFO});
     // reconnect automatically
     if (currentAppState === 'active') {
-      isActive = true;
+      this.isActive = true;
       this.props.notificationStore.start();
       await this.tryReconnect();
     }
     if (currentAppState === 'background') {
-      isActive = false;
+      this.isActive = false;
       this.props.wocky.disconnect();
       this.props.notificationStore.finish();
     }
