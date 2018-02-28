@@ -88,13 +88,29 @@ const FOOTER_HEIGHT = 75 * k;
 const PERCENT_PAD_TOP = 35;
 
 const styles = StyleSheet.create({
-  wrapper: {},
+  absolute: {position: 'absolute', top: 0, left: 0, right: 0, bottom: 0},
+  wrapper: {height: 500},
   background: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
-  backgroundImage: {},
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: null,
+    height: null,
+  },
   gradient: {
-    flex: 1,
+    position: 'absolute',
+    bottom: FOOTER_HEIGHT,
+    left: 0,
+    right: 0,
     height: 200 * k,
   },
   slide: {

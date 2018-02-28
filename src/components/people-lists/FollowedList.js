@@ -1,18 +1,16 @@
 // @flow
 
 import React from 'react';
-import {Actions} from 'react-native-router-flux';
-import Screen from '../Screen';
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
-import {colors} from '../../constants';
-import SearchBar from './SearchBar';
 import {Profile} from 'wocky-client';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
 import {followingSectionIndex} from '../../utils/friendUtils';
 import ListFooter from '../ListFooter';
+import PeopleSearchWrapper from './PeopleSearchWrapper';
+import InviteFriendsRow from './InviteFriendsRow';
 
 type Props = {
   userId: string,
@@ -23,14 +21,7 @@ type Props = {
 class FollowedList extends React.Component<Props> {
   @observable searchText: string;
   @observable profile: Profile;
-
-  static rightButtonImage = require('../../../images/followers.png');
-
-  static rightButtonTintColor = colors.PINK;
-
-  static onRight = () => {
-    Actions.searchUsers();
-  };
+  disposer: any;
 
   async componentDidMount() {
     this.profile = await this.props.wocky.getProfile(this.props.userId);
@@ -48,25 +39,16 @@ class FollowedList extends React.Component<Props> {
     const {connected} = wocky;
     const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followed;
     return (
-      <Screen>
+      <PeopleSearchWrapper>
         <PeopleList
-          ListHeaderComponent={
-            <SearchBar
-              onChangeText={t => (this.searchText = t)}
-              value={this.searchText}
-              placeholder='Search name or username'
-              placeholderTextColor='rgb(140,140,140)'
-              autoCorrect={false}
-              autoCapitalize='none'
-            />
-          }
+          ListHeaderComponent={<InviteFriendsRow />}
           ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={followedCount} />}
           sections={followingSectionIndex(this.searchText, following)}
           loadMore={this.profile.followed.load}
         />
-      </Screen>
+      </PeopleSearchWrapper>
     );
   }
 }

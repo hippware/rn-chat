@@ -7962,9 +7962,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-"validate.js@github:hippware/validate.js#b8f0dd3879555d0fdd864002aed3be67a5843ca5":
+"validate.js@github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e":
   version "0.12.0"
-  resolved "https://codeload.github.com/hippware/validate.js/tar.gz/b8f0dd3879555d0fdd864002aed3be67a5843ca5"
+  resolved "https://codeload.github.com/hippware/validate.js/tar.gz/969b4fb274b0bb5234b8fe4199cc07dc1acb536e"
   dependencies:
     xregexp "^4.1.1"
 

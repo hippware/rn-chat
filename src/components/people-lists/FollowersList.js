@@ -2,12 +2,9 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import Screen from '../Screen';
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
-import SearchBar from './SearchBar';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
@@ -15,6 +12,8 @@ import {FollowableProfileItem} from './customProfileItems';
 import {followersSectionIndex} from '../../utils/friendUtils';
 import ListFooter from '../ListFooter';
 import {Profile} from 'wocky-client';
+import PeopleSearchWrapper from './PeopleSearchWrapper';
+import InviteFriendsRow from './InviteFriendsRow';
 
 type Props = {
   userId: string,
@@ -23,23 +22,14 @@ type Props = {
 @inject('wocky')
 @observer
 class FollowersList extends React.Component<Props> {
-  @observable searchText: string;
   @observable profile: Profile;
-
-  static rightButtonImage = require('../../../images/followers.png');
-
-  static rightButtonTintColor = colors.PINK;
-
-  static onRight = () => {
-    Actions.searchUsers();
-  };
 
   componentDidMount() {
     this.getList();
   }
 
   async getList() {
-    this.profile = this.props.userId ? await this.props.wocky.getProfile(this.props.userId) : this.props.wocky.profile
+    this.profile = this.props.userId ? await this.props.wocky.getProfile(this.props.userId) : this.props.wocky.profile;
     if (!this.profile) {
       console.error(`Cannot load profile for user:${this.props.userId}`);
     }
@@ -54,10 +44,11 @@ class FollowersList extends React.Component<Props> {
     const {connected} = this.props.wocky;
     const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followers;
     return (
-      <Screen>
+      <PeopleSearchWrapper>
         <PeopleList
-          renderItem={({item}) => <FollowableProfileItem profile={item} />}
+          ListHeaderComponent={<InviteFriendsRow />}
           ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
+          renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {
             return section.key === 'new' ? (
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
@@ -74,20 +65,10 @@ class FollowersList extends React.Component<Props> {
               <SectionHeader section={section} title='Followers' count={followersCount} />
             );
           }}
-          ListHeaderComponent={
-            <SearchBar
-              onChangeText={t => (this.searchText = t)}
-              value={this.searchText}
-              placeholder='Search name or username'
-              placeholderTextColor='rgb(140,140,140)'
-              autoCorrect={false}
-              autoCapitalize='none'
-            />
-          }
           sections={followersSectionIndex(this.searchText, followers, newFollowers)}
           loadMore={this.profile.followers.load}
         />
-      </Screen>
+      </PeopleSearchWrapper>
     );
   }
 }
