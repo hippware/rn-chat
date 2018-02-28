@@ -6,7 +6,7 @@ import {reaction, observable, when} from 'mobx';
 import {inject} from 'mobx-react/native';
 import * as log from '../utils/log';
 
-@inject('wocky', 'notificationStore', 'log')
+@inject('wocky', 'locationStore', 'notificationStore', 'log')
 export default class Connectivity extends React.Component {
   @observable lastDisconnected = Date.now();
   retryDelay = 1000;
@@ -70,12 +70,14 @@ export default class Connectivity extends React.Component {
     if (currentAppState === 'active') {
       this.isActive = true;
       this.props.notificationStore.start();
+      this.props.locationStore.start();
       await this.tryReconnect();
     }
     if (currentAppState === 'background') {
       this.isActive = false;
       this.props.wocky.disconnect();
       this.props.notificationStore.finish();
+      this.props.locationStore.stop();
     }
   };
 

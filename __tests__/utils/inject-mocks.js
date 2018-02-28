@@ -5,6 +5,10 @@ const injects = {
     flash: () => {},
     show: () => {},
   },
+  locationStore: {
+    start: () => {},
+    stop: () => {},
+  },
   log: () => {},
   warn: () => {},
   analytics: {
