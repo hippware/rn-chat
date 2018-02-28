@@ -243,10 +243,9 @@ const LocationStore = types
     }
 
     function start() {
-      // Permissions.check('location', {type: 'always'}).then((response) => {
-      //   self.setAlwaysOn(response);
-      //   alert(self.alwaysOn);
-      // });
+      Permissions.check('location', {type: 'always'}).then((response) => {
+        self.setAlwaysOn(response);
+      });
 
       when(() => wocky.connected, self.watchPosition);
     }
