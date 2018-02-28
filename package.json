@@ -75,7 +75,7 @@
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
-    "validate.js": "github:hippware/validate.js#b8f0dd3879555d0fdd864002aed3be67a5843ca5",
+    "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
     "wocky-client": "github:hippware/wocky-client#0290b50ad2f51668619c6c31481f967d9cb280d9",
     "xregexp": "^4.1.1"
   },
