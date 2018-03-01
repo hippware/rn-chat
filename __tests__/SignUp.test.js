@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -8,7 +7,7 @@ import SignUp from '../src/components/SignUp';
 import {Provider} from 'mobx-react/native';
 
 describe('Signup', () => {
-  test('renders', () => {
+  it('renders', () => {
     const wocky = {
       createChat: () => {},
       profile: {

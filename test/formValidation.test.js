@@ -106,4 +106,11 @@ describe('form validation', () => {
     const result = await validateProfile(obj);
     expect(result).to.deep.equal(obj);
   });
+
+  // #1503
+  it('accepts short first name', async () => {
+    const obj = {firstName: 'T'};
+    const result = await validateProfile(obj);
+    expect(result).to.deep.equal(obj);
+  });
 });

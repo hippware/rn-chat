@@ -1,7 +1,7 @@
 // @flow
 
 import {types, getEnv, flow, getParent} from 'mobx-state-tree';
-import {when} from 'mobx';
+import {when, reaction} from 'mobx';
 import Permissions from 'react-native-permissions';
 import {settings} from '../globals';
 
@@ -52,6 +52,20 @@ const LocationStore = types
     function afterAttach() {
       ({wocky} = getParent(self));
       when(() => wocky.connected, self.initialize);
+      reaction(
+        () => wocky.connected,
+        (connected) => {
+          if (connected) {
+            Permissions.check('location', {type: 'always'}).then((response) => {
+              self.setAlwaysOn(response);
+            });
+            self.watchPosition();
+          } else if (watch !== undefined) {
+            geolocation.clearWatch(watch);
+            watch = undefined;
+          }
+        },
+      );
     }
 
     // function startBackground() {
@@ -168,7 +182,6 @@ const LocationStore = types
 
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
       setMetricSystem(system);
-      self.start();
     }
 
     function setMetricSystem(type) {
@@ -192,22 +205,6 @@ const LocationStore = types
         );
       });
     });
-
-    function stop() {
-      console.log('STOP', watch);
-      if (watch !== undefined) {
-        geolocation.clearWatch(watch);
-        watch = undefined;
-      }
-    }
-
-    function beforeDestroy() {
-      // logger.log('LOCATION FINISH');
-      stop();
-      // if (this.dateInterval) {
-      //   clearInterval(this.dateInterval);
-      // }
-    }
 
     function setPosition(position) {
       logger.log('SLOCATION:', position.coords);
@@ -242,15 +239,7 @@ const LocationStore = types
       self.alwaysOn = response === 'authorized';
     }
 
-    function start() {
-      Permissions.check('location', {type: 'always'}).then((response) => {
-        self.setAlwaysOn(response);
-      });
-
-      when(() => wocky.connected, self.watchPosition);
-    }
-
-    return {afterAttach, setAlwaysOn, start, stop, beforeDestroy, watchPosition, setPosition, positionError, getCurrentPosition, initialize};
+    return {afterAttach, setAlwaysOn, watchPosition, setPosition, positionError, getCurrentPosition, initialize};
   });
 
 export default LocationStore;

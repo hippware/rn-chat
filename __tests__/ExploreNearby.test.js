@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -11,7 +10,7 @@ import ExploreNearby from '../src/components/map/ExploreNearBy';
 import mockLocationStore from './utils/mockLocationStore';
 
 describe('Explore Nearby', () => {
-  test('renders with no data', () => {
+  it('renders with no data', () => {
     const wocky = {};
 
     mockLocationStore.setPosition({

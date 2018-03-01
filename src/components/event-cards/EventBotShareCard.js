@@ -13,7 +13,7 @@ type Props = {
 };
 
 @observer
-export default class EventBotCard extends React.Component {
+class EventBotShareCard extends React.Component {
   props: Props;
   onPress() {
     Actions.botDetails({item: this.props.item.bot.id});
@@ -49,3 +49,5 @@ export default class EventBotCard extends React.Component {
     );
   }
 }
+
+export default EventBotShareCard;
