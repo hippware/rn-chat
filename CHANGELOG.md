@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.1.0 - 2018 February 28
+
 * Onboarding: Disable Auto-correct when user creates user profile (#1889)
 * Bot Edit: Cover Photo not displaying in bot edit view (Rework #1881)
 * [dev] automate Bugsnag symbolication (#1910)
@@ -12,6 +14,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Some code cleanup and tests cleanup
 * Implement new user validation rules (client side) (#1503)
 * New Follower not at the top of the Followers List (#1912)
+* Missing the Discover, Share,(1-3 slides) screen with Logout (Rework #1882)
+* Friends Screen: Online Friends Tweak (#1762)
+* USER SEARCH & INVITE FRIENDS CTA: Friends Screen (#1759)
+* USER SEARCH & INVITE FRIENDS CTA: Followers Screen (#1760)
+* USER SEARCH & INVITE FRIENDS CTA: Following Screen (#1761)
+* Geofence Related Research for Location Access Request (#1925)
+  * and some location improvements
+* INVITE FRIENDS: CTA on Share Bot screen (#1766)
+* INVITE FRIENDS: Flow (#1767)
 
 
 # 2.0.16 - 2018 February 26
