@@ -4,7 +4,7 @@ import {action, when, observable, computed, reaction} from 'mobx';
 import validate from 'validate.js';
 
 // eslint-disable-next-line
-const isAlphabet = '^\\pL[ 0-9`\'"\u0060\u00B4\u2018\u2019\u201C\u201D\\pL]+[\\pL0-9]$';
+const isAlphabet = '^\\pL[ 0-9`\'"\u0060\u00B4\u2018\u2019\u201C\u201D\\pL]*[\\pL0-9]?$';
 
 const profileConstraints = {
   handle: {
