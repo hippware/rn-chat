@@ -9,11 +9,11 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 
 type Props = {
-  item: EventBotNote,
+  item: any,
 };
 
 @observer
-export default class EventBotCard extends React.Component {
+class EventBotNote extends React.Component {
   props: Props;
   onPress() {
     Actions.botDetails({item: this.props.item.bot.id});
@@ -37,3 +37,5 @@ export default class EventBotCard extends React.Component {
     );
   }
 }
+
+export default EventBotNote;

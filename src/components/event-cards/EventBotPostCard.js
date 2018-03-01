@@ -16,7 +16,7 @@ type Props = {
 const imageWidth = 2 * width / 3;
 
 @observer
-export default class EventBotPostCard extends React.Component {
+class EventBotPostCard extends React.Component {
   props: Props;
 
   onPress() {
@@ -43,3 +43,5 @@ export default class EventBotPostCard extends React.Component {
     );
   }
 }
+
+export default EventBotPostCard;

@@ -4,6 +4,9 @@ parser: babel-eslint
 
 globals:
     it: true
+    test: true,
+    beforeEach: true,
+    afterEach: true,
     expect: true
     describe: true
     step: true

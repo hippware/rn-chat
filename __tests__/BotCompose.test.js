@@ -1,5 +1,4 @@
 // @flow
-/* global test */
 
 import 'react-native';
 import React from 'react';
@@ -8,12 +7,11 @@ import BotCompose from '../src/components/BotCompose';
 import {Provider} from 'mobx-react/native';
 // import {} from 'wocky-client';
 import injects from './utils/inject-mocks';
+import wocky from './utils/mockWocky';
 
 describe('BotCompose', () => {
-  test('renders with no data', () => {
-    const wocky = {
-      bots: [],
-    };
+  it('renders with no data', async () => {
+    await wocky.login('user', 'password', 'host');
     const toRender = (
       <Provider wocky={wocky} {...injects}>
         <BotCompose />

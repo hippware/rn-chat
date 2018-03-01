@@ -1,147 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home renders with a couple items 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "backgroundColor": "rgb(242,243,245)",
-        "flex": 1,
-      }
-    }
-  >
-    <RCTScrollView
-      ListFooterComponent={null}
-      ListHeaderComponent={[Function]}
-      data={
-        Array [
-          Object {
-            "bot": "1234",
-            "id": "1",
-            "note": "Wow!",
-            "time": 1519253818707,
-          },
-          Object {
-            "bot": "5678",
-            "id": "2",
-            "post": Object {
-              "content": "Really?",
-              "id": "1",
-              "image": null,
-              "loaded": false,
-              "profile": null,
-              "time": 1519253818707,
-              "title": "",
-            },
-            "time": 1519253818707,
-          },
-        ]
-      }
-      disableVirtualization={false}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      horizontal={false}
-      initialNumToRender={2}
-      keyExtractor={[Function]}
-      maxToRenderPerBatch={10}
-      numColumns={1}
-      onContentSizeChange={[Function]}
-      onEndReached={[Function]}
-      onEndReachedThreshold={0.5}
-      onLayout={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      renderItem={[Function]}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      updateCellsBatchingPeriod={50}
-      viewabilityConfigCallbackPairs={Array []}
-      windowSize={21}
-    >
-      <View>
-        <View
-          onLayout={[Function]}
-          style={null}
-        />
-        <View
-          onLayout={[Function]}
-          style={null}
-        />
-        <View
-          onLayout={[Function]}
-          style={null}
-        />
-      </View>
-    </RCTScrollView>
-  </View>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
-    isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "rgb(254,92,108)",
-        "borderRadius": 27,
-        "bottom": 40,
-        "height": 54,
-        "opacity": 1,
-        "position": "absolute",
-        "right": 40,
-        "shadowOffset": Object {
-          "height": 0,
-          "width": 2,
-        },
-        "shadowOpacity": 0.18,
-        "shadowRadius": 4,
-        "width": 54,
-      }
-    }
-    testID={undefined}
-    tvParallaxProperties={undefined}
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
-        }
-      }
-    >
-      <Image
-        source={
-          Object {
-            "testUri": "../../../images/iconCreateBot.png",
-          }
-        }
-        style={undefined}
-      />
-    </View>
-  </View>
-</View>
-`;
-
 exports[`Home renders with no data 1`] = `
 <View
   style={
@@ -189,7 +47,210 @@ exports[`Home renders with no data 1`] = `
         <View
           onLayout={[Function]}
           style={null}
-        />
+        >
+          <View
+            leftActionActivationDistance={125}
+            leftActionReleaseAnimationConfig={null}
+            leftActionReleaseAnimationFn={null}
+            leftButtonWidth={75}
+            leftButtonsActivationDistance={75}
+            leftButtonsCloseReleaseAnimationConfig={null}
+            leftButtonsCloseReleaseAnimationFn={null}
+            leftButtonsOpenReleaseAnimationConfig={null}
+            leftButtonsOpenReleaseAnimationFn={null}
+            onLayout={[Function]}
+            onLeftActionActivate={[Function]}
+            onLeftActionComplete={[Function]}
+            onLeftActionDeactivate={[Function]}
+            onLeftActionRelease={[Function]}
+            onLeftButtonsActivate={[Function]}
+            onLeftButtonsCloseComplete={[Function]}
+            onLeftButtonsCloseRelease={[Function]}
+            onLeftButtonsDeactivate={[Function]}
+            onLeftButtonsOpenComplete={[Function]}
+            onLeftButtonsOpenRelease={[Function]}
+            onMoveShouldSetResponder={[Function]}
+            onMoveShouldSetResponderCapture={[Function]}
+            onPanAnimatedValueRef={[Function]}
+            onRef={[Function]}
+            onResponderEnd={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderReject={[Function]}
+            onResponderRelease={[Function]}
+            onResponderStart={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onRightActionActivate={[Function]}
+            onRightActionComplete={[Function]}
+            onRightActionDeactivate={[Function]}
+            onRightActionRelease={[Function]}
+            onRightButtonsActivate={[Function]}
+            onRightButtonsCloseComplete={[Function]}
+            onRightButtonsCloseRelease={[Function]}
+            onRightButtonsDeactivate={[Function]}
+            onRightButtonsOpenComplete={[Function]}
+            onRightButtonsOpenRelease={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onStartShouldSetResponderCapture={[Function]}
+            onSwipeComplete={[Function]}
+            onSwipeMove={[Function]}
+            onSwipeRelease={[Function]}
+            onSwipeStart={[Function]}
+            rightActionActivationDistance={125}
+            rightActionReleaseAnimationConfig={null}
+            rightActionReleaseAnimationFn={null}
+            rightButtonWidth={75}
+            rightButtonsActivationDistance={75}
+            rightButtonsCloseReleaseAnimationConfig={null}
+            rightButtonsCloseReleaseAnimationFn={null}
+            rightButtonsOpenReleaseAnimationConfig={null}
+            rightButtonsOpenReleaseAnimationFn={null}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+            swipeReleaseAnimationConfig={
+              Object {
+                "duration": 250,
+                "easing": [Function],
+                "toValue": Object {
+                  "x": 0,
+                  "y": 0,
+                },
+              }
+            }
+            swipeReleaseAnimationFn={[Function]}
+            swipeStartMinDistance={15}
+          >
+            <View
+              collapsable={undefined}
+              style={
+                Object {
+                  "marginLeft": -0,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0.5,
+                    },
+                  ],
+                  "width": 0,
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+              />
+            </View>
+            <View
+              collapsable={undefined}
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0.5,
+                    },
+                  ],
+                }
+              }
+            >
+              <BVLinearGradient
+                colors={
+                  Array [
+                    "rgba(255,151,77,1)",
+                    "rgba(253,56,134,1)",
+                  ]
+                }
+                style={
+                  Object {
+                    "flexDirection": "row",
+                    "height": 190,
+                    "paddingLeft": 35,
+                    "paddingRight": 53.2,
+                    "paddingTop": 35,
+                  }
+                }
+              >
+                <Image
+                  source={
+                    Object {
+                      "testUri": "../../../images/white.png",
+                    }
+                  }
+                  style={
+                    Object {
+                      "height": 73,
+                      "width": 63.4,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "color": "white",
+                        "fontFamily": "Roboto-Regular",
+                        "fontSize": 30,
+                        "paddingLeft": 39.6,
+                      }
+                    }
+                  >
+                    Welcome to 
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      style={
+                        Object {
+                          "fontFamily": "Roboto-Bold",
+                        }
+                      }
+                    >
+                      tinyrobot
+                    </Text>
+                    ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+                  </Text>
+                </View>
+              </BVLinearGradient>
+            </View>
+            <View
+              collapsable={undefined}
+              style={
+                Object {
+                  "marginRight": -0,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0.5,
+                    },
+                  ],
+                  "width": 0,
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+              />
+            </View>
+          </View>
+        </View>
       </View>
     </RCTScrollView>
   </View>
