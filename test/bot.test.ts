@@ -273,7 +273,6 @@ describe('BotStore', () => {
       await waitFor(() => user2.updates.length === 2)
       const user2bot3 = (user2.updates[0] as any).bot
       expect(user2bot3.owner.id).to.be.equal(user1.username)
-      console.log('UPDATES:', JSON.stringify(user2.updates))
       bot3.setPublic(false)
       await bot3.save()
       // await delete notification that will delete previously created HS bot creation notifcation
@@ -289,11 +288,9 @@ describe('BotStore', () => {
   it('incorporate updates and check bot loading', async done => {
     try {
       expect(user2.events.list.length).to.be.equal(3)
-      console.log('UPDATES:', JSON.stringify(user2.updates))
       await user2.incorporateUpdates()
       expect(user2.updates.length).to.be.equal(0)
       expect(user2.events.list.length).to.be.equal(3)
-      console.log('EVENTS:', JSON.stringify(user2.events.list[0].bot))
       const user2bot3 = user2.events.list[0].bot
       expect(user2bot3.owner.id).to.be.equal(user1.username)
       expect(user2bot3.location.latitude).to.be.equal(1.1)
