@@ -44,7 +44,7 @@ class ErrorHandler extends React.Component<{}> {
     this.props.store.reload();
     this.error = null;
     this.errorInfo = null;
-    Actions.logged();
+    Actions.reset('root');
   };
 
   render() {
