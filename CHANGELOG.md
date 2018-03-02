@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Tests cleanup.
+* Stop observing GPS when a user is offline.
+* Remove incorrect 3 character minimum for names (Rework #1503)
+
+
 # 2.1.0 - 2018 February 28
 
 * Onboarding: Disable Auto-correct when user creates user profile (#1889)
