@@ -978,8 +978,18 @@ export function processHomestreamResponse(data: any, username: string) {
   if (!isArray(items)) {
     items = [items]
   }
+  const list = items.map((rec: any) => processItem(rec, null, username)).filter((x: any) => x)
+  // process deletes
+  if (data.items.delete) {
+    let deletes = data.items.delete
+    if (!isArray(deletes)) {
+      deletes = [deletes]
+    }
+    deletes.forEach((rec: any) => list.push({id: rec.id, time: Utils.iso8601toDate(rec.version).getTime(), delete: true}))
+  }
+
   return {
-    list: items.map((rec: any) => processItem(rec, null, username)).filter((x: any) => x),
+    list,
     bots,
     version: data.items.version,
     count: parseInt((data.items && data.items.set && data.items.set.count) || 0)

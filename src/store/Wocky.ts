@@ -244,15 +244,6 @@ export const Wocky = types
         bot = {id, server, error: JSON.stringify(e)}
       }
       return self.getBot(bot)
-    })
-  }))
-  .actions(self => ({
-    createBot: flow<IBot>(function*() {
-      yield waitFor(() => self.connected)
-      const id = yield self.transport.generateId()
-      const bot = self.getBot({id, owner: self.username})
-      bot.setNew(true)
-      return bot
     }),
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
@@ -263,6 +254,15 @@ export const Wocky = types
       self.profiles.get(self.username!)!.ownBots.remove(id)
       self.geoBots.delete(id)
       self.bots.delete(id)
+    })
+  }))
+  .actions(self => ({
+    createBot: flow<IBot>(function*() {
+      yield waitFor(() => self.connected)
+      const id = yield self.transport.generateId()
+      const bot = self.getBot({id, owner: self.username})
+      bot.setNew(true)
+      return bot
     }),
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
@@ -359,6 +359,9 @@ export const Wocky = types
       bots.forEach(self.getBot)
       self.version = version
       list.forEach((data: any) => {
+        if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
+          return
+        }
         const item = self.create(EventEntity, data)
         self.updates.unshift(item)
       })
@@ -374,6 +377,21 @@ export const Wocky = types
       self.transport.subscribeToHomestream(version)
     },
     _onNotification: flow(function*({changed, version, ...data}: any) {
+      // ignore /changed and /description delete
+      // delete creation event if we have also delete event
+      if (data.delete) {
+        if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
+          return
+        }
+        let existed = self.updates.findIndex((u: any) => u.id === data.id)
+        if (existed !== -1 && getType(self.updates[existed]).name === EventBotCreate.name) {
+          while (existed !== -1) {
+            self.updates.splice(existed, 1)
+            existed = self.updates.findIndex((u: any) => u.id === data.id)
+          }
+          return
+        }
+      }
       if (changed && data.bot) {
         yield self.loadBot(data.bot.id, data.bot.server)
       } else {
@@ -398,10 +416,9 @@ export const Wocky = types
         // delete item
         self.events.remove(id)
         if (getType(self.updates[i]).name !== EventDelete.name) {
-          const event: any = clone(self.updates[i])
-          self.events.addToTop(event)
-          if (event.bot && !isAlive(event.bot)) {
-            self.events.remove(event.id)
+          const event: any = self.updates[i]
+          if (event.bot && isAlive(event.bot)) {
+            self.events.addToTop(clone(event))
           }
         }
       }

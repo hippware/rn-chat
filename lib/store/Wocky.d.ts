@@ -26300,6 +26300,7 @@ export declare const Wocky: IModelType<{
     requestRoster: () => Promise<{}>;
     loadChats: () => Promise<{}>;
     loadBot: (a1: string, a2: any) => Promise<any>;
+    removeBot: (a1: string) => Promise<any>;
 } & {
     createBot: () => Promise<{
         id: string;
@@ -26754,7 +26755,6 @@ export declare const Wocky: IModelType<{
     } & {
         readonly $treenode?: any;
     }>;
-    removeBot: (a1: string) => Promise<any>;
     _loadOwnBots: (a1: string) => Promise<any>;
     _loadBotSubscribers: (a1: string) => Promise<any>;
     _loadBotPosts: (a1: string) => Promise<any>;
