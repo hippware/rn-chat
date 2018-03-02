@@ -7,7 +7,6 @@ import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../Global';
 import {AutoExpandingTextInput} from '../common';
-// import {SelectFriends} from './people-lists';
 import Screen from '../Screen';
 import {colors} from '../../constants';
 import SelectableProfileList from '../../store/SelectableProfileList';
@@ -75,7 +74,7 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
   render() {
     return (
       <Screen>
-        <SelectFriends selection={this.selection} />
+        <SelectFriends selection={this.selection} profile={this.props.wocky.profile} botTitle={this.bot && this.bot.title} />
         {!!this.selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
@@ -99,7 +98,7 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
   }
 }
 
-const SelectFriends = observer(({selection}) => {
+const SelectFriends = observer(({selection, profile, botTitle}) => {
   return (
     <View style={{flex: 1}}>
       <SearchBar
@@ -110,7 +109,11 @@ const SelectFriends = observer(({selection}) => {
         placeholder='Search name or username'
         clearButtonMode='while-editing'
       />
-      <InviteFriendsRow style={{borderBottomWidth: StyleSheet.hairlineWidth}} />
+      <InviteFriendsRow
+        style={{borderBottomWidth: StyleSheet.hairlineWidth, backgroundColor: colors.WHITE}}
+        subtext='Share your favorite places with your friends!'
+        message={`Hey, @${profile.handle} invited you to check out "${botTitle}" on tinyrobot!`}
+      />
       <ProfileList selection={selection} />
     </View>
   );

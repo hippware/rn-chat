@@ -36,12 +36,12 @@ class FollowedList extends React.Component<Props> {
     if (!this.profile) return null;
     const following = this.profile.isOwn ? this.props.wocky.followed : this.profile.followed.list;
     const followedCount = this.profile.isOwn ? wocky.followed.length : this.profile.followedSize;
-    const {connected} = wocky;
+    const {connected, profile} = wocky;
     const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followed;
     return (
       <PeopleSearchWrapper>
         <PeopleList
-          ListHeaderComponent={<InviteFriendsRow />}
+          ListHeaderComponent={<InviteFriendsRow message={`Hey! Check out my favorite places in the world on tinyrobot! Add me as @${profile.handle}.`} />}
           ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={followedCount} />}
