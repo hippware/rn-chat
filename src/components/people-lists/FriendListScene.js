@@ -21,14 +21,14 @@ class FriendListScene extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard isDay profile={item} />;
 
   render() {
-    const {friends} = this.props.wocky;
+    const {friends, profile} = this.props.wocky;
     const onlineFriends = friends.filter(f => f.status === 'available');
     return (
       <PeopleSearchWrapper>
         <PeopleList
           ListHeaderComponent={
             <View>
-              <InviteFriendsRow />
+              <InviteFriendsRow message={`Hey! Check out my favorite places in the world on tinyrobot! Add me as @${profile.handle}.`} />
               {onlineFriends.length > 0 ? (
                 <View>
                   <FriendCount count={onlineFriends.length} suffix='Online' />
