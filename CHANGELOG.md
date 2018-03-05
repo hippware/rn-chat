@@ -5,9 +5,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.1.1 - 2018 March 5
+
 * Tests cleanup.
 * Stop observing GPS when a user is offline.
 * Remove incorrect 3 character minimum for names (Rework #1503)
+* New Message Button causes bugsnag (app crash) (#1930)
+* INVITE FRIENDS: CTA on Share Bot screen (#1766)
+* INVITE FRIENDS: Flow (#1767)
+* Invite Friends: Replace dl link, with apple campaign tracking link (#1935)
+* Handle errors on Prod (Rework #1811)
+* Change app compatibility (#1934)
+* Deleted Bots break the HS (#1864)
+* Bots switched from Public to Private are not removed from users HS (#1819)
+* Error in .../src/components/event-cards/EventBotCard.js:21 (#1940)
 
 
 # 2.1.0 - 2018 February 28
