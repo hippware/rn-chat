@@ -28,9 +28,9 @@ const VisibilitySwitch = inject('bot')(observer(({bot}) => {
         }}
         buttonContent={<Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />}
         toggleHeight={32}
-        toggleWidth={75}
+        toggleWidth={67.5}
         switchHeight={38}
-        switchWidth={150}
+        switchWidth={135}
         activeBackgroundColor={colors.GREY}
         inactiveBackgroundColor={colors.GREY}
         activeButtonColor='white'

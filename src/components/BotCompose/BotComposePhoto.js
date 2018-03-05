@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {width} from '../Global';
 import {showImagePicker} from '../ImagePicker';
 import Map from '../map/Map';
 import Bubble from '../map/Bubble';
 import {isAlive} from 'mobx-state-tree';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   afterPhotoPost: Function,
@@ -36,13 +37,13 @@ class BotComposePhoto extends React.Component<Props> {
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
         <Map location={bot.location} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
-        <View style={{position: 'absolute', height: width, width}}>
+        <TouchableWithoutFeedback style={{position: 'absolute', height: width, width}} onPress={() => Actions.botAddress({botId: bot.id})}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onCoverPhoto}>
               <Bubble text={bot.addressData.locationShort} scale={0.5} image={image} showLoader={showLoader} />
             </TouchableOpacity>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
