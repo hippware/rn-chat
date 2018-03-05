@@ -9,7 +9,7 @@ class XmppTransport {
   provider: any;
   fileService: any;
   resource: string;
-  @observable connected: boolean = false;
+  @observable connected: boolean = true;
   @observable connecting: boolean = false;
   @observable iq: any = {};
   @observable rosterItem: any = {};
@@ -101,6 +101,7 @@ class XmppTransport {
     // } else {
     //   throw 'Cannot generate ID'
     // }
+    return '4321';
   }
   async removeBot(id: string) {}
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
