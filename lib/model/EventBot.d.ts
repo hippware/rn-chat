@@ -189,6 +189,7 @@ export declare const EventBot: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {

@@ -358,7 +358,6 @@ export const Wocky = types
       const {list, bots, version} = yield self.transport.loadUpdates(self.version)
       bots.forEach(self.getBot)
       self.version = version
-      console.log('UPDATES:', JSON.stringify(list))
       list.forEach((data: any) => {
         if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
           return

@@ -10,6 +10,7 @@ export declare const Bot: IModelType<{
     title?: any;
     server?: any;
     radius?: any;
+    geofence?: any;
     owner?: any;
     image?: any;
     description?: any;
@@ -50,6 +51,7 @@ export declare const Bot: IModelType<{
     title: string | null;
     server: string | null;
     radius: number;
+    geofence: boolean;
     owner: ({
         id: string;
     } & {

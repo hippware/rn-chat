@@ -126,6 +126,7 @@ export declare const Storages: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {

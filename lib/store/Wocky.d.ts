@@ -231,6 +231,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -1157,6 +1158,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -1909,6 +1911,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -2977,6 +2980,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -3729,6 +3733,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -4894,6 +4899,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -5977,6 +5983,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -6903,6 +6910,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -7655,6 +7663,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -8723,6 +8732,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -9475,6 +9485,7 @@ export declare const Wocky: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
+            geofence: boolean;
             owner: ({
                 id: string;
             } & {
@@ -10581,6 +10592,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -25863,6 +25875,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -26330,6 +26343,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
@@ -26787,6 +26801,7 @@ export declare const Wocky: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
+        geofence: boolean;
         owner: ({
             id: string;
         } & {
