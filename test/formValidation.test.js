@@ -64,7 +64,7 @@ describe('form validation', () => {
       await validateProfile({firstName: ' Eric'});
     } catch (err) {
       expect(err).to.deep.equal({
-        firstName: ['First name can only contain alphabet characters'],
+        firstName: ['First name is invalid'],
       });
     }
   });

@@ -23,30 +23,30 @@ const profileConstraints = {
   firstName: {
     format: {
       pattern: isAlphabet,
-      message: 'can only contain alphabet characters',
+      message: 'is invalid',
     },
     length: {
       minimum: 1,
       maximum: 32,
-      message: 'must be 1 - 20 characters',
+      message: 'must be 1 - 32 characters',
     },
   },
   lastName: {
     format: {
       pattern: isAlphabet,
-      message: 'can only contain alphabet characters',
+      message: 'is invalid',
     },
     length: {
       minimum: 1,
       maximum: 32,
-      message: 'must be 1 - 20 characters',
+      message: 'must be 1 - 32 characters',
     },
   },
   email: {
     email: true,
     length: {
       maximum: 254,
-      message: 'is invalid',
+      message: 'must be less than 254 characters',
     },
   },
 };
