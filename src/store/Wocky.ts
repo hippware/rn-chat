@@ -358,6 +358,7 @@ export const Wocky = types
       const {list, bots, version} = yield self.transport.loadUpdates(self.version)
       bots.forEach(self.getBot)
       self.version = version
+      console.log('UPDATES:', JSON.stringify(list))
       list.forEach((data: any) => {
         if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
           return
@@ -377,6 +378,10 @@ export const Wocky = types
       self.transport.subscribeToHomestream(version)
     },
     _onNotification: flow(function*({changed, version, ...data}: any) {
+      if (!version) {
+        console.error('No version for notification:', JSON.stringify(data))
+      }
+      self.version = version
       // ignore /changed and /description delete
       // delete creation event if we have also delete event
       if (data.delete) {
@@ -405,10 +410,6 @@ export const Wocky = types
         }
         self.updates.unshift(item)
       }
-      if (!version) {
-        console.error('No version for notification:', JSON.stringify(data))
-      }
-      self.version = version
     }),
     incorporateUpdates: () => {
       for (let i = self.updates.length - 1; i >= 0; i--) {
