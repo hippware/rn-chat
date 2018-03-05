@@ -20,7 +20,8 @@
     "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
-    "deploy:stage": "babel-node ./scripts/deploy-stage.js"
+    "deploy:stage": "babel-node ./scripts/deploy-stage.js",
+    "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js"
   },
   "jest": {
     "preset": "react-native",
