@@ -410,6 +410,7 @@ export declare const EventBot: IModelType<{
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {

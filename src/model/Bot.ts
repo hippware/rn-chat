@@ -49,6 +49,9 @@ export const Bot = types
     setError: (value: string) => {
       self.error = value
     },
+    setGeofence: (value: boolean) => {
+      self.geofence = value
+    },
     setPublic: (value: boolean) => {
       self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
     },

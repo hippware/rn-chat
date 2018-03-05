@@ -452,6 +452,7 @@ export declare const EventEntity: IType<({
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -1379,6 +1380,7 @@ export declare const EventEntity: IType<({
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -2132,6 +2134,7 @@ export declare const EventEntity: IType<({
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -3201,6 +3204,7 @@ export declare const EventEntity: IType<({
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -3954,6 +3958,7 @@ export declare const EventEntity: IType<({
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -5120,6 +5125,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -6204,6 +6210,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -7131,6 +7138,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -7884,6 +7892,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -8953,6 +8962,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -9706,6 +9716,7 @@ export declare const Wocky: IModelType<{
             isNew: boolean;
         } & {
             setError: (value: string) => void;
+            setGeofence: (value: boolean) => void;
             setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
@@ -10813,6 +10824,7 @@ export declare const Wocky: IModelType<{
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -26096,6 +26108,7 @@ export declare const Wocky: IModelType<{
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -26564,6 +26577,7 @@ export declare const Wocky: IModelType<{
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
@@ -27022,6 +27036,7 @@ export declare const Wocky: IModelType<{
         isNew: boolean;
     } & {
         setError: (value: string) => void;
+        setGeofence: (value: boolean) => void;
         setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
