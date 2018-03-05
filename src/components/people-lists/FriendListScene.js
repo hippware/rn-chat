@@ -28,7 +28,7 @@ class FriendListScene extends React.Component<Props> {
         <PeopleList
           ListHeaderComponent={
             <View>
-              <InviteFriendsRow message={`Hey! Check out my favorite places in the world on tinyrobot! Add me as @${profile.handle}.`} />
+              <InviteFriendsRow />
               {onlineFriends.length > 0 ? (
                 <View>
                   <FriendCount count={onlineFriends.length} suffix='Online' />
