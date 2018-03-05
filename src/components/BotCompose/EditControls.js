@@ -47,7 +47,7 @@ class EditControls extends React.Component<Props> {
         <View>
           <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
             <VisibilitySwitch bot={bot} />
-            <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
+            <Cell imageStyle={{paddingLeft: 21 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
               <TextInput
                 multiline
                 style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}

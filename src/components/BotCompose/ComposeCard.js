@@ -8,6 +8,8 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 import Cell from '../Cell';
 import {isAlive} from 'mobx-state-tree';
+import Switch from '../Switch';
+import {RText} from '../common';
 
 type Props = {
   edit?: boolean,
@@ -40,7 +42,7 @@ class ComposeCard extends React.Component<Props> {
         <Cell
           style={[{padding: 10 * k}, styles.separator]}
           image={require('../../../images/faceless.png')}
-          imageStyle={{paddingLeft: 14 * k}}
+          imageStyle={{paddingLeft: 21 * k}}
           textStyle={{fontFamily: 'Roboto-Light'}}
         >
           <View style={styles.textWrapper}>
@@ -62,13 +64,33 @@ class ComposeCard extends React.Component<Props> {
             />
           </View>
         </Cell>
-        <Cell
-          imageStyle={{paddingLeft: 8 * k}}
-          style={styles.separator}
-          onPress={() => Actions.botAddress({botId: bot.id})}
-          image={require('../../../images/iconBotLocationPink.png')}
-        >
-          {address}
+        <Cell imageStyle={{paddingLeft: 21, width: 50}} image={require('../../../images/foot.png')} style={styles.separator}>
+          <RText style={{padding: 16, flex: 1, paddingRight: 30}} weight='Medium' size={15 * k}>
+            Know when friends visit your bot!
+          </RText>
+          <Switch
+            style={{paddingRight: 21}}
+            toggleHeight={32}
+            toggleWidth={32}
+            switchHeight={38}
+            switchWidth={63}
+            active={bot.geofence}
+            onChangeState={(geofence) => {
+              bot.setGeofence(geofence);
+            }}
+            activeBackgroundColor={colors.PINK}
+            inactiveBackgroundColor={colors.GREY}
+            activeButtonColor='white'
+            inactiveButtonColor='white'
+            activeButtonPressedColor='white'
+            inactiveButtonPressedColor='white'
+            buttonShadow={{
+              shadowColor: '#000',
+              shadowOpacity: 0.5,
+              shadowRadius: 0,
+              shadowOffset: {height: 0, width: 0},
+            }}
+          />
         </Cell>
       </View>
     );
