@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.0</string>
+	<string>2.1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -84,6 +84,10 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This application requires access to library to work</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application requires access to bluetooth to work</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This application requires access to calendars to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -100,10 +104,6 @@
 	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This application requires access to library to work</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This application requires access to bluetooth to work</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>This application requires access to calendars to work</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This application requires speech recognition access to work</string>
 	<key>STAGING</key>
