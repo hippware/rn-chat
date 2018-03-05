@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Alert, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
@@ -12,7 +12,7 @@ import VisibilitySwitch from '../BotVisibilitySwitch';
 import Button from '../Button';
 
 type Props = {
-  // bot: Bot
+  bot: Bot,
 };
 
 @inject('bot', 'wocky')
@@ -24,59 +24,38 @@ class EditControls extends React.Component<Props> {
     this.input.focus();
   };
 
-  removeBot = () => {
-    Alert.alert(null, 'Are you sure you want to delete this bot?', [
-      {text: 'Cancel', style: 'cancel'},
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: () => {
-          this.props.wocky.removeBot(this.props.bot.id);
-          Actions.pop();
-          Actions.pop({animated: false});
-        },
-      },
-    ]);
-  };
-
   render() {
     const {bot} = this.props;
+    if (!bot || !isAlive(bot)) return null;
     return (
-      bot &&
-      isAlive(bot) && (
-        <View>
-          <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
-            <VisibilitySwitch bot={bot} />
-            <Cell imageStyle={{paddingLeft: 21 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
-              <TextInput
-                multiline
-                style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
-                placeholder='Tell us about this place!'
-                onChangeText={text => bot.load({description: text})}
-                value={bot.description}
-                maxLength={1500}
-                ref={r => (this.input = r)}
-              />
-            </Cell>
-          </View>
-          {bot.isNew ? (
-            <Button
-              onPress={() => {
-                Actions.pop({animated: false});
-                Actions.pop();
-              }}
-              textStyle={{color: colors.PINK}}
-              style={styles.crud}
-            >
-              Cancel Bot
-            </Button>
-          ) : (
-            <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
-              Delete Bot
-            </Button>
-          )}
+      <View>
+        <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
+          <VisibilitySwitch bot={bot} />
+          <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
+            <TextInput
+              multiline
+              style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
+              placeholder='Tell us about this place!'
+              onChangeText={text => bot.load({description: text})}
+              value={bot.description}
+              maxLength={1500}
+              ref={r => (this.input = r)}
+            />
+          </Cell>
         </View>
-      )
+        {bot.isNew && (
+          <Button
+            onPress={() => {
+              Actions.pop({animated: false});
+              Actions.pop();
+            }}
+            textStyle={{color: colors.PINK}}
+            style={styles.crud}
+          >
+            Cancel Bot
+          </Button>
+        )}
+      </View>
     );
   }
 }
