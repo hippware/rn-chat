@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* GEOFENCE v1: New Create Bot UI (to include Geofence option) (#1892)
+
+
 # 2.1.2 - 2018 March 5
 
 * Remove gps, magnetometer from UIRequiredDeviceCapabilities (Rework #1934)
