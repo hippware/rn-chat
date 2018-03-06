@@ -197,6 +197,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "description": null,
                         "error": "",
                         "followersSize": 0,
+                        "geofence": false,
                         "id": "4321",
                         "image": null,
                         "isSubscribed": false,
@@ -210,7 +211,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "count": null,
                           "result": Array [],
                         },
-                        "radius": 30,
+                        "radius": 100,
                         "server": null,
                         "subscribers": Object {
                           "count": null,
@@ -1116,6 +1117,190 @@ exports[`BotCompose renders with owned bot 1`] = `
       >
         Post
       </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "rgba(0,0,0,0.7)",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "paddingHorizontal": 60,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../images/footprint.png",
+          }
+        }
+        style={
+          Object {
+            "height": 60,
+            "marginVertical": 50,
+            "width": 60,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 30,
+            },
+            Object {
+              "lineHeight": 64,
+              "marginVertical": 30,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Allow Location
+Access
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 14,
+            },
+            Object {
+              "marginTop": 10,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Please change your location settings to “always allow” to receive updates for your bots.
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "stretch",
+            "alignSelf": "stretch",
+            "marginVertical": 50,
+          }
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "rgb(253,95,108)",
+              "borderRadius": 10,
+              "borderWidth": 0,
+              "height": 100,
+              "justifyContent": "center",
+              "margin": 20,
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 17.5,
+                },
+                undefined,
+              ]
+            }
+          >
+            Always Allow
+          </Text>
+        </View>
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "white",
+              "borderRadius": 10,
+              "borderWidth": 0.5,
+              "height": 100,
+              "justifyContent": "center",
+              "margin": 20,
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {
+                  "color": "white",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 17.5,
+                },
+                undefined,
+              ]
+            }
+          >
+            Cancel
+          </Text>
+        </View>
+      </View>
     </View>
   </View>
 </View>

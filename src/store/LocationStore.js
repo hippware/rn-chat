@@ -56,9 +56,7 @@ const LocationStore = types
         () => wocky.connected,
         (connected) => {
           if (connected) {
-            Permissions.check('location', {type: 'always'}).then((response) => {
-              self.setAlwaysOn(response);
-            });
+            Permissions.check('location', {type: 'always'}).then(self.setAlwaysOn);
             self.watchPosition();
           } else if (watch !== undefined) {
             geolocation.clearWatch(watch);
