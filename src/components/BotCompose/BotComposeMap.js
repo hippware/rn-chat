@@ -16,7 +16,7 @@ type Props = {
 
 @inject('bot', 'notificationStore')
 @observer
-class BotComposePhoto extends React.Component<Props> {
+class BotComposeMap extends React.Component<Props> {
   onCoverPhoto = (): void => {
     showImagePicker('Image Picker', async (source, response) => {
       try {
@@ -49,4 +49,4 @@ class BotComposePhoto extends React.Component<Props> {
   }
 }
 
-export default BotComposePhoto;
+export default BotComposeMap;

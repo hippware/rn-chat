@@ -14,7 +14,7 @@ import Button from '../Button';
 import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
-import PhotoArea from './BotComposePhoto';
+import BotComposeMap from './BotComposeMap';
 import {settings} from '../../globals';
 
 type Props = {
@@ -117,7 +117,7 @@ class BotCompose extends React.Component<Props> {
       <Provider bot={bot}>
         <Screen>
           <KeyboardAwareScrollView style={{marginBottom: 50 * k}} onKeyboardWillShow={this.setKeyboardHeight} onKeyboardWillHide={() => (this.keyboardHeight = 0)}>
-            <PhotoArea afterPhotoPost={this.scrollToNote} />
+            <BotComposeMap afterPhotoPost={this.scrollToNote} />
             <ComposeCard edit={edit} titleBlurred={titleBlurred} />
             <EditControls ref={r => (this.controls = r)} />
           </KeyboardAwareScrollView>
