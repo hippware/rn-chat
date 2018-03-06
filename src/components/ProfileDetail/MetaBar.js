@@ -10,7 +10,7 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 import {RText} from '../common';
 
-const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
+const Separator = () => <View style={{width: StyleSheet.hairlineWidth, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
 const NewFollowerDot = () => (
   <View

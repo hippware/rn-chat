@@ -12,10 +12,9 @@ import Screen from './Screen';
 import * as log from '../utils/log';
 import Card from './Card';
 import Cell from './Cell';
-import Separator from './Separator';
 import FormTextInput from './FormTextInput';
 import {colors} from '../constants';
-import {RText} from './common';
+import {RText, Separator} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
@@ -106,7 +105,7 @@ export default class MyAccount extends React.Component<{}> {
                 Profile Info
               </RText>
             </View>
-            <Separator width={1} />
+            <Separator />
             <FormTextInput label='First Name' store={this.vProfile && this.vProfile.firstName} icon={require('../../images/iconSubsNew.png')} />
             <FormTextInput label='Last Name' store={this.vProfile && this.vProfile.lastName} />
             <FormTextInput label='Username' store={this.vProfile && this.vProfile.handle} autoCapitalize='none' icon={require('../../images/iconUsernameNew.png')} />

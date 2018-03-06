@@ -2,7 +2,7 @@ import React from 'react';
 import Screen from './Screen';
 import Card from './Card';
 import Cell from './Cell';
-import Separator from './Separator';
+import {Separator} from './common';
 import {Actions} from 'react-native-router-flux';
 
 const AddFriends = () => {
