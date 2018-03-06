@@ -12,12 +12,12 @@ import {reaction} from 'mobx';
 const footprint = require('../../images/footprint.png');
 
 type Props = {
-  onCancel: Function,
+  bot: Bot,
 };
 
 @inject('locationStore')
 @observer
-class LocationGeofenceWarning extends React.Component {
+class LocationGeofenceWarning extends React.Component<Props> {
   handler: any;
   componentDidMount() {
     this.handler = reaction(
