@@ -16,7 +16,6 @@ import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import PhotoArea from './BotComposePhoto';
 import {settings} from '../../globals';
-import LocationGeofenceWarning from '../LocationGeofenceWarning';
 
 type Props = {
   botId: string,
@@ -24,7 +23,7 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-@inject('wocky', 'notificationStore', 'analytics', 'log', 'locationStore')
+@inject('wocky', 'notificationStore', 'analytics', 'log')
 @observer
 class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
@@ -106,7 +105,7 @@ class BotCompose extends React.Component<Props> {
   };
 
   render() {
-    const {edit, titleBlurred, locationStore} = this.props;
+    const {edit, titleBlurred} = this.props;
     const {bot} = this;
     if (!bot || !isAlive(bot)) {
       this.props.log('NO BOT IS DEFINED');
@@ -123,7 +122,6 @@ class BotCompose extends React.Component<Props> {
             <EditControls ref={r => (this.controls = r)} />
           </KeyboardAwareScrollView>
           <CreateSaveButton bot={bot} isLoading={this.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={bot.title !== '' ? this.keyboardHeight : 0} />
-          {!locationStore.alwaysOn && <LocationGeofenceWarning />}
         </Screen>
       </Provider>
     );

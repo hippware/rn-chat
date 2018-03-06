@@ -5,6 +5,9 @@ import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
 import {RText} from './common';
+import {Actions} from 'react-native-router-flux';
+import {observer, inject} from 'mobx-react/native';
+import {reaction} from 'mobx';
 
 const footprint = require('../../images/footprint.png');
 
@@ -12,34 +15,55 @@ type Props = {
   onCancel: Function,
 };
 
-const LocationGeofenceWarning = ({onCancel}: Props) => (
-  <View style={styles.container}>
-    <Image source={footprint} style={{width: 60, height: 60, marginVertical: 25 * k}} resizeMode='contain' />
-    <RText style={styles.title} size={30} color='white'>
-      {'Allow Location\r\nAccess'}
-    </RText>
-    <RText style={styles.muted} color='white' size={14}>
-      Please change your location settings to “always allow” to receive updates for your bots.
-    </RText>
-    <View style={{marginVertical: 25 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          Linking.openURL('app-settings:{1}');
-        }}
-      >
-        <RText color='white' size={17.5}>
-          Always Allow
+@inject('locationStore')
+@observer
+class LocationGeofenceWarning extends React.Component {
+  handler: any;
+  componentDidMount() {
+    this.handler = reaction(
+      () => this.props.locationStore.alwaysOn,
+      (alwaysOn) => {
+        if (alwaysOn) {
+          this.props.bot.setGeofence(true);
+          Actions.pop();
+        }
+      },
+    );
+  }
+  componentWillUnmount() {
+    this.handler();
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image source={footprint} style={{width: 60, height: 60, marginVertical: 25 * k}} resizeMode='contain' />
+        <RText style={styles.title} size={30} color='white'>
+          {'Allow Location\r\nAccess'}
         </RText>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={onCancel}>
-        <RText color='white' size={17.5}>
-          Cancel
+        <RText style={styles.muted} color='white' size={14}>
+          Please change your location settings to “always allow” to receive updates for your bots.
         </RText>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
+        <View style={{marginVertical: 25 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              Linking.openURL('app-settings:{1}');
+            }}
+          >
+            <RText color='white' size={17.5}>
+              Always Allow
+            </RText>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={Actions.pop}>
+            <RText color='white' size={17.5}>
+              Cancel
+            </RText>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
 export default LocationGeofenceWarning;
 

@@ -13,15 +13,15 @@ import * as log from '../../utils/log';
 import RText from '../common/RText';
 import BotMarker from './BotMarker';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
+import {colors} from '../../constants/index';
 
 const DELTA_FULL_MAP = 0.04;
 const DELTA_BOT_PROFILE = 0.2;
+const DELTA_GEOFENCE = 0.01;
 
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
 }
-
-import {colors} from '../../constants/index';
 
 type Props = {
   selectedBot?: string,
@@ -30,6 +30,7 @@ type Props = {
   showUser?: boolean,
   showOnlyBot?: boolean,
   fullMap: boolean,
+  geofence?: boolean,
   location?: Object,
   children?: any,
   marker?: any,
@@ -106,22 +107,24 @@ export default class Map extends Component<Props> {
       this.selectedBot = '';
       MessageBarManager.hideAlert();
     }
-    if (this.props.location && newProps.location && this.props.location !== newProps.location) {
+    if (
+      newProps.geofence !== this.props.geofence ||
+      (this.props.location && newProps.location && this.latitude !== newProps.location.latitude && this.longitude !== newProps.location.longitude)
+    ) {
       this.goToCoords(newProps);
-    }
-    // center bot for scale > 0
-    if (newProps.scale && newProps.scale !== this.props.scale && this.props.bot && this.props.bot.location) {
+    } else if (newProps.scale && newProps.scale !== this.props.scale && this.props.bot && this.props.bot.location) {
+      // center bot for scale > 0
       this.goToCoords({location: this.props.bot.location});
     }
   }
 
-  goToCoords = ({scale, location, autoZoom}) => {
+  goToCoords = ({scale, geofence, location, autoZoom}) => {
     const config = {
       latitude: location.latitude,
       longitude: location.longitude,
     };
     if (autoZoom) {
-      const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
+      const delta = geofence ? DELTA_GEOFENCE : scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
       config.latitudeDelta = delta;
       config.longitudeDelta = delta;
     }
@@ -228,7 +231,7 @@ export default class Map extends Component<Props> {
   render() {
     const {locationStore, showUser} = this.props;
     const currentLoc = locationStore.location;
-    const location = this.props.location && isAlive(this.props.location) ? this.props.location : null;
+    const location = this.props.location;
     const coords = location || currentLoc;
     if (!coords) {
       return <RText>Please enable location</RText>;
@@ -237,9 +240,10 @@ export default class Map extends Component<Props> {
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
     const heading = coords && coords.heading;
-    const delta = this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
+    const delta = this.props.geofence ? DELTA_GEOFENCE : this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
     const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
+    console.log('GEOFENCE:', this.props.geofence, JSON.stringify(coords));
     return (
       <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -210 * k : 0, right: 0, left: 0}}>
         <MapView
@@ -253,6 +257,7 @@ export default class Map extends Component<Props> {
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
+          {this.props.geofence && coords && <MapView.Circle key={coords.latitude + '  ' + coords.longitude} center={coords} radius={100} fillColor={colors.PINK_MASK} strokeColor={colors.PINK} />}
           {!this.props.marker && this.list}
           {this.props.marker}
           {(this.followUser || showUser) &&

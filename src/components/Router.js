@@ -40,6 +40,7 @@ import ReportUser from './report-modals/ReportUser';
 import ReportBot from './report-modals/ReportBot';
 import SignIn from './SignIn';
 import VerifyCode from './VerifyCode';
+import LocationGeofenceWarning from './LocationGeofenceWarning';
 
 const STAGING_COLOR = 'rgb(28,247,39)';
 
@@ -205,6 +206,7 @@ class TinyRobotRouter extends React.Component<{}> {
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
           <Scene key='locationWarning' component={LocationWarning} />
+          <Scene key='geofenceWarning' component={LocationGeofenceWarning} />
         </Lightbox>
       </Router>
     );

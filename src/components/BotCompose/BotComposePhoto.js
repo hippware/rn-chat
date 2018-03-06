@@ -36,7 +36,7 @@ class BotComposePhoto extends React.Component<Props> {
     const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading);
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
-        <Map location={bot.location} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
+        <Map geofence={bot.geofence} location={{...bot.location}} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
         <TouchableWithoutFeedback style={{position: 'absolute', height: width, width}} onPress={() => Actions.botAddress({botId: bot.id})}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onCoverPhoto}>

@@ -90,6 +90,7 @@ export const COVER_PURPLE_MASK = addAlpha(COVER_PURPLE, 0.4);
 // #3ED095
 export const COVER_GREEN = 'rgb(62, 208, 149)';
 export const COVER_GREEN_MASK = addAlpha(COVER_GREEN, 0.4);
+export const PINK_MASK = addAlpha(PINK, 0.5);
 
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 

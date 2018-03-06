@@ -34,8 +34,8 @@ class BotAddress extends React.Component<Props> {
         if (!bot.title && data.isPlace) {
           data.title = data.placeName;
         }
-        bot.load({addressData: data.meta, address: data.address, location});
-        bot.location.load({isCurrent: false});
+        bot.load({addressData: data.meta, address: data.address});
+        bot.location.load({...location, isCurrent: false});
       },
       {delay: 500},
     );
