@@ -361,139 +361,143 @@ exports[`BotCompose renders with owned bot 1`] = `
             </View>
           </View>
           <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hitSlop={undefined}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "height": 750,
-                "position": "absolute",
-                "width": 750,
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
               }
             }
+            testID={undefined}
           >
             <View
+              accessibilityComponentType={undefined}
+              accessibilityLabel={undefined}
+              accessibilityTraits={undefined}
+              accessible={true}
+              collapsable={undefined}
+              hasTVPreferredFocus={undefined}
+              hitSlop={undefined}
+              isTVSelectable={true}
+              nativeID={undefined}
+              onLayout={undefined}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "justifyContent": "center",
+                  "opacity": 1,
                 }
               }
+              testID={undefined}
+              tvParallaxProperties={undefined}
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
-                accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
-                isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "opacity": 1,
+                    "alignItems": "center",
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
+                  collapsable={undefined}
                   style={
                     Object {
-                      "alignItems": "center",
+                      "backgroundColor": "rgb(253,95,108)",
+                      "borderColor": "rgb(253,95,108)",
+                      "borderRadius": 7.2,
+                      "borderWidth": 1.2,
+                      "height": 203,
+                      "overflow": "hidden",
+                      "width": 175,
                     }
                   }
                 >
-                  <View
+                  <Image
                     collapsable={undefined}
+                    resizeMode="contain"
+                    source={
+                      Object {
+                        "testUri": "../../../images/addBotPhoto.png",
+                      }
+                    }
                     style={
                       Object {
-                        "backgroundColor": "rgb(253,95,108)",
-                        "borderColor": "rgb(253,95,108)",
-                        "borderRadius": 7.2,
-                        "borderWidth": 1.2,
-                        "height": 203,
-                        "overflow": "hidden",
+                        "height": 175,
                         "width": 175,
                       }
                     }
-                  >
-                    <Image
-                      collapsable={undefined}
-                      resizeMode="contain"
-                      source={
-                        Object {
-                          "testUri": "../../../images/addBotPhoto.png",
-                        }
-                      }
-                      style={
-                        Object {
-                          "height": 175,
-                          "width": 175,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "flex": 1,
-                          "justifyContent": "center",
-                        }
-                      }
-                    >
-                      <Text
-                        accessible={true}
-                        allowFontScaling={true}
-                        ellipsizeMode="middle"
-                        numberOfLines={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "rgb(255,255,255)",
-                              "fontFamily": "Roboto-Regular",
-                              "fontSize": 13,
-                            },
-                            Object {
-                              "padding": 2,
-                            },
-                          ]
-                        }
-                      >
-                        123 address
-                      </Text>
-                    </View>
-                  </View>
+                  />
                   <View
                     style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderStyle": "solid",
-                          "height": 0,
-                          "width": 0,
-                        },
-                        Object {
-                          "borderBottomColor": "transparent",
-                          "borderBottomWidth": 0,
-                          "borderLeftColor": "transparent",
-                          "borderLeftWidth": 5.5,
-                          "borderRightColor": "transparent",
-                          "borderRightWidth": 5.5,
-                          "borderTopColor": "rgb(253,95,108)",
-                          "borderTopWidth": 11,
-                        },
-                        undefined,
-                      ]
+                      Object {
+                        "alignItems": "center",
+                        "flex": 1,
+                        "justifyContent": "center",
+                      }
                     }
-                  />
+                  >
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="middle"
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Object {
+                            "color": "rgb(255,255,255)",
+                            "fontFamily": "Roboto-Regular",
+                            "fontSize": 13,
+                          },
+                          Object {
+                            "padding": 2,
+                          },
+                        ]
+                      }
+                    >
+                      123 address
+                    </Text>
+                  </View>
                 </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "transparent",
+                        "borderStyle": "solid",
+                        "height": 0,
+                        "width": 0,
+                      },
+                      Object {
+                        "borderBottomColor": "transparent",
+                        "borderBottomWidth": 0,
+                        "borderLeftColor": "transparent",
+                        "borderLeftWidth": 5.5,
+                        "borderRightColor": "transparent",
+                        "borderRightWidth": 5.5,
+                        "borderTopColor": "rgb(253,95,108)",
+                        "borderTopWidth": 11,
+                      },
+                      undefined,
+                    ]
+                  }
+                />
               </View>
             </View>
           </View>
@@ -535,7 +539,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "width": 30,
                   },
                   Object {
-                    "paddingLeft": 28,
+                    "paddingLeft": 42,
                   },
                 ]
               }
@@ -595,104 +599,163 @@ exports[`BotCompose renders with owned bot 1`] = `
             </View>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Object {
-                "borderTopColor": "rgba(155,155,155,0.15)",
-                "borderTopWidth": 1,
-                "opacity": 1,
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "padding": 30,
+                },
+                Object {
+                  "borderTopColor": "rgba(155,155,155,0.15)",
+                  "borderTopWidth": 1,
+                },
+              ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
                 Array [
                   Object {
                     "alignItems": "center",
-                    "flexDirection": "row",
-                    "padding": 30,
+                    "paddingLeft": 10,
+                    "paddingRight": 30,
+                    "width": 30,
                   },
                   Object {
-                    "borderTopColor": "rgba(155,155,155,0.15)",
-                    "borderTopWidth": 1,
+                    "paddingLeft": 21,
+                    "width": 50,
                   },
                 ]
               }
             >
-              <View
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/foot.png",
+                  }
+                }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
-                      "alignItems": "center",
-                      "paddingLeft": 10,
-                      "paddingRight": 30,
-                      "width": 30,
+                      "color": undefined,
+                      "fontFamily": "Roboto-Medium",
+                      "fontSize": 30,
                     },
                     Object {
-                      "paddingLeft": 16,
+                      "flex": 1,
+                      "padding": 16,
+                      "paddingRight": 30,
                     },
                   ]
                 }
               >
-                <Image
-                  source={
-                    Object {
-                      "testUri": "../../../images/iconBotLocationPink.png",
-                    }
-                  }
-                />
-              </View>
+                Know when friends visit your bot!
+              </Text>
               <View
                 style={
                   Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "padding": 2,
+                    "position": "relative",
                   }
                 }
               >
-                <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
+                <View
                   style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontFamily": "Roboto-Regular",
-                        "fontSize": 15,
-                      },
-                      Array [
-                        Object {
-                          "color": "rgb(63,50,77)",
-                          "flex": 1,
-                        },
-                        undefined,
-                      ],
-                    ]
+                    Object {
+                      "backgroundColor": "rgb(212,212,212)",
+                      "borderRadius": 19,
+                      "height": 38,
+                      "width": 63,
+                    }
                   }
+                />
+                <View
+                  accessibilityComponentType={undefined}
+                  accessibilityLabel={undefined}
+                  accessibilityTraits={undefined}
+                  accessible={true}
+                  hasTVPreferredFocus={undefined}
+                  hitSlop={undefined}
+                  isTVSelectable={true}
+                  nativeID={undefined}
+                  onLayout={undefined}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "height": 40,
+                      "left": 4,
+                      "position": "absolute",
+                      "top": 0,
+                      "width": 65,
+                    }
+                  }
+                  testID={undefined}
+                  tvParallaxProperties={undefined}
                 >
-                  123 address
-                </Text>
+                  <View
+                    collapsable={undefined}
+                    onMoveShouldSetResponder={[Function]}
+                    onMoveShouldSetResponderCapture={[Function]}
+                    onResponderEnd={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderReject={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderStart={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    onStartShouldSetResponderCapture={[Function]}
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "white",
+                        "borderRadius": 15,
+                        "flexDirection": "row",
+                        "height": 32,
+                        "justifyContent": "center",
+                        "left": 1,
+                        "position": "absolute",
+                        "shadowColor": "#000",
+                        "shadowOffset": Object {
+                          "height": 0,
+                          "width": 0,
+                        },
+                        "shadowOpacity": 0.5,
+                        "shadowRadius": 0,
+                        "top": 5,
+                        "transform": Array [
+                          Object {
+                            "translateX": 0,
+                          },
+                        ],
+                        "width": 32,
+                      }
+                    }
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -782,7 +845,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "backgroundColor": "rgb(212,212,212)",
                       "borderRadius": 19,
                       "height": 38,
-                      "width": 150,
+                      "width": 135,
                     }
                   }
                 />
@@ -808,7 +871,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "left": 4,
                       "position": "absolute",
                       "top": 0,
-                      "width": 152,
+                      "width": 137,
                     }
                   }
                   testID={undefined}
@@ -848,10 +911,10 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "top": 5,
                         "transform": Array [
                           Object {
-                            "translateX": 69,
+                            "translateX": 61.5,
                           },
                         ],
-                        "width": 75,
+                        "width": 67.5,
                       }
                     }
                   >
