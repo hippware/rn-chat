@@ -3,25 +3,19 @@
 import React from 'react';
 import {TouchableOpacity, Image} from 'react-native';
 import {colors} from '../../constants';
-import {k} from '../Global';
-import {Actions} from 'react-native-router-flux';
 
 type Props = {
   subscribe: Function,
   unsubscribe: Function,
   isSubscribed: boolean,
   isOwn: boolean,
-  botId: string,
   style: any,
 };
 
-const SaveOrEditButton = ({subscribe, unsubscribe, isSubscribed, isOwn, botId, style}: Props) => {
-  console.log('isSubscribed', isSubscribed);
+const SaveOrEditButton = ({subscribe, unsubscribe, isSubscribed, isOwn, style}: Props) => {
   let onPress, buttonStyle, image;
   if (isOwn) {
-    onPress = () => Actions.botEdit({botId});
-    buttonStyle = [style, {backgroundColor: colors.WHITE}];
-    image = require('../../../images/editBot.png');
+    return null;
   } else if (isSubscribed) {
     onPress = unsubscribe;
     buttonStyle = style;

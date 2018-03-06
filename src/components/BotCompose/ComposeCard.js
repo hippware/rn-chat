@@ -10,16 +10,18 @@ import Cell from '../Cell';
 import {isAlive} from 'mobx-state-tree';
 import Switch from '../Switch';
 import {RText} from '../common';
+import {autorun, observable} from 'mobx';
 
 type Props = {
   edit?: boolean,
   titleBlurred?: boolean,
 };
 
-@inject('bot')
+@inject('bot', 'wocky', 'locationStore')
 @observer
 class ComposeCard extends React.Component<Props> {
   botTitle: any;
+  handler: any;
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.titleBlurred) {
@@ -30,10 +32,24 @@ class ComposeCard extends React.Component<Props> {
     if (this.botTitle && this.botTitle.focus && !this.props.edit && !this.props.bot.title) {
       this.botTitle.focus();
     }
+    this.handler = autorun(() => {
+      if (this.props.wocky.connected && this.props.bot.geofence) {
+        if (!this.props.locationStore.alwaysOn) {
+          Actions.geofenceWarning({bot: this.props.bot});
+          this.switch.deactivate();
+        } else {
+          this.switch.activate();
+        }
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.handler();
   }
 
   render() {
-    const {bot} = this.props;
+    const {bot, wocky, locationStore} = this.props;
     if (!bot || !isAlive(bot)) return null;
     const address = `${bot.location && bot.location.isCurrent ? 'Current - ' : ''}${bot.address}`;
     const titleColor = {color: colors.navBarTextColorDay};
@@ -69,15 +85,14 @@ class ComposeCard extends React.Component<Props> {
             Know when friends visit your bot!
           </RText>
           <Switch
+            ref={r => (this.switch = r)}
             style={{paddingRight: 21}}
             toggleHeight={32}
             toggleWidth={32}
             switchHeight={38}
             switchWidth={63}
             active={bot.geofence}
-            onChangeState={(geofence) => {
-              bot.setGeofence(geofence);
-            }}
+            onChangeState={bot.setGeofence}
             activeBackgroundColor={colors.PINK}
             inactiveBackgroundColor={colors.GREY}
             activeButtonColor='white'

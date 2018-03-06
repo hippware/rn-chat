@@ -89,7 +89,7 @@ class BotCompose extends React.Component<Props> {
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.');
       this.props.analytics.track('botcreate_fail', {bot: this.bot.toJSON(), error: e});
-      log.log('BotCompose save problem', e);
+      this.props.log('BotCompose save problem', e);
     } finally {
       this.isLoading = false;
     }

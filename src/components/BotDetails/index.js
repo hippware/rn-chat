@@ -58,7 +58,7 @@ class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    const {wocky, analytics, isNew} = this.props;
+    const {wocky, analytics} = this.props;
     this.bot = wocky.getBot({id: this.props.item});
     when(
       () => wocky.connected,

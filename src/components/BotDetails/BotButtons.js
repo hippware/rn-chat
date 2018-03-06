@@ -1,21 +1,42 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Alert} from 'react-native';
 import {k} from '../Global';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import SaveOrEditButton from './SaveOrEditButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import {colors} from '../../constants';
-import {RText} from '../common';
 
 type Props = {
   bot: Bot,
   copyAddress: Function,
 };
 
-const ownerActions = [{name: 'Copy Address', action: ({copyAddress}) => copyAddress()}, {name: 'Cancel', action: () => {}}];
+const ownerActions = [
+  {name: 'Edit', action: ({bot}) => Actions.botEdit({botId: bot ? bot.id : null})},
+  {name: 'Copy Address', action: ({copyAddress}) => copyAddress()},
+  {
+    name: 'Delete',
+    action: ({wocky, bot}) => {
+      Alert.alert(null, 'Are you sure you want to delete this bot?', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            wocky.removeBot(bot ? bot.id : null);
+            Actions.pop();
+            Actions.pop({animated: false});
+          },
+        },
+      ]);
+    },
+    destructive: true,
+  },
+  {name: 'Cancel', action: () => {}},
+];
 
 const nonOwnerActions = [
   {
@@ -30,6 +51,7 @@ const nonOwnerActions = [
   {name: 'Cancel', action: () => {}},
 ];
 
+@inject('wocky')
 @observer
 class BotButtons extends React.Component<Props> {
   actionSheet: any;
@@ -42,7 +64,7 @@ class BotButtons extends React.Component<Props> {
     const destructiveIndex = actions.findIndex(a => a.destructive);
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
+        <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} />
         {isShareable && <ShareButton bot={bot} />}
         <MultiButton onPress={() => this.actionSheet.show()} />
         <ActionSheet

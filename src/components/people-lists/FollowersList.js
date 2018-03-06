@@ -46,7 +46,7 @@ class FollowersList extends React.Component<Props> {
     return (
       <PeopleSearchWrapper>
         <PeopleList
-          ListHeaderComponent={<InviteFriendsRow message={`Hey! Check out my favorite places in the world on tinyrobot! Add me as @${profile.handle}.`} />}
+          ListHeaderComponent={<InviteFriendsRow />}
           ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {

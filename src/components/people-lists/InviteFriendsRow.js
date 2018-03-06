@@ -9,36 +9,43 @@ import {RText} from '../common';
 import {inject, observer} from 'mobx-react/native';
 
 type Props = {
-  style: any,
+  style?: any,
   subtext?: string,
-  message: string,
+  botTitle?: string,
 };
 
-const InviteFriendsRow = ({style, subtext, message}: Props) => (
-  <TouchableOpacity
-    style={[
-      {
-        flexDirection: 'row',
-        borderTopWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.DARK_GREY,
-        padding: 13 * k,
-        alignItems: 'center',
-      },
-      style,
-    ]}
-    onPress={() => share(message)}
-  >
-    <Image source={require('../../../images/iconBot.png')} style={{height: 37 * k, width: 37 * k}} resizeMode='contain' />
-    <View style={{flex: 1, marginLeft: 13 * k}}>
-      <RText size={16} weight='Medium' color={colors.PINK}>
-        Invite Friends
-      </RText>
-      <RText size={14} weight='Light' color={colors.DARK_PURPLE}>
-        {subtext || 'To discover their favorite places!'}
-      </RText>
-    </View>
-  </TouchableOpacity>
-);
+const InviteFriendsRow = inject('wocky')(observer(({style, subtext, botTitle, wocky}: Props) => {
+  const {profile} = wocky;
+  const handle = profile ? profile.handle : '';
+  const message = botTitle
+    ? `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${handle}.`
+    : `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`;
+  return (
+    <TouchableOpacity
+      style={[
+        {
+          flexDirection: 'row',
+          borderTopWidth: StyleSheet.hairlineWidth,
+          borderColor: colors.DARK_GREY,
+          padding: 13 * k,
+          alignItems: 'center',
+        },
+        style,
+      ]}
+      onPress={() => share(message)}
+    >
+      <Image source={require('../../../images/iconBot.png')} style={{height: 37 * k, width: 37 * k}} resizeMode='contain' />
+      <View style={{flex: 1, marginLeft: 13 * k}}>
+        <RText size={16} weight='Medium' color={colors.PINK}>
+            Invite Friends
+        </RText>
+        <RText size={14} weight='Light' color={colors.DARK_PURPLE}>
+          {subtext || 'To discover their favorite places!'}
+        </RText>
+      </View>
+    </TouchableOpacity>
+  );
+}));
 
 async function share(message) {
   const res = await Share.share(

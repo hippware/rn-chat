@@ -112,7 +112,7 @@ const SelectFriends = observer(({selection, profile, botTitle}) => {
       <InviteFriendsRow
         style={{borderBottomWidth: StyleSheet.hairlineWidth, backgroundColor: colors.WHITE}}
         subtext='Share your favorite places with your friends!'
-        message={`Hey, @${profile.handle} invited you to check out "${botTitle}" on tinyrobot!`}
+        botTitle={botTitle}
       />
       <ProfileList selection={selection} />
     </View>

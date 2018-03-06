@@ -17,7 +17,7 @@ exports[`Home renders with no data 1`] = `
     }
   >
     <RCTScrollView
-      ListFooterComponent={null}
+      ListFooterComponent={[Function]}
       ListHeaderComponent={[Function]}
       data={null}
       disableVirtualization={false}
@@ -249,6 +249,42 @@ exports[`Home renders with no data 1`] = `
                 ellipsizeMode="tail"
               />
             </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            style={
+              Array [
+                Object {},
+                Object {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../images/loader_pink.gif",
+                }
+              }
+              style={
+                Array [
+                  Object {
+                    "marginBottom": 21,
+                    "marginTop": 10,
+                  },
+                  Object {
+                    "height": 72,
+                    "width": 72,
+                  },
+                ]
+              }
+            />
           </View>
         </View>
       </View>
