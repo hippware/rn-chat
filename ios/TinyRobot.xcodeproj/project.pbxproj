@@ -656,7 +656,6 @@
 		87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tinyrobotTestingUITests.swift; sourceTree = "<group>"; };
 		87A3817A1E3BB88F00E68472 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87BE13061F0E57280032FB01 /* tinyrobotTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		87BE13071F0E57290032FB01 /* tinyrobotTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotTesting-Info.plist"; path = "/Users/aksonov/Documents/!/rn-chat/ios/tinyrobotTesting-Info.plist"; sourceTree = "<absolute>"; };
 		87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCubeTransition.xcodeproj; path = "../node_modules/react-native-cube-transition/RNCubeTransition.xcodeproj"; sourceTree = "<group>"; };
 		87C3B2151F349AFB006149BE /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
 		87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = ../DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
@@ -1080,7 +1079,6 @@
 				0DFF5502DE27595DF7FFEED4 /* Frameworks */,
 				879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */,
 				8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */,
-				87BE13071F0E57290032FB01 /* tinyrobotTesting-Info.plist */,
 				398BA0871F7590440030DCD6 /* Recovered References */,
 			);
 			indentWidth = 2;
