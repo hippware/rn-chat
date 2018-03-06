@@ -8,6 +8,8 @@ import AddressBar from './AddressBar';
 import MapView from 'react-native-maps';
 import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
+import Geofence from './Geofence';
+import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   edit?: boolean,
@@ -53,8 +55,10 @@ class BotAddress extends React.Component<Props> {
 
   render() {
     const {locationStore, bot} = this.props;
+    if (!bot || !isAlive(bot)) return null;
     const currentLoc = locationStore ? locationStore.location : {};
-    const {latitude, longitude} = bot.location || {};
+    const {latitude, longitude} = bot.location;
+    const coords = this.location || bot.location;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -80,6 +84,7 @@ class BotAddress extends React.Component<Props> {
                 </View>
               </MapView.Marker>
             )}
+            {bot.geofence && coords && <Geofence coords={coords} key={`${coords.latitude}-${coords.longitude}`} />}
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Image source={require('../../../images/newBotMarker.png')} />
             </View>

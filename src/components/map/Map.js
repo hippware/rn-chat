@@ -14,6 +14,7 @@ import RText from '../common/RText';
 import BotMarker from './BotMarker';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 import {colors} from '../../constants/index';
+import Geofence from './Geofence';
 
 const DELTA_FULL_MAP = 0.04;
 const DELTA_BOT_PROFILE = 0.2;
@@ -66,7 +67,7 @@ export default class Map extends Component<Props> {
   @observable markerSelected: boolean = false;
 
   @computed
-  get list(): Array<any> {
+  get botMarkerList(): Array<any> {
     const {wocky, bot} = this.props;
     const list = (wocky.geoBots && wocky.geoBots.values().filter(bot => isAlive(bot))) || [];
 
@@ -229,9 +230,8 @@ export default class Map extends Component<Props> {
   };
 
   render() {
-    const {locationStore, showUser} = this.props;
+    const {locationStore, showUser, geofence, marker, fullMap, children, location} = this.props;
     const currentLoc = locationStore.location;
-    const location = this.props.location;
     const coords = location || currentLoc;
     if (!coords) {
       return <RText>Please enable location</RText>;
@@ -243,7 +243,6 @@ export default class Map extends Component<Props> {
     const delta = this.props.geofence ? DELTA_GEOFENCE : this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
     const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
-    console.log('GEOFENCE:', this.props.geofence, JSON.stringify(coords));
     return (
       <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -210 * k : 0, right: 0, left: 0}}>
         <MapView
@@ -257,9 +256,8 @@ export default class Map extends Component<Props> {
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
-          {this.props.geofence && coords && <MapView.Circle key={coords.latitude + '  ' + coords.longitude} center={coords} radius={100} fillColor={colors.PINK_MASK} strokeColor={colors.PINK} />}
-          {!this.props.marker && this.list}
-          {this.props.marker}
+          {geofence && coords && <Geofence coords={coords} key={`${coords.longitude}-${coords.latitude}`} />}
+          {marker || this.botMarkerList}
           {(this.followUser || showUser) &&
             currentLoc && (
               <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
@@ -269,8 +267,8 @@ export default class Map extends Component<Props> {
               </MapView.Marker>
             )}
         </MapView>
-        {this.props.fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
-        {this.props.children}
+        {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
+        {children}
         <OwnMessageBar
           ref={(r) => {
             // NOTE: this ref alternates between null and value...weird
