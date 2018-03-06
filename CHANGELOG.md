@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.1.2 - 2018 March 5
+
+* Remove gps, magnetometer from UIRequiredDeviceCapabilities (Rework #1934)
+
+
 # 2.1.1 - 2018 March 5
 
 * Tests cleanup.
