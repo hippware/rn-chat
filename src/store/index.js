@@ -28,8 +28,6 @@ import rs from './ReportStore';
 import PushStore from './PushStore';
 // import bugsnag from '../utils/errorReporting';
 
-// import AppStore from "./appStore";
-
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
 const provider = new XmppIOS();
@@ -48,7 +46,6 @@ const env = {transport, storage: AsyncStorage, auth, logger, fileService, geoloc
 
 const Store = types
   .model('Store', {
-    // appStore: types.optional(AppStore, {}),``
     wocky: Wocky,
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
@@ -57,6 +54,8 @@ const Store = types
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
     version: types.string,
+    // codePushChannel: types.string,
+    locationPrimed: false,
   })
   .views(self => ({
     get getImageSize() {
@@ -67,6 +66,9 @@ const Store = types
     reload: () => {
       self.wocky.clearCache();
       self.firebaseStore.reset();
+    },
+    dismissLocationPrimer: () => {
+      self.locationPrimed = true;
     },
   }));
 
