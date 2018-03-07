@@ -16,9 +16,9 @@ import CurrentLocationIndicator from './CurrentLocationIndicator';
 import {colors} from '../../constants/index';
 import Geofence from './Geofence';
 
-const DELTA_FULL_MAP = 0.04;
-const DELTA_BOT_PROFILE = 0.2;
-const DELTA_GEOFENCE = 0.01;
+export const DELTA_FULL_MAP = 0.04;
+export const DELTA_BOT_PROFILE = 0.2;
+export const DELTA_GEOFENCE = 0.01;
 
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}

@@ -10,6 +10,7 @@ import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 import Geofence from './Geofence';
 import {isAlive} from 'mobx-state-tree';
+import {DELTA_FULL_MAP, DELTA_GEOFENCE} from './Map';
 
 type Props = {
   edit?: boolean,
@@ -60,6 +61,7 @@ class BotAddress extends React.Component<Props> {
     const currentLoc = locationStore ? locationStore.location : {};
     const {latitude, longitude} = bot.location;
     const coords = this.location || bot.location;
+    const delta = bot.geofence ? DELTA_GEOFENCE : DELTA_FULL_MAP;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -76,7 +78,7 @@ class BotAddress extends React.Component<Props> {
             }}
             onRegionChange={this.blurEnabled ? this.addressBar.blur : () => {}}
             onRegionChangeComplete={this.onLocationChange}
-            initialRegion={{latitude, longitude, latitudeDelta: 0.04, longitudeDelta: 0.04}}
+            initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           >
             {currentLoc && (
               <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={currentLoc}>
@@ -85,7 +87,7 @@ class BotAddress extends React.Component<Props> {
                 </View>
               </MapView.Marker>
             )}
-            {bot.geofence && coords && <Geofence coords={coords} key={`${coords.latitude}-${coords.longitude}`} />}
+            {bot.geofence && coords && <Geofence coords={{...coords}} key={`${coords.latitude}-${coords.longitude}`} />}
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Image source={require('../../../images/newBotMarker.png')} />
             </View>
