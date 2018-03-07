@@ -4,7 +4,7 @@ import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
-import {RText} from './common';
+import {RText, Separator} from './common';
 import {Actions} from 'react-native-router-flux';
 import {observer, inject} from 'mobx-react/native';
 import {reaction} from 'mobx';
@@ -40,8 +40,9 @@ class LocationGeofenceWarning extends React.Component<Props> {
         <RText style={styles.title} size={30} color='white'>
           {'Allow Location\r\nAccess'}
         </RText>
+        <Separator backgroundColor='white' style={{width: 200 * k}} />
         <RText style={styles.muted} color='white' size={14}>
-          Please change your location settings to “always allow” to receive updates for your bots.
+          Please change your location settings to “always allow” to receive presence updates.
         </RText>
         <View style={{marginVertical: 25 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
           <TouchableOpacity
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   muted: {
-    marginTop: 5 * k,
+    marginTop: 10 * k,
     textAlign: 'center',
   },
   button: {
