@@ -184,11 +184,15 @@ exports[`MyAccount renders 1`] = `
               </Text>
             </View>
             <View
+              isDay={true}
               style={
-                Object {
-                  "backgroundColor": "rgba(155,155,155,0.15)",
-                  "height": 0.5,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "rgba(155,155,155,0.15)",
+                    "height": 0.5,
+                  },
+                  undefined,
+                ]
               }
             />
             <View>

@@ -18,7 +18,7 @@ describe('Explore Nearby', () => {
     });
 
     const toRender = (
-      <Provider {...injects} wocky={wocky} locationStore={mockLocationStore}>
+      <Provider {...injects} wocky={wocky} locationStore={mockLocationStore} store={{}}>
         <ExploreNearby />
       </Provider>
     );

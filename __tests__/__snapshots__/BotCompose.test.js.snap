@@ -649,27 +649,50 @@ exports[`BotCompose renders with owned bot 1`] = `
                 }
               }
             >
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": undefined,
-                      "fontFamily": "Roboto-Medium",
-                      "fontSize": 30,
-                    },
-                    Object {
-                      "flex": 1,
-                      "padding": 16,
-                      "paddingRight": 30,
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                    "padding": 16,
+                    "paddingRight": 30,
+                  }
                 }
               >
-                Know when friends visit your bot!
-              </Text>
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontFamily": "Roboto-Medium",
+                        "fontSize": 15,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  See Who's Here
+                </Text>
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontFamily": "Roboto-Light",
+                        "fontSize": 14,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  Know when friends are here!
+                </Text>
+              </View>
               <View
                 style={
                   Object {
