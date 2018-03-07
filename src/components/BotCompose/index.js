@@ -76,12 +76,15 @@ class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true;
-      const {isNew} = bot;
+      const {isNew, geofence} = bot;
       await bot.save();
       if (isNew) {
         Actions.pop({animated: false});
         Actions.pop();
-        setTimeout(() => Actions.botDetails({item: bot.id, isNew: true}));
+        setTimeout(() => {
+          if (geofence) Actions.botShareSelectFriends({botId: bot.id});
+          else Actions.botDetails({item: bot.id, isNew: true});
+        });
       } else {
         Actions.pop();
       }

@@ -25,7 +25,7 @@ type State = {
 
 @inject('wocky', 'notificationStore')
 @observer
-export default class BotShareSelectFriends extends React.Component<Props, State> {
+class BotShareSelectFriends extends React.Component<Props, State> {
   @observable selection: SelectableProfileList = SelectableProfileList.create({});
   @observable bot: Bot;
   mounted: boolean = false;
@@ -118,6 +118,8 @@ const SelectFriends = observer(({selection, profile, botTitle}) => {
     </View>
   );
 });
+
+export default BotShareSelectFriends;
 
 const styles = StyleSheet.create({
   container: {
