@@ -8,5 +8,6 @@ import ProfileHandle from './ProfileHandle';
 import TouchableOpTrack from './TouchableOpTrack';
 import Spinner from './Spinner';
 import ProgressiveImage from './ProgressiveImage';
+import Separator from './Separator';
 
-export {RText, CardText, Avatar, AutoExpandingTextInput, ProfileHandle, TouchableOpTrack, Spinner, ProgressiveImage};
+export {RText, CardText, Avatar, AutoExpandingTextInput, ProfileHandle, TouchableOpTrack, Spinner, ProgressiveImage, Separator};

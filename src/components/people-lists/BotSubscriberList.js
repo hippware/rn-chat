@@ -5,7 +5,7 @@ import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 import Screen from '../Screen';
 import CardList from '../CardList';
-import Separator from '../Separator';
+import {Separator} from '../common';
 import {FollowableProfileItem} from './customProfileItems';
 import ListFooter from '../ListFooter';
 
@@ -33,7 +33,7 @@ class BotSubscriberList extends React.Component<Props> {
         <CardList
           keyboardShouldPersistTaps='always'
           data={list.slice()}
-          ItemSeparatorComponent={() => <Separator width={1} />}
+          ItemSeparatorComponent={() => <Separator />}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           keyExtractor={item => item.id}
           ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}

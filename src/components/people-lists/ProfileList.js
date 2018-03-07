@@ -4,11 +4,10 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import assert from 'assert';
 import CardList from '../CardList';
-import Separator from '../Separator';
 import {k} from '../Global';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
-import {RText} from '../common';
+import {RText, Separator} from '../common';
 
 type Props = {
   selection: SelectableProfileList,
@@ -23,7 +22,7 @@ const ProfileList = observer((props: Props) => {
       <CardList
         keyboardShouldPersistTaps='always'
         data={selection.filteredList}
-        ItemSeparatorComponent={() => <Separator width={1} />}
+        ItemSeparatorComponent={() => <Separator />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
         keyExtractor={item => item.profile.id}
         {...props}

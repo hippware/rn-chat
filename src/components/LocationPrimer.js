@@ -7,42 +7,45 @@ import {k} from './Global';
 import {RText, Separator} from './common';
 import {Actions} from 'react-native-router-flux';
 import {observer, inject} from 'mobx-react/native';
-import {reaction} from 'mobx';
+import {autorun} from 'mobx';
 
 const footprint = require('../../images/footprint.png');
 
-type Props = {
-  bot: Bot,
-};
+type Props = {};
 
-@inject('locationStore')
+@inject('locationStore', 'store')
 @observer
-class LocationGeofenceWarning extends React.Component<Props> {
+class LocationPrimer extends React.Component<Props> {
   handler: any;
+
   componentDidMount() {
-    this.handler = reaction(
-      () => this.props.locationStore.alwaysOn,
-      (alwaysOn) => {
-        if (alwaysOn) {
-          this.props.bot.setGeofence(true);
-          Actions.pop();
-        }
-      },
-    );
+    this.handler = autorun(() => {
+      if (this.props.locationStore.alwaysOn) {
+        this.props.store.dismissLocationPrimer();
+        Actions.pop();
+      }
+    });
   }
+
   componentWillUnmount() {
     this.handler();
   }
+
+  dismiss = () => {
+    this.props.store.dismissLocationPrimer();
+    Actions.pop();
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Image source={footprint} style={{width: 60, height: 60, marginVertical: 25 * k}} resizeMode='contain' />
         <RText style={styles.title} size={30} color='white'>
-          {'Allow Location\r\nAccess'}
+          {"Find out who's at\r\nyour favorite\r\nplaces!"}
         </RText>
         <Separator backgroundColor='white' style={{width: 200 * k}} />
         <RText style={styles.muted} color='white' size={14}>
-          Please change your location settings to “always allow” to receive presence updates.
+          {'Please set location settings to "always allow".'}
         </RText>
         <View style={{marginVertical: 25 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
           <TouchableOpacity
@@ -52,12 +55,12 @@ class LocationGeofenceWarning extends React.Component<Props> {
             }}
           >
             <RText color='white' size={17.5}>
-              Always Allow
+              Give Access
             </RText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={Actions.pop}>
+          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={this.dismiss}>
             <RText color='white' size={17.5}>
-              Cancel
+              Not Now
             </RText>
           </TouchableOpacity>
         </View>
@@ -66,7 +69,7 @@ class LocationGeofenceWarning extends React.Component<Props> {
   }
 }
 
-export default LocationGeofenceWarning;
+export default LocationPrimer;
 
 const styles = StyleSheet.create({
   container: {

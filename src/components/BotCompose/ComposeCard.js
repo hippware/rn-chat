@@ -10,7 +10,7 @@ import Cell from '../Cell';
 import {isAlive} from 'mobx-state-tree';
 import Switch from '../Switch';
 import {RText} from '../common';
-import {autorun, observable} from 'mobx';
+import {autorun} from 'mobx';
 
 type Props = {
   edit?: boolean,
@@ -81,9 +81,15 @@ class ComposeCard extends React.Component<Props> {
           </View>
         </Cell>
         <Cell imageStyle={{paddingLeft: 21, width: 50}} image={require('../../../images/foot.png')} style={styles.separator}>
-          <RText style={{padding: 16, flex: 1, paddingRight: 30}} weight='Medium' size={15 * k}>
-            Know when friends visit your bot!
-          </RText>
+          <View style={{padding: 16, flex: 1, paddingRight: 30}}>
+            <RText weight='Medium' size={15}>
+              {"See Who's Here"}
+            </RText>
+            <RText weight='Light' size={14}>
+              Know when friends are here!
+            </RText>
+          </View>
+
           <Switch
             ref={r => (this.switch = r)}
             style={{paddingRight: 21}}
