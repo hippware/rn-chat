@@ -37,7 +37,8 @@ class BotAddress extends React.Component<Props> {
           data.title = data.placeName;
         }
         bot.load({addressData: data.meta, address: data.address});
-        bot.location.load({...location, isCurrent: false});
+        const {latitude, longitude} = location;
+        bot.location.load({latitude, longitude, isCurrent: false});
       },
       {delay: 500},
     );
