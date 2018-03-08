@@ -3,12 +3,14 @@
 import React from 'react';
 import {View, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {width} from '../Global';
 import {showImagePicker} from '../ImagePicker';
 import Map from '../map/Map';
 import Bubble from '../map/Bubble';
 import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
+import BotMarker from '../map/BotMarker';
 
 type Props = {
   afterPhotoPost: Function,
@@ -17,7 +19,10 @@ type Props = {
 @inject('bot', 'notificationStore')
 @observer
 class BotComposeMap extends React.Component<Props> {
+  // HACK to solve the bug with MapView.Marker's onSelect that works only once, so we need to change the key every selection
+  @observable selected = false;
   onCoverPhoto = (): void => {
+    this.selected = !this.selected;
     showImagePicker('Image Picker', async (source, response) => {
       try {
         await this.props.bot.upload({file: source, ...response});
@@ -36,14 +41,20 @@ class BotComposeMap extends React.Component<Props> {
     const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading);
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
-        <Map geofence={bot.geofence} location={{...bot.location}} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
-        <TouchableWithoutFeedback style={{position: 'absolute', height: width, width}} onPress={() => Actions.botAddress({botId: bot.id})}>
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity onPress={this.onCoverPhoto}>
-              <Bubble text={bot.addressData.locationShort} scale={0.5} image={image} showLoader={showLoader} />
-            </TouchableOpacity>
-          </View>
-        </TouchableWithoutFeedback>
+        <Map
+          geofence={bot.geofence}
+          location={{...bot.location}}
+          showOnlyBot
+          showUser={false}
+          fullMap={false}
+          scrollEnabled={false}
+          rotateEnabled={false}
+          pitchEnabled={false}
+          zoomEnabled={false}
+          onMapPress={() => Actions.botAddress({botId: bot.id})}
+          scale={0.5}
+          marker={<BotMarker id={bot.id + this.selected} onImagePress={this.onCoverPhoto} image={image} showLoader={showLoader} scale={0.5} bot={bot} />}
+        />
       </View>
     );
   }

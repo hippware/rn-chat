@@ -2,14 +2,15 @@
 
 import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
-import {colors} from '../constants';
-import {k} from './Global';
-import {RText, Separator} from './common';
+import {colors} from '../../constants';
+import {k} from '../Global';
+import {RText, Separator} from '../common';
 import {Actions} from 'react-native-router-flux';
 import {observer, inject} from 'mobx-react/native';
 import {reaction} from 'mobx';
+import ModalContainer from './ModalContainer';
 
-const footprint = require('../../images/footprint.png');
+const footprint = require('../../../images/footprint.png');
 
 type Props = {
   bot: Bot,
@@ -35,7 +36,7 @@ class LocationGeofenceWarning extends React.Component<Props> {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <ModalContainer>
         <Image source={footprint} style={{width: 60, height: 60, marginVertical: 25 * k}} resizeMode='contain' />
         <RText style={styles.title} size={30} color='white'>
           {'Allow Location\r\nAccess'}
@@ -61,7 +62,7 @@ class LocationGeofenceWarning extends React.Component<Props> {
             </RText>
           </TouchableOpacity>
         </View>
-      </View>
+      </ModalContainer>
     );
   }
 }

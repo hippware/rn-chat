@@ -244,7 +244,7 @@ export default class Map extends Component<Props> {
     const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
     return (
-      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -210 * k : 0, right: 0, left: 0}}>
+      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -180 : 0, right: 0, left: 0}}>
         <MapView
           ref={(map) => {
             this._map = map;

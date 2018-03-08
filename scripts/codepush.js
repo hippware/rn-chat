@@ -24,9 +24,9 @@ const collectOptions = (): Object => {
   const deployments = codePushDeployments.staging.map(d => d.name);
   const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
   const deployment = deployments[targetIndex];
-  targetBinary = readlineSync.question(chalk.cyan('Target binary version? '));
+  // targetBinary = readlineSync.question(chalk.cyan('Target binary version? '));
   description = readlineSync.question(chalk.cyan('Describe the changes. '));
-  isMandatory = readlineSync.keyInYN(chalk.cyan('Mandatory update?'));
+  // isMandatory = readlineSync.keyInYN(chalk.cyan('Mandatory update?'));
   return {deployment, targetBinary, description, isMandatory};
 };
 
@@ -35,16 +35,16 @@ const pushIt = async ({targetBinary, deployment, description, isMandatory}) => {
   const cmd = [
     'codepush',
     'release-react',
-    '-a',
-    'southerneer/tinyrobot',
+    // '-a',
+    // 'southerneer/tinyrobot',
     '-d',
     deployment,
-    '--target-binary-version',
-    targetBinary,
+    // '--target-binary-version',
+    // targetBinary,
     '--description',
     `"${description}"`,
-    '-m',
-    isMandatory.toString(),
+    // '-m',
+    // isMandatory.toString(),
   ];
   console.log(chalk.green(`appcenter ${cmd.join(' ')}`));
 

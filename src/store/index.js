@@ -56,6 +56,7 @@ const Store = types
     version: types.string,
     // codePushChannel: types.string,
     locationPrimed: false,
+    sharePresencePrimed: false,
   })
   .views(self => ({
     get getImageSize() {
@@ -69,6 +70,9 @@ const Store = types
     },
     dismissLocationPrimer: () => {
       self.locationPrimed = true;
+    },
+    dismissSharePresencePrimer: () => {
+      self.sharePresencePrimed = true;
     },
   }));
 

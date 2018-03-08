@@ -4,12 +4,12 @@ import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-import {colors} from '../constants';
-import {k} from './Global';
+import {colors} from '../../constants';
+import {k} from '../Global';
 import PopupBlur from './PopupBlur';
 import {observer, inject} from 'mobx-react/native';
 
-const botIcon = require('../../images/iconBot.png');
+const botIcon = require('../../../images/iconBot.png');
 
 @inject('locationStore')
 @observer

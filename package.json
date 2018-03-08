@@ -80,7 +80,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#b1f646a51b5854132cc8b6f762e3e0d2688313e0",
+    "wocky-client": "github:hippware/wocky-client#3baf7eb636f3f5ac3548ee3df429d1e6c81c3cc9",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {
