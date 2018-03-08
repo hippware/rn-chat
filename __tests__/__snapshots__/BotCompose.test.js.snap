@@ -544,7 +544,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                 },
                 Array [
                   Object {
-                    "padding": 20,
+                    "padding": 10,
                   },
                   Object {
                     "borderTopColor": "rgba(155,155,155,0.15)",
@@ -564,7 +564,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "width": 30,
                   },
                   Object {
-                    "paddingLeft": 42,
+                    "paddingLeft": 16,
                   },
                 ]
               }
@@ -631,10 +631,16 @@ exports[`BotCompose renders with owned bot 1`] = `
                   "flexDirection": "row",
                   "padding": 30,
                 },
-                Object {
-                  "borderTopColor": "rgba(155,155,155,0.15)",
-                  "borderTopWidth": 1,
-                },
+                Array [
+                  Object {
+                    "borderTopColor": "rgba(155,155,155,0.15)",
+                    "borderTopWidth": 1,
+                  },
+                  Object {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                ],
               ]
             }
           >
@@ -648,7 +654,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "width": 30,
                   },
                   Object {
-                    "paddingLeft": 21,
+                    "paddingLeft": 5,
                     "width": 50,
                   },
                 ]

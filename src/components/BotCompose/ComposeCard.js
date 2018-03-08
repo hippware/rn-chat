@@ -55,12 +55,7 @@ class ComposeCard extends React.Component<Props> {
     const titleColor = {color: colors.navBarTextColorDay};
     return (
       <View style={{backgroundColor: colors.WHITE}}>
-        <Cell
-          style={[{padding: 10 * k}, styles.separator]}
-          image={require('../../../images/faceless.png')}
-          imageStyle={{paddingLeft: 21 * k}}
-          textStyle={{fontFamily: 'Roboto-Light'}}
-        >
+        <Cell style={[{padding: 10}, styles.separator]} image={require('../../../images/faceless.png')} imageStyle={{paddingLeft: 16}} textStyle={{fontFamily: 'Roboto-Light'}}>
           <View style={styles.textWrapper}>
             <TextInput
               placeholder='Name your bot'
@@ -80,7 +75,7 @@ class ComposeCard extends React.Component<Props> {
             />
           </View>
         </Cell>
-        <Cell imageStyle={{paddingLeft: 21, width: 50}} image={require('../../../images/foot.png')} style={styles.separator}>
+        <Cell imageStyle={{paddingLeft: 5, width: 50}} image={require('../../../images/foot.png')} style={[styles.separator, {paddingTop: 0, paddingBottom: 0}]}>
           <View style={{padding: 16, flex: 1, paddingRight: 30}}>
             <RText weight='Medium' size={15}>
               {"See Who's Here"}
