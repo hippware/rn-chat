@@ -10,9 +10,7 @@ import {AutoExpandingTextInput} from '../common';
 import Screen from '../Screen';
 import {colors} from '../../constants';
 import SelectableProfileList from '../../store/SelectableProfileList';
-import SearchBar from './SearchBar';
-import ProfileList from './ProfileList';
-import InviteFriendsRow from './InviteFriendsRow';
+import FriendMultiSelect from './FriendMultiSelect';
 
 type Props = {
   botId: string,
@@ -74,7 +72,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   render() {
     return (
       <Screen>
-        <SelectFriends selection={this.selection} profile={this.props.wocky.profile} botTitle={this.bot && this.bot.title} />
+        <FriendMultiSelect selection={this.selection} botTitle={this.bot && this.bot.title} />
         {!!this.selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
@@ -97,27 +95,6 @@ class BotShareSelectFriends extends React.Component<Props, State> {
     );
   }
 }
-
-const SelectFriends = observer(({selection, profile, botTitle}) => {
-  return (
-    <View style={{flex: 1}}>
-      <SearchBar
-        autoCorrect={false}
-        autoCapitalize='none'
-        onChangeText={text => selection.setFilter(text)}
-        value={selection.filter}
-        placeholder='Search name or username'
-        clearButtonMode='while-editing'
-      />
-      <InviteFriendsRow
-        style={{borderBottomWidth: StyleSheet.hairlineWidth, backgroundColor: colors.WHITE}}
-        subtext='Share your favorite places with your friends!'
-        botTitle={botTitle}
-      />
-      <ProfileList selection={selection} />
-    </View>
-  );
-});
 
 export default BotShareSelectFriends;
 

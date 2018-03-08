@@ -2,14 +2,15 @@
 
 import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
-import {colors} from '../constants';
-import {k} from './Global';
-import {RText, Separator} from './common';
+import {colors} from '../../constants';
+import {k} from '../Global';
+import {RText, Separator} from '../common';
 import {Actions} from 'react-native-router-flux';
 import {observer, inject} from 'mobx-react/native';
 import {autorun} from 'mobx';
+import ModalContainer from './ModalContainer';
 
-const footprint = require('../../images/footprint.png');
+const footprint = require('../../../images/footprint.png');
 
 type Props = {};
 
@@ -38,7 +39,7 @@ class LocationPrimer extends React.Component<Props> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ModalContainer>
         <Image source={footprint} style={{width: 60, height: 60, marginVertical: 25 * k}} resizeMode='contain' />
         <RText style={styles.title} size={30} color='white'>
           {"Find out who's at\r\nyour favorite\r\nplaces!"}
@@ -64,7 +65,7 @@ class LocationPrimer extends React.Component<Props> {
             </RText>
           </TouchableOpacity>
         </View>
-      </View>
+      </ModalContainer>
     );
   }
 }
@@ -72,17 +73,6 @@ class LocationPrimer extends React.Component<Props> {
 export default LocationPrimer;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 30 * k,
-  },
   title: {
     marginVertical: 15 * k,
     lineHeight: 32 * k,
