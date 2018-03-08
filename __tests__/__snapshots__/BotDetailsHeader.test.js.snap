@@ -43,9 +43,15 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
             "error": "",
             "followersSize": 0,
             "geofence": false,
+            "guests": Object {
+              "count": null,
+              "result": Array [],
+            },
+            "guestsSize": 0,
             "id": "1234",
             "image": null,
             "isSubscribed": false,
+            "isSubscribedGeofence": false,
             "location": null,
             "owner": null,
             "posts": Object {
@@ -61,18 +67,24 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
             "title": "title",
             "totalItems": 0,
             "visibility": 100,
+            "visitors": Object {
+              "count": null,
+              "result": Array [],
+            },
+            "visitorsSize": 0,
           }
         }
         fullMap={false}
+        geofence={false}
         initialRegion={
           Object {
-            "latitude": 2,
+            "latitude": undefined,
             "latitudeDelta": 0.2,
-            "longitude": 2,
+            "longitude": undefined,
             "longitudeDelta": 0.2,
           }
         }
-        location={null}
+        location={Object {}}
         locationStore={Object {}}
         marker={
           <_class
@@ -89,9 +101,15 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
                 "error": "",
                 "followersSize": 0,
                 "geofence": false,
+                "guests": Object {
+                  "count": null,
+                  "result": Array [],
+                },
+                "guestsSize": 0,
                 "id": "1234",
                 "image": null,
                 "isSubscribed": false,
+                "isSubscribedGeofence": false,
                 "location": null,
                 "owner": null,
                 "posts": Object {
@@ -107,6 +125,11 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
                 "title": "title",
                 "totalItems": 0,
                 "visibility": 100,
+                "visitors": Object {
+                  "count": null,
+                  "result": Array [],
+                },
+                "visitorsSize": 0,
               }
             }
             onImagePress={[Function]}

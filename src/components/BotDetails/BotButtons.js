@@ -8,6 +8,7 @@ import SaveOrEditButton from './SaveOrEditButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import {colors} from '../../constants';
+import Geofence from '../map/Geofence';
 
 type Props = {
   bot: Bot,
@@ -64,6 +65,7 @@ class BotButtons extends React.Component<Props> {
     const destructiveIndex = actions.findIndex(a => a.destructive);
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
+        {bot.geofence && <GeofenceButton style={styles.button} bot={bot} />}
         <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} />
         {isShareable && <ShareButton bot={bot} />}
         <MultiButton onPress={() => this.actionSheet.show()} />
@@ -86,6 +88,24 @@ const ShareButton = ({bot}) => (
     <Image source={require('../../../images/shareIcon.png')} resizeMode='contain' />
   </TouchableOpacity>
 );
+
+const GeofenceButton = observer(({bot, style}: Props) => {
+  let onPress, buttonStyle, image;
+  if (bot.isSubscribedGeofence) {
+    onPress = () => bot.unsubscribe(true);
+    buttonStyle = style;
+    image = require('../../../images/whiteFoot.png');
+  } else {
+    onPress = () => bot.subscribe(true);
+    buttonStyle = [style, {backgroundColor: colors.WHITE}];
+    image = require('../../../images/footIcon.png');
+  }
+  return (
+    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+      <Image source={image} resizeMode='contain' />
+    </TouchableOpacity>
+  );
+});
 
 const MultiButton = props => (
   <TouchableOpacity style={[styles.button, {width: 44 * k, backgroundColor: colors.WHITE, flex: 0, marginLeft: 10 * k}]} {...props}>
