@@ -23,6 +23,7 @@ export const Bot = types
     types.model('Bot', {
       id: types.identifier(types.string),
       isSubscribed: false,
+      isSubscribedGeofence: false,
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 100,
@@ -34,9 +35,13 @@ export const Bot = types
       location: types.maybe(Location),
       address: '',
       followersSize: 0,
+      guestsSize: 0,
+      visitorsSize: 0,
       totalItems: 0,
       addressData: types.optional(Address, {}),
       subscribers: types.optional(ProfilePaginableList, {}),
+      guests: types.optional(ProfilePaginableList, {}),
+      visitors: types.optional(ProfilePaginableList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: ''
     })
@@ -51,12 +56,15 @@ export const Bot = types
     },
     setGeofence: (value: boolean) => {
       self.geofence = value
+      self.isSubscribedGeofence = value
     },
     setPublic: (value: boolean) => {
       self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
     },
     afterAttach: () => {
       self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+      self.guests.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+      self.visitors.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
       self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
     },
     createPost: (content: string = '') => {
@@ -73,15 +81,21 @@ export const Bot = types
         self.totalItems -= 1
       }
     }),
-    subscribe: flow(function*() {
+    subscribe: flow(function*(geofence: boolean = false) {
       self.isSubscribed = true
+      if (geofence) {
+        self.isSubscribedGeofence = true
+      }
       self.service.profile!.subscribedBots.addToTop(self)
-      self.followersSize = yield self.service._subscribeBot(self.id)
+      self.followersSize = yield self.service._subscribeBot(self.id, geofence)
     }),
-    unsubscribe: flow(function*() {
-      self.isSubscribed = false
+    unsubscribe: flow(function*(geofence: boolean = false) {
+      self.isSubscribedGeofence = false
+      if (!geofence) {
+        self.isSubscribed = false
+      }
       self.service.profile!.subscribedBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeBot(self.id)
+      self.followersSize = yield self.service._unsubscribeBot(self.id, geofence)
     }),
     share: (userIDs: string[], message: string = '', type = 'headline') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)
@@ -117,6 +131,8 @@ export const Bot = types
       delete res.posts
       delete res.error
       delete res.subscribers
+      delete res.guests
+      delete res.visitors
       return res
     }
   }))

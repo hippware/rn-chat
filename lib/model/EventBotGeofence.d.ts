@@ -189,6 +189,7 @@ export declare const EventBotGeofence: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
+        isSubscribedGeofence: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -349,6 +350,8 @@ export declare const EventBotGeofence: IModelType<{
         }) | null;
         address: string;
         followersSize: number;
+        guestsSize: number;
+        visitorsSize: number;
         totalItems: number;
         addressData: {
             city: string;
@@ -361,6 +364,54 @@ export declare const EventBotGeofence: IModelType<{
             readonly $treenode?: any;
         };
         subscribers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        guests: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
             count: number | null;
         } & {
