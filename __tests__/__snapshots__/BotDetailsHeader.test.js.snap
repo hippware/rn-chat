@@ -20,7 +20,7 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
     <View
       style={
         Object {
-          "bottom": -420,
+          "bottom": -180,
           "left": 0,
           "position": "absolute",
           "right": 0,

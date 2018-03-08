@@ -14,7 +14,7 @@ type Props = {
   onMapPress: Function,
 };
 
-const BotMarker = observer(({bot, scale, ...props}: Props) => {
+const BotMarker = observer(({id, bot, scale, ...props}: Props) => {
   const fullMap = scale === 0;
   const y = scale === 1 ? 0 : fullMap ? -35 : -106;
   if (!bot || !isAlive(bot) || !bot.location) {
@@ -23,16 +23,15 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   const image = bot.image ? bot.image.thumbnail : defaultCover[bot.coverColor % 4];
   const showLoader = bot.image && !bot.image.loaded;
   const text = bot.addressData ? bot.addressData.locationShort : bot.address;
-
   return (
     <MapView.Marker.Animated
       centerOffset={{x: 0, y}}
-      key={bot.id + scale}
+      key={id || bot.id + scale}
       identifier={bot.id}
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onSelect={props.onImagePress}
     >
-      <Bubble {...props} text={text} scale={scale} image={image} showLoader={showLoader} />
+      <Bubble text={text} scale={scale} image={image} showLoader={showLoader} {...props} />
     </MapView.Marker.Animated>
   );
 });
