@@ -5,7 +5,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Build scripts and tests
+* App was updated to version 2.1.1 (197) and user received bugsnag/app crash with logout (#1947)
+* Adjust form validation error messages (Part of #1503)
+* Add gps, magnetometer to UIRequiredDeviceCapabilities (Revert #1934)
 * GEOFENCE v1: New Create Bot UI (to include Geofence option) (#1892)
+* WIP: GEOFENCE v1: Share Visits Flow (#1894)
+* GEOFENCE v1: Normal Bot Profile Changes (Owner View: All bots) (#1895)
+* GEOFENCE v1: Explore Nearby Overlay "Always Primer" (#1898)
+* GEOFENCE v1: Edit Location for Geofence Bots (#1906)
+* GEOFENCE v1: Location Access Always Required (Toggling Geofence: ON) (#1907)
+  * GEOFENCE: Text Changes for #1907 (#1953)
+* GEOFENCE v1: Enable Geofence Bot UI when reqs are completed (#1909)
+  * GEOFENCE: Text Changes for #1909 (#1952)
 
 
 # 2.1.2 - 2018 March 5
