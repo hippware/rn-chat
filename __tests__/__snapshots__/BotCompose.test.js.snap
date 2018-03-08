@@ -139,7 +139,7 @@ exports[`BotCompose renders with owned bot 1`] = `
           <View
             style={
               Object {
-                "bottom": -420,
+                "bottom": -180,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
@@ -173,10 +173,64 @@ exports[`BotCompose renders with owned bot 1`] = `
                   "stop": [Function],
                 }
               }
+              marker={
+                <_class
+                  bot={
+                    Object {
+                      "address": "123 address",
+                      "addressData": Object {
+                        "city": "",
+                        "country": "",
+                        "county": "",
+                        "state": "",
+                      },
+                      "description": null,
+                      "error": "",
+                      "followersSize": 0,
+                      "geofence": false,
+                      "id": "4321",
+                      "image": null,
+                      "isSubscribed": false,
+                      "location": Object {
+                        "accuracy": 5,
+                        "latitude": 5,
+                        "longitude": 5,
+                      },
+                      "owner": "user",
+                      "posts": Object {
+                        "count": null,
+                        "result": Array [],
+                      },
+                      "radius": 100,
+                      "server": null,
+                      "subscribers": Object {
+                        "count": null,
+                        "result": Array [],
+                      },
+                      "title": "title",
+                      "totalItems": 0,
+                      "visibility": 100,
+                    }
+                  }
+                  id="4321false"
+                  image={
+                    Object {
+                      "testUri": "../../../images/addBotPhoto.png",
+                    }
+                  }
+                  onImagePress={[Function]}
+                  scale={0.5}
+                  showLoader={null}
+                />
+              }
+              onMapPress={[Function]}
               onMarkerSelect={[Function]}
               onPress={[Function]}
               onRegionChangeComplete={[Function]}
+              pitchEnabled={false}
+              rotateEnabled={false}
               scale={0.5}
+              scrollEnabled={false}
               showOnlyBot={true}
               showUser={false}
               style={
@@ -286,7 +340,117 @@ exports[`BotCompose renders with owned bot 1`] = `
                   "version": "",
                 }
               }
-            />
+              zoomEnabled={false}
+            >
+              <Marker
+                centerOffset={
+                  Object {
+                    "x": 0,
+                    "y": -106,
+                  }
+                }
+                coordinate={
+                  Object {
+                    "latitude": 5,
+                    "longitude": 5,
+                  }
+                }
+                identifier="4321"
+                onSelect={[Function]}
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                    }
+                  }
+                >
+                  <View
+                    collapsable={undefined}
+                    style={
+                      Object {
+                        "backgroundColor": "rgb(253,95,108)",
+                        "borderColor": "rgb(253,95,108)",
+                        "borderRadius": 7.2,
+                        "borderWidth": 1.2,
+                        "height": 203,
+                        "overflow": "hidden",
+                        "width": 175,
+                      }
+                    }
+                  >
+                    <Image
+                      collapsable={undefined}
+                      resizeMode="contain"
+                      source={
+                        Object {
+                          "testUri": "../../../images/addBotPhoto.png",
+                        }
+                      }
+                      style={
+                        Object {
+                          "height": 175,
+                          "width": 175,
+                        }
+                      }
+                    />
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "flex": 1,
+                          "justifyContent": "center",
+                        }
+                      }
+                    >
+                      <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="middle"
+                        numberOfLines={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "rgb(255,255,255)",
+                              "fontFamily": "Roboto-Regular",
+                              "fontSize": 13,
+                            },
+                            Object {
+                              "padding": 2,
+                            },
+                          ]
+                        }
+                      >
+                        123 address
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderStyle": "solid",
+                          "height": 0,
+                          "width": 0,
+                        },
+                        Object {
+                          "borderBottomColor": "transparent",
+                          "borderBottomWidth": 0,
+                          "borderLeftColor": "transparent",
+                          "borderLeftWidth": 5.5,
+                          "borderRightColor": "transparent",
+                          "borderRightWidth": 5.5,
+                          "borderTopColor": "rgb(253,95,108)",
+                          "borderTopWidth": 11,
+                        },
+                        undefined,
+                      ]
+                    }
+                  />
+                </View>
+              </Marker>
+            </MapView>
             <View
               collapsable={undefined}
               style={
@@ -359,147 +523,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     }
                   />
                 </View>
-              </View>
-            </View>
-          </View>
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "justifyContent": "center",
-              }
-            }
-            testID={undefined}
-          >
-            <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
-              accessible={true}
-              collapsable={undefined}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
-              isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-              testID={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                  }
-                }
-              >
-                <View
-                  collapsable={undefined}
-                  style={
-                    Object {
-                      "backgroundColor": "rgb(253,95,108)",
-                      "borderColor": "rgb(253,95,108)",
-                      "borderRadius": 7.2,
-                      "borderWidth": 1.2,
-                      "height": 203,
-                      "overflow": "hidden",
-                      "width": 175,
-                    }
-                  }
-                >
-                  <Image
-                    collapsable={undefined}
-                    resizeMode="contain"
-                    source={
-                      Object {
-                        "testUri": "../../../images/addBotPhoto.png",
-                      }
-                    }
-                    style={
-                      Object {
-                        "height": 175,
-                        "width": 175,
-                      }
-                    }
-                  />
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "flex": 1,
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="middle"
-                      numberOfLines={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "rgb(255,255,255)",
-                            "fontFamily": "Roboto-Regular",
-                            "fontSize": 13,
-                          },
-                          Object {
-                            "padding": 2,
-                          },
-                        ]
-                      }
-                    >
-                      123 address
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderStyle": "solid",
-                        "height": 0,
-                        "width": 0,
-                      },
-                      Object {
-                        "borderBottomColor": "transparent",
-                        "borderBottomWidth": 0,
-                        "borderLeftColor": "transparent",
-                        "borderLeftWidth": 5.5,
-                        "borderRightColor": "transparent",
-                        "borderRightWidth": 5.5,
-                        "borderTopColor": "rgb(253,95,108)",
-                        "borderTopWidth": 11,
-                      },
-                      undefined,
-                    ]
-                  }
-                />
               </View>
             </View>
           </View>

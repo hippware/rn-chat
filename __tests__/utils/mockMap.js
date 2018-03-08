@@ -26,6 +26,7 @@ jest.mock('react-native-maps', () => {
   MockMarker.propTypes = MapView.Marker.propTypes;
   MockMapView.propTypes = MapView.propTypes;
   MockMapView.Marker = MockMarker;
+  MockMapView.Marker.Animated = MockMarker;
   MockMapView.Callout = MockCallout;
   return MockMapView;
 });
