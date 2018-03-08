@@ -16,7 +16,7 @@ type Props = {
 
 const FriendMultiSelect = observer(({selection, botTitle, inviteMessage}: Props) => {
   console.log('invite message', inviteMessage);
-  return (
+  return selection ? (
     <View style={{flex: 1}}>
       <SearchBar
         autoCorrect={false}
@@ -33,7 +33,7 @@ const FriendMultiSelect = observer(({selection, botTitle, inviteMessage}: Props)
       />
       <ProfileList selection={selection} />
     </View>
-  );
+  ) : null;
 });
 
 export default FriendMultiSelect;

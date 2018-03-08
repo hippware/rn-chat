@@ -82,7 +82,7 @@ class BotCompose extends React.Component<Props> {
         Actions.pop({animated: false});
         Actions.pop();
         setTimeout(() => {
-          if (geofence) Actions.botShareSelectFriends({botId: bot.id});
+          if (geofence) Actions.geofenceShare({botId: bot.id});
           else Actions.botDetails({item: bot.id, isNew: true});
         });
       } else {

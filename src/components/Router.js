@@ -33,15 +33,13 @@ import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
-import LocationWarning from './LocationWarning';
 import BotAddressScene from './map/BotAddressScene';
 import * as peopleLists from './people-lists';
 import ReportUser from './report-modals/ReportUser';
 import ReportBot from './report-modals/ReportBot';
 import SignIn from './SignIn';
 import VerifyCode from './VerifyCode';
-import LocationGeofenceWarning from './LocationGeofenceWarning';
-import LocationPrimer from './LocationPrimer';
+import * as modals from './modals';
 
 const STAGING_COLOR = 'rgb(28,247,39)';
 
@@ -111,11 +109,19 @@ autorun(() => {
 @inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics')
 @observer
 class TinyRobotRouter extends React.Component<{}> {
+
   componentDidMount() {
+    const {wocky, locationStore, store} = this.props;
+
     autorunAsync(() => {
-      const {wocky, locationStore} = this.props;
       if (wocky.connected && !locationStore.enabled) {
         Actions.locationWarning && Actions.locationWarning();
+      }
+    }, 1000);
+
+    autorunAsync(() => {
+      if (Actions.currentScene === '_fullMap' && !locationStore.alwaysOn && !store.locationPrimed) {
+        Actions.locationPrimer && Actions.locationPrimer();
       }
     }, 1000);
   }
@@ -197,6 +203,7 @@ class TinyRobotRouter extends React.Component<{}> {
             <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
             <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
             <Scene key='botShareSelectFriends' component={peopleLists.BotShareSelectFriends} title='Share' clone back right={() => null} />
+            <Scene key='geofenceShare' component={peopleLists.GeofenceShare} title="See Who's Here" clone back />
             <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
             {/* <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
             <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
@@ -206,9 +213,10 @@ class TinyRobotRouter extends React.Component<{}> {
             <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
-          <Scene key='locationWarning' component={LocationWarning} />
-          <Scene key='geofenceWarning' component={LocationGeofenceWarning} />
-          <Scene key='locationPrimer' component={LocationPrimer} />
+          <Scene key='locationWarning' component={modals.LocationWarning} />
+          <Scene key='geofenceWarning' component={modals.LocationGeofenceWarning} />
+          <Scene key='locationPrimer' component={modals.LocationPrimer} />
+          <Scene key='sharePresencePrimer' component={modals.SharePresencePrimer} />
         </Lightbox>
       </Router>
     );
