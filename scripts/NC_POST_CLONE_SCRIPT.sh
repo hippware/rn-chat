@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
-cd $GREENHOUSE_BUILD_DIR
+cd $NEVERCODE_BUILD_DIR
+set -e	# exit on first failed command
+set -x  # print all executed commands to the terminal
+
 npm install react-native-cli yarn -g
 yarn
 date

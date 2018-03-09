@@ -1,9 +1,9 @@
-#!/bin/bash
-cd $GREENHOUSE_BUILD_DIR
+#!/bin/sh
+
+cd $NEVERCODE_BUILD_DIR
 set -e	# exit on first failed command
 set -x  # print all executed commands to the terminal
 
-# $NEVERCODE_BUILD_DIR points to the cloned repository root
 gem uninstall -a -x cocoapods
 gem install cocoapods -v 1.3.1
 pod repo update
