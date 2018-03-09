@@ -7,6 +7,7 @@ exports[`Home renders with no data 1`] = `
       "flex": 1,
     }
   }
+  testID="screenHome"
 >
   <View
     style={
