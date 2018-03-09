@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-and-test:
+  build:
     parallelism: 1
     shell: /bin/bash --login
 
