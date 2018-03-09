@@ -64,7 +64,7 @@ class BotButtons extends React.Component<Props> {
     const isShareable = bot.isPublic || bot.owner.isOwn;
     const destructiveIndex = actions.findIndex(a => a.destructive);
     return (
-      <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', paddingBottom: 5 * k}}>
         {bot.geofence && <GeofenceButton style={styles.button} bot={bot} />}
         <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} />
         {isShareable && <ShareButton bot={bot} />}
