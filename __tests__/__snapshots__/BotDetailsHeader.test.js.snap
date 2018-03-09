@@ -324,20 +324,26 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
     <View
       style={
         Object {
-          "height": 8.5,
-          "width": 750,
+          "backgroundColor": "white",
+          "padding": 40,
         }
       }
     />
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "white",
-          "flexDirection": "row",
-          "height": 45,
-          "width": 750,
-        }
+        Array [
+          Object {
+            "backgroundColor": "white",
+            "padding": 40,
+          },
+          Object {
+            "alignItems": "center",
+            "alignSelf": "stretch",
+            "flexDirection": "row",
+            "height": 45,
+            "marginTop": 8.5,
+          },
+        ]
       }
     >
       <Image
@@ -349,7 +355,6 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
         style={
           Object {
             "height": 14,
-            "marginLeft": 14,
             "width": 14,
           }
         }
