@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "script tweaks?"
+
 cd $NEVERCODE_BUILD_DIR
 set -e	# exit on first failed command
 set -x  # print all executed commands to the terminal
@@ -9,6 +11,11 @@ yarn
 date
 yarn test
 npm run bugsnag
+
+gem uninstall -a -x cocoapods
+gem install cocoapods -v 1.3.1
+pod repo update
+date
 
 #cd ../..
 #react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle --bundle-output ios.bundle/main.jsbundle
