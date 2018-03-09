@@ -12,7 +12,7 @@ jobs:
 
     # https://circleci.com/docs/2.0/executor-types/
     # https://circleci.com/docs/2.0/circleci-images/
-    machine:
+    macos:
       xcode:
         version: 9.2.0
 
