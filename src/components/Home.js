@@ -29,7 +29,7 @@ export default class Home extends React.Component<{}> {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1}} testID='screenHome'>
         <EventList ref={ref => (this.eventList = ref)} />
         <BotButton />
         <Connectivity />
