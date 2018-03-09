@@ -14,7 +14,7 @@ jobs:
     # https://circleci.com/docs/2.0/circleci-images/
     machine:
       xcode:
-        version: 9.2.0
+        version: 9.0
 
     steps:
     # Machine Setup
@@ -27,16 +27,18 @@ jobs:
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
+
     # Restore the dependency cache
-    - restore_cache:
-        keys:
-        # This branch if available
-        - v1-dep-{{ .Branch }}-
-        # Default branch if not
-        - v1-dep-master-
-        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-        - v1-dep-
+    # - restore_cache:
+    #     keys:
+    #     # This branch if available
+    #     - v1-dep-{{ .Branch }}-
+    #     # Default branch if not
+    #     - v1-dep-master-
+    #     # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
+    #     - v1-dep-
     # - run: sudo npm i -g yarn
+    - run: brew install yarn
     - run: yarn
     # Save dependency cache
     - save_cache:
