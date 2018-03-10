@@ -11,7 +11,7 @@ jobs:
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
 
     # https://circleci.com/docs/2.0/executor-types/
-    # https://circleci.com/docs/2.0/circleci-images/
+    # https://circleci.com/docs/2.0/circleci-images/ 
     macos:
       xcode: "9.2.0"
 
@@ -44,9 +44,10 @@ jobs:
     - run: yarn
     - run: pod install --project-directory=./ios
     - run: detox -h
-    - run: detox build --configuration ios.sim.release
+    # - run: detox build --configuration ios.sim.release
     # - run: detox test --configuration ios.sim.release --cleanup
-    - run: detox test --configuration ios.sim.release --cleanup
+    - run: detox build --configuration ios.sim.debug
+    - run: detox test --configuration ios.sim.debug --cleanup
     # - run: yarn
     # Save dependency cache
     - save_cache:
@@ -67,6 +68,6 @@ jobs:
         path: /tmp/circleci-test-results
     # Save artifacts
     - store_artifacts:
-        path: /tmp/circleci-artifacts
+        path: /tmp/circleci-artifacts 
     - store_artifacts:
         path: /tmp/circleci-test-results
