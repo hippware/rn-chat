@@ -40,8 +40,7 @@ jobs:
     # - run: brew upgrade yarn
     - run: brew tap wix/brew
     - run: brew install applesimutils
-    - run: sudo npm install -g detox-cli
-    # - run: detox -h
+    - run: npm install -g detox-cli
     - run: detox build --configuration ios.sim.release
     - run: detox test --configuration ios.sim.release --cleanup
     # - run: yarn
