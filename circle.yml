@@ -37,7 +37,7 @@ jobs:
     #     # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
     #     - v1-dep-
     # - run: brew update
-    - run: brew install yarn
+    # - run: brew upgrade yarn
     - run: yarn
     # Save dependency cache
     - save_cache:
