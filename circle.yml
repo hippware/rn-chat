@@ -41,8 +41,10 @@ jobs:
     - run: brew tap wix/brew
     - run: brew install applesimutils
     - run: npm install -g detox-cli
-    - run: detox build --configuration ios.sim.release
-    - run: detox test --configuration ios.sim.release --cleanup
+    # - run: detox build --configuration ios.sim.release
+    - run: /usr/local/lib/node_modules/detox-cli/cli.sh build --configuration ios.sim.release
+    # - run: detox test --configuration ios.sim.release --cleanup
+    - run: /usr/local/lib/node_modules/detox-cli/cli.sh test --configuration ios.sim.release --cleanup
     # - run: yarn
     # Save dependency cache
     - save_cache:
