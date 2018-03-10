@@ -43,6 +43,7 @@ jobs:
     - run: npm install -g detox-cli
     - run: pwd
     - run: npm list -g --depth=0
+    - run: ls /usr/local/lib/node_modules/
     # - run: detox build --configuration ios.sim.release
     - run: /usr/local/lib/node_modules/.bin/detox build --configuration ios.sim.release
     # - run: detox test --configuration ios.sim.release --cleanup
