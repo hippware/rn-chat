@@ -86,9 +86,13 @@ class AddressBar extends React.Component<Props> {
       title,
     });
     bot.location.load({isCurrent});
-    if (edit) bot.save();
+    if (edit) {
+      bot.save();
+      Actions.pop();
+    } else {
+      Actions.botCompose({botId: bot.id});
+    }
     analytics.track('botcreate_chooselocation', bot.toJSON());
-    Actions.botCompose({botId: bot.id});
   };
 
   onChangeText = (text) => {
