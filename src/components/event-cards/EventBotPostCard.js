@@ -10,7 +10,7 @@ import {width} from '../Global';
 import EventBotMetabar from './EventBotMetabar';
 
 type Props = {
-  item: EventBotPost,
+  item: EventBot,
 };
 
 const imageWidth = 2 * width / 3;
@@ -26,9 +26,10 @@ class EventBotPostCard extends React.Component {
   render() {
     const {item} = this.props;
     return (
-      item.bot && (
+      item.bot &&
+      item.post && (
         <View>
-          <EventBotTitle bot={item.bot} action='added a post to' timestamp={item.relativeDateAsString} profile={item.author} />
+          <EventBotTitle bot={item.bot} action='added a post to' timestamp={item.relativeDateAsString} profile={item.post.profile} />
           <View style={{marginHorizontal: 15}}>
             {item.post.content && (
               <RText size={15} weight='Light' style={{marginTop: 15}} numberOfLines={4}>
