@@ -163,7 +163,7 @@ class TinyRobotRouter extends React.Component<{}> {
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key='main' hideTabBar lazy>
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
-                      <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+                      <Scene key='fullMap' component={ExploreNearBy} title='Explore Nearby' />
                       <Scene key='botsScene' component={BotsScreen} title='Favorites' />
                       <Scene key='friendsMain'>
                         <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />

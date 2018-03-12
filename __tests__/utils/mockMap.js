@@ -16,6 +16,12 @@ jest.mock('react-native-maps', () => {
     }
   }
 
+  class MockCircle extends React.Component {
+    render() {
+      return React.createElement('Circle', this.props, this.props.children);
+    }
+  }
+
   class MockMapView extends React.Component {
     render() {
       return React.createElement('MapView', this.props, this.props.children);
@@ -28,5 +34,6 @@ jest.mock('react-native-maps', () => {
   MockMapView.Marker = MockMarker;
   MockMapView.Marker.Animated = MockMarker;
   MockMapView.Callout = MockCallout;
+  MockMapView.Circle = MockCircle;
   return MockMapView;
 });

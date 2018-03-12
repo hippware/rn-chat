@@ -74,9 +74,14 @@ export default class Map extends Component<Props> {
     if (bot && list.indexOf(bot) === -1) {
       list.push(bot);
     }
-    return list
-      .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
-      .map(bot => <BotMarker key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />);
+    const bots = list.filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location && bot.location.latitude);
+    const res = bots.map(bot => <BotMarker key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />);
+
+    bots
+      .filter(bot => bot.geofence)
+      .map(bot => <Geofence coords={{...bot.location}} key={bot.id + 'circle'} />)
+      .forEach(rec => res.push(rec));
+    return res;
   }
 
   constructor(props: Props) {
@@ -233,7 +238,7 @@ export default class Map extends Component<Props> {
     const {locationStore, showUser, geofence, marker, fullMap, children, location} = this.props;
     const currentLoc = locationStore.location;
     const coords = location || currentLoc;
-    if (!coords) {
+    if (!coords || !coords.latitude) {
       return <RText>Please enable location</RText>;
     }
     // NOTE: seems dirty that this logic is in render

@@ -59,7 +59,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
       {
         text: 'Remove',
         style: 'destructive',
-        onPress: () => this.props.bot.unsubscribe(this.props.bot),
+        onPress: () => this.props.bot.unsubscribe(),
       },
     ]);
   };
@@ -101,7 +101,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
                   </RText>
                 </View>
               )}
-              {bot.geofence && <GeofenceCTA bot={bot} />}
+              {bot.isSubscribedGeofence && <GeofenceCTA bot={bot} />}
             </View>
             <View style={[styles.rowContainer, {height: 45, alignSelf: 'stretch', marginTop: 8.5, flexDirection: 'row', alignItems: 'center'}]}>
               <Image style={{width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />

@@ -9,6 +9,7 @@ import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import {colors} from '../../constants';
 import Geofence from '../map/Geofence';
+import {autorun} from 'mobx';
 
 type Props = {
   bot: Bot,
@@ -52,10 +53,27 @@ const nonOwnerActions = [
   {name: 'Cancel', action: () => {}},
 ];
 
-@inject('wocky')
+@inject('wocky', 'locationStore')
 @observer
 class BotButtons extends React.Component<Props> {
   actionSheet: any;
+
+  componentDidMount() {
+    this.handler = autorun(() => {
+      if (this.props.wocky.connected && this.props.bot.geofence && this.props.bot.isSubscribedGeofence) {
+        if (!this.props.locationStore.alwaysOn) {
+          Actions.geofenceWarning({bot: this.props.bot});
+          this.props.bot.unsubscribe(true);
+        } else {
+          this.props.bot.subscribe(true);
+        }
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.handler();
+  }
 
   render() {
     const {bot} = this.props;
@@ -67,7 +85,7 @@ class BotButtons extends React.Component<Props> {
       <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', paddingBottom: 5 * k}}>
         {bot.geofence && <GeofenceButton style={styles.button} bot={bot} />}
         <SaveOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} />
-        {isShareable && <ShareButton bot={bot} />}
+        {isShareable && (bot.owner.isOwn || !bot.geofence) && <ShareButton bot={bot} />}
         <MultiButton onPress={() => this.actionSheet.show()} />
         <ActionSheet
           ref={o => (this.actionSheet = o)}
@@ -93,11 +111,11 @@ const GeofenceButton = observer(({bot, style}: Props) => {
   let onPress, buttonStyle, image;
   if (bot.isSubscribedGeofence) {
     onPress = () => bot.unsubscribe(true);
-    buttonStyle = style;
+    buttonStyle = [style, {marginRight: 10 * k}];
     image = require('../../../images/whiteFoot.png');
   } else {
     onPress = () => bot.subscribe(true);
-    buttonStyle = [style, {backgroundColor: colors.WHITE}];
+    buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}];
     image = require('../../../images/footIcon.png');
   }
   return (
