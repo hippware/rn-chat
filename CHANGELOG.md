@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Light refactoring on BotDetails (PR #1970)
+
+
 # 2.1.3 - 2018 March 8
 
 * Build scripts, Nevercode scripts and tests.
