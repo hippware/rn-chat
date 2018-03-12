@@ -1,7 +1,12 @@
 // @flow
-/* global device, element, by, waitFor */
+/* global device, element, by, waitFor, before */
 
 describe('Example', () => {
+  before(async () => {
+    // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
+    await device.launchApp({permissions: {location: 'always', notifications: 'YES'}});
+  });
+
   beforeEach(async () => {
     await device.reloadReactNative();
   });
@@ -18,13 +23,6 @@ describe('Example', () => {
       .toBeVisible()
       .withTimeout(2000);
     // await expect(element(by.id('screenHome'))).toBeVisible();
-
-    await waitFor(element(by.label('Always Allow').and(by.type('_UIAlertControllerActionView'))))
-      .toBeVisible()
-      .withTimeout(2000);
-
-    // TODO: something like this to dismiss the location and notification permissions
-    await element(by.label('Always Allow').and(by.type('_UIAlertControllerActionView'))).tap();
 
     // TODO: wocky-client mock with repackager
     // https://github.com/wix/detox/blob/master/docs/Guide.Mocking.md
