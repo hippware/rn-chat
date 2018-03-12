@@ -90,9 +90,10 @@ export const Bot = types
       self.followersSize = yield self.service._subscribeBot(self.id, geofence)
     }),
     unsubscribe: flow(function*(geofence: boolean = false) {
-      self.isSubscribed = false
-      if (!geofence) {
+      if (geofence) {
         self.isSubscribedGeofence = false
+      } else {
+        self.isSubscribed = false
       }
       self.service.profile!.subscribedBots.remove(self.id)
       self.followersSize = yield self.service._unsubscribeBot(self.id, geofence)
