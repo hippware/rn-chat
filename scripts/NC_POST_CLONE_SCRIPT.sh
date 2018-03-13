@@ -10,9 +10,9 @@ date
 yarn test
 npm run bugsnag
 
-gem uninstall -a -x cocoapods
-gem install cocoapods -v 1.3.1
-pod repo update
+# gem uninstall -a -x cocoapods
+# gem install cocoapods -v 1.3.1
+# pod repo update
 date
 
 #cd ../..
