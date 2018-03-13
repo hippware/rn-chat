@@ -4,7 +4,7 @@ import {width, height, k} from './Global';
 import {colors} from '../constants';
 
 export default props => (
-  <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]}>
+  <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]} testID='screenLaunch'>
     <View style={styles.container}>
       <Image style={{width, height}} source={require('../../images/Launch.gif')} />
     </View>

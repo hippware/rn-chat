@@ -37,7 +37,6 @@ npm-debug.log
 sourcemap.js
 ios/main.jsbundle
 ios/main.jsbundle.meta
-Pods/
 # BUCK
 buck-out/
 \.buckd/

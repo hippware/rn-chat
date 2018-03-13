@@ -14,11 +14,12 @@ import {isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: string,
+  refresh?: boolean,
 };
 
 @inject('wocky')
 @observer
-export default class ProfileDetail extends React.Component<Props> {
+class ProfileDetail extends React.Component<Props> {
   handler: ?Function;
   list: any;
   @observable profile: Profile;
@@ -28,6 +29,12 @@ export default class ProfileDetail extends React.Component<Props> {
 
   componentWillMount() {
     this.load();
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps && nextProps.refresh) {
+      this.load();
+    }
   }
 
   load = async () => {
@@ -49,3 +56,5 @@ export default class ProfileDetail extends React.Component<Props> {
     );
   }
 }
+
+export default ProfileDetail;

@@ -15,7 +15,6 @@ type Props = {
 };
 
 const FriendMultiSelect = observer(({selection, botTitle, inviteMessage}: Props) => {
-  console.log('invite message', inviteMessage);
   return selection ? (
     <View style={{flex: 1}}>
       <SearchBar

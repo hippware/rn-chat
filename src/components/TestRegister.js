@@ -1,9 +1,8 @@
 // @flow
 
 import React from 'react';
-import {View, Keyboard, Image, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import {inject, observer} from 'mobx-react/native';
-import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
@@ -108,9 +107,10 @@ class TestRegister extends React.Component<Props, State> {
             backgroundColor: colors.GREY,
           }}
         />
-        <Button onPress={this.onRegister} style={styles.buttonStyle} textStyle={styles.textStyle} isLoading={Actions.currentScene !== this.props.name}>
-          Next
-        </Button>
+
+        <TouchableOpacity onPress={this.onRegister} style={styles.buttonStyle} disabled={Actions.currentScene !== this.props.name} testID='bypassRegisterButton'>
+          <Text style={styles.textStyle}>Next</Text>
+        </TouchableOpacity>
       </View>
     );
   }

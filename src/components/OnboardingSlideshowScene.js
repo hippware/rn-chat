@@ -17,44 +17,11 @@ const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 
-const Slide = ({bgImg, iconImg, children}) => (
-  <View style={styles.slide}>
-    <View style={styles.background}>
-      <Image source={bgImg} style={styles.backgroundImage} resizeMode='cover' />
-      <LinearGradient colors={[colors.addAlpha(colors.WHITE, 0), colors.addAlpha(colors.WHITE, 1)]} style={styles.gradient} />
-    </View>
-    <View style={styles.spacer} />
-    <View style={styles.textContainer}>
-      <Image source={iconImg} style={styles.icon} />
-      {children}
-    </View>
-  </View>
-);
-
-const BypassButton = () => {
-  return settings.isStaging || settings.isTesting ? (
-    <TouchableOpacity onPress={Actions.testRegisterScene} style={styles.bypassButton}>
-      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
-    </TouchableOpacity>
-  ) : null;
-};
-
-const PhoneVerify = () => (
-  <View style={styles.footerButtons}>
-    <TouchableOpTrack style={[styles.button, styles.login]} onPress={Actions.signIn} trackName='login'>
-      <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
-    </TouchableOpTrack>
-    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName='signup'>
-      <Text style={[styles.btnText]}>Sign up</Text>
-    </TouchableOpTrack>
-  </View>
-);
-
 class Onboarding extends React.Component {
   render() {
     // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
     return this.props.routeName === 'onboarding' ? (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1}} testID='onboarding'>
         <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)}>
           <Slide bgImg={discoverBg} iconImg={discoverIcon}>
             <Text style={styles.title}>
@@ -81,6 +48,39 @@ class Onboarding extends React.Component {
     ) : null;
   }
 }
+
+const Slide = ({bgImg, iconImg, children}) => (
+  <View style={styles.slide}>
+    <View style={styles.background}>
+      <Image source={bgImg} style={styles.backgroundImage} resizeMode='cover' />
+      <LinearGradient colors={[colors.addAlpha(colors.WHITE, 0), colors.addAlpha(colors.WHITE, 1)]} style={styles.gradient} />
+    </View>
+    <View style={styles.spacer} />
+    <View style={styles.textContainer}>
+      <Image source={iconImg} style={styles.icon} />
+      {children}
+    </View>
+  </View>
+);
+
+const BypassButton = () => {
+  return settings.isStaging || settings.isTesting ? (
+    <TouchableOpacity onPress={Actions.testRegisterScene} style={styles.bypassButton} testID='bypassButton'>
+      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
+    </TouchableOpacity>
+  ) : null;
+};
+
+const PhoneVerify = () => (
+  <View style={styles.footerButtons}>
+    <TouchableOpTrack style={[styles.button, styles.login]} onPress={Actions.signIn} trackName='login'>
+      <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
+    </TouchableOpTrack>
+    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName='signup'>
+      <Text style={[styles.btnText]}>Sign up</Text>
+    </TouchableOpTrack>
+  </View>
+);
 
 export default Onboarding;
 

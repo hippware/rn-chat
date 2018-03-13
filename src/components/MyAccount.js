@@ -18,53 +18,9 @@ import {RText, Separator} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const Title = inject('wocky')(observer(({wocky}) =>
-  (wocky.profile ? (
-    <RText
-      size={16}
-      style={{
-        letterSpacing: 0.5,
-        color: colors.DARK_PURPLE,
-      }}
-    >
-      {`@${wocky.profile.handle}`}
-    </RText>
-  ) : null)));
-
-const Right = inject('profileValidationStore', 'wocky')(observer(({profileValidationStore, wocky}) => {
-  const {profile} = wocky;
-  if (!profile) {
-    return null;
-  }
-  return (
-    <TouchableOpacity
-      onPress={async () => {
-        try {
-          await profileValidationStore.save();
-          Actions.pop();
-        } catch (e) {
-          alert(e);
-        }
-      }}
-      disabled={profile.updating}
-    >
-      <RText
-        size={16}
-        style={{
-          marginRight: 10 * k,
-          color: colors.PINK,
-          opacity: profile.updating ? 0.5 : 1,
-        }}
-      >
-          Save
-      </RText>
-    </TouchableOpacity>
-  );
-}));
-
 @inject('wocky', 'profileValidationStore')
 @observer
-export default class MyAccount extends React.Component<{}> {
+class MyAccount extends React.Component<{}> {
   static title = () => <Title />;
   static rightButton = () => <Right />;
 
@@ -80,13 +36,23 @@ export default class MyAccount extends React.Component<{}> {
     this.props.profileValidationStore.setProfile(this.vProfile);
   }
 
+  static submit = async (profileValidationStore) => {
+    try {
+      await profileValidationStore.save();
+      Actions.pop();
+      // need to force refresh of ProfileDetails after this change
+      setTimeout(() => Actions.refresh({refresh: new Date()}));
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   render() {
     const {profile} = this.props.wocky;
     if (!profile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR});
       return <Screen isDay />;
     }
-    const {handle, firstName, lastName, email, avatar} = profile;
     return (
       <Screen>
         <KeyboardAwareScrollView>
@@ -106,13 +72,31 @@ export default class MyAccount extends React.Component<{}> {
               </RText>
             </View>
             <Separator />
-            <FormTextInput label='First Name' store={this.vProfile && this.vProfile.firstName} icon={require('../../images/iconSubsNew.png')} />
-            <FormTextInput label='Last Name' store={this.vProfile && this.vProfile.lastName} />
-            <FormTextInput label='Username' store={this.vProfile && this.vProfile.handle} autoCapitalize='none' icon={require('../../images/iconUsernameNew.png')} />
+            <FormTextInput
+              label='First Name'
+              store={this.vProfile && this.vProfile.firstName}
+              icon={require('../../images/iconSubsNew.png')}
+              onSubmitEditing={() => this.lastName.focus()}
+            />
+            <FormTextInput ref={r => (this.lastName = r)} label='Last Name' store={this.vProfile && this.vProfile.lastName} onSubmitEditing={() => this.handle.focus()} />
+            <FormTextInput
+              ref={r => (this.handle = r)}
+              label='Username'
+              store={this.vProfile && this.vProfile.handle}
+              autoCapitalize='none'
+              icon={require('../../images/iconUsernameNew.png')}
+              onSubmitEditing={() => this.email.focus()}
+            />
             {/* TODO: phoneStore.format
             <Cell image={require('../../images/iconPhoneSmall.png')}>{format(props.profile.phoneNumber)}</Cell>
           <Separator width={1} /> */}
-            <FormTextInput label='Email' store={this.vProfile && this.vProfile.email} icon={require('../../images/iconEmailNew.png')} />
+            <FormTextInput
+              ref={r => (this.email = r)}
+              label='Email'
+              store={this.vProfile && this.vProfile.email}
+              icon={require('../../images/iconEmailNew.png')}
+              onSubmitEditing={() => MyAccount.submit(this.props.profileValidationStore)}
+            />
             <Cell
               image={require('../../images/block.png')}
               onPress={Actions.blocked}
@@ -134,3 +118,36 @@ export default class MyAccount extends React.Component<{}> {
     );
   }
 }
+
+export default MyAccount;
+
+const Title = inject('wocky')(observer(({wocky}) =>
+  (wocky.profile ? (
+    <RText
+      size={16}
+      style={{
+        letterSpacing: 0.5,
+        color: colors.DARK_PURPLE,
+      }}
+    >
+      {`@${wocky.profile.handle}`}
+    </RText>
+  ) : null)));
+
+const Right = inject('profileValidationStore', 'wocky')(observer(({profileValidationStore, wocky}) => {
+  const {profile} = wocky;
+  return profile ? (
+    <TouchableOpacity onPress={() => MyAccount.submit(profileValidationStore)} disabled={profile.updating}>
+      <RText
+        size={16}
+        style={{
+          marginRight: 10 * k,
+          color: colors.PINK,
+          opacity: profile.updating ? 0.5 : 1,
+        }}
+      >
+          Save
+      </RText>
+    </TouchableOpacity>
+  ) : null;
+}));

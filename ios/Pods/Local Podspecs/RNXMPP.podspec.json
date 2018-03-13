@@ -1,0 +1,40 @@
+{
+  "name": "RNXMPP",
+  "version": "1.0.1",
+  "summary": "XMPP Library for React Native",
+  "description": "XMPP Library for React Native",
+  "homepage": "http://hippware.com",
+  "license": "ISC",
+  "authors": {
+    "name": "Pavlo Aksonov"
+  },
+  "source": {
+    "git": "https://github.com/hippware/react-native-xmpp.git",
+    "tag": "1.0.1"
+  },
+  "requires_arc": true,
+  "platforms": {
+    "ios": "8.0"
+  },
+  "dependencies": {
+    "React": [
+
+    ],
+    "XMPPFramework": [
+
+    ]
+  },
+  "preserve_paths": [
+    "package.json",
+    "index.js"
+  ],
+  "source_files": [
+    "RNXMPP/XMPPFramework.h",
+    "RNXMPP/RNXMPPService.m",
+    "RNXMPP/RNXMPPService.h",
+    "RNXMPP/RNXMPPConstants.h",
+    "RNXMPP/RNXMPPConstants.m",
+    "RNXMPP/RNXMPP.h",
+    "RNXMPP/RNXMPP.m"
+  ]
+}
