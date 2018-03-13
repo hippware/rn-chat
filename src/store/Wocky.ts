@@ -3,7 +3,7 @@ import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, fl
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile, IProfile} from '../model/Profile'
+import {Profile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
@@ -202,6 +202,13 @@ export const Wocky = types
         const chat = self.createChat(id)
         chat.addMessage(msg)
       }
+    },
+    deleteBot: (id: string) => {
+      self.profile!.subscribedBots.remove(id)
+      self.profile!.ownBots.remove(id)
+      self.profiles.get(self.username!)!.ownBots.remove(id)
+      self.geoBots.delete(id)
+      self.bots.delete(id)
     }
   }))
   .actions(self => ({
@@ -250,10 +257,7 @@ export const Wocky = types
       yield self.transport.removeBot(id)
       // const events = self.events.list.filter(event => event.bot && event.bot === id)
       // events.forEach(event => self.events.remove(event.id))
-      self.profile!.ownBots.remove(id)
-      self.profiles.get(self.username!)!.ownBots.remove(id)
-      self.geoBots.delete(id)
-      self.bots.delete(id)
+      self.deleteBot(id)
     })
   }))
   .actions(self => ({
@@ -420,6 +424,9 @@ export const Wocky = types
           if (event.bot && isAlive(event.bot)) {
             self.events.addToTop(clone(event))
           }
+        } else {
+          const parts = id.split('/')
+          self.deleteBot(parts[parts.length - 1])
         }
       }
       self.updates.clear()

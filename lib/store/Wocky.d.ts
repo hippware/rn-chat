@@ -26981,6 +26981,7 @@ export declare const Wocky: IModelType<{
         id: string;
         message: any;
     }) => void;
+    deleteBot: (id: string) => void;
 } & {
     _follow: (a1: string) => Promise<any>;
     _unfollow: (a1: string) => Promise<any>;
