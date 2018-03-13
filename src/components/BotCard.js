@@ -4,12 +4,10 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Card from './Card';
 import {k} from './Global';
-import {observer} from 'mobx-react/native';
 import BotCardInner from './BotCardInner';
 
 type Props = {
   item: Bot,
-  hideAvatar: ?boolean,
   onPress: Function,
 };
 
@@ -22,7 +20,7 @@ const BotCard = (props: Props) => {
   );
 };
 
-export default observer(BotCard);
+export default BotCard;
 
 const styles = StyleSheet.create({
   card: {

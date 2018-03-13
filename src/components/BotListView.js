@@ -12,7 +12,6 @@ type Props = {
   user?: string,
   list?: Bots,
   header?: any,
-  hideAvatar?: boolean,
 };
 
 const img = require('../../images/graphicEndBots.png');
@@ -28,7 +27,7 @@ export default class BotListView extends React.Component<Props> {
   };
 
   render() {
-    const {filter, list, header, hideAvatar, wocky} = this.props;
+    const {filter, list, header, wocky} = this.props;
     if (!wocky.profile) {
       return null;
     }
@@ -44,7 +43,7 @@ export default class BotListView extends React.Component<Props> {
         onEndReached={bots.load}
         ListHeaderComponent={header}
         ListFooterComponent={connected ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null}
-        renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
+        renderItem={({item}) => <BotCard item={item} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />
     );

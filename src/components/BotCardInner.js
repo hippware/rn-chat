@@ -1,57 +1,40 @@
 // @flow
 
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {k, defaultCover, width} from './Global';
 import {observer, inject} from 'mobx-react/native';
-import LinearGradient from 'react-native-linear-gradient';
-import Avatar from './common/Avatar';
-import {Actions} from 'react-native-router-flux';
 import * as colors from '../constants/colors';
+import {RText} from './common';
 
 type Props = {
   style: any,
-  hideAvatar: ?boolean,
   item: Bot,
 };
 
-const BotCardInner = observer((props: Props) => {
-  const {item, style, hideAvatar} = props;
-  const profile = item.owner;
-
-  return (
-    <View style={[styles.container, style]}>
-      <MainImage item={item} />
-      <View style={styles.rightSide}>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingRight: 15 * k}}>
-          <Text numberOfLines={1} style={styles.botTitle}>
-            {item.title}
-          </Text>
-          {!item.isPublic && (
-            <Image style={{marginLeft: 5 * k, paddingRight: 5 * k, width: 10, height: 13}} source={require('../../images/iconPrivate.png')} />
-          )}
-        </View>
-        <View style={{flexDirection: 'row', flex: 1}}>
-          <Text numberOfLines={2} style={styles.smallText}>
-            {item.address}
-          </Text>
-          {!hideAvatar && (
-            <View style={styles.avatar}>
-              <Avatar size={30} profile={profile} tappable borderWidth={0} />
-            </View>
-          )}
-        </View>
-        <BottomLine {...props} />
+const BotCardInner = inject('locationStore')(observer(({item, style, locationStore}: Props) => (
+  <View style={[styles.container, style]}>
+    <MainImage item={item} />
+    <View style={styles.rightSide}>
+      <View style={{flexDirection: 'row', alignItems: 'center', paddingRight: 15 * k}}>
+        <RText numberOfLines={1} color={colors.PURPLE} size={15}>
+          {item.title}
+        </RText>
+        {!item.isPublic && <Image style={{marginLeft: 5 * k, paddingRight: 5 * k, width: 10, height: 13}} source={require('../../images/iconPrivate.png')} />}
       </View>
+      <RText numberOfLines={1} style={{flex: 1, marginBottom: 10 * k}} size={12} color={colors.DARK_GREY}>
+        {`${item.addressData.locationShort} - ${locationStore.distanceFromBot(item.location)}`}
+      </RText>
+      <BottomLine bot={item} />
     </View>
-  );
-});
+  </View>
+)));
 
 const MainImage = observer(({item}: {item: Bot}) => {
   const img = item.image;
   const source = img && img.thumbnail;
   return (
-    <View style={{width: 120 * k, height: 120 * k}}>
+    <View style={styles.mainImage}>
       <View style={{position: 'absolute'}}>
         {img && !img.loaded ? (
           <View style={[styles.mainImage, {backgroundColor: colors.GREY}]} />
@@ -63,51 +46,24 @@ const MainImage = observer(({item}: {item: Bot}) => {
   );
 });
 
-const UserName = observer(({profile}: {profile: Object}) => (
-  <TouchableOpacity
-    onPress={() =>
-      Actions.profileDetails({
-        parent: '_home',
-        item: profile.id,
-      })
-    }
-    style={styles.userNameButton}
-  >
-    <Text numberOfLines={2} style={styles.userName}>
-      @{profile && profile.handle}
-    </Text>
-  </TouchableOpacity>
-));
-
-const BottomLine = inject('locationStore')(observer(({item, hideAvatar, locationStore}: {item: Bot, hideAvatar: ?boolean, locationStore: any}) => {
-  const {location, distanceToString, distance} = locationStore;
-  const dist = location ? distanceToString(distance(location.latitude, location.longitude, item.location.latitude, item.location.longitude)) : null;
+const BottomLine = observer(({bot}: {bot: Bot}) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-    >
-      <Image style={{width: 16 * k, height: 14 * k}} source={require('../../images/heart.png')} />
-      <Text style={styles.followersSize}>{item.followersSize}</Text>
-      <View style={{paddingLeft: 10 * k}}>
-        <Image style={{width: 14 * k, height: 17 * k}} source={require('../../images/iconBotLocation2.png')} />
-      </View>
-      <Text style={styles.distance}>{dist}</Text>
-      {!hideAvatar && <UserName profile={item.owner} />}
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <Image style={{width: 16 * k, height: 14 * k}} source={require('../../images/heartGrey.png')} />
+      <RText style={styles.followersSize} size={12} color={colors.DARK_GREY}>
+        {bot.followersSize}
+      </RText>
+      <Image style={{width: 14 * k, height: 14 * k, paddingLeft: 10 * k}} source={require('../../images/postGrey.png')} />
+      <RText style={styles.posts} size={12} color={colors.DARK_GREY}>
+        {bot.totalItems}
+      </RText>
     </View>
   );
-}));
+});
 
 export default BotCardInner;
 
 const styles = StyleSheet.create({
-  avatar: {
-    width: 60 * k,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
   rightSide: {
     flex: 1,
     padding: 15 * k,
@@ -117,54 +73,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width,
   },
-  smallText: {
-    flex: 1,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 12,
-    color: colors.DARK_GREY,
-    marginBottom: 10 * k,
-  },
-  distance: {
+  posts: {
     paddingLeft: 10 * k,
     paddingRight: 10 * k,
-    fontSize: 12,
-    color: colors.DARK_GREY,
-    fontFamily: 'Roboto-Regular',
   },
   followersSize: {
     paddingLeft: 5 * k,
     paddingRight: 10 * k,
-    fontSize: 12,
-    color: colors.DARK_GREY,
-    fontFamily: 'Roboto-Regular',
-  },
-  imagesCount: {
-    fontSize: 11,
-    color: colors.WHITE,
-    backgroundColor: 'transparent',
-    fontFamily: 'Roboto-Regular',
-  },
-  image: {
-    position: 'absolute',
-    flexDirection: 'row',
-    height: 13 * k,
-    width: 36 * k,
-    right: 2 * k,
-    bottom: 7 * k,
   },
   mainImage: {width: 120 * k, height: 120 * k},
-  innerWrapper: {
-    position: 'absolute',
-    top: 70 * k,
-    right: 0,
-    left: 0,
-    bottom: 0,
-  },
-  botTitle: {
-    fontFamily: 'Roboto-Regular',
-    color: colors.PURPLE,
-    fontSize: 15,
-  },
   bottomLine: {
     flex: 1,
     flexDirection: 'row',
@@ -172,16 +89,5 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     borderWidth: 1,
     borderColor: 'blue',
-  },
-  userName: {
-    textAlign: 'right',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 10 * k,
-    color: colors.BLUE,
-  },
-  userNameButton: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
   },
 });

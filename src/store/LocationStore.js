@@ -44,6 +44,14 @@ const LocationStore = types
       //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
       // }
     },
+
+    distanceFromBot: (botLoc: {latitude: number, longitude: number}) => {
+      const {location, distanceToString, distance} = self;
+      if (location && botLoc) {
+        return distanceToString(distance(location.latitude, location.longitude, botLoc.latitude, botLoc.longitude));
+      }
+      return null;
+    },
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);

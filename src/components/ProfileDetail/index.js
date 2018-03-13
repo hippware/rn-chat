@@ -50,7 +50,7 @@ class ProfileDetail extends React.Component<Props> {
     }
     return (
       <Screen isDay>
-        <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} user={this.profile} hideAvatar header={this._header} />
+        <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} user={this.profile} header={this._header} />
         <BotButton />
       </Screen>
     );
