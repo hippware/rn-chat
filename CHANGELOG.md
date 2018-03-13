@@ -6,6 +6,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 * Light refactoring on BotDetails (PR #1970)
+* GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
+* GEOFENCE v1: Add Geofence Bots to Explore Nearby (#1899)
 
 
 # 2.1.3 - 2018 March 8
