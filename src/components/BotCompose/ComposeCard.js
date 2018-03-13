@@ -11,6 +11,7 @@ import {isAlive} from 'mobx-state-tree';
 import Switch from '../Switch';
 import {RText} from '../common';
 import {autorun} from 'mobx';
+import {settings} from '../../globals';
 
 type Props = {
   edit?: boolean,
@@ -75,39 +76,41 @@ class ComposeCard extends React.Component<Props> {
             />
           </View>
         </Cell>
-        <Cell imageStyle={{paddingLeft: 5, width: 50}} image={require('../../../images/foot.png')} style={[styles.separator, {paddingTop: 0, paddingBottom: 0}]}>
-          <View style={{padding: 16, flex: 1, paddingRight: 30}}>
-            <RText weight='Medium' size={15}>
-              {"See Who's Here"}
-            </RText>
-            <RText weight='Light' size={14}>
-              Know when friends are here!
-            </RText>
-          </View>
+        {(settings.isStaging || settings.isTesting) && (
+          <Cell imageStyle={{paddingLeft: 5, width: 50}} image={require('../../../images/foot.png')} style={[styles.separator, {paddingTop: 0, paddingBottom: 0}]}>
+            <View style={{padding: 16, flex: 1, paddingRight: 30}}>
+              <RText weight='Medium' size={15}>
+                {"See Who's Here"}
+              </RText>
+              <RText weight='Light' size={14}>
+                Know when friends are here!
+              </RText>
+            </View>
 
-          <Switch
-            ref={r => (this.switch = r)}
-            style={{paddingRight: 21}}
-            toggleHeight={32}
-            toggleWidth={32}
-            switchHeight={38}
-            switchWidth={63}
-            active={bot.geofence}
-            onChangeState={bot.setGeofence}
-            activeBackgroundColor={colors.PINK}
-            inactiveBackgroundColor={colors.GREY}
-            activeButtonColor='white'
-            inactiveButtonColor='white'
-            activeButtonPressedColor='white'
-            inactiveButtonPressedColor='white'
-            buttonShadow={{
-              shadowColor: '#000',
-              shadowOpacity: 0.5,
-              shadowRadius: 0,
-              shadowOffset: {height: 0, width: 0},
-            }}
-          />
-        </Cell>
+            <Switch
+              ref={r => (this.switch = r)}
+              style={{paddingRight: 21}}
+              toggleHeight={32}
+              toggleWidth={32}
+              switchHeight={38}
+              switchWidth={63}
+              active={bot.geofence}
+              onChangeState={bot.setGeofence}
+              activeBackgroundColor={colors.PINK}
+              inactiveBackgroundColor={colors.GREY}
+              activeButtonColor='white'
+              inactiveButtonColor='white'
+              activeButtonPressedColor='white'
+              inactiveButtonPressedColor='white'
+              buttonShadow={{
+                shadowColor: '#000',
+                shadowOpacity: 0.5,
+                shadowRadius: 0,
+                shadowOffset: {height: 0, width: 0},
+              }}
+            />
+          </Cell>
+        )}
       </View>
     );
   }
