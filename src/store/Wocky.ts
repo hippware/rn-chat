@@ -482,12 +482,10 @@ export const Wocky = types
         reaction(
           () => self.transport.presence,
           ({id, status}) => {
-            if (self.profile) {
-              const profile = self.profiles.get(id)
-              profile.setStatus(status)
-              if (profile.isOwn) {
-                self.profile!.setStatus(status)
-              }
+            const profile = self.profiles.get(id)
+            profile.setStatus(status)
+            if (profile.isOwn && self.profile) {
+              self.profile!.setStatus(status)
             }
           }
         )
