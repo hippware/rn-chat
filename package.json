@@ -21,7 +21,8 @@
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
     "deploy:stage": "babel-node ./scripts/deploy-stage.js",
-    "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js"
+    "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
+    "detox": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release"
   },
   "jest": {
     "preset": "react-native",
