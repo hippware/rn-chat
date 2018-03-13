@@ -25,9 +25,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"],
     "globalSetup": "./__tests__/utils/setupJest.js"
   },
   "detox": {
@@ -96,7 +94,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#42f4537a9f5276b87bc68dec24c30b026addc9a6",
+    "wocky-client": "github:hippware/wocky-client#76c1b32e53e0fd6c7d0078d09cf34f83d87e9dd4",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {
