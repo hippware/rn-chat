@@ -65,7 +65,7 @@ export const Profile = types
           self.isNew = false
         }),
         unblock: flow(function*() {
-          yield self.service._block(self.id)
+          yield self.service._unblock(self.id)
           self.isBlocked = false
           self.isNew = false
         }),
