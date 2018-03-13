@@ -3,7 +3,7 @@ import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, fl
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile} from '../model/Profile'
+import {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
@@ -475,6 +475,8 @@ export const Wocky = types
                 await self._loadUpdates()
               }
               self._subscribeToHomestream(self.version)
+            } else {
+              self.profiles.storage.values().forEach((profile: any) => profile.setStatus('unavailable'))
             }
           }
         )
