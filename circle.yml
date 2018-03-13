@@ -41,12 +41,13 @@ jobs:
     - run: brew install applesimutils
     - run: npm install -g detox-cli
     - run: yarn
-    - run: pod install --project-directory=./ios
+    # we don't need to pod install as long as we're keeping pods checked into git
+    # - run: pod install --project-directory=./ios
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         - ./node_modules
-        - ios/Pods
+        # - ios/Pods
     - run: detox build --configuration ios.sim.release
     - run: detox clean-framework-cache && detox build-framework-cache
     - run: detox test --configuration ios.sim.release --cleanup

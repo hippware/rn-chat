@@ -1,0 +1,399 @@
+PODS:
+  - BugsnagReactNative (2.9.1):
+    - BugsnagReactNative/Core (= 2.9.1)
+    - React
+  - BugsnagReactNative/Core (2.9.1):
+    - React
+  - CocoaAsyncSocket (7.5.1):
+    - CocoaAsyncSocket/GCD (= 7.5.1)
+  - CocoaAsyncSocket/GCD (7.5.1)
+  - CocoaLumberjack (3.3.0):
+    - CocoaLumberjack/Default (= 3.3.0)
+    - CocoaLumberjack/Extensions (= 3.3.0)
+  - CocoaLumberjack/Default (3.3.0)
+  - CocoaLumberjack/Extensions (3.3.0):
+    - CocoaLumberjack/Default
+  - CodePush (5.1.3):
+    - CodePush/Base64 (= 5.1.3)
+    - CodePush/Core (= 5.1.3)
+    - CodePush/JWT (= 5.1.3)
+    - CodePush/SSZipArchive (= 5.1.3)
+    - React
+  - CodePush/Base64 (5.1.3):
+    - React
+  - CodePush/Core (5.1.3):
+    - React
+  - CodePush/JWT (5.1.3):
+    - React
+  - CodePush/SSZipArchive (5.1.3):
+    - React
+  - Firebase/Auth (4.7.0):
+    - Firebase/Core
+    - FirebaseAuth (= 4.4.0)
+  - Firebase/Core (4.7.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.12)
+  - FirebaseAnalytics (4.0.5):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseAuth (4.4.0):
+    - FirebaseAnalytics (~> 4.0)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (4.0.12):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.7)
+  - GoogleMaps (2.1.1):
+    - GoogleMaps/Maps (= 2.1.1)
+  - GoogleMaps/Base (2.1.1)
+  - GoogleMaps/Maps (2.1.1):
+    - GoogleMaps/Base
+  - GoogleToolboxForMac/DebugUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+  - GTMSessionFetcher/Core (1.1.12)
+  - KissXML (5.1.2):
+    - KissXML/Core (= 5.1.2)
+  - KissXML/Core (5.1.2)
+  - Mixpanel (3.2.3)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - QBImagePickerController (3.4.0)
+  - React (0.53.0):
+    - React/Core (= 0.53.0)
+  - react-native-blur (0.8.0):
+    - React
+  - react-native-google-maps (0.17.0):
+    - GoogleMaps (= 2.1.1)
+    - React
+  - react-native-maps (0.17.0):
+    - React
+  - react-native-mixpanel (0.0.6):
+    - Mixpanel
+    - React
+  - React/BatchedBridge (0.53.0):
+    - React/Core
+    - React/cxxreact_legacy
+  - React/Core (0.53.0):
+    - yoga (= 0.53.0.React)
+  - React/cxxreact_legacy (0.53.0):
+    - React/jschelpers_legacy
+    - React/jsinspector_legacy
+  - React/fishhook (0.53.0)
+  - React/jschelpers_legacy (0.53.0)
+  - React/jsinspector_legacy (0.53.0)
+  - React/RCTActionSheet (0.53.0):
+    - React/Core
+  - React/RCTAnimation (0.53.0):
+    - React/Core
+  - React/RCTBlob (0.53.0):
+    - React/Core
+  - React/RCTGeolocation (0.53.0):
+    - React/Core
+  - React/RCTImage (0.53.0):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTLinkingIOS (0.53.0):
+    - React/Core
+  - React/RCTNetwork (0.53.0):
+    - React/Core
+  - React/RCTSettings (0.53.0):
+    - React/Core
+  - React/RCTText (0.53.0):
+    - React/Core
+  - React/RCTVibration (0.53.0):
+    - React/Core
+  - React/RCTWebSocket (0.53.0):
+    - React/Core
+    - React/fishhook
+    - React/RCTBlob
+  - ReactNativePermissions (1.1.1):
+    - React
+  - RNBackgroundFetch (2.3.0):
+    - React
+  - RNBackgroundGeolocation (2.11.0):
+    - CocoaLumberjack (~> 3.0)
+    - React
+  - RNFirebase (3.1.1):
+    - React
+  - RNXMPP (1.0.1):
+    - React
+    - XMPPFramework
+  - RSKImageCropper (1.6.3)
+  - XMPPFramework (3.7.3):
+    - XMPPFramework/All (= 3.7.3)
+  - XMPPFramework/All (3.7.3):
+    - XMPPFramework/BandwidthMonitor
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/FileTransfer
+    - XMPPFramework/GoogleSharedStatus
+    - XMPPFramework/ProcessOne
+    - XMPPFramework/Reconnect
+    - XMPPFramework/Roster
+    - XMPPFramework/SystemInputActivityMonitor
+    - XMPPFramework/XEP-0009
+    - XMPPFramework/XEP-0012
+    - XMPPFramework/XEP-0016
+    - XMPPFramework/XEP-0045
+    - XMPPFramework/XEP-0054
+    - XMPPFramework/XEP-0059
+    - XMPPFramework/XEP-0060
+    - XMPPFramework/XEP-0065
+    - XMPPFramework/XEP-0066
+    - XMPPFramework/XEP-0077
+    - XMPPFramework/XEP-0082
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0092
+    - XMPPFramework/XEP-0100
+    - XMPPFramework/XEP-0106
+    - XMPPFramework/XEP-0115
+    - XMPPFramework/XEP-0136
+    - XMPPFramework/XEP-0147
+    - XMPPFramework/XEP-0153
+    - XMPPFramework/XEP-0172
+    - XMPPFramework/XEP-0184
+    - XMPPFramework/XEP-0191
+    - XMPPFramework/XEP-0198
+    - XMPPFramework/XEP-0199
+    - XMPPFramework/XEP-0202
+    - XMPPFramework/XEP-0203
+    - XMPPFramework/XEP-0223
+    - XMPPFramework/XEP-0224
+    - XMPPFramework/XEP-0280
+    - XMPPFramework/XEP-0297
+    - XMPPFramework/XEP-0308
+    - XMPPFramework/XEP-0313
+    - XMPPFramework/XEP-0333
+    - XMPPFramework/XEP-0334
+    - XMPPFramework/XEP-0335
+    - XMPPFramework/XEP-0352
+    - XMPPFramework/XEP-0357
+    - XMPPFramework/XEP-0363
+    - XMPPFramework/XMPPMUCLight
+  - XMPPFramework/BandwidthMonitor (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Core (3.7.3):
+    - CocoaAsyncSocket (~> 7.5.0)
+    - CocoaLumberjack (~> 3.0)
+    - KissXML (~> 5.1.2)
+  - XMPPFramework/CoreDataStorage (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/FileTransfer (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/GoogleSharedStatus (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/ProcessOne (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Reconnect (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Roster (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0009 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0012 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0016 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0045 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0054 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/Roster
+  - XMPPFramework/XEP-0059 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0060 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0065 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0066 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0077 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0082 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0085 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0092 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0100 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0106 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0115 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0136 (3.7.3):
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0147 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0153 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0054
+  - XMPPFramework/XEP-0172 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0184 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0191 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0198 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0199 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0202 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0203 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0223 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0224 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0280 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0297 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0308 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0313 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0059
+  - XMPPFramework/XEP-0333 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0334 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0335 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0352 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0357 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0363 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XMPPMUCLight (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+  - yoga (0.53.0.React)
+
+DEPENDENCIES:
+  - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
+  - CodePush (from `../node_modules/react-native-code-push`)
+  - Firebase/Auth
+  - Firebase/Core
+  - GoogleMaps
+  - QBImagePickerController
+  - react-native-blur (from `../node_modules/react-native-blur`)
+  - react-native-google-maps (from `../node_modules/react-native-maps`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - React/BatchedBridge (from `../node_modules/react-native`)
+  - React/Core (from `../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - ReactNativePermissions (from `../node_modules/react-native-permissions`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
+  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - RNFirebase (from `../node_modules/react-native-firebase`)
+  - RNXMPP (from `../node_modules/react-native-xmpp`)
+  - RSKImageCropper
+  - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+EXTERNAL SOURCES:
+  BugsnagReactNative:
+    :path: ../node_modules/bugsnag-react-native/
+  CodePush:
+    :path: ../node_modules/react-native-code-push
+  React:
+    :path: ../node_modules/react-native
+  react-native-blur:
+    :path: ../node_modules/react-native-blur
+  react-native-google-maps:
+    :path: ../node_modules/react-native-maps
+  react-native-maps:
+    :path: ../node_modules/react-native-maps
+  react-native-mixpanel:
+    :path: ../node_modules/react-native-mixpanel
+  ReactNativePermissions:
+    :path: ../node_modules/react-native-permissions
+  RNBackgroundFetch:
+    :path: ../node_modules/react-native-background-fetch
+  RNBackgroundGeolocation:
+    :path: ../node_modules/react-native-background-geolocation
+  RNFirebase:
+    :path: ../node_modules/react-native-firebase
+  RNXMPP:
+    :path: ../node_modules/react-native-xmpp
+  XMPPFramework:
+    :branch: 3.7.3
+    :git: https://github.com/aksonov/XMPPFramework.git
+  yoga:
+    :path: ../node_modules/react-native/ReactCommon/yoga
+
+CHECKOUT OPTIONS:
+  XMPPFramework:
+    :commit: d2b0cd1ef93a93d5ff0a460bfc39582501485b47
+    :git: https://github.com/aksonov/XMPPFramework.git
+
+SPEC CHECKSUMS:
+  BugsnagReactNative: 65437615c630250fa81936486af7354a41c680fd
+  CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
+  CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
+  CodePush: ffe876b57db57e0295653d69aa1653b0278b43ad
+  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseAuth: cdeee95b528958dbb7dcf220ad0fb804d3a284b0
+  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
+  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  KissXML: 246c842586bb77110e04fb88e19376d96245c856
+  Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  React: 6a94a44468604816ad2fd3bae908b2ebbab0f95d
+  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
+  react-native-google-maps: 73a7f74a00d36c74df41388ebb8394ceba81ef0e
+  react-native-maps: ee0bb36520eb49dfc2bf11754a486a4fa5c5f883
+  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
+  RNBackgroundFetch: 07b96a101ead2be5270f27e4228e7f1a17477e4a
+  RNBackgroundGeolocation: f039e6d112ac67a79dd762e700a103315bdf2ad2
+  RNFirebase: 30522211772f22affff6f3a61981110852d2668b
+  RNXMPP: 7e56c1b4dc992d7b0ce62479308c1883cd467f9b
+  RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
+  XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
+  yoga: 36cb943786c0587f19094c593b5683074d679c46
+
+PODFILE CHECKSUM: 10e1d9104953d1855ceb327e35f1899028128a42
+
+COCOAPODS: 1.3.1
