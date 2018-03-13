@@ -21,14 +21,14 @@ export const Chats = types
     get unread() {
       return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)
     },
-    get(id: string): IChat {
+    get(id: string): IChat | undefined {
       return self._list.find(el => el.id === id)
     }
   }))
   .actions(self => ({
     clear: () => self._list.splice(0),
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
-    add: (chat: IChat) => self.get(chat.id) || (self._list.push(chat) && chat)
+    add: (chat: IChat): IChat => self.get(chat.id) || ((self._list.push(chat) && chat) as IChat)
   }))
 
 export type IChats = typeof Chats.Type

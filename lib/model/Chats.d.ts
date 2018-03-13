@@ -4622,7 +4622,7 @@ export declare const Chats: IModelType<{
         readonly $treenode?: any;
     })[];
     readonly unread: number;
-    get(id: string): {
+    get(id: string): ({
         id: string;
     } & {
         readonly pageId: string;
@@ -6156,7 +6156,7 @@ export declare const Chats: IModelType<{
         afterAttach: () => void;
     } & {
         readonly $treenode?: any;
-    };
+    }) | undefined;
 } & {
     clear: () => ({
         id: string;
