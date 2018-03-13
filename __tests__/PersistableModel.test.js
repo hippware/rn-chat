@@ -19,6 +19,9 @@ describe('PersistableModel', () => {
           }
         },
       },
+      logger: {
+        log: () => {}
+      }
     });
     const store = PersistableStore.create({wocky}, getEnv(wocky));
     expect(store.wocky.username).toEqual(null);
