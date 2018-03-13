@@ -18,8 +18,8 @@ const InviteFriendsRow = inject('wocky')(observer(({style, subtext, botTitle, wo
   const {profile} = wocky;
   const handle = profile ? profile.handle : '';
   const message = botTitle
-    ? `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${handle}.`
-    : `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`;
+    ? `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`
+    : `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${handle}.`;
   return (
     <TouchableOpacity
       style={[
