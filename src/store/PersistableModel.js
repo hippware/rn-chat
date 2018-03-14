@@ -42,7 +42,10 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
       analytics.track('migration_success', self.wocky.toJSON());
     } catch (err) {
       logger.warn('Data migration error:', err);
-      analytics.track('migration_fail', data);
+      if (data) {
+        // !data == fresh install
+        analytics.track('migration_fail', data);
+      }
     }
   }
 
