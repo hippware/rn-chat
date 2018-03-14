@@ -204,6 +204,11 @@ export const Wocky = types
       }
     },
     deleteBot: (id: string) => {
+      self.events.result.forEach((event: any) => {
+        if (event.bot && event.bot.id === id) {
+          self.events.remove(event.id)
+        }
+      })
       self.profile!.subscribedBots.remove(id)
       self.profile!.ownBots.remove(id)
       self.profiles.get(self.username!)!.ownBots.remove(id)

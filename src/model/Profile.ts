@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, isAlive, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {FileRef} from './File'
@@ -122,3 +122,14 @@ export const Profile = types
 export const ProfilePaginableList = createPaginable(types.reference(Profile))
 export type IProfilePaginableList = typeof ProfilePaginableList.Type
 export type IProfile = typeof Profile.Type
+
+export const ProfileRef = types.maybe(
+  types.reference(Profile, {
+    get(id: string, parent: any) {
+      return parent && parent.service && parent.service.profiles && isAlive(parent.service.profiles.get(id)) && parent.service.profiles.get(id)
+    },
+    set(value) {
+      return value.id
+    }
+  })
+)

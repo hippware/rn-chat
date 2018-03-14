@@ -3,7 +3,7 @@ import {types, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tre
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {FileRef} from './File'
-import {Profile} from './Profile'
+import {ProfileRef} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
@@ -19,7 +19,7 @@ export const BotPost = types
       content: '',
       title: '',
       image: FileRef,
-      profile: types.maybe(types.reference(Profile))
+      profile: ProfileRef
     })
   )
   .named('BotPost')
