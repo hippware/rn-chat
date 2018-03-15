@@ -4,6 +4,7 @@ import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 
+const TIMEOUT = 10000
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
 const FILE_NS = 'hippware.com/hxep/http-file'
@@ -97,7 +98,7 @@ export class XmppTransport {
         this.host = host
       }
       this.connecting = true
-      await this.provider.login(this.username, this.password, this.host, this.resource)
+      await timeout(this.provider.login(this.username, this.password, this.host, this.resource), TIMEOUT)
       return true
     } catch (e) {
       this.connected = false
@@ -159,7 +160,7 @@ export class XmppTransport {
 
   async disconnect() {
     this.provider.disconnectAfterSending()
-    await new Promise(resolve => when(() => !this.connected, resolve))
+    await timeout(new Promise(resolve => when(() => !this.connected, resolve)), TIMEOUT)
   }
 
   async sendIQ(data: any, withoutTo: boolean = false): Promise<any> {
@@ -1076,4 +1077,25 @@ function processRosterItem(item: any = {}, host: string) {
     isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
     isFollower: subscription === 'from' || subscription === 'both'
   }
+}
+
+function timeout(promise: Promise<any>, timeoutMillis: number) {
+  let timeout: any
+  return Promise.race([
+    promise,
+    new Promise(function(resolve, reject) {
+      timeout = setTimeout(function() {
+        reject('Operation timed out')
+      }, timeoutMillis)
+    })
+  ]).then(
+    function(v) {
+      clearTimeout(timeout)
+      return v
+    },
+    function(err) {
+      clearTimeout(timeout)
+      throw err
+    }
+  )
 }
