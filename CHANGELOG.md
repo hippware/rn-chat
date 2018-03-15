@@ -22,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Temporarily comment out geofence UI (#1976)
 * New User: Constant Offline State (#1946)
 * Kill/reload required to remove deleted bot from the Saved Bot list (#1962)
+* Bot List Redesign: Decluttering (#1972)
 
 
 # 2.1.3 - 2018 March 8
