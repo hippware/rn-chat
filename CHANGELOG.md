@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Speculative fixes for crashes: 
+  * Deleted a bot and received app crash (#1980)
+  * Login resulted in App Crash (#1982)
+
+
 # 2.1.4 - 2018 March 13
 
 **Geofence UI disabled**
