@@ -290,7 +290,7 @@ describe('BotStore', () => {
       expect(user2.events.list.length).to.be.equal(3)
       await user2.incorporateUpdates()
       expect(user2.updates.length).to.be.equal(0)
-      expect(user2.events.list.length).to.be.equal(3)
+      expect(user2.events.list.length).to.be.equal(2)
       const user2bot3 = user2.events.list[0].bot
       expect(user2bot3.owner.id).to.be.equal(user1.username)
       expect(user2bot3.location.latitude).to.be.equal(1.1)
@@ -302,6 +302,15 @@ describe('BotStore', () => {
     }
   })
 
+  it('delete bot and check updated HS', async done => {
+    try {
+      user2.deleteBot(user2.events.list[0].bot.id)
+      expect(user2.events.list.length).to.be.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   after('remove', async done => {
     try {
       await user1.removeBot(bot2.id)
