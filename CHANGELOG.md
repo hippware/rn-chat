@@ -5,9 +5,23 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.1.4 - 2018 March 13
+
+**Geofence UI disabled**
+
 * Light refactoring on BotDetails (PR #1970)
 * GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
 * GEOFENCE v1: Add Geofence Bots to Explore Nearby (#1899)
+* [dev] migrate to CircleCI 2.0
+  * Detox
+* Post Added Notifications display incorrect username (#1943)
+* Save Changes/Post should take user to bot profile (#1961)
+* Keyboard disappears with Next button on My Account/Settings (#1942)
+* INVITE FRIENDS: CTA on Share Bot screen (#1766)
+* Unblocked Users: Kill/reload puts unblocked users back in Blocked Users list (#1960)
+* Temporarily comment out geofence UI (#1976)
+* New User: Constant Offline State (#1946)
+* Kill/reload required to remove deleted bot from the Saved Bot list (#1962)
 
 
 # 2.1.3 - 2018 March 8
