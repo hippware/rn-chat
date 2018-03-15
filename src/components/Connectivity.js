@@ -21,7 +21,7 @@ export default class Connectivity extends React.Component {
       this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
-    this.interval = setInterval(async () => {
+    this.intervalId = setInterval(async () => {
       const model = this.props.wocky;
       if (this.isActive && !model.connected && !model.connecting && Date.now() - this.lastDisconnected >= this.retryDelay) {
         await this.tryReconnect();
