@@ -6,13 +6,14 @@ import {reaction, observable, when} from 'mobx';
 import {inject} from 'mobx-react/native';
 import * as log from '../utils/log';
 
-@inject('wocky', 'notificationStore', 'log')
+@inject('wocky', 'notificationStore', 'log', 'analytics')
 export default class Connectivity extends React.Component {
   @observable lastDisconnected = Date.now();
   retryDelay = 1000;
   isActive = true;
   handler;
   intervalId;
+  connectionInfo: any;
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -41,9 +42,12 @@ export default class Connectivity extends React.Component {
     const model = this.props.wocky;
     if (!model.connected && !model.connecting && model.username && model.password && model.host) {
       try {
+        this.props.analytics.track('reconnect_try', {delay: this.retryDelay, connectionInfo: this.connectionInfo});
         await model.login();
+        this.props.analytics.track('reconnect_success');
         this.retryDelay = 1000;
       } catch (e) {
+        this.props.analytics.track('reconnect_fail', {error: e});
         this.retryDelay = this.retryDelay >= 5 * 1000 ? this.retryDelay : this.retryDelay * 1.5;
         this.lastDisconnected = Date.now();
       }
@@ -52,6 +56,7 @@ export default class Connectivity extends React.Component {
 
   _handleConnectionInfoChange = (connectionInfo) => {
     this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
+    this.connectionInfo = connectionInfo;
     if (connectionInfo.type === 'unknown') {
       // @TODO: mixpanel submit info?
       return;
