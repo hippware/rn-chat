@@ -7,7 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 2.1.5 - 2018 March 15
 
-* Speculative fixes for crashes
+* Speculative fixes/changes for:
   * Deleted a bot and received app crash (#1980)
   * Login resulted in App Crash (#1982)
   * New User: Constant Offline State (#1946)
