@@ -134,7 +134,12 @@ export default class Map extends Component<Props> {
       config.latitudeDelta = delta;
       config.longitudeDelta = delta;
     }
-    this._map.animateToRegion(config);
+    if (this._map) {
+      this._map.animateToRegion(config);
+    } else {
+      // HACK for slow loading map on deeplink. https://github.com/hippware/rn-chat/issues/1986
+      setTimeout(() => this._map && this._map.animateToRegion(config), 1000);
+    }
   };
 
   setCenterCoordinate = (latitude: number, longitude: number, fit: boolean = false) => {
@@ -147,7 +152,7 @@ export default class Map extends Component<Props> {
         animated: true,
       });
     } else {
-      this._map.animateToCoordinate({latitude, longitude});
+      this._map && this._map.animateToCoordinate({latitude, longitude});
     }
   };
 
