@@ -109,6 +109,9 @@ export const Bot = types
       if (data.addressData && typeof data.addressData === 'string') {
         data.addressData = JSON.parse(data.addressData)
       }
+      if (data.geofence) {
+        data.geofence = data.geofence === 'true'
+      }
       Object.assign(self, data)
     }
   }))
