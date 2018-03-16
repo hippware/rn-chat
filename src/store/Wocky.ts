@@ -283,6 +283,11 @@ export const Wocky = types
       const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
+    _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+    }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadBotPosts(id, before)
@@ -314,9 +319,9 @@ export const Wocky = types
       const botId = parent.id
       yield self.transport.publishBotPost(botId, post)
     }),
-    _subscribeBot: flow(function*(id: string) {
+    _subscribeBot: flow(function*(id: string, geofence: boolean) {
       yield waitFor(() => self.connected)
-      return yield self.transport.subscribeBot(id)
+      return yield self.transport.subscribeBot(id, geofence)
     }),
     _unsubscribeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)

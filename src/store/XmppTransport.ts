@@ -617,12 +617,42 @@ export class XmppTransport {
         .up()
     }
     const data = await this.sendIQ(iq)
+    console.log('subscribers', data)
     let arr = data.subscribers.subscriber || []
     if (!isArray(arr)) {
       arr = [arr]
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
     return {list, count: parseInt(data.subscribers.set.count)}
+  }
+  async loadBotGuests(id: string, lastId?: string, max: number = 10) {
+    // console.log('loadBotGuests', id, lastId, max)
+    const iq = $iq({type: 'get', to: this.host}).c('guests', {
+      xmlns: BOT_NS,
+      node: `bot/${id}`
+    })
+
+    // TODO: RSM?
+    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+    // .up()
+    // .c('max')
+    // .t(max.toString())
+    // .up()
+    // if (lastId) {
+    //   iq
+    //     .c('after')
+    //     .t(lastId!)
+    //     .up()
+    // }
+
+    const data = await this.sendIQ(iq)
+    let arr = data.guests.guest || []
+    if (!isArray(arr)) {
+      arr = [arr]
+    }
+    const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
+    // return {list, count: parseInt(data.guests.set.count)}
+    return {list, count: parseInt(arr.length)}
   }
   async loadBotPosts(id: string, before?: string) {
     const iq = $iq({type: 'get', to: this.host})
@@ -794,12 +824,20 @@ export class XmppTransport {
     }
     await this.sendIQ(iq)
   }
-  async subscribeBot(id: string) {
+  async subscribeBot(id: string, geofence: boolean) {
     const iq = $iq({type: 'set', to: this.host}).c('subscribe', {
       xmlns: BOT_NS,
       node: `bot/${id}`
     })
+
+    if (geofence) {
+      iq
+        .c('geofence')
+        .t('true')
+        .up()
+    }
     const data = await this.sendIQ(iq)
+    console.log('after sending subscribeBot', data.subscriber_count)
     return parseInt(data['subscriber_count'])
   }
   async unsubscribeBot(id: string) {

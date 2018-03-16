@@ -63,7 +63,7 @@ export const Bot = types
     },
     afterAttach: () => {
       self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-      self.guests.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+      self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
       self.visitors.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
       self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
     },

@@ -86,6 +86,10 @@ export declare class XmppTransport {
         list: any;
         count: number;
     }>;
+    loadBotGuests(id: string, lastId?: string, max?: number): Promise<{
+        list: any;
+        count: number;
+    }>;
     loadBotPosts(id: string, before?: string): Promise<{
         count: number;
         list: any;
@@ -101,7 +105,7 @@ export declare class XmppTransport {
     removeBotPost(id: string, postId: string): Promise<void>;
     shareBot(id: string, server: string, recepients: string[], message: string, type: string): void;
     publishBotPost(botId: string, post: any): Promise<void>;
-    subscribeBot(id: string): Promise<number>;
+    subscribeBot(id: string, geofence: boolean): Promise<number>;
     unsubscribeBot(id: string): Promise<number>;
     loadUpdates(ver: string): Promise<{
         list: any;
