@@ -63,8 +63,10 @@ class BotDetails extends React.Component<Props> {
     when(
       () => wocky.connected,
       async () => {
-        await wocky.loadBot(this.props.item);
-        await this.bot.posts.load({force: true});
+        try {
+          await wocky.loadBot(this.props.item);
+          await this.bot.posts.load({force: true});
+        } catch (err) {}
       },
     );
 
