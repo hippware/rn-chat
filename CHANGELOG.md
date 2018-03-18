@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.1.6 - 2018 March 16
+
+* Handle bot geofence boolean field.
+* Add mixpanel calls in Connectivity component
+* Another speculative change for: New User: Constant Offline State (#1946)
+* Deep linking to bot results in App Crash (#1986)
+
+
 # 2.1.5 - 2018 March 15
 
 * Speculative fixes/changes for:
