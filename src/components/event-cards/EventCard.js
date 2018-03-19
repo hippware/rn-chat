@@ -8,7 +8,7 @@ import EventBotCard from './EventBotCard';
 import EventBotShareCard from './EventBotShareCard';
 import EventBotNoteCard from './EventBotNoteCard';
 import EventBotPostCard from './EventBotPostCard';
-import {getType} from 'mobx-state-tree';
+import {getType, isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: any,
@@ -28,8 +28,9 @@ export default class EventCard extends React.Component<Props> {
   render() {
     const row = this.props.item;
     let profile;
-    let CardClass
+    let CardClass;
     try {
+      if (!row || !isAlive(row)) return null;
       CardClass = eventCardMap[getType(row).name];
       // TODO: deleted bot throws an error here trying to generate a profile from a bad id
       profile = row.target;
@@ -41,19 +42,21 @@ export default class EventCard extends React.Component<Props> {
       return null;
     }
 
-    return CardClass && (
-      <Card
-        key={row.id}
-        onPress={() => this.card.onPress && this.card.onPress()}
-        style={{
-          paddingTop: 10 * k,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingBottom: 0,
-        }}
-      >
-        <CardClass ref={r => (this.card = r)} item={row} />
-      </Card>
+    return (
+      CardClass && (
+        <Card
+          key={row.id}
+          onPress={() => this.card.onPress && this.card.onPress()}
+          style={{
+            paddingTop: 10 * k,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingBottom: 0,
+          }}
+        >
+          <CardClass ref={r => (this.card = r)} item={row} />
+        </Card>
+      )
     );
   }
 }
