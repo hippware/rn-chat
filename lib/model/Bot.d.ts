@@ -7,7 +7,8 @@ export declare const Bot: IModelType<{
 } & {} & {
     id?: any;
     isSubscribed?: any;
-    isSubscribedGeofence?: any;
+    guest?: any;
+    visitor?: any;
     title?: any;
     server?: any;
     radius?: any;
@@ -53,7 +54,8 @@ export declare const Bot: IModelType<{
 } & {
     id: string;
     isSubscribed: boolean;
-    isSubscribedGeofence: boolean;
+    guest: boolean;
+    visitor: boolean;
     title: string | null;
     server: string | null;
     radius: number;

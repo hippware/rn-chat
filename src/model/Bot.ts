@@ -23,7 +23,8 @@ export const Bot = types
     types.model('Bot', {
       id: types.identifier(types.string),
       isSubscribed: false,
-      isSubscribedGeofence: false,
+      guest: false,
+      visitor: false,
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 100,
@@ -56,15 +57,15 @@ export const Bot = types
     },
     setGeofence: (value: boolean) => {
       self.geofence = value
-      self.isSubscribedGeofence = value
+      self.guest = value
     },
     setPublic: (value: boolean) => {
       self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
     },
     afterAttach: () => {
       self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-      self.guests.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-      self.visitors.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+      self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
+      self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
       self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
     },
     createPost: (content: string = '') => {
@@ -84,14 +85,14 @@ export const Bot = types
     subscribe: flow(function*(geofence: boolean = false) {
       self.isSubscribed = true
       if (geofence) {
-        self.isSubscribedGeofence = true
+        self.guest = true
       }
       self.service.profile!.subscribedBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id, geofence)
     }),
     unsubscribe: flow(function*(geofence: boolean = false) {
       if (geofence) {
-        self.isSubscribedGeofence = false
+        self.guest = false
       } else {
         self.isSubscribed = false
       }
@@ -108,9 +109,6 @@ export const Bot = types
       const data = {...d}
       if (data.addressData && typeof data.addressData === 'string') {
         data.addressData = JSON.parse(data.addressData)
-      }
-      if (data.geofence) {
-        data.geofence = data.geofence === 'true'
       }
       Object.assign(self, data)
     }

@@ -617,12 +617,71 @@ export class XmppTransport {
         .up()
     }
     const data = await this.sendIQ(iq)
+    console.log('subscribers', data)
     let arr = data.subscribers.subscriber || []
     if (!isArray(arr)) {
       arr = [arr]
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
     return {list, count: parseInt(data.subscribers.set.count)}
+  }
+  async loadBotGuests(id: string, lastId?: string, max: number = 10) {
+    // console.log('loadBotGuests', id, lastId, max)
+    const iq = $iq({type: 'get', to: this.host}).c('guests', {
+      xmlns: BOT_NS,
+      node: `bot/${id}`
+    })
+
+    // TODO: RSM?
+    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+    // .up()
+    // .c('max')
+    // .t(max.toString())
+    // .up()
+    // if (lastId) {
+    //   iq
+    //     .c('after')
+    //     .t(lastId!)
+    //     .up()
+    // }
+
+    const data = await this.sendIQ(iq)
+    let arr = data.guests.guest || []
+    if (!isArray(arr)) {
+      arr = [arr]
+    }
+    const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
+    // return {list, count: parseInt(data.guests.set.count)}
+    return {list, count: parseInt(arr.length)}
+  }
+  async loadBotVisitors(id: string, lastId?: string, max: number = 10) {
+    // console.log('loadBotGuests', id, lastId, max)
+    const iq = $iq({type: 'get', to: this.host}).c('visitors', {
+      xmlns: BOT_NS,
+      node: `bot/${id}`
+    })
+
+    // TODO: RSM?
+    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+    // .up()
+    // .c('max')
+    // .t(max.toString())
+    // .up()
+    // if (lastId) {
+    //   iq
+    //     .c('after')
+    //     .t(lastId!)
+    //     .up()
+    // }
+
+    const data = await this.sendIQ(iq)
+    let arr = data.guests.guest || []
+    if (!isArray(arr)) {
+      arr = [arr]
+    }
+    const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
+    // return {list, count: parseInt(data.guests.set.count)}
+    return {list, count: parseInt(arr.length)}
   }
   async loadBotPosts(id: string, before?: string) {
     const iq = $iq({type: 'get', to: this.host})
@@ -701,7 +760,7 @@ export class XmppTransport {
     return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
   }
   async updateBot(bot: any) {
-    const {title, image, description, address, location, visibility, radius, id, addressData} = bot
+    const {title, image, description, address, location, visibility, geofence, radius, id, addressData} = bot
     const iq = bot.isNew
       ? $iq({type: 'set'}).c('create', {xmlns: BOT_NS})
       : $iq({type: 'set'}).c('fields', {
@@ -714,6 +773,7 @@ export class XmppTransport {
       title,
       address_data: JSON.stringify(addressData),
       description,
+      geofence,
       radius: Math.round(radius),
       address,
       image,
@@ -721,6 +781,7 @@ export class XmppTransport {
     })
     addField(iq, 'location', 'geoloc')
     location!.addToIQ(iq)
+    console.log('IQ:', iq.toString())
     await this.sendIQ(iq)
   }
   async loadBot(id: string, server: any) {
@@ -794,19 +855,26 @@ export class XmppTransport {
     }
     await this.sendIQ(iq)
   }
-  async subscribeBot(id: string) {
-    const iq = $iq({type: 'set', to: this.host}).c('subscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
+  async subscribeBot(id: string, geofence: boolean = false) {
+    const iq = $iq({type: 'set', to: this.host})
+      .c('subscribe', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
+      .c('geofence')
+      .t(geofence.toString())
     const data = await this.sendIQ(iq)
+    console.log('after sending subscribeBot', data.subscriber_count)
     return parseInt(data['subscriber_count'])
   }
-  async unsubscribeBot(id: string) {
-    const iq = $iq({type: 'set', to: this.host}).c('unsubscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
+  async unsubscribeBot(id: string, geofence: boolean = false) {
+    const iq = $iq({type: 'set', to: this.host})
+      .c('unsubscribe', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
+      .c('geofence')
+      .t(geofence.toString())
     const data = await this.sendIQ(iq)
     return parseInt(data['subscriber_count'])
   }
@@ -954,7 +1022,7 @@ function addField(iq: any, name: string, type: string) {
 
 function addValue(iq: any, name: string, value: any) {
   if (value !== undefined && value !== null) {
-    const type = typeof value === 'number' ? 'int' : 'string'
+    const type = typeof value === 'number' ? 'int' : typeof value === 'boolean' ? 'bool' : 'string'
     addField(iq, name, type)
     iq
       .c('value')

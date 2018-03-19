@@ -50,7 +50,7 @@ export function createPaginable(type: any) {
         actions: {
           setRequest: (req: Function) => (request = req),
           exists: (id: string): boolean => {
-            return self.result.find((el: any) => el.id === id) !== null
+            return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
           },
           remove: (id: string) => {
             const index = self.result.findIndex((el: any) => el.id === id)

@@ -283,6 +283,16 @@ export const Wocky = types
       const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
+    _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+    }),
+    _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+    }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadBotPosts(id, before)
@@ -314,13 +324,13 @@ export const Wocky = types
       const botId = parent.id
       yield self.transport.publishBotPost(botId, post)
     }),
-    _subscribeBot: flow(function*(id: string) {
+    _subscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
-      return yield self.transport.subscribeBot(id)
+      return yield self.transport.subscribeBot(id, geofence)
     }),
-    _unsubscribeBot: flow(function*(id: string) {
+    _unsubscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
-      return yield self.transport.unsubscribeBot(id)
+      return yield self.transport.unsubscribeBot(id, geofence)
     }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield waitFor(() => self.connected)
@@ -404,6 +414,7 @@ export const Wocky = types
           }
           return
         }
+        if (!self.events.exists(data.id)) return
       }
       if (changed && data.bot) {
         yield self.loadBot(data.bot.id, data.bot.server)
