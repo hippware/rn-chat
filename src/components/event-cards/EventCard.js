@@ -27,9 +27,10 @@ export default class EventCard extends React.Component<Props> {
 
   render() {
     const row = this.props.item;
-    const CardClass = eventCardMap[getType(row).name];
     let profile;
+    let CardClass
     try {
+      CardClass = eventCardMap[getType(row).name];
       // TODO: deleted bot throws an error here trying to generate a profile from a bad id
       profile = row.target;
       if (!profile || !profile.id) {
@@ -40,7 +41,7 @@ export default class EventCard extends React.Component<Props> {
       return null;
     }
 
-    return (
+    return CardClass && (
       <Card
         key={row.id}
         onPress={() => this.card.onPress && this.card.onPress()}
