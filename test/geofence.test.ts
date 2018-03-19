@@ -24,14 +24,17 @@ describe('Geofence', () => {
   })
 
   it('creates a geofence bot', async done => {
-    bot = await user1.createBot()
-    bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
-    await waitFor(() => bot.updated)
-    // console.log('bot updated', bot.toJSON())
-    expect(bot.geofence).to.be.true
-    expect(bot.visitorsSize).to.equal(0)
-    expect(bot.guestsSize).to.equal(0)
-    done()
+    try {
+      bot = await user1.createBot()
+      await bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
+      // console.log('bot updated', bot.toJSON())
+      expect(bot.geofence).to.be.true
+      expect(bot.visitorsSize).to.equal(0)
+      expect(bot.guestsSize).to.equal(0)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('loads guests', async done => {

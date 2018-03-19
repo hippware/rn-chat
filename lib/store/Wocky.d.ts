@@ -27515,6 +27515,7 @@ export declare const Wocky: IModelType<{
     _loadOwnBots: (a1: string) => Promise<any>;
     _loadBotSubscribers: (a1: string) => Promise<any>;
     _loadBotGuests: (a1: string) => Promise<any>;
+    _loadBotVisitors: (a1: string) => Promise<any>;
     _loadBotPosts: (a1: string) => Promise<any>;
     _loadSubscribedBots: (a1: string) => Promise<any>;
     _updateBot: (a1: {

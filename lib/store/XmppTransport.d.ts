@@ -90,6 +90,10 @@ export declare class XmppTransport {
         list: any;
         count: number;
     }>;
+    loadBotVisitors(id: string, lastId?: string, max?: number): Promise<{
+        list: any;
+        count: number;
+    }>;
     loadBotPosts(id: string, before?: string): Promise<{
         count: number;
         list: any;

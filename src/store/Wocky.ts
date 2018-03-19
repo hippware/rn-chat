@@ -288,6 +288,11 @@ export const Wocky = types
       const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
+    _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+    }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadBotPosts(id, before)
@@ -407,6 +412,10 @@ export const Wocky = types
             self.updates.splice(existed, 1)
             existed = self.updates.findIndex((u: any) => u.id === data.id)
           }
+          return
+        }
+        let existedEvent = self.events.list.findIndex((u: any) => isAlive(u) && u.id === data.id)
+        if (existedEvent === -1) {
           return
         }
       }

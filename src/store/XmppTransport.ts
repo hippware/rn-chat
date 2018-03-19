@@ -654,6 +654,35 @@ export class XmppTransport {
     // return {list, count: parseInt(data.guests.set.count)}
     return {list, count: parseInt(arr.length)}
   }
+  async loadBotVisitors(id: string, lastId?: string, max: number = 10) {
+    // console.log('loadBotGuests', id, lastId, max)
+    const iq = $iq({type: 'get', to: this.host}).c('visitors', {
+      xmlns: BOT_NS,
+      node: `bot/${id}`
+    })
+
+    // TODO: RSM?
+    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+    // .up()
+    // .c('max')
+    // .t(max.toString())
+    // .up()
+    // if (lastId) {
+    //   iq
+    //     .c('after')
+    //     .t(lastId!)
+    //     .up()
+    // }
+
+    const data = await this.sendIQ(iq)
+    let arr = data.guests.guest || []
+    if (!isArray(arr)) {
+      arr = [arr]
+    }
+    const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
+    // return {list, count: parseInt(data.guests.set.count)}
+    return {list, count: parseInt(arr.length)}
+  }
   async loadBotPosts(id: string, before?: string) {
     const iq = $iq({type: 'get', to: this.host})
       .c('query', {xmlns: BOT_NS, node: `bot/${id}`})
@@ -752,6 +781,7 @@ export class XmppTransport {
     })
     addField(iq, 'location', 'geoloc')
     location!.addToIQ(iq)
+    console.log('IQ:', iq.toString())
     await this.sendIQ(iq)
   }
   async loadBot(id: string, server: any) {
