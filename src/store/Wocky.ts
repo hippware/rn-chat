@@ -414,10 +414,7 @@ export const Wocky = types
           }
           return
         }
-        let existedEvent = self.events.list.findIndex((u: any) => isAlive(u) && u.id === data.id)
-        if (existedEvent === -1) {
-          return
-        }
+        if (!self.events.exists(data.id)) return
       }
       if (changed && data.bot) {
         yield self.loadBot(data.bot.id, data.bot.server)
