@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-xmpp/RNXMPP/XMPPXOAuth2Wocky.h
