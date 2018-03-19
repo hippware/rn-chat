@@ -188,6 +188,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "error": "",
                       "followersSize": 0,
                       "geofence": false,
+                      "guest": false,
                       "guests": Object {
                         "count": null,
                         "result": Array [],
@@ -196,7 +197,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "id": "4321",
                       "image": null,
                       "isSubscribed": false,
-                      "isSubscribedGeofence": false,
                       "location": Object {
                         "accuracy": 5,
                         "latitude": 5,
@@ -216,6 +216,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "title": "title",
                       "totalItems": 0,
                       "visibility": 100,
+                      "visitor": false,
                       "visitors": Object {
                         "count": null,
                         "result": Array [],
@@ -265,6 +266,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "error": "",
                         "followersSize": 0,
                         "geofence": false,
+                        "guest": false,
                         "guests": Object {
                           "count": null,
                           "result": Array [],
@@ -273,7 +275,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "id": "4321",
                         "image": null,
                         "isSubscribed": false,
-                        "isSubscribedGeofence": false,
                         "location": Object {
                           "accuracy": 5,
                           "latitude": 5,
@@ -293,6 +294,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "title": "title",
                         "totalItems": 0,
                         "visibility": 100,
+                        "visitor": false,
                         "visitors": Object {
                           "count": null,
                           "result": Array [],

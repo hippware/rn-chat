@@ -60,19 +60,17 @@ class BotButtons extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = autorun(() => {
-      if (this.props.wocky.connected && this.props.bot.geofence && this.props.bot.isSubscribedGeofence) {
+      if (this.props.wocky.connected && this.props.bot.geofence && this.props.bot.guest) {
         if (!this.props.locationStore.alwaysOn) {
           Actions.geofenceWarning({bot: this.props.bot});
           this.props.bot.unsubscribe(true);
-        } else {
-          this.props.bot.subscribe(true);
         }
       }
     });
   }
 
   componentWillUnmount() {
-    this.handler();
+   this.handler();
   }
 
   render() {
@@ -109,7 +107,7 @@ const ShareButton = ({bot}) => (
 
 const GeofenceButton = observer(({bot, style}: Props) => {
   let onPress, buttonStyle, image;
-  if (bot.isSubscribedGeofence) {
+  if (bot.guest) {
     onPress = () => bot.unsubscribe(true);
     buttonStyle = [style, {marginRight: 10 * k}];
     image = require('../../../images/whiteFoot.png');

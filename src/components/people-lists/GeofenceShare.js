@@ -36,8 +36,7 @@ class GeofenceShare extends React.Component<Props> {
   share = () => {
     const shareSelect = GeofenceShare.selection.selected.map(sp => sp.id);
     try {
-      alert('TODO: geofence share (need server-side functionality)');
-      // this.bot.share(shareSelect, this.state.message, 'headline');
+      this.bot.share(shareSelect, '', 'geofence');
       const num = shareSelect.length;
       this.props.notificationStore.flash(`Presence shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
       Actions.pop({animated: false});
