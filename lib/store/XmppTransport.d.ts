@@ -105,8 +105,8 @@ export declare class XmppTransport {
     removeBotPost(id: string, postId: string): Promise<void>;
     shareBot(id: string, server: string, recepients: string[], message: string, type: string): void;
     publishBotPost(botId: string, post: any): Promise<void>;
-    subscribeBot(id: string, geofence: boolean): Promise<number>;
-    unsubscribeBot(id: string): Promise<number>;
+    subscribeBot(id: string, geofence?: boolean): Promise<number>;
+    unsubscribeBot(id: string, geofence?: boolean): Promise<number>;
     loadUpdates(ver: string): Promise<{
         list: any;
         version: any;

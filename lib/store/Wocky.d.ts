@@ -228,7 +228,8 @@ export declare const EventEntity: IType<({
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -1207,7 +1208,8 @@ export declare const EventEntity: IType<({
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -2012,7 +2014,8 @@ export declare const EventEntity: IType<({
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -3133,7 +3136,8 @@ export declare const EventEntity: IType<({
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -3938,7 +3942,8 @@ export declare const EventEntity: IType<({
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -5156,7 +5161,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -6292,7 +6298,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -7271,7 +7278,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -8076,7 +8084,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -9197,7 +9206,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -10002,7 +10012,8 @@ export declare const Wocky: IModelType<{
         } & {
             id: string;
             isSubscribed: boolean;
-            isSubscribedGeofence: boolean;
+            guest: boolean;
+            visitor: boolean;
             title: string | null;
             server: string | null;
             radius: number;
@@ -11161,7 +11172,8 @@ export declare const Wocky: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -26496,7 +26508,8 @@ export declare const Wocky: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -27017,7 +27030,8 @@ export declare const Wocky: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -27528,7 +27542,8 @@ export declare const Wocky: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
@@ -28186,7 +28201,7 @@ export declare const Wocky: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => Promise<any>;
-    _subscribeBot: (a1: string, a2: boolean) => Promise<any>;
+    _subscribeBot: (a1: string) => Promise<any>;
     _unsubscribeBot: (a1: string) => Promise<any>;
     geosearch: (a1: any) => Promise<any>;
     _loadRelations: (a1: string) => Promise<any>;

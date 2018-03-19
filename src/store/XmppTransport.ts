@@ -731,7 +731,7 @@ export class XmppTransport {
     return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
   }
   async updateBot(bot: any) {
-    const {title, image, description, address, location, visibility, radius, id, addressData} = bot
+    const {title, image, description, address, location, visibility, geofence, radius, id, addressData} = bot
     const iq = bot.isNew
       ? $iq({type: 'set'}).c('create', {xmlns: BOT_NS})
       : $iq({type: 'set'}).c('fields', {
@@ -744,6 +744,7 @@ export class XmppTransport {
       title,
       address_data: JSON.stringify(addressData),
       description,
+      geofence,
       radius: Math.round(radius),
       address,
       image,
@@ -824,27 +825,26 @@ export class XmppTransport {
     }
     await this.sendIQ(iq)
   }
-  async subscribeBot(id: string, geofence: boolean) {
-    const iq = $iq({type: 'set', to: this.host}).c('subscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
-
-    if (geofence) {
-      iq
-        .c('geofence')
-        .t('true')
-        .up()
-    }
+  async subscribeBot(id: string, geofence: boolean = false) {
+    const iq = $iq({type: 'set', to: this.host})
+      .c('subscribe', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
+      .c('geofence')
+      .t(geofence.toString())
     const data = await this.sendIQ(iq)
     console.log('after sending subscribeBot', data.subscriber_count)
     return parseInt(data['subscriber_count'])
   }
-  async unsubscribeBot(id: string) {
-    const iq = $iq({type: 'set', to: this.host}).c('unsubscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
+  async unsubscribeBot(id: string, geofence: boolean = false) {
+    const iq = $iq({type: 'set', to: this.host})
+      .c('unsubscribe', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
+      .c('geofence')
+      .t(geofence.toString())
     const data = await this.sendIQ(iq)
     return parseInt(data['subscriber_count'])
   }
@@ -992,7 +992,7 @@ function addField(iq: any, name: string, type: string) {
 
 function addValue(iq: any, name: string, value: any) {
   if (value !== undefined && value !== null) {
-    const type = typeof value === 'number' ? 'int' : 'string'
+    const type = typeof value === 'number' ? 'int' : typeof value === 'boolean' ? 'bool' : 'string'
     addField(iq, name, type)
     iq
       .c('value')

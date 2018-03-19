@@ -319,13 +319,13 @@ export const Wocky = types
       const botId = parent.id
       yield self.transport.publishBotPost(botId, post)
     }),
-    _subscribeBot: flow(function*(id: string, geofence: boolean) {
+    _subscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
       return yield self.transport.subscribeBot(id, geofence)
     }),
-    _unsubscribeBot: flow(function*(id: string) {
+    _unsubscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
-      return yield self.transport.unsubscribeBot(id)
+      return yield self.transport.unsubscribeBot(id, geofence)
     }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield waitFor(() => self.connected)

@@ -189,7 +189,8 @@ export declare const EventBotGeofence: IModelType<{
     } & {
         id: string;
         isSubscribed: boolean;
-        isSubscribedGeofence: boolean;
+        guest: boolean;
+        visitor: boolean;
         title: string | null;
         server: string | null;
         radius: number;
