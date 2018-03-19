@@ -72,7 +72,7 @@ export function processMap(data: {[key: string]: any}) {
       if (value && value !== 'null' && key !== 'field') {
         if (key === 'roles') {
           res.roles = isArray(data.roles.role) ? data.roles.role : [data.roles.role]
-        } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
+        } else if (['followers', 'bots', 'followed', 'guests', 'visitors'].indexOf(key) !== -1) {
           res[key + 'Size'] = parseInt(data[key].size)
         } else if (data[key].thumbnail_url !== undefined) {
           // we have image here!
@@ -81,6 +81,12 @@ export function processMap(data: {[key: string]: any}) {
           }
         } else if (key === 'subscribed') {
           res.isSubscribed = value === 'true'
+        } else if (key === 'geofence') {
+          res.geofence = value === 'true'
+        } else if (key === 'guest') {
+          res.guest = value === 'true'
+        } else if (key === 'visitor') {
+          res.visitor = value === 'true'
         } else if (key === 'owner') {
           res.owner = Strophe.getNodeFromJid(value)
         } else if (key === 'subscribers') {
