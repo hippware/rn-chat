@@ -5,6 +5,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* BotDetails: dead bot (#1994)
+* GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
+* GEOFENCE v1: Geofence Bot Profile (Owner View) (#1911)
+* GEOFENCE v1: HS Geofence Share Notification (#1921)
+
+
+# 2.1.7, 2.1.8 - 2018 March 19
+
+* Fix bugsnags:
+  * Dead bot reference in EventCard (#1999)
+  * Same dead bot (#2000)
+
+
 # 2.1.6 - 2018 March 16
 
 * Handle bot geofence boolean field.
@@ -24,7 +37,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 2.1.4 - 2018 March 13
 
-**Geofence UI disabled**
+**Geofence UI disabled for Production**
 
 * Light refactoring on BotDetails (PR #1970)
 * GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
@@ -36,7 +49,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Keyboard disappears with Next button on My Account/Settings (#1942)
 * INVITE FRIENDS: CTA on Share Bot screen (#1766)
 * Unblocked Users: Kill/reload puts unblocked users back in Blocked Users list (#1960)
-* Temporarily comment out geofence UI (#1976)
+* Temporarily disable geofence UI for Production (#1976)
 * New User: Constant Offline State (#1946)
 * Kill/reload required to remove deleted bot from the Saved Bot list (#1962)
 * Bot List Redesign: Decluttering (#1972)
