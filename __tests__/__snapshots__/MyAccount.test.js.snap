@@ -57,15 +57,24 @@ exports[`MyAccount renders 1`] = `
           "bottom": 0,
         }
       }
-      enableAutoAutomaticScroll={true}
+      enableAutomaticScroll={true}
       enableResetScrollToCoords={true}
       extraHeight={75}
       extraScrollHeight={0}
+      getScrollResponder={[Function]}
+      handleOnScroll={[Function]}
       keyboardDismissMode="interactive"
       keyboardOpeningTime={250}
+      keyboardSpace={0}
       onScroll={[Function]}
-      scrollEventThrottle={0}
+      resetKeyboardSpace={[Function]}
+      scrollEventThrottle={1}
+      scrollForExtraHeightOnAndroid={[Function]}
+      scrollToEnd={[Function]}
+      scrollToFocusedInput={[Function]}
+      scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
+      viewIsInsideTabBar={false}
     >
       <View>
         <View

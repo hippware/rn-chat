@@ -9,15 +9,23 @@ exports[`SignIn renders 1`] = `
       "bottom": 0,
     }
   }
-  enableAutoAutomaticScroll={true}
+  enableAutomaticScroll={true}
   enableResetScrollToCoords={true}
   extraHeight={75}
   extraScrollHeight={0}
+  getScrollResponder={[Function]}
+  handleOnScroll={[Function]}
   keyboardDismissMode="interactive"
   keyboardOpeningTime={250}
   keyboardShouldPersistTaps="always"
+  keyboardSpace={0}
   onScroll={[Function]}
-  scrollEventThrottle={0}
+  resetKeyboardSpace={[Function]}
+  scrollEventThrottle={1}
+  scrollForExtraHeightOnAndroid={[Function]}
+  scrollToEnd={[Function]}
+  scrollToFocusedInput={[Function]}
+  scrollToPosition={[Function]}
   showsVerticalScrollIndicator={true}
   style={
     Object {
@@ -25,6 +33,7 @@ exports[`SignIn renders 1`] = `
       "flex": 1,
     }
   }
+  viewIsInsideTabBar={false}
 >
   <View>
     <View
