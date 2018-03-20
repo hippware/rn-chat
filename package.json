@@ -26,9 +26,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"],
     "globalSetup": "./__tests__/utils/setupJest.js"
   },
   "detox": {
@@ -92,7 +90,7 @@
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-tab-view": "^0.0.73",
-    "react-native-xmpp": "1.0.1",
+    "react-native-xmpp": "github:hippware/react-native-xmpp#73deb74834989ae39a06fcaa0b413370b3f1cd23",
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
