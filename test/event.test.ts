@@ -9,7 +9,15 @@ import {EventBotPost} from '../src/model/EventBotPost'
 import {Storages} from '../src/store/Factory'
 import {homestreamTestData} from './support/testuser'
 const env = {
-  wocky: {_loadSubscribedBots: () => {}, _loadBotSubscribers: () => {}, _loadBotPosts: () => {}, _loadRelations: () => {}, _loadOwnBots: () => {}}
+  wocky: {
+    _loadBotVisitors: () => {},
+    _loadBotGuests: () => {},
+    _loadSubscribedBots: () => {},
+    _loadBotSubscribers: () => {},
+    _loadBotPosts: () => {},
+    _loadRelations: () => {},
+    _loadOwnBots: () => {}
+  }
 }
 
 const TestModel = types.compose(

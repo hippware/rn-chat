@@ -284,14 +284,20 @@ export const Wocky = types
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
+      // yield waitFor(() => self.connected)
+      // const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
+      // return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
+      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+      // yield waitFor(() => self.connected)
+      // const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+      // return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)

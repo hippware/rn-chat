@@ -38,8 +38,9 @@ describe('Geofence', () => {
   })
 
   it('loads guests', async done => {
-    await bot.guests.load()
-    // console.log('guests loaded', bot.toJSON())
+    const loadedBot = await user1.loadBot(bot.id, null)
+    expect(loadedBot.guestsSize).to.equal(1)
+    expect(loadedBot.guest).to.equal(true)
     done()
   })
 
