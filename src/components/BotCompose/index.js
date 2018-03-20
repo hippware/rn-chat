@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Alert, TouchableOpacity, Image} from 'react-native';
+import {Alert, Keyboard, TouchableOpacity, Image} from 'react-native';
 import {observer, inject, Provider} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {isAlive} from 'mobx-state-tree';
@@ -61,10 +61,25 @@ class BotCompose extends React.Component<Props> {
   };
 
   componentWillMount() {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     if (this.props.botId) {
       this.bot = this.props.wocky.getBot({id: this.props.botId});
     }
   }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow = ({endCoordinates, startCoordinates}) => {
+    setTimeout(() => (this.keyboardHeight = startCoordinates.screenY - endCoordinates.screenY));
+  };
+
+  _keyboardDidHide = () => {
+    this.keyboardHeight = 0;
+  };
 
   save = async () => {
     const {bot} = this;
@@ -98,11 +113,6 @@ class BotCompose extends React.Component<Props> {
     }
   };
 
-  setKeyboardHeight = (frames) => {
-    // TODO: more elegant solution...maybe animate the save button position instead of a hard switch?
-    setTimeout(() => (this.keyboardHeight = frames.endCoordinates.height), frames.duration);
-  };
-
   scrollToNote = () => {
     if (this.bot.description === '') this.controls.focus();
   };
@@ -119,7 +129,7 @@ class BotCompose extends React.Component<Props> {
     return (
       <Provider bot={bot}>
         <Screen>
-          <KeyboardAwareScrollView style={{marginBottom: 50 * k}} onKeyboardWillShow={this.setKeyboardHeight} onKeyboardWillHide={() => (this.keyboardHeight = 0)}>
+          <KeyboardAwareScrollView style={{marginBottom: 50 * k}}>
             <BotComposeMap afterPhotoPost={this.scrollToNote} />
             <ComposeCard edit={edit} titleBlurred={titleBlurred} />
             <EditControls ref={r => (this.controls = r)} />

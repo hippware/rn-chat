@@ -10,5 +10,18 @@ import AddFriendByUsername from './AddFriendByUsername';
 import BotShareSelectFriends from './BotShareSelectFriends';
 import ProfileList from './ProfileList';
 import GeofenceShare from './GeofenceShare';
+import BotVisitorList from './BotVisitorList';
 
-export {FollowersList, FollowedList, SearchUsers, BlockedList, FriendListScene, AddFriendByUsername, BotSubscriberList, BotShareSelectFriends, ProfileList, GeofenceShare};
+export {
+  BotVisitorList,
+  FollowersList,
+  FollowedList,
+  SearchUsers,
+  BlockedList,
+  FriendListScene,
+  AddFriendByUsername,
+  BotSubscriberList,
+  BotShareSelectFriends,
+  ProfileList,
+  GeofenceShare,
+};
