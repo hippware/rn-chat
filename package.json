@@ -26,9 +26,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"],
     "globalSetup": "./__tests__/utils/setupJest.js"
   },
   "detox": {
@@ -79,7 +77,7 @@
     "react-native-firebase": "^3.1.1",
     "react-native-fs": "^2.8.5",
     "react-native-image-crop-picker": "^0.18.1",
-    "react-native-keyboard-aware-scroll-view": "^0.3.0",
+    "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-linear-gradient": "^2.3.0",
     "react-native-maps": "github:hippware/react-native-maps#ed822d90b6b006008a739b2b5a8574e01732c6a7",
     "react-native-message-bar": "^2.0.7",
@@ -92,12 +90,12 @@
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-tab-view": "^0.0.73",
-    "react-native-xmpp": "1.0.1",
+    "react-native-xmpp": "github:hippware/react-native-xmpp#73deb74834989ae39a06fcaa0b413370b3f1cd23",
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#32bd9c01afa1c08aad899cd046779306ca689102",
+    "wocky-client": "github:hippware/wocky-client#0be36e13255dddd001225e966fae9ed8dd3d7ac1",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {

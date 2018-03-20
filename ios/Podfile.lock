@@ -128,7 +128,7 @@ PODS:
     - React
   - RNFirebase (3.1.1):
     - React
-  - RNXMPP (1.0.1):
+  - RNXMPP (1.1.2):
     - React
     - XMPPFramework
   - RSKImageCropper (1.6.3)
@@ -389,7 +389,7 @@ SPEC CHECKSUMS:
   RNBackgroundFetch: 07b96a101ead2be5270f27e4228e7f1a17477e4a
   RNBackgroundGeolocation: f039e6d112ac67a79dd762e700a103315bdf2ad2
   RNFirebase: 30522211772f22affff6f3a61981110852d2668b
-  RNXMPP: 7e56c1b4dc992d7b0ce62479308c1883cd467f9b
+  RNXMPP: 02fb20ff6e68e8194a2b8a9459f4ea10984f7064
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   yoga: 36cb943786c0587f19094c593b5683074d679c46

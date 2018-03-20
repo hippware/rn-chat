@@ -2,7 +2,7 @@
 
 import React from 'react';
 import * as log from '../../utils/log';
-import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
+import {View, Animated, Alert, Image, TouchableOpacity, StyleSheet, Clipboard} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {k, width, height} from '../Global';
 import {colors} from '../../constants';
@@ -123,14 +123,16 @@ class BotDetailsHeader extends React.Component<Props, State> {
 const GeofenceCTA = observer(({bot}) => (
   <View style={{flexDirection: 'row'}}>
     <Image source={require('../../../images/footOpaquePink.png')} style={{width: 26, height: 34}} />
-    <View style={{marginLeft: 10 * k}}>
-      <RText color={colors.PINK} size={15}>
-        See Who's Here
-      </RText>
-      <RText color={colors.DARK_GREY} size={12}>
-        7 people
-      </RText>
-    </View>
+    <TouchableOpacity onPress={() => Actions.visitors({item: bot.id})}>
+      <View style={{marginLeft: 10 * k}}>
+        <RText color={colors.PINK} size={15}>
+          See Who's Here
+        </RText>
+        <RText color={colors.DARK_GREY} size={12}>
+          {bot.visitorsSize} people
+        </RText>
+      </View>
+    </TouchableOpacity>
   </View>
 ));
 
