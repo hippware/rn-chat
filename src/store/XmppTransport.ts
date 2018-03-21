@@ -46,6 +46,7 @@ export class XmppTransport {
     provider.onDisconnected = () => (this.connected = false)
     provider.onIQ = (iq: any) => {
       this.iq = iq
+      // console.log('ON IQ:', JSON.stringify(iq))
       try {
         if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid) {
           this.rosterItem = processRosterItem(iq.query.item, this.host)
@@ -174,6 +175,7 @@ export class XmppTransport {
       data.tree().setAttribute('from', `${this.username!}@${this.host}`)
     }
     const id = data.tree().getAttribute('id')
+    // console.log('SEND IQ:', data.toString())
     this.provider.sendIQ(data)
     return await new Promise((resolve, reject) =>
       when(
@@ -617,7 +619,6 @@ export class XmppTransport {
         .up()
     }
     const data = await this.sendIQ(iq)
-    console.log('subscribers', data)
     let arr = data.subscribers.subscriber || []
     if (!isArray(arr)) {
       arr = [arr]
@@ -627,23 +628,23 @@ export class XmppTransport {
   }
   async loadBotGuests(id: string, lastId?: string, max: number = 10) {
     // console.log('loadBotGuests', id, lastId, max)
-    const iq = $iq({type: 'get', to: this.host}).c('guests', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
+    const iq = $iq({type: 'get', to: this.host})
+      .c('guests', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
 
-    // TODO: RSM?
-    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-    // .up()
-    // .c('max')
-    // .t(max.toString())
-    // .up()
-    // if (lastId) {
-    //   iq
-    //     .c('after')
-    //     .t(lastId!)
-    //     .up()
-    // }
+      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .up()
+      .c('max')
+      .t(max.toString())
+      .up()
+    if (lastId) {
+      iq
+        .c('after')
+        .t(lastId!)
+        .up()
+    }
 
     const data = await this.sendIQ(iq)
     let arr = data.guests.guest || []
@@ -781,7 +782,6 @@ export class XmppTransport {
     })
     addField(iq, 'location', 'geoloc')
     location!.addToIQ(iq)
-    console.log('IQ:', iq.toString())
     await this.sendIQ(iq)
   }
   async loadBot(id: string, server: any) {
@@ -864,7 +864,6 @@ export class XmppTransport {
       .c('geofence')
       .t(geofence.toString())
     const data = await this.sendIQ(iq)
-    console.log('after sending subscribeBot', data.subscriber_count)
     return parseInt(data['subscriber_count'])
   }
   async unsubscribeBot(id: string, geofence: boolean = false) {

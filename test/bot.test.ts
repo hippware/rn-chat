@@ -203,10 +203,14 @@ describe('BotStore', () => {
     }
   })
   it('change first bot and verify updating for second user', async done => {
-    expect(user2bot.title).to.be.equal('Test bot!')
-    await bot.update({title: 'Test bot!!'})
-    await waitFor(() => user2bot.title === 'Test bot!!')
-    done()
+    try {
+      expect(user2bot.title).to.be.equal('Test bot!')
+      await bot.update({title: 'Test bot!!'})
+      await waitFor(() => user2bot.title === 'Test bot!!')
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
   it('change first bot description and expect new item update', async done => {
     try {

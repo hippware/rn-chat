@@ -48,12 +48,20 @@ export const Bot = types
     })
   )
   .volatile(self => ({
-    isNew: false
+    isNew: false,
+    loading: false
   }))
   .named('Bot')
   .actions(self => ({
     setError: (value: string) => {
       self.error = value
+      self.loading = false
+    },
+    startLoading() {
+      self.loading = true
+    },
+    finishLoading() {
+      self.loading = false
     },
     setGeofence: (value: boolean) => {
       self.geofence = value
@@ -90,6 +98,11 @@ export const Bot = types
       self.service.profile!.subscribedBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id, geofence)
     }),
+    subscribeGeofence: flow(function*() {
+      self.isSubscribed = true
+      self.guest = true
+      yield self.service._subscribeGeofenceBot(self.id)
+    }),
     unsubscribe: flow(function*(geofence: boolean = false) {
       if (geofence) {
         self.guest = false
@@ -98,6 +111,10 @@ export const Bot = types
       }
       self.service.profile!.subscribedBots.remove(self.id)
       self.followersSize = yield self.service._unsubscribeBot(self.id, geofence)
+    }),
+    unsubscribeGeofence: flow(function*() {
+      self.guest = false
+      yield self.service._unsubscribeGeofenceBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', type = 'headline') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)

@@ -249,13 +249,20 @@ export const Wocky = types
     }),
     loadBot: flow(function*(id: string, server: any) {
       yield waitFor(() => self.connected)
-      let bot
-      try {
-        bot = yield self.transport.loadBot(id, server)
-      } catch (e) {
-        bot = {id, server, error: JSON.stringify(e)}
+      const bot = self.getBot({id, server})
+      if (!bot.loading) {
+        try {
+          bot.startLoading()
+          const data = yield self.transport.loadBot(id, server)
+          self.load(bot, data)
+        } catch (e) {
+          console.error(e)
+          bot.setError(JSON.stringify(e))
+        } finally {
+          bot.finishLoading()
+        }
       }
-      return self.getBot(bot)
+      return bot
     }),
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
@@ -284,20 +291,14 @@ export const Wocky = types
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
-      // yield waitFor(() => self.connected)
-      // const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
-      // return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
+      const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
+      const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
       return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
-      // yield waitFor(() => self.connected)
-      // const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
-      // return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
@@ -312,6 +313,7 @@ export const Wocky = types
     _updateBot: flow(function*(bot: IBot) {
       yield waitFor(() => self.connected)
       yield self.transport.updateBot(bot)
+      // subscribe owner to his bot
       self.profile!.ownBots.addToTop(bot)
       self.profiles.get(self.username!)!.ownBots.addToTop(bot)
       return {isNew: false}
@@ -330,9 +332,17 @@ export const Wocky = types
       const botId = parent.id
       yield self.transport.publishBotPost(botId, post)
     }),
+    _subscribeGeofenceBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
+      return yield self.transport.subscribeBot(id, true)
+    }),
     _subscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
       return yield self.transport.subscribeBot(id, geofence)
+    }),
+    _unsubscribeGeofenceBot: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
+      return yield self.transport.subscribeBot(id, false)
     }),
     _unsubscribeBot: flow(function*(id: string, geofence: boolean = false) {
       yield waitFor(() => self.connected)
@@ -402,6 +412,7 @@ export const Wocky = types
       self.transport.subscribeToHomestream(version)
     },
     _onNotification: flow(function*({changed, version, ...data}: any) {
+      // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
       if (!version) {
         console.error('No version for notification:', JSON.stringify(data))
       }

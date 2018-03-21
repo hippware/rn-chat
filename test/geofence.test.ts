@@ -1,11 +1,10 @@
 import {expect} from 'chai'
-import {createXmpp, testFile, expectedImage, waitFor} from './support/testuser'
+import {createXmpp, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
-const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
-let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
+let bot: IBot, loadedBot: IBot
 describe('Geofence', () => {
   before(async done => {
     try {
@@ -13,10 +12,10 @@ describe('Geofence', () => {
       user2 = await createXmpp(27)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
-      const profile1 = await user2.loadProfile(user1.username!)
-      await profile1.follow()
       await user1.profile!.update({handle: 'abcc3', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
       await user2.profile!.update({handle: 'abcc4', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
+      const profile1 = await user2.loadProfile(user1.username!)
+      await profile1.follow()
       done()
     } catch (e) {
       done(e)
@@ -37,15 +36,105 @@ describe('Geofence', () => {
     }
   })
 
-  it('loads guests', async done => {
-    const loadedBot = await user1.loadBot(bot.id, null)
-    expect(loadedBot.guestsSize).to.equal(1)
-    expect(loadedBot.guest).to.equal(true)
-    done()
+  it('loads own bot', async done => {
+    try {
+      const loadedBot2 = await user1.loadBot(bot.id, null)
+      await waitFor(() => !loadedBot2.loading)
+      expect(loadedBot2.guestsSize).to.equal(1)
+      expect(loadedBot2.guest).to.equal(true)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
-  // it('geofence subscribes', async done => {
-  //   await user2._subscribeBot(bot.id, true)
+  it('loads bot', async done => {
+    try {
+      loadedBot = await user2.loadBot(bot.id, null)
+      await waitFor(() => !loadedBot.loading)
+      expect(loadedBot.guestsSize).to.equal(1)
+      expect(loadedBot.guest).to.equal(false)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('geofence subscribes', async done => {
+    try {
+      await loadedBot.subscribeGeofence()
+      expect(loadedBot.guest).to.equal(true)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('loads bot again', async done => {
+    try {
+      loadedBot = await user2.loadBot(bot.id, null)
+      expect(loadedBot.guestsSize).to.equal(2)
+      expect(loadedBot.guest).to.equal(true)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('load bot guests', async done => {
+    try {
+      expect(bot.guests.length).to.equal(0)
+      await bot.guests.load()
+      expect(bot.guests.length).to.equal(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('geofence unsubscribe', async done => {
+    try {
+      await loadedBot.unsubscribeGeofence()
+      expect(loadedBot.guest).to.equal(false)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('load bot guests again', async done => {
+    try {
+      await bot.guests.refresh()
+      expect(bot.guests.length).to.equal(0)
+      await bot.guests.load()
+      expect(bot.guests.length).to.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  // it('geofence unsubscribe owner', async done => {
+  //   try {
+  //     const loadedBot2 = await user1.loadBot(bot.id, null)
+  //     await waitFor(() => !loadedBot2.loading)
+  //     expect(loadedBot2.guestsSize).to.equal(1)
+  //     expect(loadedBot2.guest).to.equal(true)
+  //     await loadedBot2.unsubscribeGeofence()
+  //     expect(loadedBot2.guest).to.equal(false)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+
+  // it('load bot guests again 2', async done => {
+  //   try {
+  //     await bot.guests.refresh()
+  //     expect(bot.guests.length).to.equal(0)
+  //     await bot.guests.load()
+  //     expect(bot.guests.length).to.equal(0)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
   //   user2.profile!.subscribedBots.refresh()
   //   await user2.profile!.subscribedBots.load()
   //   expect(user2.profile!.subscribedBots.list.length).to.be.equal(1)
@@ -61,13 +150,10 @@ describe('Geofence', () => {
 
   after('remove', async done => {
     try {
-      await user1.removeBot(bot2.id)
+      await user1.removeBot(loadedBot.id)
     } catch (e) {}
     try {
       await user1.removeBot(bot.id)
-    } catch (e) {}
-    try {
-      await user1.removeBot(bot3.id)
     } catch (e) {}
     try {
       await user1.remove()
