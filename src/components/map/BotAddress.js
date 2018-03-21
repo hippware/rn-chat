@@ -34,10 +34,12 @@ class BotAddress extends React.Component<Props> {
       async (location) => {
         const data = await this.props.geocodingStore.reverse(location);
         const {bot} = this.props;
-        if (!bot.title && data.isPlace) {
+        if (!bot.title && data && data.isPlace) {
           data.title = data.placeName;
         }
-        bot.load({addressData: data.meta, address: data.address});
+        if (data) {
+          bot.load({addressData: data.meta, address: data.address});
+        }
         const {latitude, longitude} = location;
         bot.location.load({latitude, longitude, isCurrent: false});
       },
