@@ -328,8 +328,11 @@ export declare const Bot: IModelType<{
     error: string;
 } & {
     isNew: boolean;
+    loading: boolean;
 } & {
     setError: (value: string) => void;
+    startLoading(): void;
+    finishLoading(): void;
     setGeofence: (value: boolean) => void;
     setPublic: (value: boolean) => void;
     afterAttach: () => void;
@@ -522,7 +525,9 @@ export declare const Bot: IModelType<{
     }>;
     removePost: (a1: string) => Promise<any>;
     subscribe: () => Promise<{}>;
+    subscribeGeofence: () => Promise<{}>;
     unsubscribe: () => Promise<{}>;
+    unsubscribeGeofence: () => Promise<{}>;
     share: (userIDs: string[], message?: string, type?: string) => void;
     setNew: (value: boolean) => void;
     load: (d?: any) => void;

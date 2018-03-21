@@ -652,37 +652,34 @@ export class XmppTransport {
       arr = [arr]
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
-    // return {list, count: parseInt(data.guests.set.count)}
-    return {list, count: parseInt(arr.length)}
+    return {list, count: parseInt(data.guests.set.count)}
   }
   async loadBotVisitors(id: string, lastId?: string, max: number = 10) {
-    // console.log('loadBotGuests', id, lastId, max)
-    const iq = $iq({type: 'get', to: this.host}).c('visitors', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`
-    })
+    const iq = $iq({type: 'get', to: this.host})
+      .c('visitors', {
+        xmlns: BOT_NS,
+        node: `bot/${id}`
+      })
 
-    // TODO: RSM?
-    // .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-    // .up()
-    // .c('max')
-    // .t(max.toString())
-    // .up()
-    // if (lastId) {
-    //   iq
-    //     .c('after')
-    //     .t(lastId!)
-    //     .up()
-    // }
+      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .up()
+      .c('max')
+      .t(max.toString())
+      .up()
+    if (lastId) {
+      iq
+        .c('after')
+        .t(lastId!)
+        .up()
+    }
 
     const data = await this.sendIQ(iq)
-    let arr = data.guests.guest || []
+    let arr = data.visitors.visitor || []
     if (!isArray(arr)) {
       arr = [arr]
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
-    // return {list, count: parseInt(data.guests.set.count)}
-    return {list, count: parseInt(arr.length)}
+    return {list, count: parseInt(data.visitors.set.count)}
   }
   async loadBotPosts(id: string, before?: string) {
     const iq = $iq({type: 'get', to: this.host})
