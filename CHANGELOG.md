@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.2.x ?
+
 * BotDetails: dead bot (#1994)
 * GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
 * GEOFENCE v1: Geofence Bot Profile (Owner View) (#1911)
