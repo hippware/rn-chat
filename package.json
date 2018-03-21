@@ -74,7 +74,7 @@
     "react-native-country-picker-modal": "github:hippware/react-native-country-picker-modal",
     "react-native-cube-transition": "github:hippware/react-native-cube-transition#eb50153a468d81666426d03ced937a52cafc886c",
     "react-native-device-info": "^0.12.1",
-    "react-native-firebase": "^3.1.1",
+    "react-native-firebase": "^3.3.1",
     "react-native-fs": "^2.8.5",
     "react-native-image-crop-picker": "^0.18.1",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
