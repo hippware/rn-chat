@@ -64,7 +64,7 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This application requires access to camera to work</string>
+	<string>This will let you take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This application requires location services to work</string>
 	<key>NSLocationAlwaysUsageDescription</key>

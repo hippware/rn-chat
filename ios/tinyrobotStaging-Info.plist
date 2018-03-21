@@ -89,7 +89,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>This application requires access to calendars to work</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This application requires access to camera to work</string>
+	<string>This will let you take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
