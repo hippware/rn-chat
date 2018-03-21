@@ -42,7 +42,7 @@ class Onboarding extends React.Component<{}> {
   }
 }
 
-const BG_IMG_RATIO = 433 / 375;
+const BG_IMG_RATIO = 667 / 375; // height / width of background images
 const FLEX = 55;
 
 const Slide = ({bgImg, iconImg, left, center, children}) => {
