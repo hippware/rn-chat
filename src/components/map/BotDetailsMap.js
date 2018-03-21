@@ -17,7 +17,7 @@ const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
   return (
     <Map
       location={bot ? {...bot.location} : null}
-      geofence={bot && bot.guest}
+      geofence={bot && bot.geofence}
       showOnlyBot
       showUser={fullMap}
       fullMap={fullMap}
