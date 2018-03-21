@@ -10,7 +10,7 @@ import {isAlive} from 'mobx-state-tree';
 import {Actions} from 'react-native-router-flux';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import * as log from '../../utils/log';
-import RText from '../common/RText';
+import {RText, Spinner} from '../common';
 import BotMarker from './BotMarker';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 import {colors} from '../../constants/index';
@@ -79,7 +79,7 @@ export default class Map extends Component<Props> {
 
     bots
       .filter(bot => bot.geofence)
-      .map(bot => <Geofence coords={{...bot.location}} key={bot.id + 'circle'} />)
+      .map(bot => <Geofence coords={{...bot.location}} key={`${bot.id}circle`} />)
       .forEach(rec => res.push(rec));
     return res;
   }
@@ -244,7 +244,11 @@ export default class Map extends Component<Props> {
     const currentLoc = locationStore.location;
     const coords = location || currentLoc;
     if (!coords || !coords.latitude) {
-      return <RText>Please enable location</RText>;
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Spinner />
+        </View>
+      );
     }
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
