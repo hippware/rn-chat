@@ -6,8 +6,8 @@ import Swiper from 'react-native-swiper';
 import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {settings} from '../globals';
-import {k} from './Global';
 import {TouchableOpTrack, RText} from './common';
+import {width, height, k} from './Global';
 
 const bg1 = require('../../images/slide1.png');
 const footprints = require('../../images/foot.png');
@@ -15,13 +15,16 @@ const bg2 = require('../../images/slide2.png');
 const discover = require('../../images/discover.png');
 const bg3 = require('../../images/slide3.png');
 const explore = require('../../images/magnifinder.png');
+const maskLeft = require('../../images/maskLeft.png');
+const maskCenter = require('../../images/maskCenter.png');
+const maskRight = require('../../images/maskRight.png');
 
 class Onboarding extends React.Component<{}> {
   render() {
     // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
     return this.props.routeName === 'onboarding' ? (
       <View style={{flex: 1}} testID='onboarding'>
-        <Swiper loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)}>
+        <Swiper loop={false} paginationStyle={{bottom: 95 * k}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)}>
           <Slide bgImg={bg1} iconImg={footprints} left>
             {"See who's at your\r\nfavorite places!"}
           </Slide>
@@ -39,11 +42,18 @@ class Onboarding extends React.Component<{}> {
   }
 }
 
+const BG_IMG_RATIO = 433 / 375;
+const FLEX = 55;
+
 const Slide = ({bgImg, iconImg, left, center, children}) => {
   const align = left ? 'flex-start' : center ? 'center' : 'flex-end';
+  const mask = left ? maskLeft : center ? maskCenter : maskRight;
   return (
     <View style={styles.slide}>
-      <Image source={bgImg} style={styles.bgImage} resizeMode='cover' />
+      <View style={styles.bgContainer}>
+        <Image source={bgImg} style={{width, height: BG_IMG_RATIO * width}} />
+        <Image source={mask} style={{position: 'absolute', top: height * FLEX * 0.01 - 60, width}} />
+      </View>
       <View style={[styles.textContainer, {alignSelf: align, alignItems: align}]}>
         <Image source={iconImg} style={styles.icon} resizeMode='contain' />
         <RText style={[styles.title, {textAlign: left ? 'left' : center ? 'center' : 'right'}]} color={colors.PINK} size={24} weight='Light'>
@@ -92,16 +102,18 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
   },
-  bgImage: {flex: 6},
   icon: {height: 46, width: 46},
   title: {
     marginTop: 15 * k,
-    lineHeight: 32 * k,
+    lineHeight: 34,
+  },
+  bgContainer: {
+    flex: FLEX,
   },
   textContainer: {
-    flex: 4,
+    flex: 100 - FLEX,
     paddingHorizontal: 40,
-    top: -15,
+    top: -5,
   },
   footerButtons: {
     height: FOOTER_HEIGHT,
