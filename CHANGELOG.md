@@ -9,6 +9,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
 * GEOFENCE v1: Geofence Bot Profile (Owner View) (#1911)
 * GEOFENCE v1: HS Geofence Share Notification (#1921)
+* Upgrade react-native-xmpp to 1.1.2
+* Different banner results when opening the app in WiFi vs. LTE (#2002)
+* Post Banner appearing in middle of the screen with missing keyboard (#1664)
+* GEOFENCE v1: Who's Here (Visitors Screen) (#1897)
+* Update tests
 
 
 # 2.1.7, 2.1.8 - 2018 March 19
