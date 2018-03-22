@@ -9,6 +9,8 @@ import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
 import {Wocky, XmppTransport} from 'wocky-client';
 import nativeEnv from 'react-native-native-env';
+import backgroundGeolocation from 'react-native-background-geolocation';
+import backgroundFetch from 'react-native-background-fetch';
 
 import {settings} from '../globals';
 import XmppIOS from './xmpp/XmppIOS';
@@ -42,7 +44,21 @@ const {geolocation} = navigator;
 // }
 
 const auth = firebase.auth();
-const env = {transport, storage: AsyncStorage, auth, logger, fileService, geolocation, searchIndex, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
+const env = {
+  transport,
+  storage: AsyncStorage,
+  auth,
+  logger,
+  fileService,
+  geolocation,
+  searchIndex,
+  appState: AppState,
+  netInfo: NetInfo,
+  analytics,
+  nativeEnv,
+  backgroundFetch,
+  backgroundGeolocation,
+};
 
 const Store = types
   .model('Store', {
