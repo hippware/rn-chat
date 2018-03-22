@@ -70,6 +70,7 @@ const LocationStore = types
           self.startBackground();
         },
       );
+      self.getCurrentPosition();
     }
 
     function finish() {
@@ -90,7 +91,9 @@ const LocationStore = types
             stopOnTerminate: false,
           },
           () => {
-            logger.log('[js] Received background-fetch event');
+            logger.log('background-fetch: Received background-fetch event');
+
+            // todo: explicitly call for an update on position?
 
             // To signal completion of your task to iOS, you must call #finish!
             // If you fail to do this, iOS can kill your app.
@@ -115,11 +118,12 @@ const LocationStore = types
           logger.log('- [js]http: ', response.responseText);
           //        logger.log('- [js]http: ', JSON.parse(response.responseText));
         });
+
         // This handler fires whenever bgGeo receives an error
         backgroundGeolocation.on('error', (error) => {
           self.positionError(error);
-          var type = error.type;
-          var code = error.code;
+          // var type = error.type;
+          // var code = error.code;
           // alert(type + " Error: " + code);
         });
 
@@ -150,7 +154,7 @@ const LocationStore = types
             stopTimeout: 1,
             // Application config
             debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-            //        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+            // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
             stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
             startOnBoot: true, // <-- Auto start tracking when device is powered-up.
             // HTTP / SQLite config
@@ -169,7 +173,7 @@ const LocationStore = types
             },
           },
           (state) => {
-            logger.log('- BackgroundGeolocation is configured and ready: ', state.enabled);
+            logger.log('- BackgroundGeolocation is configured and ready: ', state);
 
             if (!state.enabled) {
               backgroundGeolocation.start(() => {
