@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# 2.2.x ?
+# 2.2.0 - 2018 March 22
 
 * BotDetails: dead bot (#1994)
 * GEOFENCE v1: Geofence Bot Profile (Non-Owner View) (#1896)
@@ -19,7 +19,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * ONBOARDING: Enable NEW 1-3 Sliders for GEOFENCE (#1963)
 * Investigate/Re-enable location uploading (#2007)
 * GEOFENCE v1: Who's Here (Visitors Screen) (#1897)
-* Fix bugsnag: TypeError in src/components/map/BotAddress.js:36 (#2010)
+* Fix bugsnags
+  * TypeError in src/components/map/BotAddress.js:36 (#2010)
+  * #2009
+  * Error in main.jsbundle:314 (#2017)
+* Update rn-firebase to 3.3.1, cocoapods
+* Automate Onboarding slides to transition after 3 seconds (#2013)
+* Spinner on bot deep link until gps loads (#1995)
+* Change modal description for camera & photo library access permission request (#2015)
 
 
 # 2.1.7, 2.1.8 - 2018 March 19
