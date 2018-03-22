@@ -43,8 +43,10 @@ class BotCreate extends React.Component<{}> {
     const {wocky, locationStore} = this.props;
     const bot = await wocky.createBot();
     const {location} = locationStore;
-    bot.load({location});
-    bot.location.load({isCurrent: true});
+    if (location) {
+      bot.load({location});
+      bot.location.load({isCurrent: true});
+    }
     this.bot = bot;
     this.props.newBotStore.setId(this.bot.id);
     const data = await this.props.geocodingStore.reverse(location);
