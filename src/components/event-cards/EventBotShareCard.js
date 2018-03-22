@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {Text, View} from 'react-native';
 import {observer} from 'mobx-react/native';
@@ -13,16 +15,21 @@ type Props = {
 };
 
 @observer
-class EventBotShareCard extends React.Component {
-  props: Props;
+class EventBotShareCard extends React.Component<Props> {
   onPress() {
     Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {
-    const eventBot = this.props.item;
-    const bot = eventBot.bot || {};
-    const msg = eventBot.message || {};
+    let eventBot, bot, msg;
+
+    try {
+      eventBot = this.props.item;
+      bot = eventBot.bot || {};
+      msg = eventBot.message || {};
+    } catch (err) {
+      return null;
+    }
 
     return (
       <View>

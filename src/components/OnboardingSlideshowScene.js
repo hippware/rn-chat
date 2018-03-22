@@ -24,7 +24,7 @@ class Onboarding extends React.Component<{}> {
     // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
     return this.props.routeName === 'onboarding' ? (
       <View style={{flex: 1}} testID='onboarding'>
-        <Swiper loop={false} paginationStyle={{bottom: 95 * k}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)}>
+        <Swiper paginationStyle={{bottom: 95 * k}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)} autoplay autoplayTimeout={3} loop>
           <Slide bgImg={bg1} iconImg={footprints} left>
             {"See who's at your\r\nfavorite places!"}
           </Slide>
@@ -42,7 +42,7 @@ class Onboarding extends React.Component<{}> {
   }
 }
 
-const BG_IMG_RATIO = 433 / 375;
+const BG_IMG_RATIO = 667 / 375; // height / width of background images
 const FLEX = 55;
 
 const Slide = ({bgImg, iconImg, left, center, children}) => {

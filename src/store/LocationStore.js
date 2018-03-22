@@ -59,19 +59,29 @@ const LocationStore = types
 
     function afterAttach() {
       ({wocky} = getParent(self));
-      when(() => wocky.connected, self.initialize);
-      reaction(
-        () => wocky.connected,
-        (connected) => {
-          if (connected) {
-            Permissions.check('location', {type: 'always'}).then(self.setAlwaysOn);
-            // self.watchPosition();
-          } else if (watch !== undefined) {
-            geolocation.clearWatch(watch);
-            watch = undefined;
-          }
-        },
-      );
+      self.initialize();
+      self.start();
+    }
+    function start() {
+      Permissions.check('location', {type: 'always'}).then(self.setAlwaysOn);
+      if (self.alwaysOn) {
+        self.startBackground();
+      } else {
+        self.stopBackground();
+        self.watchPosition();
+      }
+    }
+
+    function finish() {
+      if (!self.alwaysOn) {
+        self.stopBackground();
+      }
+      if (watch) {
+        if (watch !== undefined) {
+          geolocation.clearWatch(watch);
+          watch = undefined;
+        }
+      }
     }
 
     function startBackground() {
@@ -185,15 +195,6 @@ const LocationStore = types
     }
 
     function initialize() {
-      autorun(() => {
-        if (self.alwaysOn) {
-          startBackground();
-        } else {
-          stopBackground();
-        }
-      });
-      self.getCurrentPosition();
-
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
       setMetricSystem(system);
     }
@@ -252,7 +253,7 @@ const LocationStore = types
       self.alwaysOn = response === 'authorized';
     }
 
-    return {afterAttach, setAlwaysOn, watchPosition, setPosition, positionError, getCurrentPosition, initialize};
+    return {start, finish, afterAttach, setAlwaysOn, watchPosition, setPosition, stopBackground, startBackground, positionError, getCurrentPosition, initialize};
   });
 
 export default LocationStore;

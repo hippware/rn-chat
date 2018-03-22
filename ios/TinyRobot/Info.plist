@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.8</string>
+	<string>2.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -93,7 +93,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>This application requires access to calendars to work</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This application requires access to camera to work</string>
+	<string>This will let you take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -122,6 +122,11 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>gps</string>
+		<string>magnetometer</string>
+	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
@@ -130,10 +135,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>gps</string>
-		<string>magnetometer</string>
-	</array>
 </dict>
 </plist>

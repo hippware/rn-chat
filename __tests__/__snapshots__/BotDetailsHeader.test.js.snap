@@ -17,23 +17,33 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
       }
     }
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
-        Array [
-          Object {
-            "color": undefined,
-            "fontFamily": "Roboto-Regular",
-            "fontSize": 12,
-          },
-          undefined,
-        ]
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
       }
     >
-      Please enable location
-    </Text>
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../images/loader_pink.gif",
+          }
+        }
+        style={
+          Array [
+            undefined,
+            Object {
+              "height": 72,
+              "width": 72,
+            },
+          ]
+        }
+      />
+    </View>
     <View
       collapsable={undefined}
       pointerEvents="none"
