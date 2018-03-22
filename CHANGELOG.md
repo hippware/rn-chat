@@ -16,6 +16,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Post Banner appearing in middle of the screen with missing keyboard (#1664)
 * GEOFENCE v1: Who's Here (Visitors Screen) (#1897)
 * Update tests
+* ONBOARDING: Enable NEW 1-3 Sliders for GEOFENCE (#1963)
+* Investigate/Re-enable location uploading (#2007)
+* GEOFENCE v1: Who's Here (Visitors Screen) (#1897)
+* Fix bugsnag: TypeError in src/components/map/BotAddress.js:36 (#2010)
 
 
 # 2.1.7, 2.1.8 - 2018 March 19
