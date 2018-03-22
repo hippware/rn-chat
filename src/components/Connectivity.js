@@ -4,6 +4,7 @@ import React from 'react';
 import {AppState, NetInfo} from 'react-native';
 import {reaction, observable, when} from 'mobx';
 import {inject} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 import * as log from '../utils/log';
 
 @inject('wocky', 'notificationStore', 'locationStore', 'log', 'analytics')
@@ -48,8 +49,13 @@ export default class Connectivity extends React.Component {
         this.retryDelay = 1000;
       } catch (e) {
         this.props.analytics.track('reconnect_fail', {error: e});
-        this.retryDelay = this.retryDelay >= 5 * 1000 ? this.retryDelay : this.retryDelay * 1.5;
-        this.lastDisconnected = Date.now();
+        if (e.toString().indexOf('not-authorized') !== -1) {
+          this.retryDelay = 1e9;
+          Actions.logout();
+        } else {
+          this.retryDelay = this.retryDelay >= 5 * 1000 ? this.retryDelay : this.retryDelay * 1.5;
+          this.lastDisconnected = Date.now();
+        }
       }
     }
   };

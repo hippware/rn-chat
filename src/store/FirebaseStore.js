@@ -67,7 +67,12 @@ const FirebaseStore = types
         analytics.track('error_wocky_logout', {error: err});
         logger.warn('wocky logout error', err);
       }
-      self.reset();
+      try {
+        self.reset();
+      } catch (e) {
+        console.error(e);
+      }
+      console.log('RETURN TRUE ');
       return true;
     });
 
