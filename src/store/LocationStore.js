@@ -138,8 +138,8 @@ const LocationStore = types
         BackgroundGeolocation.on('providerchange', (provider) => {
           logger.log('- Location provider changed: ', provider.enabled);
         });
-        const url = `https://${settings.getDomain()}/api/v1/users/${model.username}/location`;
-        logger.log(`LOCATION UPDATE URL: ${url}`);
+        const url = `https://${settings.getDomain()}/api/v1/users/${model.username}/locations`;
+        logger.log(`LOCATION UPDATE URL: ${url} ${model.username} ${model.password}`);
         BackgroundGeolocation.configure(
           {
             // Geolocation Config
