@@ -325,8 +325,8 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.removeBotPost(id, postId)
     }),
-    _shareBot: (id: string, server: string, recepients: string[], message: string, type: string) => {
-      self.transport.shareBot(id, server, recepients, message, type)
+    _shareBot: (id: string, server: string, recepients: string[], message: string, action: string) => {
+      self.transport.shareBot(id, server, recepients, message, action)
     },
     _publishBotPost: flow(function*(post: IBotPost) {
       yield waitFor(() => self.connected)

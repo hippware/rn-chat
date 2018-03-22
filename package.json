@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "test": "npm run lint && npm run mocha --recursive ./test/*",
+    "test": "npm run lint && npm run mocha --recursive ./test/bot.test.ts",
     "mocha": "mocha -r ts-node/register --require ./test/support/setup.js --timeout 30000"
   },
   "devDependencies": {

@@ -116,8 +116,8 @@ export const Bot = types
       self.guest = false
       yield self.service._unsubscribeGeofenceBot(self.id)
     }),
-    share: (userIDs: string[], message: string = '', type = 'headline') => {
-      self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)
+    share: (userIDs: string[], message: string = '', action: string = 'share') => {
+      self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
     },
     setNew: (value: boolean) => {
       self.isNew = value
@@ -131,11 +131,11 @@ export const Bot = types
     }
   }))
   .actions(self => ({
-    shareToFriends: (message: string = '', type = 'headline') => {
-      self.share(['friends'], message, type)
+    shareToFriends: (message: string = '') => {
+      self.share(['friends'], message)
     },
-    shareToFollowers: (message: string = '', type = 'headline') => {
-      self.share(['followers'], message, type)
+    shareToFollowers: (message: string = '') => {
+      self.share(['followers'], message)
     }
   }))
   .views(self => ({

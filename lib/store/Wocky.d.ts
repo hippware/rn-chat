@@ -702,12 +702,12 @@ export declare const EventEntity: IType<({
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -1687,12 +1687,12 @@ export declare const EventEntity: IType<({
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -2498,12 +2498,12 @@ export declare const EventEntity: IType<({
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -3625,12 +3625,12 @@ export declare const EventEntity: IType<({
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -4436,12 +4436,12 @@ export declare const EventEntity: IType<({
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -5660,12 +5660,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -6802,12 +6802,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -7787,12 +7787,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -8598,12 +8598,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -9725,12 +9725,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -10536,12 +10536,12 @@ export declare const Wocky: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
@@ -11701,12 +11701,12 @@ export declare const Wocky: IModelType<{
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -27183,12 +27183,12 @@ export declare const Wocky: IModelType<{
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -27710,12 +27710,12 @@ export declare const Wocky: IModelType<{
         subscribeGeofence: any;
         unsubscribe: any;
         unsubscribeGeofence: any;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -28228,12 +28228,12 @@ export declare const Wocky: IModelType<{
         subscribeGeofence: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
         unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, type?: string) => void;
+        share: (userIDs: string[], message?: string, action?: string) => void;
         setNew: (value: boolean) => void;
         load: (d?: any) => void;
     } & {
-        shareToFriends: (message?: string, type?: string) => void;
-        shareToFollowers: (message?: string, type?: string) => void;
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
@@ -28242,7 +28242,7 @@ export declare const Wocky: IModelType<{
         readonly $treenode?: any;
     }) => Promise<any>;
     _removeBotPost: (a1: string, a2: string) => Promise<any>;
-    _shareBot: (id: string, server: string, recepients: string[], message: string, type: string) => void;
+    _shareBot: (id: string, server: string, recepients: string[], message: string, action: string) => void;
     _publishBotPost: (a1: {
         id: string;
     } & {
