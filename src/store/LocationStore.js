@@ -55,7 +55,7 @@ const LocationStore = types
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
-    let wocky, watch;
+    let wocky, watch, handler;
 
     function afterAttach() {
       ({wocky} = getParent(self));
@@ -64,24 +64,19 @@ const LocationStore = types
     }
     function start() {
       Permissions.check('location', {type: 'always'}).then(self.setAlwaysOn);
-      if (self.alwaysOn) {
-        self.startBackground();
-      } else {
-        self.stopBackground();
-        self.watchPosition();
-      }
+      handler = reaction(
+        () => wocky.connected,
+        () => {
+          self.startBackground();
+        },
+      );
     }
 
     function finish() {
       if (!self.alwaysOn) {
         self.stopBackground();
       }
-      if (watch) {
-        if (watch !== undefined) {
-          geolocation.clearWatch(watch);
-          watch = undefined;
-        }
-      }
+      handler();
     }
 
     function startBackground() {
