@@ -30,7 +30,7 @@ def testing_pods
     pod 'RSKImageCropper'
     pod 'QBImagePickerController'
     pod 'Firebase/Core'
-    pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+    pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
     pod 'Firebase/Auth'
     pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
 end
