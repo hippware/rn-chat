@@ -183,6 +183,9 @@ export const Wocky = types
       }
       return profile
     }),
+    createProfile: (id: string, data: {[key: string]: any} = {}) => {
+      return self.profiles.get(id, processMap(data))
+    },
     getBot: ({id, server, ...data}: any): IBot => {
       const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
       if (data && Object.keys(data).length) {
@@ -492,8 +495,10 @@ export const Wocky = types
     return {
       clearCache,
       logout: flow(function* logout() {
-        yield self.disablePush()
-        yield self.disconnect()
+        if (self.connected) {
+          yield self.disablePush()
+          yield self.disconnect()
+        }
         self.profile = null
         clearCache()
         self.sessionCount = 0
