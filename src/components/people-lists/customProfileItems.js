@@ -88,6 +88,12 @@ export const FollowableProfileItem = observer(({profile}: Props) => (
   </TouchableOpacity>
 ));
 
+export const TappableProfileItem = observer(({profile}: Props) => (
+  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
+    <ProfileItem profile={profile} />
+  </TouchableOpacity>
+));
+
 export const BlockableProfileItem = ({profile}: Props) => (
   <ProfileItem isDay profile={profile} tappable={false}>
     <BlockedButton profile={profile} />
