@@ -78,7 +78,7 @@
 	<key>NSMotionUsageDescription</key>
 	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This application requires access to library to work</string>
+	<string>This will let you choose and upload photos.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This application requires access to bluetooth to work</string>
 	<key>NSCalendarsUsageDescription</key>
