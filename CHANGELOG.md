@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Upload location only for connected client
+* Update location url
+
+
 # 2.2.0 - 2018 March 22
 
 * BotDetails: dead bot (#1994)
