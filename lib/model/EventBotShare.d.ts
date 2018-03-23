@@ -8,6 +8,7 @@ export declare const EventBotShare: IModelType<{
     bot?: any;
 } & {
     message?: any;
+    action?: any;
 }, {
     id: string;
 } & {
@@ -993,6 +994,7 @@ export declare const EventBotShare: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+    action: string;
 } & {
     readonly target: {
         id: string;

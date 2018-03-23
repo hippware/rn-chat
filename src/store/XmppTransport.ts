@@ -1106,7 +1106,7 @@ export function processItem(item: any, delay: any, username: string): any {
             msg.time = Utils.iso8601toDate(item.version).getTime()
           }
         }
-        return bot ? {id, bot: bot.id, time, message: msg} : null
+        return bot ? {id, bot: bot.id, time, message: msg, action: bot.action} : null
       }
     } else {
       console.log('& UNSUPPORTED ITEM!', item)

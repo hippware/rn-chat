@@ -10,7 +10,8 @@ export const EventBotShare = types
   .compose(
     EventBot,
     types.model('EventBotShare', {
-      message: Message
+      message: Message,
+      action: types.string
     })
   )
   .views(self => ({
