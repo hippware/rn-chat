@@ -597,12 +597,12 @@ export declare const Storages: IModelType<{
             subscribeGeofence: () => Promise<{}>;
             unsubscribe: () => Promise<{}>;
             unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, type?: string) => void;
+            share: (userIDs: string[], message?: string, action?: string) => void;
             setNew: (value: boolean) => void;
             load: (d?: any) => void;
         } & {
-            shareToFriends: (message?: string, type?: string) => void;
-            shareToFollowers: (message?: string, type?: string) => void;
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;

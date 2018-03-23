@@ -792,10 +792,10 @@ export class XmppTransport {
       .c('item', {id: postId})
     await this.sendIQ(iq)
   }
-  shareBot(id: string, server: string, recepients: string[], message: string, type: string) {
+  shareBot(id: string, server: string, recepients: string[], message: string, action: string) {
     const msg = $msg({
       from: this.username + '@' + this.host,
-      type,
+      type: 'headline',
       to: this.host
     }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
 
@@ -825,7 +825,7 @@ export class XmppTransport {
       .t(server)
       .up()
       .c('action')
-      .t('share')
+      .t(action)
 
     this.sendStanza(msg)
   }
