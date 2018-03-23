@@ -69,7 +69,7 @@
     "react-native": "0.53.0",
     "react-native-actionsheet": "^2.2.2",
     "react-native-background-fetch": "^2.4.1",
-    "react-native-background-geolocation": "^2.11.0",
+    "react-native-background-geolocation": "^2.12.0-beta.2",
     "react-native-blur": "^3.2.2",
     "react-native-camera-kit": "github:aksonov/react-native-camera-kit#6fb593bed81547a68e039a77c5042f070e3a9fa1",
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",
@@ -98,7 +98,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#332dfe88b8fa45bb6f3b03ece5493cd06e90d278",
+    "wocky-client": "github:hippware/wocky-client#f2f544426a13a781c75723f56295cd786b7c73d7",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {

@@ -121,9 +121,9 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.3.0):
+  - RNBackgroundFetch (2.4.1):
     - React
-  - RNBackgroundGeolocation (2.11.0):
+  - RNBackgroundGeolocation (2.12.0-beta.2):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNFirebase (3.3.1):
