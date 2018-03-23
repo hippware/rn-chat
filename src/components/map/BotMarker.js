@@ -20,7 +20,7 @@ const BotMarker = observer(({id, bot, scale, ...props}: Props) => {
   if (!bot || !isAlive(bot) || !bot.location) {
     return null;
   }
-  const image = bot.image ? bot.image.thumbnail : bot.guest ? require('../../../images/footPrintCover.png') : defaultCover[bot.coverColor % 4];
+  const image = bot.image ? bot.image.thumbnail : bot.geofence ? require('../../../images/footPrintCover.png') : defaultCover[bot.coverColor % 4];
   const showLoader = bot.image && !bot.image.loaded;
   const text = bot.addressData ? bot.addressData.locationShort : bot.address;
   return (
