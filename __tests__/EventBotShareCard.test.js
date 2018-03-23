@@ -39,7 +39,7 @@ describe('EventBotShareCard', () => {
 
     // TODO: create different profile as owner
     const message = Message.create({id: '789', time: 789, archiveId: '789', from: owner.id});
-    const shareBot = EventBotShare.create({id: '456', time: 456, bot, message});
+    const shareBot = EventBotShare.create({id: '456', time: 456, bot, message, action: 'share'});
     const toRender = (
       <Provider locationStore={mockLocationStore}>
         <EventCard item={shareBot} />
