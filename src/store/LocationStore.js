@@ -139,7 +139,9 @@ const LocationStore = types
 
         // This event fires when the user toggles location-services
         backgroundGeolocation.on('providerchange', (provider) => {
-          logger.log('- Location provider changed: ', provider.enabled);
+          logger.log('- Location provider changed: ', provider);
+
+          self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS);
         });
         const url = `https://${settings.getDomain()}/api/v1/users/${model.username}/locations`;
         logger.log(`LOCATION UPDATE URL: ${url} ${model.username} ${model.password}`);
@@ -175,10 +177,12 @@ const LocationStore = types
           (state) => {
             logger.log('- BackgroundGeolocation is configured and ready: ', state);
 
-            if (!state.enabled) {
+            if (!state.enabled && self.alwaysOn) {
               backgroundGeolocation.start(() => {
                 logger.log('- Start success');
               });
+            } else if (state.enabled && !self.alwaysOn) {
+              backgroundGeolocation.stop();
             }
           },
         );

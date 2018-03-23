@@ -2055,9 +2055,9 @@ co@~3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/co/-/co-3.0.6.tgz#1445f226c5eb956138e68c9ac30167ea7d2e6bda"
 
-cocoa-lumberjack@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/cocoa-lumberjack/-/cocoa-lumberjack-3.0.3.tgz#6178b9f31bd156bece7a1549c9d4e1b298542812"
+cocoa-lumberjack@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/cocoa-lumberjack/-/cocoa-lumberjack-3.0.5.tgz#0b29683272ad426974a2c71c86d4de9a81029e6d"
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -6399,7 +6399,7 @@ react-native-actionsheet@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
-react-native-background-fetch@^2.4.1:
+react-native-background-fetch@^2.4.1, react-native-background-fetch@~2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.4.1.tgz#5bb3c6ecc5d646f05b9ca5a8feec724152582d1d"
   dependencies:
@@ -6407,20 +6407,15 @@ react-native-background-fetch@^2.4.1:
     plist "^2.0.1"
     xcode "^0.9.1"
 
-react-native-background-fetch@~2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.3.0.tgz#aa99f8f635999dc3cae1080d323222688c075991"
+react-native-background-geolocation@^2.12.0-beta.2:
+  version "2.12.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.12.0-beta.2.tgz#c65643e27e501855d83766916ed6a62740ce5383"
   dependencies:
+    cocoa-lumberjack "^3.0.5"
     fast-plist "^0.1.2"
     plist "^2.0.1"
+    react-native-background-fetch "~2.4.1"
     xcode "^0.9.1"
-
-react-native-background-geolocation@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.11.0.tgz#1a7cf3d9f5ac958de7d43b59cd5ce32dc8ba092d"
-  dependencies:
-    cocoa-lumberjack "^3.0.3"
-    react-native-background-fetch "~2.3.0"
 
 react-native-blur@^3.2.2:
   version "3.2.2"
