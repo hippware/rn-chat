@@ -22,7 +22,7 @@ const eventCardMap = {
 };
 @inject('log')
 @observer
-export default class EventCard extends React.Component<Props> {
+class EventCard extends React.Component<Props> {
   card: any;
 
   render() {
@@ -60,3 +60,5 @@ export default class EventCard extends React.Component<Props> {
     );
   }
 }
+
+export default EventCard;
