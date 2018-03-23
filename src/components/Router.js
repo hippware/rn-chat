@@ -204,7 +204,7 @@ class TinyRobotRouter extends React.Component<{}> {
             <Scene key='botShareSelectFriends' component={peopleLists.BotShareSelectFriends} title='Share' clone back right={() => null} />
             <Scene key='geofenceShare' component={peopleLists.GeofenceShare} title="See Who's Here" clone back />
             <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
-            <Scene key='visitors' component={peopleLists.BotVisitorList} clone back right={() => null} navTransparent={false} title='Visitors' />
+            <Scene key='visitors' component={peopleLists.BotVisitorList} clone back right={() => null} navTransparent={false} title="Who's Here" />
             {/* <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
             <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />

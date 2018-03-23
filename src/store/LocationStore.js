@@ -70,6 +70,7 @@ const LocationStore = types
           self.startBackground();
         },
       );
+      self.getCurrentPosition();
     }
 
     function finish() {
@@ -81,21 +82,22 @@ const LocationStore = types
 
     function startBackground() {
       const model = getParent(self).wocky;
+      const {backgroundGeolocation, backgroundFetch} = getEnv(self);
       if (typeof navigator !== 'undefined') {
-        console.log('BACKGROUND LOCATION START', navigator, model.username, model.password);
-        const BackgroundGeolocation = require('react-native-background-geolocation');
-        const BackgroundFetch = require('react-native-background-fetch');
+        logger.log('BACKGROUND LOCATION START');
 
-        BackgroundFetch.configure(
+        backgroundFetch.configure(
           {
             stopOnTerminate: false,
           },
           () => {
-            logger.log('[js] Received background-fetch event');
+            logger.log('background-fetch: Received background-fetch event');
+
+            // todo: explicitly call for an update on position?
 
             // To signal completion of your task to iOS, you must call #finish!
             // If you fail to do this, iOS can kill your app.
-            BackgroundFetch.finish();
+            backgroundFetch.finish();
           },
           (error) => {
             logger.log('[js] RNBackgroundFetch failed to start');
@@ -103,7 +105,7 @@ const LocationStore = types
         );
 
         // // This handler fires whenever bgGeo receives a location update.
-        BackgroundGeolocation.on('location', (position) => {
+        backgroundGeolocation.on('location', (position) => {
           logger.log('- [js]location: ', JSON.stringify(position));
           self.setPosition(position);
           // this.location = position.coords;
@@ -112,35 +114,36 @@ const LocationStore = types
         });
 
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
-        BackgroundGeolocation.on('http', (response) => {
+        backgroundGeolocation.on('http', (response) => {
           logger.log('- [js]http: ', response.responseText);
           //        logger.log('- [js]http: ', JSON.parse(response.responseText));
         });
+
         // This handler fires whenever bgGeo receives an error
-        BackgroundGeolocation.on('error', (error) => {
+        backgroundGeolocation.on('error', (error) => {
           self.positionError(error);
-          var type = error.type;
-          var code = error.code;
+          // var type = error.type;
+          // var code = error.code;
           // alert(type + " Error: " + code);
         });
 
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
-        BackgroundGeolocation.on('motionchange', (location) => {
+        backgroundGeolocation.on('motionchange', (location) => {
           logger.log('- [js]motionchanged: ', JSON.stringify(location));
         });
 
         // This event fires when a chnage in motion activity is detected
-        BackgroundGeolocation.on('activitychange', (activityName) => {
+        backgroundGeolocation.on('activitychange', (activityName) => {
           logger.log('- Current motion activity: ', activityName); // eg: 'on_foot', 'still', 'in_vehicle'
         });
 
         // This event fires when the user toggles location-services
-        BackgroundGeolocation.on('providerchange', (provider) => {
+        backgroundGeolocation.on('providerchange', (provider) => {
           logger.log('- Location provider changed: ', provider.enabled);
         });
         const url = `https://${settings.getDomain()}/api/v1/users/${model.username}/locations`;
         logger.log(`LOCATION UPDATE URL: ${url} ${model.username} ${model.password}`);
-        BackgroundGeolocation.configure(
+        backgroundGeolocation.configure(
           {
             // Geolocation Config
             desiredAccuracy: 0,
@@ -151,7 +154,7 @@ const LocationStore = types
             stopTimeout: 1,
             // Application config
             debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-            //        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+            // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
             stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
             startOnBoot: true, // <-- Auto start tracking when device is powered-up.
             // HTTP / SQLite config
@@ -170,10 +173,10 @@ const LocationStore = types
             },
           },
           (state) => {
-            logger.log('- BackgroundGeolocation is configured and ready: ', state.enabled);
+            logger.log('- BackgroundGeolocation is configured and ready: ', state);
 
             if (!state.enabled) {
-              BackgroundGeolocation.start(() => {
+              backgroundGeolocation.start(() => {
                 logger.log('- Start success');
               });
             }
@@ -183,9 +186,9 @@ const LocationStore = types
     }
 
     function stopBackground() {
-      const BackgroundGeolocation = require('react-native-background-geolocation');
-      if (typeof BackgroundGeolocation !== 'undefined') {
-        BackgroundGeolocation.stop();
+      const {backgroundGeolocation} = getEnv(self);
+      if (typeof backgroundGeolocation !== 'undefined') {
+        backgroundGeolocation.stop();
       }
     }
 

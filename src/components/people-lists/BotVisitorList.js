@@ -6,7 +6,7 @@ import {observer, inject} from 'mobx-react/native';
 import Screen from '../Screen';
 import CardList from '../CardList';
 import {Separator} from '../common';
-import {FollowableProfileItem} from './customProfileItems';
+import {TappableProfileItem} from './customProfileItems';
 import ListFooter from '../ListFooter';
 
 type Props = {
@@ -34,7 +34,7 @@ class BotVisitorList extends React.Component<Props> {
           keyboardShouldPersistTaps='always'
           data={list.slice()}
           ItemSeparatorComponent={() => <Separator />}
-          renderItem={({item}) => <FollowableProfileItem profile={item} />}
+          renderItem={({item}) => <TappableProfileItem profile={item} />}
           keyExtractor={item => item.id}
           ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}
         />

@@ -51,7 +51,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   share = () => {
     const shareSelect = this.selection.selected.map(sp => sp.id);
     try {
-      this.bot.share(shareSelect, this.state.message, 'headline');
+      this.bot.share(shareSelect, this.state.message);
       const num = shareSelect.length;
       this.props.notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
       Actions.pop({animated: false});

@@ -101,9 +101,9 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
+	<string>Using the accelerometer increases battery-efficiency by intelligently toggling location-tracking only while moving.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This application requires access to library to work</string>
+	<string>This will let you choose and upload photos.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This application requires speech recognition access to work</string>
 	<key>STAGING</key>

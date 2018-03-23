@@ -6399,6 +6399,14 @@ react-native-actionsheet@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
+react-native-background-fetch@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.4.1.tgz#5bb3c6ecc5d646f05b9ca5a8feec724152582d1d"
+  dependencies:
+    fast-plist "^0.1.2"
+    plist "^2.0.1"
+    xcode "^0.9.1"
+
 react-native-background-fetch@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.3.0.tgz#aa99f8f635999dc3cae1080d323222688c075991"
@@ -8184,9 +8192,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#ff10b70289d6fcbdb28a2feaec83dff14898df98":
+"wocky-client@github:hippware/wocky-client#332dfe88b8fa45bb6f3b03ece5493cd06e90d278":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#ff10b70289d6fcbdb28a2feaec83dff14898df98"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#332dfe88b8fa45bb6f3b03ece5493cd06e90d278"
   dependencies:
     classy-mst "github:charto/classy-mst#develop"
     moment "^2.20.1"
