@@ -90,27 +90,21 @@ export const Bot = types
         self.totalItems -= 1
       }
     }),
-    subscribe: flow(function*(geofence: boolean = false) {
+    subscribe: flow(function*() {
       self.isSubscribed = true
-      if (geofence) {
-        self.guest = true
-      }
       self.service.profile!.subscribedBots.addToTop(self)
-      self.followersSize = yield self.service._subscribeBot(self.id, geofence)
+      self.followersSize = yield self.service._subscribeBot(self.id)
     }),
     subscribeGeofence: flow(function*() {
       self.isSubscribed = true
       self.guest = true
       yield self.service._subscribeGeofenceBot(self.id)
     }),
-    unsubscribe: flow(function*(geofence: boolean = false) {
-      if (geofence) {
-        self.guest = false
-      } else {
-        self.isSubscribed = false
-      }
+    unsubscribe: flow(function*() {
+      self.guest = false
+      self.isSubscribed = false
       self.service.profile!.subscribedBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeBot(self.id, geofence)
+      self.followersSize = yield self.service._unsubscribeBot(self.id)
     }),
     unsubscribeGeofence: flow(function*() {
       self.guest = false

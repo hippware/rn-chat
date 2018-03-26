@@ -339,17 +339,17 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       return yield self.transport.subscribeBot(id, true)
     }),
-    _subscribeBot: flow(function*(id: string, geofence: boolean = false) {
+    _subscribeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
-      return yield self.transport.subscribeBot(id, geofence)
+      return yield self.transport.subscribeBot(id, false)
     }),
     _unsubscribeGeofenceBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       return yield self.transport.subscribeBot(id, false)
     }),
-    _unsubscribeBot: flow(function*(id: string, geofence: boolean = false) {
+    _unsubscribeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
-      return yield self.transport.unsubscribeBot(id, geofence)
+      return yield self.transport.unsubscribeBot(id, false)
     }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield waitFor(() => self.connected)
