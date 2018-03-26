@@ -5,8 +5,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.3.0 - 2018 March 23
+
 * Upload location only for connected client
 * Update location url
+* Change modal description for camera & photo library access permission request (#2015)
+* Background location update error (#2021)
+* Some changes to location handling
+* GEOFENCE v1: HS Geofence Share Notification (Rework #1921)
+* GEOFENCE v1: Who's Here (Visitors Screen) (Rework #1897)
+* Automate Onboarding slides to transition after 3 seconds (#2013)
+* GEOFENCE v1: Geofence Bot Profile (Owner View) (Rework #1911)
+  * Tweak default cover photo logic
+* App brought from the background receives "Background location is not enabled" (#2023)
 
 
 # 2.2.0 - 2018 March 22
