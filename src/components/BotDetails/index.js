@@ -49,6 +49,9 @@ class BotDetails extends React.Component<Props> {
 
   componentDidMount() {
     this.loadBot();
+    if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
+      Actions.visitors({item: this.props.item});
+    }
   }
 
   componentWillUnmount() {

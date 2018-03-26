@@ -108,7 +108,15 @@ const ShareButton = ({bot}) => (
 const GeofenceButton = observer(({bot, style}: Props) => {
   let onPress, buttonStyle, image;
   if (bot.guest) {
-    onPress = () => bot.unsubscribeGeofence();
+    onPress = () =>
+      Alert.alert(null, 'Are you sure you want to stop sharing your presence? You will no longer see who’s here.', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Stop Sharing',
+          style: 'destructive',
+          onPress: () => bot.unsubscribeGeofence(),
+        },
+      ]);
     buttonStyle = [style, {marginRight: 10 * k}];
     image = require('../../../images/whiteFoot.png');
   } else {
