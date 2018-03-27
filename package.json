@@ -31,7 +31,12 @@
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-client": "^2.2.8",
+    "apollo-link-http": "^1.5.3",
     "classy-mst": "github:charto/classy-mst#develop",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.8.0",
     "moment": "^2.20.1",
     "mst-middlewares": "^1.3.1",
     "strophejs": "github:hippware/strophejs",
