@@ -31,7 +31,7 @@ class PushStore {
       onNotification(notification) {
         log.log('Push Notification:', notification);
         analytics.track('push_notification_received', {notification});
-        if (notification.data && notification.data.uri) {
+        if (!notification.foreground && notification.data && notification.data.uri) {
           try {
             analytics.track('push_notification_try', {notification});
             Linking.openURL(notification.data.uri);
