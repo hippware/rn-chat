@@ -1,5 +1,5 @@
-import XmppStropheV2 from '../../src/store/XmppStropheV2'
-import {Wocky, XmppTransport, IWocky} from '../../src'
+import XmppStropheV2 from '../../src/transport/XmppStropheV2'
+import {Wocky, XmppTransport, IWocky, HybridTransport, GraphQLTransport} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
@@ -21,7 +21,9 @@ export function expectedImage() {
 export async function createXmpp(num: number): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()
-    const transport = new XmppTransport(provider, fileService, 'testing')
+    const xmppTransport = new XmppTransport(provider, fileService, 'testing')
+    const gql = new GraphQLTransport('testing')
+    const transport = new HybridTransport(xmppTransport, gql)
     // const provider = new XmppStropheV2(console.log)
     const phoneNumber = `000000${num.toString()}`
     const service = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {transport, fileService, logger: {log: (msg: string, ...params: Array<any>) => console.log(msg, ...params)}})

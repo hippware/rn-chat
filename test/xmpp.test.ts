@@ -21,9 +21,9 @@ describe('ConnectStore', () => {
       () => (user1.profile ? true : false),
       () => {
         const data = user1.profile!
-        expect(data.handle).to.be.equal('')
-        expect(data.firstName).to.be.equal('')
-        expect(data.lastName).to.be.equal('')
+        expect(data.handle).to.be.null
+        expect(data.firstName).to.be.null
+        expect(data.lastName).to.be.null
         done()
       }
     )
@@ -34,9 +34,9 @@ describe('ConnectStore', () => {
       () => (user2.profile ? true : false),
       () => {
         const data = user2.profile!
-        expect(data.handle).to.be.equal('')
-        expect(data.firstName).to.be.equal('')
-        expect(data.lastName).to.be.equal('')
+        expect(data.handle).to.be.null
+        expect(data.firstName).to.be.null
+        expect(data.lastName).to.be.null
         done()
       }
     )

@@ -3,7 +3,7 @@ import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
-
+import {IWockyTransport} from './IWockyTransport'
 const TIMEOUT = 10000
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
@@ -21,7 +21,7 @@ const USER = 'hippware.com/hxep/user'
 const HANDLE = 'hippware.com/hxep/handle'
 const EVENT_NS = 'hippware.com/hxep/publishing'
 
-export class XmppTransport {
+export class XmppTransport implements IWockyTransport {
   provider: any
   fileService: IFileService
   resource: string
@@ -87,7 +87,7 @@ export class XmppTransport {
       }
     }
   }
-  async login(user?: string, password?: string, host?: string) {
+  async login(user?: string, password?: string, host?: string): Promise<boolean> {
     try {
       if (user) {
         this.username = user
@@ -108,7 +108,7 @@ export class XmppTransport {
       this.connecting = false
     }
   }
-  async register(data: any, host?: string, providerName = 'digits') {
+  async register(data: any, host?: string, providerName = 'digits'): Promise<{username: string; password: string; host: string}> {
     if (host) {
       this.host = host
     }

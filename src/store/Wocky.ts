@@ -18,8 +18,8 @@ import {createPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
-import {processMap, waitFor} from './utils'
-import {XmppTransport} from '..'
+import {processMap, waitFor} from '../transport/utils'
+import {IWockyTransport} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 export const EventList = createPaginable(EventEntity)
@@ -46,7 +46,7 @@ export const Wocky = types
   )
   .named(SERVICE_NAME)
   .actions(self => {
-    const {transport} = getEnv(self)
+    const transport: IWockyTransport = getEnv(self).transport
     return {
       loadProfile: flow(function*(id: string) {
         const isOwn = id === self.username
@@ -65,7 +65,7 @@ export const Wocky = types
     }
   })
   .extend(self => {
-    const {transport} = getEnv(self)
+    const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
       throw 'Server transport is not defined'
     }
@@ -80,7 +80,7 @@ export const Wocky = types
           delete data.files
           return data
         },
-        get transport(): XmppTransport {
+        get transport(): IWockyTransport {
           return transport
         },
         get connected() {

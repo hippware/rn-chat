@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {types, getType, applySnapshot} from 'mobx-state-tree'
-import {processItem, processHomestreamResponse} from '../src/store/XmppTransport'
+import {processItem, processHomestreamResponse} from '../src/transport/XmppTransport'
 import {FileSource} from '../src/model/File'
 import {EventList, EventEntity} from '../src/store/Wocky'
 import {Base} from '../src/model/Base'

@@ -40,10 +40,10 @@ export declare const Chat: IModelType<{
     } & {
         id: string;
         avatar: any;
-        handle: string;
+        handle: string | null;
         status: string;
-        firstName: string;
-        lastName: string;
+        firstName: string | null;
+        lastName: string | null;
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
@@ -202,10 +202,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -391,10 +391,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -571,10 +571,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -738,10 +738,10 @@ export declare const Chat: IModelType<{
     } & {
         id: string;
         avatar: any;
-        handle: string;
+        handle: string | null;
         status: string;
-        firstName: string;
-        lastName: string;
+        firstName: string | null;
+        lastName: string | null;
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
@@ -901,10 +901,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -1078,10 +1078,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -1263,10 +1263,10 @@ export declare const Chat: IModelType<{
         } & {
             id: string;
             avatar: any;
-            handle: string;
+            handle: string | null;
             status: string;
-            firstName: string;
-            lastName: string;
+            firstName: string | null;
+            lastName: string | null;
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
@@ -1417,10 +1417,10 @@ export declare const Chat: IModelType<{
     } & {
         id: string;
         avatar: any;
-        handle: string;
+        handle: string | null;
         status: string;
-        firstName: string;
-        lastName: string;
+        firstName: string | null;
+        lastName: string | null;
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
