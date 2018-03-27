@@ -1,5 +1,5 @@
-import {observable, when} from 'mobx'
-import * as Utils from './utils'
+// import {observable, when} from 'mobx'
+// import * as Utils from './utils'
 import {ApolloClient} from 'apollo-client'
 import {HttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
@@ -60,7 +60,7 @@ export class GraphQLTransport {
     // todo
   }
   async loadOwnBots(userId: string, after?: string, max: number = 10) {
-    const afterClause = after ? `after: "${after}"` : ''
+    // const afterClause = after ? `after: "${after}"` : ''
     const res = await this.client.query({
       query: gql`
         query LoadOwnBots {
@@ -109,23 +109,23 @@ export class GraphQLTransport {
   shareBot(id: string, server: string, recepients: string[], message: string, action: string) {}
 }
 
-function timeout(promise: Promise<any>, timeoutMillis: number) {
-  let timeout: any
-  return Promise.race([
-    promise,
-    new Promise(function(resolve, reject) {
-      timeout = setTimeout(function() {
-        reject('Operation timed out')
-      }, timeoutMillis)
-    })
-  ]).then(
-    function(v) {
-      clearTimeout(timeout)
-      return v
-    },
-    function(err) {
-      clearTimeout(timeout)
-      throw err
-    }
-  )
-}
+// function timeout(promise: Promise<any>, timeoutMillis: number) {
+//   let timeout: any
+//   return Promise.race([
+//     promise,
+//     new Promise(function(resolve, reject) {
+//       timeout = setTimeout(function() {
+//         reject('Operation timed out')
+//       }, timeoutMillis)
+//     })
+//   ]).then(
+//     function(v) {
+//       clearTimeout(timeout)
+//       return v
+//     },
+//     function(err) {
+//       clearTimeout(timeout)
+//       throw err
+//     }
+//   )
+// }
