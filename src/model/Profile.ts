@@ -15,10 +15,10 @@ export const Profile = types
     types.model('Profile', {
       id: types.identifier(types.string),
       avatar: FileRef,
-      handle: '',
+      handle: types.maybe(types.string),
       status: 'unavailable',
-      firstName: '',
-      lastName: '',
+      firstName: types.maybe(types.string),
+      lastName: types.maybe(types.string),
       isBlocked: false,
       isFollowed: false,
       isFollower: false,

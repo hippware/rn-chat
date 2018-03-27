@@ -34,10 +34,10 @@ export declare const Profile: IModelType<{
 } & {
     id: string;
     avatar: any;
-    handle: string;
+    handle: string | null;
     status: string;
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
@@ -198,10 +198,10 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
 } & {
     id: string;
     avatar: any;
-    handle: string;
+    handle: string | null;
     status: string;
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
