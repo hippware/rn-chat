@@ -63,7 +63,7 @@ const LocationStore = types
       self.start();
     }
     function start() {
-      Permissions.check('location', {type: 'always'}).then(self.setAlwaysOn);
+      Permissions.check('location', {type: 'always'}).then((response) => self.setAlwaysOn(response === 'authorized'));
       handler = reaction(
         () => wocky.connected,
         () => {
@@ -251,8 +251,8 @@ const LocationStore = types
       }
     }
 
-    function setAlwaysOn(response) {
-      self.alwaysOn = response === 'authorized';
+    function setAlwaysOn(value) {
+      self.alwaysOn = value;
     }
 
     return {start, finish, afterAttach, setAlwaysOn, watchPosition, setPosition, stopBackground, startBackground, positionError, getCurrentPosition, initialize};
