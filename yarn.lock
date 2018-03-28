@@ -91,7 +91,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/graphql@^0.12.6":
+"@types/graphql@^0.12.7":
   version "0.12.7"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.7.tgz#392e46d6c1bceb7d68c117233cea787dde72780c"
 
@@ -8368,11 +8368,11 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#b8f4caf":
+"wocky-client@github:hippware/wocky-client#26913ac47f398578e5414c5bf570659f3739bb0d":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#b8f4cafe5c0bda7605675fe41ab2caef74e10674"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#26913ac47f398578e5414c5bf570659f3739bb0d"
   dependencies:
-    "@types/graphql" "^0.12.6"
+    "@types/graphql" "^0.12.7"
     "@types/node-fetch" "^1.6.7"
     apollo-cache-inmemory "^1.1.12"
     apollo-client "^2.2.8"
