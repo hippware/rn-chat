@@ -30,7 +30,27 @@
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
     "globalSetup": "./__tests__/utils/setupJest.js",
-    "modulePaths": ["<rootDir>"]
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "globals": {
+      "ts-jest": {
+        "useBabelrc": true
+      }
+    }
   },
   "detox": {
     "configurations": {
@@ -103,6 +123,7 @@
     "xregexp": "^4.1.1"
   },
   "devDependencies": {
+    "@types/jest": "^22.2.2",
     "@types/react": "^16.1.0",
     "@types/react-native": "^0.52.20",
     "appcenter-cli": "^1.0.2",
@@ -141,6 +162,7 @@
     "reactotron-mst": "^1.15.0",
     "reactotron-react-native": "^1.14.0",
     "readline-sync": "^1.4.7",
+    "ts-jest": "^22.4.2",
     "tslib": "^1.9.0",
     "tslint": "^5.9.1",
     "typescript": "^2.8.1",
