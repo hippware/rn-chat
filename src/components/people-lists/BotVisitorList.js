@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import {observable} from 'mobx';
+import {autorun, observable} from 'mobx';
+import {Actions} from 'react-native-router-flux';
 import {observer, inject} from 'mobx-react/native';
 import Screen from '../Screen';
 import CardList from '../CardList';
@@ -13,16 +14,29 @@ type Props = {
   item: string,
 };
 
-@inject('wocky')
+@inject('wocky', 'locationStore')
 @observer
 class BotVisitorList extends React.Component<Props> {
   props: Props;
   @observable bot: Bot;
+  handler;
 
   componentWillMount() {
     this.bot = this.props.wocky.getBot({id: this.props.item});
     this.bot.visitors.load({force: true});
     this.props.wocky.loadBot(this.props.item);
+  }
+
+  componentDidMount() {
+    handler = autorun(() => {
+      if (!this.props.locationStore.alwaysOn) {
+        Actions.pop();
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    handler();
   }
 
   render() {

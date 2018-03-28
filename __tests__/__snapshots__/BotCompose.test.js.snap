@@ -327,19 +327,19 @@ exports[`BotCompose renders with owned bot 1`] = `
                   "profile": Object {
                     "avatar": null,
                     "botsSize": 0,
-                    "email": "",
-                    "firstName": "",
+                    "email": null,
+                    "firstName": null,
                     "followedSize": 0,
                     "followersSize": 0,
-                    "handle": "",
+                    "handle": null,
                     "id": "user",
                     "isBlocked": false,
                     "isFollowed": false,
                     "isFollower": false,
                     "isNew": false,
-                    "lastName": "",
+                    "lastName": null,
                     "loaded": true,
-                    "phoneNumber": "",
+                    "phoneNumber": null,
                     "roles": Array [],
                     "status": "available",
                   },
@@ -348,16 +348,16 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "user": Object {
                         "avatar": null,
                         "botsSize": 0,
-                        "firstName": "",
+                        "firstName": null,
                         "followedSize": 0,
                         "followersSize": 0,
-                        "handle": "",
+                        "handle": null,
                         "id": "user",
                         "isBlocked": false,
                         "isFollowed": false,
                         "isFollower": false,
                         "isNew": false,
-                        "lastName": "",
+                        "lastName": null,
                         "loaded": false,
                         "roles": Array [],
                         "status": "unavailable",
@@ -415,7 +415,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       resizeMode="contain"
                       source={
                         Object {
-                          "testUri": "../../../images/addBotPhoto.png",
+                          "testUri": "../../../images/defaultCover2.png",
                         }
                       }
                       style={

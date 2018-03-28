@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {defaultCover} from '../Global';
-import Bubble from './Bubble';
+import BotBubble from './BotBubble';
 import MapView from 'react-native-maps';
 import {observer} from 'mobx-react/native';
 import {isAlive} from 'mobx-state-tree';
@@ -31,7 +31,7 @@ const BotMarker = observer(({id, bot, scale, ...props}: Props) => {
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onSelect={props.onImagePress}
     >
-      <Bubble text={text} scale={scale} image={image} showLoader={showLoader} {...props} />
+      <BotBubble bot={bot} scale={scale} />
     </MapView.Marker.Animated>
   );
 });
