@@ -5,10 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Don't propagate foreground push notifications.
+
+
+# 2.3.1 - 2018 March 27
+
 * Display alert when user attempts to disable footprint CTA (#2033)
 * Explore Nearby Overlay "Always Primer" when user has setting set to "Always" (#2037)
 * Deeplink for bot visitors screen (#2038)
 * Deep linking doesn't work for background mode (#2041)
+* Footprint CTA should be removed with Un-Saving/Un-Subscribing from a bot (#2027)
 
 
 # 2.3.0 - 2018 March 23
