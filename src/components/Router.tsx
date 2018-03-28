@@ -1,47 +1,53 @@
-// @flow
+import React from 'react'
+import { TouchableOpacity, Text, Keyboard } from 'react-native'
+import { when, autorun, autorunAsync } from 'mobx'
+import { observer, inject } from 'mobx-react/native'
 
-import React from 'react';
-import {TouchableOpacity, Text, Keyboard} from 'react-native';
-import {when, autorun, autorunAsync} from 'mobx';
-import {observer, inject} from 'mobx-react/native';
+import { colors } from '../constants'
 
-import {colors} from '../constants';
+import { settings } from '../globals'
 
-import {settings} from '../globals';
-import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
+import {
+  Actions,
+  Router,
+  Scene,
+  Stack,
+  Tabs,
+  Drawer,
+  Modal,
+  Lightbox
+} from 'react-native-router-flux'
 
-import {k} from './Global';
-import {CubeNavigator} from 'react-native-cube-transition';
+import { k } from './Global'
+import { CubeNavigator } from 'react-native-cube-transition'
 
-import Camera from './Camera';
-import SideMenu from './SideMenu';
-import CreateMessage from './CreateMessage';
-import Launch from './Launch';
-import SignUp from './SignUp';
-import Home from './Home';
-import MyAccount from './MyAccount';
-import ProfileDetail from './ProfileDetail';
-import AddFriends from './AddFriends';
-import ChatListScreen from './ChatListScreen';
-import ChatScreen from './ChatScreen';
-// import BotNoteScene from './BotNote';
-import BotCompose from './BotCompose';
-import BotCreate from './map/BotCreate';
-import BotDetails from './BotDetails';
-import BotsScreen from './BotsScreen';
-import ExploreNearBy from './map/ExploreNearBy';
-import TestRegister from './TestRegister';
-import CodePushScene from './CodePushScene';
-import OnboardingSlideshow from './OnboardingSlideshowScene';
-import BotAddressScene from './map/BotAddressScene';
-import * as peopleLists from './people-lists';
-import ReportUser from './report-modals/ReportUser';
-import ReportBot from './report-modals/ReportBot';
-import SignIn from './SignIn';
-import VerifyCode from './VerifyCode';
-import * as modals from './modals';
+import Camera from './Camera'
+import SideMenu from './SideMenu'
+import CreateMessage from './CreateMessage'
+import Launch from './Launch'
+import SignUp from './SignUp'
+import Home from './Home'
+import MyAccount from './MyAccount'
+import ProfileDetail from './ProfileDetail'
+import ChatListScreen from './ChatListScreen'
+import ChatScreen from './ChatScreen'
+import BotCompose from './BotCompose'
+import BotCreate from './map/BotCreate'
+import BotDetails from './BotDetails'
+import BotsScreen from './BotsScreen'
+import ExploreNearBy from './map/ExploreNearBy'
+import TestRegister from './TestRegister'
+import CodePushScene from './CodePushScene'
+import OnboardingSlideshow from './OnboardingSlideshowScene'
+import BotAddressScene from './map/BotAddressScene'
+import * as peopleLists from './people-lists'
+import ReportUser from './report-modals/ReportUser'
+import ReportBot from './report-modals/ReportBot'
+import SignIn from './SignIn'
+import VerifyCode from './VerifyCode'
+import * as modals from './modals'
 
-const STAGING_COLOR = 'rgb(28,247,39)';
+const STAGING_COLOR = 'rgb(28,247,39)'
 
 const dayNavBar = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -57,23 +63,23 @@ const dayNavBar = {
     fontSize: 16 * k,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   leftButtonIconStyle: {
-    marginLeft: 10 * k,
+    marginLeft: 10 * k
   },
   rightButtonTextStyle: {
     marginRight: 10 * k,
     color: colors.PINK,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   leftButtonTextStyle: {
     marginLeft: 10 * k,
     color: colors.PINK,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   sceneStyle: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   // headerMode: 'screen',
   navigationBarStyle: {
@@ -83,46 +89,50 @@ const dayNavBar = {
     shadowColor: 'transparent',
     shadowRadius: 0,
     shadowOffset: {
-      height: 0,
-    },
-  },
-};
+      height: 0
+    }
+  }
+}
 
 const tinyRobotTitle = () => (
   <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
   </TouchableOpacity>
-);
+)
 
-const iconClose = require('../../images/iconClose.png');
-const baseMessagesIcon = require('../../images/iconMessage.png');
-const newMessagesIcon = require('../../images/newMessages.png');
-const sendActive = require('../../images/sendActive.png');
+const iconClose = require('../../images/iconClose.png')
+const baseMessagesIcon = require('../../images/iconMessage.png')
+const newMessagesIcon = require('../../images/newMessages.png')
+const sendActive = require('../../images/sendActive.png')
 
-const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
+const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
 
 // prevent keyboard from persisting across scene transitions
 autorun(() => {
-  if (Actions.currentScene !== '') Keyboard.dismiss();
-});
+  if (Actions.currentScene !== '') Keyboard.dismiss()
+})
 
 @inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics')
 @observer
 class TinyRobotRouter extends React.Component<{}> {
   componentDidMount() {
-    const {wocky, locationStore, store} = this.props;
+    const { wocky, locationStore, store } = this.props
 
     autorunAsync(() => {
       if (wocky.connected && !locationStore.enabled) {
-        Actions.locationWarning && Actions.locationWarning();
+        Actions.locationWarning && Actions.locationWarning()
       }
-    }, 1000);
+    }, 1000)
 
     autorunAsync(() => {
-      if (Actions.currentScene === '_fullMap' && !locationStore.alwaysOn && !store.locationPrimed) {
-        Actions.locationPrimer && Actions.locationPrimer();
+      if (
+        Actions.currentScene === '_fullMap' &&
+        !locationStore.alwaysOn &&
+        !store.locationPrimed
+      ) {
+        Actions.locationPrimer && Actions.locationPrimer()
       }
-    }, 1000);
+    }, 1000)
   }
 
   render() {
@@ -166,9 +176,7 @@ class TinyRobotRouter extends React.Component<{}> {
                       <Scene key='botsScene' component={BotsScreen} title='Favorites' />
                       <Scene key='friendsMain'>
                         <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
-                        <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                         <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
-                        <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
                       </Scene>
                     </Tabs>
 

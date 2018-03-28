@@ -34,7 +34,6 @@ class EventList extends React.Component<Props> {
         <FlatList
           data={events.length > 0 ? events.list : null}
           ref={r => (this.list = r)}
-          // onRefresh=@TODO
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
@@ -44,7 +43,7 @@ class EventList extends React.Component<Props> {
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.id}
         />
-        <UpdateButton scroll={this.scrollToTop} visible />
+        <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
         <ReviewButton />
       </View>
     )
@@ -67,7 +66,7 @@ const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
     </TouchableOpacity>
   ) : null)))
 
-// TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
+// TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1520
 const ReviewButton = () => null
 
 export default EventList

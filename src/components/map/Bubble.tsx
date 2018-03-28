@@ -1,48 +1,46 @@
-// @flow
-
-import React from 'react';
-import {View, Animated, Image} from 'react-native';
-import Triangle from './Triangle';
-import {width as w} from '../Global';
-import {RText, Spinner} from '../common';
-import {colors} from '../../constants';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {View, Animated, Image} from 'react-native'
+import Triangle from './Triangle'
+import {width as w} from '../Global'
+import {RText, Spinner} from '../common'
+import {colors} from '../../constants'
+import {observer} from 'mobx-react/native'
 
 // scale here - 1 is full image, 0.5 is bot details UI (half-screen), 0 is full map mode
 type Props = {
   text: string,
-  image: Image.props.source,
-  scale?: number,
+  image: any,
+  scale: number,
   showLoader: boolean,
-};
+}
 
 @observer
 export default class Bubble extends React.Component<Props> {
-  animatedValue: any;
+  animatedValue: any
 
-  constructor(props) {
-    super(props);
-    this.animatedValue = new Animated.Value(this.props.scale);
+  constructor(props: Props) {
+    super(props)
+    this.animatedValue = new Animated.Value(this.props.scale)
   }
 
   componentWillReceiveProps(props: Props) {
-    Animated.timing(this.animatedValue, {toValue: props.scale, duration: 250}).start();
+    Animated.timing(this.animatedValue, {toValue: props.scale, duration: 250}).start()
   }
 
   render() {
-    const {scale, image, text, showLoader} = this.props;
-    const fullMap = scale === 0;
-    const fullImage = scale === 1;
+    const {scale, image, text, showLoader} = this.props
+    const fullMap = scale === 0
+    const fullImage = scale === 1
     const width = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
       outputRange: [58, 175, w],
-    });
+    })
 
     const height = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
       outputRange: [58, 203, w],
-    });
-    const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2;
+    })
+    const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2
     // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
@@ -63,6 +61,6 @@ export default class Bubble extends React.Component<Props> {
         </Animated.View>
         {!fullImage && <Triangle width={fullMap ? 14 : 11} height={fullMap ? 8 : 11} color={colors.PINK} direction='down' />}
       </View>
-    );
+    )
   }
 }
