@@ -1,33 +1,48 @@
-// @flow
+import React from 'react'
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {colors} from '../constants'
+import {k} from './Global'
+import {observer, inject} from 'mobx-react/native'
 
-import React, {Component} from 'react';
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native';
-import {colors} from '../constants';
-import {k} from './Global';
-import {observer, inject} from 'mobx-react/native';
+import EventCard from './event-cards/EventCard'
+import ListFooter from './ListFooter'
+import LinearGradient from 'react-native-linear-gradient'
+import Swipeable from 'react-native-swipeable'
+import {RText} from './common'
 
-import EventCard from './event-cards/EventCard';
-import ListFooter from './ListFooter';
-import LinearGradient from 'react-native-linear-gradient';
-import Swipeable from 'react-native-swipeable';
-import {RText} from './common';
-import HomeStreamHeader from './HomestreamHeader';
+const leftContent = <Text />
+const HomeStreamHeader = inject('wocky')(observer(({visible, wocky}) => {
+  return visible ? (
+    <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => wocky.setSessionCount(3)} onRightActionRelease={() => wocky.setSessionCount(3)}>
+      <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
+        <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
+        <View style={{flex: 1}}>
+          <Text style={styles.welcome}>
+            {'Welcome to '}
+            <Text style={{fontFamily: 'Roboto-Bold'}}>tinyrobot</Text>
+              ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+          </Text>
+        </View>
+      </LinearGradient>
+    </Swipeable>
+  ) : null
+}))
 
 @inject('wocky')
 @observer
-class EventList extends Component {
-  list: ?Object;
+class EventList extends React.Component<{}> {
+  list: ?Object
 
   scrollToTop = () => {
-    this.list && this.list.props.data.length && this.list.scrollToIndex({animated: true, index: 0});
-  };
+    this.list && this.list.props.data.length && this.list.scrollToIndex({animated: true, index: 0})
+  }
 
   render() {
-    const {sessionCount, events, connected} = this.props.wocky;
-    const backgroundColor = colors.LIGHT_GREY;
-    const footerImage = require('../../images/graphicEndHome.png');
-    const {finished} = events;
-    const isFirstSession = sessionCount <= 2;
+    const {sessionCount, events, connected} = this.props.wocky
+    const backgroundColor = colors.LIGHT_GREY
+    const footerImage = require('../../images/graphicEndHome.png')
+    const {finished} = events
+    const isFirstSession = sessionCount <= 2
 
     return (
       <View style={{flex: 1, backgroundColor}}>
@@ -47,7 +62,7 @@ class EventList extends Component {
         <UpdateButton scroll={this.scrollToTop} visible />
         <ReviewButton />
       </View>
-    );
+    )
   }
 }
 
@@ -55,8 +70,8 @@ const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
   (visible && wocky.updates.length ? (
     <TouchableOpacity
       onPress={() => {
-        scroll();
-        setTimeout(wocky.incorporateUpdates, 500);
+        scroll()
+        setTimeout(wocky.incorporateUpdates, 500)
       }}
       style={styles.updateButton}
     >
@@ -65,12 +80,12 @@ const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
             New Updates
       </RText>
     </TouchableOpacity>
-  ) : null)));
+  ) : null)))
 
 // TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
-const ReviewButton = () => null;
+const ReviewButton = () => null
 
-export default EventList;
+export default EventList
 
 const styles = StyleSheet.create({
   gradient: {
@@ -98,4 +113,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-});
+})
