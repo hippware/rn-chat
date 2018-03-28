@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "importHelpers": true,
-    "lib": ["dom", "es6"]
+    "lib": ["dom", "es6", "esnext.asynciterable"]
   },
   "files": ["src/index.ts"]
 }

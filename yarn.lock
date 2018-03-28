@@ -10,9 +10,9 @@
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.4.tgz#fe86315d9a66827feeb16f73bc954688ec950e18"
 
-"@types/graphql@^0.12.6":
-  version "0.12.6"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
+"@types/graphql@^0.12.7":
+  version "0.12.7"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.7.tgz#392e46d6c1bceb7d68c117233cea787dde72780c"
 
 "@types/mocha@2.2.43":
   version "2.2.43"
