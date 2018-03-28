@@ -1,11 +1,21 @@
-import React, {Component} from 'react';
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native';
-import {observer, inject} from 'mobx-react/native';
-import BotBubble from './map/BotBubble';
+import React, {Component} from 'react'
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
+import Swipeable from 'react-native-swipeable'
+import LinearGradient from 'react-native-linear-gradient'
 
-const leftContent = <Text />;
+import BotBubble from './map/BotBubble'
+import {k} from './Global'
 
-const WelcomeNote = inject('wocky')(observer(({visible, wocky}) => {
+const leftContent = <Text />
+
+type Props = {
+  wocky?: any,
+  locationStore?: any,
+  visible: boolean
+}
+
+const WelcomeNote = inject('wocky')(observer(({visible, wocky}: Props) => {
   return visible ? (
     <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => wocky.setSessionCount(3)} onRightActionRelease={() => wocky.setSessionCount(3)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
@@ -19,19 +29,19 @@ const WelcomeNote = inject('wocky')(observer(({visible, wocky}) => {
         </View>
       </LinearGradient>
     </Swipeable>
-  ) : null;
-}));
+  ) : null
+}))
 
 @inject('wocky', 'locationStore')
 @observer
-class HomeStreamHeader extends React.Component {
+class HomeStreamHeader extends React.Component<Props> {
   componentDidMount() {
-    this.props.wocky.profile && this.props.wocky.profile.subscribedBots.load();
+    this.props.wocky.profile && this.props.wocky.profile.subscribedBots.load()
   }
   render() {
     return (
       <View>
-        <WelcomeNote />
+        <WelcomeNote {...this.props} />
         {this.props.locationStore.alwaysOn &&
           this.props.wocky.profile &&
           !!this.props.wocky.profile.activeBots.length && (
@@ -48,8 +58,25 @@ class HomeStreamHeader extends React.Component {
             />
           )}
       </View>
-    );
+    )
   }
 }
 
-export default HomeStreamHeader;
+export default HomeStreamHeader
+
+const styles = StyleSheet.create({
+  gradient: {
+    height: 95 * k,
+    paddingTop: 17.5 * k,
+    paddingRight: 26.6 * k,
+    paddingLeft: 17.5 * k,
+    flexDirection: 'row',
+  },
+  welcome: {
+    paddingLeft: 19.8 * k,
+    fontFamily: 'Roboto-Regular',
+    fontSize: 15 * k,
+    color: 'white',
+    backgroundColor: 'transparent',
+  },
+})
