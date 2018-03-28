@@ -17,12 +17,12 @@ const geoOverlay = require('../../../images/geoShareOverlay.png');
 const BotImage = observer(({bot, image, isGeo}: Props) => {
   const img = (image && image.source) || (bot.image && bot.image.thumbnail);
   const source = img || (isGeo ? geoDefault : defaultCover[bot.coverColor % 4]);
-  const inner = <Image style={styles.image} source={source} resizeMode='contain' />;
+  const inner = <Image style={styles.image} source={source} resizeMode='cover' />;
   return isGeo && img ? (
     <View style={styles.image}>
       {inner}
-      <View style={[styles.image, {backgroundColor: 'rgba(0,0,0,0.3)', position: 'absolute', alignItems: 'center'}]}>
-        <Image source={geoOverlay} style={{flex: 1}} resizeMode='contain' />
+      <View style={{backgroundColor: 'rgba(0,0,0,0.3)', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, alignItems: 'center'}}>
+        <Image source={geoOverlay} style={styles.image} resizeMode='cover' />
       </View>
     </View>
   ) : (
