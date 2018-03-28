@@ -87,6 +87,7 @@ class XmppTransport {
     //   const to = outgoing === 'true' ? sender : this.username
     //   return {id: sender, message: processMessage({...message, to, from, time: Utils.iso8601toDate(timestamp).getTime()}, this.username!)}
     // })
+    return []
   }
 
   async generateId() {
