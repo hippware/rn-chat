@@ -55,3 +55,4 @@ android/app/libs
 */fastlane/screenshots
 .tmp/
 .project 
+yarn-error.log
