@@ -65,7 +65,6 @@ export const Bot = types
     },
     setGeofence: (value: boolean) => {
       self.geofence = value
-      self.guest = value
     },
     setPublic: (value: boolean) => {
       self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER

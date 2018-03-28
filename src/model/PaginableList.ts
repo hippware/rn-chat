@@ -107,6 +107,7 @@ export function createPaginable(type: any) {
               // self.finished = list.length === 0
             } catch (e) {
               console.warn('PagingableList.load ERROR:', e)
+              self.finished = true
             } finally {
               self.loading = false
             }

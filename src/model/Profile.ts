@@ -6,7 +6,7 @@ import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
-import {IBotPaginableList} from './Bot'
+import {IBotPaginableList, IBot} from './Bot'
 
 export const Profile = types
   .compose(
@@ -100,6 +100,9 @@ export const Profile = types
         },
         get subscribedBots(): IBotPaginableList {
           return subscribedBots
+        },
+        get activeBots(): Array<IBot> {
+          return subscribedBots.list.filter((bot: IBot) => bot.geofence && bot.guest && bot.visitorsSize)
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {
