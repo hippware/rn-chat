@@ -6,26 +6,25 @@ import {Actions} from 'react-native-router-flux'
 import * as log from '../utils/log'
 
 // TODO: need to export declaration file to make this work as expected?
-import {Wocky} from 'wocky-client'
+import {Wocky, IWocky} from 'wocky-client'
 
 type Props = {
-  wocky?: Wocky
-  notificationStore: any,
-  locationStore: any,
-  log: any,
-  analytics: any
+  wocky?: IWocky,
+  notificationStore?: any,
+  locationStore?: any,
+  log?: any,
+  analytics?: any
 }
 
 // https://github.com/mobxjs/mobx-react#with-typescript
-@inject((allStores) => ({
-  // userStore: allStores.userStore as IUserStore
-  wocky: allStores.wocky as Wocky,
+@inject((allStores: any) => ({
+  wocky: allStores.wocky as IWocky,
   notificationStore: allStores.notificationStore as any,
   locationStore: allStores.locationStore as any,
   log: allStores.log as any,
   analytics: allStores.analytics as any,
 }))
-export default class Connectivity extends React.Component<Props> {
+class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
   isActive = true
@@ -118,3 +117,5 @@ export default class Connectivity extends React.Component<Props> {
     return null
   }
 }
+
+export default Connectivity
