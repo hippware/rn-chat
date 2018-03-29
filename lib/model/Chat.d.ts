@@ -14,7 +14,6 @@ export declare const Chat: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -28,7 +27,6 @@ export declare const Chat: IModelType<{
     participants: IObservableArray<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -66,6 +64,7 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -90,6 +89,7 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -114,6 +114,7 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -138,6 +139,7 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -163,7 +165,6 @@ export declare const Chat: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -194,7 +195,6 @@ export declare const Chat: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -260,6 +260,7 @@ export declare const Chat: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -284,6 +285,7 @@ export declare const Chat: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -308,6 +310,7 @@ export declare const Chat: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -332,6 +335,7 @@ export declare const Chat: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -368,7 +372,6 @@ export declare const Chat: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -397,7 +400,6 @@ export declare const Chat: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -475,7 +477,6 @@ export declare const Chat: IModelType<{
     _messages: IObservableArray<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -498,7 +499,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -536,6 +536,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -560,6 +561,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -584,6 +586,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -608,6 +611,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -633,7 +637,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -664,7 +667,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -730,6 +732,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -754,6 +757,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -778,6 +782,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -802,6 +807,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -838,7 +844,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -867,7 +872,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -972,7 +976,6 @@ export declare const Chat: IModelType<{
     message: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -995,7 +998,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1033,6 +1035,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1057,6 +1060,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1081,6 +1085,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1105,6 +1110,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1130,7 +1136,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1161,7 +1166,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1227,6 +1231,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1251,6 +1256,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1275,6 +1281,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1299,6 +1306,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1335,7 +1343,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1364,7 +1371,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -1460,7 +1466,6 @@ export declare const Chat: IModelType<{
     readonly messages: IObservableArray<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -1483,7 +1488,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1521,6 +1525,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1545,6 +1550,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1569,6 +1575,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1593,6 +1600,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1618,7 +1626,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1649,7 +1656,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1715,6 +1721,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1739,6 +1746,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1763,6 +1771,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1787,6 +1796,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1823,7 +1833,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1852,7 +1861,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -1958,7 +1966,6 @@ export declare const Chat: IModelType<{
     readonly followedParticipants: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -1996,6 +2003,7 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2020,6 +2028,7 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2044,6 +2053,7 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2068,6 +2078,7 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2093,7 +2104,6 @@ export declare const Chat: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -2124,7 +2134,6 @@ export declare const Chat: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2190,6 +2199,7 @@ export declare const Chat: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2214,6 +2224,7 @@ export declare const Chat: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2238,6 +2249,7 @@ export declare const Chat: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2262,6 +2274,7 @@ export declare const Chat: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2298,7 +2311,6 @@ export declare const Chat: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2327,7 +2339,6 @@ export declare const Chat: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -2406,7 +2417,6 @@ export declare const Chat: IModelType<{
     readonly last: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -2429,7 +2439,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -2467,6 +2476,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2491,6 +2501,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2515,6 +2526,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2539,6 +2551,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2564,7 +2577,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2595,7 +2607,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -2661,6 +2672,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -2685,6 +2697,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -2709,6 +2722,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -2733,6 +2747,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -2769,7 +2784,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -2798,7 +2812,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -2891,7 +2904,6 @@ export declare const Chat: IModelType<{
     readonly first: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -2914,7 +2926,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -2952,6 +2963,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2976,6 +2988,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3000,6 +3013,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3024,6 +3038,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3049,7 +3064,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -3080,7 +3094,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -3146,6 +3159,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3170,6 +3184,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3194,6 +3209,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3218,6 +3234,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3254,7 +3271,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -3283,7 +3299,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -3384,7 +3399,6 @@ export declare const Chat: IModelType<{
     addMessage: (msg: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -3407,7 +3421,6 @@ export declare const Chat: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -3445,6 +3458,7 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3469,6 +3483,7 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3493,6 +3508,7 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3517,6 +3533,7 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -3542,7 +3559,6 @@ export declare const Chat: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -3573,7 +3589,6 @@ export declare const Chat: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -3639,6 +3654,7 @@ export declare const Chat: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3663,6 +3679,7 @@ export declare const Chat: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3687,6 +3704,7 @@ export declare const Chat: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3711,6 +3729,7 @@ export declare const Chat: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -3747,7 +3766,6 @@ export declare const Chat: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -3776,7 +3794,6 @@ export declare const Chat: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -3869,7 +3886,6 @@ export declare const Chat: IModelType<{
     addParticipant: (profile: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -3907,6 +3923,7 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -3931,6 +3948,7 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -3955,6 +3973,7 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -3979,6 +3998,7 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -4004,7 +4024,6 @@ export declare const Chat: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -4035,7 +4054,6 @@ export declare const Chat: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -4101,6 +4119,7 @@ export declare const Chat: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4125,6 +4144,7 @@ export declare const Chat: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4149,6 +4169,7 @@ export declare const Chat: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4173,6 +4194,7 @@ export declare const Chat: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4209,7 +4231,6 @@ export declare const Chat: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -4238,7 +4259,6 @@ export declare const Chat: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {

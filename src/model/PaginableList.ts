@@ -2,12 +2,12 @@
 import {types, destroy, getEnv, flow, getParent, IModelType, isAlive, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {IBase} from './Base'
 
 export function createPaginable(type: any) {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
+      cursor: types.maybe(types.string),
       count: types.maybe(types.number)
     })
     .named('PaginableList')
@@ -29,9 +29,6 @@ export function createPaginable(type: any) {
     }))
     .extend(self => {
       let request: Function
-      function lastId() {
-        return self.result.length ? (self.result[self.result.length - 1] as IBase).pageId : null
-      }
       return {
         views: {
           get length() {
@@ -65,8 +62,9 @@ export function createPaginable(type: any) {
             }
             self.loading = true
             try {
-              const {list, count, ...data} = yield request(lastId(), max)
+              const {list, count, cursor, ...data} = yield request(self.cursor, max)
               self.count = count
+              self.cursor = cursor || list.length ? list[list.length - 1].id : null
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
 
@@ -85,6 +83,7 @@ export function createPaginable(type: any) {
           }),
           refresh: () => {
             self.result.clear()
+            self.cursor = null
             self.finished = false
           },
           load: flow<Array<any>>(function* load({force} = {}) {
@@ -97,8 +96,9 @@ export function createPaginable(type: any) {
             }
             self.loading = true
             try {
-              const {list, count, ...data} = yield request(lastId())
+              const {list, count, cursor, ...data} = yield request(self.cursor)
               self.count = count
+              self.cursor = cursor || list.length ? list[list.length - 1].id : null
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
 

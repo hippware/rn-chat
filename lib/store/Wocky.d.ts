@@ -8,14 +8,6 @@ export declare const EventEntity: IType<({
 } & {
     bot?: any;
 } & {
-    created?: any;
-}) | ({
-    id?: any;
-} & {
-    time?: any;
-} & {
-    bot?: any;
-} & {
     post?: any;
 }) | ({
     id?: any;
@@ -41,6 +33,14 @@ export declare const EventEntity: IType<({
 } & {
     bot?: any;
 } & {
+    created?: any;
+}) | ({
+    id?: any;
+} & {
+    time?: any;
+} & {
+    bot?: any;
+} & {
     isEnter?: any;
     profile?: any;
 }) | ({
@@ -52,7 +52,6 @@ export declare const EventEntity: IType<({
 }), ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -67,7 +66,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -105,6 +103,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -129,6 +128,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -153,6 +153,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -177,6 +178,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -202,7 +204,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -233,7 +234,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -299,6 +299,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -323,6 +324,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -347,6 +349,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -371,6 +374,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -407,7 +411,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -436,7 +439,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -515,7 +517,6 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -546,7 +547,6 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -584,6 +584,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -608,6 +609,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -632,6 +634,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -656,6 +659,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -681,7 +685,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -712,7 +715,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -778,6 +780,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -802,6 +805,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -826,6 +830,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -850,6 +855,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -886,7 +892,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -915,7 +920,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -1022,6 +1026,7 @@ export declare const EventEntity: IType<({
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1046,6 +1051,7 @@ export declare const EventEntity: IType<({
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1070,6 +1076,7 @@ export declare const EventEntity: IType<({
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1094,6 +1101,7 @@ export declare const EventEntity: IType<({
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1130,7 +1138,6 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1159,7 +1166,6 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1197,6 +1203,7 @@ export declare const EventEntity: IType<({
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1221,6 +1228,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1245,6 +1253,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1269,6 +1278,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1294,7 +1304,6 @@ export declare const EventEntity: IType<({
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1325,7 +1334,6 @@ export declare const EventEntity: IType<({
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -1391,6 +1399,7 @@ export declare const EventEntity: IType<({
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1415,6 +1424,7 @@ export declare const EventEntity: IType<({
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1439,6 +1449,7 @@ export declare const EventEntity: IType<({
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1463,6 +1474,7 @@ export declare const EventEntity: IType<({
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1544,7 +1556,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -1582,6 +1593,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1606,6 +1618,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1630,6 +1643,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1654,6 +1668,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1679,7 +1694,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1710,7 +1724,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1776,6 +1789,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1800,6 +1814,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1824,6 +1839,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1848,6 +1864,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1884,7 +1901,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1913,1950 +1929,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & any & {
-                    readonly $treenode?: any;
-                }) | null;
-            } & {
-                setContent: (content: string) => string;
-                setTitle: (title: string) => string;
-                publish: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            } & ISnapshottable<{
-                id?: any;
-            } & {
-                time?: any;
-            } & {
-                loaded?: any;
-            } & {} & {
-                id?: any;
-                content?: any;
-                title?: any;
-                image?: any;
-                profile?: any;
-            }>;
-            removePost: (a1: string) => Promise<any>;
-            subscribe: () => Promise<{}>;
-            subscribeGeofence: () => Promise<{}>;
-            unsubscribe: () => Promise<{}>;
-            unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, action?: string) => void;
-            setNew: (value: boolean) => void;
-            load: (d?: any) => void;
-        } & {
-            shareToFriends: (message?: string) => void;
-            shareToFollowers: (message?: string) => void;
-        } & {
-            readonly isPublic: boolean;
-            readonly coverColor: number;
-            readonly snapshot: any;
-        } & {
-            readonly $treenode?: any;
-        })[];
-        readonly displayName: string;
-    } & {
-        readonly $treenode?: any;
-    };
-} & {
-    created: boolean;
-} & {
-    readonly $treenode?: any;
-}) | ({
-    id: string;
-} & {
-    readonly pageId: string;
-    readonly _snapshot: any;
-    readonly service: any;
-} & {
-    readonly snapshot: any;
-} & {
-    time: number;
-} & {
-    readonly date: Date;
-    readonly dateAsString: string;
-    readonly relativeDateAsString: string;
-} & {
-    readonly target: {
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly _snapshot: any;
-        readonly service: any;
-    } & {
-        readonly snapshot: any;
-    } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
-        id: string;
-        avatar: any;
-        handle: string | null;
-        status: string;
-        firstName: string | null;
-        lastName: string | null;
-        isBlocked: boolean;
-        isFollowed: boolean;
-        isFollower: boolean;
-        isNew: boolean;
-        followersSize: number;
-        followedSize: number;
-        botsSize: number;
-        roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        afterAttach: () => void;
-        follow: () => Promise<{}>;
-        unfollow: () => Promise<{}>;
-        block: () => Promise<{}>;
-        unblock: () => Promise<{}>;
-        setStatus: (status: string) => void;
-    } & {
-        readonly snapshot: any;
-        readonly isOwn: boolean;
-        readonly isVerified: boolean;
-        readonly isMutual: boolean;
-        readonly followers: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly followed: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly ownBots: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly subscribedBots: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly activeBots: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
-            updated: boolean;
-            updating: boolean;
-            updateError: string;
-        } & {
-            update: (a1: any) => Promise<any>;
-        } & {
-            save: () => Promise<{}>;
-        } & {
-            id: string;
-            isSubscribed: boolean;
-            guest: boolean;
-            visitor: boolean;
-            title: string | null;
-            server: string | null;
-            radius: number;
-            geofence: boolean;
-            owner: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                id: string;
-                avatar: any;
-                handle: string | null;
-                status: string;
-                firstName: string | null;
-                lastName: string | null;
-                isBlocked: boolean;
-                isFollowed: boolean;
-                isFollower: boolean;
-                isNew: boolean;
-                followersSize: number;
-                followedSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                afterAttach: () => void;
-                follow: () => Promise<{}>;
-                unfollow: () => Promise<{}>;
-                block: () => Promise<{}>;
-                unblock: () => Promise<{}>;
-                setStatus: (status: string) => void;
-            } & any & {
-                readonly $treenode?: any;
-            }) | null;
-            image: any;
-            description: string | null;
-            visibility: number;
-            location: ({
-                latitude: number;
-                longitude: number;
-                accuracy: number | null;
-            } & {
-                isCurrent: boolean;
-            } & {
-                load: (data: any) => void;
-                addToIQ: (iq: any) => void;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            address: string;
-            followersSize: number;
-            guestsSize: number;
-            visitorsSize: number;
-            totalItems: number;
-            addressData: {
-                city: string;
-                country: string;
-                state: string;
-                county: string;
-            } & {
-                readonly locationShort: string;
-            } & {
-                readonly $treenode?: any;
-            };
-            subscribers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            guests: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            visitors: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            posts: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            error: string;
-        } & {
-            isNew: boolean;
-            loading: boolean;
-        } & {
-            setError: (value: string) => void;
-            startLoading(): void;
-            finishLoading(): void;
-            setGeofence: (value: boolean) => void;
-            setPublic: (value: boolean) => void;
-            afterAttach: () => void;
-            createPost: (content?: string) => {
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                time: number;
-            } & {
-                readonly date: Date;
-                readonly dateAsString: string;
-                readonly relativeDateAsString: string;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                id: string;
-                content: string;
-                title: string;
-                image: any;
-                profile: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & any & {
-                    readonly $treenode?: any;
-                }) | null;
-            } & {
-                setContent: (content: string) => string;
-                setTitle: (title: string) => string;
-                publish: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            } & ISnapshottable<{
-                id?: any;
-            } & {
-                time?: any;
-            } & {
-                loaded?: any;
-            } & {} & {
-                id?: any;
-                content?: any;
-                title?: any;
-                image?: any;
-                profile?: any;
-            }>;
-            removePost: (a1: string) => Promise<any>;
-            subscribe: () => Promise<{}>;
-            subscribeGeofence: () => Promise<{}>;
-            unsubscribe: () => Promise<{}>;
-            unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, action?: string) => void;
-            setNew: (value: boolean) => void;
-            load: (d?: any) => void;
-        } & {
-            shareToFriends: (message?: string) => void;
-            shareToFollowers: (message?: string) => void;
-        } & {
-            readonly isPublic: boolean;
-            readonly coverColor: number;
-            readonly snapshot: any;
-        } & {
-            readonly $treenode?: any;
-        })[];
-        readonly displayName: string;
-    } & {
-        readonly $treenode?: any;
-    };
-} & {
-    bot: {
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly _snapshot: any;
-        readonly service: any;
-    } & {
-        readonly snapshot: any;
-    } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
-        updated: boolean;
-        updating: boolean;
-        updateError: string;
-    } & {
-        update: (a1: any) => Promise<any>;
-    } & {
-        save: () => Promise<{}>;
-    } & {
-        id: string;
-        isSubscribed: boolean;
-        guest: boolean;
-        visitor: boolean;
-        title: string | null;
-        server: string | null;
-        radius: number;
-        geofence: boolean;
-        owner: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            loaded: boolean;
-        } & {
-            load: (data: any) => void;
-        } & {
-            id: string;
-            avatar: any;
-            handle: string | null;
-            status: string;
-            firstName: string | null;
-            lastName: string | null;
-            isBlocked: boolean;
-            isFollowed: boolean;
-            isFollower: boolean;
-            isNew: boolean;
-            followersSize: number;
-            followedSize: number;
-            botsSize: number;
-            roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            afterAttach: () => void;
-            follow: () => Promise<{}>;
-            unfollow: () => Promise<{}>;
-            block: () => Promise<{}>;
-            unblock: () => Promise<{}>;
-            setStatus: (status: string) => void;
-        } & {
-            readonly snapshot: any;
-            readonly isOwn: boolean;
-            readonly isVerified: boolean;
-            readonly isMutual: boolean;
-            readonly followers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly followed: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly ownBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly subscribedBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly activeBots: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                updated: boolean;
-                updating: boolean;
-                updateError: string;
-            } & {
-                update: (a1: any) => Promise<any>;
-            } & {
-                save: () => Promise<{}>;
-            } & {
-                id: string;
-                isSubscribed: boolean;
-                guest: boolean;
-                visitor: boolean;
-                title: string | null;
-                server: string | null;
-                radius: number;
-                geofence: boolean;
-                owner: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & any & {
-                    readonly $treenode?: any;
-                }) | null;
-                image: any;
-                description: string | null;
-                visibility: number;
-                location: ({
-                    latitude: number;
-                    longitude: number;
-                    accuracy: number | null;
-                } & {
-                    isCurrent: boolean;
-                } & {
-                    load: (data: any) => void;
-                    addToIQ: (iq: any) => void;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                address: string;
-                followersSize: number;
-                guestsSize: number;
-                visitorsSize: number;
-                totalItems: number;
-                addressData: {
-                    city: string;
-                    country: string;
-                    state: string;
-                    county: string;
-                } & {
-                    readonly locationShort: string;
-                } & {
-                    readonly $treenode?: any;
-                };
-                subscribers: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                guests: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                visitors: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                posts: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                error: string;
-            } & {
-                isNew: boolean;
-                loading: boolean;
-            } & {
-                setError: (value: string) => void;
-                startLoading(): void;
-                finishLoading(): void;
-                setGeofence: (value: boolean) => void;
-                setPublic: (value: boolean) => void;
-                afterAttach: () => void;
-                createPost: (content?: string) => {
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    time: number;
-                } & {
-                    readonly date: Date;
-                    readonly dateAsString: string;
-                    readonly relativeDateAsString: string;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    uploading: boolean;
-                    uploaded: boolean;
-                    uploadError: string;
-                } & {
-                    upload: (a1: any) => Promise<any>;
-                } & {
-                    id: string;
-                    content: string;
-                    title: string;
-                    image: any;
-                    profile: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        id: string;
-                        avatar: any;
-                        handle: string | null;
-                        status: string;
-                        firstName: string | null;
-                        lastName: string | null;
-                        isBlocked: boolean;
-                        isFollowed: boolean;
-                        isFollower: boolean;
-                        isNew: boolean;
-                        followersSize: number;
-                        followedSize: number;
-                        botsSize: number;
-                        roles: IObservableArray<string> & ISnapshottable<string[]>;
-                    } & {
-                        afterAttach: () => void;
-                        follow: () => Promise<{}>;
-                        unfollow: () => Promise<{}>;
-                        block: () => Promise<{}>;
-                        unblock: () => Promise<{}>;
-                        setStatus: (status: string) => void;
-                    } & any & {
-                        readonly $treenode?: any;
-                    }) | null;
-                } & {
-                    setContent: (content: string) => string;
-                    setTitle: (title: string) => string;
-                    publish: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                } & ISnapshottable<{
-                    id?: any;
-                } & {
-                    time?: any;
-                } & {
-                    loaded?: any;
-                } & {} & {
-                    id?: any;
-                    content?: any;
-                    title?: any;
-                    image?: any;
-                    profile?: any;
-                }>;
-                removePost: (a1: string) => Promise<any>;
-                subscribe: () => Promise<{}>;
-                subscribeGeofence: () => Promise<{}>;
-                unsubscribe: () => Promise<{}>;
-                unsubscribeGeofence: () => Promise<{}>;
-                share: (userIDs: string[], message?: string, action?: string) => void;
-                setNew: (value: boolean) => void;
-                load: (d?: any) => void;
-            } & {
-                shareToFriends: (message?: string) => void;
-                shareToFollowers: (message?: string) => void;
-            } & {
-                readonly isPublic: boolean;
-                readonly coverColor: number;
-                readonly snapshot: any;
-            } & {
-                readonly $treenode?: any;
-            })[];
-            readonly displayName: string;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        image: any;
-        description: string | null;
-        visibility: number;
-        location: ({
-            latitude: number;
-            longitude: number;
-            accuracy: number | null;
-        } & {
-            isCurrent: boolean;
-        } & {
-            load: (data: any) => void;
-            addToIQ: (iq: any) => void;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        address: string;
-        followersSize: number;
-        guestsSize: number;
-        visitorsSize: number;
-        totalItems: number;
-        addressData: {
-            city: string;
-            country: string;
-            state: string;
-            county: string;
-        } & {
-            readonly locationShort: string;
-        } & {
-            readonly $treenode?: any;
-        };
-        subscribers: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        guests: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        visitors: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        posts: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        error: string;
-    } & {
-        isNew: boolean;
-        loading: boolean;
-    } & {
-        setError: (value: string) => void;
-        startLoading(): void;
-        finishLoading(): void;
-        setGeofence: (value: boolean) => void;
-        setPublic: (value: boolean) => void;
-        afterAttach: () => void;
-        createPost: (content?: string) => {
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            time: number;
-        } & {
-            readonly date: Date;
-            readonly dateAsString: string;
-            readonly relativeDateAsString: string;
-        } & {
-            loaded: boolean;
-        } & {
-            load: (data: any) => void;
-        } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
-            id: string;
-            content: string;
-            title: string;
-            image: any;
-            profile: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                id: string;
-                avatar: any;
-                handle: string | null;
-                status: string;
-                firstName: string | null;
-                lastName: string | null;
-                isBlocked: boolean;
-                isFollowed: boolean;
-                isFollower: boolean;
-                isNew: boolean;
-                followersSize: number;
-                followedSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                afterAttach: () => void;
-                follow: () => Promise<{}>;
-                unfollow: () => Promise<{}>;
-                block: () => Promise<{}>;
-                unblock: () => Promise<{}>;
-                setStatus: (status: string) => void;
-            } & {
-                readonly snapshot: any;
-                readonly isOwn: boolean;
-                readonly isVerified: boolean;
-                readonly isMutual: boolean;
-                readonly followers: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly followed: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly ownBots: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly subscribedBots: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly activeBots: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    uploading: boolean;
-                    uploaded: boolean;
-                    uploadError: string;
-                } & {
-                    upload: (a1: any) => Promise<any>;
-                } & {
-                    updated: boolean;
-                    updating: boolean;
-                    updateError: string;
-                } & {
-                    update: (a1: any) => Promise<any>;
-                } & {
-                    save: () => Promise<{}>;
-                } & {
-                    id: string;
-                    isSubscribed: boolean;
-                    guest: boolean;
-                    visitor: boolean;
-                    title: string | null;
-                    server: string | null;
-                    radius: number;
-                    geofence: boolean;
-                    owner: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        id: string;
-                        avatar: any;
-                        handle: string | null;
-                        status: string;
-                        firstName: string | null;
-                        lastName: string | null;
-                        isBlocked: boolean;
-                        isFollowed: boolean;
-                        isFollower: boolean;
-                        isNew: boolean;
-                        followersSize: number;
-                        followedSize: number;
-                        botsSize: number;
-                        roles: IObservableArray<string> & ISnapshottable<string[]>;
-                    } & {
-                        afterAttach: () => void;
-                        follow: () => Promise<{}>;
-                        unfollow: () => Promise<{}>;
-                        block: () => Promise<{}>;
-                        unblock: () => Promise<{}>;
-                        setStatus: (status: string) => void;
-                    } & any & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    image: any;
-                    description: string | null;
-                    visibility: number;
-                    location: ({
-                        latitude: number;
-                        longitude: number;
-                        accuracy: number | null;
-                    } & {
-                        isCurrent: boolean;
-                    } & {
-                        load: (data: any) => void;
-                        addToIQ: (iq: any) => void;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    address: string;
-                    followersSize: number;
-                    guestsSize: number;
-                    visitorsSize: number;
-                    totalItems: number;
-                    addressData: {
-                        city: string;
-                        country: string;
-                        state: string;
-                        county: string;
-                    } & {
-                        readonly locationShort: string;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    subscribers: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    guests: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    visitors: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    posts: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    error: string;
-                } & {
-                    isNew: boolean;
-                    loading: boolean;
-                } & any & {
-                    shareToFriends: (message?: string) => void;
-                    shareToFollowers: (message?: string) => void;
-                } & {
-                    readonly isPublic: boolean;
-                    readonly coverColor: number;
-                    readonly snapshot: any;
-                } & {
-                    readonly $treenode?: any;
-                })[];
-                readonly displayName: string;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-        } & {
-            setContent: (content: string) => string;
-            setTitle: (title: string) => string;
-            publish: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        } & ISnapshottable<{
-            id?: any;
-        } & {
-            time?: any;
-        } & {
-            loaded?: any;
-        } & {} & {
-            id?: any;
-            content?: any;
-            title?: any;
-            image?: any;
-            profile?: any;
-        }>;
-        removePost: (a1: string) => Promise<any>;
-        subscribe: () => Promise<{}>;
-        subscribeGeofence: () => Promise<{}>;
-        unsubscribe: () => Promise<{}>;
-        unsubscribeGeofence: () => Promise<{}>;
-        share: (userIDs: string[], message?: string, action?: string) => void;
-        setNew: (value: boolean) => void;
-        load: (d?: any) => void;
-    } & {
-        shareToFriends: (message?: string) => void;
-        shareToFollowers: (message?: string) => void;
-    } & {
-        readonly isPublic: boolean;
-        readonly coverColor: number;
-        readonly snapshot: any;
-    } & {
-        readonly $treenode?: any;
-    };
-} & {
-    readonly target: {
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly _snapshot: any;
-        readonly service: any;
-    } & {
-        readonly snapshot: any;
-    } & {
-        loaded: boolean;
-    } & {
-        load: (data: any) => void;
-    } & {
-        id: string;
-        avatar: any;
-        handle: string | null;
-        status: string;
-        firstName: string | null;
-        lastName: string | null;
-        isBlocked: boolean;
-        isFollowed: boolean;
-        isFollower: boolean;
-        isNew: boolean;
-        followersSize: number;
-        followedSize: number;
-        botsSize: number;
-        roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        afterAttach: () => void;
-        follow: () => Promise<{}>;
-        unfollow: () => Promise<{}>;
-        block: () => Promise<{}>;
-        unblock: () => Promise<{}>;
-        setStatus: (status: string) => void;
-    } & {
-        readonly snapshot: any;
-        readonly isOwn: boolean;
-        readonly isVerified: boolean;
-        readonly isMutual: boolean;
-        readonly followers: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly followed: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly ownBots: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly subscribedBots: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-            count: number | null;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            add: (item: any) => void;
-            addToTop: (item: any) => void;
-        } & {
-            setRequest: (req: Function) => Function;
-            exists: (id: string) => boolean;
-            remove: (id: string) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-            readonly first: any;
-            readonly last: any;
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly activeBots: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
-            updated: boolean;
-            updating: boolean;
-            updateError: string;
-        } & {
-            update: (a1: any) => Promise<any>;
-        } & {
-            save: () => Promise<{}>;
-        } & {
-            id: string;
-            isSubscribed: boolean;
-            guest: boolean;
-            visitor: boolean;
-            title: string | null;
-            server: string | null;
-            radius: number;
-            geofence: boolean;
-            owner: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                id: string;
-                avatar: any;
-                handle: string | null;
-                status: string;
-                firstName: string | null;
-                lastName: string | null;
-                isBlocked: boolean;
-                isFollowed: boolean;
-                isFollower: boolean;
-                isNew: boolean;
-                followersSize: number;
-                followedSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                afterAttach: () => void;
-                follow: () => Promise<{}>;
-                unfollow: () => Promise<{}>;
-                block: () => Promise<{}>;
-                unblock: () => Promise<{}>;
-                setStatus: (status: string) => void;
-            } & any & {
-                readonly $treenode?: any;
-            }) | null;
-            image: any;
-            description: string | null;
-            visibility: number;
-            location: ({
-                latitude: number;
-                longitude: number;
-                accuracy: number | null;
-            } & {
-                isCurrent: boolean;
-            } & {
-                load: (data: any) => void;
-                addToIQ: (iq: any) => void;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            address: string;
-            followersSize: number;
-            guestsSize: number;
-            visitorsSize: number;
-            totalItems: number;
-            addressData: {
-                city: string;
-                country: string;
-                state: string;
-                county: string;
-            } & {
-                readonly locationShort: string;
-            } & {
-                readonly $treenode?: any;
-            };
-            subscribers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            guests: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            visitors: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            posts: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            error: string;
-        } & {
-            isNew: boolean;
-            loading: boolean;
-        } & {
-            setError: (value: string) => void;
-            startLoading(): void;
-            finishLoading(): void;
-            setGeofence: (value: boolean) => void;
-            setPublic: (value: boolean) => void;
-            afterAttach: () => void;
-            createPost: (content?: string) => {
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                time: number;
-            } & {
-                readonly date: Date;
-                readonly dateAsString: string;
-                readonly relativeDateAsString: string;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                id: string;
-                content: string;
-                title: string;
-                image: any;
-                profile: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -3935,7 +2007,6 @@ export declare const EventEntity: IType<({
     post: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -3964,7 +2035,6 @@ export declare const EventEntity: IType<({
         profile: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -4002,6 +2072,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4026,6 +2097,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4050,6 +2122,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4074,6 +2147,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4099,7 +2173,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -4130,7 +2203,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -4196,6 +2268,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -4220,6 +2293,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -4244,6 +2318,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -4268,6 +2343,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -4304,7 +2380,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -4333,7 +2408,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -4420,7 +2494,6 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -4435,7 +2508,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -4473,6 +2545,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -4497,6 +2570,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -4521,6 +2595,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -4545,6 +2620,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -4570,7 +2646,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -4601,7 +2676,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -4667,6 +2741,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4691,6 +2766,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4715,6 +2791,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4739,6 +2816,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4775,7 +2853,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -4804,7 +2881,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -4883,7 +2959,6 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -4914,7 +2989,6 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -4952,6 +3026,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -4976,6 +3051,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -5000,6 +3076,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -5024,6 +3101,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -5049,7 +3127,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -5080,7 +3157,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -5146,6 +3222,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5170,6 +3247,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5194,6 +3272,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5218,6 +3297,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5254,7 +3334,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -5283,7 +3362,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -5390,6 +3468,7 @@ export declare const EventEntity: IType<({
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5414,6 +3493,7 @@ export declare const EventEntity: IType<({
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5438,6 +3518,7 @@ export declare const EventEntity: IType<({
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5462,6 +3543,7 @@ export declare const EventEntity: IType<({
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5498,7 +3580,6 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -5527,7 +3608,6 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -5565,6 +3645,7 @@ export declare const EventEntity: IType<({
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5589,6 +3670,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5613,6 +3695,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5637,6 +3720,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -5662,7 +3746,6 @@ export declare const EventEntity: IType<({
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -5693,7 +3776,6 @@ export declare const EventEntity: IType<({
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -5759,6 +3841,7 @@ export declare const EventEntity: IType<({
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -5783,6 +3866,7 @@ export declare const EventEntity: IType<({
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -5807,6 +3891,7 @@ export declare const EventEntity: IType<({
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -5831,6 +3916,7 @@ export declare const EventEntity: IType<({
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -5912,7 +3998,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -5950,6 +4035,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5974,6 +4060,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -5998,6 +4085,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6022,6 +4110,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6047,7 +4136,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -6078,7 +4166,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -6144,6 +4231,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6168,6 +4256,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6192,6 +4281,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6216,6 +4306,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6252,7 +4343,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -6281,7 +4371,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -6363,7 +4452,6 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -6378,7 +4466,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -6416,6 +4503,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6440,6 +4528,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6464,6 +4553,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6488,6 +4578,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -6513,7 +4604,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -6544,7 +4634,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -6610,6 +4699,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6634,6 +4724,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6658,6 +4749,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6682,6 +4774,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6718,7 +4811,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -6747,7 +4839,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -6826,7 +4917,6 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -6857,7 +4947,6 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -6895,6 +4984,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6919,6 +5009,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6943,6 +5034,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6967,6 +5059,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -6992,7 +5085,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -7023,7 +5115,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -7089,6 +5180,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7113,6 +5205,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7137,6 +5230,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7161,6 +5255,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7197,7 +5292,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -7226,7 +5320,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -7333,6 +5426,7 @@ export declare const EventEntity: IType<({
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7357,6 +5451,7 @@ export declare const EventEntity: IType<({
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7381,6 +5476,7 @@ export declare const EventEntity: IType<({
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7405,6 +5501,7 @@ export declare const EventEntity: IType<({
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7441,7 +5538,6 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -7470,7 +5566,6 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -7508,6 +5603,7 @@ export declare const EventEntity: IType<({
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7532,6 +5628,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7556,6 +5653,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7580,6 +5678,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -7605,7 +5704,6 @@ export declare const EventEntity: IType<({
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -7636,7 +5734,6 @@ export declare const EventEntity: IType<({
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -7702,6 +5799,7 @@ export declare const EventEntity: IType<({
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -7726,6 +5824,7 @@ export declare const EventEntity: IType<({
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -7750,6 +5849,7 @@ export declare const EventEntity: IType<({
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -7774,6 +5874,7 @@ export declare const EventEntity: IType<({
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -7855,7 +5956,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -7893,6 +5993,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7917,6 +6018,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7941,6 +6043,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7965,6 +6068,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -7990,7 +6094,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -8021,7 +6124,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -8087,6 +6189,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8111,6 +6214,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8135,6 +6239,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8159,6 +6264,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8195,7 +6301,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -8224,7 +6329,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -8303,7 +6407,6 @@ export declare const EventEntity: IType<({
     message: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -8326,7 +6429,6 @@ export declare const EventEntity: IType<({
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -8364,6 +6466,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8388,6 +6491,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8412,6 +6516,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8436,6 +6541,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -8461,7 +6567,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -8492,7 +6597,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -8558,6 +6662,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -8582,6 +6687,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -8606,6 +6712,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -8630,6 +6737,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -8666,7 +6774,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -8695,7 +6802,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -8790,7 +6896,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -8828,6 +6933,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -8852,6 +6958,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -8876,6 +6983,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -8900,6 +7008,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -8925,7 +7034,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -8956,7 +7064,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -9022,6 +7129,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9046,6 +7154,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9070,6 +7179,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9094,6 +7204,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9130,7 +7241,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -9159,7 +7269,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -9239,7 +7348,6 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -9254,7 +7362,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -9292,6 +7399,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -9316,6 +7424,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -9340,6 +7449,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -9364,6 +7474,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -9389,7 +7500,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -9420,7 +7530,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -9486,6 +7595,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9510,6 +7620,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9534,6 +7645,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9558,6 +7670,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9594,7 +7707,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -9623,7 +7735,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -9702,7 +7813,6 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -9733,7 +7843,6 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -9771,6 +7880,7 @@ export declare const EventEntity: IType<({
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9795,6 +7905,7 @@ export declare const EventEntity: IType<({
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9819,6 +7930,7 @@ export declare const EventEntity: IType<({
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9843,6 +7955,7 @@ export declare const EventEntity: IType<({
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -9868,7 +7981,6 @@ export declare const EventEntity: IType<({
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -9899,7 +8011,6 @@ export declare const EventEntity: IType<({
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -9965,6 +8076,7 @@ export declare const EventEntity: IType<({
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -9989,6 +8101,7 @@ export declare const EventEntity: IType<({
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10013,6 +8126,7 @@ export declare const EventEntity: IType<({
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10037,6 +8151,7 @@ export declare const EventEntity: IType<({
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10073,7 +8188,6 @@ export declare const EventEntity: IType<({
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -10102,7 +8216,6 @@ export declare const EventEntity: IType<({
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -10209,6 +8322,7 @@ export declare const EventEntity: IType<({
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10233,6 +8347,7 @@ export declare const EventEntity: IType<({
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10257,6 +8372,7 @@ export declare const EventEntity: IType<({
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10281,6 +8397,7 @@ export declare const EventEntity: IType<({
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10317,7 +8434,6 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -10346,7 +8462,6 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -10384,6 +8499,7 @@ export declare const EventEntity: IType<({
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10408,6 +8524,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10432,6 +8549,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10456,6 +8574,7 @@ export declare const EventEntity: IType<({
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -10481,7 +8600,6 @@ export declare const EventEntity: IType<({
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -10512,7 +8630,6 @@ export declare const EventEntity: IType<({
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -10578,6 +8695,7 @@ export declare const EventEntity: IType<({
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -10602,6 +8720,7 @@ export declare const EventEntity: IType<({
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -10626,6 +8745,7 @@ export declare const EventEntity: IType<({
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -10650,6 +8770,7 @@ export declare const EventEntity: IType<({
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -10731,7 +8852,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -10769,6 +8889,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10793,6 +8914,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10817,6 +8939,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10841,6 +8964,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -10866,7 +8990,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -10897,7 +9020,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -10963,6 +9085,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -10987,6 +9110,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11011,6 +9135,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11035,6 +9160,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11071,7 +9197,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -11100,7 +9225,1964 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & any & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setContent: (content: string) => string;
+                setTitle: (title: string) => string;
+                publish: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            } & ISnapshottable<{
+                id?: any;
+            } & {
+                time?: any;
+            } & {
+                loaded?: any;
+            } & {} & {
+                id?: any;
+                content?: any;
+                title?: any;
+                image?: any;
+                profile?: any;
+            }>;
+            removePost: (a1: string) => Promise<any>;
+            subscribe: () => Promise<{}>;
+            subscribeGeofence: () => Promise<{}>;
+            unsubscribe: () => Promise<{}>;
+            unsubscribeGeofence: () => Promise<{}>;
+            share: (userIDs: string[], message?: string, action?: string) => void;
+            setNew: (value: boolean) => void;
+            load: (d?: any) => void;
+        } & {
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
+        } & {
+            readonly isPublic: boolean;
+            readonly coverColor: number;
+            readonly snapshot: any;
+        } & {
+            readonly $treenode?: any;
+        })[];
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    };
+} & {
+    created: boolean;
+} & {
+    readonly $treenode?: any;
+}) | ({
+    id: string;
+} & {
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
+    time: number;
+} & {
+    readonly date: Date;
+    readonly dateAsString: string;
+    readonly relativeDateAsString: string;
+} & {
+    readonly target: {
+        id: string;
+    } & {
+        readonly _snapshot: any;
+        readonly service: any;
+    } & {
+        readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
+    } & {
+        id: string;
+        avatar: any;
+        handle: string | null;
+        status: string;
+        firstName: string | null;
+        lastName: string | null;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
+    } & {
+        readonly snapshot: any;
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly activeBots: ({
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            updated: boolean;
+            updating: boolean;
+            updateError: string;
+        } & {
+            update: (a1: any) => Promise<any>;
+        } & {
+            save: () => Promise<{}>;
+        } & {
+            id: string;
+            isSubscribed: boolean;
+            guest: boolean;
+            visitor: boolean;
+            title: string | null;
+            server: string | null;
+            radius: number;
+            geofence: boolean;
+            owner: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                id: string;
+                avatar: any;
+                handle: string | null;
+                status: string;
+                firstName: string | null;
+                lastName: string | null;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                isNew: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                afterAttach: () => void;
+                follow: () => Promise<{}>;
+                unfollow: () => Promise<{}>;
+                block: () => Promise<{}>;
+                unblock: () => Promise<{}>;
+                setStatus: (status: string) => void;
+            } & any & {
+                readonly $treenode?: any;
+            }) | null;
+            image: any;
+            description: string | null;
+            visibility: number;
+            location: ({
+                latitude: number;
+                longitude: number;
+                accuracy: number | null;
+            } & {
+                isCurrent: boolean;
+            } & {
+                load: (data: any) => void;
+                addToIQ: (iq: any) => void;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            address: string;
+            followersSize: number;
+            guestsSize: number;
+            visitorsSize: number;
+            totalItems: number;
+            addressData: {
+                city: string;
+                country: string;
+                state: string;
+                county: string;
+            } & {
+                readonly locationShort: string;
+            } & {
+                readonly $treenode?: any;
+            };
+            subscribers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            guests: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            visitors: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            posts: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            error: string;
+        } & {
+            isNew: boolean;
+            loading: boolean;
+        } & {
+            setError: (value: string) => void;
+            startLoading(): void;
+            finishLoading(): void;
+            setGeofence: (value: boolean) => void;
+            setPublic: (value: boolean) => void;
+            afterAttach: () => void;
+            createPost: (content?: string) => {
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                content: string;
+                title: string;
+                image: any;
+                profile: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & any & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setContent: (content: string) => string;
+                setTitle: (title: string) => string;
+                publish: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            } & ISnapshottable<{
+                id?: any;
+            } & {
+                time?: any;
+            } & {
+                loaded?: any;
+            } & {} & {
+                id?: any;
+                content?: any;
+                title?: any;
+                image?: any;
+                profile?: any;
+            }>;
+            removePost: (a1: string) => Promise<any>;
+            subscribe: () => Promise<{}>;
+            subscribeGeofence: () => Promise<{}>;
+            unsubscribe: () => Promise<{}>;
+            unsubscribeGeofence: () => Promise<{}>;
+            share: (userIDs: string[], message?: string, action?: string) => void;
+            setNew: (value: boolean) => void;
+            load: (d?: any) => void;
+        } & {
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
+        } & {
+            readonly isPublic: boolean;
+            readonly coverColor: number;
+            readonly snapshot: any;
+        } & {
+            readonly $treenode?: any;
+        })[];
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    };
+} & {
+    bot: {
+        id: string;
+    } & {
+        readonly _snapshot: any;
+        readonly service: any;
+    } & {
+        readonly snapshot: any;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (a1: any) => Promise<any>;
+    } & {
+        save: () => Promise<{}>;
+    } & {
+        id: string;
+        isSubscribed: boolean;
+        guest: boolean;
+        visitor: boolean;
+        title: string | null;
+        server: string | null;
+        radius: number;
+        geofence: boolean;
+        owner: ({
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            loaded: boolean;
+        } & {
+            load: (data: any) => void;
+        } & {
+            id: string;
+            avatar: any;
+            handle: string | null;
+            status: string;
+            firstName: string | null;
+            lastName: string | null;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            isNew: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            afterAttach: () => void;
+            follow: () => Promise<{}>;
+            unfollow: () => Promise<{}>;
+            block: () => Promise<{}>;
+            unblock: () => Promise<{}>;
+            setStatus: (status: string) => void;
+        } & {
+            readonly snapshot: any;
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly activeBots: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                updated: boolean;
+                updating: boolean;
+                updateError: string;
+            } & {
+                update: (a1: any) => Promise<any>;
+            } & {
+                save: () => Promise<{}>;
+            } & {
+                id: string;
+                isSubscribed: boolean;
+                guest: boolean;
+                visitor: boolean;
+                title: string | null;
+                server: string | null;
+                radius: number;
+                geofence: boolean;
+                owner: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & any & {
+                    readonly $treenode?: any;
+                }) | null;
+                image: any;
+                description: string | null;
+                visibility: number;
+                location: ({
+                    latitude: number;
+                    longitude: number;
+                    accuracy: number | null;
+                } & {
+                    isCurrent: boolean;
+                } & {
+                    load: (data: any) => void;
+                    addToIQ: (iq: any) => void;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                address: string;
+                followersSize: number;
+                guestsSize: number;
+                visitorsSize: number;
+                totalItems: number;
+                addressData: {
+                    city: string;
+                    country: string;
+                    state: string;
+                    county: string;
+                } & {
+                    readonly locationShort: string;
+                } & {
+                    readonly $treenode?: any;
+                };
+                subscribers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                guests: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                visitors: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                posts: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                error: string;
+            } & {
+                isNew: boolean;
+                loading: boolean;
+            } & {
+                setError: (value: string) => void;
+                startLoading(): void;
+                finishLoading(): void;
+                setGeofence: (value: boolean) => void;
+                setPublic: (value: boolean) => void;
+                afterAttach: () => void;
+                createPost: (content?: string) => {
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    time: number;
+                } & {
+                    readonly date: Date;
+                    readonly dateAsString: string;
+                    readonly relativeDateAsString: string;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
+                } & {
+                    upload: (a1: any) => Promise<any>;
+                } & {
+                    id: string;
+                    content: string;
+                    title: string;
+                    image: any;
+                    profile: ({
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        id: string;
+                        avatar: any;
+                        handle: string | null;
+                        status: string;
+                        firstName: string | null;
+                        lastName: string | null;
+                        isBlocked: boolean;
+                        isFollowed: boolean;
+                        isFollower: boolean;
+                        isNew: boolean;
+                        followersSize: number;
+                        followedSize: number;
+                        botsSize: number;
+                        roles: IObservableArray<string> & ISnapshottable<string[]>;
+                    } & {
+                        afterAttach: () => void;
+                        follow: () => Promise<{}>;
+                        unfollow: () => Promise<{}>;
+                        block: () => Promise<{}>;
+                        unblock: () => Promise<{}>;
+                        setStatus: (status: string) => void;
+                    } & any & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setContent: (content: string) => string;
+                    setTitle: (title: string) => string;
+                    publish: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                } & ISnapshottable<{
+                    id?: any;
+                } & {
+                    time?: any;
+                } & {
+                    loaded?: any;
+                } & {} & {
+                    id?: any;
+                    content?: any;
+                    title?: any;
+                    image?: any;
+                    profile?: any;
+                }>;
+                removePost: (a1: string) => Promise<any>;
+                subscribe: () => Promise<{}>;
+                subscribeGeofence: () => Promise<{}>;
+                unsubscribe: () => Promise<{}>;
+                unsubscribeGeofence: () => Promise<{}>;
+                share: (userIDs: string[], message?: string, action?: string) => void;
+                setNew: (value: boolean) => void;
+                load: (d?: any) => void;
+            } & {
+                shareToFriends: (message?: string) => void;
+                shareToFollowers: (message?: string) => void;
+            } & {
+                readonly isPublic: boolean;
+                readonly coverColor: number;
+                readonly snapshot: any;
+            } & {
+                readonly $treenode?: any;
+            })[];
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        image: any;
+        description: string | null;
+        visibility: number;
+        location: ({
+            latitude: number;
+            longitude: number;
+            accuracy: number | null;
+        } & {
+            isCurrent: boolean;
+        } & {
+            load: (data: any) => void;
+            addToIQ: (iq: any) => void;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        address: string;
+        followersSize: number;
+        guestsSize: number;
+        visitorsSize: number;
+        totalItems: number;
+        addressData: {
+            city: string;
+            country: string;
+            state: string;
+            county: string;
+        } & {
+            readonly locationShort: string;
+        } & {
+            readonly $treenode?: any;
+        };
+        subscribers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        guests: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        visitors: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        error: string;
+    } & {
+        isNew: boolean;
+        loading: boolean;
+    } & {
+        setError: (value: string) => void;
+        startLoading(): void;
+        finishLoading(): void;
+        setGeofence: (value: boolean) => void;
+        setPublic: (value: boolean) => void;
+        afterAttach: () => void;
+        createPost: (content?: string) => {
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            loaded: boolean;
+        } & {
+            load: (data: any) => void;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            content: string;
+            title: string;
+            image: any;
+            profile: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                id: string;
+                avatar: any;
+                handle: string | null;
+                status: string;
+                firstName: string | null;
+                lastName: string | null;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                isNew: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                afterAttach: () => void;
+                follow: () => Promise<{}>;
+                unfollow: () => Promise<{}>;
+                block: () => Promise<{}>;
+                unblock: () => Promise<{}>;
+                setStatus: (status: string) => void;
+            } & {
+                readonly snapshot: any;
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly activeBots: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
+                } & {
+                    upload: (a1: any) => Promise<any>;
+                } & {
+                    updated: boolean;
+                    updating: boolean;
+                    updateError: string;
+                } & {
+                    update: (a1: any) => Promise<any>;
+                } & {
+                    save: () => Promise<{}>;
+                } & {
+                    id: string;
+                    isSubscribed: boolean;
+                    guest: boolean;
+                    visitor: boolean;
+                    title: string | null;
+                    server: string | null;
+                    radius: number;
+                    geofence: boolean;
+                    owner: ({
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        id: string;
+                        avatar: any;
+                        handle: string | null;
+                        status: string;
+                        firstName: string | null;
+                        lastName: string | null;
+                        isBlocked: boolean;
+                        isFollowed: boolean;
+                        isFollower: boolean;
+                        isNew: boolean;
+                        followersSize: number;
+                        followedSize: number;
+                        botsSize: number;
+                        roles: IObservableArray<string> & ISnapshottable<string[]>;
+                    } & {
+                        afterAttach: () => void;
+                        follow: () => Promise<{}>;
+                        unfollow: () => Promise<{}>;
+                        block: () => Promise<{}>;
+                        unblock: () => Promise<{}>;
+                        setStatus: (status: string) => void;
+                    } & any & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    image: any;
+                    description: string | null;
+                    visibility: number;
+                    location: ({
+                        latitude: number;
+                        longitude: number;
+                        accuracy: number | null;
+                    } & {
+                        isCurrent: boolean;
+                    } & {
+                        load: (data: any) => void;
+                        addToIQ: (iq: any) => void;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    address: string;
+                    followersSize: number;
+                    guestsSize: number;
+                    visitorsSize: number;
+                    totalItems: number;
+                    addressData: {
+                        city: string;
+                        country: string;
+                        state: string;
+                        county: string;
+                    } & {
+                        readonly locationShort: string;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    subscribers: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    guests: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    visitors: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    posts: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    error: string;
+                } & {
+                    isNew: boolean;
+                    loading: boolean;
+                } & any & {
+                    shareToFriends: (message?: string) => void;
+                    shareToFollowers: (message?: string) => void;
+                } & {
+                    readonly isPublic: boolean;
+                    readonly coverColor: number;
+                    readonly snapshot: any;
+                } & {
+                    readonly $treenode?: any;
+                })[];
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+        } & {
+            setContent: (content: string) => string;
+            setTitle: (title: string) => string;
+            publish: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        } & ISnapshottable<{
+            id?: any;
+        } & {
+            time?: any;
+        } & {
+            loaded?: any;
+        } & {} & {
+            id?: any;
+            content?: any;
+            title?: any;
+            image?: any;
+            profile?: any;
+        }>;
+        removePost: (a1: string) => Promise<any>;
+        subscribe: () => Promise<{}>;
+        subscribeGeofence: () => Promise<{}>;
+        unsubscribe: () => Promise<{}>;
+        unsubscribeGeofence: () => Promise<{}>;
+        share: (userIDs: string[], message?: string, action?: string) => void;
+        setNew: (value: boolean) => void;
+        load: (d?: any) => void;
+    } & {
+        shareToFriends: (message?: string) => void;
+        shareToFollowers: (message?: string) => void;
+    } & {
+        readonly isPublic: boolean;
+        readonly coverColor: number;
+        readonly snapshot: any;
+    } & {
+        readonly $treenode?: any;
+    };
+} & {
+    readonly target: {
+        id: string;
+    } & {
+        readonly _snapshot: any;
+        readonly service: any;
+    } & {
+        readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
+    } & {
+        id: string;
+        avatar: any;
+        handle: string | null;
+        status: string;
+        firstName: string | null;
+        lastName: string | null;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
+    } & {
+        readonly snapshot: any;
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            add: (item: any) => void;
+            addToTop: (item: any) => void;
+        } & {
+            setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+            readonly first: any;
+            readonly last: any;
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly activeBots: ({
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            updated: boolean;
+            updating: boolean;
+            updateError: string;
+        } & {
+            update: (a1: any) => Promise<any>;
+        } & {
+            save: () => Promise<{}>;
+        } & {
+            id: string;
+            isSubscribed: boolean;
+            guest: boolean;
+            visitor: boolean;
+            title: string | null;
+            server: string | null;
+            radius: number;
+            geofence: boolean;
+            owner: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                id: string;
+                avatar: any;
+                handle: string | null;
+                status: string;
+                firstName: string | null;
+                lastName: string | null;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                isNew: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                afterAttach: () => void;
+                follow: () => Promise<{}>;
+                unfollow: () => Promise<{}>;
+                block: () => Promise<{}>;
+                unblock: () => Promise<{}>;
+                setStatus: (status: string) => void;
+            } & any & {
+                readonly $treenode?: any;
+            }) | null;
+            image: any;
+            description: string | null;
+            visibility: number;
+            location: ({
+                latitude: number;
+                longitude: number;
+                accuracy: number | null;
+            } & {
+                isCurrent: boolean;
+            } & {
+                load: (data: any) => void;
+                addToIQ: (iq: any) => void;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            address: string;
+            followersSize: number;
+            guestsSize: number;
+            visitorsSize: number;
+            totalItems: number;
+            addressData: {
+                city: string;
+                country: string;
+                state: string;
+                county: string;
+            } & {
+                readonly locationShort: string;
+            } & {
+                readonly $treenode?: any;
+            };
+            subscribers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            guests: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            visitors: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            posts: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            error: string;
+        } & {
+            isNew: boolean;
+            loading: boolean;
+        } & {
+            setError: (value: string) => void;
+            startLoading(): void;
+            finishLoading(): void;
+            setGeofence: (value: boolean) => void;
+            setPublic: (value: boolean) => void;
+            afterAttach: () => void;
+            createPost: (content?: string) => {
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                content: string;
+                title: string;
+                image: any;
+                profile: ({
+                    id: string;
+                } & {
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -11180,7 +11262,6 @@ export declare const EventEntity: IType<({
     profile: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -11218,6 +11299,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11242,6 +11324,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11266,6 +11349,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11290,6 +11374,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11315,7 +11400,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -11346,7 +11430,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -11412,6 +11495,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11436,6 +11520,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11460,6 +11545,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11484,6 +11570,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11520,7 +11607,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -11549,7 +11635,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -11628,7 +11713,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -11666,6 +11750,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11690,6 +11775,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11714,6 +11800,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11738,6 +11825,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -11763,7 +11851,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -11794,7 +11881,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -11860,6 +11946,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11884,6 +11971,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11908,6 +11996,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11932,6 +12021,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -11968,7 +12058,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -11997,7 +12086,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -12077,7 +12165,6 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -12092,7 +12179,6 @@ export declare const EventEntity: IType<({
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -12130,6 +12216,7 @@ export declare const EventEntity: IType<({
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -12154,6 +12241,7 @@ export declare const EventEntity: IType<({
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -12178,6 +12266,7 @@ export declare const EventEntity: IType<({
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -12202,6 +12291,7 @@ export declare const EventEntity: IType<({
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -12227,7 +12317,6 @@ export declare const EventEntity: IType<({
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -12258,7 +12347,6 @@ export declare const EventEntity: IType<({
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -12324,6 +12412,7 @@ export declare const EventEntity: IType<({
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -12348,6 +12437,7 @@ export declare const EventEntity: IType<({
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -12372,6 +12462,7 @@ export declare const EventEntity: IType<({
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -12396,6 +12487,7 @@ export declare const EventEntity: IType<({
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -12432,7 +12524,6 @@ export declare const EventEntity: IType<({
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -12461,7 +12552,6 @@ export declare const EventEntity: IType<({
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -12544,9 +12634,11 @@ export declare const EventEntity: IType<({
 export declare type IEventEntity = typeof EventEntity.Type;
 export declare const EventList: IModelType<{
     result?: any;
+    cursor?: any;
     count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    cursor: string | null;
     count: number | null;
 } & {
     loading: boolean;
@@ -12590,7 +12682,6 @@ export declare const Wocky: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -12612,7 +12703,6 @@ export declare const Wocky: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -12674,7 +12764,6 @@ export declare const Wocky: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -12705,7 +12794,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -12743,6 +12831,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -12767,6 +12856,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -12791,6 +12881,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -12815,6 +12906,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -12840,7 +12932,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -12871,7 +12962,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -12937,6 +13027,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -12961,6 +13052,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -12985,6 +13077,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13009,6 +13102,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13045,7 +13139,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -13074,7 +13167,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -13181,6 +13273,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13205,6 +13298,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13229,6 +13323,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13253,6 +13348,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13289,7 +13385,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -13318,7 +13413,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -13356,6 +13450,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13380,6 +13475,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13404,6 +13500,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13428,6 +13525,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -13453,7 +13551,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -13484,7 +13581,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -13550,6 +13646,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -13574,6 +13671,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -13598,6 +13696,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -13622,6 +13721,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -13718,7 +13818,6 @@ export declare const Wocky: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -13756,6 +13855,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13780,6 +13880,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13804,6 +13905,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13828,6 +13930,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -13853,7 +13956,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -13884,7 +13986,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -13950,6 +14051,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -13974,6 +14076,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -13998,6 +14101,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -14022,6 +14126,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -14058,7 +14163,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -14087,7 +14191,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -14188,7 +14291,6 @@ export declare const Wocky: IModelType<{
     roster: IExtendedObservableMap<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -14226,6 +14328,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14250,6 +14353,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14274,6 +14378,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14298,6 +14403,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14323,7 +14429,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -14354,7 +14459,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -14420,6 +14524,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14444,6 +14549,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14468,6 +14574,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14492,6 +14599,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14528,7 +14636,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -14557,7 +14664,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -14637,7 +14743,6 @@ export declare const Wocky: IModelType<{
     profile: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -14675,6 +14780,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14699,6 +14805,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14723,6 +14830,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14747,6 +14855,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -14772,7 +14881,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -14803,7 +14911,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -14869,6 +14976,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14893,6 +15001,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14917,6 +15026,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14941,6 +15051,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -14977,7 +15088,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -15006,7 +15116,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -15101,7 +15210,6 @@ export declare const Wocky: IModelType<{
     updates: IObservableArray<({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -15116,7 +15224,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -15154,6 +15261,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -15178,6 +15286,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -15202,6 +15311,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -15226,6 +15336,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -15251,7 +15362,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -15282,7 +15392,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -15348,6 +15457,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15372,6 +15482,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15396,6 +15507,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15420,6 +15532,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15456,7 +15569,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -15485,7 +15597,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -15564,7 +15675,6 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -15595,7 +15705,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -15633,6 +15742,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15657,6 +15767,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15681,6 +15792,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15705,6 +15817,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -15730,7 +15843,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -15761,7 +15873,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -15827,6 +15938,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -15851,6 +15963,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -15875,6 +15988,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -15899,6 +16013,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -15935,7 +16050,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -15964,7 +16078,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -16071,6 +16184,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16095,6 +16209,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16119,6 +16234,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16143,6 +16259,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16179,7 +16296,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -16208,7 +16324,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -16246,6 +16361,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -16270,6 +16386,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -16294,6 +16411,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -16318,6 +16436,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -16343,7 +16462,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -16374,7 +16492,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -16440,6 +16557,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -16464,6 +16582,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -16488,6 +16607,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -16512,6 +16632,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -16593,7 +16714,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -16631,6 +16751,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16655,6 +16776,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16679,6 +16801,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16703,6 +16826,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -16728,7 +16852,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -16759,7 +16882,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -16825,6 +16947,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -16849,6 +16972,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -16873,6 +16997,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -16897,6 +17022,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -16933,7 +17059,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -16962,1950 +17087,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        id: string;
-                        avatar: any;
-                        handle: string | null;
-                        status: string;
-                        firstName: string | null;
-                        lastName: string | null;
-                        isBlocked: boolean;
-                        isFollowed: boolean;
-                        isFollower: boolean;
-                        isNew: boolean;
-                        followersSize: number;
-                        followedSize: number;
-                        botsSize: number;
-                        roles: IObservableArray<string> & ISnapshottable<string[]>;
-                    } & {
-                        afterAttach: () => void;
-                        follow: () => Promise<{}>;
-                        unfollow: () => Promise<{}>;
-                        block: () => Promise<{}>;
-                        unblock: () => Promise<{}>;
-                        setStatus: (status: string) => void;
-                    } & any & {
-                        readonly $treenode?: any;
-                    }) | null;
-                } & {
-                    setContent: (content: string) => string;
-                    setTitle: (title: string) => string;
-                    publish: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                } & ISnapshottable<{
-                    id?: any;
-                } & {
-                    time?: any;
-                } & {
-                    loaded?: any;
-                } & {} & {
-                    id?: any;
-                    content?: any;
-                    title?: any;
-                    image?: any;
-                    profile?: any;
-                }>;
-                removePost: (a1: string) => Promise<any>;
-                subscribe: () => Promise<{}>;
-                subscribeGeofence: () => Promise<{}>;
-                unsubscribe: () => Promise<{}>;
-                unsubscribeGeofence: () => Promise<{}>;
-                share: (userIDs: string[], message?: string, action?: string) => void;
-                setNew: (value: boolean) => void;
-                load: (d?: any) => void;
-            } & {
-                shareToFriends: (message?: string) => void;
-                shareToFollowers: (message?: string) => void;
-            } & {
-                readonly isPublic: boolean;
-                readonly coverColor: number;
-                readonly snapshot: any;
-            } & {
-                readonly $treenode?: any;
-            })[];
-            readonly displayName: string;
-        } & {
-            readonly $treenode?: any;
-        };
-    } & {
-        created: boolean;
-    } & {
-        readonly $treenode?: any;
-    }) | ({
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly _snapshot: any;
-        readonly service: any;
-    } & {
-        readonly snapshot: any;
-    } & {
-        time: number;
-    } & {
-        readonly date: Date;
-        readonly dateAsString: string;
-        readonly relativeDateAsString: string;
-    } & {
-        readonly target: {
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            loaded: boolean;
-        } & {
-            load: (data: any) => void;
-        } & {
-            id: string;
-            avatar: any;
-            handle: string | null;
-            status: string;
-            firstName: string | null;
-            lastName: string | null;
-            isBlocked: boolean;
-            isFollowed: boolean;
-            isFollower: boolean;
-            isNew: boolean;
-            followersSize: number;
-            followedSize: number;
-            botsSize: number;
-            roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            afterAttach: () => void;
-            follow: () => Promise<{}>;
-            unfollow: () => Promise<{}>;
-            block: () => Promise<{}>;
-            unblock: () => Promise<{}>;
-            setStatus: (status: string) => void;
-        } & {
-            readonly snapshot: any;
-            readonly isOwn: boolean;
-            readonly isVerified: boolean;
-            readonly isMutual: boolean;
-            readonly followers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly followed: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly ownBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly subscribedBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly activeBots: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                updated: boolean;
-                updating: boolean;
-                updateError: string;
-            } & {
-                update: (a1: any) => Promise<any>;
-            } & {
-                save: () => Promise<{}>;
-            } & {
-                id: string;
-                isSubscribed: boolean;
-                guest: boolean;
-                visitor: boolean;
-                title: string | null;
-                server: string | null;
-                radius: number;
-                geofence: boolean;
-                owner: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & any & {
-                    readonly $treenode?: any;
-                }) | null;
-                image: any;
-                description: string | null;
-                visibility: number;
-                location: ({
-                    latitude: number;
-                    longitude: number;
-                    accuracy: number | null;
-                } & {
-                    isCurrent: boolean;
-                } & {
-                    load: (data: any) => void;
-                    addToIQ: (iq: any) => void;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                address: string;
-                followersSize: number;
-                guestsSize: number;
-                visitorsSize: number;
-                totalItems: number;
-                addressData: {
-                    city: string;
-                    country: string;
-                    state: string;
-                    county: string;
-                } & {
-                    readonly locationShort: string;
-                } & {
-                    readonly $treenode?: any;
-                };
-                subscribers: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                guests: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                visitors: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                posts: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                error: string;
-            } & {
-                isNew: boolean;
-                loading: boolean;
-            } & {
-                setError: (value: string) => void;
-                startLoading(): void;
-                finishLoading(): void;
-                setGeofence: (value: boolean) => void;
-                setPublic: (value: boolean) => void;
-                afterAttach: () => void;
-                createPost: (content?: string) => {
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    time: number;
-                } & {
-                    readonly date: Date;
-                    readonly dateAsString: string;
-                    readonly relativeDateAsString: string;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    uploading: boolean;
-                    uploaded: boolean;
-                    uploadError: string;
-                } & {
-                    upload: (a1: any) => Promise<any>;
-                } & {
-                    id: string;
-                    content: string;
-                    title: string;
-                    image: any;
-                    profile: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        id: string;
-                        avatar: any;
-                        handle: string | null;
-                        status: string;
-                        firstName: string | null;
-                        lastName: string | null;
-                        isBlocked: boolean;
-                        isFollowed: boolean;
-                        isFollower: boolean;
-                        isNew: boolean;
-                        followersSize: number;
-                        followedSize: number;
-                        botsSize: number;
-                        roles: IObservableArray<string> & ISnapshottable<string[]>;
-                    } & {
-                        afterAttach: () => void;
-                        follow: () => Promise<{}>;
-                        unfollow: () => Promise<{}>;
-                        block: () => Promise<{}>;
-                        unblock: () => Promise<{}>;
-                        setStatus: (status: string) => void;
-                    } & any & {
-                        readonly $treenode?: any;
-                    }) | null;
-                } & {
-                    setContent: (content: string) => string;
-                    setTitle: (title: string) => string;
-                    publish: () => Promise<{}>;
-                } & {
-                    readonly $treenode?: any;
-                } & ISnapshottable<{
-                    id?: any;
-                } & {
-                    time?: any;
-                } & {
-                    loaded?: any;
-                } & {} & {
-                    id?: any;
-                    content?: any;
-                    title?: any;
-                    image?: any;
-                    profile?: any;
-                }>;
-                removePost: (a1: string) => Promise<any>;
-                subscribe: () => Promise<{}>;
-                subscribeGeofence: () => Promise<{}>;
-                unsubscribe: () => Promise<{}>;
-                unsubscribeGeofence: () => Promise<{}>;
-                share: (userIDs: string[], message?: string, action?: string) => void;
-                setNew: (value: boolean) => void;
-                load: (d?: any) => void;
-            } & {
-                shareToFriends: (message?: string) => void;
-                shareToFollowers: (message?: string) => void;
-            } & {
-                readonly isPublic: boolean;
-                readonly coverColor: number;
-                readonly snapshot: any;
-            } & {
-                readonly $treenode?: any;
-            })[];
-            readonly displayName: string;
-        } & {
-            readonly $treenode?: any;
-        };
-    } & {
-        bot: {
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
-            updated: boolean;
-            updating: boolean;
-            updateError: string;
-        } & {
-            update: (a1: any) => Promise<any>;
-        } & {
-            save: () => Promise<{}>;
-        } & {
-            id: string;
-            isSubscribed: boolean;
-            guest: boolean;
-            visitor: boolean;
-            title: string | null;
-            server: string | null;
-            radius: number;
-            geofence: boolean;
-            owner: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                id: string;
-                avatar: any;
-                handle: string | null;
-                status: string;
-                firstName: string | null;
-                lastName: string | null;
-                isBlocked: boolean;
-                isFollowed: boolean;
-                isFollower: boolean;
-                isNew: boolean;
-                followersSize: number;
-                followedSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                afterAttach: () => void;
-                follow: () => Promise<{}>;
-                unfollow: () => Promise<{}>;
-                block: () => Promise<{}>;
-                unblock: () => Promise<{}>;
-                setStatus: (status: string) => void;
-            } & {
-                readonly snapshot: any;
-                readonly isOwn: boolean;
-                readonly isVerified: boolean;
-                readonly isMutual: boolean;
-                readonly followers: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly followed: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly ownBots: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly subscribedBots: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                readonly activeBots: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    uploading: boolean;
-                    uploaded: boolean;
-                    uploadError: string;
-                } & {
-                    upload: (a1: any) => Promise<any>;
-                } & {
-                    updated: boolean;
-                    updating: boolean;
-                    updateError: string;
-                } & {
-                    update: (a1: any) => Promise<any>;
-                } & {
-                    save: () => Promise<{}>;
-                } & {
-                    id: string;
-                    isSubscribed: boolean;
-                    guest: boolean;
-                    visitor: boolean;
-                    title: string | null;
-                    server: string | null;
-                    radius: number;
-                    geofence: boolean;
-                    owner: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        id: string;
-                        avatar: any;
-                        handle: string | null;
-                        status: string;
-                        firstName: string | null;
-                        lastName: string | null;
-                        isBlocked: boolean;
-                        isFollowed: boolean;
-                        isFollower: boolean;
-                        isNew: boolean;
-                        followersSize: number;
-                        followedSize: number;
-                        botsSize: number;
-                        roles: IObservableArray<string> & ISnapshottable<string[]>;
-                    } & {
-                        afterAttach: () => void;
-                        follow: () => Promise<{}>;
-                        unfollow: () => Promise<{}>;
-                        block: () => Promise<{}>;
-                        unblock: () => Promise<{}>;
-                        setStatus: (status: string) => void;
-                    } & any & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    image: any;
-                    description: string | null;
-                    visibility: number;
-                    location: ({
-                        latitude: number;
-                        longitude: number;
-                        accuracy: number | null;
-                    } & {
-                        isCurrent: boolean;
-                    } & {
-                        load: (data: any) => void;
-                        addToIQ: (iq: any) => void;
-                    } & {
-                        readonly $treenode?: any;
-                    }) | null;
-                    address: string;
-                    followersSize: number;
-                    guestsSize: number;
-                    visitorsSize: number;
-                    totalItems: number;
-                    addressData: {
-                        city: string;
-                        country: string;
-                        state: string;
-                        county: string;
-                    } & {
-                        readonly locationShort: string;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    subscribers: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    guests: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    visitors: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    posts: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    error: string;
-                } & {
-                    isNew: boolean;
-                    loading: boolean;
-                } & {
-                    setError: (value: string) => void;
-                    startLoading(): void;
-                    finishLoading(): void;
-                    setGeofence: (value: boolean) => void;
-                    setPublic: (value: boolean) => void;
-                    afterAttach: () => void;
-                    createPost: (content?: string) => {
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        time: number;
-                    } & {
-                        readonly date: Date;
-                        readonly dateAsString: string;
-                        readonly relativeDateAsString: string;
-                    } & {
-                        loaded: boolean;
-                    } & {
-                        load: (data: any) => void;
-                    } & {
-                        uploading: boolean;
-                        uploaded: boolean;
-                        uploadError: string;
-                    } & {
-                        upload: (a1: any) => Promise<any>;
-                    } & {
-                        id: string;
-                        content: string;
-                        title: string;
-                        image: any;
-                        profile: ({
-                            id: string;
-                        } & {
-                            readonly pageId: string;
-                            readonly _snapshot: any;
-                            readonly service: any;
-                        } & {
-                            readonly snapshot: any;
-                        } & {
-                            loaded: boolean;
-                        } & {
-                            load: (data: any) => void;
-                        } & {
-                            id: string;
-                            avatar: any;
-                            handle: string | null;
-                            status: string;
-                            firstName: string | null;
-                            lastName: string | null;
-                            isBlocked: boolean;
-                            isFollowed: boolean;
-                            isFollower: boolean;
-                            isNew: boolean;
-                            followersSize: number;
-                            followedSize: number;
-                            botsSize: number;
-                            roles: IObservableArray<string> & ISnapshottable<string[]>;
-                        } & {
-                            afterAttach: () => void;
-                            follow: () => Promise<{}>;
-                            unfollow: () => Promise<{}>;
-                            block: () => Promise<{}>;
-                            unblock: () => Promise<{}>;
-                            setStatus: (status: string) => void;
-                        } & any & {
-                            readonly $treenode?: any;
-                        }) | null;
-                    } & {
-                        setContent: (content: string) => string;
-                        setTitle: (title: string) => string;
-                        publish: () => Promise<{}>;
-                    } & {
-                        readonly $treenode?: any;
-                    } & ISnapshottable<{
-                        id?: any;
-                    } & {
-                        time?: any;
-                    } & {
-                        loaded?: any;
-                    } & {} & {
-                        id?: any;
-                        content?: any;
-                        title?: any;
-                        image?: any;
-                        profile?: any;
-                    }>;
-                    removePost: (a1: string) => Promise<any>;
-                    subscribe: () => Promise<{}>;
-                    subscribeGeofence: () => Promise<{}>;
-                    unsubscribe: () => Promise<{}>;
-                    unsubscribeGeofence: () => Promise<{}>;
-                    share: (userIDs: string[], message?: string, action?: string) => void;
-                    setNew: (value: boolean) => void;
-                    load: (d?: any) => void;
-                } & {
-                    shareToFriends: (message?: string) => void;
-                    shareToFollowers: (message?: string) => void;
-                } & {
-                    readonly isPublic: boolean;
-                    readonly coverColor: number;
-                    readonly snapshot: any;
-                } & {
-                    readonly $treenode?: any;
-                })[];
-                readonly displayName: string;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            image: any;
-            description: string | null;
-            visibility: number;
-            location: ({
-                latitude: number;
-                longitude: number;
-                accuracy: number | null;
-            } & {
-                isCurrent: boolean;
-            } & {
-                load: (data: any) => void;
-                addToIQ: (iq: any) => void;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            address: string;
-            followersSize: number;
-            guestsSize: number;
-            visitorsSize: number;
-            totalItems: number;
-            addressData: {
-                city: string;
-                country: string;
-                state: string;
-                county: string;
-            } & {
-                readonly locationShort: string;
-            } & {
-                readonly $treenode?: any;
-            };
-            subscribers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            guests: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            visitors: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            posts: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            error: string;
-        } & {
-            isNew: boolean;
-            loading: boolean;
-        } & {
-            setError: (value: string) => void;
-            startLoading(): void;
-            finishLoading(): void;
-            setGeofence: (value: boolean) => void;
-            setPublic: (value: boolean) => void;
-            afterAttach: () => void;
-            createPost: (content?: string) => {
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                time: number;
-            } & {
-                readonly date: Date;
-                readonly dateAsString: string;
-                readonly relativeDateAsString: string;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                id: string;
-                content: string;
-                title: string;
-                image: any;
-                profile: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & {
-                    readonly snapshot: any;
-                    readonly isOwn: boolean;
-                    readonly isVerified: boolean;
-                    readonly isMutual: boolean;
-                    readonly followers: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    readonly followed: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    readonly ownBots: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    readonly subscribedBots: {
-                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                        count: number | null;
-                    } & {
-                        loading: boolean;
-                        finished: boolean;
-                    } & {
-                        add: (item: any) => void;
-                        addToTop: (item: any) => void;
-                    } & {
-                        setRequest: (req: Function) => Function;
-                        exists: (id: string) => boolean;
-                        remove: (id: string) => void;
-                        loadPage: (a1: number) => Promise<any>;
-                        refresh: () => void;
-                        load: () => Promise<any[]>;
-                    } & {
-                        readonly length: number;
-                        readonly list: any[];
-                        readonly first: any;
-                        readonly last: any;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    readonly activeBots: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
-                        readonly _snapshot: any;
-                        readonly service: any;
-                    } & {
-                        readonly snapshot: any;
-                    } & {
-                        uploading: boolean;
-                        uploaded: boolean;
-                        uploadError: string;
-                    } & {
-                        upload: (a1: any) => Promise<any>;
-                    } & {
-                        updated: boolean;
-                        updating: boolean;
-                        updateError: string;
-                    } & {
-                        update: (a1: any) => Promise<any>;
-                    } & {
-                        save: () => Promise<{}>;
-                    } & {
-                        id: string;
-                        isSubscribed: boolean;
-                        guest: boolean;
-                        visitor: boolean;
-                        title: string | null;
-                        server: string | null;
-                        radius: number;
-                        geofence: boolean;
-                        owner: ({
-                            id: string;
-                        } & {
-                            readonly pageId: string;
-                            readonly _snapshot: any;
-                            readonly service: any;
-                        } & {
-                            readonly snapshot: any;
-                        } & {
-                            loaded: boolean;
-                        } & {
-                            load: (data: any) => void;
-                        } & {
-                            id: string;
-                            avatar: any;
-                            handle: string | null;
-                            status: string;
-                            firstName: string | null;
-                            lastName: string | null;
-                            isBlocked: boolean;
-                            isFollowed: boolean;
-                            isFollower: boolean;
-                            isNew: boolean;
-                            followersSize: number;
-                            followedSize: number;
-                            botsSize: number;
-                            roles: IObservableArray<string> & ISnapshottable<string[]>;
-                        } & {
-                            afterAttach: () => void;
-                            follow: () => Promise<{}>;
-                            unfollow: () => Promise<{}>;
-                            block: () => Promise<{}>;
-                            unblock: () => Promise<{}>;
-                            setStatus: (status: string) => void;
-                        } & any & {
-                            readonly $treenode?: any;
-                        }) | null;
-                        image: any;
-                        description: string | null;
-                        visibility: number;
-                        location: ({
-                            latitude: number;
-                            longitude: number;
-                            accuracy: number | null;
-                        } & {
-                            isCurrent: boolean;
-                        } & {
-                            load: (data: any) => void;
-                            addToIQ: (iq: any) => void;
-                        } & {
-                            readonly $treenode?: any;
-                        }) | null;
-                        address: string;
-                        followersSize: number;
-                        guestsSize: number;
-                        visitorsSize: number;
-                        totalItems: number;
-                        addressData: {
-                            city: string;
-                            country: string;
-                            state: string;
-                            county: string;
-                        } & {
-                            readonly locationShort: string;
-                        } & {
-                            readonly $treenode?: any;
-                        };
-                        subscribers: {
-                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                            count: number | null;
-                        } & {
-                            loading: boolean;
-                            finished: boolean;
-                        } & {
-                            add: (item: any) => void;
-                            addToTop: (item: any) => void;
-                        } & {
-                            setRequest: (req: Function) => Function;
-                            exists: (id: string) => boolean;
-                            remove: (id: string) => void;
-                            loadPage: (a1: number) => Promise<any>;
-                            refresh: () => void;
-                            load: () => Promise<any[]>;
-                        } & {
-                            readonly length: number;
-                            readonly list: any[];
-                            readonly first: any;
-                            readonly last: any;
-                        } & {
-                            readonly $treenode?: any;
-                        };
-                        guests: {
-                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                            count: number | null;
-                        } & {
-                            loading: boolean;
-                            finished: boolean;
-                        } & {
-                            add: (item: any) => void;
-                            addToTop: (item: any) => void;
-                        } & {
-                            setRequest: (req: Function) => Function;
-                            exists: (id: string) => boolean;
-                            remove: (id: string) => void;
-                            loadPage: (a1: number) => Promise<any>;
-                            refresh: () => void;
-                            load: () => Promise<any[]>;
-                        } & {
-                            readonly length: number;
-                            readonly list: any[];
-                            readonly first: any;
-                            readonly last: any;
-                        } & {
-                            readonly $treenode?: any;
-                        };
-                        visitors: {
-                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                            count: number | null;
-                        } & {
-                            loading: boolean;
-                            finished: boolean;
-                        } & {
-                            add: (item: any) => void;
-                            addToTop: (item: any) => void;
-                        } & {
-                            setRequest: (req: Function) => Function;
-                            exists: (id: string) => boolean;
-                            remove: (id: string) => void;
-                            loadPage: (a1: number) => Promise<any>;
-                            refresh: () => void;
-                            load: () => Promise<any[]>;
-                        } & {
-                            readonly length: number;
-                            readonly list: any[];
-                            readonly first: any;
-                            readonly last: any;
-                        } & {
-                            readonly $treenode?: any;
-                        };
-                        posts: {
-                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                            count: number | null;
-                        } & {
-                            loading: boolean;
-                            finished: boolean;
-                        } & {
-                            add: (item: any) => void;
-                            addToTop: (item: any) => void;
-                        } & {
-                            setRequest: (req: Function) => Function;
-                            exists: (id: string) => boolean;
-                            remove: (id: string) => void;
-                            loadPage: (a1: number) => Promise<any>;
-                            refresh: () => void;
-                            load: () => Promise<any[]>;
-                        } & {
-                            readonly length: number;
-                            readonly list: any[];
-                            readonly first: any;
-                            readonly last: any;
-                        } & {
-                            readonly $treenode?: any;
-                        };
-                        error: string;
-                    } & {
-                        isNew: boolean;
-                        loading: boolean;
-                    } & any & {
-                        shareToFriends: (message?: string) => void;
-                        shareToFollowers: (message?: string) => void;
-                    } & {
-                        readonly isPublic: boolean;
-                        readonly coverColor: number;
-                        readonly snapshot: any;
-                    } & {
-                        readonly $treenode?: any;
-                    })[];
-                    readonly displayName: string;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-            } & {
-                setContent: (content: string) => string;
-                setTitle: (title: string) => string;
-                publish: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            } & ISnapshottable<{
-                id?: any;
-            } & {
-                time?: any;
-            } & {
-                loaded?: any;
-            } & {} & {
-                id?: any;
-                content?: any;
-                title?: any;
-                image?: any;
-                profile?: any;
-            }>;
-            removePost: (a1: string) => Promise<any>;
-            subscribe: () => Promise<{}>;
-            subscribeGeofence: () => Promise<{}>;
-            unsubscribe: () => Promise<{}>;
-            unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, action?: string) => void;
-            setNew: (value: boolean) => void;
-            load: (d?: any) => void;
-        } & {
-            shareToFriends: (message?: string) => void;
-            shareToFollowers: (message?: string) => void;
-        } & {
-            readonly isPublic: boolean;
-            readonly coverColor: number;
-            readonly snapshot: any;
-        } & {
-            readonly $treenode?: any;
-        };
-    } & {
-        readonly target: {
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            loaded: boolean;
-        } & {
-            load: (data: any) => void;
-        } & {
-            id: string;
-            avatar: any;
-            handle: string | null;
-            status: string;
-            firstName: string | null;
-            lastName: string | null;
-            isBlocked: boolean;
-            isFollowed: boolean;
-            isFollower: boolean;
-            isNew: boolean;
-            followersSize: number;
-            followedSize: number;
-            botsSize: number;
-            roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            afterAttach: () => void;
-            follow: () => Promise<{}>;
-            unfollow: () => Promise<{}>;
-            block: () => Promise<{}>;
-            unblock: () => Promise<{}>;
-            setStatus: (status: string) => void;
-        } & {
-            readonly snapshot: any;
-            readonly isOwn: boolean;
-            readonly isVerified: boolean;
-            readonly isMutual: boolean;
-            readonly followers: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly followed: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly ownBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly subscribedBots: {
-                result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                count: number | null;
-            } & {
-                loading: boolean;
-                finished: boolean;
-            } & {
-                add: (item: any) => void;
-                addToTop: (item: any) => void;
-            } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
-                remove: (id: string) => void;
-                loadPage: (a1: number) => Promise<any>;
-                refresh: () => void;
-                load: () => Promise<any[]>;
-            } & {
-                readonly length: number;
-                readonly list: any[];
-                readonly first: any;
-                readonly last: any;
-            } & {
-                readonly $treenode?: any;
-            };
-            readonly activeBots: ({
-                id: string;
-            } & {
-                readonly pageId: string;
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                updated: boolean;
-                updating: boolean;
-                updateError: string;
-            } & {
-                update: (a1: any) => Promise<any>;
-            } & {
-                save: () => Promise<{}>;
-            } & {
-                id: string;
-                isSubscribed: boolean;
-                guest: boolean;
-                visitor: boolean;
-                title: string | null;
-                server: string | null;
-                radius: number;
-                geofence: boolean;
-                owner: ({
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & any & {
-                    readonly $treenode?: any;
-                }) | null;
-                image: any;
-                description: string | null;
-                visibility: number;
-                location: ({
-                    latitude: number;
-                    longitude: number;
-                    accuracy: number | null;
-                } & {
-                    isCurrent: boolean;
-                } & {
-                    load: (data: any) => void;
-                    addToIQ: (iq: any) => void;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                address: string;
-                followersSize: number;
-                guestsSize: number;
-                visitorsSize: number;
-                totalItems: number;
-                addressData: {
-                    city: string;
-                    country: string;
-                    state: string;
-                    county: string;
-                } & {
-                    readonly locationShort: string;
-                } & {
-                    readonly $treenode?: any;
-                };
-                subscribers: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                guests: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                visitors: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                posts: {
-                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-                    count: number | null;
-                } & {
-                    loading: boolean;
-                    finished: boolean;
-                } & {
-                    add: (item: any) => void;
-                    addToTop: (item: any) => void;
-                } & {
-                    setRequest: (req: Function) => Function;
-                    exists: (id: string) => boolean;
-                    remove: (id: string) => void;
-                    loadPage: (a1: number) => Promise<any>;
-                    refresh: () => void;
-                    load: () => Promise<any[]>;
-                } & {
-                    readonly length: number;
-                    readonly list: any[];
-                    readonly first: any;
-                    readonly last: any;
-                } & {
-                    readonly $treenode?: any;
-                };
-                error: string;
-            } & {
-                isNew: boolean;
-                loading: boolean;
-            } & {
-                setError: (value: string) => void;
-                startLoading(): void;
-                finishLoading(): void;
-                setGeofence: (value: boolean) => void;
-                setPublic: (value: boolean) => void;
-                afterAttach: () => void;
-                createPost: (content?: string) => {
-                    id: string;
-                } & {
-                    readonly pageId: string;
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    time: number;
-                } & {
-                    readonly date: Date;
-                    readonly dateAsString: string;
-                    readonly relativeDateAsString: string;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    uploading: boolean;
-                    uploaded: boolean;
-                    uploadError: string;
-                } & {
-                    upload: (a1: any) => Promise<any>;
-                } & {
-                    id: string;
-                    content: string;
-                    title: string;
-                    image: any;
-                    profile: ({
-                        id: string;
-                    } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -18984,7 +17165,6 @@ export declare const Wocky: IModelType<{
         post: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -19013,7 +17193,6 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -19051,6 +17230,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19075,6 +17255,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19099,6 +17280,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19123,6 +17305,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19148,7 +17331,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -19179,7 +17361,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -19245,6 +17426,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -19269,6 +17451,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -19293,6 +17476,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -19317,6 +17501,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -19353,7 +17538,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -19382,7 +17566,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -19469,7 +17652,6 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -19484,7 +17666,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -19522,6 +17703,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -19546,6 +17728,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -19570,6 +17753,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -19594,6 +17778,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -19619,7 +17804,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -19650,7 +17834,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -19716,6 +17899,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19740,6 +17924,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19764,6 +17949,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19788,6 +17974,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -19824,7 +18011,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -19853,7 +18039,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -19932,7 +18117,6 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -19963,7 +18147,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -20001,6 +18184,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -20025,6 +18209,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -20049,6 +18234,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -20073,6 +18259,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -20098,7 +18285,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -20129,7 +18315,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -20195,6 +18380,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20219,6 +18405,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20243,6 +18430,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20267,6 +18455,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20303,7 +18492,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -20332,7 +18520,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -20439,6 +18626,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -20463,6 +18651,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -20487,6 +18676,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -20511,6 +18701,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -20547,7 +18738,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -20576,7 +18766,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -20614,6 +18803,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20638,6 +18828,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20662,6 +18853,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20686,6 +18878,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -20711,7 +18904,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -20742,7 +18934,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -20808,6 +18999,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -20832,6 +19024,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -20856,6 +19049,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -20880,6 +19074,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -20961,7 +19156,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -20999,6 +19193,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21023,6 +19218,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21047,6 +19243,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21071,6 +19268,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21096,7 +19294,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -21127,7 +19324,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -21193,6 +19389,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21217,6 +19414,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21241,6 +19439,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21265,6 +19464,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21301,7 +19501,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -21330,7 +19529,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -21412,7 +19610,6 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -21427,7 +19624,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -21465,6 +19661,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21489,6 +19686,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21513,6 +19711,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21537,6 +19736,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -21562,7 +19762,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -21593,7 +19792,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -21659,6 +19857,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21683,6 +19882,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21707,6 +19907,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21731,6 +19932,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21767,7 +19969,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -21796,7 +19997,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -21875,7 +20075,6 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -21906,7 +20105,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -21944,6 +20142,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21968,6 +20167,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -21992,6 +20192,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -22016,6 +20217,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -22041,7 +20243,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -22072,7 +20273,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -22138,6 +20338,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22162,6 +20363,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22186,6 +20388,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22210,6 +20413,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22246,7 +20450,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -22275,7 +20478,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -22382,6 +20584,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22406,6 +20609,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22430,6 +20634,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22454,6 +20659,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22490,7 +20696,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -22519,7 +20724,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -22557,6 +20761,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22581,6 +20786,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22605,6 +20811,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22629,6 +20836,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -22654,7 +20862,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -22685,7 +20892,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -22751,6 +20957,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -22775,6 +20982,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -22799,6 +21007,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -22823,6 +21032,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -22904,7 +21114,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -22942,6 +21151,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22966,6 +21176,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -22990,6 +21201,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23014,6 +21226,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23039,7 +21252,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -23070,7 +21282,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -23136,6 +21347,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23160,6 +21372,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23184,6 +21397,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23208,6 +21422,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23244,7 +21459,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -23273,7 +21487,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -23352,7 +21565,6 @@ export declare const Wocky: IModelType<{
         message: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -23375,7 +21587,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -23413,6 +21624,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23437,6 +21649,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23461,6 +21674,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23485,6 +21699,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -23510,7 +21725,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -23541,7 +21755,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -23607,6 +21820,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -23631,6 +21845,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -23655,6 +21870,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -23679,6 +21895,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -23715,7 +21932,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -23744,7 +21960,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -23839,7 +22054,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -23877,6 +22091,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23901,6 +22116,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23925,6 +22141,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23949,6 +22166,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -23974,7 +22192,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -24005,7 +22222,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -24071,6 +22287,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24095,6 +22312,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24119,6 +22337,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24143,6 +22362,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24179,7 +22399,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -24208,7 +22427,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -24288,7 +22506,6 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -24303,7 +22520,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -24341,6 +22557,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -24365,6 +22582,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -24389,6 +22607,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -24413,6 +22632,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -24438,7 +22658,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -24469,7 +22688,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -24535,6 +22753,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24559,6 +22778,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24583,6 +22803,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24607,6 +22828,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24643,7 +22865,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -24672,7 +22893,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -24751,7 +22971,6 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -24782,7 +23001,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -24820,6 +23038,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24844,6 +23063,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24868,6 +23088,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24892,6 +23113,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -24917,7 +23139,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -24948,7 +23169,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -25014,6 +23234,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25038,6 +23259,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25062,6 +23284,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25086,6 +23309,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25122,7 +23346,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -25151,7 +23374,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -25258,6 +23480,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25282,6 +23505,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25306,6 +23530,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25330,6 +23555,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25366,7 +23592,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -25395,7 +23620,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -25433,6 +23657,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25457,6 +23682,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25481,6 +23707,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25505,6 +23732,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -25530,7 +23758,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -25561,7 +23788,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -25627,6 +23853,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -25651,6 +23878,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -25675,6 +23903,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -25699,6 +23928,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -25780,7 +24010,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -25818,6 +24047,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25842,6 +24072,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25866,6 +24097,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25890,6 +24122,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -25915,7 +24148,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -25946,7 +24178,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -26012,6 +24243,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26036,6 +24268,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26060,6 +24293,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26084,6 +24318,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26120,7 +24355,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -26149,7 +24383,1964 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        id: string;
+                        avatar: any;
+                        handle: string | null;
+                        status: string;
+                        firstName: string | null;
+                        lastName: string | null;
+                        isBlocked: boolean;
+                        isFollowed: boolean;
+                        isFollower: boolean;
+                        isNew: boolean;
+                        followersSize: number;
+                        followedSize: number;
+                        botsSize: number;
+                        roles: IObservableArray<string> & ISnapshottable<string[]>;
+                    } & {
+                        afterAttach: () => void;
+                        follow: () => Promise<{}>;
+                        unfollow: () => Promise<{}>;
+                        block: () => Promise<{}>;
+                        unblock: () => Promise<{}>;
+                        setStatus: (status: string) => void;
+                    } & any & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setContent: (content: string) => string;
+                    setTitle: (title: string) => string;
+                    publish: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                } & ISnapshottable<{
+                    id?: any;
+                } & {
+                    time?: any;
+                } & {
+                    loaded?: any;
+                } & {} & {
+                    id?: any;
+                    content?: any;
+                    title?: any;
+                    image?: any;
+                    profile?: any;
+                }>;
+                removePost: (a1: string) => Promise<any>;
+                subscribe: () => Promise<{}>;
+                subscribeGeofence: () => Promise<{}>;
+                unsubscribe: () => Promise<{}>;
+                unsubscribeGeofence: () => Promise<{}>;
+                share: (userIDs: string[], message?: string, action?: string) => void;
+                setNew: (value: boolean) => void;
+                load: (d?: any) => void;
+            } & {
+                shareToFriends: (message?: string) => void;
+                shareToFollowers: (message?: string) => void;
+            } & {
+                readonly isPublic: boolean;
+                readonly coverColor: number;
+                readonly snapshot: any;
+            } & {
+                readonly $treenode?: any;
+            })[];
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        created: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | ({
+        id: string;
+    } & {
+        readonly _snapshot: any;
+        readonly service: any;
+    } & {
+        readonly snapshot: any;
+    } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
+        readonly target: {
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            loaded: boolean;
+        } & {
+            load: (data: any) => void;
+        } & {
+            id: string;
+            avatar: any;
+            handle: string | null;
+            status: string;
+            firstName: string | null;
+            lastName: string | null;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            isNew: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            afterAttach: () => void;
+            follow: () => Promise<{}>;
+            unfollow: () => Promise<{}>;
+            block: () => Promise<{}>;
+            unblock: () => Promise<{}>;
+            setStatus: (status: string) => void;
+        } & {
+            readonly snapshot: any;
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly activeBots: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                updated: boolean;
+                updating: boolean;
+                updateError: string;
+            } & {
+                update: (a1: any) => Promise<any>;
+            } & {
+                save: () => Promise<{}>;
+            } & {
+                id: string;
+                isSubscribed: boolean;
+                guest: boolean;
+                visitor: boolean;
+                title: string | null;
+                server: string | null;
+                radius: number;
+                geofence: boolean;
+                owner: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & any & {
+                    readonly $treenode?: any;
+                }) | null;
+                image: any;
+                description: string | null;
+                visibility: number;
+                location: ({
+                    latitude: number;
+                    longitude: number;
+                    accuracy: number | null;
+                } & {
+                    isCurrent: boolean;
+                } & {
+                    load: (data: any) => void;
+                    addToIQ: (iq: any) => void;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                address: string;
+                followersSize: number;
+                guestsSize: number;
+                visitorsSize: number;
+                totalItems: number;
+                addressData: {
+                    city: string;
+                    country: string;
+                    state: string;
+                    county: string;
+                } & {
+                    readonly locationShort: string;
+                } & {
+                    readonly $treenode?: any;
+                };
+                subscribers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                guests: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                visitors: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                posts: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                error: string;
+            } & {
+                isNew: boolean;
+                loading: boolean;
+            } & {
+                setError: (value: string) => void;
+                startLoading(): void;
+                finishLoading(): void;
+                setGeofence: (value: boolean) => void;
+                setPublic: (value: boolean) => void;
+                afterAttach: () => void;
+                createPost: (content?: string) => {
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    time: number;
+                } & {
+                    readonly date: Date;
+                    readonly dateAsString: string;
+                    readonly relativeDateAsString: string;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
+                } & {
+                    upload: (a1: any) => Promise<any>;
+                } & {
+                    id: string;
+                    content: string;
+                    title: string;
+                    image: any;
+                    profile: ({
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        id: string;
+                        avatar: any;
+                        handle: string | null;
+                        status: string;
+                        firstName: string | null;
+                        lastName: string | null;
+                        isBlocked: boolean;
+                        isFollowed: boolean;
+                        isFollower: boolean;
+                        isNew: boolean;
+                        followersSize: number;
+                        followedSize: number;
+                        botsSize: number;
+                        roles: IObservableArray<string> & ISnapshottable<string[]>;
+                    } & {
+                        afterAttach: () => void;
+                        follow: () => Promise<{}>;
+                        unfollow: () => Promise<{}>;
+                        block: () => Promise<{}>;
+                        unblock: () => Promise<{}>;
+                        setStatus: (status: string) => void;
+                    } & any & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setContent: (content: string) => string;
+                    setTitle: (title: string) => string;
+                    publish: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                } & ISnapshottable<{
+                    id?: any;
+                } & {
+                    time?: any;
+                } & {
+                    loaded?: any;
+                } & {} & {
+                    id?: any;
+                    content?: any;
+                    title?: any;
+                    image?: any;
+                    profile?: any;
+                }>;
+                removePost: (a1: string) => Promise<any>;
+                subscribe: () => Promise<{}>;
+                subscribeGeofence: () => Promise<{}>;
+                unsubscribe: () => Promise<{}>;
+                unsubscribeGeofence: () => Promise<{}>;
+                share: (userIDs: string[], message?: string, action?: string) => void;
+                setNew: (value: boolean) => void;
+                load: (d?: any) => void;
+            } & {
+                shareToFriends: (message?: string) => void;
+                shareToFollowers: (message?: string) => void;
+            } & {
+                readonly isPublic: boolean;
+                readonly coverColor: number;
+                readonly snapshot: any;
+            } & {
+                readonly $treenode?: any;
+            })[];
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        bot: {
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            updated: boolean;
+            updating: boolean;
+            updateError: string;
+        } & {
+            update: (a1: any) => Promise<any>;
+        } & {
+            save: () => Promise<{}>;
+        } & {
+            id: string;
+            isSubscribed: boolean;
+            guest: boolean;
+            visitor: boolean;
+            title: string | null;
+            server: string | null;
+            radius: number;
+            geofence: boolean;
+            owner: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                id: string;
+                avatar: any;
+                handle: string | null;
+                status: string;
+                firstName: string | null;
+                lastName: string | null;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                isNew: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                afterAttach: () => void;
+                follow: () => Promise<{}>;
+                unfollow: () => Promise<{}>;
+                block: () => Promise<{}>;
+                unblock: () => Promise<{}>;
+                setStatus: (status: string) => void;
+            } & {
+                readonly snapshot: any;
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly activeBots: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
+                } & {
+                    upload: (a1: any) => Promise<any>;
+                } & {
+                    updated: boolean;
+                    updating: boolean;
+                    updateError: string;
+                } & {
+                    update: (a1: any) => Promise<any>;
+                } & {
+                    save: () => Promise<{}>;
+                } & {
+                    id: string;
+                    isSubscribed: boolean;
+                    guest: boolean;
+                    visitor: boolean;
+                    title: string | null;
+                    server: string | null;
+                    radius: number;
+                    geofence: boolean;
+                    owner: ({
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        id: string;
+                        avatar: any;
+                        handle: string | null;
+                        status: string;
+                        firstName: string | null;
+                        lastName: string | null;
+                        isBlocked: boolean;
+                        isFollowed: boolean;
+                        isFollower: boolean;
+                        isNew: boolean;
+                        followersSize: number;
+                        followedSize: number;
+                        botsSize: number;
+                        roles: IObservableArray<string> & ISnapshottable<string[]>;
+                    } & {
+                        afterAttach: () => void;
+                        follow: () => Promise<{}>;
+                        unfollow: () => Promise<{}>;
+                        block: () => Promise<{}>;
+                        unblock: () => Promise<{}>;
+                        setStatus: (status: string) => void;
+                    } & any & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    image: any;
+                    description: string | null;
+                    visibility: number;
+                    location: ({
+                        latitude: number;
+                        longitude: number;
+                        accuracy: number | null;
+                    } & {
+                        isCurrent: boolean;
+                    } & {
+                        load: (data: any) => void;
+                        addToIQ: (iq: any) => void;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    address: string;
+                    followersSize: number;
+                    guestsSize: number;
+                    visitorsSize: number;
+                    totalItems: number;
+                    addressData: {
+                        city: string;
+                        country: string;
+                        state: string;
+                        county: string;
+                    } & {
+                        readonly locationShort: string;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    subscribers: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    guests: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    visitors: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    posts: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    error: string;
+                } & {
+                    isNew: boolean;
+                    loading: boolean;
+                } & {
+                    setError: (value: string) => void;
+                    startLoading(): void;
+                    finishLoading(): void;
+                    setGeofence: (value: boolean) => void;
+                    setPublic: (value: boolean) => void;
+                    afterAttach: () => void;
+                    createPost: (content?: string) => {
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        time: number;
+                    } & {
+                        readonly date: Date;
+                        readonly dateAsString: string;
+                        readonly relativeDateAsString: string;
+                    } & {
+                        loaded: boolean;
+                    } & {
+                        load: (data: any) => void;
+                    } & {
+                        uploading: boolean;
+                        uploaded: boolean;
+                        uploadError: string;
+                    } & {
+                        upload: (a1: any) => Promise<any>;
+                    } & {
+                        id: string;
+                        content: string;
+                        title: string;
+                        image: any;
+                        profile: ({
+                            id: string;
+                        } & {
+                            readonly _snapshot: any;
+                            readonly service: any;
+                        } & {
+                            readonly snapshot: any;
+                        } & {
+                            loaded: boolean;
+                        } & {
+                            load: (data: any) => void;
+                        } & {
+                            id: string;
+                            avatar: any;
+                            handle: string | null;
+                            status: string;
+                            firstName: string | null;
+                            lastName: string | null;
+                            isBlocked: boolean;
+                            isFollowed: boolean;
+                            isFollower: boolean;
+                            isNew: boolean;
+                            followersSize: number;
+                            followedSize: number;
+                            botsSize: number;
+                            roles: IObservableArray<string> & ISnapshottable<string[]>;
+                        } & {
+                            afterAttach: () => void;
+                            follow: () => Promise<{}>;
+                            unfollow: () => Promise<{}>;
+                            block: () => Promise<{}>;
+                            unblock: () => Promise<{}>;
+                            setStatus: (status: string) => void;
+                        } & any & {
+                            readonly $treenode?: any;
+                        }) | null;
+                    } & {
+                        setContent: (content: string) => string;
+                        setTitle: (title: string) => string;
+                        publish: () => Promise<{}>;
+                    } & {
+                        readonly $treenode?: any;
+                    } & ISnapshottable<{
+                        id?: any;
+                    } & {
+                        time?: any;
+                    } & {
+                        loaded?: any;
+                    } & {} & {
+                        id?: any;
+                        content?: any;
+                        title?: any;
+                        image?: any;
+                        profile?: any;
+                    }>;
+                    removePost: (a1: string) => Promise<any>;
+                    subscribe: () => Promise<{}>;
+                    subscribeGeofence: () => Promise<{}>;
+                    unsubscribe: () => Promise<{}>;
+                    unsubscribeGeofence: () => Promise<{}>;
+                    share: (userIDs: string[], message?: string, action?: string) => void;
+                    setNew: (value: boolean) => void;
+                    load: (d?: any) => void;
+                } & {
+                    shareToFriends: (message?: string) => void;
+                    shareToFollowers: (message?: string) => void;
+                } & {
+                    readonly isPublic: boolean;
+                    readonly coverColor: number;
+                    readonly snapshot: any;
+                } & {
+                    readonly $treenode?: any;
+                })[];
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            image: any;
+            description: string | null;
+            visibility: number;
+            location: ({
+                latitude: number;
+                longitude: number;
+                accuracy: number | null;
+            } & {
+                isCurrent: boolean;
+            } & {
+                load: (data: any) => void;
+                addToIQ: (iq: any) => void;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            address: string;
+            followersSize: number;
+            guestsSize: number;
+            visitorsSize: number;
+            totalItems: number;
+            addressData: {
+                city: string;
+                country: string;
+                state: string;
+                county: string;
+            } & {
+                readonly locationShort: string;
+            } & {
+                readonly $treenode?: any;
+            };
+            subscribers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            guests: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            visitors: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            posts: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            error: string;
+        } & {
+            isNew: boolean;
+            loading: boolean;
+        } & {
+            setError: (value: string) => void;
+            startLoading(): void;
+            finishLoading(): void;
+            setGeofence: (value: boolean) => void;
+            setPublic: (value: boolean) => void;
+            afterAttach: () => void;
+            createPost: (content?: string) => {
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                loaded: boolean;
+            } & {
+                load: (data: any) => void;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                content: string;
+                title: string;
+                image: any;
+                profile: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & {
+                    readonly snapshot: any;
+                    readonly isOwn: boolean;
+                    readonly isVerified: boolean;
+                    readonly isMutual: boolean;
+                    readonly followers: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly followed: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
+                        count: number | null;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        add: (item: any) => void;
+                        addToTop: (item: any) => void;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        exists: (id: string) => boolean;
+                        remove: (id: string) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                        readonly first: any;
+                        readonly last: any;
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly activeBots: ({
+                        id: string;
+                    } & {
+                        readonly _snapshot: any;
+                        readonly service: any;
+                    } & {
+                        readonly snapshot: any;
+                    } & {
+                        uploading: boolean;
+                        uploaded: boolean;
+                        uploadError: string;
+                    } & {
+                        upload: (a1: any) => Promise<any>;
+                    } & {
+                        updated: boolean;
+                        updating: boolean;
+                        updateError: string;
+                    } & {
+                        update: (a1: any) => Promise<any>;
+                    } & {
+                        save: () => Promise<{}>;
+                    } & {
+                        id: string;
+                        isSubscribed: boolean;
+                        guest: boolean;
+                        visitor: boolean;
+                        title: string | null;
+                        server: string | null;
+                        radius: number;
+                        geofence: boolean;
+                        owner: ({
+                            id: string;
+                        } & {
+                            readonly _snapshot: any;
+                            readonly service: any;
+                        } & {
+                            readonly snapshot: any;
+                        } & {
+                            loaded: boolean;
+                        } & {
+                            load: (data: any) => void;
+                        } & {
+                            id: string;
+                            avatar: any;
+                            handle: string | null;
+                            status: string;
+                            firstName: string | null;
+                            lastName: string | null;
+                            isBlocked: boolean;
+                            isFollowed: boolean;
+                            isFollower: boolean;
+                            isNew: boolean;
+                            followersSize: number;
+                            followedSize: number;
+                            botsSize: number;
+                            roles: IObservableArray<string> & ISnapshottable<string[]>;
+                        } & {
+                            afterAttach: () => void;
+                            follow: () => Promise<{}>;
+                            unfollow: () => Promise<{}>;
+                            block: () => Promise<{}>;
+                            unblock: () => Promise<{}>;
+                            setStatus: (status: string) => void;
+                        } & any & {
+                            readonly $treenode?: any;
+                        }) | null;
+                        image: any;
+                        description: string | null;
+                        visibility: number;
+                        location: ({
+                            latitude: number;
+                            longitude: number;
+                            accuracy: number | null;
+                        } & {
+                            isCurrent: boolean;
+                        } & {
+                            load: (data: any) => void;
+                            addToIQ: (iq: any) => void;
+                        } & {
+                            readonly $treenode?: any;
+                        }) | null;
+                        address: string;
+                        followersSize: number;
+                        guestsSize: number;
+                        visitorsSize: number;
+                        totalItems: number;
+                        addressData: {
+                            city: string;
+                            country: string;
+                            state: string;
+                            county: string;
+                        } & {
+                            readonly locationShort: string;
+                        } & {
+                            readonly $treenode?: any;
+                        };
+                        subscribers: {
+                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
+                            count: number | null;
+                        } & {
+                            loading: boolean;
+                            finished: boolean;
+                        } & {
+                            add: (item: any) => void;
+                            addToTop: (item: any) => void;
+                        } & {
+                            setRequest: (req: Function) => Function;
+                            exists: (id: string) => boolean;
+                            remove: (id: string) => void;
+                            loadPage: (a1: number) => Promise<any>;
+                            refresh: () => void;
+                            load: () => Promise<any[]>;
+                        } & {
+                            readonly length: number;
+                            readonly list: any[];
+                            readonly first: any;
+                            readonly last: any;
+                        } & {
+                            readonly $treenode?: any;
+                        };
+                        guests: {
+                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
+                            count: number | null;
+                        } & {
+                            loading: boolean;
+                            finished: boolean;
+                        } & {
+                            add: (item: any) => void;
+                            addToTop: (item: any) => void;
+                        } & {
+                            setRequest: (req: Function) => Function;
+                            exists: (id: string) => boolean;
+                            remove: (id: string) => void;
+                            loadPage: (a1: number) => Promise<any>;
+                            refresh: () => void;
+                            load: () => Promise<any[]>;
+                        } & {
+                            readonly length: number;
+                            readonly list: any[];
+                            readonly first: any;
+                            readonly last: any;
+                        } & {
+                            readonly $treenode?: any;
+                        };
+                        visitors: {
+                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
+                            count: number | null;
+                        } & {
+                            loading: boolean;
+                            finished: boolean;
+                        } & {
+                            add: (item: any) => void;
+                            addToTop: (item: any) => void;
+                        } & {
+                            setRequest: (req: Function) => Function;
+                            exists: (id: string) => boolean;
+                            remove: (id: string) => void;
+                            loadPage: (a1: number) => Promise<any>;
+                            refresh: () => void;
+                            load: () => Promise<any[]>;
+                        } & {
+                            readonly length: number;
+                            readonly list: any[];
+                            readonly first: any;
+                            readonly last: any;
+                        } & {
+                            readonly $treenode?: any;
+                        };
+                        posts: {
+                            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
+                            count: number | null;
+                        } & {
+                            loading: boolean;
+                            finished: boolean;
+                        } & {
+                            add: (item: any) => void;
+                            addToTop: (item: any) => void;
+                        } & {
+                            setRequest: (req: Function) => Function;
+                            exists: (id: string) => boolean;
+                            remove: (id: string) => void;
+                            loadPage: (a1: number) => Promise<any>;
+                            refresh: () => void;
+                            load: () => Promise<any[]>;
+                        } & {
+                            readonly length: number;
+                            readonly list: any[];
+                            readonly first: any;
+                            readonly last: any;
+                        } & {
+                            readonly $treenode?: any;
+                        };
+                        error: string;
+                    } & {
+                        isNew: boolean;
+                        loading: boolean;
+                    } & any & {
+                        shareToFriends: (message?: string) => void;
+                        shareToFollowers: (message?: string) => void;
+                    } & {
+                        readonly isPublic: boolean;
+                        readonly coverColor: number;
+                        readonly snapshot: any;
+                    } & {
+                        readonly $treenode?: any;
+                    })[];
+                    readonly displayName: string;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setContent: (content: string) => string;
+                setTitle: (title: string) => string;
+                publish: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            } & ISnapshottable<{
+                id?: any;
+            } & {
+                time?: any;
+            } & {
+                loaded?: any;
+            } & {} & {
+                id?: any;
+                content?: any;
+                title?: any;
+                image?: any;
+                profile?: any;
+            }>;
+            removePost: (a1: string) => Promise<any>;
+            subscribe: () => Promise<{}>;
+            subscribeGeofence: () => Promise<{}>;
+            unsubscribe: () => Promise<{}>;
+            unsubscribeGeofence: () => Promise<{}>;
+            share: (userIDs: string[], message?: string, action?: string) => void;
+            setNew: (value: boolean) => void;
+            load: (d?: any) => void;
+        } & {
+            shareToFriends: (message?: string) => void;
+            shareToFollowers: (message?: string) => void;
+        } & {
+            readonly isPublic: boolean;
+            readonly coverColor: number;
+            readonly snapshot: any;
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly target: {
+            id: string;
+        } & {
+            readonly _snapshot: any;
+            readonly service: any;
+        } & {
+            readonly snapshot: any;
+        } & {
+            loaded: boolean;
+        } & {
+            load: (data: any) => void;
+        } & {
+            id: string;
+            avatar: any;
+            handle: string | null;
+            status: string;
+            firstName: string | null;
+            lastName: string | null;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            isNew: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            afterAttach: () => void;
+            follow: () => Promise<{}>;
+            unfollow: () => Promise<{}>;
+            block: () => Promise<{}>;
+            unblock: () => Promise<{}>;
+            setStatus: (status: string) => void;
+        } & {
+            readonly snapshot: any;
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                add: (item: any) => void;
+                addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
+                remove: (id: string) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+                readonly first: any;
+                readonly last: any;
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly activeBots: ({
+                id: string;
+            } & {
+                readonly _snapshot: any;
+                readonly service: any;
+            } & {
+                readonly snapshot: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                updated: boolean;
+                updating: boolean;
+                updateError: string;
+            } & {
+                update: (a1: any) => Promise<any>;
+            } & {
+                save: () => Promise<{}>;
+            } & {
+                id: string;
+                isSubscribed: boolean;
+                guest: boolean;
+                visitor: boolean;
+                title: string | null;
+                server: string | null;
+                radius: number;
+                geofence: boolean;
+                owner: ({
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    id: string;
+                    avatar: any;
+                    handle: string | null;
+                    status: string;
+                    firstName: string | null;
+                    lastName: string | null;
+                    isBlocked: boolean;
+                    isFollowed: boolean;
+                    isFollower: boolean;
+                    isNew: boolean;
+                    followersSize: number;
+                    followedSize: number;
+                    botsSize: number;
+                    roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    afterAttach: () => void;
+                    follow: () => Promise<{}>;
+                    unfollow: () => Promise<{}>;
+                    block: () => Promise<{}>;
+                    unblock: () => Promise<{}>;
+                    setStatus: (status: string) => void;
+                } & any & {
+                    readonly $treenode?: any;
+                }) | null;
+                image: any;
+                description: string | null;
+                visibility: number;
+                location: ({
+                    latitude: number;
+                    longitude: number;
+                    accuracy: number | null;
+                } & {
+                    isCurrent: boolean;
+                } & {
+                    load: (data: any) => void;
+                    addToIQ: (iq: any) => void;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                address: string;
+                followersSize: number;
+                guestsSize: number;
+                visitorsSize: number;
+                totalItems: number;
+                addressData: {
+                    city: string;
+                    country: string;
+                    state: string;
+                    county: string;
+                } & {
+                    readonly locationShort: string;
+                } & {
+                    readonly $treenode?: any;
+                };
+                subscribers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                guests: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                visitors: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                posts: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    add: (item: any) => void;
+                    addToTop: (item: any) => void;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    exists: (id: string) => boolean;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                    readonly first: any;
+                    readonly last: any;
+                } & {
+                    readonly $treenode?: any;
+                };
+                error: string;
+            } & {
+                isNew: boolean;
+                loading: boolean;
+            } & {
+                setError: (value: string) => void;
+                startLoading(): void;
+                finishLoading(): void;
+                setGeofence: (value: boolean) => void;
+                setPublic: (value: boolean) => void;
+                afterAttach: () => void;
+                createPost: (content?: string) => {
+                    id: string;
+                } & {
+                    readonly _snapshot: any;
+                    readonly service: any;
+                } & {
+                    readonly snapshot: any;
+                } & {
+                    time: number;
+                } & {
+                    readonly date: Date;
+                    readonly dateAsString: string;
+                    readonly relativeDateAsString: string;
+                } & {
+                    loaded: boolean;
+                } & {
+                    load: (data: any) => void;
+                } & {
+                    uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
+                } & {
+                    upload: (a1: any) => Promise<any>;
+                } & {
+                    id: string;
+                    content: string;
+                    title: string;
+                    image: any;
+                    profile: ({
+                        id: string;
+                    } & {
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -26229,7 +26420,6 @@ export declare const Wocky: IModelType<{
         profile: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -26267,6 +26457,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26291,6 +26482,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26315,6 +26507,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26339,6 +26532,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26364,7 +26558,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -26395,7 +26588,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -26461,6 +26653,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26485,6 +26678,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26509,6 +26703,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26533,6 +26728,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26569,7 +26765,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -26598,7 +26793,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -26677,7 +26871,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -26715,6 +26908,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26739,6 +26933,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26763,6 +26958,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26787,6 +26983,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -26812,7 +27009,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -26843,7 +27039,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -26909,6 +27104,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26933,6 +27129,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26957,6 +27154,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -26981,6 +27179,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27017,7 +27216,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -27046,7 +27244,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -27126,7 +27323,6 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -27141,7 +27337,6 @@ export declare const Wocky: IModelType<{
         readonly target: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -27179,6 +27374,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27203,6 +27399,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27227,6 +27424,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27251,6 +27449,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27276,7 +27475,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -27307,7 +27505,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -27373,6 +27570,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27397,6 +27595,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27421,6 +27620,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27445,6 +27645,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27481,7 +27682,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -27510,7 +27710,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -27596,14 +27795,6 @@ export declare const Wocky: IModelType<{
     } & {
         bot?: any;
     } & {
-        created?: any;
-    }) | ({
-        id?: any;
-    } & {
-        time?: any;
-    } & {
-        bot?: any;
-    } & {
         post?: any;
     }) | ({
         id?: any;
@@ -27629,6 +27820,14 @@ export declare const Wocky: IModelType<{
     } & {
         bot?: any;
     } & {
+        created?: any;
+    }) | ({
+        id?: any;
+    } & {
+        time?: any;
+    } & {
+        bot?: any;
+    } & {
         isEnter?: any;
         profile?: any;
     }) | ({
@@ -27640,6 +27839,7 @@ export declare const Wocky: IModelType<{
     }))[]>;
     events: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -27665,7 +27865,6 @@ export declare const Wocky: IModelType<{
     geoBots: IExtendedObservableMap<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -27696,7 +27895,6 @@ export declare const Wocky: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -27734,6 +27932,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27758,6 +27957,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27782,6 +27982,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27806,6 +28007,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -27831,7 +28033,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -27862,7 +28063,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -27928,6 +28128,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27952,6 +28153,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -27976,6 +28178,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28000,6 +28203,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28036,7 +28240,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -28065,7 +28268,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -28172,6 +28374,7 @@ export declare const Wocky: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -28196,6 +28399,7 @@ export declare const Wocky: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -28220,6 +28424,7 @@ export declare const Wocky: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -28244,6 +28449,7 @@ export declare const Wocky: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -28280,7 +28486,6 @@ export declare const Wocky: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -28309,7 +28514,6 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -28347,6 +28551,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28371,6 +28576,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28395,6 +28601,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28419,6 +28626,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28444,7 +28652,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -28475,7 +28682,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -28541,6 +28747,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28565,6 +28772,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28589,6 +28797,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28613,6 +28822,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28696,7 +28906,6 @@ export declare const Wocky: IModelType<{
         _list: IObservableArray<{
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -28710,7 +28919,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -28748,6 +28956,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28772,6 +28981,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28796,6 +29006,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28820,6 +29031,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -28845,7 +29057,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -28876,7 +29087,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -28942,6 +29152,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28966,6 +29177,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -28990,6 +29202,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29014,6 +29227,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29050,7 +29264,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -29079,7 +29292,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -29157,7 +29369,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -29180,7 +29391,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -29218,6 +29428,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29242,6 +29453,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29266,6 +29478,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29290,6 +29503,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29315,7 +29529,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -29346,7 +29559,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -29412,6 +29624,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29436,6 +29649,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29460,6 +29674,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29484,6 +29699,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29520,7 +29736,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -29549,7 +29764,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -29654,7 +29868,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -29677,7 +29890,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -29715,6 +29927,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29739,6 +29952,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29763,6 +29977,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29787,6 +30002,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -29812,7 +30028,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -29843,7 +30058,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -29909,6 +30123,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29933,6 +30148,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29957,6 +30173,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -29981,6 +30198,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -30017,7 +30235,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -30046,7 +30263,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -30142,7 +30358,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -30165,7 +30380,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -30203,6 +30417,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30227,6 +30442,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30251,6 +30467,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30275,6 +30492,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30300,7 +30518,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -30331,7 +30548,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -30397,6 +30613,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -30421,6 +30638,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -30445,6 +30663,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -30469,6 +30688,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -30505,7 +30725,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -30534,7 +30753,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -30640,7 +30858,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -30678,6 +30895,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -30702,6 +30920,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -30726,6 +30945,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -30750,6 +30970,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -30775,7 +30996,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -30806,7 +31026,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -30872,6 +31091,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30896,6 +31116,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30920,6 +31141,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30944,6 +31166,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -30980,7 +31203,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -31009,7 +31231,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -31088,7 +31309,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -31111,7 +31331,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -31149,6 +31368,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31173,6 +31393,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31197,6 +31418,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31221,6 +31443,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31246,7 +31469,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -31277,7 +31499,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -31343,6 +31564,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31367,6 +31589,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31391,6 +31614,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31415,6 +31639,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31451,7 +31676,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -31480,7 +31704,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -31573,7 +31796,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -31596,7 +31818,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -31634,6 +31855,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31658,6 +31880,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31682,6 +31905,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31706,6 +31930,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -31731,7 +31956,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -31762,7 +31986,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -31828,6 +32051,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31852,6 +32076,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31876,6 +32101,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31900,6 +32126,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -31936,7 +32163,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -31965,7 +32191,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -32066,7 +32291,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -32089,7 +32313,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -32127,6 +32350,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32151,6 +32375,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32175,6 +32400,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32199,6 +32425,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32224,7 +32451,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -32255,7 +32481,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -32321,6 +32546,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -32345,6 +32571,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -32369,6 +32596,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -32393,6 +32621,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -32429,7 +32658,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -32458,7 +32686,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -32551,7 +32778,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -32589,6 +32815,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -32613,6 +32840,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -32637,6 +32865,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -32661,6 +32890,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -32686,7 +32916,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -32717,7 +32946,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -32783,6 +33011,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32807,6 +33036,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32831,6 +33061,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32855,6 +33086,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -32891,7 +33123,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -32920,7 +33151,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -33015,7 +33245,6 @@ export declare const Wocky: IModelType<{
         readonly _filteredList: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -33029,7 +33258,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -33067,6 +33295,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -33091,6 +33320,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -33115,6 +33345,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -33139,6 +33370,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -33164,7 +33396,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -33195,7 +33426,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -33261,6 +33491,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33285,6 +33516,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33309,6 +33541,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33333,6 +33566,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33369,7 +33603,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -33398,7 +33631,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -33476,7 +33708,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -33499,7 +33730,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -33537,6 +33767,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33561,6 +33792,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33585,6 +33817,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33609,6 +33842,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -33634,7 +33868,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -33665,7 +33898,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -33731,6 +33963,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -33755,6 +33988,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -33779,6 +34013,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -33803,6 +34038,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -33839,7 +34075,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -33868,7 +34103,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -33973,7 +34207,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -33996,7 +34229,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -34034,6 +34266,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34058,6 +34291,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34082,6 +34316,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34106,6 +34341,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34131,7 +34367,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -34162,7 +34397,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -34228,6 +34462,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34252,6 +34487,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34276,6 +34512,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34300,6 +34537,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34336,7 +34574,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -34365,7 +34602,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -34461,7 +34697,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -34484,7 +34719,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -34522,6 +34756,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34546,6 +34781,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34570,6 +34806,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34594,6 +34831,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -34619,7 +34857,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -34650,7 +34887,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -34716,6 +34952,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34740,6 +34977,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34764,6 +35002,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34788,6 +35027,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -34824,7 +35064,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -34853,7 +35092,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -34959,7 +35197,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -34997,6 +35234,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -35021,6 +35259,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -35045,6 +35284,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -35069,6 +35309,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -35094,7 +35335,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -35125,7 +35365,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -35191,6 +35430,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35215,6 +35455,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35239,6 +35480,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35263,6 +35505,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35299,7 +35542,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -35328,7 +35570,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -35407,7 +35648,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -35430,7 +35670,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -35468,6 +35707,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35492,6 +35732,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35516,6 +35757,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35540,6 +35782,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35565,7 +35808,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -35596,7 +35838,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -35662,6 +35903,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -35686,6 +35928,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -35710,6 +35953,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -35734,6 +35978,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -35770,7 +36015,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -35799,7 +36043,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -35892,7 +36135,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -35915,7 +36157,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -35953,6 +36194,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -35977,6 +36219,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36001,6 +36244,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36025,6 +36269,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36050,7 +36295,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -36081,7 +36325,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -36147,6 +36390,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36171,6 +36415,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36195,6 +36440,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36219,6 +36465,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36255,7 +36502,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -36284,7 +36530,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -36385,7 +36630,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -36408,7 +36652,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -36446,6 +36689,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36470,6 +36714,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36494,6 +36739,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36518,6 +36764,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -36543,7 +36790,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -36574,7 +36820,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -36640,6 +36885,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36664,6 +36910,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36688,6 +36935,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36712,6 +36960,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -36748,7 +36997,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -36777,7 +37025,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -36870,7 +37117,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -36908,6 +37154,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -36932,6 +37179,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -36956,6 +37204,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -36980,6 +37229,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -37005,7 +37255,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -37036,7 +37285,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -37102,6 +37350,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37126,6 +37375,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37150,6 +37400,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37174,6 +37425,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37210,7 +37462,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -37239,7 +37490,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -37323,7 +37573,6 @@ export declare const Wocky: IModelType<{
         readonly list: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -37337,7 +37586,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -37375,6 +37623,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -37399,6 +37648,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -37423,6 +37673,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -37447,6 +37698,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -37472,7 +37724,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -37503,7 +37754,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -37569,6 +37819,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37593,6 +37844,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37617,6 +37869,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37641,6 +37894,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37677,7 +37931,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -37706,7 +37959,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -37784,7 +38036,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -37807,7 +38058,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -37845,6 +38095,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37869,6 +38120,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37893,6 +38145,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37917,6 +38170,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -37942,7 +38196,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -37973,7 +38226,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -38039,6 +38291,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38063,6 +38316,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38087,6 +38341,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38111,6 +38366,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38147,7 +38403,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -38176,7 +38431,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -38281,7 +38535,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -38304,7 +38557,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -38342,6 +38594,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38366,6 +38619,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38390,6 +38644,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38414,6 +38669,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38439,7 +38695,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -38470,7 +38725,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -38536,6 +38790,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38560,6 +38815,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38584,6 +38840,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38608,6 +38865,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -38644,7 +38902,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -38673,7 +38930,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -38769,7 +39025,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -38792,7 +39047,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -38830,6 +39084,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38854,6 +39109,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38878,6 +39134,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38902,6 +39159,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -38927,7 +39185,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -38958,7 +39215,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -39024,6 +39280,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -39048,6 +39305,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -39072,6 +39330,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -39096,6 +39355,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -39132,7 +39392,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -39161,7 +39420,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -39267,7 +39525,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -39305,6 +39562,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -39329,6 +39587,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -39353,6 +39612,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -39377,6 +39637,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -39402,7 +39663,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -39433,7 +39693,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -39499,6 +39758,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39523,6 +39783,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39547,6 +39808,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39571,6 +39833,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39607,7 +39870,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -39636,7 +39898,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -39715,7 +39976,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -39738,7 +39998,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -39776,6 +40035,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39800,6 +40060,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39824,6 +40085,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39848,6 +40110,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -39873,7 +40136,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -39904,7 +40166,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -39970,6 +40231,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -39994,6 +40256,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40018,6 +40281,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40042,6 +40306,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40078,7 +40343,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -40107,7 +40371,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -40200,7 +40463,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -40223,7 +40485,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -40261,6 +40522,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40285,6 +40547,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40309,6 +40572,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40333,6 +40597,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40358,7 +40623,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -40389,7 +40653,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -40455,6 +40718,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40479,6 +40743,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40503,6 +40768,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40527,6 +40793,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40563,7 +40830,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -40592,7 +40858,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -40693,7 +40958,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -40716,7 +40980,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -40754,6 +41017,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40778,6 +41042,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40802,6 +41067,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40826,6 +41092,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -40851,7 +41118,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -40882,7 +41148,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -40948,6 +41213,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40972,6 +41238,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -40996,6 +41263,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -41020,6 +41288,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -41056,7 +41325,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -41085,7 +41353,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -41178,7 +41445,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -41216,6 +41482,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41240,6 +41507,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41264,6 +41532,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41288,6 +41557,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41313,7 +41583,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -41344,7 +41613,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -41410,6 +41678,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41434,6 +41703,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41458,6 +41728,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41482,6 +41753,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41518,7 +41790,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -41547,7 +41818,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -41631,7 +41901,6 @@ export declare const Wocky: IModelType<{
         get(id: string): ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -41645,7 +41914,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -41683,6 +41951,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41707,6 +41976,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41731,6 +42001,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41755,6 +42026,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -41780,7 +42052,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -41811,7 +42082,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -41877,6 +42147,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41901,6 +42172,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41925,6 +42197,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41949,6 +42222,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -41985,7 +42259,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -42014,7 +42287,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -42092,7 +42364,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -42115,7 +42386,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -42153,6 +42423,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42177,6 +42448,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42201,6 +42473,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42225,6 +42498,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42250,7 +42524,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -42281,7 +42554,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -42347,6 +42619,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42371,6 +42644,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42395,6 +42669,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42419,6 +42694,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42455,7 +42731,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -42484,7 +42759,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -42589,7 +42863,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -42612,7 +42885,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -42650,6 +42922,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42674,6 +42947,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42698,6 +42972,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42722,6 +42997,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -42747,7 +43023,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -42778,7 +43053,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -42844,6 +43118,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42868,6 +43143,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42892,6 +43168,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42916,6 +43193,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -42952,7 +43230,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -42981,7 +43258,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -43077,7 +43353,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -43100,7 +43375,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -43138,6 +43412,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43162,6 +43437,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43186,6 +43462,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43210,6 +43487,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43235,7 +43513,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -43266,7 +43543,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -43332,6 +43608,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -43356,6 +43633,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -43380,6 +43658,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -43404,6 +43683,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -43440,7 +43720,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -43469,7 +43748,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -43575,7 +43853,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -43613,6 +43890,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -43637,6 +43915,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -43661,6 +43940,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -43685,6 +43965,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -43710,7 +43991,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -43741,7 +44021,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -43807,6 +44086,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43831,6 +44111,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43855,6 +44136,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43879,6 +44161,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -43915,7 +44198,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -43944,7 +44226,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -44023,7 +44304,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -44046,7 +44326,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -44084,6 +44363,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44108,6 +44388,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44132,6 +44413,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44156,6 +44438,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44181,7 +44464,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -44212,7 +44494,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -44278,6 +44559,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44302,6 +44584,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44326,6 +44609,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44350,6 +44634,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44386,7 +44671,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -44415,7 +44699,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -44508,7 +44791,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -44531,7 +44813,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -44569,6 +44850,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44593,6 +44875,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44617,6 +44900,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44641,6 +44925,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -44666,7 +44951,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -44697,7 +44981,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -44763,6 +45046,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44787,6 +45071,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44811,6 +45096,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44835,6 +45121,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -44871,7 +45158,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -44900,7 +45186,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -45001,7 +45286,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -45024,7 +45308,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -45062,6 +45345,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45086,6 +45370,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45110,6 +45395,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45134,6 +45420,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45159,7 +45446,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -45190,7 +45476,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -45256,6 +45541,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -45280,6 +45566,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -45304,6 +45591,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -45328,6 +45616,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -45364,7 +45653,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -45393,7 +45681,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -45486,7 +45773,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -45524,6 +45810,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -45548,6 +45835,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -45572,6 +45860,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -45596,6 +45885,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -45621,7 +45911,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -45652,7 +45941,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -45718,6 +46006,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45742,6 +46031,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45766,6 +46056,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45790,6 +46081,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -45826,7 +46118,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -45855,7 +46146,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -45939,7 +46229,6 @@ export declare const Wocky: IModelType<{
         clear: () => ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -45953,7 +46242,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -45991,6 +46279,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -46015,6 +46304,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -46039,6 +46329,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -46063,6 +46354,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -46088,7 +46380,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -46119,7 +46410,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -46185,6 +46475,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46209,6 +46500,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46233,6 +46525,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46257,6 +46550,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46293,7 +46587,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -46322,7 +46615,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -46400,7 +46692,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -46423,7 +46714,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -46461,6 +46751,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46485,6 +46776,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46509,6 +46801,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46533,6 +46826,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46558,7 +46852,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -46589,7 +46882,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -46655,6 +46947,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -46679,6 +46972,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -46703,6 +46997,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -46727,6 +47022,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -46763,7 +47059,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -46792,7 +47087,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -46897,7 +47191,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -46920,7 +47213,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -46958,6 +47250,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -46982,6 +47275,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47006,6 +47300,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47030,6 +47325,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47055,7 +47351,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -47086,7 +47381,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -47152,6 +47446,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47176,6 +47471,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47200,6 +47496,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47224,6 +47521,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47260,7 +47558,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -47289,7 +47586,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -47385,7 +47681,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -47408,7 +47703,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -47446,6 +47740,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47470,6 +47765,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47494,6 +47790,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47518,6 +47815,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -47543,7 +47841,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -47574,7 +47871,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -47640,6 +47936,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47664,6 +47961,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47688,6 +47986,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47712,6 +48011,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -47748,7 +48048,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -47777,7 +48076,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -47883,7 +48181,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -47921,6 +48218,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -47945,6 +48243,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -47969,6 +48268,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -47993,6 +48293,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -48018,7 +48319,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -48049,7 +48349,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -48115,6 +48414,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48139,6 +48439,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48163,6 +48464,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48187,6 +48489,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48223,7 +48526,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -48252,7 +48554,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -48331,7 +48632,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -48354,7 +48654,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -48392,6 +48691,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48416,6 +48716,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48440,6 +48741,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48464,6 +48766,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48489,7 +48792,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -48520,7 +48822,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -48586,6 +48887,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -48610,6 +48912,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -48634,6 +48937,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -48658,6 +48962,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -48694,7 +48999,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -48723,7 +49027,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -48816,7 +49119,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -48839,7 +49141,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -48877,6 +49178,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48901,6 +49203,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48925,6 +49228,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48949,6 +49253,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -48974,7 +49279,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -49005,7 +49309,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -49071,6 +49374,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49095,6 +49399,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49119,6 +49424,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49143,6 +49449,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49179,7 +49486,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -49208,7 +49514,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -49309,7 +49614,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -49332,7 +49636,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -49370,6 +49673,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -49394,6 +49698,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -49418,6 +49723,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -49442,6 +49748,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -49467,7 +49774,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -49498,7 +49804,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -49564,6 +49869,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49588,6 +49894,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49612,6 +49919,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49636,6 +49944,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -49672,7 +49981,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -49701,7 +50009,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -49794,7 +50101,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -49832,6 +50138,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -49856,6 +50163,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -49880,6 +50188,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -49904,6 +50213,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -49929,7 +50239,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -49960,7 +50269,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -50026,6 +50334,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50050,6 +50359,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50074,6 +50384,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50098,6 +50409,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50134,7 +50446,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -50163,7 +50474,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -50246,7 +50556,6 @@ export declare const Wocky: IModelType<{
         remove: (id: string) => ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -50260,7 +50569,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -50298,6 +50606,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -50322,6 +50631,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -50346,6 +50656,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -50370,6 +50681,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -50395,7 +50707,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -50426,7 +50737,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -50492,6 +50802,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50516,6 +50827,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50540,6 +50852,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50564,6 +50877,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50600,7 +50914,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -50629,7 +50942,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -50707,7 +51019,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -50730,7 +51041,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -50768,6 +51078,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50792,6 +51103,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50816,6 +51128,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50840,6 +51153,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -50865,7 +51179,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -50896,7 +51209,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -50962,6 +51274,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -50986,6 +51299,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51010,6 +51324,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51034,6 +51349,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51070,7 +51386,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -51099,7 +51414,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -51204,7 +51518,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -51227,7 +51540,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -51265,6 +51577,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51289,6 +51602,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51313,6 +51627,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51337,6 +51652,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51362,7 +51678,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -51393,7 +51708,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -51459,6 +51773,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51483,6 +51798,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51507,6 +51823,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51531,6 +51848,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51567,7 +51885,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -51596,7 +51913,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -51692,7 +52008,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -51715,7 +52030,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -51753,6 +52067,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51777,6 +52092,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51801,6 +52117,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51825,6 +52142,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -51850,7 +52168,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -51881,7 +52198,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -51947,6 +52263,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51971,6 +52288,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -51995,6 +52313,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -52019,6 +52338,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -52055,7 +52375,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -52084,7 +52403,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -52190,7 +52508,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -52228,6 +52545,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -52252,6 +52570,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -52276,6 +52595,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -52300,6 +52620,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -52325,7 +52646,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -52356,7 +52676,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -52422,6 +52741,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52446,6 +52766,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52470,6 +52791,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52494,6 +52816,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52530,7 +52853,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -52559,7 +52881,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -52638,7 +52959,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -52661,7 +52981,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -52699,6 +53018,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52723,6 +53043,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52747,6 +53068,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52771,6 +53093,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -52796,7 +53119,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -52827,7 +53149,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -52893,6 +53214,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -52917,6 +53239,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -52941,6 +53264,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -52965,6 +53289,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53001,7 +53326,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -53030,7 +53354,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -53123,7 +53446,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -53146,7 +53468,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -53184,6 +53505,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53208,6 +53530,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53232,6 +53555,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53256,6 +53580,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53281,7 +53606,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -53312,7 +53636,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -53378,6 +53701,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53402,6 +53726,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53426,6 +53751,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53450,6 +53776,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53486,7 +53813,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -53515,7 +53841,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -53616,7 +53941,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -53639,7 +53963,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -53677,6 +54000,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53701,6 +54025,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53725,6 +54050,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53749,6 +54075,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -53774,7 +54101,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -53805,7 +54131,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -53871,6 +54196,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53895,6 +54221,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53919,6 +54246,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53943,6 +54271,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -53979,7 +54308,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -54008,7 +54336,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -54101,7 +54428,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -54139,6 +54465,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54163,6 +54490,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54187,6 +54515,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54211,6 +54540,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54236,7 +54566,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -54267,7 +54596,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -54333,6 +54661,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54357,6 +54686,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54381,6 +54711,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54405,6 +54736,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54441,7 +54773,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -54470,7 +54801,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -54553,7 +54883,6 @@ export declare const Wocky: IModelType<{
         add: (chat: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -54567,7 +54896,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -54605,6 +54933,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54629,6 +54958,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54653,6 +54983,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54677,6 +55008,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -54702,7 +55034,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -54733,7 +55064,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -54799,6 +55129,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54823,6 +55154,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54847,6 +55179,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54871,6 +55204,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -54907,7 +55241,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -54936,7 +55269,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -55014,7 +55346,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -55037,7 +55368,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -55075,6 +55405,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55099,6 +55430,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55123,6 +55455,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55147,6 +55480,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55172,7 +55506,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -55203,7 +55536,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -55269,6 +55601,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55293,6 +55626,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55317,6 +55651,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55341,6 +55676,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55377,7 +55713,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -55406,7 +55741,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -55511,7 +55845,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -55534,7 +55867,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -55572,6 +55904,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55596,6 +55929,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55620,6 +55954,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55644,6 +55979,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -55669,7 +56005,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -55700,7 +56035,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -55766,6 +56100,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55790,6 +56125,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55814,6 +56150,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55838,6 +56175,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -55874,7 +56212,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -55903,7 +56240,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -55999,7 +56335,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -56022,7 +56357,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -56060,6 +56394,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56084,6 +56419,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56108,6 +56444,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56132,6 +56469,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56157,7 +56495,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -56188,7 +56525,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -56254,6 +56590,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -56278,6 +56615,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -56302,6 +56640,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -56326,6 +56665,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -56362,7 +56702,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -56391,7 +56730,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -56497,7 +56835,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -56535,6 +56872,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -56559,6 +56897,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -56583,6 +56922,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -56607,6 +56947,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -56632,7 +56973,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -56663,7 +57003,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -56729,6 +57068,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56753,6 +57093,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56777,6 +57118,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56801,6 +57143,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -56837,7 +57180,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -56866,7 +57208,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -56945,7 +57286,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -56968,7 +57308,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -57006,6 +57345,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57030,6 +57370,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57054,6 +57395,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57078,6 +57420,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57103,7 +57446,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -57134,7 +57476,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -57200,6 +57541,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57224,6 +57566,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57248,6 +57591,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57272,6 +57616,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57308,7 +57653,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -57337,7 +57681,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -57430,7 +57773,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -57453,7 +57795,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -57491,6 +57832,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57515,6 +57857,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57539,6 +57882,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57563,6 +57907,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -57588,7 +57933,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -57619,7 +57963,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -57685,6 +58028,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57709,6 +58053,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57733,6 +58078,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57757,6 +58103,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -57793,7 +58140,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -57822,7 +58168,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -57923,7 +58268,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -57946,7 +58290,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -57984,6 +58327,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58008,6 +58352,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58032,6 +58377,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58056,6 +58402,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58081,7 +58428,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -58112,7 +58458,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -58178,6 +58523,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -58202,6 +58548,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -58226,6 +58573,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -58250,6 +58598,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -58286,7 +58635,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -58315,7 +58663,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -58408,7 +58755,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -58446,6 +58792,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58470,6 +58817,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58494,6 +58842,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58518,6 +58867,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58543,7 +58893,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -58574,7 +58923,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -58640,6 +58988,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58664,6 +59013,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58688,6 +59038,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58712,6 +59063,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -58748,7 +59100,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -58777,7 +59128,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -58859,7 +59209,6 @@ export declare const Wocky: IModelType<{
         }) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -58873,7 +59222,6 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -58911,6 +59259,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58935,6 +59284,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58959,6 +59309,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -58983,6 +59334,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -59008,7 +59360,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -59039,7 +59390,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -59105,6 +59455,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59129,6 +59480,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59153,6 +59505,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59177,6 +59530,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59213,7 +59567,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -59242,7 +59595,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -59320,7 +59672,6 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -59343,7 +59694,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -59381,6 +59731,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59405,6 +59756,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59429,6 +59781,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59453,6 +59806,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59478,7 +59832,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -59509,7 +59862,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -59575,6 +59927,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -59599,6 +59952,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -59623,6 +59977,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -59647,6 +60002,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -59683,7 +60039,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -59712,7 +60067,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -59817,7 +60171,6 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -59840,7 +60193,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -59878,6 +60230,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59902,6 +60255,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59926,6 +60280,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59950,6 +60305,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -59975,7 +60331,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -60006,7 +60361,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -60072,6 +60426,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60096,6 +60451,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60120,6 +60476,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60144,6 +60501,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60180,7 +60538,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -60209,7 +60566,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -60305,7 +60661,6 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -60328,7 +60683,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -60366,6 +60720,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -60390,6 +60745,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -60414,6 +60770,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -60438,6 +60795,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -60463,7 +60821,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -60494,7 +60851,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -60560,6 +60916,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60584,6 +60941,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60608,6 +60966,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60632,6 +60991,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -60668,7 +61028,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -60697,7 +61056,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -60803,7 +61161,6 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -60841,6 +61198,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -60865,6 +61223,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -60889,6 +61248,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -60913,6 +61273,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -60938,7 +61299,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -60969,7 +61329,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -61035,6 +61394,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61059,6 +61419,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61083,6 +61444,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61107,6 +61469,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61143,7 +61506,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -61172,7 +61534,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -61251,7 +61612,6 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -61274,7 +61634,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -61312,6 +61671,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61336,6 +61696,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61360,6 +61721,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61384,6 +61746,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61409,7 +61772,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -61440,7 +61802,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -61506,6 +61867,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -61530,6 +61892,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -61554,6 +61917,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -61578,6 +61942,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -61614,7 +61979,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -61643,7 +62007,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -61736,7 +62099,6 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -61759,7 +62121,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -61797,6 +62158,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61821,6 +62183,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61845,6 +62208,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61869,6 +62233,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -61894,7 +62259,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -61925,7 +62289,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -61991,6 +62354,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62015,6 +62379,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62039,6 +62404,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62063,6 +62429,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62099,7 +62466,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -62128,7 +62494,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -62229,7 +62594,6 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -62252,7 +62616,6 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -62290,6 +62653,7 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62314,6 +62678,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62338,6 +62703,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62362,6 +62728,7 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62387,7 +62754,6 @@ export declare const Wocky: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -62418,7 +62784,6 @@ export declare const Wocky: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -62484,6 +62849,7 @@ export declare const Wocky: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62508,6 +62874,7 @@ export declare const Wocky: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62532,6 +62899,7 @@ export declare const Wocky: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62556,6 +62924,7 @@ export declare const Wocky: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -62592,7 +62961,6 @@ export declare const Wocky: IModelType<{
                         createPost: (content?: string) => {
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -62621,7 +62989,6 @@ export declare const Wocky: IModelType<{
                             profile: ({
                                 id: string;
                             } & {
-                                readonly pageId: string;
                                 readonly _snapshot: any;
                                 readonly service: any;
                             } & {
@@ -62714,7 +63081,6 @@ export declare const Wocky: IModelType<{
             addParticipant: (profile: {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -62752,6 +63118,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -62776,6 +63143,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -62800,6 +63168,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -62824,6 +63193,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -62849,7 +63219,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -62880,7 +63249,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -62946,6 +63314,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62970,6 +63339,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -62994,6 +63364,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -63018,6 +63389,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -63054,7 +63426,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -63083,7 +63454,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -63181,7 +63551,6 @@ export declare const Wocky: IModelType<{
     createChat: (id: string) => {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -63195,7 +63564,6 @@ export declare const Wocky: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -63233,6 +63601,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -63257,6 +63626,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -63281,6 +63651,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -63305,6 +63676,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -63330,7 +63702,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -63361,7 +63732,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -63427,6 +63797,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63451,6 +63822,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63475,6 +63847,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63499,6 +63872,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63535,7 +63909,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -63564,7 +63937,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -63642,7 +64014,6 @@ export declare const Wocky: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -63665,7 +64036,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -63703,6 +64073,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63727,6 +64098,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63751,6 +64123,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63775,6 +64148,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -63800,7 +64174,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -63831,7 +64204,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -63897,6 +64269,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -63921,6 +64294,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -63945,6 +64319,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -63969,6 +64344,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64005,7 +64381,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -64034,7 +64409,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -64139,7 +64513,6 @@ export declare const Wocky: IModelType<{
         message: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -64162,7 +64535,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -64200,6 +64572,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64224,6 +64597,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64248,6 +64622,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64272,6 +64647,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64297,7 +64673,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -64328,7 +64703,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -64394,6 +64768,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64418,6 +64793,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64442,6 +64818,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64466,6 +64843,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64502,7 +64880,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -64531,7 +64908,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -64627,7 +65003,6 @@ export declare const Wocky: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -64650,7 +65025,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -64688,6 +65062,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64712,6 +65087,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64736,6 +65112,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64760,6 +65137,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -64785,7 +65163,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -64816,7 +65193,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -64882,6 +65258,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64906,6 +65283,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64930,6 +65308,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64954,6 +65333,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -64990,7 +65370,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -65019,7 +65398,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -65125,7 +65503,6 @@ export declare const Wocky: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -65163,6 +65540,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -65187,6 +65565,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -65211,6 +65590,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -65235,6 +65615,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -65260,7 +65641,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -65291,7 +65671,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -65357,6 +65736,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65381,6 +65761,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65405,6 +65786,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65429,6 +65811,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65465,7 +65848,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -65494,7 +65876,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -65573,7 +65954,6 @@ export declare const Wocky: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -65596,7 +65976,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -65634,6 +66013,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65658,6 +66038,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65682,6 +66063,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65706,6 +66088,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -65731,7 +66114,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -65762,7 +66144,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -65828,6 +66209,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -65852,6 +66234,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -65876,6 +66259,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -65900,6 +66284,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -65936,7 +66321,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -65965,7 +66349,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -66058,7 +66441,6 @@ export declare const Wocky: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -66081,7 +66463,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -66119,6 +66500,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66143,6 +66525,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66167,6 +66550,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66191,6 +66575,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66216,7 +66601,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -66247,7 +66631,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -66313,6 +66696,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66337,6 +66721,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66361,6 +66746,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66385,6 +66771,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66421,7 +66808,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -66450,7 +66836,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -66551,7 +66936,6 @@ export declare const Wocky: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -66574,7 +66958,6 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -66612,6 +66995,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66636,6 +67020,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66660,6 +67045,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66684,6 +67070,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -66709,7 +67096,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -66740,7 +67126,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -66806,6 +67191,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66830,6 +67216,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66854,6 +67241,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66878,6 +67266,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -66914,7 +67303,6 @@ export declare const Wocky: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -66943,7 +67331,6 @@ export declare const Wocky: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -67036,7 +67423,6 @@ export declare const Wocky: IModelType<{
         addParticipant: (profile: {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -67074,6 +67460,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67098,6 +67485,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67122,6 +67510,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67146,6 +67535,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67171,7 +67561,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -67202,7 +67591,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -67268,6 +67656,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -67292,6 +67681,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -67316,6 +67706,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -67340,6 +67731,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -67376,7 +67768,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -67405,7 +67796,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -67493,7 +67883,6 @@ export declare const Wocky: IModelType<{
     readonly sortedRoster: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -67531,6 +67920,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -67555,6 +67945,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -67579,6 +67970,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -67603,6 +67995,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -67628,7 +68021,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -67659,7 +68051,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -67725,6 +68116,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67749,6 +68141,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67773,6 +68166,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67797,6 +68191,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -67833,7 +68228,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -67862,7 +68256,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -67941,7 +68334,6 @@ export declare const Wocky: IModelType<{
     readonly all: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -67979,6 +68371,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68003,6 +68396,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68027,6 +68421,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68051,6 +68446,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68076,7 +68472,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -68107,7 +68502,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -68173,6 +68567,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68197,6 +68592,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68221,6 +68617,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68245,6 +68642,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68281,7 +68679,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -68310,7 +68707,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -68388,7 +68784,6 @@ export declare const Wocky: IModelType<{
     readonly blocked: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -68426,6 +68821,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68450,6 +68846,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68474,6 +68871,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68498,6 +68896,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68523,7 +68922,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -68554,7 +68952,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -68620,6 +69017,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68644,6 +69042,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68668,6 +69067,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68692,6 +69092,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -68728,7 +69129,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -68757,7 +69157,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -68835,7 +69234,6 @@ export declare const Wocky: IModelType<{
     readonly friends: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -68873,6 +69271,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68897,6 +69296,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68921,6 +69321,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68945,6 +69346,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -68970,7 +69372,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -69001,7 +69402,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -69067,6 +69467,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69091,6 +69492,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69115,6 +69517,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69139,6 +69542,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69175,7 +69579,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -69204,7 +69607,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -69282,7 +69684,6 @@ export declare const Wocky: IModelType<{
     readonly followers: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -69320,6 +69721,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69344,6 +69746,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69368,6 +69771,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69392,6 +69796,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69417,7 +69822,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -69448,7 +69852,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -69514,6 +69917,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69538,6 +69942,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69562,6 +69967,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69586,6 +69992,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69622,7 +70029,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -69651,7 +70057,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -69729,7 +70134,6 @@ export declare const Wocky: IModelType<{
     readonly newFollowers: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -69767,6 +70171,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69791,6 +70196,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69815,6 +70221,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69839,6 +70246,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -69864,7 +70272,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -69895,7 +70302,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -69961,6 +70367,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -69985,6 +70392,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70009,6 +70417,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70033,6 +70442,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70069,7 +70479,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -70098,7 +70507,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -70176,7 +70584,6 @@ export declare const Wocky: IModelType<{
     readonly followed: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -70214,6 +70621,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70238,6 +70646,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70262,6 +70671,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70286,6 +70696,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70311,7 +70722,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -70342,7 +70752,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -70408,6 +70817,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70432,6 +70842,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70456,6 +70867,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70480,6 +70892,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70516,7 +70929,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -70545,7 +70957,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -70628,7 +71039,6 @@ export declare const Wocky: IModelType<{
     }) => {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -70666,6 +71076,7 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70690,6 +71101,7 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70714,6 +71126,7 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70738,6 +71151,7 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -70763,7 +71177,6 @@ export declare const Wocky: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -70794,7 +71207,6 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -70860,6 +71272,7 @@ export declare const Wocky: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70884,6 +71297,7 @@ export declare const Wocky: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70908,6 +71322,7 @@ export declare const Wocky: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70932,6 +71347,7 @@ export declare const Wocky: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -70968,7 +71384,6 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -70997,7 +71412,6 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -71075,7 +71489,6 @@ export declare const Wocky: IModelType<{
     getBot: ({id, server, ...data}: any) => {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -71106,7 +71519,6 @@ export declare const Wocky: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -71144,6 +71556,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -71168,6 +71581,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -71192,6 +71606,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -71216,6 +71631,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -71241,7 +71657,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -71272,7 +71687,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -71338,6 +71752,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71362,6 +71777,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71386,6 +71802,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71410,6 +71827,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71446,7 +71864,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -71475,7 +71892,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -71582,6 +71998,7 @@ export declare const Wocky: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -71606,6 +72023,7 @@ export declare const Wocky: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -71630,6 +72048,7 @@ export declare const Wocky: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -71654,6 +72073,7 @@ export declare const Wocky: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -71690,7 +72110,6 @@ export declare const Wocky: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -71719,7 +72138,6 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -71757,6 +72175,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71781,6 +72200,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71805,6 +72225,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71829,6 +72250,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -71854,7 +72276,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -71885,7 +72306,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -71951,6 +72371,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -71975,6 +72396,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -71999,6 +72421,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -72023,6 +72446,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -72118,7 +72542,6 @@ export declare const Wocky: IModelType<{
     createBot: () => Promise<{
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -72149,7 +72572,6 @@ export declare const Wocky: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -72187,6 +72609,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -72211,6 +72634,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -72235,6 +72659,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -72259,6 +72684,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -72284,7 +72710,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -72315,7 +72740,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -72381,6 +72805,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72405,6 +72830,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72429,6 +72855,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72453,6 +72880,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72489,7 +72917,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -72518,7 +72945,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -72625,6 +73051,7 @@ export declare const Wocky: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -72649,6 +73076,7 @@ export declare const Wocky: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -72673,6 +73101,7 @@ export declare const Wocky: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -72697,6 +73126,7 @@ export declare const Wocky: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -72733,7 +73163,6 @@ export declare const Wocky: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -72762,7 +73191,6 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -72800,6 +73228,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72824,6 +73253,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72848,6 +73278,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72872,6 +73303,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -72897,7 +73329,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -72928,7 +73359,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -72994,6 +73424,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -73018,6 +73449,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -73042,6 +73474,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -73066,6 +73499,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -73152,7 +73586,6 @@ export declare const Wocky: IModelType<{
     _updateBot: (a1: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -73183,7 +73616,6 @@ export declare const Wocky: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -73221,6 +73653,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -73245,6 +73678,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -73269,6 +73703,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -73293,6 +73728,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -73318,7 +73754,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -73349,7 +73784,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -73415,6 +73849,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73439,6 +73874,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73463,6 +73899,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73487,6 +73924,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73523,7 +73961,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -73552,7 +73989,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -73659,6 +74095,7 @@ export declare const Wocky: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -73683,6 +74120,7 @@ export declare const Wocky: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -73707,6 +74145,7 @@ export declare const Wocky: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -73731,6 +74170,7 @@ export declare const Wocky: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -73767,7 +74207,6 @@ export declare const Wocky: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -73796,7 +74235,6 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -73834,6 +74272,7 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73858,6 +74297,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73882,6 +74322,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73906,6 +74347,7 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -73931,7 +74373,6 @@ export declare const Wocky: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -73962,7 +74403,6 @@ export declare const Wocky: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -74028,6 +74468,7 @@ export declare const Wocky: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -74052,6 +74493,7 @@ export declare const Wocky: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -74076,6 +74518,7 @@ export declare const Wocky: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -74100,6 +74543,7 @@ export declare const Wocky: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -74182,7 +74626,6 @@ export declare const Wocky: IModelType<{
     _publishBotPost: (a1: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -74211,7 +74654,6 @@ export declare const Wocky: IModelType<{
         profile: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -74249,6 +74691,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74273,6 +74716,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74297,6 +74741,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74321,6 +74766,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74346,7 +74792,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -74377,7 +74822,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -74443,6 +74887,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74467,6 +74912,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74491,6 +74937,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74515,6 +74962,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74551,7 +74999,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -74580,7 +75027,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -74671,7 +75117,6 @@ export declare const Wocky: IModelType<{
     _sendMessage: (msg: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -74694,7 +75139,6 @@ export declare const Wocky: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -74732,6 +75176,7 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74756,6 +75201,7 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74780,6 +75226,7 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74804,6 +75251,7 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -74829,7 +75277,6 @@ export declare const Wocky: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -74860,7 +75307,6 @@ export declare const Wocky: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -74926,6 +75372,7 @@ export declare const Wocky: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74950,6 +75397,7 @@ export declare const Wocky: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74974,6 +75422,7 @@ export declare const Wocky: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -74998,6 +75447,7 @@ export declare const Wocky: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -75034,7 +75484,6 @@ export declare const Wocky: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -75063,7 +75512,6 @@ export declare const Wocky: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {

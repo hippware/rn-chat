@@ -23,7 +23,6 @@ export declare const File: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {

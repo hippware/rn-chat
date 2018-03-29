@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
-import {IWockyTransport, GraphQLTransport, IWocky} from '../src'
+import {IWockyTransport, IBot, GraphQLTransport, IWocky} from '../src'
 
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
@@ -10,7 +10,7 @@ import {IWockyTransport, GraphQLTransport, IWocky} from '../src'
 
 const host = 'testing.dev.tinyrobot.com'
 let gql: IWockyTransport, user: IWocky
-
+let bot, bot2: IBot
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
@@ -42,23 +42,38 @@ describe('GraphQL', () => {
 
   it('gets some bots', async done => {
     try {
-      const bot = await user.createBot()
+      bot = await user.createBot()
       await bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
-      const bot2 = await user.createBot()
+      bot2 = await user.createBot()
       await bot2.update({location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2', geofence: false, addressData: {city: 'New York', country: 'US'}})
-      const bots = await gql.loadOwnBots(user.username!)
+      const bots = await gql.loadOwnBots(user.username!, null, 1)
       console.log('bots', bots)
       expect(bots.count).to.equal(2)
+      expect(bots.list.length).to.equal(1)
+      expect(bots.list[0].title).to.equal('Test bot')
+      const bots2 = await gql.loadOwnBots(user.username!, bots.cursor, 1)
+      console.log('bots', bots2)
+      expect(bots2.count).to.equal(2)
+      expect(bots2.list.length).to.equal(1)
+      expect(bots2.list[0].title).to.equal('Test bot2')
       done()
     } catch (e) {
       done(e)
     }
   })
 
-  // it('paginates bots', async done => {
-  //   console.log('todo')
-  //   done()
-  // })
+  it('load bot', async done => {
+    try {
+      const loaded = await gql.loadBot(bot.id, bot.server)
+      expect(loaded.title).to.equal(bot.title)
+      expect(loaded.geofence).to.equal(bot.geofence)
+      // expect(loaded.guest).to.equal(bot.guest) // TODO
+      expect(loaded.id).to.equal(bot.id)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
   after('remove', async done => {
     try {

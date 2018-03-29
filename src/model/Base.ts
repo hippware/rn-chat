@@ -8,9 +8,6 @@ export const Base = types
   .model('Base', {id: types.identifier(types.string)})
   .named('Base')
   .views(self => ({
-    get pageId() {
-      return self.id
-    },
     get _snapshot(): any {
       const data: any = getSnapshot(self)
       const res: any = {}

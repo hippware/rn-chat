@@ -12,7 +12,6 @@ export declare const EventBotGeofence: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -27,7 +26,6 @@ export declare const EventBotGeofence: IModelType<{
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -65,6 +63,7 @@ export declare const EventBotGeofence: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -89,6 +88,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -113,6 +113,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -137,6 +138,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -162,7 +164,6 @@ export declare const EventBotGeofence: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -193,7 +194,6 @@ export declare const EventBotGeofence: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -259,6 +259,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -283,6 +284,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -307,6 +309,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -331,6 +334,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -367,7 +371,6 @@ export declare const EventBotGeofence: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -396,7 +399,6 @@ export declare const EventBotGeofence: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -475,7 +477,6 @@ export declare const EventBotGeofence: IModelType<{
     bot: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -506,7 +507,6 @@ export declare const EventBotGeofence: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -544,6 +544,7 @@ export declare const EventBotGeofence: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -568,6 +569,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -592,6 +594,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -616,6 +619,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -641,7 +645,6 @@ export declare const EventBotGeofence: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -672,7 +675,6 @@ export declare const EventBotGeofence: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -738,6 +740,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -762,6 +765,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -786,6 +790,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -810,6 +815,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -846,7 +852,6 @@ export declare const EventBotGeofence: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -875,7 +880,6 @@ export declare const EventBotGeofence: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -982,6 +986,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1006,6 +1011,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1030,6 +1036,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1054,6 +1061,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1090,7 +1098,6 @@ export declare const EventBotGeofence: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1119,7 +1126,6 @@ export declare const EventBotGeofence: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1157,6 +1163,7 @@ export declare const EventBotGeofence: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1181,6 +1188,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1205,6 +1213,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1229,6 +1238,7 @@ export declare const EventBotGeofence: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1254,7 +1264,6 @@ export declare const EventBotGeofence: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1285,7 +1294,6 @@ export declare const EventBotGeofence: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -1351,6 +1359,7 @@ export declare const EventBotGeofence: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1375,6 +1384,7 @@ export declare const EventBotGeofence: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1399,6 +1409,7 @@ export declare const EventBotGeofence: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1423,6 +1434,7 @@ export declare const EventBotGeofence: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -1504,7 +1516,6 @@ export declare const EventBotGeofence: IModelType<{
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -1542,6 +1553,7 @@ export declare const EventBotGeofence: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1566,6 +1578,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1590,6 +1603,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1614,6 +1628,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -1639,7 +1654,6 @@ export declare const EventBotGeofence: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1670,7 +1684,6 @@ export declare const EventBotGeofence: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1736,6 +1749,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1760,6 +1774,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1784,6 +1799,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1808,6 +1824,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1844,7 +1861,6 @@ export declare const EventBotGeofence: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1873,7 +1889,6 @@ export declare const EventBotGeofence: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1953,7 +1968,6 @@ export declare const EventBotGeofence: IModelType<{
     profile: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -1991,6 +2005,7 @@ export declare const EventBotGeofence: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2015,6 +2030,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2039,6 +2055,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2063,6 +2080,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2088,7 +2106,6 @@ export declare const EventBotGeofence: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -2119,7 +2136,6 @@ export declare const EventBotGeofence: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2185,6 +2201,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2209,6 +2226,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2233,6 +2251,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2257,6 +2276,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2293,7 +2313,6 @@ export declare const EventBotGeofence: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2322,7 +2341,6 @@ export declare const EventBotGeofence: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -2401,7 +2419,6 @@ export declare const EventBotGeofence: IModelType<{
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -2439,6 +2456,7 @@ export declare const EventBotGeofence: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2463,6 +2481,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2487,6 +2506,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2511,6 +2531,7 @@ export declare const EventBotGeofence: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -2536,7 +2557,6 @@ export declare const EventBotGeofence: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -2567,7 +2587,6 @@ export declare const EventBotGeofence: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2633,6 +2652,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2657,6 +2677,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2681,6 +2702,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2705,6 +2727,7 @@ export declare const EventBotGeofence: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -2741,7 +2764,6 @@ export declare const EventBotGeofence: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -2770,7 +2792,6 @@ export declare const EventBotGeofence: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {

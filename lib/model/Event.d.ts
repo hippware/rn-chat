@@ -7,7 +7,6 @@ export declare const Event: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -22,7 +21,6 @@ export declare const Event: IModelType<{
     readonly target: {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -60,6 +58,7 @@ export declare const Event: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -84,6 +83,7 @@ export declare const Event: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -108,6 +108,7 @@ export declare const Event: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -132,6 +133,7 @@ export declare const Event: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -157,7 +159,6 @@ export declare const Event: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -188,7 +189,6 @@ export declare const Event: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -254,6 +254,7 @@ export declare const Event: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -278,6 +279,7 @@ export declare const Event: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -302,6 +304,7 @@ export declare const Event: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -326,6 +329,7 @@ export declare const Event: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -362,7 +366,6 @@ export declare const Event: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -391,7 +394,6 @@ export declare const Event: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {

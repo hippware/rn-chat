@@ -22,7 +22,6 @@ export declare const Profile: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -60,6 +59,7 @@ export declare const Profile: IModelType<{
     readonly isMutual: boolean;
     readonly followers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -84,6 +84,7 @@ export declare const Profile: IModelType<{
     };
     readonly followed: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -108,6 +109,7 @@ export declare const Profile: IModelType<{
     };
     readonly ownBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -132,6 +134,7 @@ export declare const Profile: IModelType<{
     };
     readonly subscribedBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -157,7 +160,6 @@ export declare const Profile: IModelType<{
     readonly activeBots: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -188,7 +190,6 @@ export declare const Profile: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -254,6 +255,7 @@ export declare const Profile: IModelType<{
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -278,6 +280,7 @@ export declare const Profile: IModelType<{
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -302,6 +305,7 @@ export declare const Profile: IModelType<{
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -326,6 +330,7 @@ export declare const Profile: IModelType<{
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -362,7 +367,6 @@ export declare const Profile: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -391,7 +395,6 @@ export declare const Profile: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -466,9 +469,11 @@ export declare const Profile: IModelType<{
 }>;
 export declare const ProfilePaginableList: IModelType<{
     result?: any;
+    cursor?: any;
     count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    cursor: string | null;
     count: number | null;
 } & {
     loading: boolean;
@@ -494,7 +499,6 @@ export declare type IProfile = typeof Profile.Type;
 export declare const ProfileRef: IType<string | number | null | undefined, ({
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -532,6 +536,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     readonly isMutual: boolean;
     readonly followers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -556,6 +561,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     };
     readonly followed: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -580,6 +586,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     };
     readonly ownBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -604,6 +611,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     };
     readonly subscribedBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -629,7 +637,6 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     readonly activeBots: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -660,7 +667,6 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         owner: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -726,6 +732,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         };
         subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -750,6 +757,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         };
         guests: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -774,6 +782,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         };
         visitors: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -798,6 +807,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         };
         posts: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -834,7 +844,6 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -863,7 +872,6 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
             profile: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {

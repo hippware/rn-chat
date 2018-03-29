@@ -39,7 +39,6 @@ export declare const Storages: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -101,7 +100,6 @@ export declare const Storages: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -132,7 +130,6 @@ export declare const Storages: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -170,6 +167,7 @@ export declare const Storages: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -194,6 +192,7 @@ export declare const Storages: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -218,6 +217,7 @@ export declare const Storages: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -242,6 +242,7 @@ export declare const Storages: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -267,7 +268,6 @@ export declare const Storages: IModelType<{
                 readonly activeBots: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -298,7 +298,6 @@ export declare const Storages: IModelType<{
                     owner: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -364,6 +363,7 @@ export declare const Storages: IModelType<{
                     };
                     subscribers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -388,6 +388,7 @@ export declare const Storages: IModelType<{
                     };
                     guests: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -412,6 +413,7 @@ export declare const Storages: IModelType<{
                     };
                     visitors: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -436,6 +438,7 @@ export declare const Storages: IModelType<{
                     };
                     posts: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -472,7 +475,6 @@ export declare const Storages: IModelType<{
                     createPost: (content?: string) => {
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -501,7 +503,6 @@ export declare const Storages: IModelType<{
                         profile: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -608,6 +609,7 @@ export declare const Storages: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -632,6 +634,7 @@ export declare const Storages: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -656,6 +659,7 @@ export declare const Storages: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -680,6 +684,7 @@ export declare const Storages: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -716,7 +721,6 @@ export declare const Storages: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -745,7 +749,6 @@ export declare const Storages: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -783,6 +786,7 @@ export declare const Storages: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -807,6 +811,7 @@ export declare const Storages: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -831,6 +836,7 @@ export declare const Storages: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -855,6 +861,7 @@ export declare const Storages: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        cursor: string | null;
                         count: number | null;
                     } & {
                         loading: boolean;
@@ -880,7 +887,6 @@ export declare const Storages: IModelType<{
                     readonly activeBots: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {
@@ -911,7 +917,6 @@ export declare const Storages: IModelType<{
                         owner: ({
                             id: string;
                         } & {
-                            readonly pageId: string;
                             readonly _snapshot: any;
                             readonly service: any;
                         } & {
@@ -977,6 +982,7 @@ export declare const Storages: IModelType<{
                         };
                         subscribers: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -1001,6 +1007,7 @@ export declare const Storages: IModelType<{
                         };
                         guests: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -1025,6 +1032,7 @@ export declare const Storages: IModelType<{
                         };
                         visitors: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -1049,6 +1057,7 @@ export declare const Storages: IModelType<{
                         };
                         posts: {
                             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                            cursor: string | null;
                             count: number | null;
                         } & {
                             loading: boolean;
@@ -1145,7 +1154,6 @@ export declare const Storages: IModelType<{
         } | undefined) => {
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -1183,6 +1191,7 @@ export declare const Storages: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1207,6 +1216,7 @@ export declare const Storages: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1231,6 +1241,7 @@ export declare const Storages: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1255,6 +1266,7 @@ export declare const Storages: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -1280,7 +1292,6 @@ export declare const Storages: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -1311,7 +1322,6 @@ export declare const Storages: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1377,6 +1387,7 @@ export declare const Storages: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1401,6 +1412,7 @@ export declare const Storages: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1425,6 +1437,7 @@ export declare const Storages: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1449,6 +1462,7 @@ export declare const Storages: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1485,7 +1499,6 @@ export declare const Storages: IModelType<{
                 createPost: (content?: string) => {
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -1514,7 +1527,6 @@ export declare const Storages: IModelType<{
                     profile: ({
                         id: string;
                     } & {
-                        readonly pageId: string;
                         readonly _snapshot: any;
                         readonly service: any;
                     } & {

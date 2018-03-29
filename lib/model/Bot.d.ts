@@ -32,7 +32,6 @@ export declare const Bot: IModelType<{
 }, {
     id: string;
 } & {
-    readonly pageId: string;
     readonly _snapshot: any;
     readonly service: any;
 } & {
@@ -63,7 +62,6 @@ export declare const Bot: IModelType<{
     owner: ({
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -101,6 +99,7 @@ export declare const Bot: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -125,6 +124,7 @@ export declare const Bot: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -149,6 +149,7 @@ export declare const Bot: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -173,6 +174,7 @@ export declare const Bot: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            cursor: string | null;
             count: number | null;
         } & {
             loading: boolean;
@@ -198,7 +200,6 @@ export declare const Bot: IModelType<{
         readonly activeBots: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -229,7 +230,6 @@ export declare const Bot: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -295,6 +295,7 @@ export declare const Bot: IModelType<{
             };
             subscribers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -319,6 +320,7 @@ export declare const Bot: IModelType<{
             };
             guests: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -343,6 +345,7 @@ export declare const Bot: IModelType<{
             };
             visitors: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -367,6 +370,7 @@ export declare const Bot: IModelType<{
             };
             posts: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -403,7 +407,6 @@ export declare const Bot: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -432,7 +435,6 @@ export declare const Bot: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -539,6 +541,7 @@ export declare const Bot: IModelType<{
     };
     subscribers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -563,6 +566,7 @@ export declare const Bot: IModelType<{
     };
     guests: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -587,6 +591,7 @@ export declare const Bot: IModelType<{
     };
     visitors: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -611,6 +616,7 @@ export declare const Bot: IModelType<{
     };
     posts: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        cursor: string | null;
         count: number | null;
     } & {
         loading: boolean;
@@ -647,7 +653,6 @@ export declare const Bot: IModelType<{
     createPost: (content?: string) => {
         id: string;
     } & {
-        readonly pageId: string;
         readonly _snapshot: any;
         readonly service: any;
     } & {
@@ -676,7 +681,6 @@ export declare const Bot: IModelType<{
         profile: ({
             id: string;
         } & {
-            readonly pageId: string;
             readonly _snapshot: any;
             readonly service: any;
         } & {
@@ -714,6 +718,7 @@ export declare const Bot: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -738,6 +743,7 @@ export declare const Bot: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -762,6 +768,7 @@ export declare const Bot: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -786,6 +793,7 @@ export declare const Bot: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                cursor: string | null;
                 count: number | null;
             } & {
                 loading: boolean;
@@ -811,7 +819,6 @@ export declare const Bot: IModelType<{
             readonly activeBots: ({
                 id: string;
             } & {
-                readonly pageId: string;
                 readonly _snapshot: any;
                 readonly service: any;
             } & {
@@ -842,7 +849,6 @@ export declare const Bot: IModelType<{
                 owner: ({
                     id: string;
                 } & {
-                    readonly pageId: string;
                     readonly _snapshot: any;
                     readonly service: any;
                 } & {
@@ -908,6 +914,7 @@ export declare const Bot: IModelType<{
                 };
                 subscribers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -932,6 +939,7 @@ export declare const Bot: IModelType<{
                 };
                 guests: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -956,6 +964,7 @@ export declare const Bot: IModelType<{
                 };
                 visitors: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -980,6 +989,7 @@ export declare const Bot: IModelType<{
                 };
                 posts: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    cursor: string | null;
                     count: number | null;
                 } & {
                     loading: boolean;
@@ -1058,9 +1068,11 @@ export declare const Bot: IModelType<{
 export declare type IBot = typeof Bot.Type;
 export declare const BotPaginableList: IModelType<{
     result?: any;
+    cursor?: any;
     count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    cursor: string | null;
     count: number | null;
 } & {
     loading: boolean;

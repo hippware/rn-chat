@@ -6,6 +6,10 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {observable} from 'mobx'
+
+// TODO use GraphQL fragment for this?
+const BOT_PROPS = 'id title address addressData description geofence image public radius server shortname type'
+
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: any
@@ -71,33 +75,31 @@ export class GraphQLTransport implements IWockyTransport {
   async generateId(): Promise<string> {
     throw 'Not supported'
   }
-  async loadOwnBots(userId: string, after?: string, max: number = 10) {
-    // const afterClause = after ? `after: "${after}"` : ''
+  async loadBot(id: string, server: any): Promise<any> {
     const res = await this.client.query({
       query: gql`
-        query LoadOwnBots {
-          currentUser {
-            bots(first: ${max}, relationship: OWNED) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
+        {
+          bot(id: "${id}") {
+            ${BOT_PROPS}
+          }
+        }
+      `
+    })
+    return res.data.bot
+  }
+
+  async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
+    const res = await this.client.query({
+      query: gql`
+        {
+          user(id: "${userId}") {
+            id
+            bots(first: ${max} after: ${after ? `"${after}"` : null} relationship: ${relationship}) {
               totalCount
               edges {
                 cursor
                 node {
-                  id
-                  title
-                  address
-                  addressData
-                  description
-                  geofence
-                  image
-                  public
-                  radius
-                  server
-                  shortname
-                  type
+                  ${BOT_PROPS}
                 }
               }
             }
@@ -105,8 +107,15 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `
     })
-    const list = res.data.currentUser.bots.edges.map((e: any) => e.node)
-    return {list, count: list.length}
+    const {bots} = res.data.user
+    const list = bots.edges.map((e: any) => e.node)
+    return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
+  }
+  async loadOwnBots(id: string, lastId?: string, max: number = 10) {
+    return await this._loadBots('OWNED', id, lastId, max)
+  }
+  async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    return await this._loadBots('SUBSCRIBED', userId, lastId, max)
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     throw 'Not supported'
@@ -118,9 +127,6 @@ export class GraphQLTransport implements IWockyTransport {
     throw 'Not supported'
   }
   async loadBotPosts(id: string, before?: string): Promise<IPagingList> {
-    throw 'Not supported'
-  }
-  async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     throw 'Not supported'
   }
   shareBot(id: string, server: string, recepients: string[], message: string, action: string) {}
@@ -197,10 +203,6 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadChats(max?: number): Promise<Array<{id: string; message: any}>> {
-    throw 'Not supported'
-  }
-
-  async loadBot(id: string, server: any): Promise<any> {
     throw 'Not supported'
   }
 

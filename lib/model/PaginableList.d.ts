@@ -2,9 +2,11 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare function createPaginable(type: any): IModelType<{
     result?: any;
+    cursor?: any;
     count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    cursor: string | null;
     count: number | null;
 } & {
     loading: boolean;

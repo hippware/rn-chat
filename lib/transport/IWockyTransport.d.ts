@@ -1,5 +1,6 @@
 export interface IPagingList {
     list: [any];
+    cursor?: string;
     count: number;
 }
 export interface IWockyTransport {

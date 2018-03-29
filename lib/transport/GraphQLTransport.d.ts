@@ -17,15 +17,22 @@ export declare class GraphQLTransport implements IWockyTransport {
     loadProfile(user: string): Promise<any>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
-    loadOwnBots(userId: string, after?: string, max?: number): Promise<{
+    loadBot(id: string, server: any): Promise<any>;
+    _loadBots(relationship: string, userId: string, after?: string, max?: number): Promise<{
         list: any;
+        cursor: any;
         count: any;
     }>;
+    loadOwnBots(id: string, lastId?: string, max?: number): Promise<{
+        list: any;
+        cursor: any;
+        count: any;
+    }>;
+    loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotPosts(id: string, before?: string): Promise<IPagingList>;
-    loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
     shareBot(id: string, server: string, recepients: string[], message: string, action: string): void;
     register(data: any, host?: string, providerName?: string): Promise<{
         username: string;
@@ -65,7 +72,6 @@ export declare class GraphQLTransport implements IWockyTransport {
         id: string;
         message: any;
     }>>;
-    loadBot(id: string, server: any): Promise<any>;
     removeBot(id: string): Promise<void>;
     removeBotPost(id: string, postId: string): Promise<void>;
     updateBot(bot: any): Promise<void>;
