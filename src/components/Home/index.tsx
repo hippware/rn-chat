@@ -11,7 +11,7 @@ class Home extends React.Component<{}> {
   eventList: any
 
   scrollToTop() {
-    this.eventList && this.eventList.wrappedInstance.scrollToTop()
+    if (this.eventList) this.eventList.wrappedInstance.scrollToTop()
   }
 
   componentDidMount() {

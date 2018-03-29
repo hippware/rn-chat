@@ -19,11 +19,21 @@ class EventList extends React.Component<Props> {
   list: any
 
   componentDidMount() {
-    this.props.wocky.profile && this.props.wocky.profile.subscribedBots.load()
+    if (this.props.wocky.profile) this.props.wocky.profile.subscribedBots.load()
   }
 
   scrollToTop = () => {
-    this.list && this.list.props.data.length && this.list.scrollToIndex({animated: true, index: 0})
+    if (this.list && this.list.props.data.length)
+      this.list.scrollToIndex({animated: true, index: 0})
+  }
+
+  renderItem = ({item}: {item: any}) => <EventCard item={item} />
+
+  keyExtractor = (item: any) => item.id
+
+  onUpdate = () => {
+    scroll()
+    setTimeout(this.props.wocky.incorporateUpdates, 500)
   }
 
   render() {
@@ -48,10 +58,14 @@ class EventList extends React.Component<Props> {
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
               : null
           }
-          renderItem={({item}) => <EventCard item={item} />}
-          keyExtractor={item => item.id}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
         />
-        <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
+        <UpdateButton
+          scroll={this.scrollToTop}
+          visible={!isFirstSession}
+          onUpdate={this.onUpdate}
+        />
         <ReviewButton />
       </View>
     )
@@ -60,15 +74,9 @@ class EventList extends React.Component<Props> {
 
 const UpdateButton = inject('wocky')(
   observer(
-    ({scroll, visible, wocky}) =>
+    ({scroll, visible, wocky, onUpdate}) =>
       visible && wocky.updates.length ? (
-        <TouchableOpacity
-          onPress={() => {
-            scroll()
-            setTimeout(wocky.incorporateUpdates, 500)
-          }}
-          style={styles.updateButton}
-        >
+        <TouchableOpacity onPress={onUpdate} style={styles.updateButton}>
           <Image source={require('../../../images/up.png')} style={{marginRight: 5 * k}} />
           <RText weight="Medium" color={colors.WHITE} size={12}>
             New Updates

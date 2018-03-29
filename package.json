@@ -11,7 +11,7 @@
       "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "ios:prod":
       "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobot",
-    "test": "npm run mocha && npm run jest:all",
+    "test": "npm run lint && npm run mocha && npm run jest:all",
     "testStaging":
       "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "mocha":
@@ -23,7 +23,6 @@
       "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
     "lint": "tslint -c tslint.json 'src/**/*.tsx'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
-    "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
     "deploy:stage": "babel-node ./scripts/deploy-stage.js",

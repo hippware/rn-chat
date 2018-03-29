@@ -18,7 +18,6 @@ extends:
 
 plugins:
   - react
-  - flowtype
 
 settings:
   import/extensions: ['.js']
@@ -44,8 +43,6 @@ rules:
   object-curly-spacing:
     - 1
     - never
-  flowtype/space-after-type-colon:
-    - 2
   import/no-unresolved:
     - 1
     - ignore:

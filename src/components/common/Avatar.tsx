@@ -14,7 +14,7 @@ type Props = {
   profile: any
   size: number
   disableStatus?: boolean
-  style?: Object
+  style?: object
   borderWidth?: number
   showFrame?: boolean
   tappable: boolean
@@ -28,6 +28,10 @@ class Avatar extends React.Component<Props> {
   }
 
   _root: any
+
+  setRoot = (component: any) => (this._root = component)
+
+  goToProfile = () => Actions.profileDetails({item: this.props.profile.id})
 
   render() {
     const {
@@ -48,14 +52,8 @@ class Avatar extends React.Component<Props> {
     title = title.length > 1 ? title[0] : title
     const Clazz = tappable ? TouchableOpacity : View
     return (
-      <Clazz
-        style={{justifyContent: 'flex-end'}}
-        onPress={() => Actions.profileDetails({item: profile.id})}
-      >
-        <View
-          ref={component => (this._root = component)}
-          style={[style, {height: size * k, width: size * k}]}
-        >
+      <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
+        <View ref={this.setRoot} style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar && (
             <AvatarImage
               {...this.props}
@@ -122,7 +120,19 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
   }
 })
 
-const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
+const AvatarImage = ({
+  source,
+  borderWidth,
+  style,
+  size,
+  showLoader,
+}: {
+  source: any
+  borderWidth?: any
+  style?: any
+  size: any
+  showLoader: any
+}) => {
   const theStyle = [
     {
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,

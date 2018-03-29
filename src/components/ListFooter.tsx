@@ -6,7 +6,7 @@ import {observer} from 'mobx-react/native'
 type Props = {
   footerImage?: any
   finished: boolean
-  style?: Object
+  style?: object
 }
 
 const ListFooter = observer(({footerImage, finished, style}: Props) => (

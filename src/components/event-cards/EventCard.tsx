@@ -7,9 +7,10 @@ import EventBotShareCard from './EventBotShareCard'
 import EventBotNoteCard from './EventBotNoteCard'
 import EventBotPostCard from './EventBotPostCard'
 import {getType, isAlive} from 'mobx-state-tree'
+import {IEventBot} from 'wocky-client'
 
 type Props = {
-  item: any
+  item: IEventBot
 }
 
 const eventCardMap = {
@@ -22,6 +23,12 @@ const eventCardMap = {
 @observer
 class EventCard extends React.Component<Props> {
   card: any
+
+  onCardPress = () => {
+    if (this.card.onPress) this.card.onPress()
+  }
+
+  setCardRef = (r: any) => (this.card = r)
 
   render() {
     const row = this.props.item
@@ -44,7 +51,7 @@ class EventCard extends React.Component<Props> {
       CardClass && (
         <Card
           key={row.id}
-          onPress={() => this.card.onPress && this.card.onPress()}
+          onPress={this.onCardPress}
           style={{
             paddingTop: 10 * k,
             paddingLeft: 0,
@@ -52,7 +59,7 @@ class EventCard extends React.Component<Props> {
             paddingBottom: 0,
           }}
         >
-          <CardClass ref={r => (this.card = r)} item={row} />
+          <CardClass ref={this.setCardRef} item={row} />
         </Card>
       )
     )
