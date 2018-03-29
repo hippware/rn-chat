@@ -53,7 +53,7 @@ export class GraphQLTransport implements IWockyTransport {
     const res = await this.client.query({
       query: gql`
         query LoadProfile {
-          users(id: "${user}") {
+          user(id: "${user}") {
             id
             handle
             phoneNumber
@@ -62,7 +62,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `
     })
-    return res.data.users
+    return res.data.user
   }
   async requestRoster(): Promise<[any]> {
     throw 'Not supported'
@@ -77,7 +77,7 @@ export class GraphQLTransport implements IWockyTransport {
       query: gql`
         query LoadOwnBots {
           currentUser {
-            botsConnection(relationship: OWNED) {
+            bots(first: ${max}, relationship: OWNED) {
               pageInfo {
                 hasNextPage
                 hasPreviousPage
@@ -105,8 +105,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `
     })
-    console.log('res', res.data.currentUser.botsConnection)
-    const list = res.data.currentUser.botsConnection.edges.map((e: any) => e.node)
+    const list = res.data.currentUser.bots.edges.map((e: any) => e.node)
     return {list, count: list.length}
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {

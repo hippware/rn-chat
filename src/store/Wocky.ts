@@ -94,7 +94,7 @@ export const Wocky = types
             .values()
             .filter(x => x.handle)
             .sort((a, b) => {
-              return a.handle.toLocaleLowerCase().localeCompare(b.handle.toLocaleLowerCase())
+              return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
             })
         }
       },

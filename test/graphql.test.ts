@@ -15,13 +15,17 @@ let gql: IWockyTransport, user: IWocky
 
 describe('GraphQL', () => {
   before('get credentials via XMPP', async done => {
-    user = await createXmpp(34)
-    await waitFor(() => user.profile !== null)
-    await user.profile!.update({handle: 'abc134', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
-    // console.log('credentials', user.username, user.password)
-    gql = new GraphQLTransport('testing')
-    gql.login(user.username!, user.password!, host)
-    done()
+    try {
+      user = await createXmpp(35)
+      await waitFor(() => user.profile !== null)
+      await user.profile!.update({handle: 'abc134567', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
+      // console.log('credentials', user.username, user.password)
+      gql = new GraphQLTransport('testing')
+      gql.login(user.username!, user.password!, host)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('loads profile', async done => {
@@ -29,7 +33,7 @@ describe('GraphQL', () => {
       const profile = await gql.loadProfile(user.username!)
       console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user.username)
-      expect(profile.__typename).to.equal('Profile')
+      expect(profile.__typename).to.equal('User')
       done()
     } catch (e) {
       done(e)
