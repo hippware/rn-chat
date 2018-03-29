@@ -19,3 +19,5 @@ export const EventBotGeofence = types
     }
   }))
   .named('EventBotGeofence')
+
+export type IEventBotGeofence = typeof EventBotGeofence.Type

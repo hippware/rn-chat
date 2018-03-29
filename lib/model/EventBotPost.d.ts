@@ -2449,3 +2449,4 @@ export declare const EventBotPost: IModelType<{
         readonly $treenode?: any;
     };
 }>;
+export declare type IEventBotPost = typeof EventBotPost.Type;

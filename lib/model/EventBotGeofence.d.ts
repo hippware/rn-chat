@@ -2867,3 +2867,4 @@ export declare const EventBotGeofence: IModelType<{
         readonly $treenode?: any;
     };
 }>;
+export declare type IEventBotGeofence = typeof EventBotGeofence.Type;

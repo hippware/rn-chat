@@ -2904,3 +2904,4 @@ export declare const EventBotShare: IModelType<{
         readonly $treenode?: any;
     };
 }>;
+export declare type IEventBotShare = typeof EventBotShare.Type;

@@ -21,3 +21,5 @@ export const EventBotShare = types
   }))
 
   .named('EventBotShare')
+
+export type IEventBotShare = typeof EventBotShare.Type

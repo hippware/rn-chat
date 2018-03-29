@@ -12,3 +12,5 @@ export const EventBotCreate = types
     })
   )
   .named('EventBotCreate')
+
+export type IEventBotCreate = typeof EventBotCreate.Type

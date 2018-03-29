@@ -1965,3 +1965,4 @@ export declare const EventBotNote: IModelType<{
 } & {
     note: string;
 }>;
+export declare type IEventBotNote = typeof EventBotNote.Type;

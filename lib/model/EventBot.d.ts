@@ -1961,3 +1961,4 @@ export declare const EventBot: IModelType<{
         readonly $treenode?: any;
     };
 }>;
+export declare type IEventBot = typeof EventBot.Type;

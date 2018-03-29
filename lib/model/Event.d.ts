@@ -469,3 +469,4 @@ export declare const Event: IModelType<{
         readonly $treenode?: any;
     };
 }>;
+export declare type IEvent = typeof Event.Type;

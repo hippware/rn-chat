@@ -1965,3 +1965,4 @@ export declare const EventBotCreate: IModelType<{
 } & {
     created: boolean;
 }>;
+export declare type IEventBotCreate = typeof EventBotCreate.Type;

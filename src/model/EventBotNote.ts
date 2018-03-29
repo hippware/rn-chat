@@ -12,3 +12,5 @@ export const EventBotNote = types
     })
   )
   .named('EventBotNote')
+
+export type IEventBotNote = typeof EventBotNote.Type
