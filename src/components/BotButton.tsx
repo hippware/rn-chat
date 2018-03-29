@@ -1,7 +1,7 @@
-import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
-import {k} from './Global';
-import {Actions} from 'react-native-router-flux';
+import React from 'react'
+import {View, Image, TouchableOpacity} from 'react-native'
+import {k} from './Global'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   style?: any
@@ -36,4 +36,4 @@ export default (props: Props) => (
       <Image style={props.style} source={require('../../images/iconCreateBot.png')} />
     </View>
   </TouchableOpacity>
-);
+)

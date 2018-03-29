@@ -1,6 +1,3 @@
-// @flow
-
-// require('es6-symbol/implement');
 import {log} from './constants';
 import {observable} from 'mobx';
 
@@ -18,7 +15,7 @@ class Settings {
 
   constructor() {
     if (process.env.NODE_ENV === 'test') {
-      this.isStaging = process.env.STAGING;
+      this.isStaging = !!process.env.STAGING;
       this.isTesting = !this.isStaging;
       this.version = '0.0.0';
     } else {

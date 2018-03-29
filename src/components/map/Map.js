@@ -239,6 +239,15 @@ export default class Map extends Component<Props> {
     setTimeout(() => (this.markerSelected = false), 100);
   };
 
+  setMapRef = (map) => {
+    this._map = map;
+  }
+
+  setAlert = (r) => {
+    // NOTE: this ref alternates between null and value...weird
+    this._alert = r;
+  }
+
   render() {
     const {locationStore, showUser, geofence, marker, fullMap, children, location} = this.props;
     const currentLoc = locationStore.location;
@@ -260,9 +269,7 @@ export default class Map extends Component<Props> {
     return (
       <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -180 : 0, right: 0, left: 0}}>
         <MapView
-          ref={(map) => {
-            this._map = map;
-          }}
+          ref={this.setMapRef}
           onPress={this.onPress}
           onMarkerSelect={this.onMarkerSelect}
           style={styles.container}
@@ -284,10 +291,7 @@ export default class Map extends Component<Props> {
         {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
         {children}
         <OwnMessageBar
-          ref={(r) => {
-            // NOTE: this ref alternates between null and value...weird
-            this._alert = r;
-          }}
+          ref={this.setAlert}
         />
       </View>
     );

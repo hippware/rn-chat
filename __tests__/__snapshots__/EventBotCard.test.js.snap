@@ -271,8 +271,8 @@ exports[`EventBotCard renders 1`] = `
     }
     style={
       Object {
-        "height": 750,
-        "width": 750,
+        "height": undefined,
+        "width": undefined,
       }
     }
   />

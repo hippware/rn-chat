@@ -1,16 +1,15 @@
 // @flow
 
-import BlockedList from './BlockedList';
-import FriendListScene from './FriendListScene';
-import FollowersList from './FollowersList';
-import FollowedList from './FollowedList';
-import BotSubscriberList from './BotSubscriberList';
-import SearchUsers from './SearchUsers';
-import AddFriendByUsername from './AddFriendByUsername';
-import BotShareSelectFriends from './BotShareSelectFriends';
-import ProfileList from './ProfileList';
-import GeofenceShare from './GeofenceShare';
-import BotVisitorList from './BotVisitorList';
+import BlockedList from "./BlockedList";
+import FriendListScene from "./FriendListScene";
+import FollowersList from "./FollowersList";
+import FollowedList from "./FollowedList";
+import BotSubscriberList from "./BotSubscriberList";
+import SearchUsers from "./SearchUsers";
+import BotShareSelectFriends from "./BotShareSelectFriends";
+import ProfileList from "./ProfileList";
+import GeofenceShare from "./GeofenceShare";
+import BotVisitorList from "./BotVisitorList";
 
 export {
   BotVisitorList,
@@ -19,9 +18,8 @@ export {
   SearchUsers,
   BlockedList,
   FriendListScene,
-  AddFriendByUsername,
   BotSubscriberList,
   BotShareSelectFriends,
   ProfileList,
-  GeofenceShare,
+  GeofenceShare
 };

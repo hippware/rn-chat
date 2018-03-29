@@ -12,7 +12,7 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
     style={
       Object {
         "backgroundColor": "white",
-        "height": 750,
+        "height": undefined,
         "overflow": "hidden",
       }
     }
@@ -50,7 +50,7 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "height": 750,
+          "height": undefined,
           "justifyContent": "center",
           "left": 0,
           "opacity": 0,
@@ -151,7 +151,7 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
       style={
         Object {
           "height": 1,
-          "width": 750,
+          "width": undefined,
         }
       }
     />

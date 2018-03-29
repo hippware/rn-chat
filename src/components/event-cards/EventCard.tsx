@@ -1,45 +1,43 @@
-// @flow
-
-import React from 'react';
-import Card from '../Card';
-import {k} from '../Global';
-import {observer, inject} from 'mobx-react/native';
-import EventBotCard from './EventBotCard';
-import EventBotShareCard from './EventBotShareCard';
-import EventBotNoteCard from './EventBotNoteCard';
-import EventBotPostCard from './EventBotPostCard';
-import {getType, isAlive} from 'mobx-state-tree';
+import React from 'react'
+import Card from '../Card'
+import {k} from '../Global'
+import {observer, inject} from 'mobx-react/native'
+import EventBotCard from './EventBotCard'
+import EventBotShareCard from './EventBotShareCard'
+import EventBotNoteCard from './EventBotNoteCard'
+import EventBotPostCard from './EventBotPostCard'
+import {getType, isAlive} from 'mobx-state-tree'
 
 type Props = {
   item: any,
-};
+}
 
 const eventCardMap = {
   EventBotCreate: EventBotCard,
   EventBotPost: EventBotPostCard,
   EventBotShare: EventBotShareCard,
   EventBotNote: EventBotNoteCard,
-};
+}
 @inject('log')
 @observer
 class EventCard extends React.Component<Props> {
-  card: any;
+  card: any
 
   render() {
-    const row = this.props.item;
-    let profile;
-    let CardClass;
+    const row = this.props.item
+    let profile
+    let CardClass
     try {
-      if (!row || !isAlive(row)) return null;
-      CardClass = eventCardMap[getType(row).name];
+      if (!row || !isAlive(row)) return null
+      CardClass = eventCardMap[getType(row).name]
       // TODO: deleted bot throws an error here trying to generate a profile from a bad id
-      profile = row.target;
+      profile = row.target
       if (!profile || !profile.id) {
-        return null;
+        return null
       }
     } catch (err) {
-      this.props.log('TODO: fix bot delete after server-side changes', err);
-      return null;
+      this.props.log('TODO: fix bot delete after server-side changes', err)
+      return null
     }
 
     return (
@@ -57,8 +55,8 @@ class EventCard extends React.Component<Props> {
           <CardClass ref={r => (this.card = r)} item={row} />
         </Card>
       )
-    );
+    )
   }
 }
 
-export default EventCard;
+export default EventCard

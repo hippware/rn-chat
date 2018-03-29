@@ -1,25 +1,24 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react'
+import {StyleSheet, View} from 'react-native'
 
 type Props = {
   direction: 'up' | 'right' | 'down' | 'left' | 'up-right' | 'up-left' | 'down-right' | 'down-left',
   width: number,
   height: number,
   color: string,
-  style: any,
-};
+  style?: any,
+}
 
-class Triangle extends React.Component {
-  props: Props;
+class Triangle extends React.Component<Props> {
 
   static defaultProps = {
     direction: 'up',
     width: 0,
     height: 0,
     color: 'white',
-  };
+  }
 
   _borderStyles() {
     if (this.props.direction === 'up') {
@@ -32,7 +31,7 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: this.props.color,
         borderLeftColor: 'transparent',
-      };
+      }
     } else if (this.props.direction === 'right') {
       return {
         borderTopWidth: this.props.height / 2.0,
@@ -43,7 +42,7 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: 'transparent',
         borderLeftColor: this.props.color,
-      };
+      }
     } else if (this.props.direction === 'down') {
       return {
         borderTopWidth: this.props.height,
@@ -54,7 +53,7 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: 'transparent',
         borderLeftColor: 'transparent',
-      };
+      }
     } else if (this.props.direction === 'left') {
       return {
         borderTopWidth: this.props.height / 2.0,
@@ -65,7 +64,7 @@ class Triangle extends React.Component {
         borderRightColor: this.props.color,
         borderBottomColor: 'transparent',
         borderLeftColor: 'transparent',
-      };
+      }
     } else if (this.props.direction === 'up-left') {
       return {
         borderTopWidth: this.props.height,
@@ -76,7 +75,7 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: 'transparent',
         borderLeftColor: 'transparent',
-      };
+      }
     } else if (this.props.direction === 'up-right') {
       return {
         borderTopWidth: 0,
@@ -87,7 +86,7 @@ class Triangle extends React.Component {
         borderRightColor: this.props.color,
         borderBottomColor: 'transparent',
         borderLeftColor: 'transparent',
-      };
+      }
     } else if (this.props.direction === 'down-left') {
       return {
         borderTopWidth: this.props.height,
@@ -98,7 +97,7 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: 'transparent',
         borderLeftColor: this.props.color,
-      };
+      }
     } else if (this.props.direction === 'down-right') {
       return {
         borderTopWidth: 0,
@@ -109,18 +108,18 @@ class Triangle extends React.Component {
         borderRightColor: 'transparent',
         borderBottomColor: this.props.color,
         borderLeftColor: 'transparent',
-      };
+      }
     } else {
       // eslint-disable-next-line
       console.error(
-        `Triangle.js wrong direction. ${this.props.direction} is invalid. Must be one of: ${['up', 'right', 'down', 'left', 'up-right', 'up-left', 'down-right', 'down-left']}`);
-      return {};
+        `Triangle.js wrong direction. ${this.props.direction} is invalid. Must be one of: ${['up', 'right', 'down', 'left', 'up-right', 'up-left', 'down-right', 'down-left']}`)
+      return {}
     }
   }
 
   render() {
-    const borderStyles = this._borderStyles();
-    return <View style={[styles.triangle, borderStyles, this.props.style]} />;
+    const borderStyles = this._borderStyles()
+    return <View style={[styles.triangle, borderStyles, this.props.style]} />
   }
 }
 
@@ -131,6 +130,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderStyle: 'solid',
   },
-});
+})
 
-export default Triangle;
+export default Triangle
