@@ -138,7 +138,7 @@ exports[`BotCompose renders with owned bot 1`] = `
           style={
             Object {
               "backgroundColor": "white",
-              "height": 750,
+              "height": undefined,
               "overflow": "hidden",
             }
           }
