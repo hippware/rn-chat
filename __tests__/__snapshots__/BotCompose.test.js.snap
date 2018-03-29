@@ -198,6 +198,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "guest": false,
                       "guests": Object {
                         "count": null,
+                        "cursor": null,
                         "result": Array [],
                       },
                       "guestsSize": 0,
@@ -212,12 +213,14 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "owner": "user",
                       "posts": Object {
                         "count": null,
+                        "cursor": null,
                         "result": Array [],
                       },
                       "radius": 100,
                       "server": null,
                       "subscribers": Object {
                         "count": null,
+                        "cursor": null,
                         "result": Array [],
                       },
                       "title": "title",
@@ -226,6 +229,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "visitor": false,
                       "visitors": Object {
                         "count": null,
+                        "cursor": null,
                         "result": Array [],
                       },
                       "visitorsSize": 0,
@@ -276,6 +280,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "guest": false,
                         "guests": Object {
                           "count": null,
+                          "cursor": null,
                           "result": Array [],
                         },
                         "guestsSize": 0,
@@ -290,12 +295,14 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "owner": "user",
                         "posts": Object {
                           "count": null,
+                          "cursor": null,
                           "result": Array [],
                         },
                         "radius": 100,
                         "server": null,
                         "subscribers": Object {
                           "count": null,
+                          "cursor": null,
                           "result": Array [],
                         },
                         "title": "title",
@@ -304,6 +311,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "visitor": false,
                         "visitors": Object {
                           "count": null,
+                          "cursor": null,
                           "result": Array [],
                         },
                         "visitorsSize": 0,
@@ -315,6 +323,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                   },
                   "events": Object {
                     "count": null,
+                    "cursor": null,
                     "result": Array [],
                   },
                   "files": Object {
