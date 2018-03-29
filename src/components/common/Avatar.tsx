@@ -1,16 +1,14 @@
-// @flow
+import React from 'react'
+import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {k} from '../Global'
+import {Actions} from 'react-native-router-flux'
+import {observer} from 'mobx-react/native'
+import {colors} from '../../constants'
+import {isAlive} from 'mobx-state-tree'
 
-import React from 'react';
-import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {k} from '../Global';
-import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
-import {colors} from '../../constants';
-import {isAlive} from 'mobx-state-tree';
-
-const onlineColor = colors.LIGHT_BLUE;
-const offlineColor = 'rgb(211,211,211)';
-const imgAnon = require('../../../images/follower.png');
+const onlineColor = colors.LIGHT_BLUE
+const offlineColor = 'rgb(211,211,211)'
+const imgAnon = require('../../../images/follower.png')
 
 type Props = {
   profile: any,
@@ -21,32 +19,25 @@ type Props = {
   showFrame?: boolean,
   tappable: boolean,
   smallFont?: boolean,
-};
+}
 
 @observer
 class Avatar extends React.Component<Props> {
-  _root: any;
-
   static defaultProps = {
     tappable: true,
-  };
+  }
 
-  // Do we need this?
-  // setNativeProps(nativeProps) {
-  //   if (this._root) {
-  //     this._root.setNativeProps(nativeProps);
-  //   }
-  // }
+  _root: any
 
   render() {
-    const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
+    const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props
     if (!profile || !isAlive(profile)) {
-      return null;
+      return null
     }
-    let title = profile.displayName || ' ';
-    const showLoader = !(profile.avatar && profile.avatar.loaded);
-    title = title.length > 1 ? title[0] : title;
-    const Clazz = tappable ? TouchableOpacity : View;
+    let title = profile.displayName || ' '
+    const showLoader = !(profile.avatar && profile.avatar.loaded)
+    title = title.length > 1 ? title[0] : title
+    const Clazz = tappable ? TouchableOpacity : View
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.id})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
@@ -75,27 +66,27 @@ class Avatar extends React.Component<Props> {
           <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
         </View>
       </Clazz>
-    );
+    )
   }
 }
 
 const PresenceDot = observer(({profile, size, disableStatus}) => {
-  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
-  const shift = size * k * 3 / 4;
-  const d = Math.max(10, size / 5) * k;
-  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
+  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor
+  const shift = size * k * 3 / 4
+  const d = Math.max(10, size / 5) * k
+  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift}
 
   if (profile) {
-    const {isOwn, isMutual} = profile;
+    const {isOwn, isMutual} = profile
     if ((isMutual || isOwn) && !disableStatus) {
-      return <View style={[styles.dot, style, {backgroundColor}]} />;
+      return <View style={[styles.dot, style, {backgroundColor}]} />
     } else {
-      return <Image source={imgAnon} style={[styles.dot, style]} />;
+      return <Image source={imgAnon} style={[styles.dot, style]} />
     }
   } else {
-    return null;
+    return null
   }
-});
+})
 
 const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
   const theStyle = [
@@ -106,9 +97,9 @@ const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
     },
     style,
     {width: size * k, height: size * k, borderRadius: size * k / 2},
-  ];
-  return showLoader ? <View style={theStyle} /> : <Image source={source} style={theStyle} />;
-};
+  ]
+  return showLoader ? <View style={theStyle} /> : <Image source={source} style={theStyle} />
+}
 
 const styles = StyleSheet.create({
   title: {
@@ -127,6 +118,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
   },
-});
+})
 
-export default Avatar;
+export default Avatar

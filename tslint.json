@@ -1,6 +1,6 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint:recommended", "tslint-react"],
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "jsRules": {},
   "rules": {
     "class-name": true,
@@ -27,13 +27,7 @@
     "quotemark": [true, "single"],
     "semicolon": [true, "never"],
     "ordered-imports": false,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "never",
-        "singleline": "never"
-      }
-    ],
+    "trailing-comma": false,
     "triple-equals": [true, "allow-null-check"],
     "typedef-whitespace": [
       true,
@@ -53,6 +47,12 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ]
+    ],
+
+    // loosening
+    "interface-over-type-literal": false,
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "jsx-boolean-value": false
   }
 }
