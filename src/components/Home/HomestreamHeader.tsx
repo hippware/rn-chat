@@ -30,12 +30,12 @@ class ActiveBotBanner extends React.Component<{wocky?: any, locationStore?: any}
     // !!profile.activeBots.length
     if (locationStore.alwaysOn && profile && !!profile.subscribedBots.length) {
       return (
-        <View style={{margin: 10 * k}}>
+        <View style={{padding: 10 * k, backgroundColor: 'white'}}>
           <RText size={13} weight='Bold' color={colors.PINK}>{"See Who's Here"}</RText>
           <FlatList
             data={wocky.profile.subscribedBots.list}
             horizontal
-            style={{ backgroundColor: 'white', height: 90 }}
+            style={{ height: 90 }}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderActiveBot}
           />
