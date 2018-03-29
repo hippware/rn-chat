@@ -1,10 +1,10 @@
 import React from 'react'
-import { View } from 'react-native'
-import { observer } from 'mobx-react/native'
+import {View} from 'react-native'
+import {observer} from 'mobx-react/native'
 import BotButton from '../BotButton'
 import EventList from './EventListView'
 import Connectivity from '../Connectivity'
-import { Actions } from 'react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 @observer
 class Home extends React.Component<{}> {
@@ -25,7 +25,7 @@ class Home extends React.Component<{}> {
 
   render() {
     return (
-      <View style={{ flex: 1 }} testID='screenHome'>
+      <View style={{flex: 1}} testID="screenHome">
         <EventList ref={ref => (this.eventList = ref)} />
         <BotButton />
         <Connectivity />

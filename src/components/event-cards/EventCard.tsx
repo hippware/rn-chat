@@ -9,7 +9,7 @@ import EventBotPostCard from './EventBotPostCard'
 import {getType, isAlive} from 'mobx-state-tree'
 
 type Props = {
-  item: any,
+  item: any
 }
 
 const eventCardMap = {

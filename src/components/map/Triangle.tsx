@@ -4,15 +4,14 @@ import React from 'react'
 import {StyleSheet, View} from 'react-native'
 
 type Props = {
-  direction: 'up' | 'right' | 'down' | 'left' | 'up-right' | 'up-left' | 'down-right' | 'down-left',
-  width: number,
-  height: number,
-  color: string,
-  style?: any,
+  direction: 'up' | 'right' | 'down' | 'left' | 'up-right' | 'up-left' | 'down-right' | 'down-left'
+  width: number
+  height: number
+  color: string
+  style?: any
 }
 
 class Triangle extends React.Component<Props> {
-
   static defaultProps = {
     direction: 'up',
     width: 0,
@@ -110,9 +109,18 @@ class Triangle extends React.Component<Props> {
         borderLeftColor: 'transparent',
       }
     } else {
-      // eslint-disable-next-line
       throw new Error(
-        `Triangle.js wrong direction. ${this.props.direction} is invalid. Must be one of: ${['up', 'right', 'down', 'left', 'up-right', 'up-left', 'down-right', 'down-left']}`)
+        `Triangle.js wrong direction. ${this.props.direction} is invalid. Must be one of: ${[
+          'up',
+          'right',
+          'down',
+          'left',
+          'up-right',
+          'up-left',
+          'down-right',
+          'down-left',
+        ]}`
+      )
     }
   }
 

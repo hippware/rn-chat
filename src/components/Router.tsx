@@ -1,11 +1,11 @@
 import React from 'react'
-import { TouchableOpacity, Text, Keyboard } from 'react-native'
-import { when, autorun, autorunAsync } from 'mobx'
-import { observer, inject } from 'mobx-react/native'
+import {TouchableOpacity, Text, Keyboard} from 'react-native'
+import {when, autorun, autorunAsync} from 'mobx'
+import {observer, inject} from 'mobx-react/native'
 
-import { colors } from '../constants'
+import {colors} from '../constants'
 
-import { settings } from '../globals'
+import {settings} from '../globals'
 
 import {
   Actions,
@@ -15,11 +15,11 @@ import {
   Tabs,
   Drawer,
   Modal,
-  Lightbox
+  Lightbox,
 } from 'react-native-router-flux'
 
-import { k } from './Global'
-import { CubeNavigator } from 'react-native-cube-transition'
+import {k} from './Global'
+import {CubeNavigator} from 'react-native-cube-transition'
 
 import Camera from './Camera'
 import SideMenu from './SideMenu'
@@ -63,23 +63,23 @@ const dayNavBar = {
     fontSize: 16 * k,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   leftButtonIconStyle: {
-    marginLeft: 10 * k
+    marginLeft: 10 * k,
   },
   rightButtonTextStyle: {
     marginRight: 10 * k,
     color: colors.PINK,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   leftButtonTextStyle: {
     marginLeft: 10 * k,
     color: colors.PINK,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   sceneStyle: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   // headerMode: 'screen',
   navigationBarStyle: {
@@ -89,9 +89,9 @@ const dayNavBar = {
     shadowColor: 'transparent',
     shadowRadius: 0,
     shadowOffset: {
-      height: 0
-    }
-  }
+      height: 0,
+    },
+  },
 }
 
 const tinyRobotTitle = () => (
@@ -116,7 +116,7 @@ autorun(() => {
 @observer
 class TinyRobotRouter extends React.Component<{}> {
   componentDidMount() {
-    const { wocky, locationStore, store } = this.props
+    const {wocky, locationStore, store} = this.props
 
     autorunAsync(() => {
       if (wocky.connected && !locationStore.enabled) {
@@ -125,144 +125,287 @@ class TinyRobotRouter extends React.Component<{}> {
     }, 1000)
 
     autorunAsync(() => {
-      if (
-        Actions.currentScene === '_fullMap' &&
-        !locationStore.alwaysOn &&
-        !store.locationPrimed
-      ) {
+      if (Actions.currentScene === '_fullMap' && !locationStore.alwaysOn && !store.locationPrimed) {
         Actions.locationPrimer && Actions.locationPrimer()
       }
     }, 1000)
   }
 
   render() {
-    const {store, wocky, firebaseStore} = this.props;
+    const {store, wocky, firebaseStore} = this.props
 
     return (
       <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Lightbox>
-          <Stack key='rootStack' initial hideNavBar>
-            <Stack key='root' tabs hideTabBar hideNavBar>
-              <Stack key='launch' hideNavBar lightbox type='replace'>
-                <Scene key='load' component={Launch} on={store.hydrate} success='checkCredentials' failure='onboarding' />
-                <Scene key='checkCredentials' on={() => wocky.username && wocky.password && wocky.host} success='checkProfile' failure='onboarding' />
-                <Scene key='connect' on={this.login} success='checkHandle' failure='onboarding' />
-                <Scene key='checkProfile' on={() => wocky.profile} success='checkHandle' failure='connect' />
-                <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
-                <Scene key='logout' on={firebaseStore.logout} success='onboarding' />
+          <Stack key="rootStack" initial hideNavBar>
+            <Stack key="root" tabs hideTabBar hideNavBar>
+              <Stack key="launch" hideNavBar lightbox type="replace">
+                <Scene
+                  key="load"
+                  component={Launch}
+                  on={store.hydrate}
+                  success="checkCredentials"
+                  failure="onboarding"
+                />
+                <Scene
+                  key="checkCredentials"
+                  on={() => wocky.username && wocky.password && wocky.host}
+                  success="checkProfile"
+                  failure="onboarding"
+                />
+                <Scene key="connect" on={this.login} success="checkHandle" failure="onboarding" />
+                <Scene
+                  key="checkProfile"
+                  on={() => wocky.profile}
+                  success="checkHandle"
+                  failure="connect"
+                />
+                <Scene
+                  key="checkHandle"
+                  on={() => wocky.profile.handle}
+                  success="logged"
+                  failure="signUp"
+                />
+                <Scene key="logout" on={firebaseStore.logout} success="onboarding" />
               </Stack>
-              <Stack key='onboarding' navTransparent>
-                <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
-                <Scene key='signIn' component={SignIn} back />
-                <Scene key='verifyCode' component={VerifyCode} />
-                <Scene key='testRegisterScene' component={TestRegister} success='connect' />
+              <Stack key="onboarding" navTransparent>
+                <Scene
+                  key="slideshow"
+                  component={OnboardingSlideshow}
+                  onSignIn="signIn"
+                  onBypass="testRegisterScene"
+                />
+                <Scene key="signIn" component={SignIn} back />
+                <Scene key="verifyCode" component={VerifyCode} />
+                <Scene key="testRegisterScene" component={TestRegister} success="connect" />
               </Stack>
-              <Scene key='signUp' component={SignUp} hideNavBar />
+              <Scene key="signUp" component={SignUp} hideNavBar />
               <Drawer
-                key='logged'
-                type='replace'
+                key="logged"
+                type="replace"
                 hideNavBar
                 contentComponent={SideMenu}
                 drawerImage={require('../../images/iconMenu.png')}
                 onRight={() => Actions.messaging()}
-                rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
+                rightButtonImage={() =>
+                  wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon
+                }
                 rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
               >
-                <Modal key='modal' hideNavBar>
-                  <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
-                    <Tabs key='main' hideTabBar lazy>
-                      <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
-                      <Scene key='fullMap' component={ExploreNearBy} title='Explore Nearby' />
-                      <Scene key='botsScene' component={BotsScreen} title='Favorites' />
-                      <Scene key='friendsMain'>
-                        <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
-                        <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
+                <Modal key="modal" hideNavBar>
+                  <Tabs key="cube" navigator={CubeNavigator} hideTabBar lazy>
+                    <Tabs key="main" hideTabBar lazy>
+                      <Scene key="home" component={Home} renderTitle={tinyRobotTitle} />
+                      <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" />
+                      <Scene key="botsScene" component={BotsScreen} title="Favorites" />
+                      <Scene key="friendsMain">
+                        <Scene
+                          key="friends"
+                          component={peopleLists.FriendListScene}
+                          title="Friends"
+                        />
+                        <Scene
+                          key="blocked"
+                          component={peopleLists.BlockedList}
+                          title="Blocked"
+                          back
+                        />
                       </Scene>
                     </Tabs>
 
-                    <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
-                      <Scene key='chats' component={ChatListScreen} title='Messages' />
-                      <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
+                    <Stack
+                      key="messaging"
+                      rightButtonImage={iconClose}
+                      onRight={() => Actions.main()}
+                    >
+                      <Scene key="chats" component={ChatListScreen} title="Messages" />
+                      <Scene
+                        key="chat"
+                        path="conversation/:server/:item"
+                        component={ChatScreen}
+                        back
+                        rightButtonImage={null}
+                      />
                     </Stack>
                   </Tabs>
 
-                  <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
                   <Scene
-                    key='searchUsers'
+                    key="selectFriends"
+                    component={CreateMessage}
+                    title="Select Friend"
+                    wrap
+                    leftButtonImage={iconClose}
+                    onLeft={Actions.pop}
+                    rightButtonImage={null}
+                  />
+                  <Scene
+                    key="searchUsers"
                     component={peopleLists.SearchUsers}
                     leftButtonImage={iconClose}
                     onLeft={this.resetSearchStore}
-                    title='Search Users'
+                    title="Search Users"
                     rightButtonImage={null}
                     wrap
                   />
-                  <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                  <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                  <Scene
+                    key="reportUser"
+                    component={ReportUser}
+                    title="Report User"
+                    wrap
+                    rightButtonImage={sendActive}
+                    leftButtonImage={iconClose}
+                    onLeft={Actions.pop}
+                  />
+                  <Scene
+                    key="reportBot"
+                    component={ReportBot}
+                    title="Report Bot"
+                    wrap
+                    rightButtonImage={sendActive}
+                    leftButtonImage={iconClose}
+                    onLeft={Actions.pop}
+                  />
                 </Modal>
               </Drawer>
             </Stack>
-            <Scene key='botContainer' headerMode='screen'>
-              <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
-              <Scene key='botCompose' component={BotCompose} navTransparent />
+            <Scene key="botContainer" headerMode="screen">
+              <Scene
+                key="createBot"
+                component={BotCreate}
+                title="Post a New Bot"
+                leftButtonImage={iconClose}
+                onLeft={Actions.pop}
+              />
+              <Scene key="botCompose" component={BotCompose} navTransparent />
             </Scene>
-            <Scene key='camera' component={Camera} clone hideNavBar />
-            <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
-            <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
-            <Scene key='botDetails' path='bot/:server/:item/:params*' component={BotDetails} scale={0.5} clone back right={() => null} />
-            <Scene key='botShareSelectFriends' component={peopleLists.BotShareSelectFriends} title='Share' clone back right={() => null} />
-            <Scene key='geofenceShare' component={peopleLists.GeofenceShare} title="See Who's Here" clone back />
-            <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
-            <Scene key='visitors' component={peopleLists.BotVisitorList} clone back right={() => null} navTransparent={false} title="Who's Here" />
+            <Scene key="camera" component={Camera} clone hideNavBar />
+            <Scene
+              key="botEdit"
+              component={BotCompose}
+              clone
+              edit
+              navTransparent
+              right={() => null}
+            />
+            <Scene key="codePush" component={CodePushScene} title="CodePush" clone back />
+            <Scene
+              key="botDetails"
+              path="bot/:server/:item/:params*"
+              component={BotDetails}
+              scale={0.5}
+              clone
+              back
+              right={() => null}
+            />
+            <Scene
+              key="botShareSelectFriends"
+              component={peopleLists.BotShareSelectFriends}
+              title="Share"
+              clone
+              back
+              right={() => null}
+            />
+            <Scene
+              key="geofenceShare"
+              component={peopleLists.GeofenceShare}
+              title="See Who's Here"
+              clone
+              back
+            />
+            <Scene
+              key="subscribers"
+              component={peopleLists.BotSubscriberList}
+              clone
+              back
+              right={() => null}
+              navTransparent={false}
+              title="Saves"
+            />
+            <Scene
+              key="visitors"
+              component={peopleLists.BotVisitorList}
+              clone
+              back
+              right={() => null}
+              navTransparent={false}
+              title="Who's Here"
+            />
             {/* <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
-            <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
-            <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
-            <Scene key='myAccount' component={MyAccount} editMode clone back />
-            <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
-            <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
-            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
+            <Scene key="botAddress" component={BotAddressScene} clone back title="Edit Location" />
+            <Scene
+              key="profileDetails"
+              component={ProfileDetail}
+              clone
+              back
+              navTransparent={false}
+            />
+            <Scene key="myAccount" component={MyAccount} editMode clone back />
+            <Scene
+              key="followers"
+              path="followers"
+              component={peopleLists.FollowersList}
+              clone
+              title="Followers"
+              back
+            />
+            <Scene
+              key="followed"
+              component={peopleLists.FollowedList}
+              clone
+              title="Following"
+              back
+            />
+            <Scene
+              key="blocked"
+              component={peopleLists.BlockedList}
+              clone
+              title="Blocked Users"
+              back
+              right={() => null}
+            />
           </Stack>
-          <Scene key='locationWarning' component={modals.LocationWarning} />
-          <Scene key='geofenceWarning' component={modals.LocationGeofenceWarning} />
-          <Scene key='locationPrimer' component={modals.LocationPrimer} />
-          <Scene key='sharePresencePrimer' component={modals.SharePresencePrimer} />
+          <Scene key="locationWarning" component={modals.LocationWarning} />
+          <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />
+          <Scene key="locationPrimer" component={modals.LocationPrimer} />
+          <Scene key="sharePresencePrimer" component={modals.SharePresencePrimer} />
         </Lightbox>
       </Router>
-    );
+    )
   }
 
   onDeepLink = async ({action, params}) => {
-    const {store, analytics} = this.props;
-    analytics.track('deeplink', {action, params});
+    const {store, analytics} = this.props
+    analytics.track('deeplink', {action, params})
     Actions[action] &&
       // wait until connected
       when(
         () => this.props.wocky.connected,
         () => {
           try {
-            analytics.track('deeplink_try', {action, params});
-            Actions[action](params);
-            analytics.track('deeplink_success', {action, params});
+            analytics.track('deeplink_try', {action, params})
+            Actions[action](params)
+            analytics.track('deeplink_success', {action, params})
           } catch (err) {
-            analytics.track('deeplink_fail', {error: err, action, params});
+            analytics.track('deeplink_fail', {error: err, action, params})
           }
-        },
-      );
-  };
+        }
+      )
+  }
 
   resetSearchStore = () => {
-    this.props.store.searchStore.setGlobal('');
-    Actions.pop();
-  };
+    this.props.store.searchStore.setGlobal('')
+    Actions.pop()
+  }
 
   login = async (...params) => {
     try {
-      await this.props.wocky.login();
-      return true;
+      await this.props.wocky.login()
+      return true
     } catch (error) {
-      this.props.analytics.track('error_connection', {error});
+      this.props.analytics.track('error_connection', {error})
     }
-    return false;
-  };
+    return false
+  }
 }
 
-export default TinyRobotRouter;
+export default TinyRobotRouter

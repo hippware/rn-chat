@@ -1,17 +1,10 @@
-import React, { Component } from 'react'
-import {
-  TouchableOpacity,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  Image
-} from 'react-native'
-import { observer, inject } from 'mobx-react/native'
+import React, {Component} from 'react'
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
 import Swipeable from 'react-native-swipeable'
 import LinearGradient from 'react-native-linear-gradient'
 
-import { k } from '../Global'
+import {k} from '../Global'
 import ActiveBot from './ActiveBot'
 
 const leftContent = <Text />
@@ -24,7 +17,7 @@ type Props = {
 
 @inject('wocky')
 @observer
-class WelcomeNote extends React.Component<{visible: boolean, wocky?: any}> {
+class WelcomeNote extends React.Component<{visible: boolean; wocky?: any}> {
   onRelease = () => this.props.wocky.setSessionCount(3)
   render() {
     return this.props.visible ? (
@@ -39,15 +32,14 @@ class WelcomeNote extends React.Component<{visible: boolean, wocky?: any}> {
           style={styles.gradient}
         >
           <Image
-            style={{ width: 31.7 * k, height: 36.5 * k }}
+            style={{width: 31.7 * k, height: 36.5 * k}}
             source={require('../../../images/white.png')}
           />
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             <Text style={styles.welcome}>
               {'Welcome to '}
-              <Text style={{ fontFamily: 'Roboto-Bold' }}>tinyrobot</Text>
-              ! We’ve added our team as your friends! You may unfollow us at
-              anytime. 🎉
+              <Text style={{fontFamily: 'Roboto-Bold'}}>tinyrobot</Text>
+              ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
             </Text>
           </View>
         </LinearGradient>
@@ -64,13 +56,13 @@ const styles = StyleSheet.create({
     paddingTop: 17.5 * k,
     paddingRight: 26.6 * k,
     paddingLeft: 17.5 * k,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   welcome: {
     paddingLeft: 19.8 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
     color: 'white',
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 })

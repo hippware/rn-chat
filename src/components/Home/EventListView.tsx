@@ -1,19 +1,12 @@
 import React from 'react'
-import {
-  TouchableOpacity,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  Image
-} from 'react-native'
-import { colors } from '../../constants'
-import { k } from '../Global'
-import { observer, inject } from 'mobx-react/native'
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {colors} from '../../constants'
+import {k} from '../Global'
+import {observer, inject} from 'mobx-react/native'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
-import { RText } from '../common'
+import {RText} from '../common'
 import HomeStreamHeader from './HomestreamHeader'
 
 type Props = {
@@ -30,20 +23,18 @@ class EventList extends React.Component<Props> {
   }
 
   scrollToTop = () => {
-    this.list &&
-      this.list.props.data.length &&
-      this.list.scrollToIndex({ animated: true, index: 0 })
+    this.list && this.list.props.data.length && this.list.scrollToIndex({animated: true, index: 0})
   }
 
   render() {
-    const { sessionCount, events, connected } = this.props.wocky
+    const {sessionCount, events, connected} = this.props.wocky
     const backgroundColor = colors.LIGHT_GREY
     const footerImage = require('../../../images/graphicEndHome.png')
-    const { finished } = events
+    const {finished} = events
     const isFirstSession = sessionCount <= 2
 
     return (
-      <View style={{ flex: 1, backgroundColor }}>
+      <View style={{flex: 1, backgroundColor}}>
         <FlatList
           data={events.length > 0 ? events.list : null}
           ref={r => (this.list = r)}
@@ -54,12 +45,10 @@ class EventList extends React.Component<Props> {
           // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
           ListFooterComponent={
             connected
-              ? observer(() => (
-                  <ListFooter footerImage={footerImage} finished={finished} />
-                ))
+              ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
               : null
           }
-          renderItem={({ item }) => <EventCard item={item} />}
+          renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.id}
         />
         <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
@@ -71,7 +60,7 @@ class EventList extends React.Component<Props> {
 
 const UpdateButton = inject('wocky')(
   observer(
-    ({ scroll, visible, wocky }) =>
+    ({scroll, visible, wocky}) =>
       visible && wocky.updates.length ? (
         <TouchableOpacity
           onPress={() => {
@@ -80,11 +69,8 @@ const UpdateButton = inject('wocky')(
           }}
           style={styles.updateButton}
         >
-          <Image
-            source={require('../../../images/up.png')}
-            style={{ marginRight: 5 * k }}
-          />
-          <RText weight='Medium' color={colors.WHITE} size={12}>
+          <Image source={require('../../../images/up.png')} style={{marginRight: 5 * k}} />
+          <RText weight="Medium" color={colors.WHITE} size={12}>
             New Updates
           </RText>
         </TouchableOpacity>
@@ -103,14 +89,14 @@ const styles = StyleSheet.create({
     paddingTop: 17.5 * k,
     paddingRight: 26.6 * k,
     paddingLeft: 17.5 * k,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   welcome: {
     paddingLeft: 19.8 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
     color: 'white',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   updateButton: {
     position: 'absolute',
@@ -121,6 +107,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 17 * k,
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })

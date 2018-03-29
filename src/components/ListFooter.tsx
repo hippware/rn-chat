@@ -4,14 +4,20 @@ import {Spinner} from './common'
 import {observer} from 'mobx-react/native'
 
 type Props = {
-  footerImage?: any,
-  finished: boolean,
-  style?: Object,
+  footerImage?: any
+  finished: boolean
+  style?: Object
 }
 
 const ListFooter = observer(({footerImage, finished, style}: Props) => (
   <View style={[style, {alignItems: 'center'}]}>
-    {finished ? footerImage ? <Image source={footerImage} style={styles.padding} /> : null : <Spinner style={styles.padding} />}
+    {finished ? (
+      footerImage ? (
+        <Image source={footerImage} style={styles.padding} />
+      ) : null
+    ) : (
+      <Spinner style={styles.padding} />
+    )}
   </View>
 ))
 

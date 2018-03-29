@@ -22,7 +22,7 @@
     "testBundle":
       "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
     "lint": "tslint -c tslint.json 'src/**/*.tsx'",
-    "prettify:ts": "prettier --write  \"src/**/*.(ts?|tsx?)\"",
+    "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
