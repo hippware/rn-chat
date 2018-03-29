@@ -5,7 +5,12 @@ import {IObservableArray} from 'mobx'
 import {Profile, IProfile} from './Profile'
 import {Message, IMessage} from './Message'
 import {Base} from './Base'
+import {IBot} from './Bot'
 const moment = require('moment')
+
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IObservableArray<s> = IObservableArray<any>
+export type __IBot = IBot
 
 export const Chat = types
   .compose(
@@ -24,7 +29,7 @@ export const Chat = types
   .volatile(self => ({
     loading: false
   }))
-  .named('Chat')
+  // .named('Chat')
   .views(self => ({
     get messages() {
       return self._messages.sort((a, b) => a.time - b.time)
@@ -94,4 +99,5 @@ export const Chat = types
     }
   }))
 
-export type IChat = typeof Chat.Type
+export type IChatType = typeof Chat.Type
+export interface IChat extends IChatType {}

@@ -5,6 +5,9 @@ import {IObservableArray} from 'mobx'
 import {EventBot} from './EventBot'
 import {Message} from './Message'
 import {IProfile} from './Profile'
+import {IBot} from './Bot'
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IBot = IBot
 
 export const EventBotShare = types
   .compose(

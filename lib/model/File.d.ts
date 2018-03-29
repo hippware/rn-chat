@@ -63,5 +63,7 @@ export declare const File: IModelType<{
 } & {
     afterAttach: () => Promise<{}>;
 }>;
-export declare type IFile = typeof File.Type;
+export declare type IFileType = typeof File.Type;
+export interface IFile extends IFileType {
+}
 export declare const FileRef: IType<string | number | null | undefined, any>;

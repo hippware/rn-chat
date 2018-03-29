@@ -5,6 +5,10 @@ import {IObservableArray} from 'mobx'
 import {Profile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
+import {IBot} from './Bot'
+
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IBot = IBot
 
 export const OwnProfile = types
   .compose(

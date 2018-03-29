@@ -10,7 +10,7 @@ import {Address} from './Address'
 import * as utils from '../transport/utils'
 import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
-import {createPaginable} from './PaginableList'
+import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
 
 export const VISIBILITY_OWNER = 0
@@ -83,7 +83,7 @@ export const Bot = types
       return botPost
     },
     removePost: flow(function*(postId: string) {
-      if (self.posts.list.find(el => el.id === postId)) {
+      if (self.posts.list.find((el: any) => el.id === postId)) {
         yield self.service._removeBotPost(self.id, postId)
         self.posts.remove(postId)
         self.totalItems -= 1
@@ -149,7 +149,11 @@ export const Bot = types
     }
   }))
 
-export type IBot = typeof Bot.Type
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IPaginable = IPaginable
+
+export type IBotType = typeof Bot.Type
+export interface IBot extends IBotType {}
 export const BotPaginableList = createPaginable(types.reference(Bot))
 export type IBotPaginableList = typeof BotPaginableList.Type
 export const BotRef = types.reference(Bot, {

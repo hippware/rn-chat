@@ -4,14 +4,17 @@ import {types, ISnapshottable, IModelType, IExtendedObservableMap, getEnv, getPa
 import {IObservableArray} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
-import {Bot} from '../model/Bot'
+import {Bot, IBot} from '../model/Bot'
 import {IBase} from '../model/Base'
+
+export type __IBot = IBot
+
 export function createFactory<T extends IBase>(type: IType<any, T>) {
   return types
     .model({
       storage: types.optional(types.map(type), {})
     })
-    .named('Factory' + type.name)
+    .named(`Factory${type.name}`)
     .views(self => ({
       get snapshot() {
         const storage: any = {}

@@ -3,7 +3,17 @@ import {types, destroy, getEnv, flow, getParent, IModelType, isAlive, ISnapshott
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 
-export function createPaginable(type: any) {
+export interface IPaginable extends IModelType<any, any> {
+  result?: any[]
+  cursor?: string
+  count?: number
+  loading?: boolean
+  finished?: boolean
+  add?: (i: any) => any
+  addToTop?: (i: any) => any
+}
+
+export function createPaginable(type: any): IPaginable {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),

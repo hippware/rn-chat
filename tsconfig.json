@@ -15,6 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "importHelpers": true,
+    // "noUnusedLocals": true,
     "lib": [
       "dom",
       "es6",

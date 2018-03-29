@@ -185,7 +185,7 @@ export function generateID() {
   return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`
 }
 
-export function parseXml(xml: HTMLElement, arrayTags?: [string]) {
+export function parseXml(xml: any, arrayTags?: [string]) {
   function isArray(o: any) {
     return Object.prototype.toString.apply(o) === '[object Array]'
   }

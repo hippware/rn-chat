@@ -8,6 +8,10 @@ import * as utils from '../transport/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
+import {IBot} from './Bot'
+
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IBot = IBot
 
 const moment = require('moment')
 

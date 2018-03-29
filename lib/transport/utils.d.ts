@@ -33,6 +33,6 @@ export declare function getNodeJid(jid: string): string;
  */
 export declare function getUniqueId(suffix: string): string;
 export declare function generateID(): string;
-export declare function parseXml(xml: HTMLElement, arrayTags?: [string]): any;
+export declare function parseXml(xml: any, arrayTags?: [string]): any;
 export declare function hashCode(s: string): number;
 export declare function iso8601toDate(date: string): Date;

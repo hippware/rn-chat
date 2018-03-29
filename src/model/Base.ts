@@ -2,6 +2,7 @@
 import {types, getEnv, getType, getParent, IModelType, getSnapshot, isStateTreeNode, hasParent} from 'mobx-state-tree'
 
 export const SERVICE_NAME = 'WockyClient'
+export type __IModelType = IModelType<any, any>
 
 // Base class for entities that want access to parent wocky service
 export const Base = types
@@ -43,4 +44,5 @@ export const Base = types
     }
   }))
 
-export type IBase = typeof Base.Type
+export type IBaseType = typeof Base.Type
+export interface IBase extends IBaseType {}
