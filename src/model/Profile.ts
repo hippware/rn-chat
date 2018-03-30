@@ -1,12 +1,16 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, isAlive, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types, flow, isAlive, IModelType, IType, ISnapshottable} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
-import {createPaginable} from './PaginableList'
+import {createPaginable, IPaginable} from './PaginableList'
 import {IBotPaginableList, IBot} from './Bot'
+import {IObservableArray} from 'mobx'
+
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IObs = IObservableArray<any>
+export type __ISnap = ISnapshottable<any>
+export type __IPaginable = IPaginable
 
 export const Profile = types
   .compose(
@@ -31,7 +35,7 @@ export const Profile = types
   )
   .named('Profile')
   .extend(self => {
-    let followers: IProfilePaginableList, followed: IProfilePaginableList, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
+    let followers: IProfilePaginableListType, followed: IProfilePaginableListType, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
     const {BotPaginableList} = require('./Bot')
     return {
       actions: {
@@ -89,10 +93,10 @@ export const Profile = types
         get isMutual(): boolean {
           return self.isFollowed && self.isFollower
         },
-        get followers(): IProfilePaginableList {
+        get followers(): IProfilePaginableListType {
           return followers
         },
-        get followed(): IProfilePaginableList {
+        get followed(): IProfilePaginableListType {
           return followed
         },
         get ownBots(): IBotPaginableList {
@@ -123,8 +127,10 @@ export const Profile = types
   })
 
 export const ProfilePaginableList = createPaginable(types.reference(Profile))
-export type IProfilePaginableList = typeof ProfilePaginableList.Type
-export type IProfile = typeof Profile.Type
+export type IProfilePaginableListType = typeof ProfilePaginableList.Type
+export interface IProfilePaginableList extends IProfilePaginableListType {}
+export type IProfileType = typeof Profile.Type
+export interface IProfile extends IProfileType {}
 
 export const ProfileRef = types.maybe(
   types.reference(Profile, {

@@ -87,7 +87,8 @@ export const File = types
       }
     })
   }))
-export type IFile = typeof File.Type
+export type IFileType = typeof File.Type
+export interface IFile extends IFileType {}
 
 export const FileRef = types.maybe(
   types.reference(File, {

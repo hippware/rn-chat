@@ -12,9 +12,7 @@ export const Address = types
     get locationShort(): string {
       const {city, state, country, county} = self
       if (country) {
-        return country === 'US' || country === 'United States'
-          ? `${city || county}, ${state}`
-          : city || county || state ? `${city || county || state}, ${country}` : country
+        return country === 'US' || country === 'United States' ? `${city || county}, ${state}` : city || county || state ? `${city || county || state}, ${country}` : country
       } else {
         if (getParent(self) && getParent(self).address) {
           const arr = getParent(self).address.split(', ')

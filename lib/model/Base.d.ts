@@ -1,5 +1,6 @@
 import { IModelType } from 'mobx-state-tree';
 export declare const SERVICE_NAME = "WockyClient";
+export declare type __IModelType = IModelType<any, any>;
 export declare const Base: IModelType<{
     id?: any;
 }, {
@@ -10,4 +11,6 @@ export declare const Base: IModelType<{
 } & {
     readonly snapshot: any;
 }>;
-export declare type IBase = typeof Base.Type;
+export declare type IBaseType = typeof Base.Type;
+export interface IBase extends IBaseType {
+}

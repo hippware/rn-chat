@@ -3,7 +3,7 @@ import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, fl
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile} from '../model/Profile'
+import {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot} from '../model/Bot'
@@ -14,7 +14,7 @@ import {EventBotNote} from '../model/EventBotNote'
 import {EventBotShare} from '../model/EventBotShare'
 import {EventBotGeofence} from '../model/EventBotGeofence'
 import {EventDelete} from '../model/EventDelete'
-import {createPaginable} from '../model/PaginableList'
+import {createPaginable, IPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
@@ -22,8 +22,14 @@ import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
+// export interface IEventEntity extends IEventEntityType {}
 export const EventList = createPaginable(EventEntity)
-export type IEventList = typeof EventList.Type
+export type IEventListType = typeof EventList.Type
+export interface IEventList extends IEventListType {}
+
+// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
+export type __IPaginable = IPaginable
+export type __IProfile = IProfile
 
 export const Wocky = types
   .compose(
@@ -90,12 +96,9 @@ export const Wocky = types
           return transport.connecting
         },
         get sortedRoster() {
-          return self.roster
-            .values()
-            .filter(x => x.handle)
-            .sort((a, b) => {
-              return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-            })
+          return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
+            return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+          })
         }
       },
       actions: {
@@ -543,4 +546,5 @@ export const Wocky = types
     }
   })
 
-export type IWocky = typeof Wocky.Type
+export type IWockyType = typeof Wocky.Type
+export interface IWocky extends IWockyType {}

@@ -15,3 +15,6 @@ export const Event = types
     }
   }))
   .named('Event')
+
+export type IEventType = typeof Event.Type
+export interface IEvent extends IEventType {}
