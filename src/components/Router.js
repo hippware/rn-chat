@@ -310,7 +310,7 @@ class TinyRobotRouter extends React.Component<{}> {
               component={peopleLists.GeofenceShare}
               title="See Who's Here"
               clone
-              back
+              left={() => null}
             />
             <Scene
               key="subscribers"
