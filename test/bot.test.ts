@@ -185,7 +185,7 @@ describe('BotStore', () => {
 
   it('unsubscribe user2 for first bot', async done => {
     try {
-      user2.profile!.subscribedBots.list[0].unsubscribe()
+      await user2.profile!.subscribedBots.list[0].unsubscribe()
       user2.profile!.subscribedBots.refresh()
       await user2.profile!.subscribedBots.load()
       expect(user2.profile!.subscribedBots.list.length).to.be.equal(0)
