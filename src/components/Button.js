@@ -1,10 +1,10 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import ApslButton from 'apsl-react-native-button';
-import {k} from './Global';
-import {colors} from '../constants';
+import React from 'react'
+import {StyleSheet} from 'react-native'
+import ApslButton from 'apsl-react-native-button'
+import {k} from './Global'
+import {colors} from '../constants'
 
 type Props = {
   style?: any,
@@ -13,7 +13,7 @@ type Props = {
   disabledStyle?: any,
   onPress: Function,
   children?: any,
-};
+}
 
 export default (props: Props) => (
   <ApslButton
@@ -25,7 +25,7 @@ export default (props: Props) => (
   >
     {props.children}
   </ApslButton>
-);
+)
 
 const styles = StyleSheet.create({
   style: {
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 0.8,
   },
-});
+})
