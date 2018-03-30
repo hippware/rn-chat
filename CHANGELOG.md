@@ -8,7 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Don't propagate foreground push notifications.
 * GEOFENCE v1: HS Geofence Share Notification (Rework #1921)
 * Interim solution for Who's Here (while we wait for live updates) (#2035)
-* Convert some components to TypeScript.
+* Convert some source files to TypeScript (work in progress).
+  * Includes some small improvements.
 
 
 # 2.3.1 - 2018 March 27
