@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Alert, Keyboard, TouchableOpacity, Image} from 'react-native'
 import {observer, inject, Provider} from 'mobx-react/native'
@@ -18,23 +16,18 @@ import BotComposeMap from './BotComposeMap'
 import {settings} from '../../globals'
 
 type Props = {
-  botId: string,
-  edit?: boolean,
-  titleBlurred?: boolean,
+  botId: string
+  edit?: boolean
+  titleBlurred?: boolean
 }
 
 @inject('wocky', 'notificationStore', 'analytics', 'log')
 @observer
 class BotCompose extends React.Component<Props> {
-  botTitle: ?Object
-  @observable keyboardHeight: number = 0
-  @observable isLoading: boolean = false
-  controls: any
-  @observable bot: Bot
-
   static leftButton = ({edit}) => {
     return (
       <TouchableOpacity
+        // tslint:disable-next-line
         onPress={() => {
           if (edit) {
             Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
@@ -62,34 +55,21 @@ class BotCompose extends React.Component<Props> {
       </TouchableOpacity>
     )
   }
+  botTitle: any
+  @observable isLoading: boolean = false
+  controls: any
+  @observable bot: Bot
 
   componentWillMount() {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow)
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide)
-    if (this.props.botId) {
-      this.bot = this.props.wocky.getBot({id: this.props.botId})
-    }
+    this.bot = this.props.wocky.getBot({id: this.props.botId})
   }
 
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove()
-    this.keyboardDidHideListener.remove()
-  }
-
-  _keyboardDidShow = ({endCoordinates, startCoordinates}) => {
-    setTimeout(() => (this.keyboardHeight = startCoordinates.screenY - endCoordinates.screenY))
-  }
-
-  _keyboardDidHide = () => {
-    this.keyboardHeight = 0
-  }
-
-  save = async () => {
+  save = async (): Promise<void> => {
     const {bot} = this
     if (!bot.title) {
       // TODO: slide-down notification
       Alert.alert('Title cannot be empty')
-      this.botTitle && this.botTitle.focus()
+      if (this.botTitle) this.botTitle.focus()
       return
     }
     try {
@@ -139,7 +119,7 @@ class BotCompose extends React.Component<Props> {
           >
             <BotComposeMap afterPhotoPost={this.scrollToNote} />
             <ComposeCard edit={edit} titleBlurred={titleBlurred} />
-            <EditControls ref={r => (this.controls = r)} />
+            <EditControls ref={this.setEditRef} />
           </KeyboardAwareScrollView>
           <BottomButton isDisabled={!isEnabled} onPress={this.save}>
             {bot.isLoading ? <Spinner color="white" size={22} /> : buttonText}
@@ -148,6 +128,8 @@ class BotCompose extends React.Component<Props> {
       </Provider>
     )
   }
+
+  private setEditRef = r => (this.controls = r)
 }
 
 export default BotCompose

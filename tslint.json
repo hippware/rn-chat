@@ -24,6 +24,9 @@
     "triple-equals": [true, "allow-null-check"],
     "variable-name": [true, "ban-keywords"],
 
+    // https://github.com/prettier/prettier/issues/1080
+    // "quotemark": [true, "single", "jsx-single"],
+
     // loosening
     "interface-over-type-literal": false,
     "object-literal-sort-keys": false,
