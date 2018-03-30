@@ -6,7 +6,7 @@ import {when, observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 import {k, width} from '../Global';
 import {colors} from '../../constants';
-import {Profile} from 'wocky-client';
+import {Profile, IBot} from 'wocky-client';
 import BotPostCard from './BotPostCard';
 import {RText, Spinner} from '../common';
 import AddBotPost from './AddBotPost';
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const Title = inject('wocky')(({wocky, item, server, scale}) => {
-  const bot = wocky.getBot({id: item, server});
+  const bot: IBot = wocky.getBot({id: item, server});
   return <Header bot={bot} scale={scale} />;
 });
 

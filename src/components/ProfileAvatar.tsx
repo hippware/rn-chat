@@ -5,11 +5,11 @@ import {k} from './Global'
 import {IProfile} from 'wocky-client'
 
 type Props = {
-  profile: IProfile,
-  tappable: boolean,
-  size: number,
-  style?: any,
-  wrapperStyle?: any,
+  profile: Profile
+  tappable: boolean
+  size: number
+  style?: any
+  wrapperStyle?: any
 }
 
 const ProfileAvatar = (props: Props) => {

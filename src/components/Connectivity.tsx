@@ -9,10 +9,10 @@ import * as log from '../utils/log'
 import {Wocky, IWocky} from 'wocky-client'
 
 type Props = {
-  wocky?: IWocky,
-  notificationStore?: any,
-  locationStore?: any,
-  log?: any,
+  wocky?: IWocky
+  notificationStore?: any
+  locationStore?: any
+  log?: any
   analytics?: any
 }
 
@@ -41,11 +41,19 @@ class Connectivity extends React.Component<Props> {
     })
     this.intervalId = setInterval(async () => {
       const model = this.props.wocky
-      if (this.isActive && !model.connected && !model.connecting && Date.now() - this.lastDisconnected >= this.retryDelay) {
+      if (
+        this.isActive &&
+        !model.connected &&
+        !model.connecting &&
+        Date.now() - this.lastDisconnected >= this.retryDelay
+      ) {
         await this.tryReconnect()
       }
     }, 1000)
-    this.handler = reaction(() => !this.props.wocky.connected, () => (this.lastDisconnected = Date.now()))
+    this.handler = reaction(
+      () => !this.props.wocky.connected,
+      () => (this.lastDisconnected = Date.now())
+    )
   }
 
   componentWillUnmount() {

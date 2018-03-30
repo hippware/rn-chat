@@ -8,10 +8,10 @@ import {observer} from 'mobx-react/native'
 
 // scale here - 1 is full image, 0.5 is bot details UI (half-screen), 0 is full map mode
 type Props = {
-  text: string,
-  image: any,
-  scale: number,
-  showLoader: boolean,
+  text: string
+  image: any
+  scale: number
+  showLoader: boolean
 }
 
 @observer
@@ -44,22 +44,45 @@ export default class Bubble extends React.Component<Props> {
     // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
-        <Animated.View style={{backgroundColor: colors.PINK, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: colors.PINK}}>
+        <Animated.View
+          style={{
+            backgroundColor: colors.PINK,
+            borderRadius,
+            width,
+            height,
+            overflow: 'hidden',
+            borderWidth: fullImage ? 0 : 1.2,
+            borderColor: colors.PINK,
+          }}
+        >
           {showLoader ? (
             <Animated.View style={{width, height: width, backgroundColor: colors.GREY}} />
           ) : (
-            <Animated.Image style={{width, height: width}} resizeMode='contain' source={image} />
+            <Animated.Image style={{width, height: width}} resizeMode="contain" source={image} />
           )}
           {!fullImage &&
             !fullMap && (
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <RText color={colors.WHITE} size={13} style={{padding: 2}} numberOfLines={1} ellipsizeMode='middle'>
+                <RText
+                  color={colors.WHITE}
+                  size={13}
+                  style={{padding: 2}}
+                  numberOfLines={1}
+                  ellipsizeMode="middle"
+                >
                   {text}
                 </RText>
               </View>
             )}
         </Animated.View>
-        {!fullImage && <Triangle width={fullMap ? 14 : 11} height={fullMap ? 8 : 11} color={colors.PINK} direction='down' />}
+        {!fullImage && (
+          <Triangle
+            width={fullMap ? 14 : 11}
+            height={fullMap ? 8 : 11}
+            color={colors.PINK}
+            direction="down"
+          />
+        )}
       </View>
     )
   }
