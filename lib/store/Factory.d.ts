@@ -1,12 +1,10 @@
 import { ISnapshottable, IModelType, IExtendedObservableMap, IType } from 'mobx-state-tree';
-import { IObservableArray } from 'mobx';
 import { IBot } from '../model/Bot';
-import { IBase } from '../model/Base';
 export declare type __IBot = IBot;
-export declare function createFactory<T extends IBase>(type: IType<any, T>): IModelType<{
+export declare function createFactory(type: IType<any, any>): IModelType<{
     storage?: any;
 }, {
-    storage: IExtendedObservableMap<T> & ISnapshottable<{
+    storage: IExtendedObservableMap<any> & ISnapshottable<{
         [key: string]: any;
     }>;
 } & {
@@ -18,7 +16,7 @@ export declare function createFactory<T extends IBase>(type: IType<any, T>): IMo
     delete: (id: string) => void;
     get: (id: string, data?: {
         [key: string]: any;
-    } | undefined) => T;
+    } | undefined) => any;
 }>;
 export declare const Storages: IModelType<{
     files?: any;
@@ -26,7 +24,7 @@ export declare const Storages: IModelType<{
     profiles?: any;
 }, {
     files: {
-        storage: IExtendedObservableMap<T> & ISnapshottable<{
+        storage: IExtendedObservableMap<any> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -38,56 +36,12 @@ export declare const Storages: IModelType<{
         delete: (id: string) => void;
         get: (id: string, data?: {
             [key: string]: any;
-        } | undefined) => {
-            id: string;
-        } & {
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            id: string;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-        } & {
-            loading: boolean;
-            isNew: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-            readonly snapshot: any;
-        } & {
-            setURL: (url: string) => void;
-            setSource: (source: any) => void;
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        };
+        } | undefined) => any;
     } & {
         readonly $treenode?: any;
     };
     bots: {
-        storage: IExtendedObservableMap<T> & ISnapshottable<{
+        storage: IExtendedObservableMap<any> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -99,245 +53,12 @@ export declare const Storages: IModelType<{
         delete: (id: string) => void;
         get: (id: string, data?: {
             [key: string]: any;
-        } | undefined) => {
-            id: string;
-        } & {
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
-            updated: boolean;
-            updating: boolean;
-            updateError: string;
-        } & {
-            update: (a1: any) => Promise<any>;
-        } & {
-            save: () => Promise<{}>;
-        } & {
-            id: string;
-            isSubscribed: boolean;
-            guest: boolean;
-            visitor: boolean;
-            title: string | null;
-            server: string | null;
-            radius: number;
-            geofence: boolean;
-            owner: ({
-                id: string;
-            } & {
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                id: string;
-                avatar: any;
-                handle: string | null;
-                status: string;
-                firstName: string | null;
-                lastName: string | null;
-                isBlocked: boolean;
-                isFollowed: boolean;
-                isFollower: boolean;
-                isNew: boolean;
-                followersSize: number;
-                followedSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & {
-                afterAttach: () => void;
-                follow: () => Promise<{}>;
-                unfollow: () => Promise<{}>;
-                block: () => Promise<{}>;
-                unblock: () => Promise<{}>;
-                setStatus: (status: string) => void;
-            } & {
-                readonly snapshot: any;
-                readonly isOwn: boolean;
-                readonly isVerified: boolean;
-                readonly isMutual: boolean;
-                readonly followers: any;
-                readonly followed: any;
-                readonly ownBots: any;
-                readonly subscribedBots: any;
-                readonly activeBots: IBot[];
-                readonly displayName: string;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            image: any;
-            description: string | null;
-            visibility: number;
-            location: ({
-                latitude: number;
-                longitude: number;
-                accuracy: number | null;
-            } & {
-                isCurrent: boolean;
-            } & {
-                load: (data: any) => void;
-                addToIQ: (iq: any) => void;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            address: string;
-            followersSize: number;
-            guestsSize: number;
-            visitorsSize: number;
-            totalItems: number;
-            addressData: {
-                city: string;
-                country: string;
-                state: string;
-                county: string;
-            } & {
-                readonly locationShort: string;
-            } & {
-                readonly $treenode?: any;
-            };
-            subscribers: any;
-            guests: any;
-            visitors: any;
-            posts: any;
-            error: string;
-        } & {
-            isNew: boolean;
-            loading: boolean;
-        } & {
-            setError: (value: string) => void;
-            startLoading(): void;
-            finishLoading(): void;
-            setGeofence: (value: boolean) => void;
-            setPublic: (value: boolean) => void;
-            afterAttach: () => void;
-            createPost: (content?: string) => {
-                id: string;
-            } & {
-                readonly _snapshot: any;
-                readonly service: any;
-            } & {
-                readonly snapshot: any;
-            } & {
-                time: number;
-            } & {
-                readonly date: Date;
-                readonly dateAsString: string;
-                readonly relativeDateAsString: string;
-            } & {
-                loaded: boolean;
-            } & {
-                load: (data: any) => void;
-            } & {
-                uploading: boolean;
-                uploaded: boolean;
-                uploadError: string;
-            } & {
-                upload: (a1: any) => Promise<any>;
-            } & {
-                id: string;
-                content: string;
-                title: string;
-                image: any;
-                profile: ({
-                    id: string;
-                } & {
-                    readonly _snapshot: any;
-                    readonly service: any;
-                } & {
-                    readonly snapshot: any;
-                } & {
-                    loaded: boolean;
-                } & {
-                    load: (data: any) => void;
-                } & {
-                    id: string;
-                    avatar: any;
-                    handle: string | null;
-                    status: string;
-                    firstName: string | null;
-                    lastName: string | null;
-                    isBlocked: boolean;
-                    isFollowed: boolean;
-                    isFollower: boolean;
-                    isNew: boolean;
-                    followersSize: number;
-                    followedSize: number;
-                    botsSize: number;
-                    roles: IObservableArray<string> & ISnapshottable<string[]>;
-                } & {
-                    afterAttach: () => void;
-                    follow: () => Promise<{}>;
-                    unfollow: () => Promise<{}>;
-                    block: () => Promise<{}>;
-                    unblock: () => Promise<{}>;
-                    setStatus: (status: string) => void;
-                } & {
-                    readonly snapshot: any;
-                    readonly isOwn: boolean;
-                    readonly isVerified: boolean;
-                    readonly isMutual: boolean;
-                    readonly followers: any;
-                    readonly followed: any;
-                    readonly ownBots: any;
-                    readonly subscribedBots: any;
-                    readonly activeBots: IBot[];
-                    readonly displayName: string;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-            } & {
-                setContent: (content: string) => string;
-                setTitle: (title: string) => string;
-                publish: () => Promise<{}>;
-            } & {
-                readonly $treenode?: any;
-            } & ISnapshottable<{
-                id?: any;
-            } & {
-                time?: any;
-            } & {
-                loaded?: any;
-            } & {} & {
-                id?: any;
-                content?: any;
-                title?: any;
-                image?: any;
-                profile?: any;
-            }>;
-            removePost: (a1: string) => Promise<any>;
-            subscribe: () => Promise<{}>;
-            subscribeGeofence: () => Promise<{}>;
-            unsubscribe: () => Promise<{}>;
-            unsubscribeGeofence: () => Promise<{}>;
-            share: (userIDs: string[], message?: string, action?: string) => void;
-            setNew: (value: boolean) => void;
-            load: (d?: any) => void;
-        } & {
-            shareToFriends: (message?: string) => void;
-            shareToFollowers: (message?: string) => void;
-        } & {
-            readonly isPublic: boolean;
-            readonly coverColor: number;
-            readonly snapshot: any;
-        } & {
-            readonly $treenode?: any;
-        };
+        } | undefined) => any;
     } & {
         readonly $treenode?: any;
     };
     profiles: {
-        storage: IExtendedObservableMap<T> & ISnapshottable<{
+        storage: IExtendedObservableMap<any> & ISnapshottable<{
             [key: string]: any;
         }>;
     } & {
@@ -349,53 +70,7 @@ export declare const Storages: IModelType<{
         delete: (id: string) => void;
         get: (id: string, data?: {
             [key: string]: any;
-        } | undefined) => {
-            id: string;
-        } & {
-            readonly _snapshot: any;
-            readonly service: any;
-        } & {
-            readonly snapshot: any;
-        } & {
-            loaded: boolean;
-        } & {
-            load: (data: any) => void;
-        } & {
-            id: string;
-            avatar: any;
-            handle: string | null;
-            status: string;
-            firstName: string | null;
-            lastName: string | null;
-            isBlocked: boolean;
-            isFollowed: boolean;
-            isFollower: boolean;
-            isNew: boolean;
-            followersSize: number;
-            followedSize: number;
-            botsSize: number;
-            roles: IObservableArray<string> & ISnapshottable<string[]>;
-        } & {
-            afterAttach: () => void;
-            follow: () => Promise<{}>;
-            unfollow: () => Promise<{}>;
-            block: () => Promise<{}>;
-            unblock: () => Promise<{}>;
-            setStatus: (status: string) => void;
-        } & {
-            readonly snapshot: any;
-            readonly isOwn: boolean;
-            readonly isVerified: boolean;
-            readonly isMutual: boolean;
-            readonly followers: any;
-            readonly followed: any;
-            readonly ownBots: any;
-            readonly subscribedBots: any;
-            readonly activeBots: IBot[];
-            readonly displayName: string;
-        } & {
-            readonly $treenode?: any;
-        };
+        } | undefined) => any;
     } & {
         readonly $treenode?: any;
     };

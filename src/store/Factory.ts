@@ -5,11 +5,10 @@ import {IObservableArray} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot, IBot} from '../model/Bot'
-import {IBase} from '../model/Base'
 
 export type __IBot = IBot
 
-export function createFactory<T extends IBase>(type: IType<any, T>) {
+export function createFactory(type: IType<any, any>) {
   return types
     .model({
       storage: types.optional(types.map(type), {})
@@ -33,7 +32,7 @@ export function createFactory<T extends IBase>(type: IType<any, T>) {
       delete: (id: string) => {
         self.storage.delete(id)
       },
-      get: (id: string, data?: {[key: string]: any}): T => {
+      get: (id: string, data?: {[key: string]: any}) => {
         if (!self.storage.get(id)) {
           const entity = getParent(self).create(type, {id, ...data, loaded: data && !!Object.keys(data).length})
           self.storage.put(entity)
