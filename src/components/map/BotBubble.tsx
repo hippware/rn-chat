@@ -5,11 +5,10 @@ import Bubble from './Bubble'
 import {observer} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 
-// import {Bot} from 'wocky-client'
+import {IBot} from 'wocky-client'
 
 type Props = {
-  // bot: Bot,
-  bot: any
+  bot: IBot
   scale: number
   onImagePress?: () => void
 }
