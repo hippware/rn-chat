@@ -8,9 +8,10 @@ import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
 import {RText} from '../common'
 import HomeStreamHeader from './HomestreamHeader'
+import {IWocky, IEventBot} from 'wocky-client'
 
 type Props = {
-  wocky?: any
+  wocky?: IWocky
 }
 
 @inject('wocky')
@@ -19,7 +20,7 @@ class EventList extends React.Component<Props> {
   list: any
 
   componentDidMount() {
-    if (this.props.wocky.profile) this.props.wocky.profile.subscribedBots.load()
+    if (this.props.wocky!.profile) this.props.wocky!.profile!.subscribedBots.load()
   }
 
   scrollToTop = () => {
@@ -27,17 +28,17 @@ class EventList extends React.Component<Props> {
       this.list.scrollToIndex({animated: true, index: 0})
   }
 
-  renderItem = ({item}: {item: any}) => <EventCard item={item} />
+  renderItem = ({item}: {item: IEventBot}) => <EventCard item={item} />
 
   keyExtractor = (item: any) => item.id
 
   onUpdate = () => {
     scroll()
-    setTimeout(this.props.wocky.incorporateUpdates, 500)
+    setTimeout(this.props.wocky!.incorporateUpdates, 500)
   }
 
   render() {
-    const {sessionCount, events, connected} = this.props.wocky
+    const {sessionCount, events, connected} = this.props.wocky!
     const backgroundColor = colors.LIGHT_GREY
     const footerImage = require('../../../images/graphicEndHome.png')
     const {finished} = events

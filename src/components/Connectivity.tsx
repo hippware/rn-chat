@@ -40,7 +40,7 @@ class Connectivity extends React.Component<Props> {
       this._handleConnectionInfoChange(reach)
     })
     this.intervalId = setInterval(async () => {
-      const model = this.props.wocky
+      const model = this.props.wocky!
       if (
         this.isActive &&
         !model.connected &&
@@ -51,7 +51,7 @@ class Connectivity extends React.Component<Props> {
       }
     }, 1000)
     this.handler = reaction(
-      () => !this.props.wocky.connected,
+      () => !this.props.wocky!.connected,
       () => (this.lastDisconnected = Date.now())
     )
   }
@@ -64,7 +64,7 @@ class Connectivity extends React.Component<Props> {
   }
 
   tryReconnect = async () => {
-    const model = this.props.wocky
+    const model = this.props.wocky!
     if (!model.connected && !model.connecting && model.username && model.password && model.host) {
       try {
         this.props.analytics.track('reconnect_try', {
@@ -87,7 +87,7 @@ class Connectivity extends React.Component<Props> {
     }
   }
 
-  _handleConnectionInfoChange = connectionInfo => {
+  _handleConnectionInfoChange = (connectionInfo: any) => {
     this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
     this.connectionInfo = connectionInfo
     if (connectionInfo.type === 'unknown') {
@@ -96,12 +96,12 @@ class Connectivity extends React.Component<Props> {
     }
     if (connectionInfo.type !== 'none') {
       setTimeout(() => this.tryReconnect(), 500)
-    } else if (this.props.wocky.connected && !this.props.wocky.connecting) {
-      this.props.wocky.disconnect()
+    } else if (this.props.wocky!.connected && !this.props.wocky!.connecting) {
+      this.props.wocky!.disconnect()
     }
   }
 
-  _handleAppStateChange = async currentAppState => {
+  _handleAppStateChange = async (currentAppState: any) => {
     this.retryDelay = 1000
     this.props.log('CURRENT APPSTATE:', currentAppState, {
       level: log.levels.INFO,
@@ -115,7 +115,7 @@ class Connectivity extends React.Component<Props> {
     }
     if (currentAppState === 'background') {
       this.isActive = false
-      this.props.wocky.disconnect()
+      this.props.wocky!.disconnect()
       this.props.notificationStore.finish()
       this.props.locationStore.finish()
     }

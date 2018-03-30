@@ -10,11 +10,11 @@ import BotBubble from '../map/BotBubble'
 import {k} from '../Global'
 // import Avatar from '../ProfileAvatar'
 import {Avatar} from '../common'
-import {IWocky} from 'wocky-client'
+import {IBot, IWocky} from 'wocky-client'
 
 type Props = {
-  wocky: IWocky
-  bot: any
+  wocky?: IWocky
+  bot: IBot
 }
 
 @inject('wocky')
@@ -28,7 +28,7 @@ class ActiveBot extends React.Component<Props> {
 
   async componentWillMount() {
     // console.log('visitors', this.props.bot.visitors)
-    this.profile = await this.props.wocky.getProfile(this.props.bot.owner.id)
+    this.profile = await this.props.wocky!.getProfile(this.props.bot.owner!.id)
   }
 
   render() {

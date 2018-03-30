@@ -11,9 +11,10 @@ import {IEventBot} from 'wocky-client'
 
 type Props = {
   item: IEventBot
+  log?: any
 }
 
-const eventCardMap = {
+const eventCardMap: {[key: string]: any} = {
   EventBotCreate: EventBotCard,
   EventBotPost: EventBotPostCard,
   EventBotShare: EventBotShareCard,
@@ -33,7 +34,7 @@ class EventCard extends React.Component<Props> {
   render() {
     const row = this.props.item
     let profile
-    let CardClass
+    let CardClass: any
     try {
       if (!row || !isAlive(row)) return null
       CardClass = eventCardMap[getType(row).name]
