@@ -8,6 +8,7 @@
     "curly": false,
     "interface-name": true,
     "jsdoc-format": true,
+    "no-bitwise": false,
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-eval": true,

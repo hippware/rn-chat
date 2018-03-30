@@ -7,10 +7,11 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import ActiveBot from './ActiveBot'
 import WelcomeNote from './WelcomeNote'
+import {IBot, IWocky} from 'wocky-client'
 
 type Props = {
-  wocky?: any
-  locationStore?: any
+  wocky: IWocky
+  locationStore: any
   visible: boolean
 }
 
@@ -40,9 +41,9 @@ class ActiveBotBanner extends React.Component<{wocky?: any; locationStore?: any}
     return null
   }
 
-  keyExtractor = item => item.id
+  keyExtractor = (item: IBot) => item.id
 
-  renderActiveBot = ({item}) => <ActiveBot bot={item} />
+  renderActiveBot = ({item}: {item: IBot}) => <ActiveBot bot={item} />
 }
 
 const HomeStreamHeader = ({visible}: {visible: boolean}) => (

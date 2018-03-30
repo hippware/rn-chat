@@ -5,7 +5,7 @@ import {k} from './Global'
 import {IProfile} from 'wocky-client'
 
 type Props = {
-  profile: Profile
+  profile: IProfile
   tappable: boolean
   size: number
   style?: any
