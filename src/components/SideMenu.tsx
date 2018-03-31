@@ -1,3 +1,4 @@
+// tslint:disable jsx-no-lambda
 import React from 'react'
 import {Actions} from 'react-native-router-flux'
 import {View, Text, Image, StyleSheet, TouchableOpacity, ImageProperties} from 'react-native'
@@ -30,7 +31,7 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
   <TouchableOpacity
     onPress={() => {
       Actions.drawerClose()
-      onPress && onPress()
+      if (onPress) onPress()
     }}
     testID={testID}
   >

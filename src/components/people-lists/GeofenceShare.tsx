@@ -49,7 +49,7 @@ class GeofenceShare extends React.Component<Props> {
       Actions.botDetails({item: this.props.botId, isNew: true})
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.')
-      console.warn(e)
+      // console.warn(e)
     }
   }
 
