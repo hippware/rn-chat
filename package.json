@@ -21,7 +21,7 @@
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
     "testBundle":
       "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
-    "lint": "tslint -c tslint.json 'src/**/*.tsx'",
+    "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js",
