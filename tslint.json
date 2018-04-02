@@ -32,6 +32,8 @@
     "object-literal-sort-keys": false,
     "member-access": false,
     "jsx-boolean-value": false,
-    "no-var-requires": false
+    "no-var-requires": false,
+    // we should probably re-enable this at some point
+    "jsx-no-lambda": false
   }
 }
