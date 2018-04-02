@@ -99,6 +99,11 @@ export const Wocky = types
           return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
             return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
           })
+        },
+        get updatesToAdd(): IEventEntity[] {
+          return self.updates.filter((e: IEventEntity) => {
+            return getType(e).name !== EventDelete.name
+          })
         }
       },
       actions: {
@@ -455,7 +460,7 @@ export const Wocky = types
     }),
     incorporateUpdates: () => {
       for (let i = self.updates.length - 1; i >= 0; i--) {
-        const id = self.updates[i].id
+        const {id} = self.updates[i]
         // delete item
         self.events.remove(id)
         if (getType(self.updates[i]).name !== EventDelete.name) {
