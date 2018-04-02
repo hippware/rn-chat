@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {TouchableOpacity, View, FlatList, StyleSheet, Image} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
@@ -34,7 +34,7 @@ class EventList extends React.Component<Props> {
 
   onUpdate = () => {
     this.scrollToTop()
-    setTimeout(this.props.wocky!.incorporateUpdates, 500)
+    setTimeout(this.props.wocky!.incorporateUpdates, 250)
   }
 
   render() {
@@ -62,11 +62,7 @@ class EventList extends React.Component<Props> {
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
         />
-        <UpdateButton
-          scroll={this.scrollToTop}
-          visible={!isFirstSession}
-          onUpdate={this.onUpdate}
-        />
+        <UpdateButton visible={!isFirstSession} onUpdate={this.onUpdate} />
         <ReviewButton />
       </View>
     )
@@ -75,8 +71,8 @@ class EventList extends React.Component<Props> {
 
 const UpdateButton = inject('wocky')(
   observer(
-    ({scroll, visible, wocky, onUpdate}) =>
-      visible && wocky.updates.length ? (
+    ({visible, wocky, onUpdate}: {visible: boolean; wocky?: IWocky; onUpdate: () => void}) =>
+      visible && wocky!.updatesToAdd.length ? (
         <TouchableOpacity onPress={onUpdate} style={styles.updateButton}>
           <Image source={require('../../../images/up.png')} style={{marginRight: 5 * k}} />
           <RText weight="Medium" color={colors.WHITE} size={12}>
