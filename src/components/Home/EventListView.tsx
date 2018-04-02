@@ -52,7 +52,7 @@ class EventList extends React.Component<Props> {
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
-          ListHeaderComponent={<HomeStreamHeader visible={isFirstSession} />}
+          // ListHeaderComponent={<HomeStreamHeader visible={isFirstSession} />}
           // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
           ListFooterComponent={
             connected
