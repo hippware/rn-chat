@@ -9,7 +9,6 @@ import {colors} from '../constants'
 import {settings} from '../globals'
 import {version} from '../../package.json'
 import {ILocationStore} from '../store/LocationStore'
-import {settings} from '../globals'
 
 import {isAlive} from 'mobx-state-tree'
 
@@ -25,12 +24,22 @@ type MenuItemProps = {
   image?: object
   innerStyle?: any
   children?: any
+  stayOpen?: boolean
 }
 
-const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) => (
+const MenuItem = ({
+  onPress,
+  testID,
+  style,
+  icon,
+  image,
+  innerStyle,
+  children,
+  stayOpen,
+}: MenuItemProps) => (
   <TouchableOpacity
     onPress={() => {
-      Actions.drawerClose()
+      if (!stayOpen) Actions.drawerClose()
       if (onPress) onPress()
     }}
     testID={testID}
@@ -113,6 +122,7 @@ class SideMenu extends React.Component<Props> {
         {settings.isStaging && (
           <MenuItem
             onPress={() => locationStore.toggleBackgroundDebugMode()}
+            stayOpen
             // image={require('../../images/menuFriends.png')}
           >
             <Text style={styles.text}>
