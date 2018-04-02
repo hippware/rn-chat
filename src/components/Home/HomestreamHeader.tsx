@@ -49,7 +49,7 @@ class ActiveBotBanner extends React.Component<{wocky?: any; locationStore?: any}
 const HomeStreamHeader = ({visible}: {visible: boolean}) => (
   <View>
     <WelcomeNote visible={visible} />
-    <ActiveBotBanner />
+    {/* <ActiveBotBanner /> */}
   </View>
 )
 
