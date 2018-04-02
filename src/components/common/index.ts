@@ -1,5 +1,3 @@
-// @flow
-
 import RText from './RText'
 import CardText from './CardText'
 import Avatar from './Avatar'
@@ -9,6 +7,7 @@ import TouchableOpTrack from './TouchableOpTrack'
 import Spinner from './Spinner'
 import ProgressiveImage from './ProgressiveImage'
 import Separator from './Separator'
+import BottomButton from './BottomButton'
 
 export {
   RText,
@@ -20,4 +19,5 @@ export {
   Spinner,
   ProgressiveImage,
   Separator,
+  BottomButton,
 }

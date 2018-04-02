@@ -33,7 +33,7 @@ class EventList extends React.Component<Props> {
   keyExtractor = (item: any) => item.id
 
   onUpdate = () => {
-    scroll()
+    this.scrollToTop()
     setTimeout(this.props.wocky!.incorporateUpdates, 500)
   }
 

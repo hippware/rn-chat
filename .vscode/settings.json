@@ -1,8 +1,6 @@
 {
   "javascript.validate.enable": false,
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
+  "editor.formatOnSave": true,
   "workbench.startupEditor": "newUntitledFile",
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
