@@ -17,8 +17,8 @@ const FirebaseStore = types
     const {auth, logger, analytics} = getEnv(self)
     let wocky: IWocky
     // tslint:disable-next-line
-    let unsubscribe
-    let confirmResult
+    let unsubscribe: any
+    let confirmResult: any
 
     function afterAttach() {
       unsubscribe = auth.onAuthStateChanged(processFirebaseAuthChange)
@@ -26,7 +26,7 @@ const FirebaseStore = types
     }
 
     // NOTE: this is not a MST action
-    async function processFirebaseAuthChange(user) {
+    async function processFirebaseAuthChange(user: any) {
       logger.log('FIREBASESTORE: AUTH STATE CHANGED')
       if (user) {
         try {
@@ -67,12 +67,7 @@ const FirebaseStore = types
         analytics.track('error_wocky_logout', {error: err})
         logger.warn('wocky logout error', err)
       }
-      try {
-        self.reset()
-      } catch (e) {
-        console.error(e)
-      }
-      console.log('RETURN TRUE ')
+      self.reset()
       return true
     })
 
@@ -83,7 +78,7 @@ const FirebaseStore = types
       confirmResult = null
     }
 
-    const verifyPhone = flow(function*({phone}) {
+    const verifyPhone = flow(function*({phone}: any) {
       self.phone = phone
       try {
         self.errorMessage = null
@@ -108,7 +103,7 @@ const FirebaseStore = types
       }
     })
 
-    const confirmCode = flow(function*({code, resource}) {
+    const confirmCode = flow(function*({code, resource}: any) {
       self.errorMessage = null
       self.buttonText = 'Verifying...'
       self.resource = resource

@@ -1,8 +1,8 @@
 import React from 'react'
-import {View, Animated, Image} from 'react-native'
+import {View, Animated} from 'react-native'
 import Triangle from './Triangle'
 import {width as w} from '../Global'
-import {RText, Spinner} from '../common'
+import {RText} from '../common'
 import {colors} from '../../constants'
 import {observer} from 'mobx-react/native'
 

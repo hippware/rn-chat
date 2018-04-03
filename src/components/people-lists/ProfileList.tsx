@@ -10,7 +10,7 @@ import {observer} from 'mobx-react/native'
 import {RText, Separator} from '../common'
 
 type Props = {
-  selection: SelectableProfileList
+  selection: any // TODO change to ISelectableProfileList
   onSelect?: () => void
   renderItem?: () => React.ReactElement<any>
 }
@@ -21,7 +21,7 @@ class ProfileList extends React.Component<Props> {
 
   renderI = ({item}: {item: any}) => <SelectableProfileItem row={item} {...this.props} />
 
-  separator = (info: any) => <Separator />
+  separator = () => <Separator />
 
   render() {
     const {selection, renderItem} = this.props

@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {View, FlatList} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
 import {k} from '../Global'

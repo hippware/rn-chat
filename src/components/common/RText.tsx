@@ -7,6 +7,8 @@ type Props = {
   weight?: 'Regular' | 'Bold' | 'Light' | 'Medium' | 'Italic'
   style?: any
   children?: any
+  numberOfLines?: number
+  ellipsizeMode?: any
 }
 
 const RText = (props: Props) => {

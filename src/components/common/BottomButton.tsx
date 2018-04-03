@@ -1,21 +1,8 @@
 import React from 'react'
-import {
-  Alert,
-  Keyboard,
-  TouchableOpacity,
-  Image,
-  StyleSheetProperties,
-  Animated,
-} from 'react-native'
-import {observer, inject, Provider} from 'mobx-react/native'
+import {Keyboard, Animated} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
 import {observable, when} from 'mobx'
-import {isAlive} from 'mobx-state-tree'
-import {Actions} from 'react-native-router-flux'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {k} from '../Global'
-import {colors} from '../../constants'
 import Button from '../Button'
-import {settings} from '../../globals'
 
 type Props = {
   style?: any
@@ -88,7 +75,7 @@ class BottomButton extends React.Component<Props, State> {
     )
   }
 
-  private _keyboardWillShow = ({endCoordinates, duration}) => {
+  private _keyboardWillShow = ({endCoordinates, duration}: any) => {
     when(
       () => !this.animating,
       () => {
@@ -101,7 +88,7 @@ class BottomButton extends React.Component<Props, State> {
     )
   }
 
-  private _keyboardWillHide = ({duration}) => {
+  private _keyboardWillHide = ({duration}: any) => {
     when(
       () => !this.animating,
       () => {
@@ -114,7 +101,7 @@ class BottomButton extends React.Component<Props, State> {
     )
   }
 
-  private animationCb = status => {
+  private animationCb = () => {
     this.animating = false
   }
 }
