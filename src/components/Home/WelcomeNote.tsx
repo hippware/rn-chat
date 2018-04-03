@@ -1,24 +1,23 @@
-import React, {Component} from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import React from 'react'
+import {View, StyleSheet, Text, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import Swipeable from 'react-native-swipeable'
 import LinearGradient from 'react-native-linear-gradient'
-
+import {IWocky} from 'wocky-client'
 import {k} from '../Global'
-import ActiveBot from './ActiveBot'
 
 const leftContent = <Text />
 
 type Props = {
-  wocky?: any
+  wocky?: IWocky
   locationStore?: any
   visible: boolean
 }
 
 @inject('wocky')
 @observer
-class WelcomeNote extends React.Component<{visible: boolean; wocky?: any}> {
-  onRelease = () => this.props.wocky.setSessionCount(3)
+class WelcomeNote extends React.Component<Props> {
+  onRelease = () => this.props.wocky!.setSessionCount(3)
   render() {
     return this.props.visible ? (
       <Swipeable

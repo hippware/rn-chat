@@ -1,13 +1,10 @@
-import React, {Component} from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import React from 'react'
+import {View} from 'react-native'
 
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
-import Swipeable from 'react-native-swipeable'
-import LinearGradient from 'react-native-linear-gradient'
 
 import BotBubble from '../map/BotBubble'
-import {k} from '../Global'
 // import Avatar from '../ProfileAvatar'
 import {Avatar} from '../common'
 import {IBot, IWocky} from 'wocky-client'

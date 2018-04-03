@@ -1,12 +1,11 @@
 import React from 'react'
-import {Alert, Keyboard, TouchableOpacity, Image} from 'react-native'
+import {Alert, TouchableOpacity, Image} from 'react-native'
 import {observer, inject, Provider} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {k} from '../Global'
-import {colors} from '../../constants'
 import Screen from '../Screen'
 import BottomButton from '../common/BottomButton'
 import {Spinner} from '../common'
@@ -14,17 +13,23 @@ import EditControls from './EditControls'
 import ComposeCard from './ComposeCard'
 import BotComposeMap from './BotComposeMap'
 import {settings} from '../../globals'
+import {IWocky, IBot} from 'wocky-client'
 
 type Props = {
   botId: string
   edit?: boolean
   titleBlurred?: boolean
+  wocky?: IWocky
+  notificationStore?: any
+  locationStore?: any
+  log?: any
+  analytics?: any
 }
 
 @inject('wocky', 'notificationStore', 'analytics', 'log')
 @observer
 class BotCompose extends React.Component<Props> {
-  static leftButton = ({edit}) => {
+  static leftButton = ({edit}: Props) => {
     return (
       <TouchableOpacity
         // tslint:disable-next-line
@@ -58,14 +63,14 @@ class BotCompose extends React.Component<Props> {
   botTitle: any
   @observable isLoading: boolean = false
   controls: any
-  @observable bot: Bot
+  @observable bot?: IBot
 
   componentWillMount() {
-    this.bot = this.props.wocky.getBot({id: this.props.botId})
+    this.bot = this.props.wocky!.getBot({id: this.props.botId})
   }
 
   save = async (): Promise<void> => {
-    const {bot} = this
+    const bot = this.bot!
     if (!bot.title) {
       // TODO: slide-down notification
       Alert.alert('Title cannot be empty')
@@ -86,10 +91,10 @@ class BotCompose extends React.Component<Props> {
       } else {
         Actions.pop()
       }
-      this.props.analytics.track('botcreate_complete', this.bot.toJSON())
+      this.props.analytics.track('botcreate_complete', bot.toJSON())
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.')
-      this.props.analytics.track('botcreate_fail', {bot: this.bot.toJSON(), error: e})
+      this.props.analytics.track('botcreate_fail', {bot: bot.toJSON(), error: e})
       this.props.log('BotCompose save problem', e)
     } finally {
       this.isLoading = false
@@ -97,7 +102,7 @@ class BotCompose extends React.Component<Props> {
   }
 
   scrollToNote = () => {
-    if (this.bot.description === '') this.controls.focus()
+    if (this.bot!.description === '') this.controls.focus()
   }
 
   render() {
@@ -122,14 +127,14 @@ class BotCompose extends React.Component<Props> {
             <EditControls ref={this.setEditRef} />
           </KeyboardAwareScrollView>
           <BottomButton isDisabled={!isEnabled} onPress={this.save}>
-            {bot.isLoading ? <Spinner color="white" size={22} /> : buttonText}
+            {this.isLoading ? <Spinner color="white" size={22} /> : buttonText}
           </BottomButton>
         </Screen>
       </Provider>
     )
   }
 
-  private setEditRef = r => (this.controls = r)
+  private setEditRef = (r: any) => (this.controls = r)
 }
 
 export default BotCompose

@@ -1,7 +1,7 @@
 // tslint:disable jsx-no-lambda
 import React from 'react'
 import {Actions} from 'react-native-router-flux'
-import {View, Text, Image, StyleSheet, TouchableOpacity, ImageProperties} from 'react-native'
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import {k} from './Global'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'

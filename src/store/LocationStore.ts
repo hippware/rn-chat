@@ -26,11 +26,11 @@ const LocationStore = types
     backgroundDebugEnabled: false,
   }))
   .views(self => ({
-    distance: (lat1, lon1, lat2, lon2) => {
-      var R = 6371000 // Radius of the earth in m
-      var dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
-      var dLon = (lon2 - lon1) * Math.PI / 180
-      var a =
+    distance: (lat1: number, lon1: number, lat2: number, lon2: number) => {
+      const R = 6371000 // Radius of the earth in m
+      const dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
+      const dLon = (lon2 - lon1) * Math.PI / 180
+      const a =
         0.5 -
         Math.cos(dLat) / 2 +
         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2
@@ -40,7 +40,7 @@ const LocationStore = types
       return result
     },
 
-    distanceToString: distance => {
+    distanceToString: (distance: number) => {
       const limit = self.system === METRIC ? 1000 : 5280
       // if (distance>limit){
       return self.system === METRIC
@@ -240,7 +240,7 @@ const LocationStore = types
       // this.share(this.location);
     }
 
-    function positionError(error) {
+    function positionError(error: any) {
       if (error.code === 1) {
         // user denied location permissions
         self.enabled = false

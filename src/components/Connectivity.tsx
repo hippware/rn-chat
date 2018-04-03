@@ -1,12 +1,12 @@
 import React from 'react'
 import {AppState, NetInfo} from 'react-native'
-import {reaction, observable, when} from 'mobx'
+import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import * as log from '../utils/log'
 
 // TODO: need to export declaration file to make this work as expected?
-import {Wocky, IWocky} from 'wocky-client'
+import {IWocky} from 'wocky-client'
 
 type Props = {
   wocky?: IWocky

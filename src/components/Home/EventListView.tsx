@@ -1,8 +1,9 @@
 import React from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native'
+import {TouchableOpacity, View, FlatList, StyleSheet, Image} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
@@ -18,6 +19,7 @@ type Props = {
 @observer
 class EventList extends React.Component<Props> {
   list: any
+  @observable isRefreshing: boolean = false
 
   componentDidMount() {
     if (this.props.wocky!.profile) this.props.wocky!.profile!.subscribedBots.load()
@@ -33,8 +35,16 @@ class EventList extends React.Component<Props> {
   keyExtractor = (item: any) => item.id
 
   onUpdate = () => {
+    if (!this.props.wocky!.updatesToAdd.length || this.isRefreshing) return
+    this.isRefreshing = true
     this.scrollToTop()
-    setTimeout(this.props.wocky!.incorporateUpdates, 500)
+    setTimeout(() => {
+      try {
+        this.props.wocky!.incorporateUpdates()
+      } finally {
+        this.isRefreshing = false
+      }
+    }, 500)
   }
 
   render() {
@@ -47,13 +57,14 @@ class EventList extends React.Component<Props> {
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
+          refreshing={this.isRefreshing}
+          onRefresh={this.onUpdate}
           data={events.length > 0 ? events.list : null}
           ref={r => (this.list = r)}
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
           ListHeaderComponent={<HomeStreamHeader visible={isFirstSession} />}
-          // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
           ListFooterComponent={
             connected
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
@@ -62,11 +73,7 @@ class EventList extends React.Component<Props> {
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
         />
-        <UpdateButton
-          scroll={this.scrollToTop}
-          visible={!isFirstSession}
-          onUpdate={this.onUpdate}
-        />
+        <UpdateButton visible={!isFirstSession} onUpdate={this.onUpdate} />
         <ReviewButton />
       </View>
     )
@@ -75,8 +82,8 @@ class EventList extends React.Component<Props> {
 
 const UpdateButton = inject('wocky')(
   observer(
-    ({scroll, visible, wocky, onUpdate}) =>
-      visible && wocky.updates.length ? (
+    ({visible, wocky, onUpdate}: {visible: boolean; wocky?: IWocky; onUpdate: () => void}) =>
+      visible && wocky!.updatesToAdd.length ? (
         <TouchableOpacity onPress={onUpdate} style={styles.updateButton}>
           <Image source={require('../../../images/up.png')} style={{marginRight: 5 * k}} />
           <RText weight="Medium" color={colors.WHITE} size={12}>

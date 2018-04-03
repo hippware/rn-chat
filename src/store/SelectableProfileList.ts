@@ -1,22 +1,24 @@
 // @flow
 
 import {types} from 'mobx-state-tree'
-import {Profile} from 'wocky-client'
+import {Profile, IProfile} from 'wocky-client'
 
 const SelectableProfile = types.model({
   profile: types.reference(Profile),
   selected: false,
 })
 
+type ISelectableProfile = typeof SelectableProfile.Type
+
 const SelectableProfileList = types
   .model('SelectableProfileList', {
     list: types.optional(types.array(SelectableProfile), []),
     filter: '',
     multiSelect: true,
-    selection: types.optional(types.array(SelectableProfile), []),
+    selection: types.optional(types.map(types.boolean), {}),
   })
   .views(self => ({
-    get selected(): Profile[] {
+    get selected(): IProfile[] {
       return self.list.filter(el => el.selected).map(el => el.profile)
     },
 
@@ -24,12 +26,19 @@ const SelectableProfileList = types
       return self.list.filter(el => el.selected).length === self.list.length
     },
 
-    get filteredList(): SelectableProfile[] {
+    get filteredList(): ISelectableProfile[] {
       return self.list.filter(el => _filterFn(el, self.filter))
     },
   }))
+  .actions(self => ({
+    deselectAll: () => {
+      self.list.forEach(el => {
+        el.selected = false
+      })
+    },
+  }))
   .actions(self => {
-    function setList(list: Array<any>) {
+    function setList(list: [any]) {
       self.list.replace(list)
     }
 
@@ -37,22 +46,16 @@ const SelectableProfileList = types
       self.filter = text
     }
 
-    function replace(list: Profile[]): void {
-      self.list.forEach(p => (self.selection[p.profile.id] = p.selected))
+    function replace(list: IProfile[]): void {
+      self.list.forEach(p => self.selection.set(p.profile.id, p.selected))
       self.list.replace(
-        list.map(el => SelectableProfile.create({profile: el, selected: self.selection[el.id]}))
+        list.map(el => SelectableProfile.create({profile: el, selected: self.selection.get(el.id)}))
       )
     }
 
     function clear(): void {
       self.list.splice(0)
-      // self.selection = {};
-    }
-
-    function deselectAll() {
-      self.list.forEach(el => {
-        el.selected = false
-      })
+      self.selection.clear()
     }
 
     function selectAll() {
@@ -61,15 +64,17 @@ const SelectableProfileList = types
       })
     }
 
-    function switchRowSelected(row: SelectableProfile) {
-      !self.multiSelect && self.deselectAll()
+    function switchRowSelected(row: ISelectableProfile) {
+      if (!self.multiSelect) {
+        self.deselectAll()
+      }
       row.selected = !row.selected
     }
 
-    return {selectAll, deselectAll, switchRowSelected, replace, clear, setFilter, setList}
+    return {selectAll, switchRowSelected, replace, clear, setFilter, setList}
   })
 
-function _filterFn(el, filter) {
+function _filterFn(el: ISelectableProfile, filter: string) {
   const {isOwn, firstName, lastName, handle} = el.profile
   return (
     !isOwn &&

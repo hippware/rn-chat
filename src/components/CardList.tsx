@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import {StyleSheet, FlatList, FlatListProperties} from 'react-native'
+import {StyleSheet} from 'react-native'
 import {
   KeyboardAwareFlatList,
   KeyboardAwareFlatListProps,

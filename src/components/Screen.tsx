@@ -1,6 +1,5 @@
 import React from 'react'
 import {View} from 'react-native'
-import {observer} from 'mobx-react/native'
 import BackgroundGradient from './BackgroundGradient'
 
 const Screen = ({style, children}: {style?: any; children?: any}) => (
