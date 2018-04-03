@@ -80,7 +80,9 @@ export const Wocky = types
         get snapshot() {
           const data = {...self._snapshot}
           if (self.events.length > 20) {
-            data.events = {result: data.events.result.slice(0, 20)}
+            const result = data.events.result.slice(0, 20)
+            const cursor = result[result.length - 1].id
+            data.events = {result, cursor}
           }
           delete data.geoBots
           delete data.files
@@ -413,8 +415,10 @@ export const Wocky = types
       })
     }),
     _loadHomestream: flow(function*(lastId: any, max: number = 3) {
+      // console.log('wocky loadHomestream', lastId, max)
       yield waitFor(() => self.connected)
       const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
+      // console.log('wocky loadHomestream result', list, count)
       bots.forEach(self.getBot)
       self.version = version
       return {list: list.map((data: any) => self.create(EventEntity, data)), count}

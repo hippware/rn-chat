@@ -1,5 +1,5 @@
 export interface IPagingList {
-  list: [any]
+  list: any[]
   cursor?: string
   count: number
 }
