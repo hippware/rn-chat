@@ -3,6 +3,7 @@ import {TouchableOpacity, View, FlatList, StyleSheet, Image} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
@@ -18,6 +19,7 @@ type Props = {
 @observer
 class EventList extends React.Component<Props> {
   list: any
+  @observable isRefreshing: boolean = false
 
   componentDidMount() {
     if (this.props.wocky!.profile) this.props.wocky!.profile!.subscribedBots.load()
@@ -33,8 +35,16 @@ class EventList extends React.Component<Props> {
   keyExtractor = (item: any) => item.id
 
   onUpdate = () => {
+    if (!this.props.wocky!.updatesToAdd.length || this.isRefreshing) return
+    this.isRefreshing = true
     this.scrollToTop()
-    setTimeout(this.props.wocky!.incorporateUpdates, 250)
+    setTimeout(() => {
+      try {
+        this.props.wocky!.incorporateUpdates()
+      } finally {
+        this.isRefreshing = false
+      }
+    }, 500)
   }
 
   render() {
@@ -47,13 +57,14 @@ class EventList extends React.Component<Props> {
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
+          refreshing={this.isRefreshing}
+          onRefresh={this.onUpdate}
           data={events.length > 0 ? events.list : null}
           ref={r => (this.list = r)}
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
           ListHeaderComponent={<HomeStreamHeader visible={isFirstSession} />}
-          // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
           ListFooterComponent={
             connected
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
