@@ -2,6 +2,7 @@ import React from 'react'
 import {Alert, TouchableOpacity, Image} from 'react-native'
 import {observer, inject, Provider} from 'mobx-react/native'
 import {observable} from 'mobx'
+import {getSnapshot} from 'mobx-state-tree'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -91,10 +92,10 @@ class BotCompose extends React.Component<Props> {
       } else {
         Actions.pop()
       }
-      this.props.analytics.track('botcreate_complete', bot.toJSON())
+      this.props.analytics.track('botcreate_complete', getSnapshot(bot))
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.')
-      this.props.analytics.track('botcreate_fail', {bot: bot.toJSON(), error: e})
+      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(bot), error: e})
       this.props.log('BotCompose save problem', e)
     } finally {
       this.isLoading = false

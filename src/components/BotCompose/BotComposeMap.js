@@ -19,10 +19,7 @@ type Props = {
 @inject('bot', 'notificationStore')
 @observer
 class BotComposeMap extends React.Component<Props> {
-  // HACK to solve the bug with MapView.Marker's onSelect that works only once, so we need to change the key every selection
-  @observable selected = false;
   onCoverPhoto = (): void => {
-    this.selected = !this.selected;
     showImagePicker('Image Picker', async (source, response) => {
       try {
         await this.props.bot.upload({file: source, ...response});
@@ -53,7 +50,7 @@ class BotComposeMap extends React.Component<Props> {
           zoomEnabled={false}
           onMapPress={() => Actions.botAddress({botId: bot.id})}
           scale={0.5}
-          marker={<BotMarker id={bot.id + this.selected} onImagePress={this.onCoverPhoto} image={image} showLoader={showLoader} scale={0.5} bot={bot} />}
+          marker={<BotMarker id={bot.id} onImagePress={this.onCoverPhoto} image={image} showLoader={showLoader} scale={0.5} bot={bot} />}
         />
       </View>
     );

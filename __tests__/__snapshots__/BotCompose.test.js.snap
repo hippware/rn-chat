@@ -987,7 +987,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "visitorsSize": 0,
                     }
                   }
-                  id="4321false"
+                  id="4321"
                   image={
                     Object {
                       "testUri": "../../../images/addBotPhoto.png",
@@ -999,10 +999,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                 />
               }
               onMapPress={[Function]}
-              onMarkerSelect={[Function]}
+              onMarkerPress={[Function]}
               onPress={[Function]}
               onRegionChangeComplete={[Function]}
               pitchEnabled={false}
+              provider="google"
               rotateEnabled={false}
               scale={0.5}
               scrollEnabled={false}
@@ -1182,10 +1183,10 @@ exports[`BotCompose renders with owned bot 1`] = `
               zoomEnabled={false}
             >
               <Marker
-                centerOffset={
+                anchor={
                   Object {
-                    "x": 0,
-                    "y": -106,
+                    "x": 0.5,
+                    "y": 1,
                   }
                 }
                 coordinate={
@@ -1195,7 +1196,13 @@ exports[`BotCompose renders with owned bot 1`] = `
                   }
                 }
                 identifier="4321"
-                onSelect={[Function]}
+                onPress={[Function]}
+                style={
+                  Object {
+                    "borderWidth": 2,
+                    "top": -2000,
+                  }
+                }
               >
                 <View
                   style={

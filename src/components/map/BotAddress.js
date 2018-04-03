@@ -68,6 +68,7 @@ class BotAddress extends React.Component<Props> {
       <View style={{flex: 1}}>
         {this.mounted && (
           <MapView
+            provider={'google'}
             ref={(map) => {
               this._map = map;
             }}
@@ -90,7 +91,7 @@ class BotAddress extends React.Component<Props> {
               </MapView.Marker>
             )}
             {bot.geofence && coords && <Geofence coords={{...coords}} key={`${coords.latitude}-${coords.longitude}`} />}
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View pointerEvents="none" style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Image source={require('../../../images/newBotMarker.png')} />
             </View>
           </MapView>

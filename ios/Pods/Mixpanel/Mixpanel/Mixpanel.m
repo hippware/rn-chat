@@ -28,14 +28,17 @@
 #error The Mixpanel library must be compiled with ARC enabled
 #endif
 
-#define VERSION @"3.2.3"
+#define VERSION @"3.2.9"
+
+NSString *const MPNotificationTypeMini = @"mini";
+NSString *const MPNotificationTypeTakeover = @"takeover";
 
 @implementation Mixpanel
 
 static NSMutableDictionary *instances;
 static NSString *defaultProjectToken;
 
-+ (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken launchOptions:(NSDictionary *)launchOptions {
++ (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken launchOptions:(NSDictionary *)launchOptions trackCrashes:(BOOL)trackCrashes automaticPushTracking:(BOOL)automaticPushTracking {
     if (instances[apiToken]) {
         return instances[apiToken];
     }
@@ -45,8 +48,12 @@ static NSString *defaultProjectToken;
 #else
     const NSUInteger flushInterval = 60;
 #endif
+    
+    return [[self alloc] initWithToken:apiToken launchOptions:launchOptions flushInterval:flushInterval trackCrashes:trackCrashes automaticPushTracking:automaticPushTracking];
+}
 
-    return [[self alloc] initWithToken:apiToken launchOptions:launchOptions andFlushInterval:flushInterval];
++ (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken launchOptions:(NSDictionary *)launchOptions {
+    return [Mixpanel sharedInstanceWithToken:apiToken launchOptions:launchOptions trackCrashes:YES automaticPushTracking:YES];
 }
 
 + (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken {
@@ -86,7 +93,8 @@ static NSString *defaultProjectToken;
 - (instancetype)initWithToken:(NSString *)apiToken
                 launchOptions:(NSDictionary *)launchOptions
                 flushInterval:(NSUInteger)flushInterval
-                 trackCrashes:(BOOL)trackCrashes {
+                 trackCrashes:(BOOL)trackCrashes
+        automaticPushTracking:(BOOL)automaticPushTracking {
     if (apiToken.length == 0) {
         if (apiToken == nil) {
             apiToken = @"";
@@ -138,7 +146,7 @@ static NSString *defaultProjectToken;
 #else
         self.enableVisualABTestAndCodeless = YES;
 #endif
-
+        self.sessionMetadata = [[SessionMetadata alloc] init];
         self.network = [[MPNetwork alloc] initWithServerURL:[NSURL URLWithString:self.serverURL] mixpanel:self];
         self.people = [[MixpanelPeople alloc] initWithMixpanel:self];
         [self setUpListeners];
@@ -149,13 +157,18 @@ static NSString *defaultProjectToken;
             self.automaticEvents.delegate = self;
             [self.automaticEvents initializeEvents:self.people];
 #endif
+#if !MIXPANEL_NO_CONNECT_INTEGRATION_SUPPORT
+        self.connectIntegrations = [[MPConnectIntegrations alloc] initWithMixpanel:self];
+#endif
 #if !MIXPANEL_NO_NOTIFICATION_AB_TEST_SUPPORT
             [self executeCachedVariants];
             [self executeCachedEventBindings];
-            [self setupAutomaticPushTracking];
-            NSDictionary *remoteNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-            if (remoteNotification) {
-                [self trackPushNotification:remoteNotification event:@"$app_open"];
+            if (automaticPushTracking) {
+                [self setupAutomaticPushTracking];
+                NSDictionary *remoteNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+                if (remoteNotification) {
+                    [self trackPushNotification:remoteNotification event:@"$app_open"];
+                }
             }
 #endif
         }
@@ -171,6 +184,17 @@ static NSString *defaultProjectToken;
                  launchOptions:launchOptions
                  flushInterval:flushInterval
                   trackCrashes:YES];
+}
+
+- (instancetype)initWithToken:(NSString *)apiToken
+                launchOptions:(NSDictionary *)launchOptions
+                flushInterval:(NSUInteger)flushInterval
+                 trackCrashes:(BOOL)trackCrashes {
+    return [self initWithToken:apiToken
+                 launchOptions:launchOptions
+                 flushInterval:flushInterval
+                  trackCrashes:trackCrashes
+         automaticPushTracking:YES];
 }
 
 - (instancetype)initWithToken:(NSString *)apiToken andFlushInterval:(NSUInteger)flushInterval {
@@ -477,7 +501,9 @@ static NSString *defaultProjectToken;
         }
 #endif
 
-        NSDictionary *e = @{ @"event": event, @"properties": [NSDictionary dictionaryWithDictionary:p]} ;
+        NSMutableDictionary *e = [[NSMutableDictionary alloc] initWithDictionary:@{ @"event": event,
+                                                                                    @"properties": [NSDictionary dictionaryWithDictionary:p]}];
+        [e addEntriesFromDictionary:[self.sessionMetadata toDictionaryForEvent:YES]];
         MPLogInfo(@"%@ queueing event: %@", self, e);
         @synchronized (self) {
             [self.eventsQueue addObject:e];
@@ -692,6 +718,9 @@ static NSString *defaultProjectToken;
             self.decideResponseCached = NO;
             self.variants = [NSSet set];
             self.eventBindings = [NSSet set];
+#if !MIXPANEL_NO_CONNECT_INTEGRATION_SUPPORT
+            [self.connectIntegrations reset];
+#endif
 #if !MIXPANEL_NO_NOTIFICATION_AB_TEST_SUPPORT
             if (![Mixpanel isAppExtension]) {
                 [[MPTweakStore sharedInstance] reset];
@@ -1311,6 +1340,9 @@ static void MixpanelReachabilityCallback(SCNetworkReachabilityRef target, SCNetw
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
     MPLogInfo(@"%@ application did become active", self);
+    dispatch_async(self.serialQueue, ^{
+        [self.sessionMetadata reset];
+    });
     [self startFlushTimer];
 
 #if !MIXPANEL_NO_NOTIFICATION_AB_TEST_SUPPORT
@@ -1588,6 +1620,13 @@ static void MixpanelReachabilityCallback(SCNetworkReachabilityRef target, SCNetw
                         [self archiveProperties];
                     }
                 }
+
+#if !MIXPANEL_NO_CONNECT_INTEGRATION_SUPPORT
+                id integrations = object[@"integrations"];
+                if ([integrations isKindOfClass:[NSArray class]]) {
+                    [self.connectIntegrations setupIntegrations:integrations];
+                }
+#endif
 
                 // Variants that are already running (may or may not have been marked as finished).
                 NSSet *runningVariants = [NSSet setWithSet:[self.variants objectsPassingTest:^BOOL(MPVariant *var, BOOL *stop) { return var.running; }]];
@@ -1980,7 +2019,7 @@ static void MixpanelReachabilityCallback(SCNetworkReachabilityRef target, SCNetw
         [shownVariants addEntriesFromDictionary:shownVariant];
         [superProperties addEntriesFromDictionary:@{@"$experiments": [shownVariants copy]}];
         self.superProperties = [superProperties copy];
-#if !MIXPANEL_NO_UI_APPLICATION_ACCESS
+#if !MIXPANEL_NO_UIAPPLICATION_ACCESS
         if (![Mixpanel isAppExtension]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([Mixpanel sharedUIApplication].applicationState == UIApplicationStateBackground) {

@@ -11,7 +11,7 @@ const FirebaseStore = types
   .volatile(() => ({
     buttonText: 'Verify',
     registered: false,
-    errorMessage: types.maybe(types.string),
+    errorMessage: '', // to avoid strange typescript errors when set it to string or null
   }))
   .actions(self => {
     const {auth, logger, analytics} = getEnv(self)
@@ -73,7 +73,7 @@ const FirebaseStore = types
 
     function reset() {
       self.registered = false
-      self.errorMessage = null
+      self.errorMessage = ''
       self.buttonText = 'Verify'
       confirmResult = null
     }
@@ -81,7 +81,7 @@ const FirebaseStore = types
     const verifyPhone = flow(function*({phone}: any) {
       self.phone = phone
       try {
-        self.errorMessage = null
+        self.errorMessage = ''
         analytics.track('sms_confirmation_try')
         confirmResult = yield auth.signInWithPhoneNumber(phone)
         analytics.track('sms_confirmation_success')
@@ -104,7 +104,7 @@ const FirebaseStore = types
     })
 
     const confirmCode = flow(function*({code, resource}: any) {
-      self.errorMessage = null
+      self.errorMessage = ''
       self.buttonText = 'Verifying...'
       self.resource = resource
       try {
@@ -140,7 +140,7 @@ const FirebaseStore = types
     function register(): void {
       self.buttonText = 'Registering...'
       // TODO: set a timeout on firebase register
-      when(() => self.token, registerWithToken)
+      when(() => !!self.token, registerWithToken)
     }
 
     const registerWithToken = flow(function*() {
@@ -156,7 +156,7 @@ const FirebaseStore = types
         analytics.track('error_firebase_register', err)
       } finally {
         self.buttonText = 'Verify'
-        self.errorMessage = null
+        self.errorMessage = ''
       }
     })
 

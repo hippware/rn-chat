@@ -120,7 +120,7 @@ export default class Map extends Component<Props> {
       this.goToCoords(newProps);
     } else if (newProps.scale && newProps.scale !== this.props.scale && this.props.bot && this.props.bot.location) {
       // center bot for scale > 0
-      this.goToCoords({location: this.props.bot.location});
+      setTimeout(() => this._map && this._map.animateToCoordinate({...this.props.bot.location}))
     }
   }
 
@@ -269,9 +269,10 @@ export default class Map extends Component<Props> {
     return (
       <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -180 : 0, right: 0, left: 0}}>
         <MapView
+          provider={'google'}
           ref={this.setMapRef}
           onPress={this.onPress}
-          onMarkerSelect={this.onMarkerSelect}
+          onMarkerPress={this.onMarkerSelect}
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}

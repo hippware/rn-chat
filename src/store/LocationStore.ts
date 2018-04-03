@@ -1,7 +1,7 @@
 // @flow
 
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, autorun, reaction} from 'mobx'
+import {reaction} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 
@@ -16,7 +16,7 @@ const IMPERIAL = 'IMPERIAL'
 
 const LocationStore = types
   .model('LocationStore', {})
-  .volatile(self => ({
+  .volatile(() => ({
     // TODO: should we persist location?
     location: types.maybe(Location),
     enabled: true,
@@ -39,9 +39,8 @@ const LocationStore = types
       const result = self.system === METRIC ? res : res * 3.2808399
       return result
     },
-
     distanceToString: (distance: number) => {
-      const limit = self.system === METRIC ? 1000 : 5280
+      // const limit = self.system === METRIC ? 1000 : 5280
       // if (distance>limit){
       return self.system === METRIC
         ? `${Math.round(distance / 100) / 10} km`
@@ -50,7 +49,8 @@ const LocationStore = types
       //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
       // }
     },
-
+  }))
+  .views(self => ({
     distanceFromBot: (botLoc: {latitude: number; longitude: number}) => {
       const {location, distanceToString, distance} = self
       if (location && botLoc) {
@@ -63,7 +63,9 @@ const LocationStore = types
   }))
   .actions(self => {
     const {logger, geolocation, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
-    let wocky, watch, handler
+    let wocky
+    let watch
+    let handler
 
     function afterAttach() {
       ;({wocky} = getParent(self))
@@ -109,7 +111,7 @@ const LocationStore = types
             backgroundFetch.finish()
           },
           error => {
-            logger.log('[js] RNBackgroundFetch failed to start')
+            logger.log('[js] RNBackgroundFetch failed to start ' + error)
           }
         )
 
@@ -199,7 +201,6 @@ const LocationStore = types
     }
 
     function stopBackground() {
-      const {backgroundGeolocation} = getEnv(self)
       if (typeof backgroundGeolocation !== 'undefined') {
         backgroundGeolocation.stop()
       }
@@ -214,7 +215,7 @@ const LocationStore = types
       self.system = type
     }
 
-    const getCurrentPosition = flow(function* getCurrentPosition() {
+    const getCurrentPosition = flow(function*() {
       if (self.loading) return self.location
       self.loading = true
       yield new Promise((resolve, reject) => {

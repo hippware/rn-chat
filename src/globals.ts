@@ -1,5 +1,4 @@
 import {log} from './constants'
-import {observable} from 'mobx'
 
 export const DEV_HOST = 'testing.dev.tinyrobot.com'
 export const PROD_HOST = 'us1.prod.tinyrobot.com'

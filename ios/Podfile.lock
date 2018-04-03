@@ -7,11 +7,11 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
-  - CocoaLumberjack (3.3.0):
-    - CocoaLumberjack/Default (= 3.3.0)
-    - CocoaLumberjack/Extensions (= 3.3.0)
-  - CocoaLumberjack/Default (3.3.0)
-  - CocoaLumberjack/Extensions (3.3.0):
+  - CocoaLumberjack (3.4.1):
+    - CocoaLumberjack/Default (= 3.4.1)
+    - CocoaLumberjack/Extensions (= 3.4.1)
+  - CocoaLumberjack/Default (3.4.1)
+  - CocoaLumberjack/Extensions (3.4.1):
     - CocoaLumberjack/Default
   - CodePush (5.1.3):
     - CodePush/Base64 (= 5.1.3)
@@ -27,28 +27,45 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.1.3):
     - React
-  - Firebase/Auth (4.7.0):
+  - Firebase/Auth (4.11.0):
     - Firebase/Core
-    - FirebaseAuth (= 4.4.0)
-  - Firebase/Core (4.7.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - FirebaseAnalytics (4.0.5):
+    - FirebaseAuth (= 4.5.0)
+  - Firebase/Core (4.11.0):
+    - FirebaseAnalytics (= 4.1.0)
+    - FirebaseCore (= 4.0.18)
+  - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.0):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseAuth (4.5.0):
+    - FirebaseAnalytics (~> 4.1)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.12):
+  - FirebaseCore (4.0.18):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.7)
-  - GoogleMaps (2.1.1):
-    - GoogleMaps/Maps (= 2.1.1)
-  - GoogleMaps/Base (2.1.1)
-  - GoogleMaps/Maps (2.1.1):
+  - FirebaseInstanceID (2.0.10):
+    - FirebaseCore (~> 4.0)
+  - Google-Maps-iOS-Utils (2.1.0):
+    - Google-Maps-iOS-Utils/Clustering (= 2.1.0)
+    - Google-Maps-iOS-Utils/Geometry (= 2.1.0)
+    - Google-Maps-iOS-Utils/Heatmap (= 2.1.0)
+    - Google-Maps-iOS-Utils/QuadTree (= 2.1.0)
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Clustering (2.1.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Geometry (2.1.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Heatmap (2.1.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/QuadTree (2.1.0):
+    - GoogleMaps
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
@@ -64,7 +81,7 @@ PODS:
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
-  - Mixpanel (3.2.3)
+  - Mixpanel (3.2.9)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -75,10 +92,11 @@ PODS:
     - React/Core (= 0.53.0)
   - react-native-blur (0.8.0):
     - React
-  - react-native-google-maps (0.17.0):
-    - GoogleMaps (= 2.1.1)
+  - react-native-google-maps (0.21.0):
+    - Google-Maps-iOS-Utils (= 2.1.0)
+    - GoogleMaps (= 2.5.0)
     - React
-  - react-native-maps (0.17.0):
+  - react-native-maps (0.21.0):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
@@ -131,7 +149,7 @@ PODS:
   - RNXMPP (1.1.2):
     - React
     - XMPPFramework
-  - RSKImageCropper (1.6.3)
+  - RSKImageCropper (2.0.1)
   - XMPPFramework (3.7.3):
     - XMPPFramework/All (= 3.7.3)
   - XMPPFramework/All (3.7.3):
@@ -366,23 +384,24 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
-  CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
+  CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
   CodePush: af67b07310e4037ecd5c38f03c7a51c6350240b5
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseAuth: cdeee95b528958dbb7dcf220ad0fb804d3a284b0
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
-  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
+  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
+  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
+  FirebaseAuth: 147bf340a0706b44ca1753d6b41ebafd9687cfe6
+  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
-  Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
+  Mixpanel: 85cd02171dc84a8b0295bbe3db65604e2934b920
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 988a7dbd5626e0dd4f4b63fb444fa7e3d975e5b7
   react-native-blur: c35c1f6c2c76db7108bde7ed343bd2b01d64e0c0
-  react-native-google-maps: 7a280302cdf0bcddc7efa6ec55423b17dcbeb1fe
+  react-native-google-maps: 2cfe3b01f8422c7dae51d8764139fd70f888cfce
   react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
   react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
@@ -390,7 +409,7 @@ SPEC CHECKSUMS:
   RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
   RNFirebase: dff98ceb517ef0b5e1858deb59eca186acc6edb0
   RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
-  RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
+  RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   yoga: 55da126afc384965b96bff46652464373b330add
 

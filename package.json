@@ -41,7 +41,7 @@
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__tests__/.*(test|spec)\\.(jsx?|tsx?))$",
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "globals": {
       "ts-jest": {
@@ -104,8 +104,7 @@
     "react-native-image-crop-picker": "^0.18.1",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-linear-gradient": "^2.3.0",
-    "react-native-maps":
-      "github:hippware/react-native-maps#ed822d90b6b006008a739b2b5a8574e01732c6a7",
+    "react-native-maps": "^0.21.0",
     "react-native-message-bar": "^2.0.7",
     "react-native-mixpanel": "^0.0.16",
     "react-native-native-env":
