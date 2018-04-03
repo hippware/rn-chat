@@ -32,9 +32,10 @@ exports[`Explore Nearby renders with no data 1`] = `
         }
       }
       locationStore={Object {}}
-      onMarkerSelect={[Function]}
+      onMarkerPress={[Function]}
       onPress={[Function]}
       onRegionChangeComplete={[Function]}
+      provider="google"
       style={
         Object {
           "flex": 1,

@@ -17,7 +17,7 @@ type Props = {
   style?: object
   borderWidth?: number
   showFrame?: boolean
-  tappable: boolean
+  tappable?: boolean
   smallFont?: boolean
 }
 

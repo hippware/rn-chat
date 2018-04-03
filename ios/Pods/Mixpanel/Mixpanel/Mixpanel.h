@@ -6,17 +6,35 @@
 #endif
 #import "MixpanelPeople.h"
 
-#define MIXPANEL_FLUSH_IMMEDIATELY defined(MIXPANEL_WATCHOS)
-#define MIXPANEL_NO_REACHABILITY_SUPPORT (defined(MIXPANEL_TVOS) || defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
-#define MIXPANEL_NO_AUTOMATIC_EVENTS_SUPPORT (defined(MIXPANEL_TVOS) || defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
-#define MIXPANEL_NO_NOTIFICATION_AB_TEST_SUPPORT (defined(MIXPANEL_TVOS) || defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
-#define MIXPANEL_NO_APP_LIFECYCLE_SUPPORT defined(MIXPANEL_WATCHOS)
-#define MIXPANEL_NO_UIAPPLICATION_ACCESS (defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
+#if defined(MIXPANEL_WATCHOS)
+#define MIXPANEL_FLUSH_IMMEDIATELY 1
+#define MIXPANEL_NO_APP_LIFECYCLE_SUPPORT 1
+#endif
+
+#if (defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
+#define MIXPANEL_NO_UIAPPLICATION_ACCESS 1
+#endif
+
+#if (defined(MIXPANEL_TVOS) || defined(MIXPANEL_WATCHOS) || defined(MIXPANEL_MACOS))
+#define MIXPANEL_NO_REACHABILITY_SUPPORT 1
+#define MIXPANEL_NO_AUTOMATIC_EVENTS_SUPPORT 1
+#define MIXPANEL_NO_NOTIFICATION_AB_TEST_SUPPORT 1
+#define MIXPANEL_NO_CONNECT_INTEGRATION_SUPPORT 1
+#endif
 
 @class    MixpanelPeople;
 @protocol MixpanelDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
+
+/*!
+ A string constant "mini" that respresent Mini Notification
+ */
+extern NSString *const MPNotificationTypeMini;
+/*!
+ A string constant "takeover" that respresent Takeover Notification
+ */
+extern NSString *const MPNotificationTypeTakeover;
 
 /*!
  Mixpanel API.
@@ -242,6 +260,22 @@ NS_ASSUME_NONNULL_BEGIN
 + (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken launchOptions:(nullable NSDictionary *)launchOptions;
 
 /*!
+ Initializes a singleton instance of the API, uses it to track launchOptions information,
+ and then returns it.
+ 
+ This is the preferred method for creating a sharedInstance with a mixpanel
+ like above. With the launchOptions parameter, Mixpanel can track referral
+ information created by push notifications.
+ 
+ @param apiToken        your project token
+ @param launchOptions   your application delegate's launchOptions
+ @param trackCrashes    whether or not to track crashes in Mixpanel. may want to disable if you're seeing
+ issues with your crash reporting for either signals or exceptions
+ @param automaticPushTracking    whether or not to automatically track pushes sent from Mixpanel
+ */
++ (Mixpanel *)sharedInstanceWithToken:(NSString *)apiToken launchOptions:(NSDictionary *)launchOptions trackCrashes:(BOOL)trackCrashes automaticPushTracking:(BOOL)automaticPushTracking;
+
+/*!
  Returns a previously instantiated singleton instance of the API.
 
  The API must be initialized with <code>sharedInstanceWithToken:</code> or
@@ -269,6 +303,26 @@ NS_ASSUME_NONNULL_BEGIN
                 launchOptions:(nullable NSDictionary *)launchOptions
                 flushInterval:(NSUInteger)flushInterval
                  trackCrashes:(BOOL)trackCrashes;
+
+/*!
+ Initializes an instance of the API with the given project token. This also sets
+ it as a shared instance so you can use <code>sharedInstance</code> or
+ <code>sharedInstanceWithToken:</code> to retrieve this object later.
+
+ Creates and initializes a new API object. See also <code>sharedInstanceWithToken:</code>.
+
+ @param apiToken        your project token
+ @param launchOptions   optional app delegate launchOptions
+ @param flushInterval   interval to run background flushing
+ @param trackCrashes    whether or not to track crashes in Mixpanel. may want to disable if you're seeing
+ issues with your crash reporting for either signals or exceptions
+ @param automaticPushTracking    whether or not to automatically track pushes sent from Mixpanel
+ */
+- (instancetype)initWithToken:(NSString *)apiToken
+                launchOptions:(nullable NSDictionary *)launchOptions
+                flushInterval:(NSUInteger)flushInterval
+                 trackCrashes:(BOOL)trackCrashes
+        automaticPushTracking:(BOOL)automaticPushTracking;
 
 /*!
  Initializes an instance of the API with the given project token.

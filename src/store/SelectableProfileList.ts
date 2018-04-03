@@ -3,12 +3,12 @@
 import {types} from 'mobx-state-tree'
 import {Profile, IProfile} from 'wocky-client'
 
-const SelectableProfile = types.model({
+export const SelectableProfile = types.model({
   profile: types.reference(Profile),
   selected: false,
 })
 
-type ISelectableProfile = typeof SelectableProfile.Type
+export type ISelectableProfile = typeof SelectableProfile.Type
 
 const SelectableProfileList = types
   .model('SelectableProfileList', {
@@ -38,7 +38,7 @@ const SelectableProfileList = types
     },
   }))
   .actions(self => {
-    function setList(list: [any]) {
+    function setList(list: [ISelectableProfile]) {
       self.list.replace(list)
     }
 

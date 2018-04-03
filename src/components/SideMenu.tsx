@@ -7,11 +7,10 @@ import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {colors} from '../constants'
 import {settings} from '../globals'
-import {version} from '../../package.json'
 import {ILocationStore} from '../store/LocationStore'
 
 import {isAlive} from 'mobx-state-tree'
-
+const {version} = require('../../package.json')
 const MenuImage = ({image}: {image: object}) => (
   <Image source={image} resizeMode="contain" style={styles.menuImage} />
 )
@@ -121,7 +120,7 @@ class SideMenu extends React.Component<Props> {
         </MenuItem>
         {settings.isStaging && (
           <MenuItem
-            onPress={() => locationStore.toggleBackgroundDebugMode()}
+            onPress={() => locationStore!.toggleBackgroundDebugMode()}
             stayOpen
             // image={require('../../images/menuFriends.png')}
           >

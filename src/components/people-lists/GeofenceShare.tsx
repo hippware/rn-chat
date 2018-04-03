@@ -17,6 +17,8 @@ import {RText, BottomButton} from '../common'
 type Props = {
   botId: string
   wocky: IWocky
+  notificationStore: any // TODO proper
+  store: any // TODO proper type
 }
 
 @inject('wocky', 'notificationStore', 'store')
