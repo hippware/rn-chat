@@ -7960,9 +7960,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#43c8df93acc7c35e512c1e8bf4aa9589ba9e0761":
+"wocky-client@github:hippware/wocky-client#ac54153e178287ebae7c4a0658feea769400d1ea":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#43c8df93acc7c35e512c1e8bf4aa9589ba9e0761"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#ac54153e178287ebae7c4a0658feea769400d1ea"
   dependencies:
     "@types/graphql" "^0.12.7"
     "@types/node-fetch" "^1.6.7"
