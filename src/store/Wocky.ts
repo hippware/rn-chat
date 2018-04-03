@@ -95,7 +95,7 @@ export const Wocky = types
         get connecting() {
           return transport.connecting
         },
-        get sortedRoster() {
+        get sortedRoster(): Array<IProfile> {
           return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
             return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
           })
