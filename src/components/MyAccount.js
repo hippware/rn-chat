@@ -32,8 +32,10 @@ class MyAccount extends React.Component<{}> {
   email: any;
 
   componentDidMount() {
-    this.vProfile = new ValidatableProfile(this.props.wocky.profile);
-    this.props.profileValidationStore.setProfile(this.vProfile);
+    if (this.props.wocky.profile) {
+      this.vProfile = new ValidatableProfile(this.props.wocky.profile);
+      this.props.profileValidationStore.setProfile(this.vProfile);
+    }
   }
 
   static submit = async (profileValidationStore) => {
