@@ -64,7 +64,7 @@ class EventList extends React.Component<Props> {
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
-          ListHeaderComponent={<HomeStreamHeader visible={isFirstSession} />}
+          ListHeaderComponent={<HomeStreamHeader />}
           ListFooterComponent={
             connected
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
