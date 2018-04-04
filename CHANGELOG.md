@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* More typescript
+* GEOFENCE v1: Location Access Request in HS Geofence Header (#1914)
+* Incorrect sms auth code is creating a bugsnag (#2062)
+* `New Updates` Delete Tweak (#2030)
+* Pull Down Updates Loader (#1991)
+* Switch to Google Maps (#1932)
+
+
 # 2.4.0 - 2018 Apr 2
 
 * Don't propagate foreground push notifications.
