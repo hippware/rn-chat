@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, Alert, TouchableOpacity, Text} from 'react-native';
 import Button from 'apsl-react-native-button';
 import {settings} from '../globals';
 import {k} from './Global';
@@ -23,9 +23,18 @@ const LogoutButton = () => {
     return (
       <TouchableOpacity
         onPress={() => {
-          Actions.pop({animated: false});
-          Actions.pop({animated: false});
-          Actions.logout();
+          Alert.alert('Log Out', `Are you sure you want to log out?`, [
+            {text: 'Cancel', style: 'cancel'},
+            {
+              text: 'Log Out',
+              style: 'destructive',
+              onPress: async () => {
+                Actions.pop({animated: false});
+                Actions.pop({animated: false});
+                Actions.logout();
+              },
+            },
+          ])
         }}
         style={styles.button}
       >
