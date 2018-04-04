@@ -12,6 +12,8 @@ type Props = {
   id?: string
   scale: number
   onImagePress: () => void
+  image?: any
+  showLoader?: boolean
 }
 
 const BotMarker = observer(({id, bot, scale, ...props}: Props) => {
@@ -28,7 +30,7 @@ const BotMarker = observer(({id, bot, scale, ...props}: Props) => {
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onPress={props.onImagePress}
     >
-      <BotBubble bot={bot} scale={scale} />
+      <BotBubble bot={bot} scale={scale} {...props} />
     </MapView.Marker.Animated>
   )
 })
