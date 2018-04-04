@@ -24,6 +24,10 @@ const LocationStore = types
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
     loading: false,
     backgroundDebugEnabled: false,
+  })).views(self => ({
+    get isMetric() {
+      return self.system === METRIC
+    }
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -36,13 +40,13 @@ const LocationStore = types
         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2
 
       const res = R * 2 * Math.asin(Math.sqrt(a))
-      const result = self.system === METRIC ? res : res * 3.2808399
+      const result = self.isMetric ? res : res * 3.2808399
       return result
     },
     distanceToString: (distance: number) => {
       // const limit = self.system === METRIC ? 1000 : 5280
       // if (distance>limit){
-      return self.system === METRIC
+      return self.isMetric
         ? `${Math.round(distance / 100) / 10} km`
         : `${Math.round(distance * 0.00189393939) / 10} mi`
       // } else {

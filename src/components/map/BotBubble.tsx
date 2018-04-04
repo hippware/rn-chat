@@ -11,25 +11,35 @@ type Props = {
   bot: IBot
   scale: number
   onImagePress?: () => void
+  image?: any
+  showLoader?: boolean
 }
 
-const BotBubble = observer(({bot, scale, onImagePress}: Props) => {
+const BotBubble = observer(({bot, showLoader, image, scale, onImagePress}: Props) => {
   if (!bot || !isAlive(bot) || !bot.location) {
     return null
   }
-  const image = bot.image
-    ? bot.image.thumbnail
-    : bot.geofence
-      ? require('../../../images/footPrintCover.png')
-      : defaultCover[bot.coverColor % 4]
-  const showLoader = bot.image && !bot.image.loaded
+  const coverImage =
+    image ||
+    (bot.image
+      ? bot.image.thumbnail
+      : bot.geofence
+        ? require('../../../images/footPrintCover.png')
+        : defaultCover[bot.coverColor % 4])
   const text = bot.addressData ? bot.addressData.locationShort : bot.address
+  const bubble = (
+    <Bubble
+      text={text}
+      scale={scale}
+      image={coverImage}
+      showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
+    />
+  )
+
   return onImagePress ? (
-    <TouchableOpacity onPress={onImagePress}>
-      <Bubble text={text} scale={scale} image={image} showLoader={showLoader} />
-    </TouchableOpacity>
+    <TouchableOpacity onPress={onImagePress}>{bubble}</TouchableOpacity>
   ) : (
-    <Bubble text={text} scale={scale} image={image} showLoader={showLoader} />
+    bubble
   )
 })
 

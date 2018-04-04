@@ -1,24 +1,34 @@
 import React from 'react'
-import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageRequireSource,
+  ViewStyle,
+} from 'react-native'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
+import {IProfile} from 'wocky-client'
 
 const onlineColor = colors.LIGHT_BLUE
 const offlineColor = 'rgb(211,211,211)'
 const imgAnon = require('../../../images/follower.png')
 
 type Props = {
-  profile: any
+  profile: IProfile
   size: number
   disableStatus?: boolean
-  style?: object
+  style?: ViewStyle
   borderWidth?: number
   showFrame?: boolean
   tappable?: boolean
   smallFont?: boolean
+  hideDot?: boolean
 }
 
 @observer
@@ -43,6 +53,7 @@ class Avatar extends React.Component<Props> {
       profile,
       tappable,
       smallFont,
+      hideDot,
     } = this.props
     if (!profile || !isAlive(profile)) {
       return null
@@ -54,15 +65,14 @@ class Avatar extends React.Component<Props> {
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
         <View ref={this.setRoot} style={[style, {height: size * k, width: size * k}]}>
-          {!!profile.avatar && (
+          {!!profile.avatar ? (
             <AvatarImage
               {...this.props}
               source={profile.avatar.thumbnail}
               showLoader={showLoader}
               size={size}
             />
-          )}
-          {!profile.avatar && (
+          ) : (
             <View
               style={{
                 width: size * k,
@@ -88,7 +98,7 @@ class Avatar extends React.Component<Props> {
               />
             </View>
           )}
-          <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
+          {!hideDot && <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />}
         </View>
       </Clazz>
     )
@@ -127,7 +137,7 @@ const AvatarImage = ({
   size,
   showLoader,
 }: {
-  source: any
+  source: ImageRequireSource
   borderWidth?: any
   style?: any
   size: any

@@ -5,3 +5,4 @@ declare module 'apsl-react-native-button'
 declare module 'react-native-permissions'
 declare module 'react-native-router-flux'
 declare module 'react-native-maps'
+declare const process

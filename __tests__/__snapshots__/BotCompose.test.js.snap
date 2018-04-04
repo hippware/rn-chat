@@ -944,15 +944,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "state": "",
                       },
                       "description": null,
-                      "error": "",
                       "followersSize": 0,
                       "geofence": false,
                       "guest": false,
-                      "guests": Object {
-                        "count": null,
-                        "cursor": null,
-                        "result": Array [],
-                      },
                       "guestsSize": 0,
                       "id": "4321",
                       "image": null,
@@ -963,27 +957,12 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "longitude": 5,
                       },
                       "owner": "user",
-                      "posts": Object {
-                        "count": null,
-                        "cursor": null,
-                        "result": Array [],
-                      },
                       "radius": 100,
                       "server": null,
-                      "subscribers": Object {
-                        "count": null,
-                        "cursor": null,
-                        "result": Array [],
-                      },
                       "title": "title",
                       "totalItems": 0,
                       "visibility": 100,
                       "visitor": false,
-                      "visitors": Object {
-                        "count": null,
-                        "cursor": null,
-                        "result": Array [],
-                      },
                       "visitorsSize": 0,
                     }
                   }
@@ -1027,42 +1006,21 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "state": "",
                         },
                         "description": null,
-                        "error": "",
                         "followersSize": 0,
                         "geofence": false,
                         "guest": false,
-                        "guests": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "guestsSize": 0,
                         "id": "123",
                         "image": null,
                         "isSubscribed": false,
                         "location": null,
                         "owner": null,
-                        "posts": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "radius": 100,
                         "server": null,
-                        "subscribers": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "title": null,
                         "totalItems": 0,
                         "visibility": 100,
                         "visitor": false,
-                        "visitors": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "visitorsSize": 0,
                       },
                       "4321": Object {
@@ -1074,15 +1032,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "state": "",
                         },
                         "description": null,
-                        "error": "",
                         "followersSize": 0,
                         "geofence": false,
                         "guest": false,
-                        "guests": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "guestsSize": 0,
                         "id": "4321",
                         "image": null,
@@ -1093,27 +1045,12 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "longitude": 5,
                         },
                         "owner": "user",
-                        "posts": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "radius": 100,
                         "server": null,
-                        "subscribers": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "title": "title",
                         "totalItems": 0,
                         "visibility": 100,
                         "visitor": false,
-                        "visitors": Object {
-                          "count": null,
-                          "cursor": null,
-                          "result": Array [],
-                        },
                         "visitorsSize": 0,
                       },
                     },
@@ -1126,10 +1063,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "cursor": null,
                     "result": Array [],
                   },
-                  "files": Object {
-                    "storage": Object {},
-                  },
-                  "geoBots": Object {},
                   "host": "host",
                   "id": "wocky",
                   "password": "password",
@@ -1150,7 +1083,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "loaded": true,
                     "phoneNumber": null,
                     "roles": Array [],
-                    "status": "available",
                   },
                   "profiles": Object {
                     "storage": Object {
@@ -1169,7 +1101,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "lastName": null,
                         "loaded": false,
                         "roles": Array [],
-                        "status": "unavailable",
                       },
                     },
                   },
@@ -1205,95 +1136,121 @@ exports[`BotCompose renders with owned bot 1`] = `
                 }
               >
                 <View
+                  accessibilityComponentType={undefined}
+                  accessibilityLabel={undefined}
+                  accessibilityTraits={undefined}
+                  accessible={true}
+                  collapsable={undefined}
+                  hasTVPreferredFocus={undefined}
+                  hitSlop={undefined}
+                  isTVSelectable={true}
+                  nativeID={undefined}
+                  onLayout={undefined}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "alignItems": "center",
+                      "opacity": 1,
                     }
                   }
+                  testID={undefined}
+                  tvParallaxProperties={undefined}
                 >
                   <View
-                    collapsable={undefined}
                     style={
                       Object {
-                        "backgroundColor": "rgb(253,95,108)",
-                        "borderColor": "rgb(253,95,108)",
-                        "borderRadius": 7.2,
-                        "borderWidth": 1.2,
-                        "height": 203,
-                        "overflow": "hidden",
-                        "width": 175,
+                        "alignItems": "center",
                       }
                     }
                   >
-                    <Image
+                    <View
                       collapsable={undefined}
-                      resizeMode="contain"
-                      source={
-                        Object {
-                          "testUri": "../../../images/defaultCover2.png",
-                        }
-                      }
                       style={
                         Object {
-                          "height": 175,
+                          "backgroundColor": "rgb(253,95,108)",
+                          "borderColor": "rgb(253,95,108)",
+                          "borderRadius": 7.2,
+                          "borderWidth": 1.2,
+                          "height": 203,
+                          "overflow": "hidden",
                           "width": 175,
                         }
                       }
-                    />
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "flex": 1,
-                          "justifyContent": "center",
-                        }
-                      }
                     >
-                      <Text
-                        accessible={true}
-                        allowFontScaling={true}
-                        ellipsizeMode="middle"
-                        numberOfLines={1}
+                      <Image
+                        collapsable={undefined}
+                        resizeMode="contain"
+                        source={
+                          Object {
+                            "testUri": "../../../images/addBotPhoto.png",
+                          }
+                        }
                         style={
-                          Array [
-                            Object {
-                              "color": "rgb(255,255,255)",
-                              "fontFamily": "Roboto-Regular",
-                              "fontSize": 13,
-                            },
-                            Object {
-                              "padding": 2,
-                            },
-                          ]
+                          Object {
+                            "height": 175,
+                            "width": 175,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flex": 1,
+                            "justifyContent": "center",
+                          }
                         }
                       >
-                        123 address
-                      </Text>
+                        <Text
+                          accessible={true}
+                          allowFontScaling={true}
+                          ellipsizeMode="middle"
+                          numberOfLines={1}
+                          style={
+                            Array [
+                              Object {
+                                "color": "rgb(255,255,255)",
+                                "fontFamily": "Roboto-Regular",
+                                "fontSize": 13,
+                              },
+                              Object {
+                                "padding": 2,
+                              },
+                            ]
+                          }
+                        >
+                          123 address
+                        </Text>
+                      </View>
                     </View>
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "backgroundColor": "transparent",
+                            "borderStyle": "solid",
+                            "height": 0,
+                            "width": 0,
+                          },
+                          Object {
+                            "borderBottomColor": "transparent",
+                            "borderBottomWidth": 0,
+                            "borderLeftColor": "transparent",
+                            "borderLeftWidth": 5.5,
+                            "borderRightColor": "transparent",
+                            "borderRightWidth": 5.5,
+                            "borderTopColor": "rgb(253,95,108)",
+                            "borderTopWidth": 11,
+                          },
+                          undefined,
+                        ]
+                      }
+                    />
                   </View>
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderStyle": "solid",
-                          "height": 0,
-                          "width": 0,
-                        },
-                        Object {
-                          "borderBottomColor": "transparent",
-                          "borderBottomWidth": 0,
-                          "borderLeftColor": "transparent",
-                          "borderLeftWidth": 5.5,
-                          "borderRightColor": "transparent",
-                          "borderRightWidth": 5.5,
-                          "borderTopColor": "rgb(253,95,108)",
-                          "borderTopWidth": 11,
-                        },
-                        undefined,
-                      ]
-                    }
-                  />
                 </View>
               </Marker>
             </MapView>

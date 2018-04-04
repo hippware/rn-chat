@@ -95,12 +95,15 @@ const photoActions = [
 
 // @ANDROID
 export const showImagePicker = (title: string, callback: Function, cropping: boolean = true): void => {
+  const options = {
+    options: [...photoActions.map(a => a.title), 'Cancel'],
+    cancelButtonIndex: photoActions.length,
+  }
+  if (title) {
+    options.title = title
+  }
   ActionSheetIOS.showActionSheetWithOptions(
-    {
-      options: [...photoActions.map(a => a.title), 'Cancel'],
-      cancelButtonIndex: photoActions.length,
-      title,
-    },
+    options,
     (index) => {
       index < photoActions.length && photoActions[index].action(callback, cropping);
     },

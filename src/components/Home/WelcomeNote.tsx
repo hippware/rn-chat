@@ -10,8 +10,6 @@ const leftContent = <Text />
 
 type Props = {
   wocky?: IWocky
-  locationStore?: any
-  visible: boolean
 }
 
 @inject('wocky')
@@ -19,7 +17,7 @@ type Props = {
 class WelcomeNote extends React.Component<Props> {
   onRelease = () => this.props.wocky!.setSessionCount(3)
   render() {
-    return this.props.visible ? (
+    return this.props.wocky!.sessionCount <= 2 ? (
       <Swipeable
         leftContent={leftContent}
         rightContent={leftContent}
