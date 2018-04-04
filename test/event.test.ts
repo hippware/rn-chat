@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {types, getType, applySnapshot} from 'mobx-state-tree'
+import {types, getType, applySnapshot, getSnapshot} from 'mobx-state-tree'
 import {processItem, processHomestreamResponse} from '../src/transport/XmppTransport'
 import {FileSource} from '../src/model/File'
 import {EventList, EventEntity} from '../src/store/Wocky'
@@ -41,8 +41,8 @@ describe('Home stream', () => {
       testModel.home.add(eventNote)
       testModel.home.add(eventBotPost)
 
-      console.log(JSON.stringify(testModel.snapshot, null, 2))
-      snapshot = JSON.stringify(testModel.snapshot)
+      console.log(JSON.stringify(getSnapshot(testModel), null, 2))
+      snapshot = JSON.stringify(getSnapshot(testModel))
       done()
     } catch (e) {
       done(e)

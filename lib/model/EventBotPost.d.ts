@@ -15,10 +15,7 @@ export declare const EventBotPost: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -31,10 +28,7 @@ export declare const EventBotPost: IModelType<{
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -61,10 +55,7 @@ export declare const EventBotPost: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -91,8 +82,8 @@ export declare const EventBotPost: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -153,10 +144,7 @@ export declare const EventBotPost: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -181,10 +169,7 @@ export declare const EventBotPost: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -211,8 +196,8 @@ export declare const EventBotPost: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -255,10 +240,10 @@ export declare const EventBotPost: IModelType<{
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -268,10 +253,7 @@ export declare const EventBotPost: IModelType<{
     post: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -296,10 +278,7 @@ export declare const EventBotPost: IModelType<{
         profile: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -326,8 +305,8 @@ export declare const EventBotPost: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;

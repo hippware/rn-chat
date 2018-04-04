@@ -75,14 +75,14 @@ export const Profile = types
         }),
         setStatus: (status: string) => {
           self.status = status
+        },
+        postProcessSnapshot: (snapshot: any) => {
+          const res: any = {...snapshot}
+          delete res.status
+          return res
         }
       },
       views: {
-        get snapshot() {
-          const res: any = {...self._snapshot}
-          delete res.status
-          return res
-        },
         get isOwn(): boolean {
           const ownProfile = self.service.profile
           return ownProfile && self.id === ownProfile.id

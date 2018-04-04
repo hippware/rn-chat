@@ -23,10 +23,7 @@ export declare const File: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     id: string;
     source: ({
@@ -54,8 +51,8 @@ export declare const File: IModelType<{
     error: string;
 } & {
     readonly loaded: boolean;
-    readonly snapshot: any;
 } & {
+    postProcessSnapshot: (snapshot: any) => any;
     setURL: (url: string) => void;
     setSource: (source: any) => void;
     downloadThumbnail: () => Promise<{}>;

@@ -19,10 +19,7 @@ export declare const BotPost: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -47,10 +44,7 @@ export declare const BotPost: IModelType<{
     profile: ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         loaded: boolean;
     } & {
@@ -77,8 +71,8 @@ export declare const BotPost: IModelType<{
         block: () => Promise<{}>;
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
-        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;

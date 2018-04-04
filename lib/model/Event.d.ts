@@ -7,10 +7,7 @@ export declare const Event: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {

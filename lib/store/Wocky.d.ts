@@ -56,10 +56,7 @@ export declare const EventEntity: IType<({
 }), ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -72,10 +69,7 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -102,10 +96,7 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -132,8 +123,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -194,10 +185,7 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -222,10 +210,7 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -252,8 +237,8 @@ export declare const EventEntity: IType<({
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -296,10 +281,10 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -309,10 +294,7 @@ export declare const EventEntity: IType<({
     post: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -337,10 +319,7 @@ export declare const EventEntity: IType<({
         profile: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -367,8 +346,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -393,10 +372,7 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -409,10 +385,7 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -439,10 +412,7 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -469,8 +439,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -531,10 +501,7 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -559,10 +526,7 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -589,8 +553,8 @@ export declare const EventEntity: IType<({
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -633,10 +597,10 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -649,10 +613,7 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -665,10 +626,7 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -695,10 +653,7 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -725,8 +680,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -787,10 +742,7 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -815,10 +767,7 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -845,8 +794,8 @@ export declare const EventEntity: IType<({
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -889,10 +838,10 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -902,10 +851,7 @@ export declare const EventEntity: IType<({
     message: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -924,10 +870,7 @@ export declare const EventEntity: IType<({
         from: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -954,8 +897,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -991,10 +934,7 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -1007,10 +947,7 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -1037,10 +974,7 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -1067,8 +1001,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1129,10 +1063,7 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1157,10 +1088,7 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1187,8 +1115,8 @@ export declare const EventEntity: IType<({
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1231,10 +1159,10 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -1247,10 +1175,7 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -1263,10 +1188,7 @@ export declare const EventEntity: IType<({
     bot: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -1293,10 +1215,7 @@ export declare const EventEntity: IType<({
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -1323,8 +1242,8 @@ export declare const EventEntity: IType<({
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1385,10 +1304,7 @@ export declare const EventEntity: IType<({
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1413,10 +1329,7 @@ export declare const EventEntity: IType<({
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1443,8 +1356,8 @@ export declare const EventEntity: IType<({
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1487,10 +1400,10 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     };
@@ -1501,10 +1414,7 @@ export declare const EventEntity: IType<({
     profile: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         loaded: boolean;
     } & {
@@ -1531,8 +1441,8 @@ export declare const EventEntity: IType<({
         block: () => Promise<{}>;
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
-        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1552,10 +1462,7 @@ export declare const EventEntity: IType<({
 }) | ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     time: number;
 } & {
@@ -1570,7 +1477,7 @@ export declare const EventEntity: IType<({
     readonly $treenode?: any;
 })>;
 export declare type IEventEntity = typeof EventEntity.Type;
-export declare const EventList: IPaginable;
+export declare const EventList: IModelType<any, any>;
 export declare type IEventListType = typeof EventList.Type;
 export interface IEventList extends IEventListType {
 }
@@ -1598,10 +1505,7 @@ export declare const Wocky: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     files: {
         storage: IExtendedObservableMap<any> & ISnapshottable<{
@@ -1677,10 +1581,7 @@ export declare const Wocky: IModelType<{
     roster: IExtendedObservableMap<{
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         loaded: boolean;
     } & {
@@ -1707,8 +1608,8 @@ export declare const Wocky: IModelType<{
         block: () => Promise<{}>;
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
-        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1726,10 +1627,7 @@ export declare const Wocky: IModelType<{
     profile: ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         loaded: boolean;
     } & {
@@ -1756,8 +1654,8 @@ export declare const Wocky: IModelType<{
         block: () => Promise<{}>;
         unblock: () => Promise<{}>;
         setStatus: (status: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
-        readonly snapshot: any;
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
@@ -1790,10 +1688,7 @@ export declare const Wocky: IModelType<{
     updates: IObservableArray<({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -1806,10 +1701,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -1836,10 +1728,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1866,8 +1755,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1928,10 +1817,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -1956,10 +1842,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -1986,8 +1869,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -2030,10 +1913,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -2043,10 +1926,7 @@ export declare const Wocky: IModelType<{
         post: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2071,10 +1951,7 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2101,8 +1978,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2127,10 +2004,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -2143,10 +2017,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -2173,10 +2044,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2203,8 +2071,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2265,10 +2133,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -2293,10 +2158,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -2323,8 +2185,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -2367,10 +2229,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -2383,10 +2245,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -2399,10 +2258,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -2429,10 +2285,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2459,8 +2312,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2521,10 +2374,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -2549,10 +2399,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -2579,8 +2426,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -2623,10 +2470,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -2636,10 +2483,7 @@ export declare const Wocky: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2658,10 +2502,7 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2688,8 +2529,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2725,10 +2566,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -2741,10 +2579,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -2771,10 +2606,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2801,8 +2633,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2863,10 +2695,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -2891,10 +2720,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -2921,8 +2747,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -2965,10 +2791,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -2981,10 +2807,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -2997,10 +2820,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -3027,10 +2847,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3057,8 +2874,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3119,10 +2936,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -3147,10 +2961,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -3177,8 +2988,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3221,10 +3032,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -3235,10 +3046,7 @@ export declare const Wocky: IModelType<{
         profile: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -3265,8 +3073,8 @@ export declare const Wocky: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -3286,10 +3094,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -3355,10 +3160,7 @@ export declare const Wocky: IModelType<{
     geoBots: IExtendedObservableMap<{
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -3385,10 +3187,7 @@ export declare const Wocky: IModelType<{
         owner: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -3415,8 +3214,8 @@ export declare const Wocky: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -3477,10 +3276,7 @@ export declare const Wocky: IModelType<{
         createPost: (content?: string) => {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3505,10 +3301,7 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3535,8 +3328,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3579,10 +3372,10 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string) => void;
         shareToFollowers: (message?: string) => void;
+        postProcessSnapshot: (snapshot: any) => any;
     } & {
         readonly isPublic: boolean;
         readonly coverColor: number;
-        readonly snapshot: any;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
@@ -3592,10 +3385,7 @@ export declare const Wocky: IModelType<{
         _list: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             id: string;
             active: boolean;
@@ -3605,10 +3395,7 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3635,8 +3422,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3652,10 +3439,7 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -3674,10 +3458,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -3704,8 +3485,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3748,10 +3529,7 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -3770,10 +3548,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -3800,8 +3575,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3835,10 +3610,7 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -3857,10 +3629,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -3887,8 +3656,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -3932,10 +3701,7 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3962,8 +3728,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3980,10 +3746,7 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4002,10 +3765,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4032,8 +3792,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4064,10 +3824,7 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4086,10 +3843,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4116,8 +3870,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4156,10 +3910,7 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4178,10 +3929,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4208,8 +3956,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4258,10 +4006,7 @@ export declare const Wocky: IModelType<{
         readonly _filteredList: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             id: string;
             active: boolean;
@@ -4271,10 +4016,7 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -4301,8 +4043,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4318,10 +4060,7 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4340,10 +4079,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4370,8 +4106,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4414,10 +4150,7 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4436,10 +4169,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4466,8 +4196,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4501,10 +4231,7 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4523,10 +4250,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4553,8 +4277,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4598,10 +4322,7 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -4628,8 +4349,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4646,10 +4367,7 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4668,10 +4386,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4698,8 +4413,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4730,10 +4445,7 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4752,10 +4464,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4782,8 +4491,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4822,10 +4531,7 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4844,10 +4550,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -4874,8 +4577,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -4913,10 +4616,7 @@ export declare const Wocky: IModelType<{
         readonly list: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             id: string;
             active: boolean;
@@ -4926,10 +4626,7 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -4956,8 +4653,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -4973,10 +4670,7 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -4995,10 +4689,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5025,8 +4716,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5069,10 +4760,7 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5091,10 +4779,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5121,8 +4806,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5156,10 +4841,7 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5178,10 +4860,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5208,8 +4887,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5253,10 +4932,7 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -5283,8 +4959,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5301,10 +4977,7 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5323,10 +4996,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5353,8 +5023,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5385,10 +5055,7 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5407,10 +5074,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5437,8 +5101,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5477,10 +5141,7 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5499,10 +5160,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5529,8 +5187,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5570,10 +5228,7 @@ export declare const Wocky: IModelType<{
         clear: () => ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             id: string;
             active: boolean;
@@ -5583,10 +5238,7 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -5613,8 +5265,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5630,10 +5282,7 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5652,10 +5301,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5682,8 +5328,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5726,10 +5372,7 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5748,10 +5391,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5778,8 +5418,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5813,10 +5453,7 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5835,10 +5472,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -5865,8 +5499,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -5910,10 +5544,7 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -5940,8 +5571,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -5958,10 +5589,7 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -5980,10 +5608,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6010,8 +5635,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6042,10 +5667,7 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6064,10 +5686,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6094,8 +5713,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6134,10 +5753,7 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6156,10 +5772,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6186,8 +5799,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6224,10 +5837,7 @@ export declare const Wocky: IModelType<{
         remove: (id: string) => ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             id: string;
             active: boolean;
@@ -6237,10 +5847,7 @@ export declare const Wocky: IModelType<{
             participants: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -6267,8 +5874,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6284,10 +5891,7 @@ export declare const Wocky: IModelType<{
             _messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6306,10 +5910,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6336,8 +5937,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6380,10 +5981,7 @@ export declare const Wocky: IModelType<{
             message: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6402,10 +6000,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6432,8 +6027,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6467,10 +6062,7 @@ export declare const Wocky: IModelType<{
             readonly messages: IObservableArray<{
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6489,10 +6081,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6519,8 +6108,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6564,10 +6153,7 @@ export declare const Wocky: IModelType<{
             readonly followedParticipants: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -6594,8 +6180,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -6612,10 +6198,7 @@ export declare const Wocky: IModelType<{
             readonly last: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6634,10 +6217,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6664,8 +6244,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6696,10 +6276,7 @@ export declare const Wocky: IModelType<{
             readonly first: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6718,10 +6295,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6748,8 +6322,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6788,10 +6362,7 @@ export declare const Wocky: IModelType<{
             addMessage: (msg: {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -6810,10 +6381,7 @@ export declare const Wocky: IModelType<{
                 from: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -6840,8 +6408,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -6883,6 +6451,7 @@ export declare const Wocky: IModelType<{
 } & {
     loadProfile: (a1: string) => Promise<any>;
 } & {
+    postProcessSnapshot: (snapshot: any) => any;
     login: () => Promise<{}>;
     disconnect: () => Promise<{}>;
     remove: () => Promise<{}>;
@@ -6893,7 +6462,6 @@ export declare const Wocky: IModelType<{
     lookup: (a1: string) => Promise<any>;
     createChat: (id: string) => IChat;
 } & {
-    readonly snapshot: any;
     readonly transport: IWockyTransport;
     readonly connected: boolean;
     readonly connecting: boolean;
@@ -6901,10 +6469,7 @@ export declare const Wocky: IModelType<{
     readonly updatesToAdd: (({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -6917,10 +6482,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -6947,10 +6509,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -6977,8 +6536,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7039,10 +6598,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -7067,10 +6623,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -7097,8 +6650,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7141,10 +6694,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -7154,10 +6707,7 @@ export declare const Wocky: IModelType<{
         post: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -7182,10 +6732,7 @@ export declare const Wocky: IModelType<{
             profile: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -7212,8 +6759,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7238,10 +6785,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -7254,10 +6798,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -7284,10 +6825,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -7314,8 +6852,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7376,10 +6914,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -7404,10 +6939,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -7434,8 +6966,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7478,10 +7010,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -7494,10 +7026,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -7510,10 +7039,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -7540,10 +7066,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -7570,8 +7093,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7632,10 +7155,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -7660,10 +7180,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -7690,8 +7207,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -7734,10 +7251,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -7747,10 +7264,7 @@ export declare const Wocky: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -7769,10 +7283,7 @@ export declare const Wocky: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -7799,8 +7310,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7836,10 +7347,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -7852,10 +7360,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -7882,10 +7387,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -7912,8 +7414,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -7974,10 +7476,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -8002,10 +7501,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -8032,8 +7528,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -8076,10 +7572,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -8092,10 +7588,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -8108,10 +7601,7 @@ export declare const Wocky: IModelType<{
         bot: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             uploading: boolean;
             uploaded: boolean;
@@ -8138,10 +7628,7 @@ export declare const Wocky: IModelType<{
             owner: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -8168,8 +7655,8 @@ export declare const Wocky: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -8230,10 +7717,7 @@ export declare const Wocky: IModelType<{
             createPost: (content?: string) => {
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 time: number;
             } & {
@@ -8258,10 +7742,7 @@ export declare const Wocky: IModelType<{
                 profile: ({
                     id: string;
                 } & {
-                    readonly _snapshot: any;
                     readonly service: any;
-                } & {
-                    readonly snapshot: any;
                 } & {
                     loaded: boolean;
                 } & {
@@ -8288,8 +7769,8 @@ export declare const Wocky: IModelType<{
                     block: () => Promise<{}>;
                     unblock: () => Promise<{}>;
                     setStatus: (status: string) => void;
+                    postProcessSnapshot: (snapshot: any) => any;
                 } & {
-                    readonly snapshot: any;
                     readonly isOwn: boolean;
                     readonly isVerified: boolean;
                     readonly isMutual: boolean;
@@ -8332,10 +7813,10 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string) => void;
             shareToFollowers: (message?: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
             readonly isPublic: boolean;
             readonly coverColor: number;
-            readonly snapshot: any;
         } & {
             readonly $treenode?: any;
         };
@@ -8346,10 +7827,7 @@ export declare const Wocky: IModelType<{
         profile: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -8376,8 +7854,8 @@ export declare const Wocky: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -8397,10 +7875,7 @@ export declare const Wocky: IModelType<{
     }) | ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -8456,10 +7931,7 @@ export declare const Wocky: IModelType<{
     _publishBotPost: (a1: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -8484,10 +7956,7 @@ export declare const Wocky: IModelType<{
         profile: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -8514,8 +7983,8 @@ export declare const Wocky: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -8544,10 +8013,7 @@ export declare const Wocky: IModelType<{
     _sendMessage: (msg: {
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         time: number;
     } & {
@@ -8566,10 +8032,7 @@ export declare const Wocky: IModelType<{
         from: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -8596,8 +8059,8 @@ export declare const Wocky: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;

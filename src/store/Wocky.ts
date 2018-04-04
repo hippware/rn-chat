@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot} from 'mobx-state-tree'
+import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot, onSnapshot} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
@@ -23,7 +23,16 @@ import {IWockyTransport} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 // export interface IEventEntity extends IEventEntityType {}
-export const EventList = createPaginable(EventEntity)
+export const EventList = createPaginable(EventEntity).actions(self => ({
+  postProcessSnapshot: (snapshot: any) => {
+    if (snapshot.result.length > 20) {
+      const result = snapshot.result.slice(0, 20)
+      const cursor = result[result.length - 1].id
+      return {...snapshot, result, cursor}
+    }
+    return snapshot
+  }
+}))
 export type IEventListType = typeof EventList.Type
 export interface IEventList extends IEventListType {}
 
@@ -77,17 +86,6 @@ export const Wocky = types
     }
     return {
       views: {
-        get snapshot() {
-          const data = {...self._snapshot}
-          if (self.events.length > 20) {
-            const result = data.events.result.slice(0, 20)
-            const cursor = result[result.length - 1].id
-            data.events = {result, cursor}
-          }
-          delete data.geoBots
-          delete data.files
-          return data
-        },
         get transport(): IWockyTransport {
           return transport
         },
@@ -109,6 +107,12 @@ export const Wocky = types
         }
       },
       actions: {
+        postProcessSnapshot: (snapshot: any) => {
+          const data = {...snapshot}
+          delete data.geoBots
+          delete data.files
+          return data
+        },
         login: flow(function*(user?: string, password?: string, host?: string) {
           if (user) {
             self.username = user

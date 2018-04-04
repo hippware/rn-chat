@@ -27,10 +27,7 @@ export declare const OwnProfile: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     loaded: boolean;
 } & {
@@ -57,8 +54,8 @@ export declare const OwnProfile: IModelType<{
     block: () => Promise<{}>;
     unblock: () => Promise<{}>;
     setStatus: (status: string) => void;
+    postProcessSnapshot: (snapshot: any) => any;
 } & {
-    readonly snapshot: any;
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;

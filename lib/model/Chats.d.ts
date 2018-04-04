@@ -11,10 +11,7 @@ export declare const Chats: IModelType<{
     _list: IObservableArray<{
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -24,10 +21,7 @@ export declare const Chats: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -54,8 +48,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -71,10 +65,7 @@ export declare const Chats: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -93,10 +84,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -123,8 +111,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -167,10 +155,7 @@ export declare const Chats: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -189,10 +174,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -219,8 +201,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -254,10 +236,7 @@ export declare const Chats: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -276,10 +255,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -306,8 +282,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -351,10 +327,7 @@ export declare const Chats: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -381,8 +354,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -399,10 +372,7 @@ export declare const Chats: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -421,10 +391,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -451,8 +418,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -483,10 +450,7 @@ export declare const Chats: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -505,10 +469,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -535,8 +496,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -575,10 +536,7 @@ export declare const Chats: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -597,10 +555,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -627,8 +582,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -677,10 +632,7 @@ export declare const Chats: IModelType<{
     readonly _filteredList: ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -690,10 +642,7 @@ export declare const Chats: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -720,8 +669,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -737,10 +686,7 @@ export declare const Chats: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -759,10 +705,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -789,8 +732,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -833,10 +776,7 @@ export declare const Chats: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -855,10 +795,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -885,8 +822,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -920,10 +857,7 @@ export declare const Chats: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -942,10 +876,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -972,8 +903,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1017,10 +948,7 @@ export declare const Chats: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -1047,8 +975,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1065,10 +993,7 @@ export declare const Chats: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1087,10 +1012,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1117,8 +1039,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1149,10 +1071,7 @@ export declare const Chats: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1171,10 +1090,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1201,8 +1117,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1241,10 +1157,7 @@ export declare const Chats: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1263,10 +1176,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1293,8 +1203,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1332,10 +1242,7 @@ export declare const Chats: IModelType<{
     readonly list: ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -1345,10 +1252,7 @@ export declare const Chats: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -1375,8 +1279,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1392,10 +1296,7 @@ export declare const Chats: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1414,10 +1315,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1444,8 +1342,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1488,10 +1386,7 @@ export declare const Chats: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1510,10 +1405,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1540,8 +1432,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1575,10 +1467,7 @@ export declare const Chats: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1597,10 +1486,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1627,8 +1513,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1672,10 +1558,7 @@ export declare const Chats: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -1702,8 +1585,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -1720,10 +1603,7 @@ export declare const Chats: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1742,10 +1622,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1772,8 +1649,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1804,10 +1681,7 @@ export declare const Chats: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1826,10 +1700,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1856,8 +1727,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1896,10 +1767,7 @@ export declare const Chats: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1918,10 +1786,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -1948,8 +1813,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -1989,10 +1854,7 @@ export declare const Chats: IModelType<{
     clear: () => ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -2002,10 +1864,7 @@ export declare const Chats: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -2032,8 +1891,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2049,10 +1908,7 @@ export declare const Chats: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2071,10 +1927,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2101,8 +1954,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2145,10 +1998,7 @@ export declare const Chats: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2167,10 +2017,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2197,8 +2044,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2232,10 +2079,7 @@ export declare const Chats: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2254,10 +2098,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2284,8 +2125,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2329,10 +2170,7 @@ export declare const Chats: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -2359,8 +2197,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2377,10 +2215,7 @@ export declare const Chats: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2399,10 +2234,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2429,8 +2261,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2461,10 +2293,7 @@ export declare const Chats: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2483,10 +2312,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2513,8 +2339,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2553,10 +2379,7 @@ export declare const Chats: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2575,10 +2398,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2605,8 +2425,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2643,10 +2463,7 @@ export declare const Chats: IModelType<{
     remove: (id: string) => ({
         id: string;
     } & {
-        readonly _snapshot: any;
         readonly service: any;
-    } & {
-        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -2656,10 +2473,7 @@ export declare const Chats: IModelType<{
         participants: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -2686,8 +2500,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -2703,10 +2517,7 @@ export declare const Chats: IModelType<{
         _messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2725,10 +2536,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2755,8 +2563,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2799,10 +2607,7 @@ export declare const Chats: IModelType<{
         message: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2821,10 +2626,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2851,8 +2653,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2886,10 +2688,7 @@ export declare const Chats: IModelType<{
         readonly messages: IObservableArray<{
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2908,10 +2707,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -2938,8 +2734,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -2983,10 +2779,7 @@ export declare const Chats: IModelType<{
         readonly followedParticipants: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             loaded: boolean;
         } & {
@@ -3013,8 +2806,8 @@ export declare const Chats: IModelType<{
             block: () => Promise<{}>;
             unblock: () => Promise<{}>;
             setStatus: (status: string) => void;
+            postProcessSnapshot: (snapshot: any) => any;
         } & {
-            readonly snapshot: any;
             readonly isOwn: boolean;
             readonly isVerified: boolean;
             readonly isMutual: boolean;
@@ -3031,10 +2824,7 @@ export declare const Chats: IModelType<{
         readonly last: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3053,10 +2843,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3083,8 +2870,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3115,10 +2902,7 @@ export declare const Chats: IModelType<{
         readonly first: ({
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3137,10 +2921,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3167,8 +2948,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;
@@ -3207,10 +2988,7 @@ export declare const Chats: IModelType<{
         addMessage: (msg: {
             id: string;
         } & {
-            readonly _snapshot: any;
             readonly service: any;
-        } & {
-            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3229,10 +3007,7 @@ export declare const Chats: IModelType<{
             from: ({
                 id: string;
             } & {
-                readonly _snapshot: any;
                 readonly service: any;
-            } & {
-                readonly snapshot: any;
             } & {
                 loaded: boolean;
             } & {
@@ -3259,8 +3034,8 @@ export declare const Chats: IModelType<{
                 block: () => Promise<{}>;
                 unblock: () => Promise<{}>;
                 setStatus: (status: string) => void;
+                postProcessSnapshot: (snapshot: any) => any;
             } & {
-                readonly snapshot: any;
                 readonly isOwn: boolean;
                 readonly isVerified: boolean;
                 readonly isMutual: boolean;

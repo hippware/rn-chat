@@ -31,17 +31,17 @@ export const File = types
   .views(self => ({
     get loaded() {
       return self.thumbnail !== null // self.source !== null
-    },
-    get snapshot() {
-      const res: any = {...self._snapshot}
-      delete res.source
-      delete res.thumbnail
-      delete res.url
-      return res
     }
   }))
   .actions(self => {
     return {
+      postProcessSnapshot: (snapshot: any) => {
+        const res: any = {...snapshot}
+        delete res.source
+        delete res.thumbnail
+        delete res.url
+        return res
+      },
       setURL: (url: string) => {
         self.url = url
       },

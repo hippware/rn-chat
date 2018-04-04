@@ -129,6 +129,15 @@ export const Bot = types
     },
     shareToFollowers: (message: string = '') => {
       self.share(['followers'], message)
+    },
+    postProcessSnapshot: (snapshot: any) => {
+      const res: any = {...snapshot}
+      delete res.posts
+      delete res.error
+      delete res.subscribers
+      delete res.guests
+      delete res.visitors
+      return res
     }
   }))
   .views(self => ({
@@ -137,15 +146,6 @@ export const Bot = types
     },
     get coverColor(): number {
       return utils.hashCode(self.id)
-    },
-    get snapshot() {
-      const res: any = {...self._snapshot}
-      delete res.posts
-      delete res.error
-      delete res.subscribers
-      delete res.guests
-      delete res.visitors
-      return res
     }
   }))
 

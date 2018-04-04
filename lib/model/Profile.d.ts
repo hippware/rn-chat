@@ -27,10 +27,7 @@ export declare const Profile: IModelType<{
 }, {
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     loaded: boolean;
 } & {
@@ -57,8 +54,8 @@ export declare const Profile: IModelType<{
     block: () => Promise<{}>;
     unblock: () => Promise<{}>;
     setStatus: (status: string) => void;
+    postProcessSnapshot: (snapshot: any) => any;
 } & {
-    readonly snapshot: any;
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;
@@ -79,10 +76,7 @@ export interface IProfile extends IProfileType {
 export declare const ProfileRef: IType<string | number | null | undefined, ({
     id: string;
 } & {
-    readonly _snapshot: any;
     readonly service: any;
-} & {
-    readonly snapshot: any;
 } & {
     loaded: boolean;
 } & {
@@ -109,8 +103,8 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     block: () => Promise<{}>;
     unblock: () => Promise<{}>;
     setStatus: (status: string) => void;
+    postProcessSnapshot: (snapshot: any) => any;
 } & {
-    readonly snapshot: any;
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;
