@@ -11,7 +11,8 @@ import CurrentLocationIndicator from './CurrentLocationIndicator';
 import Geofence from './Geofence';
 import {isAlive} from 'mobx-state-tree';
 import {DELTA_FULL_MAP, DELTA_GEOFENCE} from './Map';
-
+import mapStyle from './mapStyle'
+import CurrentLocationMarker from './CurrentLocationMarker';
 type Props = {
   edit?: boolean,
   bot: Bot,
@@ -69,6 +70,7 @@ class BotAddress extends React.Component<Props> {
         {this.mounted && (
           <MapView
             provider={'google'}
+            customMapStyle={mapStyle}
             ref={(map) => {
               this._map = map;
             }}
@@ -83,13 +85,7 @@ class BotAddress extends React.Component<Props> {
             onRegionChangeComplete={this.onLocationChange}
             initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           >
-            {currentLoc && (
-              <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={currentLoc}>
-                <View style={{transform: currentLoc.heading ? [{rotate: `${360 + currentLoc.heading} deg`}] : []}}>
-                  <Image source={require('../../../images/location-indicator.png')} />
-                </View>
-              </MapView.Marker>
-            )}
+            <CurrentLocationMarker />
             {bot.geofence && coords && <Geofence coords={{...coords}} key={`${coords.latitude}-${coords.longitude}`} />}
             <View pointerEvents="none" style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <Image source={require('../../../images/newBotMarker.png')} />
