@@ -11,6 +11,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * `New Updates` Delete Tweak (#2030)
 * Pull Down Updates Loader (#1991)
 * Switch to Google Maps (#1932)
+* GEOFENCE v1: HS Static Banner Active Geofence Bots (WIP #1903)
+* Infinite loader on HS (#2066)
+* Image picker text should be removed (#2065)
+* Logout should say 'Are you sure you want to Logout' (#1297)
 
 
 # 2.4.0 - 2018 Apr 2
