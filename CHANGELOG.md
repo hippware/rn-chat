@@ -5,11 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.4.0 - 2018 Apr 2
+
 * Don't propagate foreground push notifications.
 * GEOFENCE v1: HS Geofence Share Notification (Rework #1921)
 * Interim solution for Who's Here (while we wait for live updates) (#2035)
-* Convert some source files to TypeScript (work in progress).
-  * Includes some small improvements.
+* Convert source files to TypeScript (work in progress).
+* new BottomButton component (better animation)
+* Presence Bot Share Flow: Share Presence CTA is behind the keyboard and remove back caret (#2051)
+* Location uploading 'debug' mode (Staging only) (Related #2029)
+* Various other small changes and improvements.
 
 
 # 2.3.1 - 2018 March 27
