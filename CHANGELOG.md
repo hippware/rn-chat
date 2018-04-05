@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.4.1 - 2018 Apr 4
+
+* `New Updates` Delete Tweak (#2030)
+* Infinite loader on HS (#2066)
+
+
 # 2.4.0 - 2018 Apr 2
 
 * Don't propagate foreground push notifications.
