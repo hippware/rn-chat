@@ -24,6 +24,7 @@ export default class BotMarker extends React.Component<Props> {
 
   componentDidMount() {
     this.setState({mounted: true})
+    setTimeout(() => this.setState({tracking: false}), 500)
   }
 
   componentWillUnmount() {
