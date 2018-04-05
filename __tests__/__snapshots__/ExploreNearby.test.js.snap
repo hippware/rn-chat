@@ -21,6 +21,117 @@ exports[`Explore Nearby renders with no data 1`] = `
   >
     <MapView
       autoZoom={true}
+      customMapStyle={
+        Array [
+          Object {
+            "elementType": "labels.text",
+            "featureType": "administrative",
+            "stylers": Array [
+              Object {
+                "color": "#fe5c6c",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.text.stroke",
+            "featureType": "administrative",
+            "stylers": Array [
+              Object {
+                "color": "#ffffff",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.text",
+            "featureType": "administrative.land_parcel",
+            "stylers": Array [
+              Object {
+                "color": "#d6949b",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.text.fill",
+            "featureType": "administrative.neighborhood",
+            "stylers": Array [
+              Object {
+                "color": "#d6949b",
+              },
+            ],
+          },
+          Object {
+            "elementType": "geometry.fill",
+            "featureType": "landscape.man_made",
+            "stylers": Array [
+              Object {
+                "color": "#fff8f0",
+              },
+            ],
+          },
+          Object {
+            "elementType": "geometry.fill",
+            "featureType": "landscape.natural",
+            "stylers": Array [
+              Object {
+                "color": "#fff8f0",
+              },
+            ],
+          },
+          Object {
+            "elementType": "geometry.stroke",
+            "featureType": "road",
+            "stylers": Array [
+              Object {
+                "visibility": "off",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.text",
+            "featureType": "road",
+            "stylers": Array [
+              Object {
+                "color": "#70b0e1",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.text.stroke",
+            "featureType": "road",
+            "stylers": Array [
+              Object {
+                "color": "#ffffff",
+              },
+            ],
+          },
+          Object {
+            "elementType": "labels.icon",
+            "featureType": "road.highway",
+            "stylers": Array [
+              Object {
+                "visibility": "off",
+              },
+            ],
+          },
+          Object {
+            "featureType": "transit",
+            "stylers": Array [
+              Object {
+                "visibility": "off",
+              },
+            ],
+          },
+          Object {
+            "elementType": "geometry.fill",
+            "featureType": "water",
+            "stylers": Array [
+              Object {
+                "color": "#99ddf0",
+              },
+            ],
+          },
+        ]
+      }
       followUser={true}
       fullMap={true}
       initialRegion={
@@ -53,9 +164,10 @@ exports[`Explore Nearby renders with no data 1`] = `
         pointerEvents="none"
         style={
           Object {
-            "zIndex": 1,
+            "zIndex": 1000,
           }
         }
+        tracksViewChanges={true}
       >
         <View
           style={

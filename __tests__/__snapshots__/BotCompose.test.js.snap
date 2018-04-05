@@ -908,6 +908,117 @@ exports[`BotCompose renders with owned bot 1`] = `
           >
             <MapView
               autoZoom={true}
+              customMapStyle={
+                Array [
+                  Object {
+                    "elementType": "labels.text",
+                    "featureType": "administrative",
+                    "stylers": Array [
+                      Object {
+                        "color": "#fe5c6c",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.text.stroke",
+                    "featureType": "administrative",
+                    "stylers": Array [
+                      Object {
+                        "color": "#ffffff",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.text",
+                    "featureType": "administrative.land_parcel",
+                    "stylers": Array [
+                      Object {
+                        "color": "#d6949b",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.text.fill",
+                    "featureType": "administrative.neighborhood",
+                    "stylers": Array [
+                      Object {
+                        "color": "#d6949b",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "geometry.fill",
+                    "featureType": "landscape.man_made",
+                    "stylers": Array [
+                      Object {
+                        "color": "#fff8f0",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "geometry.fill",
+                    "featureType": "landscape.natural",
+                    "stylers": Array [
+                      Object {
+                        "color": "#fff8f0",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "geometry.stroke",
+                    "featureType": "road",
+                    "stylers": Array [
+                      Object {
+                        "visibility": "off",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.text",
+                    "featureType": "road",
+                    "stylers": Array [
+                      Object {
+                        "color": "#70b0e1",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.text.stroke",
+                    "featureType": "road",
+                    "stylers": Array [
+                      Object {
+                        "color": "#ffffff",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "labels.icon",
+                    "featureType": "road.highway",
+                    "stylers": Array [
+                      Object {
+                        "visibility": "off",
+                      },
+                    ],
+                  },
+                  Object {
+                    "featureType": "transit",
+                    "stylers": Array [
+                      Object {
+                        "visibility": "off",
+                      },
+                    ],
+                  },
+                  Object {
+                    "elementType": "geometry.fill",
+                    "featureType": "water",
+                    "stylers": Array [
+                      Object {
+                        "color": "#99ddf0",
+                      },
+                    ],
+                  },
+                ]
+              }
               fullMap={false}
               geofence={false}
               initialRegion={
@@ -933,7 +1044,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                 }
               }
               marker={
-                <_class
+                <BotMarker
                   bot={
                     Object {
                       "address": "123 address",
@@ -1129,11 +1240,14 @@ exports[`BotCompose renders with owned bot 1`] = `
                 identifier="4321"
                 onPress={[Function]}
                 style={
-                  Object {
-                    "borderWidth": 2,
-                    "top": -2000,
-                  }
+                  Array [
+                    Object {
+                      "top": -2000,
+                    },
+                    undefined,
+                  ]
                 }
+                tracksViewChanges={true}
               >
                 <View
                   accessibilityComponentType={undefined}

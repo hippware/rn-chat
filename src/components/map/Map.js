@@ -13,8 +13,10 @@ import * as log from '../../utils/log';
 import {RText, Spinner} from '../common';
 import BotMarker from './BotMarker';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
+import CurrentLocationMarker from './CurrentLocationMarker';
 import {colors} from '../../constants/index';
 import Geofence from './Geofence';
+import mapStyle from './mapStyle';
 
 export const DELTA_FULL_MAP = 0.04;
 export const DELTA_BOT_PROFILE = 0.2;
@@ -75,7 +77,7 @@ export default class Map extends Component<Props> {
       list.push(bot);
     }
     const bots = list.filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location && bot.location.latitude);
-    const res = bots.map(bot => <BotMarker key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />);
+    const res = bots.map((bot, index) => <BotMarker style={{zIndex: index + (this.selectedBot === bot.id ? 1000 : 0)}} key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />);
 
     bots
       .filter(bot => bot.geofence)
@@ -274,20 +276,14 @@ export default class Map extends Component<Props> {
           onPress={this.onPress}
           onMarkerPress={this.onMarkerSelect}
           style={styles.container}
+          customMapStyle={mapStyle}
           onRegionChangeComplete={this.onRegionDidChange}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
           {geofence && coords && <Geofence coords={coords} key={`${coords.longitude}-${coords.latitude}`} />}
           {marker || this.botMarkerList}
-          {(this.followUser || showUser) &&
-            currentLoc && (
-              <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
-                <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
-                  <Image source={require('../../../images/location-indicator.png')} />
-                </View>
-              </MapView.Marker>
-            )}
+          {(this.followUser || showUser) && <CurrentLocationMarker />}
         </MapView>
         {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
         {children}
