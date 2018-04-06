@@ -31,11 +31,12 @@
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
+    "@absinthe/socket-apollo-link": "^0.1.11",
     "@types/graphql": "^0.12.7",
     "@types/node-fetch": "^1.6.7",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",
-    "apollo-link-http": "^1.5.3",
+    "apollo-link": "^1.2.1",
     "classy-mst": "github:charto/classy-mst#develop",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",

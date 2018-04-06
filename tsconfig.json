@@ -7,7 +7,7 @@
     "module": "commonjs",
     "removeComments": false,
     "outDir": "lib/",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "strictNullChecks": true,

@@ -1,11 +1,13 @@
 // import {observable, when} from 'mobx'
 // import * as Utils from './utils'
 import {ApolloClient} from 'apollo-client'
-import {HttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {observable} from 'mobx'
+import * as AbsintheSocket from '@absinthe/socket'
+import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
+import {Socket as PhoenixSocket} from 'phoenix'
 
 // TODO use GraphQL fragment for this?
 const BOT_PROPS = 'id title address addressData description geofence image public radius server shortname type'
@@ -39,18 +41,25 @@ export class GraphQLTransport implements IWockyTransport {
     }
     // todo: implement login when it's ready
     this.client = new ApolloClient({
-      link: new HttpLink({
-        // use http link for now but may need websockets client later to handle subscriptions
-        // https://www.apollographql.com/docs/link/links/ws.html
-        uri: `https://${this.host}/graphql`,
-        headers: {
-          'x-auth-user': this.username,
-          'x-auth-token': this.password
-        }
-      }),
+      link: createAbsintheSocketLink(AbsintheSocket.create(new PhoenixSocket(`wss://${this.host}/graphql`))),
       cache: new InMemoryCache()
     })
-    return true
+    try {
+      const res = await this.client.mutate({
+        mutation: gql`
+          mutation authenticate($user: String!, $token: String!) {
+            authenticate(user: $user, token: $token) {
+              id
+            }
+          }
+        `,
+        variables: {user, token: password}
+      })
+      return res.data.authenticate !== null
+    } catch (err) {
+      console.log('setLocation error:', err)
+      return false
+    }
   }
 
   async loadProfile(user: string): Promise<any> {
