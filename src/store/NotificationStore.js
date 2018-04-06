@@ -36,7 +36,7 @@ class NotificationStore {
         }
       },
       {
-        delay: 3000,
+        delay: 5000,
         name: 'offline notification check',
       },
     );
