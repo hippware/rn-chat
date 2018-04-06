@@ -61,8 +61,9 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
-  disconnect(): Promise<void> {
-    return this._xmpp.disconnect()
+  async disconnect(): Promise<void> {
+    await this._gql.disconnect()
+    await this._xmpp.disconnect()
   }
 
   loadProfile(user: string): Promise<any> {

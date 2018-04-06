@@ -14,7 +14,7 @@ const BOT_PROPS = 'id title address addressData description geofence image publi
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
-  client: any
+  client: ApolloClient<any>
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -55,7 +55,7 @@ export class GraphQLTransport implements IWockyTransport {
         `,
         variables: {user, token: password}
       })
-      return res.data.authenticate !== null
+      return !!res.data && res.data!.authenticate !== null
     } catch (err) {
       console.log('setLocation error:', err)
       return false
@@ -63,7 +63,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<any> {
-    const res = await this.client.query({
+    const res = await this.client.query<any>({
       query: gql`
         query LoadProfile {
           user(id: "${user}") {
@@ -85,7 +85,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw 'Not supported'
   }
   async loadBot(id: string, server: any): Promise<any> {
-    const res = await this.client.query({
+    const res = await this.client.query<any>({
       query: gql`
         {
           bot(id: "${id}") {
@@ -98,7 +98,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.client.query({
+    const res = await this.client.query<any>({
       query: gql`
         {
           user(id: "${userId}") {
@@ -147,9 +147,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw 'Not supported'
   }
 
-  async disconnect(): Promise<void> {
-    throw 'Not supported'
-  }
+  async disconnect(): Promise<void> {}
 
   async requestProfiles(users: string[]): Promise<any> {
     throw 'Not supported'
