@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, ImageRequireSource} from 'react-native'
 import {defaultCover} from '../Global'
 import Bubble from './Bubble'
 import {observer} from 'mobx-react/native'
@@ -11,11 +11,12 @@ type Props = {
   bot: IBot
   scale: number
   onImagePress?: () => void
-  image?: any
+  image?: ImageRequireSource
   showLoader?: boolean
 }
 
-const BotBubble = observer(({bot, showLoader, image, scale, onImagePress}: Props) => {
+const BotBubble = observer((props: Props) => {
+  const {bot, showLoader, image, onImagePress, ...rest} = props
   if (!bot || !isAlive(bot) || !bot.location) {
     return null
   }
@@ -30,9 +31,9 @@ const BotBubble = observer(({bot, showLoader, image, scale, onImagePress}: Props
   const bubble = (
     <Bubble
       text={text}
-      scale={scale}
       image={coverImage}
       showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
+      {...rest}
     />
   )
 

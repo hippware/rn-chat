@@ -12,6 +12,7 @@ type Props = {
   image: any
   scale: number
   showLoader: boolean
+  children?: any
 }
 
 @observer
@@ -28,7 +29,7 @@ export default class Bubble extends React.Component<Props> {
   }
 
   render() {
-    const {scale, image, text, showLoader} = this.props
+    const {scale, image, text, showLoader, children} = this.props
     const fullMap = scale === 0
     const fullImage = scale === 1
     const width = this.animatedValue.interpolate({
@@ -74,6 +75,7 @@ export default class Bubble extends React.Component<Props> {
                 </RText>
               </View>
             )}
+          {children}
         </Animated.View>
         {!fullImage && (
           <Triangle

@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, View, FlatList, StyleSheet, Image} from 'react-native'
+import {TouchableOpacity, View, FlatList, StyleSheet} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
@@ -85,7 +85,6 @@ const UpdateButton = inject('wocky')(
     ({visible, wocky, onUpdate}: {visible: boolean; wocky?: IWocky; onUpdate: () => void}) =>
       visible && wocky!.updatesToAdd.length ? (
         <TouchableOpacity onPress={onUpdate} style={styles.updateButton}>
-          <Image source={require('../../../images/up.png')} style={{marginRight: 5 * k}} />
           <RText weight="Medium" color={colors.WHITE} size={12}>
             New Updates
           </RText>
