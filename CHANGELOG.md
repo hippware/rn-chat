@@ -10,7 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Incorrect sms auth code is creating a bugsnag (#2062)
 * `New Updates` Delete Tweak (#2030)
 * Pull Down Updates Loader (#1991)
-* Switch to Google Maps (#1932)
+* Switch to Google Maps (#1932, PR #2080)
+  * High CPU fix
+  * Import map style (#2070)
 * GEOFENCE v1: HS Static Banner Active Geofence Bots (WIP #1903)
 * Infinite loader on HS (#2066)
 * Image picker text should be removed (#2065)
