@@ -7,7 +7,7 @@ import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
-import {Wocky, XmppTransport} from 'wocky-client';
+import {Wocky, XmppTransport, HybridTransport, GraphQLTransport} from 'wocky-client';
 import nativeEnv from 'react-native-native-env';
 import backgroundGeolocation from 'react-native-background-geolocation';
 import backgroundFetch from 'react-native-background-fetch';
@@ -33,7 +33,9 @@ import PushStore from './PushStore';
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
 const provider = new XmppIOS();
-const transport = new XmppTransport(provider, fileService, DeviceInfo.getUniqueID());
+const xmppTransport = new XmppTransport(provider, fileService, DeviceInfo.getUniqueID())
+const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
+const transport = new HybridTransport(xmppTransport, graphqlTransport)
 
 const {geolocation} = navigator;
 
