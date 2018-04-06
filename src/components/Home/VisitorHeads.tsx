@@ -15,12 +15,12 @@ type Props = {
 @observer
 class VisitorHeads extends React.Component<Props> {
   componentDidMount() {
-    this.props.bot.subscribers.load()
+    this.props.bot.visitors.load()
   }
 
   render() {
     const {bot} = this.props
-    const {list} = bot.subscribers
+    const {list} = bot.visitors
     const profile = list.length ? list[0] : null
     const rest = list.length - 1
     const size = 30

@@ -21,7 +21,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     const {profile} = wocky!
     // console.log('profile', profile)
     // !!profile.activeBots.length
-    return profile && profile.handle && !!profile.subscribedBots.list.length ? (
+    return profile && profile.handle && !!profile.activeBots.length ? (
       <View style={{backgroundColor: 'white'}}>
         <RText
           size={13}
@@ -32,7 +32,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           {"See Who's Here"}
         </RText>
         <FlatList
-          data={profile.subscribedBots.list}
+          data={profile.activeBots}
           horizontal
           keyExtractor={this.keyExtractor}
           renderItem={this.renderActiveBot}

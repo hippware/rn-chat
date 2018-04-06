@@ -28,8 +28,7 @@ class ActiveBot extends React.Component<Props> {
       <View style={styles.outer}>
         <View style={styles.inner}>
           <BotBubble bot={this.props.bot} scale={0} onImagePress={this.goToBot}>
-            {/* TODO: reactivate when `bot.guest` is real data
-             {this.props.bot.guest ? (
+            {this.props.bot.guest ? (
               <View
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.3)',
@@ -48,7 +47,7 @@ class ActiveBot extends React.Component<Props> {
                   style={{textAlign: 'center'}}
                 >{`You're\r\nHere`}</RText>
               </View>
-            ) : null} */}
+            ) : null}
           </BotBubble>
           <RText size={13} style={{textAlign: 'center'}} numberOfLines={2} ellipsizeMode="tail">
             {this.props.bot.title}
