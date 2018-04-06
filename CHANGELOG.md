@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.5.??
+
+(Not sequential with 2.4.1)
 
 * More typescript
 * GEOFENCE v1: Location Access Request in HS Geofence Header (#1914)
@@ -17,6 +20,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Infinite loader on HS (#2066)
 * Image picker text should be removed (#2065)
 * Logout should say 'Are you sure you want to Logout' (#1297)
+
+
+# 2.4.1 - 2018 Apr 4
+
+* `New Updates` Delete Tweak (#2030)
+* Infinite loader on HS (#2066)
 
 
 # 2.4.0 - 2018 Apr 2
