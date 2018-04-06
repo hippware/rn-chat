@@ -32,14 +32,10 @@ type Props = {
 }
 
 @observer
-class Avatar extends React.Component<Props> {
+export default class Avatar extends React.Component<Props> {
   static defaultProps = {
     tappable: true,
   }
-
-  _root: any
-
-  setRoot = (component: any) => (this._root = component)
 
   goToProfile = () => Actions.profileDetails({item: this.props.profile.id})
 
@@ -64,7 +60,7 @@ class Avatar extends React.Component<Props> {
     const Clazz = tappable ? TouchableOpacity : View
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
-        <View ref={this.setRoot} style={[style, {height: size * k, width: size * k}]}>
+        <View style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar ? (
             <AvatarImage
               {...this.props}
@@ -173,5 +169,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
-
-export default Avatar
