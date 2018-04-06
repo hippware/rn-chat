@@ -23,12 +23,12 @@ export default class BotMarker extends React.Component<Props> {
   mounted = false
 
   componentDidMount() {
-    this.setState({mounted: true})
+    this.mounted = true
     setTimeout(() => this.setState({tracking: false}), 500)
   }
 
   componentWillUnmount() {
-    this.setState({mounted: false})
+    this.mounted = false
   }
   // workaround for high CPU usage by Google maps
   // https://github.com/react-community/react-native-maps/issues/1031#issuecomment-378881118
