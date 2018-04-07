@@ -4,7 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 2.5.??
+
+# 2.5.0 - 2018 Apr 6
 
 (Not sequential with 2.4.1)
 
@@ -16,10 +17,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Switch to Google Maps (#1932, PR #2080)
   * High CPU fix
   * Import map style (#2070)
-* GEOFENCE v1: HS Static Banner Active Geofence Bots (WIP #1903)
 * Infinite loader on HS (#2066)
 * Image picker text should be removed (#2065)
 * Logout should say 'Are you sure you want to Logout' (#1297)
+* GEOFENCE v1: HS Static Banner Active Geofence Bots (#1903)
+* Change the geofence created notification to match the shared notification (#2034)
+* GraphQL support (work in progress)
 
 
 # 2.4.1 - 2018 Apr 4
