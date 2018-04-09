@@ -5,7 +5,7 @@ import {simpleActionLogger} from 'mst-middlewares';
 import {addMiddleware} from 'mobx-state-tree';
 import {observable} from 'mobx';
 
-class XmppTransport {
+export class XmppTransport {
   provider: any;
   fileService: any;
   resource: string;
@@ -24,11 +24,16 @@ class XmppTransport {
 
   async login(user?: string, password?: string, host?: string) {
     console.log('WOCKY LOGIN');
+    this.user = user;
+    this.password = password;
+    this.host = host;
+    this.connected = true;
   }
 
   async disconnect() {
     // this.provider.disconnectAfterSending()
     // await new Promise(resolve => when(() => !this.connected, resolve))
+    this.connected = false;
   }
 
   async sendIQ(data: any, withoutTo: boolean = false): Promise<any> {}

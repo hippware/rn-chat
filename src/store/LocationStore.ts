@@ -24,10 +24,11 @@ const LocationStore = types
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
     loading: false,
     backgroundDebugEnabled: false,
-  })).views(self => ({
+  }))
+  .views(self => ({
     get isMetric() {
       return self.system === METRIC
-    }
+    },
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number) => {

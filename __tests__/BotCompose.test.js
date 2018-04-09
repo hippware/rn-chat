@@ -31,6 +31,7 @@ describe('BotCompose', () => {
     const profile = await wocky.profiles.get(wocky.profile.id)
     bot.load({location, title: 'title', address: '123 address', owner: profile})
     bot.location.load({isCurrent: false})
+
     // bot.load({addressData: data.meta, address: data.address});
     const toRender = (
       <Provider wocky={wocky} {...injects}>
