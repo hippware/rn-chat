@@ -1,8 +1,5 @@
-// @flow
-
-import {autorun} from 'mobx'
-import {types, flow, getEnv, addMiddleware} from 'mobx-state-tree'
-import {actionLogger, simpleActionLogger} from 'mst-middlewares'
+import {types, getEnv, addMiddleware} from 'mobx-state-tree'
+import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage, AppState, NetInfo} from 'react-native'
 import firebase from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
