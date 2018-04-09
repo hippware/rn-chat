@@ -48,6 +48,7 @@ const ConnectivityStore = types
         () => {
           const {netConnected, isActive} = self
           const {username, password, connected, connecting} = getParent(self).wocky
+          // if the app "should connect", has the necessary info, and isn't already trying...
           if (netConnected && isActive && username && password && !(connected || connecting)) {
             tryReconnect()
           }
