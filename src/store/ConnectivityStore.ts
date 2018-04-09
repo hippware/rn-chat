@@ -1,100 +1,112 @@
-import {observable, autorunAsync, computed} from 'mobx'
-import {IWocky} from 'wocky-client'
-
-type ConnectivityStoreParams = {
-  wocky: IWocky
-  AppState: any
-  NetInfo: any
-  logger: any
-}
+import {autorunAsync} from 'mobx'
+// import {IWocky} from 'wocky-client'
+import {types, getEnv, getParent} from 'mobx-state-tree'
 
 export const DELAY = 1000
 
-export default class Connectivity {
-  @observable isActive: boolean = true
-  @observable retryCount: number = 0
-  @observable netConnected: boolean = true
-
-  private wocky: IWocky
-  private logger: any
-  // private timeout: number;
-  private retryDelay: number
-
-  constructor({wocky, AppState, NetInfo, logger}: ConnectivityStoreParams) {
-    this.wocky = wocky
-    this.logger = logger
-    this.retryDelay = DELAY
-
-    AppState.addEventListener('change', this._handleAppStateChange)
-    NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
-    NetInfo.getConnectionInfo().then(reach => {
-      this.logger.log('NETINFO INITIAL:', reach)
-      this._handleConnectionInfoChange(reach)
-    })
-
-    autorunAsync(
-      'Connectivity: tryReconnect',
-      () => {
-        if (this.netConnected && this.isActive && !this.loggedOut) {
-          this.tryReconnect()
-        }
-      },
-      500
-    )
-  }
-
-  @computed
-  get loggedOut() {
-    const {connected, profile, connecting} = this.wocky
-    return !connected && !connecting && !profile
-  }
-
-  tryReconnect = async () => {
-    this.logger.log('tryReconnect')
-    const {username, password, host, login} = this.wocky
-    if (username && password && host) {
-      try {
-        this.retryCount += 1
-        await login()
-        this.retryDelay = DELAY
-        this.retryCount = 0
-      } catch (e) {
-        // TODO: failed login Mixpanel call
-        this.retryDelay = this.retryDelay >= 5000 ? this.retryDelay : this.retryDelay * 1.5
-        setTimeout(this.tryReconnect, this.retryDelay)
-      }
-    } else {
-      this.wocky.disconnect()
-    }
-  }
-
-  _handleConnectionInfoChange = connectionInfo => {
-    this.logger.log('CONNECTIVITY:', connectionInfo)
-    if (connectionInfo.type === 'unknown') {
-      this.netConnected = false
-      // @TODO: mixpanel submit info?
-      return
-    }
-    if (connectionInfo.type === 'none') {
-      this.netConnected = false
-      if (this.wocky.connected && !this.wocky.connecting) {
-        this.wocky.disconnect()
-      }
-    } else {
-      // TODO: store the connection type ('wifi' or 'cellular')
-      // MIXPANEL
-      this.netConnected = true
-    }
-  }
-
-  _handleAppStateChange = async currentAppState => {
-    this.logger.log('CURRENT APPSTATE:', currentAppState)
-    if (currentAppState === 'active') {
-      this.isActive = true
-    }
-    if (currentAppState === 'background') {
-      this.isActive = false
-      this.wocky.disconnect()
-    }
-  }
+type State = {
+  isActive?: boolean
+  retryCount?: number
+  netConnected?: boolean
+  retryDelay?: number
+  reconnecting?: boolean
 }
+
+const ConnectivityStore = types
+  .model('ConnectivityStore', {})
+  .volatile(() => ({
+    isActive: true,
+    retryCount: 0,
+    netConnected: true,
+    retryDelay: DELAY,
+    reconnecting: false,
+  }))
+  .actions(self => ({
+    setState(state: State) {
+      Object.assign(self, state)
+    },
+  }))
+  .actions(self => {
+    let wocky
+    let logger
+    let appState
+    let netInfo
+
+    function afterAttach() {
+      wocky = getParent(self).wocky
+      ;({logger, appState, netInfo} = getEnv(self))
+
+      appState.addEventListener('change', _handleAppStateChange)
+      netInfo.addEventListener('connectionChange', _handleConnectionInfoChange)
+      netInfo.getConnectionInfo().then(reach => {
+        logger.log('NETINFO INITIAL:', reach)
+        _handleConnectionInfoChange(reach)
+      })
+
+      autorunAsync(
+        'Connectivity: tryReconnect',
+        () => {
+          const {netConnected, isActive} = self
+          const {username, password, connected, connecting} = getParent(self).wocky
+          if (netConnected && isActive && username && password && !(connected || connecting)) {
+            tryReconnect()
+          }
+        },
+        DELAY
+      )
+    }
+
+    async function tryReconnect(force?: boolean) {
+      const {username, password, host, login, connected, connecting, profile} = wocky
+      if (username && password && host && (!self.reconnecting || force)) {
+        try {
+          self.setState({retryCount: self.retryCount + 1, reconnecting: true})
+          await login()
+          self.setState({
+            retryDelay: DELAY,
+            retryCount: 0,
+            reconnecting: false,
+          })
+        } catch (e) {
+          self.setState({
+            retryDelay: self.retryDelay >= 5000 ? self.retryDelay : self.retryDelay * 1.5,
+          })
+          setTimeout(() => tryReconnect(true), self.retryDelay)
+        }
+      } else {
+        wocky.disconnect()
+      }
+    }
+
+    async function _handleAppStateChange(currentAppState: any) {
+      logger.log('& CURRENT APPSTATE:', currentAppState)
+      if (currentAppState === 'active') {
+        self.setState({isActive: true})
+      }
+      if (currentAppState === 'background') {
+        self.setState({isActive: false})
+        wocky.disconnect()
+      }
+    }
+
+    async function _handleConnectionInfoChange(connectionInfo: any) {
+      logger.log('& CONNECTIVITY:', connectionInfo)
+      if (connectionInfo.type === 'unknown') {
+        self.setState({netConnected: true})
+        return
+      }
+      if (connectionInfo.type === 'none') {
+        self.setState({netConnected: false})
+        if (wocky.connected && !wocky.connecting) {
+          wocky.disconnect()
+        }
+      } else {
+        self.setState({netConnected: true})
+      }
+    }
+
+    return {afterAttach}
+  })
+
+export default ConnectivityStore
+export type IConnectivityStore = typeof ConnectivityStore.Type

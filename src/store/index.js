@@ -47,7 +47,6 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
-let connectivityStore
 const env = {
   transport,
   storage: AsyncStorage,
@@ -60,6 +59,8 @@ const env = {
   nativeEnv,
   appState: AppState,
   netInfo: NetInfo,
+  backgroundFetch,
+  backgroundGeolocation,
 }
 
 const Store = types
@@ -71,6 +72,7 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
+    connectivityStore: ConnectivityStore,
     version: types.string,
     // codePushChannel: types.string,
     locationPrimed: false,
@@ -92,9 +94,6 @@ const Store = types
     dismissSharePresencePrimer: () => {
       self.sharePresencePrimed = true
     },
-    connectivityStore: () => {
-      return connectivityStore
-    }
   }))
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore')
@@ -107,6 +106,7 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
+    connectivityStore: {},
     version: settings.version,
   },
   env
@@ -115,13 +115,7 @@ const theStore = PersistableStore.create(
 export const codePushStore = cp
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)
-export connectivityStore = new ConnectivityStore({
-  wocky: theStore.wocky,
-  AppState,
-  NetInfo,
-  logger,
-})
-export const notificationStore = new NotificationStore(theStore.wocky, connectivityStore)
+export const notificationStore = new NotificationStore(theStore.wocky, theStore.connectivityStore)
 // bugsnag(theStore.wocky);
 
 // simple logging
