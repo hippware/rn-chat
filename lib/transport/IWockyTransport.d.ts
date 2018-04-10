@@ -3,6 +3,12 @@ export interface IPagingList {
     cursor?: string;
     count: number;
 }
+export declare type SetLocationParams = {
+    accuracy: number;
+    latitude: number;
+    longitude: number;
+    resource: string;
+};
 export interface IWockyTransport {
     connected: boolean;
     connecting: boolean;
@@ -14,6 +20,7 @@ export interface IWockyTransport {
     presence: any;
     rosterItem: any;
     notification: any;
+    botVisitor: any;
     login(user?: string, password?: string, host?: string): Promise<boolean>;
     register(data: any, host?: string, providerName?: string): Promise<{
         username: string;
@@ -28,6 +35,7 @@ export interface IWockyTransport {
         host: string;
     }>;
     disconnect(): Promise<void>;
+    setLocation(params: SetLocationParams): Promise<void>;
     loadProfile(user: string): Promise<any>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;

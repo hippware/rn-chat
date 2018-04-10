@@ -3,19 +3,20 @@
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, IPagingList} from './IWockyTransport'
+import {IWockyTransport, SetLocationParams, IPagingList} from './IWockyTransport'
 import {observable} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 
 // TODO use GraphQL fragment for this?
-const BOT_PROPS = 'id title address addressData description geofence image public radius server shortname type'
+const BOT_PROPS = 'id title address addressData description geofence image public radius server shortname type lat lon'
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
   socket: PhoenixSocket
+  subscriptions: {[key: string]: any} = {}
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -26,6 +27,7 @@ export class GraphQLTransport implements IWockyTransport {
   @observable notification: any
   @observable presence: any
   @observable rosterItem: any
+  @observable botVisitor: any
 
   constructor(resource: string) {
     this.resource = resource
@@ -59,7 +61,6 @@ export class GraphQLTransport implements IWockyTransport {
       })
       return !!res.data && res.data!.authenticate !== null
     } catch (err) {
-      console.log('setLocation error:', err)
       return false
     }
   }
@@ -122,6 +123,54 @@ export class GraphQLTransport implements IWockyTransport {
     const list = bots.edges.map((e: any) => e.node)
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
+  async setLocation(params: SetLocationParams): Promise<void> {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
+          setLocation(location: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+            result
+            successful
+          }
+        }
+      `,
+      variables: params
+    })
+    return res.data!.setLocation.successful
+  }
+  async subscribeBotVisitors(botId: string) {
+    if (this.subscriptions[botId]) {
+      this.subscriptions[botId]()
+    }
+    console.log('SUBSCRIBE BOT VISITORS', botId)
+    this.subscriptions[botId] = await this.client
+      .subscribe({
+        query: gql`
+          subscription botVisitors($id: String!) {
+            botVisitors(id: $id) {
+              subscribers(first: 100, type: VISITOR) {
+                edges {
+                  node {
+                    avatar
+                    firstName
+                    lastName
+                    handle
+                    id
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {id: botId}
+      })
+      .subscribe({
+        next: (result: any) => {
+          console.log('SUBSCRIPTION RESULT:', JSON.stringify(result))
+          this.botVisitor = {...result.data.botVisitors.subscribers.edges[0].node, botId}
+        }
+      })
+  }
+
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this._loadBots('OWNED', id, lastId, max)
   }
@@ -168,7 +217,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async remove(): Promise<void> {
-    throw 'Not supported'
+    return this.disconnect()
   }
 
   async downloadURL(tros: string): Promise<any> {

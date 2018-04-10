@@ -1,4 +1,4 @@
-import { IWockyTransport, IPagingList, XmppTransport, GraphQLTransport } from '../';
+import { IWockyTransport, SetLocationParams, IPagingList, XmppTransport, GraphQLTransport } from '../';
 export declare class HybridTransport implements IWockyTransport {
     readonly connected: boolean;
     readonly connecting: boolean;
@@ -10,6 +10,7 @@ export declare class HybridTransport implements IWockyTransport {
         id: string;
         message: any;
     };
+    readonly botVisitor: any;
     readonly presence: {
         status: string;
         id: string;
@@ -32,6 +33,7 @@ export declare class HybridTransport implements IWockyTransport {
         password: string;
         host: string;
     }>;
+    setLocation(params: SetLocationParams): Promise<void>;
     disconnect(): Promise<void>;
     loadProfile(user: string): Promise<any>;
     requestProfiles(users: string[]): Promise<any>;
