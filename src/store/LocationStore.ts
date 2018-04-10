@@ -25,11 +25,11 @@ const LocationStore = types
   }))
   .views(self => ({
     get isMetric() {
-      return self.system === METRIC
+      return self.system.is(METRIC)
     },
   }))
   .views(self => ({
-    distance: (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
       const R = 6371000 // Radius of the earth in m
       const dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
       const dLon = (lon2 - lon1) * Math.PI / 180
@@ -42,7 +42,7 @@ const LocationStore = types
       const result = self.isMetric ? res : res * 3.2808399
       return result
     },
-    distanceToString: (distance: number) => {
+    distanceToString: (distance: number): string => {
       // const limit = self.system === METRIC ? 1000 : 5280
       // if (distance>limit){
       return self.isMetric
@@ -54,14 +54,14 @@ const LocationStore = types
     },
   }))
   .views(self => ({
-    distanceFromBot: (botLoc: {latitude: number; longitude: number}) => {
+    distanceFromBot: (botLoc: {latitude: number; longitude: number}): string | undefined => {
       const {location, distanceToString, distance} = self
       if (location && botLoc) {
         return distanceToString(
           distance(location.latitude, location.longitude, botLoc.latitude, botLoc.longitude)
         )
       }
-      return null
+      return undefined
     },
   }))
   .actions(self => ({

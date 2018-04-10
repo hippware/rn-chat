@@ -58,7 +58,7 @@ const ConnectivityStore = types
     }
 
     async function tryReconnect(force?: boolean) {
-      const {username, password, host, login, connected, connecting, profile} = wocky
+      const {username, password, host, login} = wocky
       if (username && password && host && (!self.reconnecting || force)) {
         try {
           self.setState({retryCount: self.retryCount + 1, reconnecting: true})

@@ -2,6 +2,15 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
 
+type State = {
+  phone?: string
+  token?: string
+  resource?: string
+  buttonText?: string
+  registered?: boolean
+  errorMessage?: string
+}
+
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
@@ -11,17 +20,25 @@ const FirebaseStore = types
   .volatile(() => ({
     buttonText: 'Verify',
     registered: false,
-    errorMessage: '', // to avoid strange typescript errors when set it to string or null
+    errorMessage: '', // to avoid strange typescript errors when set it to string or null,
+  }))
+  .actions(self => ({
+    setState(state: State) {
+      Object.assign(self, state)
+    },
+    reset() {
+      self.registered = false
+      self.errorMessage = ''
+      self.buttonText = 'Verify'
+    },
   }))
   .actions(self => {
     const {auth, logger, analytics} = getEnv(self)
     let wocky: IWocky
-    // tslint:disable-next-line
-    let unsubscribe: any
     let confirmResult: any
 
     function afterAttach() {
-      unsubscribe = auth.onAuthStateChanged(processFirebaseAuthChange)
+      auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = getParent(self).wocky
     }
 
@@ -32,7 +49,7 @@ const FirebaseStore = types
         try {
           await auth.currentUser.reload()
           const token = await auth.currentUser.getIdToken(true)
-          self.setToken(token)
+          self.setState({token})
           // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});)
         } catch (err) {
           logger.warn('Firebase onAuthStateChanged error:', err)
@@ -44,10 +61,6 @@ const FirebaseStore = types
       } else if (wocky.profile && wocky.connected) {
         wocky.logout()
       }
-    }
-
-    function setToken(token: string): void {
-      self.token = token
     }
 
     const logout = flow(function*() {
@@ -68,15 +81,9 @@ const FirebaseStore = types
         logger.warn('wocky logout error', err)
       }
       self.reset()
+      confirmResult = null
       return true
     })
-
-    function reset() {
-      self.registered = false
-      self.errorMessage = ''
-      self.buttonText = 'Verify'
-      confirmResult = null
-    }
 
     const verifyPhone = flow(function*({phone}: any) {
       self.phone = phone
@@ -113,7 +120,7 @@ const FirebaseStore = types
         }
         analytics.track('verify_confirmation_try', {code, resource})
         yield confirmResult.confirm(code)
-        self.register()
+        register()
         analytics.track('verify_confirmation_success')
       } catch (err) {
         analytics.track('verify_confirmation_fail', {error: err, code})
@@ -138,29 +145,30 @@ const FirebaseStore = types
 
     // const register = flow(function* register(token: string) {
     function register(): void {
-      self.buttonText = 'Registering...'
+      self.setState({buttonText: 'Registering...'})
       // TODO: set a timeout on firebase register
       when(() => !!self.token, registerWithToken)
     }
 
     const registerWithToken = flow(function*() {
       try {
-        yield wocky!.register({jwt: self.token}, 'firebase')
-        self.buttonText = 'Connecting...'
+        yield wocky!.register({jwt: self.token})
+        self.setState({buttonText: 'Connecting...'})
         yield wocky.login()
-        self.buttonText = 'Verify'
-        self.registered = true
+        self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
-        self.errorMessage = 'Error registering, please try again'
+        self.setState({errorMessage: 'Error registering, please try again'})
         analytics.track('error_firebase_register', err)
       } finally {
-        self.buttonText = 'Verify'
-        self.errorMessage = ''
+        self.setState({
+          buttonText: 'Verify',
+          errorMessage: '',
+        })
       }
     })
 
-    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken, reset}
+    return {afterAttach, logout, verifyPhone, confirmCode, resendCode}
   })
 
 export default FirebaseStore
