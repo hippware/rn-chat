@@ -19,8 +19,6 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   render() {
     const {wocky} = this.props
     const {profile} = wocky!
-    // console.log('profile', profile)
-    // !!profile.activeBots.length
     return profile && profile.handle && !!profile.activeBots.length ? (
       <View style={{backgroundColor: 'white'}}>
         <RText
