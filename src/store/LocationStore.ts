@@ -13,10 +13,11 @@ const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
 
 const LocationStore = types
-  .model('LocationStore', {})
-  .volatile(() => ({
-    // TODO: should we persist location?
+  .model('LocationStore', {
+    // should we persist location?
     location: types.maybe(Location),
+  })
+  .volatile(() => ({
     enabled: true,
     alwaysOn: true,
     system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
