@@ -1,5 +1,5 @@
 import {autorunAsync} from 'mobx'
-// import {IWocky} from 'wocky-client'
+import {IWocky} from 'wocky-client'
 import {types, getEnv, getParent} from 'mobx-state-tree'
 
 export const DELAY = 1000
@@ -27,7 +27,7 @@ const ConnectivityStore = types
     },
   }))
   .actions(self => {
-    let wocky
+    let wocky: IWocky
     let logger
     let appState
     let netInfo
@@ -57,7 +57,7 @@ const ConnectivityStore = types
       )
     }
 
-    async function tryReconnect(force?: boolean) {
+    async function tryReconnect(force: boolean = false) {
       const {username, password, host, login} = wocky
       if (username && password && host && (!self.reconnecting || force)) {
         try {
@@ -74,13 +74,10 @@ const ConnectivityStore = types
           })
           setTimeout(() => tryReconnect(true), self.retryDelay)
         }
-      } else {
-        wocky.disconnect()
       }
     }
 
     async function _handleAppStateChange(currentAppState: any) {
-      logger.log('& CURRENT APPSTATE:', currentAppState)
       if (currentAppState === 'active') {
         self.setState({isActive: true})
       }
@@ -91,7 +88,6 @@ const ConnectivityStore = types
     }
 
     async function _handleConnectionInfoChange(connectionInfo: any) {
-      logger.log('& CONNECTIVITY:', connectionInfo)
       if (connectionInfo.type === 'unknown') {
         self.setState({netConnected: true})
         return
