@@ -15,6 +15,7 @@ const BOT_PROPS = 'id title address addressData description geofence image publi
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
+  socket: PhoenixSocket
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -39,9 +40,10 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
+    this.socket = new PhoenixSocket(`wss://${this.host}/graphql`)
     // todo: implement login when it's ready
     this.client = new ApolloClient({
-      link: createAbsintheSocketLink(AbsintheSocket.create(new PhoenixSocket(`wss://${this.host}/graphql`))),
+      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
       cache: new InMemoryCache()
     })
     try {
@@ -147,7 +149,11 @@ export class GraphQLTransport implements IWockyTransport {
     throw 'Not supported'
   }
 
-  async disconnect(): Promise<void> {}
+  async disconnect(): Promise<void> {
+    if (this.socket) {
+      this.socket.disconnect()
+    }
+  }
 
   async requestProfiles(users: string[]): Promise<any> {
     throw 'Not supported'

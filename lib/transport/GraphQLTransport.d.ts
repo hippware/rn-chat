@@ -1,8 +1,10 @@
 import { ApolloClient } from 'apollo-client';
 import { IWockyTransport, IPagingList } from './IWockyTransport';
+import { Socket as PhoenixSocket } from 'phoenix';
 export declare class GraphQLTransport implements IWockyTransport {
     resource: string;
     client: ApolloClient<any>;
+    socket: PhoenixSocket;
     connected: boolean;
     connecting: boolean;
     username: string;
