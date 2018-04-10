@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TouchableOpacity} from 'react-native'
 
 import {observer, inject} from 'mobx-react/native'
 
@@ -49,9 +49,11 @@ class ActiveBot extends React.Component<Props> {
               </View>
             ) : null}
           </BotBubble>
-          <RText size={13} style={{textAlign: 'center'}} numberOfLines={2} ellipsizeMode="tail">
-            {this.props.bot.title}
-          </RText>
+          <TouchableOpacity onPress={this.goToBot}>
+            <RText size={13} style={{textAlign: 'center'}} numberOfLines={2} ellipsizeMode="tail">
+              {this.props.bot.title}
+            </RText>
+          </TouchableOpacity>
           <VisitorHeads bot={this.props.bot} />
         </View>
       </View>
