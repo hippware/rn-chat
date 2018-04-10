@@ -11,6 +11,8 @@ export const Location = types.model('Location', {
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
+const METRIC_TYPE = types.literal(METRIC)
+const IMPERIAL_TYPE = types.literal(IMPERIAL)
 
 const LocationStore = types
   .model('LocationStore', {
@@ -20,13 +22,13 @@ const LocationStore = types
   .volatile(() => ({
     enabled: true,
     alwaysOn: true,
-    system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
+    system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
     backgroundDebugEnabled: false,
   }))
   .views(self => ({
     get isMetric() {
-      return self.system.is(METRIC)
+      return METRIC_TYPE.is(self.system)
     },
   }))
   .views(self => ({
