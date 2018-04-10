@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
@@ -13,8 +11,8 @@ import {IBot} from 'wocky-client'
 
 type Props = {
   afterPhotoPost: () => void
-  bot: IBot
-  notificationStore: any // TODO proper type
+  bot?: IBot
+  notificationStore?: any // TODO proper type
 }
 
 @inject('bot', 'notificationStore')
@@ -23,10 +21,10 @@ class BotComposeMap extends React.Component<Props> {
   onCoverPhoto = (): void => {
     showImagePicker(null, async (source, response) => {
       try {
-        await this.props.bot.upload({file: source, ...response})
+        await this.props.bot!.upload({file: source, ...response})
         this.props.afterPhotoPost()
       } catch (err) {
-        this.props.notificationStore.flash(`Upload error: ${this.props.bot.image.uploadError}`)
+        this.props.notificationStore.flash(`Upload error: ${this.props.bot!.image.uploadError}`)
       }
     })
   }

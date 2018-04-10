@@ -1,5 +1,3 @@
-// @flow
-
 import {types} from 'mobx-state-tree'
 import {Profile, IProfile} from 'wocky-client'
 
@@ -38,7 +36,7 @@ const SelectableProfileList = types
     },
   }))
   .actions(self => {
-    function setList(list: [ISelectableProfile]) {
+    function setList(list: any[]) {
       self.list.replace(list)
     }
 

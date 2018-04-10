@@ -1,7 +1,5 @@
-// @flow
-
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {reaction} from 'mobx'
+import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 
@@ -13,24 +11,28 @@ export const Location = types.model('Location', {
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
+const METRIC_TYPE = types.literal(METRIC)
+const IMPERIAL_TYPE = types.literal(IMPERIAL)
 
 const LocationStore = types
-  .model('LocationStore', {})
-  .volatile(() => ({
-    // TODO: should we persist location?
+  .model('LocationStore', {
+    // should we persist location?
     location: types.maybe(Location),
+  })
+  .volatile(() => ({
     enabled: true,
     alwaysOn: true,
-    system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
+    system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
     backgroundDebugEnabled: false,
-  })).views(self => ({
-    get isMetric() {
-      return self.system === METRIC
-    }
   }))
   .views(self => ({
-    distance: (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    get isMetric() {
+      return METRIC_TYPE.is(self.system)
+    },
+  }))
+  .views(self => ({
+    distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
       const R = 6371000 // Radius of the earth in m
       const dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
       const dLon = (lon2 - lon1) * Math.PI / 180
@@ -43,7 +45,7 @@ const LocationStore = types
       const result = self.isMetric ? res : res * 3.2808399
       return result
     },
-    distanceToString: (distance: number) => {
+    distanceToString: (distance: number): string => {
       // const limit = self.system === METRIC ? 1000 : 5280
       // if (distance>limit){
       return self.isMetric
@@ -55,46 +57,48 @@ const LocationStore = types
     },
   }))
   .views(self => ({
-    distanceFromBot: (botLoc: {latitude: number; longitude: number}) => {
+    distanceFromBot: (botLoc: {latitude: number; longitude: number}): string | undefined => {
       const {location, distanceToString, distance} = self
       if (location && botLoc) {
         return distanceToString(
           distance(location.latitude, location.longitude, botLoc.latitude, botLoc.longitude)
         )
       }
-      return null
+      return undefined
+    },
+  }))
+  .actions(self => ({
+    setMetricSystem(type) {
+      self.system = type
+    },
+    setPosition(position) {
+      self.enabled = true
+      self.location = position.coords
+      self.loading = false
+      // TODO: share location via wocky-client
+      // this.share(this.location);
+    },
+    positionError(error: any) {
+      if (error.code === 1) {
+        // user denied location permissions
+        self.enabled = false
+      }
+      self.loading = false
+      const logger = getEnv(self).logger
+      // @TODO: how do we handle timeout or other error?
+      logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
+    },
+    setAlwaysOn(value) {
+      self.alwaysOn = value
+    },
+    setBackgroundGeoDebugMode({debug}: {debug: boolean}) {
+      self.backgroundDebugEnabled = debug
     },
   }))
   .actions(self => {
     const {logger, geolocation, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
-    let wocky
+
     let watch
-    let handler
-
-    function afterAttach() {
-      ;({wocky} = getParent(self))
-      self.initialize()
-      self.start()
-    }
-    function start() {
-      Permissions.check('location', {type: 'always'}).then(response =>
-        self.setAlwaysOn(response === 'authorized')
-      )
-      handler = reaction(
-        () => wocky.connected,
-        () => {
-          self.startBackground()
-        }
-      )
-      self.getCurrentPosition()
-    }
-
-    function finish() {
-      if (!self.alwaysOn) {
-        self.stopBackground()
-      }
-      handler()
-    }
 
     function startBackground() {
       const model = getParent(self).wocky
@@ -212,11 +216,7 @@ const LocationStore = types
 
     function initialize() {
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL'
-      setMetricSystem(system)
-    }
-
-    function setMetricSystem(type) {
-      self.system = type
+      self.setMetricSystem(system)
     }
 
     const getCurrentPosition = flow(function*() {
@@ -237,24 +237,6 @@ const LocationStore = types
       })
     })
 
-    function setPosition(position) {
-      self.enabled = true
-      self.location = position.coords
-      self.loading = false
-      // TODO: share location via wocky-client
-      // this.share(this.location);
-    }
-
-    function positionError(error: any) {
-      if (error.code === 1) {
-        // user denied location permissions
-        self.enabled = false
-      }
-      self.loading = false
-      // @TODO: how do we handle timeout or other error?
-      logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
-    }
-
     function watchPosition() {
       if (!watch) {
         watch = geolocation.watchPosition(self.setPosition, self.positionError, {
@@ -265,17 +247,9 @@ const LocationStore = types
       }
     }
 
-    function setAlwaysOn(value) {
-      self.alwaysOn = value
-    }
-
-    function getBackgroundMode(): Promise<any> {
-      return backgroundGeolocation.getState()
-    }
-
-    function setBackgroundGeoDebugMode({debug}: {debug: boolean}) {
-      self.backgroundDebugEnabled = debug
-    }
+    // function getBackgroundMode(): Promise<any> {
+    //   return backgroundGeolocation.getState()
+    // }
 
     function toggleBackgroundDebugMode() {
       backgroundGeolocation.setConfig(
@@ -285,20 +259,48 @@ const LocationStore = types
     }
 
     return {
-      start,
-      finish,
-      afterAttach,
-      setAlwaysOn,
       watchPosition,
-      setPosition,
       stopBackground,
       startBackground,
-      positionError,
       getCurrentPosition,
       initialize,
       toggleBackgroundDebugMode,
-      setBackgroundGeoDebugMode,
     }
+  })
+  .actions(self => {
+    let wocky
+    let connectivityStore
+    let handler
+
+    function afterAttach() {
+      self.initialize()
+      ;({wocky, connectivityStore} = getParent(self))
+      autorun('LocationStore toggler', () => {
+        if (connectivityStore.isActive) start()
+        else finish()
+      })
+    }
+    function start() {
+      Permissions.check('location', {type: 'always'}).then(response =>
+        self.setAlwaysOn(response === 'authorized')
+      )
+      handler = reaction(
+        () => wocky.connected,
+        () => {
+          self.startBackground()
+        }
+      )
+      self.getCurrentPosition()
+    }
+
+    function finish() {
+      if (!self.alwaysOn) {
+        self.stopBackground()
+      }
+      handler()
+    }
+
+    return {afterAttach, start, finish}
   })
 
 export default LocationStore

@@ -26,3 +26,9 @@ export const timeoutWhen = async (predicate: Function, ms: number = 3000, identi
   await timeoutPromise(ms, new Promise(resolve => when(predicate, () => resolve(true))));
   return true;
 };
+
+export function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}

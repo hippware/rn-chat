@@ -142,7 +142,15 @@ exports[`Explore Nearby renders with no data 1`] = `
           "longitudeDelta": 0.04,
         }
       }
-      locationStore={Object {}}
+      locationStore={
+        Object {
+          "location": Object {
+            "accuracy": 2,
+            "latitude": 2,
+            "longitude": 2,
+          },
+        }
+      }
       onMarkerPress={[Function]}
       onPress={[Function]}
       onRegionChangeComplete={[Function]}

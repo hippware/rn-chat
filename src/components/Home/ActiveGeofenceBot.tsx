@@ -28,7 +28,7 @@ class ActiveBot extends React.Component<Props> {
       <View style={styles.outer}>
         <View style={styles.inner}>
           <BotBubble bot={this.props.bot} scale={0} onImagePress={this.goToBot}>
-            {this.props.bot.guest ? (
+            {this.props.bot.visitor ? (
               <View
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.3)',
