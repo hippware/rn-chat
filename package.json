@@ -9,7 +9,8 @@
     "setup": "npm run xcode:clean && yarn && cd ios && pod install && cd ..",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "ios:prod": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobot",
-    "test": "npm run lint && npm run mocha && npm run jest:all",
+    "test": "npm run lint && npm run tsc && npm run mocha && npm run jest:all",
+    "tsc": "node node_modules/.bin/tsc",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill  --require mocha-steps --timeout 10000",
     "jest:all": "jest --testPathPattern __tests__/*.test.js",
@@ -119,7 +120,7 @@
   "devDependencies": {
     "@types/jest": "^22.2.2",
     "@types/react": "^16.1.0",
-    "@types/react-native": "^0.52.20",
+    "@types/react-native": "^0.55.1",
     "appcenter-cli": "^1.0.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
