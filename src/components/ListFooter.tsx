@@ -5,7 +5,7 @@ import {observer} from 'mobx-react/native'
 
 type Props = {
   footerImage?: any
-  finished: boolean
+  finished?: boolean
   style?: object
 }
 
