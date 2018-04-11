@@ -35,16 +35,17 @@ const SearchStore = types
   .actions((self) => {
     const {searchIndex} = getEnv(self);
     let wocky;
+    let handler1, handler2;
 
     function afterAttach() {
       ({wocky} = getParent(self));
       addUsernameValidator();
-      reaction(() => self.global, text => self._searchGlobal(text), {fireImmediately: false, delay: 500});
+      handler1 = reaction(() => self.global, text => self._searchGlobal(text), {fireImmediately: false, delay: 500});
 
       // set initial list to all friends
       when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends));
 
-      autorun('SearchStore', () => {
+      handler2 = autorun('SearchStore', () => {
         const {local} = self;
         if (wocky.connected) {
           self.localResult.replace(wocky.friends.filter((el) => {
@@ -64,6 +65,8 @@ const SearchStore = types
 
     // TODO: cleanup on disconnect
     function beforeDestroy() {
+      handler1()
+      handler2()
       applySnapshot(self, {
         local: '',
         localResult: {},
