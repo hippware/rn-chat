@@ -71,12 +71,8 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics} = this.props
     this.bot = wocky!.getBot({id: this.props.item})
-    try {
-      await wocky!.loadBot(this.props.item, undefined)
-      await this.bot!.posts.load({force: true})
-    } catch (err) {
-      // todo?
-    }
+    await wocky!.loadBot(this.props.item, undefined)
+    await this.bot!.posts.load({force: true})
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))
