@@ -10,7 +10,10 @@ export interface IPaginable extends IModelType<any, any> {
   loading?: boolean
   finished?: boolean
   add?: (i: any) => any
+  refresh?: () => void
+  load?: (args?: {force?: boolean}) => Promise<Array<any>>
   addToTop?: (i: any) => any
+  list?: Array<any>
 }
 
 export function createPaginable(type: any): IPaginable {
@@ -96,7 +99,7 @@ export function createPaginable(type: any): IPaginable {
             self.cursor = null
             self.finished = false
           },
-          load: flow<Array<any>>(function* load({force} = {}) {
+          load: flow<Array<any>>(function* load({force}: {force?: boolean} = {}) {
             if (self.loading || (self.finished && !force)) {
               return self.result
             }
