@@ -8,7 +8,9 @@ export interface IPaginable extends IModelType<any, any> {
     finished?: boolean;
     add?: (i: any) => any;
     refresh?: () => void;
-    load?: () => Promise<Array<any>>;
+    load?: (args?: {
+        force?: boolean;
+    }) => Promise<Array<any>>;
     addToTop?: (i: any) => any;
 }
 export declare function createPaginable(type: any): IPaginable;

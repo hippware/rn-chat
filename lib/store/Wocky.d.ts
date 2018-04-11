@@ -7902,7 +7902,11 @@ export declare const Wocky: IModelType<{
     createProfile: (id: string, data?: {
         [key: string]: any;
     }) => any;
-    getBot: ({id, server, ...data}: any) => IBot;
+    getBot: ({id, server, ...data}: {
+        id: string;
+        server?: string | undefined;
+        owner?: string | null | undefined;
+    }) => IBot;
     _addMessage: ({id, message}: {
         id: string;
         message: any;

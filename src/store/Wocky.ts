@@ -200,7 +200,7 @@ export const Wocky = types
     createProfile: (id: string, data: {[key: string]: any} = {}) => {
       return self.profiles.get(id, processMap(data))
     },
-    getBot: ({id, server, ...data}: any): IBot => {
+    getBot: ({id, server, ...data}: {id: string; server?: string; owner?: string | null}): IBot => {
       const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
       if (data && Object.keys(data).length) {
         self.load(bot, data)
@@ -264,6 +264,7 @@ export const Wocky = types
         chat.addMessage(msg)
       })
     }),
+    // TODO: make server an optional param
     loadBot: flow(function*(id: string, server: any) {
       yield waitFor(() => self.connected)
       const bot = self.getBot({id, server})
