@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
-import {when} from 'mobx'
+// import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
 // // User "111" on Staging
@@ -62,50 +62,29 @@ describe('GraphQL', () => {
     }
   })
 
-  it('gets some bots', async done => {
-    try {
-      bot = await user.createBot()
-      await bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
-      bot2 = await user.createBot()
-      await bot2.update({location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2', geofence: false, addressData: {city: 'New York', country: 'US'}})
-      const bots = await gql.loadOwnBots(user.username!, null, 1)
-      console.log('bots', bots)
-      expect(bots.count).to.equal(2)
-      expect(bots.list.length).to.equal(1)
-      expect(bots.list[0].title).to.equal('Test bot2')
-      const bots2 = await gql.loadOwnBots(user.username!, bots.cursor, 1)
-      console.log('bots', bots2)
-      expect(bots2.count).to.equal(2)
-      expect(bots2.list.length).to.equal(1)
-      expect(bots2.list[0].title).to.equal('Test bot')
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('check subscription', async done => {
-    try {
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      gql.subscribeBotVisitors(bot.id)
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      when(
-        () => !!gql.botVisitor,
-        () => {
-          expect(gql.botVisitor.botId).to.equal(bot.id)
-          expect(gql.botVisitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.avatar).to.be.null
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
-  })
+  // it('check subscription', async done => {
+  //   try {
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     gql.subscribeBotVisitors(bot.id)
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor,
+  //       () => {
+  //         expect(gql.botVisitor.botId).to.equal(bot.id)
+  //         expect(gql.botVisitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.handle).to.equal(user.profile.handle)
+  //         expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
+  //         expect(gql.botVisitor.lastName).to.equal(user.profile.lastName)
+  //         expect(gql.botVisitor.avatar).to.be.null
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
   it('load bot', async done => {
     try {
       const loaded = await gql.loadBot(bot.id, bot.server)

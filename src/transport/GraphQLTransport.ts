@@ -8,9 +8,11 @@ import {observable} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
+import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 
 // TODO use GraphQL fragment for this?
-const BOT_PROPS = 'id title address addressData description geofence image public radius server shortname type lat lon'
+const PROFILE_PROPS = 'id firstName lastName handle'
+const BOT_PROPS = `id title address isPublic: public addressData description geofence image public radius server shortname type lat lon owner { ${PROFILE_PROPS} }`
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
@@ -46,7 +48,17 @@ export class GraphQLTransport implements IWockyTransport {
     // todo: implement login when it's ready
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: 'network-only',
+          errorPolicy: 'ignore'
+        },
+        query: {
+          fetchPolicy: 'network-only',
+          errorPolicy: 'all'
+        }
+      }
     })
     try {
       const res = await this.client.mutate({
@@ -93,11 +105,16 @@ export class GraphQLTransport implements IWockyTransport {
         {
           bot(id: "${id}") {
             ${BOT_PROPS}
+            subscribers(first: 1 id: "${this.username}") {
+              edges {
+                relationships
+              }
+            }
           }
         }
       `
     })
-    return res.data.bot
+    return convertBot(res.data.bot)
   }
 
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
@@ -166,7 +183,8 @@ export class GraphQLTransport implements IWockyTransport {
       .subscribe({
         next: (result: any) => {
           console.log('SUBSCRIPTION RESULT:', JSON.stringify(result))
-          this.botVisitor = {...result.data.botVisitors.subscribers.edges[0].node, botId}
+          // this.botVisitor = {...result.data.botVisitors.subscribers.edges[0].node, botId}
+          // disabled until new subscription is not ready
         }
       })
   }
@@ -314,6 +332,19 @@ export class GraphQLTransport implements IWockyTransport {
 
   async loadHomestream(lastId: any, max?: number): Promise<IPagingList> {
     throw 'Not supported'
+  }
+}
+
+function convertBot({lat, lon, isPublic, subscribers, ...data}: any) {
+  const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+  const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+  return {
+    ...data,
+    location: {latitude: lat, longitude: lon},
+    visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
+    guest: contains('GUEST'),
+    visitor: contains('VISITOR'),
+    isSubscribed: contains('SUBSCRIBED')
   }
 }
 

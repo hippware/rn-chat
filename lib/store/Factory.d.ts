@@ -1,7 +1,7 @@
 import { ISnapshottable, IModelType, IExtendedObservableMap, IType } from 'mobx-state-tree';
 import { IBot } from '../model/Bot';
 export declare type __IBot = IBot;
-export declare function createFactory<T>(type: IType<any, any>): IModelType<{
+export declare function createFactory(type: IType<any, any>): IModelType<{
     storage?: any;
 }, {
     storage: IExtendedObservableMap<any> & ISnapshottable<{

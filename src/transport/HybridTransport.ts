@@ -151,7 +151,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadBot(id: string, server: any): Promise<any> {
-    return this._xmpp.loadBot(id, server)
+    return this._gql.loadBot(id, server)
   }
 
   removeBot(id: string): Promise<void> {
