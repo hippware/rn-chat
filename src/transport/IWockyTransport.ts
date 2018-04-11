@@ -4,6 +4,13 @@ export interface IPagingList {
   count: number
 }
 
+export type SetLocationParams = {
+  accuracy: number
+  latitude: number
+  longitude: number
+  resource: string
+}
+
 export interface IWockyTransport {
   connected: boolean
   connecting: boolean
@@ -15,10 +22,12 @@ export interface IWockyTransport {
   presence: any // TODO interface for presence
   rosterItem: any // TODO interface for roster
   notification: any // TODO interface for notification
+  botVisitor: any // TODO interface for bot visitor
   login(user?: string, password?: string, host?: string): Promise<boolean>
   register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}>
   testRegister({phoneNumber}: {phoneNumber: string}, host: string): Promise<{username: string; password: string; host: string}>
   disconnect(): Promise<void>
+  setLocation(params: SetLocationParams): Promise<void>
   loadProfile(user: string): Promise<any> // TODO define interface for Profile data
   requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>

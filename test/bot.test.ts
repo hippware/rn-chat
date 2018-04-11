@@ -27,6 +27,7 @@ describe('BotStore', () => {
     try {
       bot = await user1.createBot()
       expect(bot.isNew).to.be.true
+      expect(bot.isPublic).to.be.true
       done()
     } catch (e) {
       done(e)
@@ -34,9 +35,10 @@ describe('BotStore', () => {
   })
 
   it('update bot', async done => {
-    bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', addressData: {city: 'Koper', country: 'Slovenia'}})
+    bot.update({visibility: 0, location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', addressData: {city: 'Koper', country: 'Slovenia'}})
     await waitFor(() => bot.updated)
     expect(bot.isNew).to.be.false
+    expect(bot.isPublic).to.be.false
     expect(bot.title).to.be.equal('Test bot')
     expect(bot.location!.latitude).to.be.equal(1.1)
     expect(bot.location!.longitude).to.be.equal(2.1)
@@ -48,13 +50,18 @@ describe('BotStore', () => {
   })
 
   it('update bot location', async done => {
-    bot.update({location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
-    await waitFor(() => bot.updated)
-    expect(bot.isNew).to.be.false
-    expect(bot.title).to.be.equal('Test bot!')
-    expect(bot.location!.latitude).to.be.equal(1.3)
-    expect(bot.location!.longitude).to.be.equal(2.3)
-    done()
+    try {
+      bot.update({visibility: 100, location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
+      await waitFor(() => bot.updated)
+      expect(bot.isNew).to.be.false
+      expect(bot.isPublic).to.be.true
+      expect(bot.title).to.be.equal('Test bot!')
+      expect(bot.location!.latitude).to.be.equal(1.3)
+      expect(bot.location!.longitude).to.be.equal(2.3)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('update bot description', async done => {
@@ -101,20 +108,56 @@ describe('BotStore', () => {
       await bot.save()
       await waitFor(() => bot.updated)
       await waitFor(() => bot.image!.source !== null)
+    } catch (e) {
+      done(e)
+    }
+    try {
       expect(expectedImage()).to.be.equal(fs.readFileSync(bot.image!.source!.uri).toString())
+      done()
+    } catch (e) {
+      done(`ERROR comparing content for ${bot.image!.source!.uri} and ${__dirname}/../img/test-thumbnail.jpg`)
+    }
+  })
+
+  it('load bot', async done => {
+    try {
+      const loaded = await user2.loadBot(bot.id, bot.server)
+      await waitFor(() => !loaded.loading)
+      expect(loaded.isNew).to.be.false
+      expect(loaded.title).to.be.equal('Test bot!')
+      expect(loaded.isSubscribed).to.be.false
+      expect(loaded.guest).to.be.false
+      expect(loaded.visitor).to.be.false
+      expect(loaded.location!.latitude).to.be.equal(1.3)
+      expect(loaded.location!.longitude).to.be.equal(2.3)
+      expect(loaded.error).to.be.empty
       done()
     } catch (e) {
       done(e)
     }
   })
 
-  it('load bot', async done => {
+  it('load subscribed bot with newly logged user2', async done => {
     try {
-      const loaded = await user1.loadBot(bot.id, bot.server)
+      await user2.logout()
+      user2 = await createXmpp(27)
+      await user2._subscribeBot(bot.id)
+      const loaded = await user2.loadBot(bot.id, bot.server)
+      await waitFor(() => !loaded.loading)
+      expect(loaded.owner).to.be.not.null
+      expect(loaded.owner.id).to.be.equal(user1.profile.id)
+      expect(loaded.owner.handle).to.be.equal(user1.profile.handle)
       expect(loaded.isNew).to.be.false
       expect(loaded.title).to.be.equal('Test bot!')
-      expect(bot.location!.latitude).to.be.equal(1.3)
-      expect(bot.location!.longitude).to.be.equal(2.3)
+      expect(loaded.isSubscribed).to.be.true
+      expect(loaded.guest).to.be.false
+      expect(loaded.visitor).to.be.false
+      expect(loaded.location!.latitude).to.be.equal(1.3)
+      expect(loaded.location!.longitude).to.be.equal(2.3)
+      expect(loaded.error).to.be.empty
+      await user2._unsubscribeBot(bot.id)
+      await user2.logout()
+      user2 = await createXmpp(27)
       done()
     } catch (e) {
       done(e)
@@ -202,10 +245,12 @@ describe('BotStore', () => {
       done(e)
     }
   })
+
   it('change first bot and verify updating for second user', async done => {
     try {
       expect(user2bot.title).to.be.equal('Test bot!')
       await bot.update({title: 'Test bot!!'})
+      await waitFor(() => !user2bot.loading)
       await waitFor(() => user2bot.title === 'Test bot!!')
       done()
     } catch (e) {
@@ -214,10 +259,10 @@ describe('BotStore', () => {
   })
   it('change first bot description and expect new item update', async done => {
     try {
-      expect(user2.updates.length).to.be.equal(2)
+      expect(user2.updates.length).to.be.equal(1)
       expect(user2bot.description).to.be.equal('New description')
       await bot.update({description: 'New description2'})
-      await waitFor(() => user2.updates.length === 3)
+      await waitFor(() => user2.updates.length === 2)
       done()
     } catch (e) {
       done(e)

@@ -1,4 +1,4 @@
-import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport} from '../'
+import {IWockyTransport, SetLocationParams, IPagingList, XmppTransport, GraphQLTransport} from '../'
 import {computed} from 'mobx'
 
 export class HybridTransport implements IWockyTransport {
@@ -30,12 +30,19 @@ export class HybridTransport implements IWockyTransport {
   get message() {
     return this._xmpp.message
   }
+  @computed
+  get botVisitor() {
+    return this._gql.botVisitor
+  }
+  @computed
   get presence() {
     return this._xmpp.presence
   }
+  @computed
   get rosterItem() {
     return this._xmpp.rosterItem
   }
+  @computed
   get notification() {
     return this._xmpp.notification
   }
@@ -61,8 +68,13 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
-  disconnect(): Promise<void> {
-    return this._xmpp.disconnect()
+  async setLocation(params: SetLocationParams): Promise<void> {
+    return this._gql.setLocation(params)
+  }
+
+  async disconnect(): Promise<void> {
+    await this._gql.disconnect()
+    await this._xmpp.disconnect()
   }
 
   loadProfile(user: string): Promise<any> {
@@ -81,8 +93,9 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.lookup(handle)
   }
 
-  remove(): Promise<void> {
-    return this._xmpp.remove()
+  async remove(): Promise<void> {
+    await this._gql.remove()
+    await this._xmpp.remove()
   }
 
   downloadURL(tros: string): Promise<any> {
@@ -138,7 +151,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadBot(id: string, server: any): Promise<any> {
-    return this._xmpp.loadBot(id, server)
+    return this._gql.loadBot(id, server)
   }
 
   removeBot(id: string): Promise<void> {
@@ -214,6 +227,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+    this._gql.subscribeBotVisitors(id)
     return this._xmpp.loadBotVisitors(id, lastId, max)
   }
 

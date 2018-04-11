@@ -3,7 +3,7 @@ import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
-import {IWockyTransport} from './IWockyTransport'
+import {IWockyTransport, SetLocationParams} from './IWockyTransport'
 const TIMEOUT = 10000
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
@@ -23,6 +23,7 @@ const EVENT_NS = 'hippware.com/hxep/publishing'
 
 export class XmppTransport implements IWockyTransport {
   provider: any
+  botVisitor: any
   fileService: IFileService
   resource: string
   @observable connected: boolean = false
@@ -680,6 +681,9 @@ export class XmppTransport implements IWockyTransport {
     }
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
     return {list, count: parseInt(data.visitors.set.count)}
+  }
+  async setLocation(params: SetLocationParams): Promise<void> {
+    throw new Error('Not supported')
   }
   async loadBotPosts(id: string, before?: string) {
     const iq = $iq({type: 'get', to: this.host})

@@ -36,6 +36,27 @@ describe('Geofence', () => {
     }
   })
 
+  it('load visitors and live updates', async done => {
+    try {
+      await bot.visitors.load!()
+      expect(bot.visitors.list.length).to.equal(0)
+      // await user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+      // await user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+      // // bot.visitors.refresh!()
+      // // await bot.visitors.load!()
+      // await waitFor(() => bot.visitors.list.length === 1)
+      // await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+      // await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+      // // bot.visitors.refresh!()
+      // // await bot.visitors.load!()
+      // expect(bot.visitors.list.length).to.equal(0)
+      // await waitFor(() => bot.visitors.list.length === 0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
   it('loads own bot', async done => {
     try {
       const loadedBot2 = await user1.loadBot(bot.id, null)

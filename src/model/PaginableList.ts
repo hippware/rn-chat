@@ -5,6 +5,7 @@ import {IObservableArray} from 'mobx'
 
 export interface IPaginable extends IModelType<any, any> {
   result?: any[]
+  list?: any[]
   cursor?: string
   count?: number
   loading?: boolean
@@ -13,7 +14,6 @@ export interface IPaginable extends IModelType<any, any> {
   refresh?: () => void
   load?: (args?: {force?: boolean}) => Promise<Array<any>>
   addToTop?: (i: any) => any
-  list?: Array<any>
 }
 
 export function createPaginable(type: any): IPaginable {

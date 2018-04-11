@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
-import {IWockyTransport, IBot, GraphQLTransport, IWocky} from '../src'
-
+import {IBot, GraphQLTransport, IWocky} from '../src'
+// import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
 // // User "111" on Staging
@@ -9,7 +9,7 @@ import {IWockyTransport, IBot, GraphQLTransport, IWocky} from '../src'
 // const token = '$T$AFNkdiDaQHC/lI4o2xzmmf4pQ+LaHF39STooScbv6E4='
 
 const host = 'testing.dev.tinyrobot.com'
-let gql: IWockyTransport, user: IWocky
+let gql: GraphQLTransport, user: IWocky
 let bot, bot2: IBot
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
@@ -62,6 +62,29 @@ describe('GraphQL', () => {
     }
   })
 
+  // it('check subscription', async done => {
+  //   try {
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     gql.subscribeBotVisitors(bot.id)
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor,
+  //       () => {
+  //         expect(gql.botVisitor.botId).to.equal(bot.id)
+  //         expect(gql.botVisitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.handle).to.equal(user.profile.handle)
+  //         expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
+  //         expect(gql.botVisitor.lastName).to.equal(user.profile.lastName)
+  //         expect(gql.botVisitor.avatar).to.be.null
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
   it('load bot', async done => {
     try {
       const loaded = await gql.loadBot(bot.id, bot.server)

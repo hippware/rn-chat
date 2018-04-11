@@ -155,7 +155,9 @@ export const Bot = types
 export type __IPaginable = IPaginable
 
 export type IBotType = typeof Bot.Type
-export interface IBot extends IBotType {}
+export interface IBot extends IBotType {
+  visitors: IPaginable
+}
 export const BotPaginableList = createPaginable(types.reference(Bot))
 export type IBotPaginableList = typeof BotPaginableList.Type
 export const BotRef = types.reference(Bot, {

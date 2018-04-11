@@ -19,7 +19,7 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
-import {IWockyTransport} from '..'
+import {IWockyTransport, SetLocationParams} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 // export interface IEventEntity extends IEventEntityType {}
@@ -402,6 +402,9 @@ export const Wocky = types
     downloadTROS: flow(function*(tros: string) {
       return yield self.transport.downloadTROS(tros)
     }),
+    setLocation: flow(function*(location: SetLocationParams) {
+      return yield self.transport.setLocation(location)
+    }),
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
       return yield self.transport.requestUpload({file, size, width, height, access})
@@ -431,6 +434,14 @@ export const Wocky = types
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
     },
+    _onBotVisitor: flow(function*({botId, id, ...data}: any) {
+      if (self.bots.get(botId)) {
+        console.log('ON BOT VISITOR', id, data)
+        const bot: IBot = self.bots.get(botId)
+        const profile = self.profiles.get(id, data)
+        bot.visitors.addToTop!(profile)
+      }
+    }),
     _onNotification: flow(function*({changed, version, ...data}: any) {
       // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
       if (!version) {
@@ -556,6 +567,7 @@ export const Wocky = types
         reaction(() => self.transport.rosterItem, self.addRosterItem)
         reaction(() => self.transport.message, self._addMessage)
         reaction(() => self.transport.notification, self._onNotification)
+        reaction(() => self.transport.botVisitor, self._onBotVisitor)
       }
     }
   })
