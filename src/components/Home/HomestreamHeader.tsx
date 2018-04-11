@@ -4,10 +4,10 @@ import {View} from 'react-native'
 import WelcomeNote from './WelcomeNote'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 
-const HomeStreamHeader = () => (
+const HomeStreamHeader = props => (
   <View>
     <WelcomeNote />
-    <ActiveGeoBotBanner />
+    <ActiveGeoBotBanner {...props} />
   </View>
 )
 

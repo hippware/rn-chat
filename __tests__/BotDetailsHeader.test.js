@@ -34,9 +34,7 @@ describe('BotDetailsHeader', () => {
       // posts: types.optional(BotPostPaginableList, {}),
       // error: ''
     });
-    mockLocationStore.setPosition({
-      coords: {longitude: 2, latitude: 2, accuracy: 2},
-    });
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
     const toRender = (
       <Provider wocky={wocky} {...injects} locationStore={mockLocationStore}>
         <BotDetailsHeader bot={bot} scale={0.5} />

@@ -2,12 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
-
-export const Location = types.model('Location', {
-  longitude: types.number,
-  latitude: types.number,
-  accuracy: types.number,
-})
+import {ILocationSnapshot, Location} from 'wocky-client'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
@@ -71,9 +66,9 @@ const LocationStore = types
     setMetricSystem(type) {
       self.system = type
     },
-    setPosition(position) {
+    setPosition(location: ILocationSnapshot) {
       self.enabled = true
-      self.location = position.coords
+      Object.assign(self, {location})
       self.loading = false
       // TODO: share location via wocky-client
       // this.share(this.location);
@@ -126,7 +121,7 @@ const LocationStore = types
         // // This handler fires whenever bgGeo receives a location update.
         backgroundGeolocation.on('location', position => {
           logger.log('- [js]location: ', JSON.stringify(position))
-          self.setPosition(position)
+          self.setPosition(position.coords)
           // this.location = position.coords;
           // we don't need it because we have HTTP location share
           // this.share(this.location);
@@ -225,7 +220,7 @@ const LocationStore = types
       yield new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           position => {
-            self.setPosition(position)
+            self.setPosition(position.coords)
             resolve()
           },
           error => {
@@ -239,11 +234,15 @@ const LocationStore = types
 
     function watchPosition() {
       if (!watch) {
-        watch = geolocation.watchPosition(self.setPosition, self.positionError, {
-          timeout: 20000,
-          maximumAge: 60000,
-          enableHighAccuracy: false,
-        })
+        watch = geolocation.watchPosition(
+          position => self.setPosition(position.coords),
+          self.positionError,
+          {
+            timeout: 20000,
+            maximumAge: 60000,
+            enableHighAccuracy: false,
+          }
+        )
       }
     }
 

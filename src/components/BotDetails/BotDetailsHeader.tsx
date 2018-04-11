@@ -15,8 +15,8 @@ import {IBot} from 'wocky-client'
 
 type Props = {
   bot: IBot
-  notificationStore: any // TODO proper type
-  analytics: any // TODO proper type
+  notificationStore?: any // TODO proper type
+  analytics?: any // TODO proper type
   scale: number
 }
 
@@ -119,7 +119,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
                 copyAddress={this.copyAddress}
               />
               <UserInfoRow bot={bot} copyAddress={this.copyAddress} />
-              {bot.description && (
+              {!!bot.description && (
                 <View style={styles.descriptionContainer}>
                   <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
                     {bot.description}

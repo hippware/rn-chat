@@ -33,9 +33,7 @@ describe('EventBotPostCard', () => {
       error: '',
     });
 
-    mockLocationStore.setPosition({
-      coords: {longitude: 2, latitude: 2, accuracy: 2},
-    });
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
 
     const post = BotPost.create({id: '123', time: 123, loaded: true, content: 'some content', title: 'a title', profile: owner});
     const botPost = EventBotPost.create({id: '123', time: 123, bot, post});

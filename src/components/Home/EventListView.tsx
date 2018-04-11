@@ -20,6 +20,7 @@ type Props = {
 class EventList extends React.Component<Props> {
   list: any
   @observable isRefreshing: boolean = false
+  headerHeight: number = 0
 
   componentDidMount() {
     if (this.props.wocky!.profile) this.props.wocky!.profile!.subscribedBots.load()
@@ -27,7 +28,7 @@ class EventList extends React.Component<Props> {
 
   scrollToTop = () => {
     if (this.list && this.list.props.data.length)
-      this.list.scrollToIndex({animated: true, index: 0})
+      this.list.scrollToIndex({animated: true, index: 0, viewOffset: this.headerHeight})
   }
 
   renderItem = ({item}: {item: IEventBot}) => <EventCard item={item} />
@@ -47,6 +48,10 @@ class EventList extends React.Component<Props> {
     }, 500)
   }
 
+  measureHeader = e => {
+    this.headerHeight = e.nativeEvent.layout.height
+  }
+
   render() {
     const {sessionCount, events, connected} = this.props.wocky!
     const backgroundColor = colors.LIGHT_GREY
@@ -64,7 +69,7 @@ class EventList extends React.Component<Props> {
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
-          ListHeaderComponent={<HomeStreamHeader />}
+          ListHeaderComponent={<HomeStreamHeader onLayout={this.measureHeader} />}
           ListFooterComponent={
             connected
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
