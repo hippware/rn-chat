@@ -3,11 +3,14 @@ import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 
+// TODO: use Wocky Location type instead?
 export const Location = types.model('Location', {
   longitude: types.number,
   latitude: types.number,
   accuracy: types.number,
 })
+
+type LocationType = typeof Location.Type
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
@@ -71,7 +74,7 @@ const LocationStore = types
     setMetricSystem(type) {
       self.system = type
     },
-    setPosition(position) {
+    setPosition(position: {coords: LocationType}) {
       self.enabled = true
       self.location = position.coords
       self.loading = false
