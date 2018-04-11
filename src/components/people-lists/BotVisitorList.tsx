@@ -51,10 +51,10 @@ class BotVisitorList extends React.Component<Props> {
     const {list, finished} = this.bot.visitors
     return (
       <Screen>
-        {list.length ? (
+        {list && list!.length ? (
           <CardList
             keyboardShouldPersistTaps="always"
-            data={list.slice()}
+            data={list!.slice()}
             ItemSeparatorComponent={() => <Separator />}
             renderItem={({item}) => <TappableProfileItem profile={item} />}
             keyExtractor={item => item.id}
