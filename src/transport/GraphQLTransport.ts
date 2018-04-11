@@ -12,7 +12,13 @@ import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 
 // TODO use GraphQL fragment for this?
 const PROFILE_PROPS = 'id firstName lastName handle'
-const BOT_PROPS = `id title address isPublic: public addressData description geofence image public radius server shortname type lat lon owner { ${PROFILE_PROPS} }`
+const BOT_PROPS = `id title address isPublic: public addressData description geofence image public radius server shortname 
+  type lat lon owner { ${PROFILE_PROPS} } 
+  items { totalCount }
+  guestCount: subscribers(first:0 type:GUEST){ totalCount }
+  visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
+  subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
+`
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
@@ -335,11 +341,15 @@ export class GraphQLTransport implements IWockyTransport {
   }
 }
 
-function convertBot({lat, lon, isPublic, subscribers, ...data}: any) {
+function convertBot({lat, lon, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
   const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
   const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
   return {
     ...data,
+    totalItems: items ? items.totalCount : 0,
+    followersSize: subscriberCount.totalCount,
+    visitorsSize: visitorCount.totalCount,
+    guestsSize: guestCount.totalCount,
     location: {latitude: lat, longitude: lon},
     visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
     guest: contains('GUEST'),
