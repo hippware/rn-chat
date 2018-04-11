@@ -1,4 +1,4 @@
-import { IModelType } from 'mobx-state-tree';
+import { IModelType, ISnapshottable } from 'mobx-state-tree';
 export declare const Location: IModelType<{
     latitude?: any;
     longitude?: any;
@@ -13,3 +13,4 @@ export declare const Location: IModelType<{
     load: (data: any) => void;
     addToIQ: (iq: any) => void;
 }>;
+export declare type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>;
