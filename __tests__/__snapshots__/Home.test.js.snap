@@ -19,7 +19,11 @@ exports[`Home renders with no data 1`] = `
   >
     <RCTScrollView
       ListFooterComponent={[Function]}
-      ListHeaderComponent={<HomeStreamHeader />}
+      ListHeaderComponent={
+        <HomeStreamHeader
+          onLayout={[Function]}
+        />
+      }
       data={null}
       disableVirtualization={false}
       getItem={[Function]}
