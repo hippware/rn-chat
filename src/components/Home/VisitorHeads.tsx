@@ -16,7 +16,6 @@ type Props = {
 class VisitorHeads extends React.Component<Props> {
   componentDidMount() {
     this.props.bot.visitors.load!()
-    this.props.bot.visitors.load!()
   }
 
   render() {
