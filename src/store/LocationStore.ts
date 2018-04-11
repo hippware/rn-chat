@@ -9,10 +9,23 @@ const IMPERIAL = 'IMPERIAL'
 const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 
+export const LocationAccuracyValues = ['-2', '-1', '10', '100', '1000', '3000']
+
+const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+  desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
+  distanceFilter: types.maybe(types.number),
+  stationaryRadius: types.maybe(types.number),
+})
+
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
     location: types.maybe(Location),
+    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {
+      desiredAccuracy: undefined,
+      distanceFilter: undefined,
+      stationaryRadius: undefined,
+    }),
   })
   .volatile(() => ({
     enabled: true,
@@ -86,8 +99,15 @@ const LocationStore = types
     setAlwaysOn(value) {
       self.alwaysOn = value
     },
-    setBackgroundGeoDebugMode({debug}: {debug: boolean}) {
-      self.backgroundDebugEnabled = debug
+    updateBackgroundConfigSuccess(state) {
+      const {desiredAccuracy, distanceFilter, stationaryRadius} = state
+      Object.assign(self, {
+        backgroundOptions: {
+          desiredAccuracy: desiredAccuracy.toString(),
+          distanceFilter,
+          stationaryRadius,
+        },
+      })
     },
   }))
   .actions(self => {
@@ -190,6 +210,7 @@ const LocationStore = types
           },
           state => {
             logger.log('- BackgroundGeolocation is configured and ready: ', state)
+            self.updateBackgroundConfigSuccess(state)
 
             if (!state.enabled && self.alwaysOn) {
               backgroundGeolocation.start(() => {
@@ -246,15 +267,8 @@ const LocationStore = types
       }
     }
 
-    // function getBackgroundMode(): Promise<any> {
-    //   return backgroundGeolocation.getState()
-    // }
-
-    function toggleBackgroundDebugMode() {
-      backgroundGeolocation.setConfig(
-        {debug: !self.backgroundDebugEnabled},
-        self.setBackgroundGeoDebugMode
-      )
+    function setBackgroundConfig(config) {
+      backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
     return {
@@ -263,7 +277,7 @@ const LocationStore = types
       startBackground,
       getCurrentPosition,
       initialize,
-      toggleBackgroundDebugMode,
+      setBackgroundConfig,
     }
   })
   .actions(self => {

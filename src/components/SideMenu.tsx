@@ -7,7 +7,6 @@ import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {colors} from '../constants'
 import {settings} from '../globals'
-import {ILocationStore} from '../store/LocationStore'
 
 import {isAlive} from 'mobx-state-tree'
 const {version} = require('../../package.json')
@@ -70,16 +69,14 @@ const VersionFooter = () => (
 
 type Props = {
   wocky?: any
-  locationStore?: ILocationStore
 }
 
-@inject('wocky', 'locationStore')
+@inject('wocky')
 @observer
 class SideMenu extends React.Component<Props> {
   render() {
-    const {wocky, locationStore} = this.props
+    const {wocky} = this.props
     const {profile} = wocky
-    const debug = locationStore!.backgroundDebugEnabled
     if (!profile || !isAlive(profile)) {
       return null
     }
@@ -119,17 +116,8 @@ class SideMenu extends React.Component<Props> {
           <Text style={styles.text}>FRIENDS</Text>
         </MenuItem>
         {settings.isStaging && (
-          <MenuItem
-            onPress={() => locationStore!.toggleBackgroundDebugMode()}
-            stayOpen
-            // image={require('../../images/menuFriends.png')}
-          >
-            <Text style={styles.text}>
-              LOCATION DEBUG:
-              <Text style={[styles.text, {color: debug ? 'green' : 'red'}]}>
-                {debug ? ' ON' : ' OFF'}
-              </Text>
-            </Text>
+          <MenuItem onPress={() => Actions.locationDebug()}>
+            <Text style={styles.text}>LOCATION DEBUG</Text>
           </MenuItem>
         )}
         <VersionFooter />

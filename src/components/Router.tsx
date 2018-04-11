@@ -39,6 +39,7 @@ import ReportBot from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import * as modals from './modals'
+import LocationDebug from './LocationDebug'
 
 const STAGING_COLOR = 'rgb(28,247,39)'
 
@@ -209,6 +210,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="followers" path="followers" component={peopleLists.FollowersList} clone title="Followers" back />
             <Scene key="followed" component={peopleLists.FollowedList} clone title="Following" back />
             <Scene key="blocked" component={peopleLists.BlockedList} clone title="Blocked Users" back right={() => null} />
+            <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />
           </Stack>
           <Scene key="locationWarning" component={modals.LocationWarning} />
           <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />
