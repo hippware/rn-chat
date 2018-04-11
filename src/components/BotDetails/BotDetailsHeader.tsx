@@ -15,8 +15,8 @@ import {IBot} from 'wocky-client'
 
 type Props = {
   bot: IBot
-  notificationStore: any // TODO proper type
-  analytics: any // TODO proper type
+  notificationStore?: any // TODO proper type
+  analytics?: any // TODO proper type
   scale: number
 }
 

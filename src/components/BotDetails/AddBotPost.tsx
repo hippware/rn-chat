@@ -15,9 +15,9 @@ const IMAGE_HEIGHT = 70 * k
 
 type Props = {
   bot: IBot
-  wocky: IWocky
+  wocky?: IWocky
   scrollToEnd: () => void
-  notificationStore: any // TODO proper type
+  notificationStore?: any // TODO proper type
 }
 
 @inject('notificationStore', 'wocky')
@@ -169,7 +169,7 @@ class AddBotPost extends React.Component<Props> {
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
               disabled={
-                (textLength === 0 && !this.imageSrc) || !wocky.connected || this.sendingPost
+                (textLength === 0 && !this.imageSrc) || !wocky!.connected || this.sendingPost
               }
               onPress={this.onSend}
             >
@@ -179,7 +179,7 @@ class AddBotPost extends React.Component<Props> {
                 <RText
                   size={16}
                   color={
-                    (textLength || this.imageSrc) && wocky.connected ? colors.PINK : colors.GREY
+                    (textLength || this.imageSrc) && wocky!.connected ? colors.PINK : colors.GREY
                   }
                 >
                   Post
