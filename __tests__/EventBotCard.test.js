@@ -33,9 +33,7 @@ describe('EventBotCard', () => {
       error: '',
     });
 
-    mockLocationStore.setPosition({
-      coords: {longitude: 2, latitude: 2, accuracy: 2},
-    });
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
 
     const botCreate = EventBotCreate.create({id: '123', time: 123, bot, created: true});
     const toRender = (

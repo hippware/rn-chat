@@ -13,9 +13,7 @@ describe('Explore Nearby', () => {
   it('renders with no data', () => {
     const wocky = {};
 
-    mockLocationStore.setPosition({
-      coords: {longitude: 2, latitude: 2, accuracy: 2},
-    });
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
 
     const toRender = (
       <Provider {...injects} wocky={wocky} locationStore={mockLocationStore} store={{}}>

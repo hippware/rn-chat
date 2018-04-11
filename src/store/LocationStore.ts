@@ -2,7 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
-import {ILocation, Location} from 'wocky-client'
+import {ILocationSnapshot, Location} from 'wocky-client'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
@@ -66,9 +66,9 @@ const LocationStore = types
     setMetricSystem(type) {
       self.system = type
     },
-    setPosition(location: ILocation) {
+    setPosition(location: ILocationSnapshot) {
       self.enabled = true
-      self.location = location
+      Object.assign(self, {location})
       self.loading = false
       // TODO: share location via wocky-client
       // this.share(this.location);

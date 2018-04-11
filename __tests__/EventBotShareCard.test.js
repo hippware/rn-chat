@@ -33,9 +33,7 @@ describe('EventBotShareCard', () => {
       error: '',
     });
 
-    mockLocationStore.setPosition({
-      coords: {longitude: 2, latitude: 2, accuracy: 2},
-    });
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
 
     // TODO: create different profile as owner
     const message = Message.create({id: '789', time: 789, archiveId: '789', from: owner.id});
