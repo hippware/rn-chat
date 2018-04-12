@@ -144,6 +144,11 @@ exports[`Explore Nearby renders with no data 1`] = `
       }
       locationStore={
         Object {
+          "backgroundOptions": Object {
+            "desiredAccuracy": null,
+            "distanceFilter": null,
+            "stationaryRadius": null,
+          },
           "location": Object {
             "accuracy": 2,
             "latitude": 2,
