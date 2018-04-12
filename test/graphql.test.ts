@@ -21,7 +21,7 @@ describe('GraphQL', () => {
       await user.profile!.update({handle: 'abc134567', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
       // console.log('credentials', user.username, user.password)
       gql = new GraphQLTransport('testing')
-      gql.login(user.username!, user.password!, host)
+      await gql.login(user.username!, user.password!, host)
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       done()
