@@ -246,6 +246,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async remove(): Promise<void> {
+    // TODO: remove user
     return this.disconnect()
   }
 

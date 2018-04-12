@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, IModelType} from 'mobx-state-tree'
+import {types, IModelType, ISnapshottable} from 'mobx-state-tree'
 const GEOLOC_NS = 'http://jabber.org/protocol/geoloc'
 
 export const Location = types
@@ -30,3 +30,5 @@ export const Location = types
       }
     }
   }))
+
+export type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>
