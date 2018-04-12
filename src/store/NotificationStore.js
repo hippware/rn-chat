@@ -4,6 +4,7 @@ import autobind from 'autobind-decorator'
 import {computed, observable, reaction, when, autorun} from 'mobx'
 import type {IObservableArray} from 'mobx'
 import {colors} from '../constants'
+import {isAlive} from 'mobx-state-tree'
 
 @autobind
 class NotificationStore {
@@ -15,7 +16,7 @@ class NotificationStore {
   constructor(wocky, connectivityStore) {
     this.wocky = wocky
     autorun('NotificationStore toggler', () => {
-      if (connectivityStore.isActive) this.start()
+      if (connectivityStore && isAlive(connectivityStore) && connectivityStore.isActive) this.start()
       else this.finish()
     })
   }
