@@ -1,4 +1,3 @@
-/// <reference types="phoenix" />
 import { ApolloClient } from 'apollo-client';
 import { IWockyTransport, SetLocationParams, IPagingList } from './IWockyTransport';
 import { Socket as PhoenixSocket } from 'phoenix';
