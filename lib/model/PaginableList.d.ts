@@ -12,5 +12,6 @@ export interface IPaginable extends IModelType<any, any> {
         force?: boolean;
     }) => Promise<Array<any>>;
     addToTop?: (i: any) => any;
+    remove?: (id: string) => void;
 }
 export declare function createPaginable(type: any): IPaginable;

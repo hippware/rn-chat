@@ -434,12 +434,15 @@ export const Wocky = types
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
     },
-    _onBotVisitor: flow(function*({botId, id, ...data}: any) {
+    _onBotVisitor: flow(function*({botId, action, id, ...data}: any) {
       if (self.bots.get(botId)) {
-        console.log('ON BOT VISITOR', id, data)
         const bot: IBot = self.bots.get(botId)
-        const profile = self.profiles.get(id, data)
-        bot.visitors.addToTop!(profile)
+        if (action === 'ARRIVE') {
+          const profile = self.profiles.get(id, data)
+          bot.visitors.addToTop!(profile)
+        } else {
+          bot.visitors.remove!(id)
+        }
       }
     }),
     _onNotification: flow(function*({changed, version, ...data}: any) {

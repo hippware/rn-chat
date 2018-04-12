@@ -11,20 +11,21 @@ import {Socket as PhoenixSocket} from 'phoenix'
 import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 
 // TODO use GraphQL fragment for this?
-const PROFILE_PROPS = 'id firstName lastName handle'
+const PROFILE_PROPS = 'id firstName lastName handle avatar'
 const BOT_PROPS = `id title address isPublic: public addressData description geofence image public radius server shortname 
   type lat lon owner { ${PROFILE_PROPS} } 
-  items { totalCount }
+  items(first:0) { totalCount }
   guestCount: subscribers(first:0 type:GUEST){ totalCount }
   visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
+  subscribers(first:1 id: $ownUsername) { edges { relationships } }
 `
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
   socket: PhoenixSocket
-  subscriptions: {[key: string]: any} = {}
+  botGuestVisitorsSubscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -50,7 +51,12 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
-    this.socket = new PhoenixSocket(`wss://${this.host}/graphql`)
+    this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
+      logger: (kind, msg, data) => {
+        // uncomment to see all graphql messages!
+        // console.log(`${kind}: ${msg}`, JSON.stringify(data))
+      }
+    })
     // todo: implement login when it's ready
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
@@ -70,14 +76,20 @@ export class GraphQLTransport implements IWockyTransport {
       const res = await this.client.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
-            authenticate(user: $user, token: $token) {
-              id
+            authenticate(input: {user: $user, token: $token}) {
+              user {
+                id
+              }
             }
           }
         `,
         variables: {user, token: password}
       })
-      return !!res.data && res.data!.authenticate !== null
+      const result = !!res.data && res.data!.authenticate !== null
+      if (result) {
+        this.subscribeBotVisitors()
+      }
+      return result
     } catch (err) {
       return false
     }
@@ -108,17 +120,16 @@ export class GraphQLTransport implements IWockyTransport {
   async loadBot(id: string, server: any): Promise<any> {
     const res = await this.client.query<any>({
       query: gql`
-        {
-          bot(id: "${id}") {
+        query loadBot($id: String!, $ownUsername: String!){
+          bot(id: $id) {
             ${BOT_PROPS}
-            subscribers(first: 1 id: "${this.username}") {
-              edges {
-                relationships
-              }
-            }
           }
         }
-      `
+      `,
+      variables: {
+        id,
+        ownUsername: this.username
+      }
     })
     return convertBot(res.data.bot)
   }
@@ -126,10 +137,10 @@ export class GraphQLTransport implements IWockyTransport {
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
     const res = await this.client.query<any>({
       query: gql`
-        {
-          user(id: "${userId}") {
+        query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
+          user(id: $userId) {
             id
-            bots(first: ${max} after: ${after ? `"${after}"` : null} relationship: ${relationship}) {
+            bots(first: $max after: $after relationship: $relationship) {
               totalCount
               edges {
                 cursor
@@ -139,18 +150,19 @@ export class GraphQLTransport implements IWockyTransport {
               }
             }
           }
-        }
-      `
+        }        
+      `,
+      variables: {userId, after, max, ownUsername: this.username, relationship}
     })
     const {bots} = res.data.user
-    const list = bots.edges.map((e: any) => e.node)
+    const list = bots.edges.map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async setLocation(params: SetLocationParams): Promise<void> {
     const res = await this.client.mutate({
       mutation: gql`
         mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
-          setLocation(location: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+          userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
             result
             successful
           }
@@ -158,39 +170,32 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: params
     })
-    return res.data!.setLocation.successful
+    return res.data!.userLocationUpdate.successful
   }
-  async subscribeBotVisitors(botId: string) {
-    if (this.subscriptions[botId]) {
-      this.subscriptions[botId]()
+  async subscribeBotVisitors() {
+    if (this.botGuestVisitorsSubscription) {
+      this.botGuestVisitorsSubscription()
     }
-    console.log('SUBSCRIBE BOT VISITORS', botId)
-    this.subscriptions[botId] = await this.client
+    this.botGuestVisitorsSubscription = await this.client
       .subscribe({
         query: gql`
-          subscription botVisitors($id: String!) {
-            botVisitors(id: $id) {
-              subscribers(first: 100, type: VISITOR) {
-                edges {
-                  node {
-                    avatar
-                    firstName
-                    lastName
-                    handle
-                    id
-                  }
-                }
+          subscription {
+            botGuestVisitors {
+              action
+              bot {
+                id
+              }
+              visitor {
+                ${PROFILE_PROPS}
               }
             }
           }
-        `,
-        variables: {id: botId}
+        `
       })
       .subscribe({
         next: (result: any) => {
-          console.log('SUBSCRIPTION RESULT:', JSON.stringify(result))
-          // this.botVisitor = {...result.data.botVisitors.subscribers.edges[0].node, botId}
-          // disabled until new subscription is not ready
+          const update = result.data.botGuestVisitors
+          this.botVisitor = {...update.visitor, botId: update.bot.id, action: update.action}
         }
       })
   }
@@ -348,7 +353,7 @@ function convertBot({lat, lon, isPublic, items, subscriberCount, visitorCount, g
   return {
     ...data,
     totalItems: items ? items.totalCount : 0,
-    followersSize: subscriberCount.totalCount,
+    followersSize: subscriberCount.totalCount - 1,
     visitorsSize: visitorCount.totalCount,
     guestsSize: guestCount.totalCount,
     location: {latitude: lat, longitude: lon},

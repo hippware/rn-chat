@@ -215,7 +215,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadOwnBots(userId, lastId, max)
+    return this._gql.loadOwnBots(userId, lastId, max)
   }
 
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList> {
@@ -227,7 +227,6 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
-    this._gql.subscribeBotVisitors(id)
     return this._xmpp.loadBotVisitors(id, lastId, max)
   }
 
@@ -236,6 +235,6 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadSubscribedBots(userId, lastId, max)
+    return this._gql.loadSubscribedBots(userId, lastId, max)
   }
 }

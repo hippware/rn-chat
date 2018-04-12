@@ -216,14 +216,18 @@ describe('BotStore', () => {
   })
 
   it('subscribe user2 for first bot', async done => {
-    await user2._subscribeBot(bot.id)
-    user2.profile!.subscribedBots.refresh()
-    await user2.profile!.subscribedBots.load()
-    expect(user2.profile!.subscribedBots.list.length).to.be.equal(1)
-    expect(user2.profile!.subscribedBots.list[0].isSubscribed).to.be.true
-    expect(user2.profile!.subscribedBots.list[0].followersSize).to.be.equal(1)
-    user2bot = user2.profile!.subscribedBots.list[0]
-    done()
+    try {
+      await user2._subscribeBot(bot.id)
+      user2.profile!.subscribedBots.refresh()
+      await user2.profile!.subscribedBots.load()
+      expect(user2.profile!.subscribedBots.list.length).to.be.equal(1)
+      expect(user2.profile!.subscribedBots.list[0].isSubscribed).to.be.true
+      expect(user2.profile!.subscribedBots.list[0].followersSize).to.be.equal(1)
+      user2bot = user2.profile!.subscribedBots.list[0]
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('unsubscribe user2 for first bot', async done => {
