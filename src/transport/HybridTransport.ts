@@ -227,7 +227,6 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
-    this._gql.subscribeBotVisitors(id)
     return this._xmpp.loadBotVisitors(id, lastId, max)
   }
 

@@ -25,7 +25,7 @@ export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
   socket: PhoenixSocket
-  subscriptions: {[key: string]: any} = {}
+  botGuestVisitorsSubscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -85,7 +85,11 @@ export class GraphQLTransport implements IWockyTransport {
         `,
         variables: {user, token: password}
       })
-      return !!res.data && res.data!.authenticate !== null
+      const result = !!res.data && res.data!.authenticate !== null
+      if (result) {
+        this.subscribeBotVisitors()
+      }
+      return result
     } catch (err) {
       return false
     }
@@ -166,39 +170,32 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: params
     })
-    return res.data!.setLocation.successful
+    return res.data!.userLocationUpdate.successful
   }
-  async subscribeBotVisitors(botId: string) {
-    if (this.subscriptions[botId]) {
-      this.subscriptions[botId]()
+  async subscribeBotVisitors() {
+    if (this.botGuestVisitorsSubscription) {
+      this.botGuestVisitorsSubscription()
     }
-    console.log('SUBSCRIBE BOT VISITORS', botId)
-    this.subscriptions[botId] = await this.client
+    this.botGuestVisitorsSubscription = await this.client
       .subscribe({
         query: gql`
-          subscription botVisitors($id: String!) {
-            botVisitors(id: $id) {
-              subscribers(first: 100, type: VISITOR) {
-                edges {
-                  node {
-                    avatar
-                    firstName
-                    lastName
-                    handle
-                    id
-                  }
-                }
+          subscription {
+            botGuestVisitors {
+              action
+              bot {
+                id
+              }
+              visitor {
+                ${PROFILE_PROPS}
               }
             }
           }
-        `,
-        variables: {id: botId}
+        `
       })
       .subscribe({
         next: (result: any) => {
-          console.log('SUBSCRIPTION RESULT:', JSON.stringify(result))
-          // this.botVisitor = {...result.data.botVisitors.subscribers.edges[0].node, botId}
-          // disabled until new subscription is not ready
+          const update = result.data.botGuestVisitors
+          this.botVisitor = {...update.visitor, botId: update.bot.id, action: update.action}
         }
       })
   }
