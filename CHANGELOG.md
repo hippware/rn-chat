@@ -5,6 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* [dev] [refactor] make Connectivity.js "reactive" (#1936)
+* You're Here UI shows for all geofence bots on geo header (#2092)
+* Bot Title is not tappable on geofence header (#2091)
+* HS: Tapping New Updates CTA scrolls geo header out of view (#2093)
+* Enable empty UI for Visitors "Who's Here" screen (#2077)
+* Implement bot retrieval via GraphQL (#2046)
+* Other graphql work
+* Some conversation to typescript
+
+
 # 2.5.0 - 2018 Apr 6
 
 (Not sequential with 2.4.1)
