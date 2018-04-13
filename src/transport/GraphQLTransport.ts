@@ -159,18 +159,20 @@ export class GraphQLTransport implements IWockyTransport {
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async setLocation(params: SetLocationParams): Promise<void> {
-    const res = await this.client.mutate({
-      mutation: gql`
-        mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
-          userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
-            result
-            successful
+    if (this.client) {
+      const res = await this.client.mutate({
+        mutation: gql`
+          mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
+            userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+              result
+              successful
+            }
           }
-        }
-      `,
-      variables: params
-    })
-    return res.data!.userLocationUpdate.successful
+        `,
+        variables: params
+      })
+      return res.data!.userLocationUpdate.successful
+    }
   }
   async subscribeBotVisitors() {
     this.botGuestVisitorsSubscription = await this.client
