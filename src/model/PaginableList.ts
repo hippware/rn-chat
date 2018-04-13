@@ -78,16 +78,10 @@ export function createPaginable(type: any): IPaginable {
             try {
               const {list, count, cursor, ...data} = yield request(self.cursor, max)
               self.count = count
-              self.cursor = cursor || list.length ? list[list.length - 1].id : null
+              self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
-
-              // temporary solution for deletes not working in homestream
-              self.finished = self.result.length >= count
-              // self.finished = list.length === 0
-              if (self.result.length >= count) {
-                console.warn('WOCKY: result.length > count', self.result.length, count, self)
-              }
+              self.finished = list.length === 0
             } finally {
               self.loading = false
             }
@@ -110,13 +104,10 @@ export function createPaginable(type: any): IPaginable {
             try {
               const {list, count, cursor, ...data} = yield request(self.cursor)
               self.count = count
-              self.cursor = cursor || list.length ? list[list.length - 1].id : null
+              self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
-
-              // temporary solution for deletes not working in homestream
-              self.finished = self.result.length >= count
-              // self.finished = list.length === 0
+              self.finished = list.length === 0
             } finally {
               self.loading = false
             }

@@ -300,33 +300,33 @@ export const Wocky = types
     }),
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadOwnBots(userId, lastId, max)
-      return {list: list.map((bot: any) => self.getBot(bot)), count}
+      const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
+      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+      const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
     }),
     _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotGuests(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+      const {list, cursor, count} = yield self.transport.loadBotGuests(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
     }),
     _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotVisitors(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count}
+      const {list, cursor, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadBotPosts(id, before)
-      return {list: list.map((post: any) => self.create(BotPost, post)), count}
+      const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
+      return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
     }),
     _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
-      return {list: list.map((bot: any) => self.getBot(bot)), count}
+      const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
+      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
     _updateBot: flow(function*(bot: IBot) {
       yield waitFor(() => self.connected)
