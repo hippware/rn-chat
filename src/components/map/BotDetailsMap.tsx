@@ -28,7 +28,7 @@ const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
       rotateEnabled={fullMap}
       pitchEnabled={fullMap}
       zoomEnabled={fullMap}
-      marker={<BotMarker {...props} scale={scale} bot={bot} />}
+      marker={<BotMarker key={bot.id + scale} {...props} scale={scale} bot={bot} />}
       {...props}
     />
   )

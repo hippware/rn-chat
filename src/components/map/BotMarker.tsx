@@ -4,6 +4,7 @@ import React from 'react'
 import BotBubble from './BotBubble'
 import MapView from 'react-native-maps'
 import {observer} from 'mobx-react/native'
+import {observable} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 
@@ -19,25 +20,10 @@ type Props = {
 
 @observer
 export default class BotMarker extends React.Component<Props> {
-  state = {tracking: true}
-  mounted = false
+  @observable tracking = true
 
   componentDidMount() {
-    this.mounted = true
-    setTimeout(() => this.setState({tracking: false}), 500)
-  }
-
-  componentWillUnmount() {
-    this.mounted = false
-  }
-  // workaround for high CPU usage by Google maps
-  // https://github.com/react-community/react-native-maps/issues/1031#issuecomment-378881118
-  componentDidUpdate() {
-    if (this.state.tracking) {
-      setTimeout(() => this.mounted && this.setState({tracking: false}), 500)
-    } else {
-      setTimeout(() => this.mounted && this.setState({tracking: true}), 500)
-    }
+    setTimeout(() => this.tracking = false, 400)
   }
 
   render() {
@@ -49,7 +35,7 @@ export default class BotMarker extends React.Component<Props> {
     return (
       <MapView.Marker.Animated
         anchor={{x: 0.5, y}}
-        tracksViewChanges={this.state.tracking}
+        tracksViewChanges={this.tracking}
         style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
         key={id || bot.id}
         identifier={bot.id}
