@@ -15,14 +15,14 @@ const SearchStore = types
     globalResult: types.optional(SelectableProfileList, {}),
   })
   .views(self => ({
-    get snapshot() {
-      const res = {...getSnapshot(self)};
+    postProcessSnapshot: (snapshot: any) => {
+      const res: any = {...snapshot}
       delete res.global;
       delete res.globalResult;
       delete res.local;
       delete res.localResult;
-      return res;
-    },
+      return res
+    }
   }))
   .actions(self => ({
     clear: () => {
