@@ -121,7 +121,7 @@
     "stream-to-array": "^2.3.0",
     "tcomb-form-native": "^0.6.11",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#2e3bb4a90836de89bf9547b9bb0b2bf2978b9992",
+    "wocky-client": "github:hippware/wocky-client#6613eed6a1f041341136313d44e30af8464e1e7e",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {
