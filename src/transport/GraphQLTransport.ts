@@ -155,7 +155,7 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {userId, after, max, ownUsername: this.username, relationship}
     })
     const {bots} = res.data.user
-    const list = bots.edges.map((e: any) => convertBot(e.node))
+    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async setLocation(params: SetLocationParams): Promise<void> {
@@ -173,9 +173,6 @@ export class GraphQLTransport implements IWockyTransport {
     return res.data!.userLocationUpdate.successful
   }
   async subscribeBotVisitors() {
-    if (this.botGuestVisitorsSubscription) {
-      this.botGuestVisitorsSubscription()
-    }
     this.botGuestVisitorsSubscription = await this.client
       .subscribe({
         query: gql`
@@ -347,20 +344,25 @@ export class GraphQLTransport implements IWockyTransport {
   }
 }
 
-function convertBot({lat, lon, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
-  const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
-  const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
-  return {
-    ...data,
-    totalItems: items ? items.totalCount : 0,
-    followersSize: subscriberCount.totalCount - 1,
-    visitorsSize: visitorCount.totalCount,
-    guestsSize: guestCount.totalCount,
-    location: {latitude: lat, longitude: lon},
-    visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
-    guest: contains('GUEST'),
-    visitor: contains('VISITOR'),
-    isSubscribed: contains('SUBSCRIBED')
+function convertBot({lat, lon, addressData, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
+  try {
+    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+    return {
+      ...data,
+      addressData: addressData || {},
+      totalItems: items ? items.totalCount : 0,
+      followersSize: subscriberCount.totalCount - 1,
+      visitorsSize: visitorCount.totalCount,
+      guestsSize: guestCount.totalCount,
+      location: {latitude: lat, longitude: lon},
+      visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
+      guest: contains('GUEST'),
+      visitor: contains('VISITOR'),
+      isSubscribed: contains('SUBSCRIBED')
+    }
+  } catch (e) {
+    console.error('ERROR CONVERTING:', arguments[0])
   }
 }
 

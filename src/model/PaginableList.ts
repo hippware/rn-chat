@@ -88,8 +88,6 @@ export function createPaginable(type: any): IPaginable {
               if (self.result.length >= count) {
                 console.warn('WOCKY: result.length > count', self.result.length, count, self)
               }
-            } catch (e) {
-              console.log('ERROR:', e)
             } finally {
               self.loading = false
             }
@@ -119,9 +117,6 @@ export function createPaginable(type: any): IPaginable {
               // temporary solution for deletes not working in homestream
               self.finished = self.result.length >= count
               // self.finished = list.length === 0
-            } catch (e) {
-              console.warn('PagingableList.load ERROR:', e)
-              self.finished = true
             } finally {
               self.loading = false
             }
