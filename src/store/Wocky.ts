@@ -141,7 +141,7 @@ export const Wocky = types
         remove: flow(function*() {
           yield transport.remove()
         }),
-        register: flow(function*(data: any, providerName = 'digits') {
+        register: flow(function*(data: any, providerName: string) {
           const res = yield transport.register(data, self.host, providerName)
           Object.assign(self, res)
           return true
