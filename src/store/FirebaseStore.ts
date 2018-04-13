@@ -152,7 +152,7 @@ const FirebaseStore = types
 
     const registerWithToken = flow(function*() {
       try {
-        yield wocky!.register({jwt: self.token})
+        yield wocky!.register({jwt: self.token}, 'firebase')
         self.setState({buttonText: 'Connecting...'})
         yield wocky.login()
         self.setState({buttonText: 'Verify', registered: true})
