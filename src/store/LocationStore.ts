@@ -3,18 +3,18 @@ import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
-import bgLoc from 'react-native-background-geolocation'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
 const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 
+// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
 export const LocationAccuracyChoices = {
-  [bgLoc.DESIRED_ACCURACY_HIGH.toString()]: 'HIGH',
-  [bgLoc.DESIRED_ACCURACY_MEDIUM.toString()]: 'MEDIUM',
-  [bgLoc.DESIRED_ACCURACY_LOW.toString()]: 'LOW',
-  [bgLoc.DESIRED_ACCURACY_VERY_LOW.toString()]: 'VERY_LOW',
+  '-1': 'HIGH',
+  '10': 'MEDIUM',
+  '100': 'LOW',
+  '1000': 'VERY_LOW',
 }
 const LocationAccuracyValues = Object.keys(LocationAccuracyChoices)
 
