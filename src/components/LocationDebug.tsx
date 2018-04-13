@@ -1,27 +1,31 @@
 import React from 'react'
-import Screen from './Screen'
 import t from 'tcomb-form-native'
 import stylesheet from 'tcomb-form-native/lib/stylesheets/bootstrap'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {inject, observer} from 'mobx-react/native'
-import {ILocationStore, LocationAccuracyValues} from '../store/LocationStore'
+
+import {ILocationStore, LocationAccuracyChoices, ActivityTypeChoices} from '../store/LocationStore'
+import Screen from './Screen'
+import {observable} from 'mobx'
 
 t.form.Form.stylesheet = stylesheet
 const Form = t.form.Form
 
-const enumObj = {}
-LocationAccuracyValues.forEach(v => {
-  enumObj[v] = v
-})
-
 const debuggerSettings = t.struct({
-  desiredAccuracy: t.enums(enumObj),
+  debug: t.Boolean,
+  debugSounds: t.Boolean,
+  desiredAccuracy: t.enums(LocationAccuracyChoices),
   distanceFilter: t.Number,
   stationaryRadius: t.Number,
+  activityType: t.enums(ActivityTypeChoices),
+  activityRecognitionInterval: t.Number,
 })
 
 const options = {
   fields: {
+    debug: {
+      label: 'Background location debug mode',
+    },
     desiredAccuracy: {
       label: 'desiredAccuracy',
     },
@@ -29,7 +33,13 @@ const options = {
       label: 'distanceFilter',
     },
     stationaryRadius: {
-      label: 'stationaryRadius',
+      label: 'stationaryRadius (minimum 25)',
+    },
+    activityType: {
+      label: 'activityType',
+    },
+    activityRecognitionInterval: {
+      label: 'activityRecognitionInterval (in ms)',
     },
   },
 }
@@ -42,27 +52,42 @@ type Props = {
 @observer
 export default class LocationDebug extends React.Component<Props> {
   form: any
+  @observable emailing: boolean = false
 
   onChange = config => {
     this.props.locationStore!.setBackgroundConfig(config)
   }
 
   render() {
-    const {backgroundOptions} = this.props.locationStore!
+    const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
-    const {desiredAccuracy, distanceFilter, stationaryRadius} = backgroundOptions
-
-    // TODO: add location debug mode toggle
+    const {
+      debug,
+      desiredAccuracy,
+      distanceFilter,
+      stationaryRadius,
+      activityType,
+      activityRecognitionInterval,
+    } = backgroundOptions
+    const value = {
+      debug,
+      desiredAccuracy,
+      distanceFilter,
+      stationaryRadius,
+      activityType,
+      activityRecognitionInterval,
+      debugSounds,
+    }
 
     return (
-      <Screen style={{flex: 1}}>
-        <KeyboardAwareScrollView style={{flex: 1, padding: 20}}>
+      <Screen style={{flex: 1, paddingVertical: 20}}>
+        <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: 20}}>
           <Form
             ref={f => (this.form = f)}
             type={debuggerSettings}
             options={options}
             onChange={this.onChange}
-            value={{desiredAccuracy, distanceFilter, stationaryRadius}}
+            value={value}
           />
         </KeyboardAwareScrollView>
       </Screen>
