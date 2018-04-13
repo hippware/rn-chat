@@ -1,25 +1,53 @@
-import {types, getEnv, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, isAlive} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
-import {ILocationSnapshot, Location} from 'wocky-client'
+import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
 const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 
+// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
+export const LocationAccuracyChoices = {
+  '-1': 'HIGH',
+  '10': 'MEDIUM',
+  '100': 'LOW',
+  '1000': 'VERY_LOW',
+}
+const LocationAccuracyValues = Object.keys(LocationAccuracyChoices)
+
+// https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-activitytype-activity_type_automotive_navigation-activity_type_other_navigation-activity_type_fitness-activity_type_other
+export const ActivityTypeChoices = {
+  '1': 'OTHER',
+  '2': 'AUTOMOTIVE_NAVIGATION',
+  '3': 'FITNESS',
+  '4': 'OTHER_NAVIGATION',
+}
+const ActivityTypeValues = Object.keys(ActivityTypeChoices)
+
+const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+  desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
+  distanceFilter: types.maybe(types.number),
+  stationaryRadius: types.maybe(types.number),
+  debug: types.maybe(types.boolean),
+  activityType: types.maybe(types.enumeration(ActivityTypeValues)),
+  activityRecognitionInterval: types.maybe(types.number),
+})
+
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
     location: types.maybe(Location),
+    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
     enabled: true,
     alwaysOn: true,
     system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
-    backgroundDebugEnabled: false,
+    debugSounds: false,
   }))
   .views(self => ({
     get isMetric() {
@@ -86,17 +114,35 @@ const LocationStore = types
     setAlwaysOn(value) {
       self.alwaysOn = value
     },
-    setBackgroundGeoDebugMode({debug}: {debug: boolean}) {
-      self.backgroundDebugEnabled = debug
+    updateBackgroundConfigSuccess(state) {
+      const {
+        desiredAccuracy,
+        distanceFilter,
+        stationaryRadius,
+        activityType,
+        activityRecognitionInterval,
+        debug,
+      } = state
+      Object.assign(self, {
+        backgroundOptions: {
+          desiredAccuracy: desiredAccuracy.toString(),
+          distanceFilter,
+          stationaryRadius,
+          activityType: activityType.toString(),
+          activityRecognitionInterval,
+          debug,
+        },
+      })
+    },
+    setState(value) {
+      Object.assign(self, value)
     },
   }))
   .actions(self => {
-    const {logger, geolocation, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
-
-    let watch
+    const {logger, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
 
     function startBackground() {
-      const model = getParent(self).wocky
+      const wocky: IWocky = getParent(self).wocky
       if (typeof navigator !== 'undefined') {
         logger.log('BACKGROUND LOCATION START')
 
@@ -128,10 +174,17 @@ const LocationStore = types
         })
 
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
-        backgroundGeolocation.on('http', response => {
-          logger.log('- [js]http: ', response.responseText)
-          //        logger.log('- [js]http: ', JSON.parse(response.responseText));
-        })
+        backgroundGeolocation.on(
+          'http',
+          () => {
+            // success
+            if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+          },
+          () => {
+            // fail
+            if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+          }
+        )
 
         // This handler fires whenever bgGeo receives an error
         backgroundGeolocation.on('error', error => {
@@ -157,20 +210,20 @@ const LocationStore = types
 
           self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
         })
-        const url = `https://${settings.getDomain()}/api/v1/users/${model.username}/locations`
-        logger.log(`LOCATION UPDATE URL: ${url} ${model.username} ${model.password}`)
+        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
+        logger.log(`LOCATION UPDATE URL: ${url} ${wocky.username} ${wocky.password}`)
         backgroundGeolocation.ready(
           {
             // Geolocation Config
-            desiredAccuracy: 0,
+            desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
             useSignificantChangesOnly: false,
-            stationaryRadius: 20,
+            stationaryRadius: 25,
             distanceFilter: 30,
             // Activity Recognition
             stopTimeout: 1,
             // Application config
             debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-            // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
+            logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
             stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
             startOnBoot: true, // <-- Auto start tracking when device is powered-up.
             // HTTP / SQLite config
@@ -179,17 +232,16 @@ const LocationStore = types
             autoSync: true, // <-- [Default: true] Set true to sync each location to server as it arrives.
             // maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
             headers: {
-              // <-- Optional HTTP headers
-              'X-Auth-User': model.username,
-              'X-Auth-Token': model.password,
+              'X-Auth-User': wocky.username,
+              'X-Auth-Token': wocky.password,
             },
             params: {
-              // <-- Optional HTTP params
               resource: 'testing',
             },
           },
           state => {
             logger.log('- BackgroundGeolocation is configured and ready: ', state)
+            self.updateBackgroundConfigSuccess(state)
 
             if (!state.enabled && self.alwaysOn) {
               backgroundGeolocation.start(() => {
@@ -232,38 +284,18 @@ const LocationStore = types
       })
     })
 
-    function watchPosition() {
-      if (!watch) {
-        watch = geolocation.watchPosition(
-          position => self.setPosition(position.coords),
-          self.positionError,
-          {
-            timeout: 20000,
-            maximumAge: 60000,
-            enableHighAccuracy: false,
-          }
-        )
-      }
-    }
-
-    // function getBackgroundMode(): Promise<any> {
-    //   return backgroundGeolocation.getState()
-    // }
-
-    function toggleBackgroundDebugMode() {
-      backgroundGeolocation.setConfig(
-        {debug: !self.backgroundDebugEnabled},
-        self.setBackgroundGeoDebugMode
-      )
+    function setBackgroundConfig(config) {
+      backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+      if (config.debugSounds && !self.debugSounds) backgroundGeolocation.playSound(1028) // newsflash
+      self.setState({debugSounds: config.debugSounds})
     }
 
     return {
-      watchPosition,
       stopBackground,
       startBackground,
       getCurrentPosition,
       initialize,
-      toggleBackgroundDebugMode,
+      setBackgroundConfig,
     }
   })
   .actions(self => {
@@ -275,7 +307,7 @@ const LocationStore = types
       self.initialize()
       ;({wocky, connectivityStore} = getParent(self))
       autorun('LocationStore toggler', () => {
-        if (connectivityStore.isActive) start()
+        if (connectivityStore && isAlive(connectivityStore) && connectivityStore.isActive) start()
         else finish()
       })
     }

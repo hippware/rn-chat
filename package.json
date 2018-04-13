@@ -16,8 +16,7 @@
     "jest:all": "jest --testPathPattern __tests__/*.test.js",
     "jest": "jest",
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
-    "testBundle":
-      "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
+    "testBundle": "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "babel-node ./scripts/codepush.js",
@@ -40,7 +39,14 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*(test|spec)\\.(jsx?|tsx?))$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "globals": {
       "ts-jest": {
         "useBabelrc": true
@@ -113,8 +119,9 @@
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
+    "tcomb-form-native": "^0.6.11",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#2091",
+    "wocky-client": "github:hippware/wocky-client#2e3bb4a90836de89bf9547b9bb0b2bf2978b9992",
     "xregexp": "^4.1.1"
   },
   "devDependencies": {
