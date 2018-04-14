@@ -70,7 +70,7 @@ class BotVisitorList extends React.Component<Props> {
             }}
           >
             <Image
-              source={require('../../../images/botGray.png')}
+              source={require('../../../images/surpriseBotGray.png')}
               style={{height: 74, width: 64, marginVertical: 10 * k}}
               resizeMode="contain"
             />
