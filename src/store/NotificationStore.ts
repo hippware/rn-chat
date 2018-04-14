@@ -44,7 +44,7 @@ class NotificationStore {
           }
         },
         {
-          delay: 3000,
+          delay: 1000,
           fireImmediately: true,
           name: 'offline notification check',
         }
