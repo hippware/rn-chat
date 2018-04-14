@@ -27,25 +27,29 @@ class NotificationStore {
 
     let offlineNotification
 
-    this.disposer = reaction(
-      () => {
-        const {connected, connecting, profile} = this.wocky
-        return {isOffline: !!profile && !connected, connecting}
-      },
-      ({isOffline, connecting}) => {
-        if (isOffline) {
-          offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
-            color: colors.DARK_GREY,
-          })
-        } else {
-          if (offlineNotification) offlineNotification.close()
+    // initial check after timeout. Delay = debounce.
+    setTimeout(() => {
+      this.disposer = reaction(
+        () => {
+          const {connected, connecting, profile} = this.wocky
+          return {isOffline: !!profile && !connected, connecting}
+        },
+        ({isOffline, connecting}) => {
+          if (isOffline) {
+            offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
+              color: colors.DARK_GREY,
+            })
+          } else {
+            if (offlineNotification) offlineNotification.close()
+          }
+        },
+        {
+          delay: 3000,
+          fireImmediately: true,
+          name: 'offline notification check',
         }
-      },
-      {
-        delay: 5000,
-        name: 'offline notification check',
-      }
-    )
+      )
+    }, 5000)
   }
 
   finish() {
