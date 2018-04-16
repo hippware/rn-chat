@@ -440,8 +440,14 @@ export const Wocky = types
         if (action === 'ARRIVE') {
           const profile = self.profiles.get(id, data)
           bot.visitors.addToTop!(profile)
+          if (id === self.username) {
+            bot.visitor = true
+          }
         } else {
           bot.visitors.remove!(id)
+          if (id === self.username) {
+            bot.visitor = false
+          }
         }
       }
     }),
