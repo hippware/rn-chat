@@ -4,20 +4,23 @@ cd $NEVERCODE_BUILD_DIR
 set -e	# exit on first failed command
 set -x  # print all executed commands to the terminal
 
-npm install react-native-cli yarn -g
+npm install react-native-cli yarn detox-cli -g
 yarn
 date
 yarn test
-npm run bugsnag
+
+# DETOX
+brew tap wix/brew
+brew install applesimutils
+# we don't need to pod install as long as we're keeping pods checked into git
+# - run: pod install --project-directory=./ios
+detox build --configuration ios.sim.release
+detox clean-framework-cache && detox build-framework-cache
+detox test --configuration ios.sim.release --cleanup
+
+yarn bugsnag
 
 # gem uninstall -a -x cocoapods
 # gem install cocoapods -v 1.3.1
 # pod repo update
 date
-
-#cd ../..
-#react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle --bundle-output ios.bundle/main.jsbundle
-#zip -r os.bundle.zip ios.bundle
-#npm run sign os.bundle.zip
-#zip main.zip ios.bundle.zip  signature.txt
-#find node_modules -type f -name '.babelrc' | grep -v 'node_modules/react-native/packager/react-packager/.babelrc' | xargs rm
