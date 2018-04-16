@@ -25,7 +25,7 @@ import NotificationStore from './NotificationStore'
 import cp from './CodePushStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
-import ConnectivityStore from './ConnectivityStore'
+import connectivityStore from './ConnectivityStore'
 // import bugsnag from '../utils/errorReporting';
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
@@ -54,10 +54,9 @@ const env = {
   searchIndex,
   analytics,
   nativeEnv,
-  appState: AppState,
-  netInfo: NetInfo,
   backgroundFetch,
   backgroundGeolocation,
+  connectivityStore,
 }
 
 const Store = types
@@ -69,7 +68,6 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
-    connectivityStore: ConnectivityStore,
     version: types.string,
     // codePushChannel: types.string,
     locationPrimed: false,
@@ -81,6 +79,9 @@ const Store = types
     },
   }))
   .actions(self => ({
+    afterCreate() {
+      connectivityStore.start(self.wocky, logger, AppState, NetInfo)
+    },
     reload: () => {
       self.wocky.clearCache()
       self.firebaseStore.reset()
@@ -103,7 +104,6 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
-    connectivityStore: {},
     version: settings.version,
   },
   env
@@ -112,7 +112,7 @@ const theStore = PersistableStore.create(
 export const codePushStore = cp
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)
-export const notificationStore = new NotificationStore(theStore.wocky, theStore.connectivityStore)
+export const notificationStore = new NotificationStore(theStore.wocky, connectivityStore)
 // bugsnag(theStore.wocky);
 
 // simple logging

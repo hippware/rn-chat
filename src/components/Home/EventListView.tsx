@@ -3,7 +3,7 @@ import {TouchableOpacity, View, FlatList, StyleSheet} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {observable, when} from 'mobx'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
@@ -23,7 +23,8 @@ class EventList extends React.Component<Props> {
   headerHeight: number = 0
 
   componentDidMount() {
-    if (this.props.wocky!.profile) this.props.wocky!.profile!.subscribedBots.load()
+    // should we do this inside wocky-client?
+    when(() => !!this.props.wocky!.profile, () => this.props.wocky!.profile!.subscribedBots.load())
   }
 
   scrollToTop = () => {
