@@ -103,7 +103,9 @@ const LocationStore = types
       }
       if (hasParent(self) && getParent(self).wocky) {
         const wocky: IWocky = getParent(self).wocky
-        wocky.setLocation(location)
+        if (wocky.connected) {
+          wocky.setLocation(location)
+        }
       }
       self.loading = false
     },
