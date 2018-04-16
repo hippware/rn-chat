@@ -3,7 +3,7 @@ import {TouchableOpacity, View, FlatList, StyleSheet} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
-import {observable, when} from 'mobx'
+import {observable} from 'mobx'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
