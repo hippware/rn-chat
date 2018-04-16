@@ -37,7 +37,7 @@ export default class BotMarker extends React.Component<Props> {
         anchor={{x: 0.5, y}}
         tracksViewChanges={this.tracking}
         style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
-        key={id || bot.id}
+        key={(id || bot.id) + (bot && bot.image && bot.image.loaded)}
         identifier={bot.id}
         coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
         onPress={props.onImagePress}
