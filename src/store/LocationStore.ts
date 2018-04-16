@@ -221,6 +221,7 @@ const LocationStore = types
           {
             // Geolocation Config
             desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+            elasticityMultiplier: 1,
             useSignificantChangesOnly: false,
             stationaryRadius: 25,
             distanceFilter: 30,
