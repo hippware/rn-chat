@@ -3,12 +3,13 @@
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, SetLocationParams, IPagingList} from './IWockyTransport'
+import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {observable} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
+import {ILocationSnapshot} from '..'
 
 // TODO use GraphQL fragment for this?
 const PROFILE_PROPS = 'id firstName lastName handle avatar'
@@ -158,21 +159,19 @@ export class GraphQLTransport implements IWockyTransport {
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
-  async setLocation(params: SetLocationParams): Promise<void> {
-    if (this.client) {
-      const res = await this.client.mutate({
-        mutation: gql`
-          mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
-            userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
-              result
-              successful
-            }
+  async setLocation(params: ILocationSnapshot): Promise<void> {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
+          userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+            result
+            successful
           }
-        `,
-        variables: params
-      })
-      return res.data!.userLocationUpdate.successful
-    }
+        }
+      `,
+      variables: {...params, resource: this.resource}
+    })
+    return res.data!.userLocationUpdate.successful
   }
   async subscribeBotVisitors() {
     this.botGuestVisitorsSubscription = await this.client

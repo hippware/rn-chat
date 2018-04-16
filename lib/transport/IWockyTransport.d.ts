@@ -1,14 +1,9 @@
+import { ILocationSnapshot } from '../model/Location';
 export interface IPagingList {
     list: any[];
     cursor?: string;
     count: number;
 }
-export declare type SetLocationParams = {
-    accuracy: number;
-    latitude: number;
-    longitude: number;
-    resource: string;
-};
 export interface IWockyTransport {
     connected: boolean;
     connecting: boolean;
@@ -35,7 +30,7 @@ export interface IWockyTransport {
         host: string;
     }>;
     disconnect(): Promise<void>;
-    setLocation(params: SetLocationParams): Promise<void>;
+    setLocation(params: ILocationSnapshot): Promise<void>;
     loadProfile(user: string): Promise<any>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;

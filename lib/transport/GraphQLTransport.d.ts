@@ -1,6 +1,7 @@
 import { ApolloClient } from 'apollo-client';
-import { IWockyTransport, SetLocationParams, IPagingList } from './IWockyTransport';
+import { IWockyTransport, IPagingList } from './IWockyTransport';
 import { Socket as PhoenixSocket } from 'phoenix';
+import { ILocationSnapshot } from '..';
 export declare class GraphQLTransport implements IWockyTransport {
     resource: string;
     client: ApolloClient<any>;
@@ -28,7 +29,7 @@ export declare class GraphQLTransport implements IWockyTransport {
         cursor: any;
         count: any;
     }>;
-    setLocation(params: SetLocationParams): Promise<void>;
+    setLocation(params: ILocationSnapshot): Promise<void>;
     subscribeBotVisitors(): Promise<void>;
     loadOwnBots(id: string, lastId?: string, max?: number): Promise<{
         list: any;
