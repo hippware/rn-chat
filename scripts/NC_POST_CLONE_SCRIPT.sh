@@ -18,8 +18,6 @@ detox build --configuration ios.sim.release
 detox clean-framework-cache && detox build-framework-cache
 detox test --configuration ios.sim.release --cleanup
 
-yarn bugsnag
-
 # gem uninstall -a -x cocoapods
 # gem install cocoapods -v 1.3.1
 # pod repo update
