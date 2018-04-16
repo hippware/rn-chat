@@ -91,6 +91,7 @@ export declare const EventBotCreate: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
+            readonly geofenceBots: any;
             readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
@@ -205,6 +206,7 @@ export declare const EventBotCreate: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
+                readonly geofenceBots: any;
                 readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {

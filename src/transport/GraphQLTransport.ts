@@ -86,11 +86,7 @@ export class GraphQLTransport implements IWockyTransport {
         `,
         variables: {user, token: password}
       })
-      const result = !!res.data && res.data!.authenticate !== null
-      if (result) {
-        this.subscribeBotVisitors()
-      }
-      return result
+      return !!res.data && res.data!.authenticate !== null
     } catch (err) {
       return false
     }
@@ -182,6 +178,9 @@ export class GraphQLTransport implements IWockyTransport {
               action
               bot {
                 id
+                visitorCount: subscribers(first:0 type:VISITOR) {
+                  totalCount
+                }
               }
               visitor {
                 ${PROFILE_PROPS}
@@ -193,7 +192,8 @@ export class GraphQLTransport implements IWockyTransport {
       .subscribe({
         next: (result: any) => {
           const update = result.data.botGuestVisitors
-          this.botVisitor = {...update.visitor, botId: update.bot.id, action: update.action}
+          console.log('UPDATE:', JSON.stringify(update))
+          this.botVisitor = {...update.visitor, botId: update.bot.id, visitorsSize: update.bot.visitorCount.totalCount, action: update.action}
         }
       })
   }
@@ -203,6 +203,12 @@ export class GraphQLTransport implements IWockyTransport {
   }
   async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     return await this._loadBots('SUBSCRIBED', userId, lastId, max)
+  }
+  async loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+    // load all guest bots
+    const res = await this._loadBots('GUEST', userId, lastId, 100)
+    this.subscribeBotVisitors()
+    return res
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     throw 'Not supported'

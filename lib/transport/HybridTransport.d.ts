@@ -88,6 +88,7 @@ export declare class HybridTransport implements IWockyTransport {
     }>;
     loadHomestream(lastId: any, max?: number): Promise<IPagingList>;
     loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
+    loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>;

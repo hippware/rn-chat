@@ -35,14 +35,27 @@ describe('Geofence', () => {
       done(e)
     }
   })
+  it('load geofence bots', async done => {
+    try {
+      await user1.profile.geofenceBots.refresh()
+      await user1.profile.geofenceBots.load()
+      expect(user1.profile.geofenceBots.list.length).to.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
   it('load visitors and live updates', async done => {
     try {
       await bot.visitors.load!()
       expect(bot.visitors.list.length).to.equal(0)
+      expect(bot.visitorsSize).to.equal(0)
       await user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
       await user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
       await waitFor(() => bot.visitors.list.length === 1)
+      expect(bot.visitorsSize).to.equal(1)
+      expect(user1.profile.activeBots.length).to.equal(1)
       bot.visitors.refresh!()
       expect(bot.visitors.list.length).to.equal(0)
       await bot.visitors.load!()
@@ -50,6 +63,8 @@ describe('Geofence', () => {
       await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
       await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
       await waitFor(() => bot.visitors.list.length === 0)
+      expect(bot.visitorsSize).to.equal(0)
+      expect(user1.profile.activeBots.length).to.equal(0)
       done()
     } catch (e) {
       done(e)
@@ -130,43 +145,31 @@ describe('Geofence', () => {
       done(e)
     }
   })
-  // it('geofence unsubscribe owner', async done => {
-  //   try {
-  //     const loadedBot2 = await user1.loadBot(bot.id, null)
-  //     await waitFor(() => !loadedBot2.loading)
-  //     expect(loadedBot2.guestsSize).to.equal(1)
-  //     expect(loadedBot2.guest).to.equal(true)
-  //     await loadedBot2.unsubscribeGeofence()
-  //     expect(loadedBot2.guest).to.equal(false)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('geofence unsubscribe owner', async done => {
+    try {
+      const loadedBot2 = await user1.loadBot(bot.id, null)
+      await waitFor(() => !loadedBot2.loading)
+      expect(loadedBot2.guestsSize).to.equal(1)
+      expect(loadedBot2.guest).to.equal(true)
+      await loadedBot2.unsubscribeGeofence()
+      expect(loadedBot2.guest).to.equal(false)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
-  // it('load bot guests again 2', async done => {
-  //   try {
-  //     await bot.guests.refresh()
-  //     expect(bot.guests.length).to.equal(0)
-  //     await bot.guests.load()
-  //     expect(bot.guests.length).to.equal(0)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
-  //   user2.profile!.subscribedBots.refresh()
-  //   await user2.profile!.subscribedBots.load()
-  //   expect(user2.profile!.subscribedBots.list.length).to.be.equal(1)
-  //   expect(user2.profile!.subscribedBots.list[0].isSubscribed).to.be.true
-  //   expect(user2.profile!.subscribedBots.list[0].followersSize).to.be.equal(1)
-  //   user2bot = user2.profile!.subscribedBots.list[0]
-  //   bot.guests.load()
-  //   await waitFor(() => !bot.guests.loading)
-  //   // console.log('bot after guests loaded', bot.guests.toJSON(), bot.toJSON())
-  //   expect(bot.guests.length).to.equal(1)
-  //   done()
-  // })
+  it('load bot guests again 2', async done => {
+    try {
+      await bot.guests.refresh()
+      expect(bot.guests.length).to.equal(0)
+      await bot.guests.load()
+      expect(bot.guests.length).to.equal(0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
   after('remove', async done => {
     try {

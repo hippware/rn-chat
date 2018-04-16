@@ -303,6 +303,11 @@ export const Wocky = types
       const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
+    _loadGeofenceBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, cursor, count} = yield self.transport.loadGeofenceBots(userId, lastId, max)
+      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
+    }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
@@ -434,7 +439,7 @@ export const Wocky = types
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
     },
-    _onBotVisitor: flow(function*({botId, action, id, ...data}: any) {
+    _onBotVisitor: flow(function*({botId, action, visitorsSize, id, ...data}: any) {
       if (self.bots.get(botId)) {
         const bot: IBot = self.bots.get(botId)
         if (action === 'ARRIVE') {
@@ -449,6 +454,7 @@ export const Wocky = types
             bot.visitor = false
           }
         }
+        bot.visitorsSize = visitorsSize
       }
     }),
     _onNotification: flow(function*({changed, version, ...data}: any) {
@@ -549,6 +555,7 @@ export const Wocky = types
           () => self.profile && self.connected,
           async (connected: boolean) => {
             if (connected) {
+              self.profile!.geofenceBots.load()
               await self.loadChats()
               self.requestRoster()
               if (!self.version) {
