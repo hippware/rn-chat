@@ -1,4 +1,4 @@
-import {types, getEnv, flow, hasParent, getParent, isAlive} from 'mobx-state-tree'
+import {types, getEnv, hasParent, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -310,12 +310,14 @@ const LocationStore = types
 
     function afterAttach() {
       self.initialize()
-      ;({wocky, connectivityStore} = getParent(self))
+      ;({wocky} = getParent(self))
+      ;({connectivityStore} = getEnv(self))
       autorun('LocationStore toggler', () => {
-        if (connectivityStore && isAlive(connectivityStore) && connectivityStore.isActive) start()
+        if (connectivityStore.isActive) start()
         else finish()
       })
     }
+
     function start() {
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')

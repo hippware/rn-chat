@@ -2,8 +2,6 @@ import autobind from 'autobind-decorator'
 import {computed, observable, reaction, autorun} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
-import {isAlive} from 'mobx-state-tree'
-// import { ObservableArray } from 'mobx/lib/types/observablearray';
 import {IWocky} from 'wocky-client'
 import Notification from './Notification'
 
@@ -14,11 +12,10 @@ class NotificationStore {
   started: boolean = false
   wocky: IWocky
 
-  constructor(wocky, connectivityStore) {
+  constructor(wocky: IWocky, connectivityStore) {
     this.wocky = wocky
     autorun('NotificationStore toggler', () => {
-      if (connectivityStore && isAlive(connectivityStore) && connectivityStore.isActive)
-        this.start()
+      if (connectivityStore.isActive) this.start()
       else this.finish()
     })
   }
@@ -30,25 +27,29 @@ class NotificationStore {
 
     let offlineNotification
 
-    this.disposer = reaction(
-      () => {
-        const {connected, connecting, profile} = this.wocky
-        return {isOffline: !!profile && !connected, connecting}
-      },
-      ({isOffline, connecting}) => {
-        if (isOffline) {
-          offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
-            color: colors.DARK_GREY,
-          })
-        } else {
-          if (offlineNotification) offlineNotification.close()
+    // initial check after timeout. Delay = debounce.
+    setTimeout(() => {
+      this.disposer = reaction(
+        () => {
+          const {connected, connecting, profile} = this.wocky
+          return {isOffline: !!profile && !connected, connecting}
+        },
+        ({isOffline, connecting}) => {
+          if (isOffline) {
+            offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
+              color: colors.DARK_GREY,
+            })
+          } else {
+            if (offlineNotification) offlineNotification.close()
+          }
+        },
+        {
+          delay: 1000,
+          fireImmediately: true,
+          name: 'offline notification check',
         }
-      },
-      {
-        delay: 5000,
-        name: 'offline notification check',
-      }
-    )
+      )
+    }, 5000)
   }
 
   finish() {

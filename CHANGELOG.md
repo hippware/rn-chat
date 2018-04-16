@@ -5,14 +5,29 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.5.2 - 2018 Apr 13
+
+* hot-fix: temporary disable retrieval of suscribed bots via graphql
+* hot-fix: broken firebase login fix
+
+
+# 2.5.1 - 2018 Apr 13
+
 * [dev] [refactor] make Connectivity.js "reactive" (#1936)
 * You're Here UI shows for all geofence bots on geo header (#2092)
 * Bot Title is not tappable on geofence header (#2091)
 * HS: Tapping New Updates CTA scrolls geo header out of view (#2093)
 * Enable empty UI for Visitors "Who's Here" screen (#2077)
 * Implement bot retrieval via GraphQL (#2046)
-* Other graphql work
-* Some conversation to typescript
+* Some conversion to typescript
+* [dev] Change GraphQL mutations because of new server format (#2113)
+* Bot live updates via GraphQL subscriptions (#2047)
+* Graphql subscriptions
+* Other graphql work. Fix crashes. Fix pagination for cursors.
+* Location debug view (#2081)
+* hot-fix: fix login/logout crash because of dead profile ref
+* hot-fix: Google maps performance improvement
+* Fix bugsnag crashes
 
 
 # 2.5.0 - 2018 Apr 6
