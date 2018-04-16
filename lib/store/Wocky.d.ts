@@ -4,7 +4,7 @@ import { IProfile } from '../model/Profile';
 import { IBot } from '../model/Bot';
 import { IPaginable } from '../model/PaginableList';
 import { IChat } from '../model/Chat';
-import { IWockyTransport, SetLocationParams } from '..';
+import { IWockyTransport } from '..';
 export declare const EventEntity: IType<({
     id?: any;
 } & {
@@ -8097,7 +8097,11 @@ export declare const Wocky: IModelType<{
     downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
     downloadThumbnail: (a1: string, a2: string) => Promise<any>;
     downloadTROS: (a1: string) => Promise<any>;
-    setLocation: (a1: SetLocationParams) => Promise<any>;
+    setLocation: (a1: ISnapshottable<{
+        latitude?: any;
+        longitude?: any;
+        accuracy?: any;
+    }>) => Promise<any>;
     _requestUpload: (a1: any) => Promise<any>;
     _loadUpdates: () => Promise<{}>;
     _loadHomestream: (a1: any) => Promise<any>;

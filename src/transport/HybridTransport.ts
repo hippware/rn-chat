@@ -1,4 +1,4 @@
-import {IWockyTransport, SetLocationParams, IPagingList, XmppTransport, GraphQLTransport} from '../'
+import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
 import {computed} from 'mobx'
 
 export class HybridTransport implements IWockyTransport {
@@ -68,7 +68,7 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
-  async setLocation(params: SetLocationParams): Promise<void> {
+  async setLocation(params: ILocationSnapshot): Promise<void> {
     return this._gql.setLocation(params)
   }
 
@@ -234,7 +234,9 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.loadBotPosts(id, lastId)
   }
 
-  loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadSubscribedBots(userId, lastId, max)
+  async loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+    const res = await this._gql.loadSubscribedBots(userId, lastId, max)
+    console.log('LIST OF BOTS:', JSON.stringify(res))
+    return res
   }
 }

@@ -19,7 +19,7 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
-import {IWockyTransport, SetLocationParams} from '..'
+import {IWockyTransport, ILocationSnapshot} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 // export interface IEventEntity extends IEventEntityType {}
@@ -402,7 +402,7 @@ export const Wocky = types
     downloadTROS: flow(function*(tros: string) {
       return yield self.transport.downloadTROS(tros)
     }),
-    setLocation: flow(function*(location: SetLocationParams) {
+    setLocation: flow(function*(location: ILocationSnapshot) {
       return yield self.transport.setLocation(location)
     }),
     _requestUpload: flow(function*({file, size, width, height, access}: any) {

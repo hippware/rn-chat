@@ -19,5 +19,5 @@ export { Message, IMessage } from './model/Message';
 export { OwnProfile } from './model/OwnProfile';
 export { XmppTransport } from './transport/XmppTransport';
 export { GraphQLTransport } from './transport/GraphQLTransport';
-export { IWockyTransport, IPagingList, SetLocationParams } from './transport/IWockyTransport';
+export { IWockyTransport, IPagingList } from './transport/IWockyTransport';
 export { HybridTransport } from './transport/HybridTransport';

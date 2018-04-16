@@ -1,6 +1,7 @@
 import { IFileService } from './FileService';
 import './XmppStropheV2';
-import { IWockyTransport, SetLocationParams } from './IWockyTransport';
+import { IWockyTransport } from './IWockyTransport';
+import { ILocationSnapshot } from '..';
 export declare class XmppTransport implements IWockyTransport {
     provider: any;
     botVisitor: any;
@@ -96,7 +97,7 @@ export declare class XmppTransport implements IWockyTransport {
         list: any;
         count: number;
     }>;
-    setLocation(params: SetLocationParams): Promise<void>;
+    setLocation(params: ILocationSnapshot): Promise<void>;
     loadBotPosts(id: string, before?: string): Promise<{
         count: number;
         list: any;
