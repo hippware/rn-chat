@@ -96,14 +96,16 @@ const LocationStore = types
     },
     setPosition(location: ILocationSnapshot) {
       self.enabled = true
-      Object.assign(self, {location})
+      if (!self.location) {
+        self.location = Location.create(location)
+      } else {
+        self.location.load(location)
+      }
       if (hasParent(self) && getParent(self).wocky) {
         const wocky: IWocky = getParent(self).wocky
         wocky.setLocation(location)
       }
       self.loading = false
-      // TODO: share location via wocky-client
-      // this.share(this.location);
     },
     positionError(error: any) {
       if (error.code === 1) {
@@ -172,9 +174,6 @@ const LocationStore = types
         backgroundGeolocation.on('location', position => {
           logger.log('- [js]location: ', JSON.stringify(position))
           self.setPosition(position.coords)
-          // this.location = position.coords;
-          // we don't need it because we have HTTP location share
-          // this.share(this.location);
         })
 
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
