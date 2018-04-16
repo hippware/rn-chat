@@ -22,11 +22,6 @@ class EventList extends React.Component<Props> {
   @observable isRefreshing: boolean = false
   headerHeight: number = 0
 
-  componentDidMount() {
-    // should we do this inside wocky-client?
-    when(() => !!this.props.wocky!.profile, () => this.props.wocky!.profile!.subscribedBots.load())
-  }
-
   scrollToTop = () => {
     if (this.list && this.list.props.data.length)
       this.list.scrollToIndex({animated: true, index: 0, viewOffset: this.headerHeight})
