@@ -5,9 +5,8 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import Screen from '../Screen'
 import CardList from '../CardList'
-import {Separator} from '../common'
+import {Separator, Spinner} from '../common'
 import {TappableProfileItem} from './customProfileItems'
-import ListFooter from '../ListFooter'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {isAlive} from 'mobx-state-tree'
@@ -46,9 +45,17 @@ class BotVisitorList extends React.Component<Props> {
   }
 
   render() {
-    const {connected} = this.props.wocky!
     if (!this.bot || !isAlive(this.bot)) return null
-    const {list, finished} = this.bot.visitors
+    const {list, loading} = this.bot.visitors
+    if (loading) {
+      return (
+        <Screen>
+          <View style={{alignItems: 'center'}}>
+            <Spinner />
+          </View>
+        </Screen>
+      )
+    }
     return (
       <Screen>
         {list && list!.length ? (
@@ -58,7 +65,6 @@ class BotVisitorList extends React.Component<Props> {
             ItemSeparatorComponent={() => <Separator />}
             renderItem={({item}) => <TappableProfileItem profile={item} />}
             keyExtractor={item => item.id}
-            ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}
           />
         ) : (
           <View
