@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, hasParent, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -96,10 +96,16 @@ const LocationStore = types
     },
     setPosition(location: ILocationSnapshot) {
       self.enabled = true
-      Object.assign(self, {location})
+      if (!self.location) {
+        self.location = Location.create(location)
+      } else {
+        self.location.load(location)
+      }
+      if (hasParent(self) && getParent(self).wocky) {
+        const wocky: IWocky = getParent(self).wocky
+        wocky.setLocation(location)
+      }
       self.loading = false
-      // TODO: share location via wocky-client
-      // this.share(this.location);
     },
     positionError(error: any) {
       if (error.code === 1) {
@@ -168,17 +174,19 @@ const LocationStore = types
         backgroundGeolocation.on('location', position => {
           logger.log('- [js]location: ', JSON.stringify(position))
           self.setPosition(position.coords)
-          // this.location = position.coords;
-          // we don't need it because we have HTTP location share
-          // this.share(this.location);
         })
 
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
         backgroundGeolocation.on(
           'http',
-          () => {
+          (response) => {
+            logger.log('- [js]http sent', response)
             // success
-            if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+            if (response.status >= 200 && response.status < 300) {
+              if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+            } else {
+              if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+            }
           },
           () => {
             // fail
@@ -212,10 +220,11 @@ const LocationStore = types
         })
         const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
         logger.log(`LOCATION UPDATE URL: ${url} ${wocky.username} ${wocky.password}`)
-        backgroundGeolocation.ready(
+        backgroundGeolocation.configure(
           {
             // Geolocation Config
             desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+            elasticityMultiplier: 1,
             useSignificantChangesOnly: false,
             stationaryRadius: 25,
             distanceFilter: 30,
@@ -320,10 +329,10 @@ const LocationStore = types
       handler = reaction(
         () => wocky.connected,
         () => {
+          self.getCurrentPosition()
           self.startBackground()
         }
       )
-      self.getCurrentPosition()
     }
 
     function finish() {
