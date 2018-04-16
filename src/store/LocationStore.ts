@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent, isAlive} from 'mobx-state-tree'
+import {types, getEnv, flow, hasParent, getParent, isAlive} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -97,6 +97,10 @@ const LocationStore = types
     setPosition(location: ILocationSnapshot) {
       self.enabled = true
       Object.assign(self, {location})
+      if (hasParent(self) && getParent(self).wocky) {
+        const wocky: IWocky = getParent(self).wocky
+        wocky.setLocation(location)
+      }
       self.loading = false
       // TODO: share location via wocky-client
       // this.share(this.location);
@@ -176,7 +180,8 @@ const LocationStore = types
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
         backgroundGeolocation.on(
           'http',
-          () => {
+          (response) => {
+            logger.log('- [js]http sent', response)
             // success
             if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
           },
@@ -318,10 +323,10 @@ const LocationStore = types
       handler = reaction(
         () => wocky.connected,
         () => {
+          self.getCurrentPosition()
           self.startBackground()
         }
       )
-      self.getCurrentPosition()
     }
 
     function finish() {
