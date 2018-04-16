@@ -183,7 +183,11 @@ const LocationStore = types
           (response) => {
             logger.log('- [js]http sent', response)
             // success
-            if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+            if (response.status >= 200 && response.status < 300) {
+              if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+            } else {
+              if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+            }
           },
           () => {
             // fail
