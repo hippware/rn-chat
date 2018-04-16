@@ -55,7 +55,7 @@ export class GraphQLTransport implements IWockyTransport {
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
       logger: (kind, msg, data) => {
         // uncomment to see all graphql messages!
-        console.log(`${kind}: ${msg}`, JSON.stringify(data))
+        // console.log(`${kind}: ${msg}`, JSON.stringify(data))
       }
     })
     // todo: implement login when it's ready
