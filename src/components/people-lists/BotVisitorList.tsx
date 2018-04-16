@@ -48,7 +48,13 @@ class BotVisitorList extends React.Component<Props> {
     if (!this.bot || !isAlive(this.bot)) return null
     const {list, loading} = this.bot.visitors
     if (loading) {
-      return <Screen><View style={{alignItems: 'center'}}><Spinner /></View></Screen>
+      return (
+        <Screen>
+          <View style={{alignItems: 'center'}}>
+            <Spinner />
+          </View>
+        </Screen>
+      )
     }
     return (
       <Screen>
