@@ -217,7 +217,7 @@ const LocationStore = types
         })
         const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
         logger.log(`LOCATION UPDATE URL: ${url} ${wocky.username} ${wocky.password}`)
-        backgroundGeolocation.ready(
+        backgroundGeolocation.configure(
           {
             // Geolocation Config
             desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
