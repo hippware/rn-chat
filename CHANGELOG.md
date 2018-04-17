@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.5.3 - 2018 Apr 17
+
 * Refactoring Connectivity (continues #1936)
   * Error in .../store/ConnectivityStore.ts:98 (#2132) 
 * Geofence Header not displaying after a clean install (#2135)
@@ -13,6 +15,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Location fixes
   * Users location not being updated for @miranda (#2100)
 * Infinite loader on Who's Here screen below visitors list (#2136)
+* Prettify on commit (PR #2154)
+* Run detox tests on nevercode
+  * [dev] Re-organize detox tests (#2097)
+* [dev] Bugsnag symbols for codepush (#2128)
+* Update wocky-client to work with latest server
 
 
 # 2.5.2 - 2018 Apr 13
