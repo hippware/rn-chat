@@ -122,8 +122,12 @@
     "stream-to-array": "^2.3.0",
     "tcomb-form-native": "^0.6.11",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "wocky-client": "github:hippware/wocky-client#b6834583005272624b65d56c2e284d0f23280529",
+    "wocky-client": "github:hippware/wocky-client#748850b6c39ba22f0f62b64439e78be1691d8d5c",
     "xregexp": "^4.1.1"
+  },
+  "resolutions": {
+    "zen-observable": "github:aksonov/zen-observable#62be6b655646c01ae3b1f43b2c6d13247cf06581",
+    "@absinthe/socket": "github:aksonov/absinthe-socket#d3052d1"
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
