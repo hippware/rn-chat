@@ -55,9 +55,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
-    await this._gql.login(user, password, host)
-    await this._xmpp.login(user, password, host)
-    return true
+    return (await this._gql.login(user, password, host)) && (await this._xmpp.login(user, password, host))
   }
 
   register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}> {

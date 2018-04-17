@@ -66,7 +66,9 @@ describe('GraphQL', () => {
 
   it('check subscription arrive', async done => {
     try {
-      gql.subscribeBotVisitors()
+      await gql.setLocation({latitude: 21.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 21.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+      await gql.subscribeBotVisitors()
       await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       when(

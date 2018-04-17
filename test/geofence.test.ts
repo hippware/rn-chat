@@ -10,6 +10,8 @@ describe('Geofence', () => {
     try {
       user1 = await createXmpp(26)
       user2 = await createXmpp(27)
+      await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+      await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
       await user1.profile!.update({handle: 'abcc3', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
@@ -56,6 +58,14 @@ describe('Geofence', () => {
       await waitFor(() => bot.visitors.list.length === 1)
       expect(bot.visitorsSize).to.equal(1)
       expect(user1.profile.activeBots.length).to.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('load visitors2', async done => {
+    try {
       bot.visitors.refresh!()
       expect(bot.visitors.list.length).to.equal(0)
       await bot.visitors.load!()
