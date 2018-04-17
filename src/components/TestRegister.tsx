@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
 import {inject, observer} from 'mobx-react/native'
@@ -8,20 +6,21 @@ import {k, width} from './Global'
 import {colors} from '../constants'
 
 type Props = {
-  wocky: any,
+  wocky?: any
+  analytics?: any
+  name: string
+  warn?: any
 }
 
 type State = {
-  // pending: boolean,
-  text: string,
+  text: string
 }
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'warn')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
     text: '',
-    // pending: false
   }
 
   onRegister = async () => {
@@ -29,7 +28,7 @@ class TestRegister extends React.Component<Props, State> {
       await this.props.wocky.testRegister({phoneNumber: this.state.text})
       Actions.connect()
     } catch (err) {
-      console.warn('Test Register error', err)
+      this.props.warn('Test Register error', err)
       this.props.analytics.track('error_bypass_register', {error: err})
       // TODO: notificationStore.showNotification with error message
     }
