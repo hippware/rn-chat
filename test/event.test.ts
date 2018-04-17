@@ -13,6 +13,7 @@ const env = {
     _loadBotVisitors: () => {},
     _loadBotGuests: () => {},
     _loadSubscribedBots: () => {},
+    _loadGeofenceBots: () => {},
     _loadBotSubscribers: () => {},
     _loadBotPosts: () => {},
     _loadRelations: () => {},

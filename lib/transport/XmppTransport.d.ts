@@ -1,6 +1,6 @@
 import { IFileService } from './FileService';
 import './XmppStropheV2';
-import { IWockyTransport } from './IWockyTransport';
+import { IWockyTransport, IPagingList } from './IWockyTransport';
 import { ILocationSnapshot } from '..';
 export declare class XmppTransport implements IWockyTransport {
     provider: any;
@@ -81,6 +81,7 @@ export declare class XmppTransport implements IWockyTransport {
     }>>;
     generateId(): Promise<any>;
     removeBot(id: string): Promise<void>;
+    loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadOwnBots(userId: string, lastId?: string, max?: number): Promise<{
         list: any;
         count: number;

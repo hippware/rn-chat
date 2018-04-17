@@ -3,7 +3,7 @@ import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
-import {IWockyTransport} from './IWockyTransport'
+import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {ILocationSnapshot} from '..'
 const TIMEOUT = 10000
 const BOT_NS = 'hippware.com/hxep/bot'
@@ -574,6 +574,9 @@ export class XmppTransport implements IWockyTransport {
   async removeBot(id: string) {
     const iq = $iq({type: 'set', to: this.host}).c('delete', {xmlns: BOT_NS, node: `bot/${id}`})
     await this.sendIQ(iq)
+  }
+  async loadGeofenceBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    throw new Error('Not supported')
   }
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
     const iq = $iq({type: 'get', to: this.host})

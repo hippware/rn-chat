@@ -63,6 +63,7 @@ export declare const Profile: IModelType<{
     readonly followed: any;
     readonly ownBots: any;
     readonly subscribedBots: any;
+    readonly geofenceBots: any;
     readonly activeBots: IBot[];
     readonly displayName: string;
 }>;
@@ -112,6 +113,7 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     readonly followed: any;
     readonly ownBots: any;
     readonly subscribedBots: any;
+    readonly geofenceBots: any;
     readonly activeBots: IBot[];
     readonly displayName: string;
 } & {
