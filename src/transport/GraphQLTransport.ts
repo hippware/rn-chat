@@ -352,13 +352,20 @@ export class GraphQLTransport implements IWockyTransport {
   }
 }
 
-function convertBot({lat, lon, image, addressData, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
+function convertImage(image) {
+  return image ? {id: image.trosUrl, source: {uri: image.fullUrl}, thumbnail: {uri: image.thumbnailUrl}} : null
+}
+function convertProfile({avatar, ...data}) {
+  return {avatar: convertImage(avatar), ...data}
+}
+function convertBot({lat, lon, image, addressData, isPublic, owner, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
   try {
     const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
     const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
     return {
       ...data,
-      image: image ? {id: image.trosUrl, source: {uri: image.fullUrl}, thumbnail: {uri: image.thumbnailUrl}} : null,
+      owner: convertProfile(owner),
+      image: convertImage(image),
       addressData: addressData || {},
       totalItems: items ? items.totalCount : 0,
       followersSize: subscriberCount.totalCount - 1,
