@@ -12,5 +12,7 @@ global.window = global
 if (!global.window.navigator) {
   global.window.navigator = {}
 }
-global.window.navigator.userAgent = 'ReactNative'
+try {
+  global.window.navigator.userAgent = 'ReactNative'
+} catch (e) {}
 import 'strophejs'

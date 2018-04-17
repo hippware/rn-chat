@@ -12,8 +12,9 @@ import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {ILocationSnapshot} from '..'
 
 // TODO use GraphQL fragment for this?
-const PROFILE_PROPS = 'id firstName lastName handle avatar'
-const BOT_PROPS = `id title address isPublic: public addressData description geofence image public radius server shortname 
+const PROFILE_PROPS = 'id firstName lastName handle avatar { thumbnailUrl fullUrl trosUrl }'
+const BOT_PROPS = `id title address isPublic: public addressData description geofence public radius server shortname 
+  image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
   guestCount: subscribers(first:0 type:GUEST){ totalCount }
@@ -88,6 +89,7 @@ export class GraphQLTransport implements IWockyTransport {
       })
       return !!res.data && res.data!.authenticate !== null
     } catch (err) {
+      console.error(err)
       return false
     }
   }
@@ -167,7 +169,7 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {...params, resource: this.resource}
     })
-    return res.data!.userLocationUpdate.successful
+    return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
   async subscribeBotVisitors() {
     this.botGuestVisitorsSubscription = await this.client
@@ -192,7 +194,6 @@ export class GraphQLTransport implements IWockyTransport {
       .subscribe({
         next: (result: any) => {
           const update = result.data.botGuestVisitors
-          console.log('UPDATE:', JSON.stringify(update))
           this.botVisitor = {...update.visitor, botId: update.bot.id, visitorsSize: update.bot.visitorCount.totalCount, action: update.action}
         }
       })
@@ -351,12 +352,13 @@ export class GraphQLTransport implements IWockyTransport {
   }
 }
 
-function convertBot({lat, lon, addressData, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
+function convertBot({lat, lon, image, addressData, isPublic, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
   try {
     const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
     const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
     return {
       ...data,
+      image: image ? {id: image.trosUrl, source: {uri: image.fullUrl}, thumbnail: {uri: image.thumbnailUrl}} : null,
       addressData: addressData || {},
       totalItems: items ? items.totalCount : 0,
       followersSize: subscriberCount.totalCount - 1,
@@ -369,7 +371,7 @@ function convertBot({lat, lon, addressData, isPublic, items, subscriberCount, vi
       isSubscribed: contains('SUBSCRIBED')
     }
   } catch (e) {
-    console.error('ERROR CONVERTING:', arguments[0])
+    console.error('ERROR CONVERTING:', arguments[0], e)
   }
 }
 
