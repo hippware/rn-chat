@@ -10,7 +10,7 @@ import {Client, Configuration} from 'bugsnag-react-native'
 const config = new Configuration()
 config.notifyReleaseStages = ['testflight', 'production']
 if (codeBundleId) {
-  client.codeBundleId = codeBundleId
+  config.codeBundleId = codeBundleId
 }
 const client = new Client(config)
 
