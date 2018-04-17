@@ -13,9 +13,9 @@
     graphql "0.11.7"
     zen-observable "0.6.0"
 
-"@absinthe/socket@0.1.10", "@absinthe/socket@github:aksonov/absinthe-socket#d3052d1":
+"@absinthe/socket@0.1.10", "@absinthe/socket@github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4":
   version "0.1.10"
-  resolved "https://codeload.github.com/aksonov/absinthe-socket/tar.gz/d3052d1e6b1d7e6e57849da0c5bec36c28334d6e"
+  resolved "https://codeload.github.com/aksonov/absinthe-socket/tar.gz/6b14cd8ecb18068a4bea95c80e75b23790926da4"
   dependencies:
     "@jumpn/utils-array" "0.3.4"
     "@jumpn/utils-composite" "0.5.0"

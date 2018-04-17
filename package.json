@@ -127,7 +127,7 @@
   },
   "resolutions": {
     "zen-observable": "github:aksonov/zen-observable#62be6b655646c01ae3b1f43b2c6d13247cf06581",
-    "@absinthe/socket": "github:aksonov/absinthe-socket#d3052d1"
+    "@absinthe/socket": "github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4"
   },
   "devDependencies": {
     "@types/jest": "^22.2.2",
