@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {observer} from 'mobx-react/native'
 import {observable, action} from 'mobx'
@@ -13,7 +11,7 @@ import {TabViewAnimated, TabBar} from 'react-native-tab-view'
 import {colors} from '../constants'
 
 type Props = {
-  filter: string,
+  filter: string
 }
 
 const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}]
@@ -22,10 +20,8 @@ const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'
 class BotScreen extends React.Component<Props> {
   @observable index: number = 0
 
-  _handleChangeTab = action(i => {
+  _handleChangeTab = action((i: number) => {
     this.index = i
-    // HACK: needs refactor
-    // TODO if (i === 1 && model.ownBots.list.length === 0) botStore.list(model.ownBots);
   })
 
   _renderHeader = props => (
