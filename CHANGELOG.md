@@ -5,6 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Refactoring Connectivity (continues #1936)
+  * Error in .../store/ConnectivityStore.ts:98 (#2132) 
+* Geofence Header not displaying after a clean install (#2135)
+* Enable empty UI for Visitors "Who's Here" screen (#2077)
+* User required to leave screen and return to see cover image (#2137)
+* Location fixes
+  * Users location not being updated for @miranda (#2100)
+* Infinite loader on Who's Here screen below visitors list (#2136)
+
+
 # 2.5.2 - 2018 Apr 13
 
 * hot-fix: temporary disable retrieval of suscribed bots via graphql
