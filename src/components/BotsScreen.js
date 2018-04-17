@@ -1,55 +1,60 @@
 // @flow
 
-import React from 'react';
-import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
-import {Text, StyleSheet} from 'react-native';
-import {k} from './Global';
-import Screen from './Screen';
-import BotButton from './BotButton';
-import Bots from './BotListView';
+import React from 'react'
+import {observer} from 'mobx-react/native'
+import {observable, action} from 'mobx'
+import {Text, StyleSheet} from 'react-native'
+import {k} from './Global'
+import Screen from './Screen'
+import BotButton from './BotButton'
+import Bots from './BotListView'
 
-import {TabViewAnimated, TabBar} from 'react-native-tab-view';
-import {colors} from '../constants';
+import {TabViewAnimated, TabBar} from 'react-native-tab-view'
+import {colors} from '../constants'
 
 type Props = {
   filter: string,
-};
+}
 
-const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}];
+const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}]
 
 @observer
 class BotScreen extends React.Component<Props> {
-  @observable index: number = 0;
+  @observable index: number = 0
 
-  _handleChangeTab = (i) => {
-    this.index = i;
+  _handleChangeTab = action(i => {
+    this.index = i
     // HACK: needs refactor
     // TODO if (i === 1 && model.ownBots.list.length === 0) botStore.list(model.ownBots);
-  };
+  })
 
   _renderHeader = props => (
     <TabBar
       style={{backgroundColor: 'white'}}
       tabStyle={{height: 54 * k}}
       renderLabel={({route}) => {
-        const selected = routes[this.index].key === route.key;
-        return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>;
+        const selected = routes[this.index].key === route.key
+        return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>
       }}
       indicatorStyle={styles.indicator}
       {...props}
     />
-  );
+  )
 
-  _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />;
+  _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />
 
   render() {
     return (
       <Screen>
-        <TabViewAnimated navigationState={{index: this.index, routes}} renderScene={this._renderScene} renderHeader={this._renderHeader} onIndexChange={this._handleChangeTab} />
+        <TabViewAnimated
+          navigationState={{index: this.index, routes}}
+          renderScene={this._renderScene}
+          renderHeader={this._renderHeader}
+          onIndexChange={this._handleChangeTab}
+        />
         <BotButton />
       </Screen>
-    );
+    )
   }
 }
 
@@ -73,6 +78,6 @@ const styles = StyleSheet.create({
     width: 155 * k,
     height: 3 * k,
   },
-});
+})
 
-export default BotScreen;
+export default BotScreen
