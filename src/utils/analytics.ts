@@ -1,17 +1,9 @@
-// @flow
-
 // mixpanel JS API docs: https://mixpanel.com/help/reference/javascript
-
 import {settings} from '../globals'
 import {when} from 'mobx'
 import * as log from '../utils/log'
-
-let Mixpanel
-try {
-  Mixpanel = require('react-native-mixpanel')
-} catch (e) {
-  log.log(`No mixpanel ${e}`)
-}
+import {IWocky} from 'wocky-client'
+import Mixpanel from 'react-native-mixpanel'
 
 class Analytics {
   inSession: boolean = false
@@ -21,22 +13,28 @@ class Analytics {
     Mixpanel.sharedInstanceWithToken(
       settings.isStaging ? '5ee41c4ec134d9c7d769d9ddf41ed8eb' : '3f62ffcf7a8fc0100157f877af5668a6'
     )
+  }
 
-    // TODO: analytics based on wocky triggers
-    // when(
-    //   () => model.profile,
-    //   () => {
-    //     Mixpanel.identify(model.profile.user);
-    //     Mixpanel.set({
-    //       $email: model.profile.email,
-    //       $first_name: model.profile.firstName,
-    //       $last_name: model.profile.lastName,
-    //       phone: model.profile.phoneNumber,
-    //       username: model.profile.handle,
-    //     });
-    //     this.sessionStart();
-    //   },
-    // );
+  identify = (wocky: IWocky) => {
+    if (__DEV__) {
+      log.log('IDENTIFY', wocky)
+      return
+    }
+    when(
+      () => wocky && wocky.connected && !!wocky.profile && !!wocky.profile.handle,
+      () => {
+        const {id, email, firstName, lastName, phoneNumber, handle} = wocky!.profile!
+        Mixpanel.identify(id)
+        Mixpanel.set({
+          $email: email,
+          $first_name: firstName,
+          $last_name: lastName,
+          phone: phoneNumber,
+          username: handle,
+        })
+        this.sessionStart()
+      }
+    )
   }
 
   track = (name: string, properties?: object): void => {

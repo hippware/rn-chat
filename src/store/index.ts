@@ -81,6 +81,7 @@ const Store = types
   .actions(self => ({
     afterCreate() {
       connectivityStore.start(self.wocky, logger, AppState, NetInfo)
+      analytics.identify(self.wocky)
     },
     reload: () => {
       self.wocky.clearCache()
