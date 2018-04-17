@@ -80,6 +80,9 @@ const Store = types
     },
   }))
   .actions(self => ({
+    afterCreate() {
+      analytics.identify(self.wocky)
+    },
     reload: () => {
       self.wocky.clearCache();
       self.firebaseStore.reset();
