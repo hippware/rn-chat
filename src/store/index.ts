@@ -1,4 +1,5 @@
 import {types, getEnv, addMiddleware} from 'mobx-state-tree'
+import {useStrict} from 'mobx'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage, AppState, NetInfo} from 'react-native'
 import firebase from 'react-native-firebase'
@@ -36,6 +37,10 @@ const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
 const transport = new HybridTransport(xmppTransport, graphqlTransport)
 
 const {geolocation} = navigator
+
+if (__DEV__) {
+  useStrict(true)
+}
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
