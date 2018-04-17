@@ -23,6 +23,7 @@
     "ordered-imports": false,
     "triple-equals": [true, "allow-null-check"],
     "variable-name": [true, "ban-keywords"],
+    "eofline": true,
 
     // https://github.com/prettier/prettier/issues/1080
     // "quotemark": [true, "single", "jsx-single"],
