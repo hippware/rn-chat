@@ -70,7 +70,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
     if (this.mounted) this.setState({height: e.endCoordinates.height})
   }
 
-  keyboardWillHide = e => {
+  keyboardWillHide = () => {
     if (this.mounted) this.setState({height: 0})
   }
 

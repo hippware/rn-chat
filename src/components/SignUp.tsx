@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, StyleSheet, Text, Linking} from 'react-native'
-import {observable, when, action} from 'mobx'
+import {observable, when, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -30,15 +30,21 @@ class SignUp extends React.Component<Props> {
   email: any
   when: any
 
-  @action
   componentDidMount() {
-    this.vProfile = this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile)
+    runInAction(
+      () =>
+        (this.vProfile =
+          this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile))
+    )
   }
 
-  @action
   componentWillReceiveProps(nextProps) {
     if (nextProps.routeName === 'signUp') {
-      this.vProfile = this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile)
+      runInAction(
+        () =>
+          (this.vProfile =
+            this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile))
+      )
     }
   }
 
