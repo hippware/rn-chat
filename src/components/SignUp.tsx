@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, Image, StyleSheet, Text, Linking} from 'react-native'
 import {observable, when, action} from 'mobx'
@@ -9,15 +7,22 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {k} from './Global'
 import FormTextInput from './FormTextInput'
 import SignUpAvatar from './SignUpAvatar'
-// import * as log from '../utils/log';
 import {colors} from '../constants'
 import Button from 'apsl-react-native-button'
 import {RText, Spinner} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
+import {IWocky} from 'wocky-client'
+import {getSnapshot} from 'mobx-state-tree'
 
-@inject('wocky', 'analytics')
+type Props = {
+  wocky?: IWocky
+  analytics?: any
+  warn?: any
+}
+
+@inject('wocky', 'analytics', 'warn')
 @observer
-class SignUp extends React.Component<{}> {
+class SignUp extends React.Component<Props> {
   @observable vProfile: ValidatableProfile
   handle: any
   firstName: any
@@ -27,39 +32,39 @@ class SignUp extends React.Component<{}> {
 
   @action
   componentDidMount() {
-    this.vProfile = this.props.wocky.profile && new ValidatableProfile(this.props.wocky.profile)
+    this.vProfile = this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile)
   }
 
   @action
   componentWillReceiveProps(nextProps) {
     if (nextProps.routeName === 'signUp') {
-      this.vProfile = this.props.wocky.profile && new ValidatableProfile(this.props.wocky.profile)
+      this.vProfile = this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile)
     }
   }
 
   done = () => {
-    const {profile} = this.props.wocky
+    const {profile} = this.props.wocky!
     try {
-      profile.update(this.vProfile.asObject)
+      profile!.update(this.vProfile.asObject)
       this.when = when(
-        () => !profile.updating && !profile.updateError,
+        () => !profile!.updating && !profile!.updateError,
         () => {
           this.props.analytics.track('createprofile_complete', {
-            profile: this.props.wocky.profile.toJSON(),
+            profile: getSnapshot(this.props.wocky!.profile!),
           })
           Actions.logged()
         }
       )
     } catch (err) {
       this.props.analytics.track('createprofile_fail', {
-        profile: this.props.wocky.profile.toJSON(),
+        profile: getSnapshot(this.props.wocky!.profile!),
         error: err,
       })
     }
   }
 
   render() {
-    const {profile} = this.props.wocky
+    const {profile} = this.props.wocky!
     if (!profile) {
       return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -70,7 +75,7 @@ class SignUp extends React.Component<{}> {
     const {updating, updateError} = profile
     // TODO: handle update errors with notificationStore. Watch for updateError in componentDidMount and flash error
     if (updateError !== '') {
-      console.warn('update error?', updateError)
+      this.props.warn('update error?', updateError)
     }
 
     const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || updating
@@ -152,7 +157,7 @@ class SignUp extends React.Component<{}> {
           <RText>{', and for us to contact you via email\r\nfor updates and information.'}</RText>
         </RText>
         <Button
-          isDisabled={buttonDisabled || !this.props.wocky.connected}
+          isDisabled={buttonDisabled || !this.props.wocky!.connected}
           onPress={this.done}
           style={styles.submitButton}
           textStyle={styles.text}
