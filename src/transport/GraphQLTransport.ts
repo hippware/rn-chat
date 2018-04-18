@@ -175,26 +175,26 @@ export class GraphQLTransport implements IWockyTransport {
     this.botGuestVisitorsSubscription = await this.client
       .subscribe({
         query: gql`
-          subscription {
+          subscription subscribeBotVisitors($ownUsername: String!){
             botGuestVisitors {
               action
               bot {
-                id
-                visitorCount: subscribers(first:0 type:VISITOR) {
-                  totalCount
-                }
+                ${BOT_PROPS}
               }
               visitor {
                 ${PROFILE_PROPS}
               }
             }
           }
-        `
+        `,
+        variables: {
+          ownUsername: this.username
+        }
       })
       .subscribe({
         next: action((result: any) => {
           const update = result.data.botGuestVisitors
-          this.botVisitor = {...update.visitor, botId: update.bot.id, visitorsSize: update.bot.visitorCount.totalCount, action: update.action}
+          this.botVisitor = {...update.visitor, bot: convertBot(update.bot), action: update.action}
         })
       })
   }

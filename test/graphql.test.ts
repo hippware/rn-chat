@@ -74,7 +74,7 @@ describe('GraphQL', () => {
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
-          expect(gql.botVisitor.botId).to.equal(bot.id)
+          expect(gql.botVisitor.bot.id).to.equal(bot.id)
           expect(gql.botVisitor.id).to.equal(user.profile.id)
           expect(gql.botVisitor.handle).to.equal(user.profile.handle)
           expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
@@ -95,7 +95,7 @@ describe('GraphQL', () => {
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
-          expect(gql.botVisitor.botId).to.equal(bot.id)
+          expect(gql.botVisitor.bot.id).to.equal(bot.id)
           expect(gql.botVisitor.id).to.equal(user.profile.id)
           expect(gql.botVisitor.handle).to.equal(user.profile.handle)
           expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
