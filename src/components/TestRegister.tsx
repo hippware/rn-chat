@@ -1,39 +1,38 @@
-// @flow
-
-import React from 'react';
-import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
-import {inject, observer} from 'mobx-react/native';
-import {Actions} from 'react-native-router-flux';
-import {k, width} from './Global';
-import {colors} from '../constants';
+import React from 'react'
+import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
+import {inject, observer} from 'mobx-react/native'
+import {Actions} from 'react-native-router-flux'
+import {k, width} from './Global'
+import {colors} from '../constants'
 
 type Props = {
-  wocky: any,
-};
+  wocky?: any
+  analytics?: any
+  name: string
+  warn?: any
+}
 
 type State = {
-  // pending: boolean,
-  text: string,
-};
+  text: string
+}
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'warn')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
     text: '',
-    // pending: false
-  };
+  }
 
   onRegister = async () => {
     try {
-      await this.props.wocky.testRegister({phoneNumber: this.state.text});
-      Actions.connect();
+      await this.props.wocky.testRegister({phoneNumber: this.state.text})
+      Actions.connect()
     } catch (err) {
-      console.warn('Test Register error', err);
-      this.props.analytics.track('error_bypass_register', err);
+      this.props.warn('Test Register error', err)
+      this.props.analytics.track('error_bypass_register', {error: err})
       // TODO: notificationStore.showNotification with error message
     }
-  };
+  }
 
   render() {
     return (
@@ -88,7 +87,7 @@ class TestRegister extends React.Component<Props, State> {
           <TextInput
             autoFocus
             maxLength={7}
-            keyboardType='phone-pad'
+            keyboardType="phone-pad"
             onChangeText={text => this.setState({text})}
             value={this.state.text}
             style={{
@@ -108,11 +107,16 @@ class TestRegister extends React.Component<Props, State> {
           }}
         />
 
-        <TouchableOpacity onPress={this.onRegister} style={styles.buttonStyle} disabled={Actions.currentScene !== this.props.name} testID='bypassRegisterButton'>
+        <TouchableOpacity
+          onPress={this.onRegister}
+          style={styles.buttonStyle}
+          disabled={Actions.currentScene !== this.props.name}
+          testID="bypassRegisterButton"
+        >
           <Text style={styles.textStyle}>Next</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -134,6 +138,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: 'white',
   },
-});
+})
 
-export default TestRegister;
+export default TestRegister

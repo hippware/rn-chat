@@ -159,7 +159,7 @@ const FirebaseStore = types
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
         self.setState({errorMessage: 'Error registering, please try again'})
-        analytics.track('error_firebase_register', err)
+        analytics.track('error_firebase_register', {error: err})
       } finally {
         self.setState({
           buttonText: 'Verify',
