@@ -447,11 +447,14 @@ export const Wocky = types
         if (id === self.username) {
           botModel.visitor = true
         }
+        botModel.visitorsSize = bot.visitorsSize
+        self.profile!.geofenceBots.addToTop(botModel)
       } else {
         botModel.visitors.remove!(id)
         if (id === self.username) {
           botModel.visitor = false
         }
+        botModel.visitorsSize = bot.visitorsSize
       }
     }),
     _onNotification: flow(function*({changed, version, ...data}: any) {
