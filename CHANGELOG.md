@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.5.4 - 2018 Apr 17
+
+Same as 2.5.3 but with an incremented version.
+
+
 # 2.5.3 - 2018 Apr 17
 
 * Refactoring Connectivity (continues #1936)
