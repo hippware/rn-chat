@@ -25,6 +25,7 @@ Same as 2.5.3 but with an incremented version.
   * [dev] Re-organize detox tests (#2097)
 * [dev] Bugsnag symbols for codepush (#2128)
 * Update wocky-client to work with latest server
+* S3 URL support (hippware/wocky-client#24)
 
 
 # 2.5.2 - 2018 Apr 13
