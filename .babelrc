@@ -4,7 +4,7 @@
     "react-native"
   ],
   "sourceMaps": "inline",
-  "plugins": ["transform-decorators-legacy", "transform-class-properties", "mobx-deep-action"],
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"],
   "env": {
     "production": {
       "plugins": ["transform-remove-console"]

@@ -62,7 +62,6 @@ class GeofenceShare extends React.Component<Props> {
       <Screen>
         <FriendMultiSelect
           selection={this.selection}
-          profile={this.props.wocky.profile!}
           botTitle={this.bot && this.bot.title ? this.bot.title : ''}
           inviteMessage="To share presence!"
         />

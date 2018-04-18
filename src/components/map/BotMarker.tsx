@@ -4,7 +4,7 @@ import React from 'react'
 import BotBubble from './BotBubble'
 import MapView from 'react-native-maps'
 import {observer} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {observable, action} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 
@@ -23,7 +23,7 @@ export default class BotMarker extends React.Component<Props> {
   @observable tracking = true
 
   componentDidMount() {
-    setTimeout(() => this.tracking = false, 400)
+    setTimeout(action(() => (this.tracking = false)), 400)
   }
 
   render() {
