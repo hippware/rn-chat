@@ -1,4 +1,4 @@
-import {autorunAsync, observable} from 'mobx'
+import {autorunAsync, observable, action} from 'mobx'
 import {IWocky} from 'wocky-client'
 
 export const DELAY = 1000
@@ -15,6 +15,7 @@ class ConnectivityStore {
   private disposer?: () => void
   private started: boolean = false
 
+  @action
   start(wocky: IWocky, logger, appState, netInfo) {
     if (this.started) return
     this.started = true
@@ -45,11 +46,14 @@ class ConnectivityStore {
   }
 
   // do we want this to finish ever?
+  @action
   finish() {
     this.logger.log('ConnectivityStore STOP')
     if (this.disposer) this.disposer()
+    this.started = false
   }
 
+  @action
   private async tryReconnect(force: boolean = false) {
     if (!this.wocky) return
     const {username, password, host, login} = this.wocky
@@ -68,6 +72,7 @@ class ConnectivityStore {
     }
   }
 
+  @action
   private _handleAppStateChange = (currentAppState: any) => {
     if (currentAppState === 'active') {
       this.isActive = true
@@ -78,6 +83,7 @@ class ConnectivityStore {
     }
   }
 
+  @action
   private _handleConnectionInfoChange = (connectionInfo: any) => {
     if (connectionInfo.type === 'unknown') {
       this.netConnected = true

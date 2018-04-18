@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator'
-import {computed, observable, reaction, autorun} from 'mobx'
+import {computed, observable, reaction, autorun, action} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
 import {IWocky} from 'wocky-client'
@@ -20,6 +20,7 @@ class NotificationStore {
     })
   }
 
+  @action
   start() {
     // console.log('NOTIFICATION STORE START')
     if (this.started) return
@@ -52,6 +53,7 @@ class NotificationStore {
     }, 5000)
   }
 
+  @action
   finish() {
     if (this.disposer) this.disposer()
     this.stack.clear()
@@ -63,6 +65,7 @@ class NotificationStore {
     return this.stack.length > 0 ? this.stack[this.stack.length - 1] : null
   }
 
+  @action
   dismiss(notification: Notification) {
     const index = this.stack.findIndex(n => n.message === notification.message)
     if (index !== -1) {
@@ -70,6 +73,7 @@ class NotificationStore {
     }
   }
 
+  @action
   show(message: string, options: object = {}): Notification {
     const notification = new Notification({
       message,

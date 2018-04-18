@@ -1,4 +1,4 @@
-import {computed, observable, when} from 'mobx'
+import {computed, observable, when, action} from 'mobx'
 import {colors} from '../constants'
 
 type NotificationObj = {
@@ -28,8 +28,8 @@ export default class Notification {
       setTimeout(this.close, n.autoCloseTimeout)
     }
 
-    when(() => this.isOpening, () => setTimeout(() => (this.lifeCycleIndex = OPEN), 1000))
-    when(() => this.isClosing, () => setTimeout(() => (this.lifeCycleIndex = CLOSED), 1000))
+    when(() => this.isOpening, () => setTimeout(action(() => (this.lifeCycleIndex = OPEN)), 1000))
+    when(() => this.isClosing, () => setTimeout(action(() => (this.lifeCycleIndex = CLOSED)), 1000))
     when(() => this.isClosed, n.onClosed || (() => {})) // tslint:disable-line
   }
 
@@ -60,6 +60,5 @@ export default class Notification {
   }
 
   // next = () => (this.lifeCycleIndex += 1);
-
-  close = () => (this.lifeCycleIndex = CLOSING)
+  @action close = () => (this.lifeCycleIndex = CLOSING)
 }
