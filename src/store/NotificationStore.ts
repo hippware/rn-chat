@@ -11,52 +11,62 @@ class NotificationStore {
   disposer?: () => void
   started: boolean = false
   wocky: IWocky
+  offlineNotification?: Notification
+  timeout?: any
 
   constructor(wocky: IWocky, connectivityStore) {
     this.wocky = wocky
     autorun('NotificationStore toggler', () => {
       if (connectivityStore.isActive) this.start()
-      else this.finish()
     })
   }
 
   @action
   start() {
-    // console.log('NOTIFICATION STORE START')
+    console.log('& NOTIFICATION STORE START', this.started)
     if (this.started) return
     this.started = true
-
-    let offlineNotification
+    this.reset()
 
     // initial check after timeout. Delay = debounce.
-    setTimeout(() => {
-      this.disposer = reaction(
-        () => {
-          const {connected, connecting, profile} = this.wocky
-          return {isOffline: !!profile && !connected, connecting}
-        },
-        ({isOffline, connecting}) => {
-          if (isOffline) {
-            offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
-              color: colors.DARK_GREY,
-            })
-          } else {
-            if (offlineNotification) offlineNotification.close()
-          }
-        },
-        {
-          delay: 1000,
-          fireImmediately: true,
-          name: 'offline notification check',
+    // this.timeout = setTimeout(() => {
+    this.disposer = reaction(
+      () => {
+        if (!this.wocky) console.warn('No wocky!')
+        const {connected, connecting, profile} = this.wocky
+        // console.log('& disposer', connected, connecting, profile, this.stack.length)
+        return {isOffline: !!profile && !connected, connecting}
+      },
+      ({isOffline, connecting}) => {
+        // console.log('& disposer inside', isOffline, connecting)
+        if (isOffline) {
+          if (this.offlineNotification) this.dismiss(this.offlineNotification)
+          this.offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
+            color: colors.DARK_GREY,
+          })
+        } else {
+          if (this.offlineNotification) this.offlineNotification.close()
         }
-      )
-    }, 5000)
+      },
+      {
+        delay: 1000,
+        fireImmediately: true,
+        name: 'offline notification check',
+      }
+    )
+    // }, 5000)
   }
 
   @action
-  finish() {
+  reset() {
+    // console.log('& reset')
     if (this.disposer) this.disposer()
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeout = undefined
+    }
     this.stack.clear()
+    this.offlineNotification = undefined
     this.started = false
   }
 
@@ -75,6 +85,7 @@ class NotificationStore {
 
   @action
   show(message: string, options: object = {}): Notification {
+    // console.log('& show', message)
     const notification = new Notification({
       message,
       onClosed: () => this.dismiss(notification),

@@ -1,4 +1,4 @@
-import {autorunAsync, observable, action} from 'mobx'
+import {autorunAsync, observable, action, runInAction} from 'mobx'
 import {IWocky} from 'wocky-client'
 
 export const DELAY = 1000
@@ -6,7 +6,7 @@ export const DELAY = 1000
 class ConnectivityStore {
   @observable isActive: boolean = true
   @observable netConnected: boolean = true
-  retryCount: number = 0
+  @observable retryCount: number = 0
   retryDelay: number = DELAY
   reconnecting: boolean = false
 
@@ -38,6 +38,7 @@ class ConnectivityStore {
         const {username, password, connected, connecting} = this.wocky!
         // if the app "should connect", has the necessary info, and isn't already trying...
         if (netConnected && isActive && username && password && !(connected || connecting)) {
+          // console.log('& tryReconnect')
           this.tryReconnect()
         }
       },
@@ -45,26 +46,31 @@ class ConnectivityStore {
     )
   }
 
-  // do we want this to finish ever?
-  @action
-  finish() {
-    this.logger.log('ConnectivityStore STOP')
-    if (this.disposer) this.disposer()
-    this.started = false
-  }
+  // // do we want this to finish ever?
+  // @action
+  // finish() {
+  //   this.logger.log('ConnectivityStore STOP')
+  //   if (this.disposer) this.disposer()
+  //   this.started = false
+  // }
 
   @action
   private async tryReconnect(force: boolean = false) {
-    if (!this.wocky) return
+    if (!this.wocky) {
+      this.logger.warn('connectivity: no wocky!', this.retryCount)
+      return
+    }
     const {username, password, host, login} = this.wocky
     if (username && password && host && (!this.reconnecting || force)) {
       try {
         this.retryCount += 1
         this.reconnecting = true
         await login()
-        this.retryDelay = DELAY
-        this.retryCount = 0
-        this.reconnecting = false
+        runInAction(() => {
+          this.retryDelay = DELAY
+          this.retryCount = 0
+          this.reconnecting = false
+        })
       } catch (e) {
         this.retryDelay = this.retryDelay >= 5000 ? this.retryDelay : this.retryDelay * 1.5
         setTimeout(() => this.tryReconnect(true), this.retryDelay)
