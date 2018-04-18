@@ -1,10 +1,8 @@
-// @flow
-
 import React from 'react'
 import Button from 'apsl-react-native-button'
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {observable, computed} from 'mobx'
+import {observable, computed, action, runInAction} from 'mobx'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker} from '../ImagePicker'
@@ -98,10 +96,12 @@ class AddBotPost extends React.Component<Props> {
     })
   }
 
+  @action
   keyboardWillShow = e => {
     if (this.mounted) this.keyboardHeight = e.endCoordinates.height
   }
 
+  @action
   keyboardWillHide = () => {
     if (this.mounted) this.keyboardHeight = 0
   }
@@ -151,15 +151,15 @@ class AddBotPost extends React.Component<Props> {
             </Button>
             <TextInput
               ref={text => (this.textInput = text)}
-              onChangeText={text => (this.text = text)}
-              onContentSizeChange={({nativeEvent}) =>
-                (this.inputHeight = nativeEvent.contentSize.height)
-              }
+              onChangeText={action((text: string) => (this.text = text))}
+              onContentSizeChange={action(
+                ({nativeEvent}) => (this.inputHeight = nativeEvent.contentSize.height)
+              )}
               style={[styles.textInput, styles.textInputDay, {height: 'auto'}]}
               placeholder="Add a post"
               placeholderTextColor={colors.DARK_GREY}
-              onFocus={() => (this.focused = true)}
-              onBlur={() => (this.focused = false)}
+              onFocus={action(() => (this.focused = true))}
+              onBlur={action(() => (this.focused = false))}
               multiline
               returnKeyType="default"
               enablesReturnKeyAutomatically
