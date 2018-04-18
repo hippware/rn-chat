@@ -4,7 +4,7 @@ import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
-import {observable} from 'mobx'
+import {observable, action} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
@@ -192,10 +192,10 @@ export class GraphQLTransport implements IWockyTransport {
         `
       })
       .subscribe({
-        next: (result: any) => {
+        next: action((result: any) => {
           const update = result.data.botGuestVisitors
           this.botVisitor = {...update.visitor, botId: update.bot.id, visitorsSize: update.bot.visitorCount.totalCount, action: update.action}
-        }
+        })
       })
   }
 

@@ -1,4 +1,4 @@
-import {observable, when} from 'mobx'
+import {observable, when, action, runInAction} from 'mobx'
 import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
@@ -44,9 +44,9 @@ export class XmppTransport implements IWockyTransport {
     this.provider = provider
     this.resource = resource
     this.fileService = fileService
-    provider.onConnected = () => (this.connected = true)
-    provider.onDisconnected = () => (this.connected = false)
-    provider.onIQ = (iq: any) => {
+    provider.onConnected = action(() => (this.connected = true))
+    provider.onDisconnected = action(() => (this.connected = false))
+    provider.onIQ = action((iq: any) => {
       this.iq = iq
       // console.log('ON IQ:', JSON.stringify(iq))
       try {
@@ -56,8 +56,8 @@ export class XmppTransport implements IWockyTransport {
       } catch (e) {
         console.error(e)
       }
-    }
-    provider.onMessage = (msg: any) => {
+    })
+    provider.onMessage = action((msg: any) => {
       if (msg.body || msg.media || msg.image || msg.result) {
         const {chatId, ...message} = processMessage({...msg, unread: true}, this.username!)
         this.message = {id: chatId, message}
@@ -80,15 +80,16 @@ export class XmppTransport implements IWockyTransport {
           console.warn('& notification: unhandled homestream notification', msg.notification)
         }
       }
-    }
-    provider.onPresence = (stanza: any) => {
+    })
+    provider.onPresence = action((stanza: any) => {
       const id = Utils.getNodeJid(stanza.from)!
       if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
         const status = stanza.type || 'available'
         this.presence = {status, id}
       }
-    }
+    })
   }
+  @action
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
     try {
       if (user) {
@@ -100,16 +101,18 @@ export class XmppTransport implements IWockyTransport {
       if (host) {
         this.host = host
       }
-      this.connecting = true
+      runInAction(() => (this.connecting = true))
       await timeout(this.provider.login(this.username, this.password, this.host, this.resource), TIMEOUT)
       return true
     } catch (e) {
-      this.connected = false
+      runInAction(() => (this.connected = false))
       throw e
     } finally {
-      this.connecting = false
+      runInAction(() => (this.connecting = false))
     }
   }
+
+  @action
   async register(data: any, host?: string, providerName = 'digits'): Promise<{username: string; password: string; host: string}> {
     if (host) {
       this.host = host
@@ -133,11 +136,13 @@ export class XmppTransport implements IWockyTransport {
       }
       if ('redirect' in d) {
         const {user, server, token} = JSON.parse(d.text)
-        // modify provider host to response's server
-        this.provider.host = server!
-        this.host = server!
-        this.username = user!
-        this.password = token!
+        runInAction(() => {
+          // modify provider host to response's server
+          this.provider.host = server!
+          this.host = server!
+          this.username = user!
+          this.password = token!
+        })
         return {username: user, host: server, password: token}
       } else {
         throw d.text ? new Error(d.text) : error
