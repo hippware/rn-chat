@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import {observer} from 'mobx-react/native'
@@ -7,11 +5,9 @@ import {colors} from '../../constants'
 import SearchBar from './SearchBar'
 import ProfileList from './ProfileList'
 import InviteFriendsRow from './InviteFriendsRow'
-import {IProfile} from 'wocky-client'
 
 type Props = {
   selection: any
-  profile: IProfile
   botTitle: string
   inviteMessage?: string
 }

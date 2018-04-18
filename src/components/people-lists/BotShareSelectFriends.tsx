@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Alert, TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
@@ -11,21 +9,25 @@ import Screen from '../Screen'
 import {colors} from '../../constants'
 import SelectableProfileList from '../../store/SelectableProfileList'
 import FriendMultiSelect from './FriendMultiSelect'
+import {IBot, IWocky} from 'wocky-client'
 
 type Props = {
-  botId: string,
+  botId: string
+  wocky?: IWocky
+  notificationStore?: any
+  warn?: any
 }
 
 type State = {
-  height: number,
-  message: string,
+  height: number
+  message: string
 }
 
-@inject('wocky', 'notificationStore')
+@inject('wocky', 'notificationStore', 'warn')
 @observer
 class BotShareSelectFriends extends React.Component<Props, State> {
-  @observable selection: SelectableProfileList = SelectableProfileList.create({})
-  @observable bot: Bot
+  @observable selection = SelectableProfileList.create({})
+  @observable bot?: IBot
   mounted: boolean = false
 
   constructor(props: Props) {
@@ -35,7 +37,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
 
   @action
   componentDidMount() {
-    const {friends, getBot} = this.props.wocky
+    const {friends, getBot} = this.props.wocky!
     this.bot = getBot({id: this.props.botId})
     this.selection.setList(friends.map(f => ({profile: f})))
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
@@ -45,22 +47,22 @@ class BotShareSelectFriends extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.mounted = false
-    Keyboard.removeListener('keyboardWillShow')
-    Keyboard.removeListener('keyboardWillHide')
+    Keyboard.removeListener('keyboardWillShow', () => {}) // tslint:disable-line
+    Keyboard.removeListener('keyboardWillHide', () => {}) // tslint:disable-line
   }
 
   share = () => {
     const shareSelect = this.selection.selected.map(sp => sp.id)
     try {
-      this.bot.share(shareSelect, this.state.message)
+      this.bot!.share(shareSelect, this.state.message)
       const num = shareSelect.length
-      this.props.notificationStore.flash(
+      this.props.notificationStore!.flash(
         `Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`
       )
       Actions.pop({animated: false})
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.')
-      console.warn(e)
+      this.props.warn(e)
     }
   }
 
@@ -75,7 +77,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   render() {
     return (
       <Screen>
-        <FriendMultiSelect selection={this.selection} botTitle={this.bot && this.bot.title} />
+        <FriendMultiSelect selection={this.selection} botTitle={this.bot ? this.bot!.title! : ''} />
         {!!this.selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
