@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native'
-import {when, observable, action} from 'mobx'
+import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
@@ -68,10 +68,9 @@ class BotDetails extends React.Component<Props> {
     }
   }
 
-  @action
   loadBot = async () => {
     const {wocky, analytics} = this.props
-    this.bot = wocky!.getBot({id: this.props.item})
+    runInAction(() => (this.bot = wocky!.getBot({id: this.props.item})))
     await wocky!.loadBot(this.props.item, undefined)
     await this.bot!.posts.load({force: true})
 
