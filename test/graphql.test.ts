@@ -66,11 +66,7 @@ describe('GraphQL', () => {
 
   it('check subscription arrive', async done => {
     try {
-      await gql.setLocation({latitude: 21.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 21.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       await gql.subscribeBotVisitors()
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
@@ -84,14 +80,14 @@ describe('GraphQL', () => {
           done()
         }
       )
+      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
     } catch (e) {
       done(e)
     }
   })
   it('check subscription exit', async done => {
     try {
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
@@ -105,14 +101,14 @@ describe('GraphQL', () => {
           done()
         }
       )
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
     } catch (e) {
       done(e)
     }
   })
   it('load bot', async done => {
     try {
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       const loaded = await gql.loadBot(bot.id, bot.server)
       expect(loaded.title).to.equal(bot.title)
       expect(loaded.geofence).to.equal(bot.geofence)
