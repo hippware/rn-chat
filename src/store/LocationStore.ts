@@ -215,6 +215,7 @@ const LocationStore = types
       const wocky: IWocky = getParent(self).wocky
       logger.log(prefix, 'BACKGROUND LOCATION START')
 
+      backgroundGeolocation.removeListeners()
       backgroundGeolocation.on('location', onLocation, onLocationError)
       backgroundGeolocation.on('http', onHttp, onHttpError)
       backgroundGeolocation.on('error', self.positionError)
