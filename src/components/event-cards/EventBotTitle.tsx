@@ -1,12 +1,10 @@
-// @flow
-
 import React from 'react'
 import {View, StyleSheet, Image} from 'react-native'
 import Avatar from '../common/Avatar'
 import {k} from '../Global'
 import * as colors from '../../constants/colors'
 import {observer} from 'mobx-react/native'
-import {Profile} from 'wocky-client'
+import {IProfile} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {RText, ProfileHandle} from '../common'
 
@@ -14,11 +12,11 @@ type Props = {
   bot: any
   action: string
   timestamp: string
-  profile: Profile
-  style: any
+  profile?: IProfile
+  style?: any
 }
 
-const onProfile = (bot, profile: Profile) => {
+const onProfile = (profile: IProfile) => {
   Actions.profileDetails({
     item: profile.id,
   })
@@ -46,7 +44,7 @@ const EventBotTitle = observer((props: Props) => {
           <View style={{flexDirection: 'row'}}>
             <ProfileHandle
               profile={profile}
-              onPress={() => onProfile(bot, profile)}
+              onPress={() => onProfile(profile)}
               textStyle={styles.text}
             />
             <RText size={13} color={colors.PURPLISH_GREY} style={styles.text}>

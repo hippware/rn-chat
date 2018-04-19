@@ -1,15 +1,14 @@
-// @flow
-
 import React from 'react'
 import {View, Image} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {inject, observer} from 'mobx-react/native'
 import {RText} from '../common'
+import {IBot} from 'wocky-client'
 
 type Props = {
-  bot: any
-  locationStore: any
+  bot: IBot
+  locationStore?: any
 }
 
 const locImg = require('../../../images/iconBotLocation3.png')

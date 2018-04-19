@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
@@ -8,17 +6,16 @@ import EventBotTitle from './EventBotTitle'
 import {RText} from '../common'
 import {width} from '../Global'
 import EventBotMetabar from './EventBotMetabar'
+import {IEventBotPost} from 'wocky-client'
 
 type Props = {
-  item: EventBot
+  item: IEventBotPost
 }
 
 const imageWidth = 2 * width / 3
 
 @observer
-class EventBotPostCard extends React.Component {
-  props: Props
-
+class EventBotPostCard extends React.Component<Props> {
   onPress() {
     Actions.botDetails({item: this.props.item.bot.id})
   }
@@ -33,7 +30,7 @@ class EventBotPostCard extends React.Component {
             bot={item.bot}
             action="added a post to"
             timestamp={item.relativeDateAsString}
-            profile={item.post.profile}
+            profile={item.post.profile!}
           />
           <View style={{marginHorizontal: 15}}>
             {!!item.post.content && (

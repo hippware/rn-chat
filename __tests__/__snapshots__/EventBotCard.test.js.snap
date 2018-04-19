@@ -325,7 +325,8 @@ exports[`EventBotCard renders 1`] = `
         }
       >
         address
-         - 
+         -
+         
         97.7 mi
       </Text>
     </View>
