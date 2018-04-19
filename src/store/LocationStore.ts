@@ -147,30 +147,30 @@ const LocationStore = types
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
+    const {logger, nativeEnv, backgroundGeolocation /*, backgroundFetch*/} = getEnv(self)
 
     function startBackground() {
       const wocky: IWocky = getParent(self).wocky
       if (typeof navigator !== 'undefined') {
         logger.log('BACKGROUND LOCATION START')
 
-        backgroundFetch.configure(
-          {
-            stopOnTerminate: false,
-          },
-          () => {
-            logger.log('background-fetch: Received background-fetch event')
+        // backgroundFetch.configure(
+        //   {
+        //     stopOnTerminate: false,
+        //   },
+        //   () => {
+        //     logger.log('background-fetch: Received background-fetch event')
 
-            // todo: explicitly call for an update on position?
+        //     // todo: explicitly call for an update on position?
 
-            // To signal completion of your task to iOS, you must call #finish!
-            // If you fail to do this, iOS can kill your app.
-            backgroundFetch.finish()
-          },
-          error => {
-            logger.log('[js] RNBackgroundFetch failed to start ' + error)
-          }
-        )
+        //     // To signal completion of your task to iOS, you must call #finish!
+        //     // If you fail to do this, iOS can kill your app.
+        //     backgroundFetch.finish()
+        //   },
+        //   error => {
+        //     logger.log('[js] RNBackgroundFetch failed to start ' + error)
+        //   }
+        // )
 
         // // This handler fires whenever bgGeo receives a location update.
         backgroundGeolocation.on('location', position => {
