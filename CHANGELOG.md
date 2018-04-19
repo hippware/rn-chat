@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.4.1-1 - ??
+
+* Fix up mixpanel identify (PR #2185, backports PR #2167)
+  * Event `ios app release` is not reflecting on mixpanel (#2158)
+
+
 # 2.4.1 - 2018 Apr 4
 
 * `New Updates` Delete Tweak (#2030)
