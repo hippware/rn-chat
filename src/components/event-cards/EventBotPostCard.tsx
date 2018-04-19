@@ -36,7 +36,7 @@ class EventBotPostCard extends React.Component {
             profile={item.post.profile}
           />
           <View style={{marginHorizontal: 15}}>
-            {item.post.content && (
+            {!!item.post.content && (
               <RText size={15} weight="Light" style={{marginTop: 15}} numberOfLines={4}>
                 {item.post.content}
               </RText>
