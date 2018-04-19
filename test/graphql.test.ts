@@ -67,42 +67,42 @@ describe('GraphQL', () => {
   it('check subscription arrive', async done => {
     try {
       await gql.subscribeBotVisitors()
+      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+      gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
           expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.avatar).to.be.null
+          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+          expect(gql.botVisitor.visitor.handle).to.equal(user.profile.handle)
+          expect(gql.botVisitor.visitor.firstName).to.equal(user.profile.firstName)
+          expect(gql.botVisitor.visitor.lastName).to.equal(user.profile.lastName)
+          expect(gql.botVisitor.visitor.avatar).to.be.null
           expect(gql.botVisitor.action).to.equal('ARRIVE')
           done()
         }
       )
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
     } catch (e) {
       done(e)
     }
   })
   it('check subscription exit', async done => {
     try {
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+      gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
           expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.avatar).to.be.null
+          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+          expect(gql.botVisitor.visitor.handle).to.equal(user.profile.handle)
+          expect(gql.botVisitor.visitor.firstName).to.equal(user.profile.firstName)
+          expect(gql.botVisitor.visitor.lastName).to.equal(user.profile.lastName)
+          expect(gql.botVisitor.visitor.avatar).to.be.null
           expect(gql.botVisitor.action).to.equal('DEPART')
           done()
         }
       )
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
     } catch (e) {
       done(e)
     }
