@@ -439,7 +439,8 @@ export const Wocky = types
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
     },
-    _onBotVisitor: flow(function*({bot, action, id, visitor}: any) {
+    _onBotVisitor: flow(function*({bot, action, visitor}: any) {
+      const id = visitor.id
       const botModel: IBot = self.bots.get(bot.id, bot)
       if (action === 'ARRIVE') {
         const profile = self.profiles.get(id, visitor)
