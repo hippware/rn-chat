@@ -125,7 +125,7 @@ class BotCompose extends React.Component<Props> {
           >
             <BotComposeMap afterPhotoPost={this.scrollToNote} />
             <ComposeCard edit={edit} titleBlurred={titleBlurred} />
-            <EditControls ref={this.setEditRef} />
+            <EditControls ref={this.setEditRef} wocky={this.props.wocky!} bot={bot!} />
           </KeyboardAwareScrollView>
           <BottomButton isDisabled={!isEnabled} onPress={this.save}>
             {this.isLoading ? <Spinner color="white" size={22} /> : buttonText}

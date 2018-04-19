@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, TextInput, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {k} from '../Global'
@@ -8,13 +8,13 @@ import {colors} from '../../constants'
 import Cell from '../Cell'
 import VisibilitySwitch from '../BotVisibilitySwitch'
 import Button from '../Button'
-import {IBot} from 'wocky-client'
+import {IBot, IWocky} from 'wocky-client'
 
 type Props = {
-  bot?: IBot
+  bot: IBot
+  wocky: IWocky
 }
 
-@inject('bot', 'wocky')
 @observer
 class EditControls extends React.Component<Props> {
   input: any
