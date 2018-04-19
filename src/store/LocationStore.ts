@@ -181,7 +181,7 @@ const LocationStore = types
         // This handler fires when movement states changes (stationary->moving; moving->stationary)
         backgroundGeolocation.on(
           'http',
-          (response) => {
+          response => {
             logger.log('- [js]http sent', response)
             // success
             if (response.status >= 200 && response.status < 300) {
@@ -209,6 +209,24 @@ const LocationStore = types
           logger.log('- [js]motionchanged: ', JSON.stringify(location))
         })
 
+        backgroundGeolocation.on('heartbeat', data => {
+          logger.log('- [js]heartbeat: ', JSON.stringify(data.location))
+          backgroundGeolocation.getCurrentPosition(
+            location => {
+              logger.log('- Current position received: ', location)
+            },
+            errorCode => {
+              logger.log('An location error occurred: ' + errorCode)
+            },
+            {
+              timeout: 30, // 30 second timeout to fetch location
+              maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
+              desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
+              samples: 3, // How many location samples to attempt.
+            }
+          )
+        })
+
         // This event fires when a chnage in motion activity is detected
         backgroundGeolocation.on('activitychange', activityName => {
           logger.log('- Current motion activity: ', activityName) // eg: 'on_foot', 'still', 'in_vehicle'
@@ -226,7 +244,9 @@ const LocationStore = types
           {
             // Geolocation Config
             desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-            elasticityMultiplier: 1,
+            elasticityMultiplier: 2,
+            preventSuspend: true,
+            heartbeatInterval: 4 * 60,
             useSignificantChangesOnly: false,
             stationaryRadius: 25,
             distanceFilter: 30,
