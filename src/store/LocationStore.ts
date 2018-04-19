@@ -3,11 +3,22 @@ import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
+import _ from 'lodash'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
 const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
+export const BG_STATE_PROPS = [
+  'elasticityMultiplier',
+  'heartbeatInterval',
+  'desiredAccuracy',
+  'distanceFilter',
+  'stationaryRadius',
+  'activityType',
+  'activityRecognitionInterval',
+  'debug',
+]
 
 const prefix = 'BGGL'
 
@@ -30,6 +41,8 @@ export const ActivityTypeChoices = {
 const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
+  elasticityMultiplier: types.maybe(types.number),
+  heartbeatInterval: types.maybe(types.number),
   desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybe(types.number),
   stationaryRadius: types.maybe(types.number),
@@ -103,6 +116,8 @@ const LocationStore = types
       } else {
         self.location.load(location)
       }
+
+      // TODO: if setPosition is called from `onLocation` then the user location will be sent to the backend twice (once via HTTP, once via GraphQL in wocky-client)
       if (hasParent(self) && getParent(self).wocky) {
         const wocky: IWocky = getParent(self).wocky
         if (wocky.connected) {
@@ -125,22 +140,12 @@ const LocationStore = types
       self.alwaysOn = value
     },
     updateBackgroundConfigSuccess(state) {
-      const {
-        desiredAccuracy,
-        distanceFilter,
-        stationaryRadius,
-        activityType,
-        activityRecognitionInterval,
-        debug,
-      } = state
+      const options = _.pick(state, BG_STATE_PROPS)
       applySnapshot(self, {
         backgroundOptions: {
-          desiredAccuracy: desiredAccuracy.toString(),
-          distanceFilter,
-          stationaryRadius,
-          activityType: activityType.toString(),
-          activityRecognitionInterval,
-          debug,
+          ...options,
+          desiredAccuracy: options.desiredAccuracy.toString(),
+          activityType: options.activityType.toString(),
         },
       })
     },
@@ -152,7 +157,7 @@ const LocationStore = types
     const {logger, nativeEnv, backgroundGeolocation} = getEnv(self)
 
     function onHeartbeat(data) {
-      logger.log(prefix, 'heartbeat:', JSON.stringify(data.location))
+      logger.log(prefix, 'heartbeat:', JSON.stringify(data))
       backgroundGeolocation.getCurrentPosition(
         location => {
           logger.log(prefix, 'Current position received: ', JSON.stringify(location))
@@ -225,7 +230,7 @@ const LocationStore = types
       backgroundGeolocation.ready(
         {
           desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-          elasticityMultiplier: 2,
+          elasticityMultiplier: 1,
           preventSuspend: true,
           heartbeatInterval: 60,
           useSignificantChangesOnly: false,
