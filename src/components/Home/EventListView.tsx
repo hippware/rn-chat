@@ -3,7 +3,7 @@ import {TouchableOpacity, View, FlatList, StyleSheet} from 'react-native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
@@ -31,6 +31,7 @@ class EventList extends React.Component<Props> {
 
   keyExtractor = (item: any) => item.id
 
+  @action
   onUpdate = () => {
     if (!this.props.wocky!.updatesToAdd.length || this.isRefreshing) return
     this.isRefreshing = true
@@ -39,7 +40,7 @@ class EventList extends React.Component<Props> {
       try {
         this.props.wocky!.incorporateUpdates()
       } finally {
-        this.isRefreshing = false
+        runInAction(() => (this.isRefreshing = false))
       }
     }, 500)
   }

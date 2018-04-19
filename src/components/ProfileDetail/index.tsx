@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {observable, runInAction} from 'mobx'
 import {IProfile, IWocky} from 'wocky-client'
 import Screen from '../Screen'
 import BotListView from '../BotListView'
@@ -37,7 +37,8 @@ class ProfileDetail extends React.Component<Props> {
   }
 
   load = async () => {
-    this.profile = await this.props.wocky!.profiles.get(this.props.item)
+    const profile = await this.props.wocky!.profiles.get(this.props.item)
+    runInAction(() => (this.profile = profile))
     this.props.wocky!.loadProfile(this.props.item)
   }
 
