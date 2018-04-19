@@ -439,10 +439,11 @@ export const Wocky = types
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
     },
-    _onBotVisitor: flow(function*({bot, action, id, ...data}: any) {
+    _onBotVisitor: flow(function*({bot, action, visitor}: any) {
+      const id = visitor.id
       const botModel: IBot = self.bots.get(bot.id, bot)
       if (action === 'ARRIVE') {
-        const profile = self.profiles.get(id, data)
+        const profile = self.profiles.get(id, visitor)
         botModel.visitors.addToTop!(profile)
         if (id === self.username) {
           botModel.visitor = true
@@ -555,6 +556,7 @@ export const Wocky = types
           () => self.profile && self.connected,
           async (connected: boolean) => {
             if (connected) {
+              self.profile!.geofenceBots.refresh()
               self.profile!.geofenceBots.load()
               await self.loadChats()
               self.requestRoster()
