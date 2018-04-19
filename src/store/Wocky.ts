@@ -440,6 +440,7 @@ export const Wocky = types
       self.transport.subscribeToHomestream(version)
     },
     _onBotVisitor: flow(function*({bot, action, visitor}: any) {
+      console.log('ONBOTVISITOR', action, bot, visitor)
       const id = visitor.id
       const botModel: IBot = self.bots.get(bot.id, bot)
       if (action === 'ARRIVE') {
