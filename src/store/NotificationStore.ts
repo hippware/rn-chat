@@ -11,25 +11,27 @@ class NotificationStore {
   disposer?: () => void
   started: boolean = false
   wocky: IWocky
+  offlineNotification?: Notification
+  timeout?: any
+  connectivityStore: any
 
   constructor(wocky: IWocky, connectivityStore) {
     this.wocky = wocky
+    this.connectivityStore = connectivityStore
     autorun('NotificationStore toggler', () => {
-      if (connectivityStore.isActive) this.start()
-      else this.finish()
+      if (this.connectivityStore.isActive) this.start()
+      else this.reset()
     })
   }
 
   @action
   start() {
-    // console.log('NOTIFICATION STORE START')
     if (this.started) return
+    this.reset()
     this.started = true
 
-    let offlineNotification
-
     // initial check after timeout. Delay = debounce.
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.disposer = reaction(
         () => {
           const {connected, connecting, profile} = this.wocky
@@ -37,11 +39,15 @@ class NotificationStore {
         },
         ({isOffline, connecting}) => {
           if (isOffline) {
-            offlineNotification = this.show(connecting ? 'Connecting...' : "You're offline 😰", {
-              color: colors.DARK_GREY,
-            })
+            if (this.offlineNotification) this.dismiss(this.offlineNotification)
+            this.offlineNotification = this.show(
+              connecting ? `Connecting...` : `You're offline 😰`,
+              {
+                color: colors.DARK_GREY,
+              }
+            )
           } else {
-            if (offlineNotification) offlineNotification.close()
+            if (this.offlineNotification) this.offlineNotification.close()
           }
         },
         {
@@ -54,9 +60,14 @@ class NotificationStore {
   }
 
   @action
-  finish() {
+  reset() {
     if (this.disposer) this.disposer()
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeout = undefined
+    }
     this.stack.clear()
+    this.offlineNotification = undefined
     this.started = false
   }
 
