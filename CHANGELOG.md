@@ -8,6 +8,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix up mixpanel identify (PR #2167)
   * Event `ios app release` is not reflecting on mixpanel (#2158)
 * Annotate mobx actions (PR #2168, PR #2169)
+* More offline banner fixes (PR #2187)
+  * Offline Banner that does not go away (#2163)
+* [dev] error on image-only bot post (#2188)
+* Geofence Widget not updating (#2177)
 
 
 # 2.5.4 - 2018 Apr 17
