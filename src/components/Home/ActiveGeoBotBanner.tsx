@@ -20,7 +20,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   render() {
     const {wocky, onLayout} = this.props
     const {profile} = wocky!
-    return profile && profile.handle && !!profile.activeBots.length ? (
+    return wocky!.connected && profile && profile.handle && !!profile.activeBots.length ? (
       <View style={{backgroundColor: 'white'}} onLayout={onLayout}>
         <RText
           size={13}
