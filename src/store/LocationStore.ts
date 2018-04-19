@@ -1,4 +1,4 @@
-import {types, getEnv, hasParent, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, hasParent, flow, getParent, applySnapshot} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -8,6 +8,8 @@ const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
 const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
+
+const prefix = 'BGGL'
 
 // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
 export const LocationAccuracyChoices = {
@@ -131,7 +133,7 @@ const LocationStore = types
         activityRecognitionInterval,
         debug,
       } = state
-      Object.assign(self, {
+      applySnapshot(self, {
         backgroundOptions: {
           desiredAccuracy: desiredAccuracy.toString(),
           distanceFilter,
@@ -143,151 +145,124 @@ const LocationStore = types
       })
     },
     setState(value) {
-      Object.assign(self, value)
+      applySnapshot(self, value)
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, backgroundGeolocation /*, backgroundFetch*/} = getEnv(self)
+    const {logger, nativeEnv, backgroundGeolocation} = getEnv(self)
 
-    function startBackground() {
-      const wocky: IWocky = getParent(self).wocky
-      if (typeof navigator !== 'undefined') {
-        logger.log('BACKGROUND LOCATION START')
+    function onHeartbeat(data) {
+      logger.log(prefix, 'heartbeat:', JSON.stringify(data.location))
+      backgroundGeolocation.getCurrentPosition(
+        location => {
+          logger.log(prefix, 'Current position received: ', JSON.stringify(location))
+        },
+        errorCode => {
+          logger.log(prefix, 'A location error occurred: ' + errorCode)
+        },
+        {
+          timeout: 30, // 30 second timeout to fetch location
+          maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
+          desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
+          samples: 3, // How many location samples to attempt.
+        }
+      )
+    }
 
-        // backgroundFetch.configure(
-        //   {
-        //     stopOnTerminate: false,
-        //   },
-        //   () => {
-        //     logger.log('background-fetch: Received background-fetch event')
+    function onLocation(position) {
+      logger.log(prefix, 'location: ', JSON.stringify(position))
+      self.setPosition(position.coords)
+    }
 
-        //     // todo: explicitly call for an update on position?
+    function onLocationError(err) {
+      logger.warn(prefix, 'location error', err)
+      // if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+    }
 
-        //     // To signal completion of your task to iOS, you must call #finish!
-        //     // If you fail to do this, iOS can kill your app.
-        //     backgroundFetch.finish()
-        //   },
-        //   error => {
-        //     logger.log('[js] RNBackgroundFetch failed to start ' + error)
-        //   }
-        // )
-
-        // // This handler fires whenever bgGeo receives a location update.
-        backgroundGeolocation.on('location', position => {
-          logger.log('- [js]location: ', JSON.stringify(position))
-          self.setPosition(position.coords)
-        })
-
-        // This handler fires when movement states changes (stationary->moving; moving->stationary)
-        backgroundGeolocation.on(
-          'http',
-          response => {
-            logger.log('- [js]http sent', response)
-            // success
-            if (response.status >= 200 && response.status < 300) {
-              if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
-            } else {
-              if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
-            }
-          },
-          () => {
-            // fail
-            if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
-          }
-        )
-
-        // This handler fires whenever bgGeo receives an error
-        backgroundGeolocation.on('error', error => {
-          self.positionError(error)
-          // var type = error.type;
-          // var code = error.code;
-          // alert(type + " Error: " + code);
-        })
-
-        // This handler fires when movement states changes (stationary->moving; moving->stationary)
-        backgroundGeolocation.on('motionchange', location => {
-          logger.log('- [js]motionchanged: ', JSON.stringify(location))
-        })
-
-        backgroundGeolocation.on('heartbeat', data => {
-          logger.log('- [js]heartbeat: ', JSON.stringify(data.location))
-          backgroundGeolocation.getCurrentPosition(
-            location => {
-              logger.log('- Current position received: ', location)
-            },
-            errorCode => {
-              logger.log('An location error occurred: ' + errorCode)
-            },
-            {
-              timeout: 30, // 30 second timeout to fetch location
-              maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
-              desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
-              samples: 3, // How many location samples to attempt.
-            }
-          )
-        })
-
-        // This event fires when a chnage in motion activity is detected
-        backgroundGeolocation.on('activitychange', activityName => {
-          logger.log('- Current motion activity: ', activityName) // eg: 'on_foot', 'still', 'in_vehicle'
-        })
-
-        // This event fires when the user toggles location-services
-        backgroundGeolocation.on('providerchange', provider => {
-          logger.log('- Location provider changed: ', provider)
-
-          self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
-        })
-        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-        logger.log(`LOCATION UPDATE URL: ${url} ${wocky.username} ${wocky.password}`)
-        backgroundGeolocation.stop()
-        backgroundGeolocation.configure(
-          {
-            // Geolocation Config
-            desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-            elasticityMultiplier: 2,
-            preventSuspend: true,
-            heartbeatInterval: 60,
-            useSignificantChangesOnly: false,
-            stationaryRadius: 25,
-            distanceFilter: 30,
-            // Activity Recognition
-            stopTimeout: 1,
-            // Application config
-            debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-            logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-            stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
-            startOnBoot: true, // <-- Auto start tracking when device is powered-up.
-            // HTTP / SQLite config
-            url,
-            // batchSync: false, // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-            autoSync: true, // <-- [Default: true] Set true to sync each location to server as it arrives.
-            // maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
-            headers: {
-              'X-Auth-User': wocky.username,
-              'X-Auth-Token': wocky.password,
-            },
-            params: {
-              resource: 'testing',
-            },
-          },
-          state => {
-            logger.log('- BackgroundGeolocation is configured and ready: ', state)
-            self.updateBackgroundConfigSuccess(state)
-
-            if (!state.enabled && self.alwaysOn) {
-              backgroundGeolocation.start(() => {
-                logger.log('- Start success')
-              })
-            } else if (state.enabled && !self.alwaysOn) {
-              backgroundGeolocation.stop()
-            }
-          }
-        )
+    function onHttp(response) {
+      logger.log(prefix, 'http sent:', response)
+      if (response.status >= 200 && response.status < 300) {
+        if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+      } else {
+        if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
       }
     }
 
+    function onHttpError(err) {
+      logger.warn(prefix, 'http error:', err)
+      if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+    }
+
+    function onMotionChange(location) {
+      logger.log(prefix, 'motionchanged:', location)
+    }
+
+    function onActivityChange(activityName) {
+      logger.log(prefix, 'Current motion activity:', activityName)
+    }
+
+    function onProviderChange(provider) {
+      logger.log(prefix, 'Location provider changed:', provider)
+      self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
+    }
+
+    function startBackground() {
+      const wocky: IWocky = getParent(self).wocky
+      logger.log(prefix, 'BACKGROUND LOCATION START')
+
+      backgroundGeolocation.on('location', onLocation, onLocationError)
+      backgroundGeolocation.on('http', onHttp, onHttpError)
+      backgroundGeolocation.on('error', self.positionError)
+      backgroundGeolocation.on('motionchange', onMotionChange)
+      backgroundGeolocation.on('heartbeat', onHeartbeat)
+      backgroundGeolocation.on('activitychange', onActivityChange)
+      backgroundGeolocation.on('providerchange', onProviderChange)
+
+      const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
+      logger.log(`LOCATION UPDATE URL: ${url}`)
+
+      // inital config (only applies to first app boot)
+      backgroundGeolocation.ready(
+        {
+          desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+          elasticityMultiplier: 2,
+          preventSuspend: true,
+          heartbeatInterval: 60,
+          useSignificantChangesOnly: false,
+          stationaryRadius: 25,
+          distanceFilter: 30,
+          stopTimeout: 5, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
+          debug: false,
+          logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
+          stopOnTerminate: false,
+          startOnBoot: true,
+          url,
+          headers: {
+            'X-Auth-User': wocky.username,
+            'X-Auth-Token': wocky.password,
+          },
+          autoSync: true,
+          params: {
+            resource: 'testing',
+          },
+        },
+        state => {
+          logger.log(prefix, 'is configured and ready: ', state)
+          self.updateBackgroundConfigSuccess(state)
+
+          if (!state.enabled && self.alwaysOn) {
+            backgroundGeolocation.start(() => {
+              logger.log(prefix, 'Start success')
+            })
+          } else if (state.enabled && !self.alwaysOn) {
+            backgroundGeolocation.stop()
+          }
+        }
+      )
+    }
+
     function stopBackground() {
+      // why this typeof check?
       if (typeof backgroundGeolocation !== 'undefined') {
         backgroundGeolocation.stop()
       }
@@ -360,6 +335,7 @@ const LocationStore = types
 
     function finish() {
       if (!self.alwaysOn) {
+        // is this unnecessary? Might turn off automatically without call
         self.stopBackground()
       }
       handler()
