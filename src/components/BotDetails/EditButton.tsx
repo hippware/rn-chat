@@ -1,22 +1,21 @@
-// @flow
+import React from 'react'
+import {Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {colors} from '../../constants'
+import {k} from '../Global'
+import {Actions} from 'react-native-router-flux'
+import {IBot} from 'wocky-client'
 
-import React from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {colors} from '../../constants';
-import {k} from '../Global';
-import {Actions} from 'react-native-router-flux';
-
-const EditButton = ({isOwn, bot}) => {
+const EditButton = ({isOwn, bot}: {isOwn: boolean; bot: IBot}) => {
   return (
     !!isOwn && (
       <TouchableOpacity onPress={() => Actions.botEdit({botId: bot.id})} style={styles.editButton}>
         <Text style={styles.editButtonText}>EDIT</Text>
       </TouchableOpacity>
     )
-  );
-};
+  )
+}
 
-export default EditButton;
+export default EditButton
 
 const styles = StyleSheet.create({
   editButton: {
@@ -36,4 +35,4 @@ const styles = StyleSheet.create({
     color: colors.PURPLE,
     letterSpacing: 0.5,
   },
-});
+})

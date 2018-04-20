@@ -1,43 +1,50 @@
-// @flow
-
-import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import Avatar from '../common/Avatar';
-import {k, width} from '../Global';
-import {Actions} from 'react-native-router-flux';
-import * as colors from '../../constants/colors';
-import {observer} from 'mobx-react/native';
-import BotPostOptions from './BotPostOptions';
-import {RText, ProgressiveImage} from '../common';
+import React from 'react'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
+import Avatar from '../common/Avatar'
+import {k, width} from '../Global'
+import {Actions} from 'react-native-router-flux'
+import * as colors from '../../constants/colors'
+import {observer} from 'mobx-react/native'
+import BotPostOptions from './BotPostOptions'
+import {RText, ProgressiveImage} from '../common'
 import {isAlive} from 'mobx-state-tree'
+import {IBotPost, IBot} from 'wocky-client'
 
 type Props = {
-  item: BotPost,
-  bot: Bot,
-};
+  item: IBotPost
+  bot: IBot
+}
 
 const BotPostCard = (props: Props) => {
-  const post = props.item;
-  const {bot} = props;
+  const post = props.item
+  const {bot} = props
   if (!isAlive(bot)) {
     return null
   }
-  const timestamp = post.relativeDateAsString;
+  const timestamp = post.relativeDateAsString
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
           <View style={{paddingLeft: 15 * k, paddingRight: 5 * k, marginTop: -14 * k}}>
-            <Avatar size={40 * k} profile={post.profile} />
+            <Avatar size={40 * k} profile={post.profile!} />
           </View>
-          <View style={{flex: 1, paddingRight: 8 * k, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.id})}>
-              <RText color={colors.COOL_BLUE} weight='Medium' size={15} style={styles.hyperlink}>
-                @{post.profile.handle}
+          <View
+            style={{
+              flex: 1,
+              paddingRight: 8 * k,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile!.id})}>
+              <RText color={colors.COOL_BLUE} weight="Medium" size={15} style={styles.hyperlink}>
+                @{post.profile!.handle}
               </RText>
             </TouchableOpacity>
             <View style={{flexDirection: 'row'}}>
-              <RText size={12} weight='Light' color={colors.DARK_GREY}>
+              <RText size={12} weight="Light" color={colors.DARK_GREY}>
                 {timestamp}
               </RText>
               <BotPostOptions bot={bot} item={post} />
@@ -52,12 +59,14 @@ const BotPostCard = (props: Props) => {
           </RText>
         </View>
       )}
-      {!!post.image && <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode='contain' />}
+      {!!post.image && (
+        <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode="contain" />
+      )}
     </View>
-  );
-};
+  )
+}
 
-export default observer(BotPostCard);
+export default observer(BotPostCard)
 
 const styles = StyleSheet.create({
   hyperlink: {
@@ -83,4 +92,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

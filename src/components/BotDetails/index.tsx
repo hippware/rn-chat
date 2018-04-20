@@ -100,7 +100,7 @@ class BotDetails extends React.Component<Props> {
     }
   }
 
-  renderItem = ({item}) => <BotPostCard item={item} bot={this.bot} />
+  renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
 
   renderSeparator = () => (
     <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />
