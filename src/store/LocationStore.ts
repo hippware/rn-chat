@@ -245,7 +245,7 @@ const LocationStore = types
           desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
           elasticityMultiplier: 1,
           preventSuspend: true,
-          heartbeatInterval: 60,
+            heartbeatInterval: 4 * 60,
           useSignificantChangesOnly: false,
           stationaryRadius: 25,
           distanceFilter: 30,
