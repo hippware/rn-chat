@@ -1,9 +1,7 @@
 import React from 'react'
-import {TextInput} from 'react-native'
+import {TextInput, TextInputProperties} from 'react-native'
 
-type Props = {
-  style?: any
-  value?: string
+interface IProps extends TextInputProperties {
   height?: number
 }
 
@@ -12,7 +10,7 @@ type State = {
   height: number
 }
 
-export default class AutoExpandingTextInput extends React.Component<Props, State> {
+export default class AutoExpandingTextInput extends React.Component<IProps, State> {
   constructor(props) {
     super(props)
     this.state = {text: props.value || '', height: 0}

@@ -1,5 +1,5 @@
 import {types, getEnv, addMiddleware} from 'mobx-state-tree'
-import {useStrict} from 'mobx'
+// import {useStrict} from 'mobx'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage, AppState, NetInfo} from 'react-native'
 import firebase from 'react-native-firebase'
