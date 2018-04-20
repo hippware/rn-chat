@@ -119,13 +119,13 @@ const LocationStore = types
         self.location.load(location)
       }
 
-      // TODO: if setPosition is called from `onLocation` then the user location will be sent to the backend twice (once via HTTP, once via GraphQL in wocky-client)
-      if (hasParent(self) && getParent(self).wocky) {
-        const wocky: IWocky = getParent(self).wocky
-        if (wocky.connected) {
-          wocky.setLocation(location)
-        }
-      }
+      // TODO: if setPosition is called from `onLocation` then location will be sent to the backend twice (once via HTTP, once via GraphQL)
+      // if (hasParent(self) && getParent(self).wocky) {
+      //   const wocky: IWocky = getParent(self).wocky
+      //   if (wocky.connected) {
+      //     wocky.setLocation(location)
+      //   }
+      // }
       self.loading = false
     },
     positionError(error: any) {
