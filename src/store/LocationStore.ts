@@ -285,19 +285,16 @@ const LocationStore = types
       logger.log(prefix, 'get current position')
       if (self.loading) return self.location
       self.loading = true
-      yield new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          position => {
+      try {
+        const position = yield backgroundGeolocation.getCurrentPosition({
+          timeout: 20,
+          maximumAge: 1000,
+          enableHighAccuracy: false,
+        })
             self.setPosition(position.coords)
-            resolve()
-          },
-          error => {
-            self.positionError(error)
-            reject()
-          },
-          {timeout: 20000, maximumAge: 1000, enableHighAccuracy: false}
-        )
-      })
+      } catch (err) {
+        self.positionError(err)
+      }
     })
 
     function setBackgroundConfig(config) {
