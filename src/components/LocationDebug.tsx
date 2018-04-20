@@ -17,6 +17,7 @@ const Form = t.form.Form
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
+  preventSuspend: t.Boolean,
   heartbeatInterval: t.Number,
   elasticityMultiplier: t.Number,
   desiredAccuracy: t.enums(LocationAccuracyChoices),
@@ -30,6 +31,9 @@ const options = {
   fields: {
     debug: {
       label: 'Background location debug mode',
+    },
+    preventSuspend: {
+      label: 'preventSuspend',
     },
     heartbeatInterval: {
       label: 'heartbeatInterval',
@@ -66,7 +70,7 @@ export default class LocationDebug extends React.Component<Props> {
     const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
     let value = _.pick(backgroundOptions, BG_STATE_PROPS)
-    value = Object.assign(value, {debugSounds})
+    value = _.assign(value, {debugSounds})
 
     return (
       <Screen style={{flex: 1, paddingVertical: 20}}>

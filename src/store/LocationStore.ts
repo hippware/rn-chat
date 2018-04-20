@@ -1,4 +1,4 @@
-import {types, getEnv, hasParent, flow, getParent, applySnapshot} from 'mobx-state-tree'
+import {types, getEnv, hasParent, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -11,6 +11,7 @@ const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
+  'preventSuspend',
   'heartbeatInterval',
   'desiredAccuracy',
   'distanceFilter',
@@ -42,6 +43,7 @@ const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   elasticityMultiplier: types.maybe(types.number),
+  preventSuspend: true,
   heartbeatInterval: types.maybe(types.number),
   desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybe(types.number),
@@ -141,7 +143,7 @@ const LocationStore = types
     },
     updateBackgroundConfigSuccess(state) {
       const options = _.pick(state, BG_STATE_PROPS)
-      applySnapshot(self, {
+      Object.assign(self, {
         backgroundOptions: {
           ...options,
           desiredAccuracy: options.desiredAccuracy.toString(),
@@ -150,7 +152,7 @@ const LocationStore = types
       })
     },
     setState(value) {
-      applySnapshot(self, value)
+      Object.assign(self, value)
     },
   }))
   .actions(self => {
@@ -280,6 +282,7 @@ const LocationStore = types
     }
 
     const getCurrentPosition = flow(function*() {
+      logger.log(prefix, 'get current position')
       if (self.loading) return self.location
       self.loading = true
       yield new Promise((resolve, reject) => {
@@ -298,9 +301,9 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
       if (config.debugSounds && !self.debugSounds) backgroundGeolocation.playSound(1028) // newsflash
       self.setState({debugSounds: config.debugSounds})
+      backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
     return {
