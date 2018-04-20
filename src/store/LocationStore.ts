@@ -1,4 +1,4 @@
-import {types, getEnv, hasParent, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -138,9 +138,13 @@ const LocationStore = types
       // @TODO: how do we handle timeout or other error?
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
     },
-    setAlwaysOn(value) {
+    setAlwaysOn: flow(function*(value: boolean) {
       self.alwaysOn = value
-    },
+      if (!value) {
+        const {backgroundGeolocation} = getEnv(self)
+        backgroundGeolocation.removeListeners()
+      }
+    }),
     updateBackgroundConfigSuccess(state) {
       const options = _.pick(state, BG_STATE_PROPS)
       Object.assign(self, {
@@ -183,7 +187,7 @@ const LocationStore = types
 
     function onLocationError(err) {
       logger.warn(prefix, 'location error', err)
-      // if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+      if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
     }
 
     function onHttp(response) {
@@ -213,9 +217,10 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
-    function startBackground() {
-      const wocky: IWocky = getParent(self).wocky
-      logger.log(prefix, 'BACKGROUND LOCATION START')
+    const startBackground = flow(function*() {
+      try {
+        const wocky: IWocky = getParent(self).wocky
+        logger.log(prefix, 'BACKGROUND LOCATION START')
 
         // NOTE: this never resolves or errors
         // yield backgroundGeolocation.removeListeners()
@@ -228,56 +233,59 @@ const LocationStore = types
         backgroundGeolocation.un('activitychange', onActivityChange)
         backgroundGeolocation.un('providerchange', onProviderChange)
 
-      backgroundGeolocation.on('location', onLocation, onLocationError)
-      backgroundGeolocation.on('http', onHttp, onHttpError)
-      backgroundGeolocation.on('error', self.positionError)
-      backgroundGeolocation.on('motionchange', onMotionChange)
-      backgroundGeolocation.on('heartbeat', onHeartbeat)
-      backgroundGeolocation.on('activitychange', onActivityChange)
-      backgroundGeolocation.on('providerchange', onProviderChange)
+        backgroundGeolocation.on('location', onLocation, onLocationError)
+        backgroundGeolocation.on('http', onHttp, onHttpError)
+        backgroundGeolocation.on('error', self.positionError)
+        backgroundGeolocation.on('motionchange', onMotionChange)
+        backgroundGeolocation.on('heartbeat', onHeartbeat)
+        backgroundGeolocation.on('activitychange', onActivityChange)
+        backgroundGeolocation.on('providerchange', onProviderChange)
 
-      const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-      logger.log(`LOCATION UPDATE URL: ${url}`)
+        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
+        logger.log(`LOCATION UPDATE URL: ${url}`)
 
-      // inital config (only applies to first app boot)
-      backgroundGeolocation.ready(
-        {
-          desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-          elasticityMultiplier: 1,
-          preventSuspend: true,
+        // inital config (only applies to first app boot)
+        backgroundGeolocation.ready(
+          {
+            desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+            elasticityMultiplier: 1,
+            preventSuspend: true,
             heartbeatInterval: 4 * 60,
-          useSignificantChangesOnly: false,
-          stationaryRadius: 25,
-          distanceFilter: 30,
-          stopTimeout: 5, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
-          debug: false,
-          logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-          stopOnTerminate: false,
-          startOnBoot: true,
-          url,
-          headers: {
-            'X-Auth-User': wocky.username,
-            'X-Auth-Token': wocky.password,
+            useSignificantChangesOnly: false,
+            stationaryRadius: 25,
+            distanceFilter: 30,
+            stopTimeout: 5, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
+            debug: false,
+            logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
+            stopOnTerminate: false,
+            startOnBoot: true,
+            url,
+            headers: {
+              'X-Auth-User': wocky.username,
+              'X-Auth-Token': wocky.password,
+            },
+            autoSync: true,
+            params: {
+              resource: 'testing',
+            },
           },
-          autoSync: true,
-          params: {
-            resource: 'testing',
-          },
-        },
-        state => {
-          logger.log(prefix, 'is configured and ready: ', state)
-          self.updateBackgroundConfigSuccess(state)
+          state => {
+            logger.log(prefix, 'is configured and ready: ', state)
+            self.updateBackgroundConfigSuccess(state)
 
-          if (!state.enabled && self.alwaysOn) {
-            backgroundGeolocation.start(() => {
-              logger.log(prefix, 'Start success')
-            })
-          } else if (state.enabled && !self.alwaysOn) {
-            backgroundGeolocation.stop()
+            if (!state.enabled && self.alwaysOn) {
+              backgroundGeolocation.start(() => {
+                logger.log(prefix, 'Start success')
+              })
+            } else if (state.enabled && !self.alwaysOn) {
+              backgroundGeolocation.stop()
+            }
           }
-        }
-      )
-    }
+        )
+      } catch (err) {
+        console.log('start background error', err)
+      }
+    })
 
     function stopBackground() {
       // why this typeof check?
@@ -301,7 +309,7 @@ const LocationStore = types
           maximumAge: 1000,
           enableHighAccuracy: false,
         })
-            self.setPosition(position.coords)
+        self.setPosition(position.coords)
       } catch (err) {
         self.positionError(err)
       }
@@ -351,7 +359,7 @@ const LocationStore = types
 
     function finish() {
       if (!self.alwaysOn) {
-        // is this unnecessary? Might turn off automatically without call
+        // is this necessary? Might turn off automatically without call
         self.stopBackground()
       }
       handler()

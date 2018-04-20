@@ -150,6 +150,9 @@ exports[`Explore Nearby renders with no data 1`] = `
             "debug": null,
             "desiredAccuracy": null,
             "distanceFilter": null,
+            "elasticityMultiplier": null,
+            "heartbeatInterval": null,
+            "preventSuspend": true,
             "stationaryRadius": null,
           },
           "location": Object {
