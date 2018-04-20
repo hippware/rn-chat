@@ -13,6 +13,7 @@ export const BG_STATE_PROPS = [
   'elasticityMultiplier',
   'preventSuspend',
   'heartbeatInterval',
+  'stopTimeout',
   'desiredAccuracy',
   'distanceFilter',
   'stationaryRadius',
@@ -45,6 +46,7 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   elasticityMultiplier: types.maybe(types.number),
   preventSuspend: true,
   heartbeatInterval: types.maybe(types.number),
+  stopTimeout: types.maybe(types.number),
   desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybe(types.number),
   stationaryRadius: types.maybe(types.number),
@@ -118,14 +120,6 @@ const LocationStore = types
       } else {
         self.location.load(location)
       }
-
-      // TODO: if setPosition is called from `onLocation` then location will be sent to the backend twice (once via HTTP, once via GraphQL)
-      // if (hasParent(self) && getParent(self).wocky) {
-      //   const wocky: IWocky = getParent(self).wocky
-      //   if (wocky.connected) {
-      //     wocky.setLocation(location)
-      //   }
-      // }
       self.loading = false
     },
     positionError(error: any) {
@@ -218,85 +212,65 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
-      try {
-        const wocky: IWocky = getParent(self).wocky
-        logger.log(prefix, 'BACKGROUND LOCATION START')
+      const wocky: IWocky = getParent(self).wocky
+      logger.log(prefix, 'BACKGROUND LOCATION START')
 
-        // NOTE: this never resolves or errors
-        // yield backgroundGeolocation.removeListeners()
+      const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
+      logger.log(`LOCATION UPDATE URL: ${url}`)
 
-        backgroundGeolocation.un('location', onLocation, onLocationError)
-        backgroundGeolocation.un('http', onHttp, onHttpError)
-        backgroundGeolocation.un('error', self.positionError)
-        backgroundGeolocation.un('motionchange', onMotionChange)
-        backgroundGeolocation.un('heartbeat', onHeartbeat)
-        backgroundGeolocation.un('activitychange', onActivityChange)
-        backgroundGeolocation.un('providerchange', onProviderChange)
+      // inital config (only applies to first app boot without explicitly setting `reset: true`)
+      const state = yield backgroundGeolocation.ready({
+        reset: true,
+        desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        elasticityMultiplier: 1,
+        preventSuspend: true,
+        heartbeatInterval: 60,
+        useSignificantChangesOnly: false,
+        stationaryRadius: 25,
+        distanceFilter: 30,
+        stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
+        debug: false,
+        // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
+        logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
+        stopOnTerminate: false,
+        startOnBoot: true,
+        url,
+        headers: {
+          'X-Auth-User': wocky.username,
+          'X-Auth-Token': wocky.password,
+        },
+        autoSync: true,
+        params: {
+          resource: 'testing',
+        },
+      })
+      logger.log(prefix, 'is configured and ready: ', state)
+      self.updateBackgroundConfigSuccess(state)
 
-        backgroundGeolocation.on('location', onLocation, onLocationError)
-        backgroundGeolocation.on('http', onHttp, onHttpError)
-        backgroundGeolocation.on('error', self.positionError)
-        backgroundGeolocation.on('motionchange', onMotionChange)
-        backgroundGeolocation.on('heartbeat', onHeartbeat)
-        backgroundGeolocation.on('activitychange', onActivityChange)
-        backgroundGeolocation.on('providerchange', onProviderChange)
-
-        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-        logger.log(`LOCATION UPDATE URL: ${url}`)
-
-        // inital config (only applies to first app boot)
-        backgroundGeolocation.ready(
-          {
-            desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-            elasticityMultiplier: 1,
-            preventSuspend: true,
-            heartbeatInterval: 4 * 60,
-            useSignificantChangesOnly: false,
-            stationaryRadius: 25,
-            distanceFilter: 30,
-            stopTimeout: 5, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
-            debug: false,
-            logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-            stopOnTerminate: false,
-            startOnBoot: true,
-            url,
-            headers: {
-              'X-Auth-User': wocky.username,
-              'X-Auth-Token': wocky.password,
-            },
-            autoSync: true,
-            params: {
-              resource: 'testing',
-            },
-          },
-          state => {
-            logger.log(prefix, 'is configured and ready: ', state)
-            self.updateBackgroundConfigSuccess(state)
-
-            if (!state.enabled && self.alwaysOn) {
-              backgroundGeolocation.start(() => {
-                logger.log(prefix, 'Start success')
-              })
-            } else if (state.enabled && !self.alwaysOn) {
-              backgroundGeolocation.stop()
-            }
-          }
-        )
-      } catch (err) {
-        console.log('start background error', err)
+      if (!state.enabled && self.alwaysOn) {
+        backgroundGeolocation.start(() => {
+          logger.log(prefix, 'Start success')
+        })
+      } else if (state.enabled && !self.alwaysOn) {
+        backgroundGeolocation.stop()
       }
     })
 
     function stopBackground() {
-      // why this typeof check?
-      if (typeof backgroundGeolocation !== 'undefined') {
-        backgroundGeolocation.stop()
-      }
+      backgroundGeolocation.stop()
     }
 
     function initialize() {
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL'
       self.setMetricSystem(system)
+
+      backgroundGeolocation.on('location', onLocation, onLocationError)
+      backgroundGeolocation.on('http', onHttp, onHttpError)
+      backgroundGeolocation.on('error', self.positionError)
+      backgroundGeolocation.on('motionchange', onMotionChange)
+      backgroundGeolocation.on('heartbeat', onHeartbeat)
+      backgroundGeolocation.on('activitychange', onActivityChange)
+      backgroundGeolocation.on('providerchange', onProviderChange)
     }
 
     const getCurrentPosition = flow(function*() {

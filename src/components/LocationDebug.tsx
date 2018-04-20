@@ -19,6 +19,7 @@ const debuggerSettings = t.struct({
   debugSounds: t.Boolean,
   preventSuspend: t.Boolean,
   heartbeatInterval: t.Number,
+  stopTimeout: t.Number,
   elasticityMultiplier: t.Number,
   desiredAccuracy: t.enums(LocationAccuracyChoices),
   distanceFilter: t.Number,
@@ -36,7 +37,10 @@ const options = {
       label: 'preventSuspend',
     },
     heartbeatInterval: {
-      label: 'heartbeatInterval',
+      label: 'heartbeatInterval (in seconds, min 60)',
+    },
+    stopTimeout: {
+      label: 'stopTimeout (in minutes)',
     },
     elasticityMultiplier: {
       label: 'elasticityMultiplier',
@@ -45,10 +49,10 @@ const options = {
       label: 'desiredAccuracy',
     },
     distanceFilter: {
-      label: 'distanceFilter',
+      label: 'distanceFilter (in meters)',
     },
     stationaryRadius: {
-      label: 'stationaryRadius (minimum 25)',
+      label: 'stationaryRadius (in meters, min 25)',
     },
     activityType: {
       label: 'activityType',

@@ -154,6 +154,7 @@ exports[`Explore Nearby renders with no data 1`] = `
             "heartbeatInterval": null,
             "preventSuspend": true,
             "stationaryRadius": null,
+            "stopTimeout": null,
           },
           "location": Object {
             "accuracy": 2,
