@@ -82,6 +82,14 @@ Same as 2.5.3 but with an incremented version.
 * GraphQL support (work in progress)
 
 
+# 2.4.1-1 - 2018 Apr 19
+
+(codepush only)
+
+* Fix up mixpanel identify (PR #2185, backports PR #2167)
+  * Event `ios app release` is not reflecting on mixpanel (#2158)
+
+
 # 2.4.1 - 2018 Apr 4
 
 * `New Updates` Delete Tweak (#2030)
