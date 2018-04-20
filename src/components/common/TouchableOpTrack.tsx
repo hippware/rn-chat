@@ -1,25 +1,22 @@
-// @flow
-
-import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import {inject} from 'mobx-react/native';
-// import analyticsStore from '../../store/analyticsStore';
+import React from 'react'
+import {TouchableOpacity} from 'react-native'
+import {inject} from 'mobx-react/native'
 
 type Props = {
-  trackName: string,
-  trackData?: Object,
-  onPress: Function,
-};
+  trackName: string
+  trackData?: object
+  onPress: (args?: any) => void
+  analytics?: any
+}
 
 const TouchableOpTrack = inject('analytics')((props: Props) => (
   <TouchableOpacity
     {...props}
     onPress={(...args) => {
-      // TODO analytics with new MST
-      props.analytics.track(props.trackName, props.trackData);
-      props.onPress(...args);
+      props.analytics.track(props.trackName, props.trackData)
+      props.onPress(...args)
     }}
   />
-));
+))
 
-export default TouchableOpTrack;
+export default TouchableOpTrack
