@@ -22,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Bot Edit: User changes location after choosing location and metadata doesn't change (#2145)
 * Fix this.controls.focus is not defined and upload error handling (PR #2192)
   * Upload error: undefined when uploading an image to an existing cover photo (#2181)
+* Geofence Widget: You're Here bot should stick to the left (#2179)
 
 
 # 2.5.4 - 2018 Apr 17
