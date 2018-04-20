@@ -38,9 +38,9 @@ const transport = new HybridTransport(xmppTransport, graphqlTransport)
 
 const {geolocation} = navigator
 
-if (__DEV__) {
-  useStrict(true)
-}
+// if (__DEV__) {
+//   useStrict(true)
+// }
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914

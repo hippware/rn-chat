@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'apsl-react-native-button'
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {observable, computed, action} from 'mobx'
+import {observable, computed, action, runInAction} from 'mobx'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker} from '../ImagePicker'
@@ -47,6 +47,7 @@ class AddBotPost extends React.Component<Props> {
     this.mounted = true
   }
 
+  @action
   componentWillUnmount() {
     this.mounted = false
     Keyboard.removeListener('keyboardWillShow', this.keyboardWillShow)
@@ -57,6 +58,7 @@ class AddBotPost extends React.Component<Props> {
     }
   }
 
+  @action
   onSend = async () => {
     if (this.sendingPost) return
     this.sendingPost = true
@@ -67,11 +69,13 @@ class AddBotPost extends React.Component<Props> {
         await this.post.upload({...this.image, file: this.image.source})
       }
       await this.post.publish()
-      this.post = null
-      this.text = ''
-      this.imageSrc = null
-      this.image = null
-      this.textInput.blur()
+      runInAction(() => {
+        this.post = null
+        this.text = ''
+        this.imageSrc = null
+        this.image = null
+        this.textInput.blur()
+      })
       Keyboard.dismiss()
       this.props.scrollToEnd()
     } catch (e) {
@@ -83,17 +87,20 @@ class AddBotPost extends React.Component<Props> {
       // TODO: clean up local state by removing bad post? Maybe in componentWillUnmount?
       // https://github.com/hippware/rn-chat/issues/1828
     } finally {
-      this.sendingPost = false
+      runInAction(() => (this.sendingPost = false))
     }
   }
 
   onAttach = () => {
-    showImagePicker(null, async (source, response) => {
-      const {size, width, height} = response
-      this.imageSrc = source
-      this.image = {source, size, width, height}
-      this.textInput.focus()
-    })
+    showImagePicker(
+      null,
+      action((source, response) => {
+        const {size, width, height} = response
+        this.imageSrc = source
+        this.image = {source, size, width, height}
+        this.textInput.focus()
+      })
+    )
   }
 
   @action
