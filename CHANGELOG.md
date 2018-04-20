@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Add location heartbeat (1 minute). Avoid double event firing.
+  * Upload a location data point at least once every 3-4 minutes (#2171)
+
+
+# 2.5.5 - 2018 Apr 19
+
 * Fix up mixpanel identify (PR #2167)
   * Event `ios app release` is not reflecting on mixpanel (#2158)
 * Annotate mobx actions (PR #2168, PR #2169)
@@ -12,6 +18,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Offline Banner that does not go away (#2163)
 * [dev] error on image-only bot post (#2188)
 * Geofence Widget not updating (#2177)
+* Include address to bot marker key (PR #2193)
+  * Bot Edit: User changes location after choosing location and metadata doesn't change (#2145)
+* Fix this.controls.focus is not defined and upload error handling (PR #2192)
+  * Upload error: undefined when uploading an image to an existing cover photo (#2181)
 
 
 # 2.5.4 - 2018 Apr 17
