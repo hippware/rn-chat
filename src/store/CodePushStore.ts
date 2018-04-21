@@ -1,4 +1,4 @@
-import {action, observable, when} from 'mobx'
+import {action, observable} from 'mobx'
 import deployments from '../constants/codepush-deployments'
 import {settings} from '../globals'
 import * as log from '../utils/log'
