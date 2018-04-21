@@ -113,12 +113,12 @@ const LocationStore = types
     setMetricSystem(type) {
       self.system = type
     },
-    setPosition(location: ILocationSnapshot) {
+    setPosition({latitude, longitude, accuracy}) {
       self.enabled = true
       if (!self.location) {
-        self.location = Location.create(location)
+        self.location = Location.create({latitude, longitude, accuracy})
       } else {
-        self.location.load(location)
+        self.location.load({latitude, longitude, accuracy})
       }
       self.loading = false
     },
