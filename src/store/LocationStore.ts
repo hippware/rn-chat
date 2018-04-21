@@ -2,7 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
-import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
+import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 
 const METRIC = 'METRIC'
