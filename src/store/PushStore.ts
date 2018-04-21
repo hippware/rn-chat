@@ -54,7 +54,7 @@ class PushStore {
 
   requestPushPermissions = async () => {
     if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
-      const res = await PushNotification.requestPermissions()
+      await PushNotification.requestPermissions()
       this.requestedPermissions = true
     }
   }
