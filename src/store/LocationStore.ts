@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {autorun} from 'mobx'
+import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
@@ -228,7 +228,7 @@ const LocationStore = types
         useSignificantChangesOnly: false,
         stationaryRadius: 25,
         distanceFilter: 30,
-        stopTimeout: 1, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
+        stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
         debug: false,
         // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
         logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
@@ -306,6 +306,7 @@ const LocationStore = types
   .actions(self => {
     let wocky
     let connectivityStore
+    let handler
 
     function afterAttach() {
       self.initialize()
@@ -321,8 +322,15 @@ const LocationStore = types
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')
       )
-      self.getCurrentPosition()
-      self.startBackground()
+      handler = reaction(
+        () => wocky.connected,
+        (connected: boolean) => {
+          if (connected) {
+            self.getCurrentPosition()
+            self.startBackground()
+          }
+        }
+      )
     }
 
     function finish() {
@@ -330,6 +338,7 @@ const LocationStore = types
         // is this necessary? Might turn off automatically without call
         self.stopBackground()
       }
+      handler()
     }
 
     return {afterAttach, start, finish}
