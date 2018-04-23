@@ -52,7 +52,7 @@ class EventBotShareCard extends React.Component<Props> {
             </RText>
           </View>
         )}
-        <BotImage bot={bot} isGeo={isGeo} />
+        <BotImage bot={bot} isGeo={isGeo || bot.geofence} />
         <EventBotMetabar bot={bot} />
       </View>
     )

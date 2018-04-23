@@ -48,7 +48,11 @@ class PushStore {
       popInitialNotification: true,
       requestPermissions: false,
     })
-    PushNotification.setApplicationIconBadgeNumber(0)
+    PushNotification.getApplicationIconBadgeNumber((badgeCount: number) => {
+      if (badgeCount > 0) {
+        PushNotification.setApplicationIconBadgeNumber(0)
+      }
+    })
     when(() => wocky.connected, this.requestPushPermissions)
   }
 
