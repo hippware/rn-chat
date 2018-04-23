@@ -235,13 +235,16 @@ const LocationStore = types
         stopOnTerminate: false,
         startOnBoot: true,
         url,
-        headers: {
-          'X-Auth-User': wocky.username,
-          'X-Auth-Token': wocky.password,
-        },
         autoSync: true,
         params: {
           resource: 'testing',
+        },
+      })
+      // apply this change every load to prevent stale auth headers
+      yield backgroundGeolocation.setConfig({
+        headers: {
+          'X-Auth-User': wocky.username,
+          'X-Auth-Token': wocky.password,
         },
       })
       logger.log(prefix, 'is configured and ready: ', state)
