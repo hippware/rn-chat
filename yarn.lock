@@ -8161,9 +8161,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#a244b7e9b892e9021fd45bc03d55bbd41fa14d11":
+"wocky-client@github:hippware/wocky-client#029158ad6431cf2738c53ab2a1631b3e68cf957f":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#a244b7e9b892e9021fd45bc03d55bbd41fa14d11"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#029158ad6431cf2738c53ab2a1631b3e68cf957f"
   dependencies:
     "@absinthe/socket-apollo-link" "^0.1.11"
     "@types/graphql" "^0.12.7"
