@@ -1,19 +1,26 @@
 import React from 'react'
 import t from 'tcomb-form-native'
-import stylesheet from 'tcomb-form-native/lib/stylesheets/bootstrap'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {inject, observer} from 'mobx-react/native'
 
-import {ILocationStore, LocationAccuracyChoices, ActivityTypeChoices} from '../store/LocationStore'
+import {
+  ILocationStore,
+  LocationAccuracyChoices,
+  ActivityTypeChoices,
+  BG_STATE_PROPS,
+} from '../store/LocationStore'
 import Screen from './Screen'
-import {observable} from 'mobx'
+import _ from 'lodash'
 
-t.form.Form.stylesheet = stylesheet
 const Form = t.form.Form
 
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
+  preventSuspend: t.Boolean,
+  heartbeatInterval: t.Number,
+  stopTimeout: t.Number,
+  elasticityMultiplier: t.Number,
   desiredAccuracy: t.enums(LocationAccuracyChoices),
   distanceFilter: t.Number,
   stationaryRadius: t.Number,
@@ -26,14 +33,26 @@ const options = {
     debug: {
       label: 'Background location debug mode',
     },
+    preventSuspend: {
+      label: 'preventSuspend',
+    },
+    heartbeatInterval: {
+      label: 'heartbeatInterval (in seconds, min 60)',
+    },
+    stopTimeout: {
+      label: 'stopTimeout (in minutes)',
+    },
+    elasticityMultiplier: {
+      label: 'elasticityMultiplier',
+    },
     desiredAccuracy: {
       label: 'desiredAccuracy',
     },
     distanceFilter: {
-      label: 'distanceFilter',
+      label: 'distanceFilter (in meters)',
     },
     stationaryRadius: {
-      label: 'stationaryRadius (minimum 25)',
+      label: 'stationaryRadius (in meters, min 25)',
     },
     activityType: {
       label: 'activityType',
@@ -51,42 +70,19 @@ type Props = {
 @inject('locationStore')
 @observer
 export default class LocationDebug extends React.Component<Props> {
-  form: any
-  @observable emailing: boolean = false
-
-  onChange = config => {
-    this.props.locationStore!.setBackgroundConfig(config)
-  }
-
   render() {
     const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
-    const {
-      debug,
-      desiredAccuracy,
-      distanceFilter,
-      stationaryRadius,
-      activityType,
-      activityRecognitionInterval,
-    } = backgroundOptions
-    const value = {
-      debug,
-      desiredAccuracy,
-      distanceFilter,
-      stationaryRadius,
-      activityType,
-      activityRecognitionInterval,
-      debugSounds,
-    }
+    let value = _.pick(backgroundOptions, BG_STATE_PROPS)
+    value = _.assign(value, {debugSounds})
 
     return (
       <Screen style={{flex: 1, paddingVertical: 20}}>
         <KeyboardAwareScrollView style={{flex: 1, paddingHorizontal: 20}}>
           <Form
-            ref={f => (this.form = f)}
             type={debuggerSettings}
             options={options}
-            onChange={this.onChange}
+            onChange={this.props.locationStore!.setBackgroundConfig}
             value={value}
           />
         </KeyboardAwareScrollView>
