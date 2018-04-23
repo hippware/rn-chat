@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {reaction, autorun} from 'mobx'
+import {autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
@@ -306,7 +306,6 @@ const LocationStore = types
   .actions(self => {
     let wocky
     let connectivityStore
-    let handler
 
     function afterAttach() {
       self.initialize()
@@ -322,13 +321,8 @@ const LocationStore = types
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')
       )
-      handler = reaction(
-        () => wocky.connected,
-        () => {
-          self.getCurrentPosition()
-          self.startBackground()
-        }
-      )
+      self.getCurrentPosition()
+      self.startBackground()
     }
 
     function finish() {
@@ -336,7 +330,6 @@ const LocationStore = types
         // is this necessary? Might turn off automatically without call
         self.stopBackground()
       }
-      handler()
     }
 
     return {afterAttach, start, finish}
