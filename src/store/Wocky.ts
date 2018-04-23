@@ -440,8 +440,10 @@ export const Wocky = types
       self.transport.subscribeToHomestream(version)
     },
     _onBotVisitor: flow(function*({bot, action, visitor}: any) {
+      // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
       const id = visitor.id
       const botModel: IBot = self.bots.get(bot.id, bot)
+      botModel.visitors.remove!(id)
       if (action === 'ARRIVE') {
         const profile = self.profiles.get(id, visitor)
         botModel.visitors.addToTop!(profile)
@@ -451,7 +453,6 @@ export const Wocky = types
         botModel.visitorsSize = bot.visitorsSize
         self.profile!.geofenceBots.addToTop(botModel)
       } else {
-        botModel.visitors.remove!(id)
         if (id === self.username) {
           botModel.visitor = false
         }
