@@ -228,7 +228,7 @@ const LocationStore = types
         useSignificantChangesOnly: false,
         stationaryRadius: 25,
         distanceFilter: 30,
-        stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
+        stopTimeout: 1, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
         debug: false,
         // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
         logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
