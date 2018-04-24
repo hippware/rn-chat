@@ -43,6 +43,7 @@ export class GraphQLTransport implements IWockyTransport {
   constructor(resource: string) {
     this.resource = resource
   }
+  @action
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
     if (this.connecting) {
       // prevent duplicate login
@@ -96,8 +97,6 @@ export class GraphQLTransport implements IWockyTransport {
       this.socket.onClose(err => {
         console.log('& graphql Phoenix socket closed')
         this.unsubscribeBotVisitors()
-        this.connected = false
-        this.connecting = false
       })
       this.socket.onOpen(() => {
         console.log('& graphql open')
@@ -105,7 +104,6 @@ export class GraphQLTransport implements IWockyTransport {
           if (res) {
             this.subscribeBotVisitors()
           }
-          this.connecting = false
           resolve(res)
         })
       })
@@ -122,6 +120,7 @@ export class GraphQLTransport implements IWockyTransport {
     })
   }
 
+  @action
   async authenticate(user: string, token: string): Promise<boolean> {
     try {
       console.log('& graphql proceeding with login')
@@ -142,6 +141,8 @@ export class GraphQLTransport implements IWockyTransport {
     } catch (err) {
       this.connected = false
       return false
+    } finally {
+      this.connecting = false
     }
   }
 
@@ -223,7 +224,10 @@ export class GraphQLTransport implements IWockyTransport {
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
+  @action
   unsubscribeBotVisitors() {
+    this.connected = false
+    this.connecting = false
     if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
     this.botGuestVisitorsSubscription = undefined
   }
