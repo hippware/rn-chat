@@ -1,4 +1,4 @@
-import {autorunAsync, observable, action} from 'mobx'
+import {autorunAsync, reaction, observable, action} from 'mobx'
 import {IWocky} from 'wocky-client'
 
 export const DELAY = 1000
@@ -7,12 +7,14 @@ class ConnectivityStore {
   @observable isActive: boolean = true
   @observable netConnected: boolean = true
   @observable retryCount: number = 0
+  @observable connectionInfoType: string = 'none'
   retryDelay: number = DELAY
   reconnecting: boolean = false
 
   private wocky?: IWocky
   private logger?: any
   private disposer?: () => void
+  private disposer2?: () => void
   private started: boolean = false
 
   @action
@@ -45,6 +47,25 @@ class ConnectivityStore {
       },
       DELAY
     )
+
+    this.disposer2 = reaction(
+      () => this.connectionInfoType,
+      (type: string) => {
+        if (type === 'unknown') {
+          this.netConnected = true
+        } else if (type === 'none') {
+          this.netConnected = false
+          if (this.wocky && this.wocky.connected && !this.wocky.connecting) {
+            this.wocky.disconnect()
+          }
+        } else {
+          this.netConnected = true
+        }
+      },
+      {
+        delay: 100,
+      }
+    )
   }
 
   @action
@@ -59,6 +80,7 @@ class ConnectivityStore {
   finish() {
     this.logger.log('ConnectivityStore STOP')
     if (this.disposer) this.disposer()
+    if (this.disposer2) this.disposer2()
     this.reset()
   }
 
@@ -95,15 +117,11 @@ class ConnectivityStore {
 
   @action
   private _handleConnectionInfoChange = (connectionInfo: any) => {
-    if (connectionInfo.type === 'unknown') {
-      this.netConnected = true
-    } else if (connectionInfo.type === 'none') {
-      this.netConnected = false
-      if (this.wocky && this.wocky.connected && !this.wocky.connecting) {
-        this.wocky.disconnect()
-      }
+    this.logger.log('_handleConnectionInfoChange', JSON.stringify(connectionInfo))
+    if (connectionInfo.type !== 'none') {
+      setTimeout(() => (this.connectionInfoType = connectionInfo.type), 50) // dirty hack to fix thebug with NetInfo
     } else {
-      this.netConnected = true
+      this.connectionInfoType = connectionInfo.type
     }
   }
 }
