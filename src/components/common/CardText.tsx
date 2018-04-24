@@ -1,13 +1,11 @@
-// @flow
-
-import React from 'react';
-import {Text} from 'react-native';
+import React from 'react'
+import {Text} from 'react-native'
 
 type Props = {
-  isDay: boolean,
-  style?: any,
-  children: any,
-};
+  isDay: boolean
+  style?: any
+  children: any
+}
 
 const CardText = ({isDay, style, children}: Props) => (
   <Text
@@ -23,6 +21,6 @@ const CardText = ({isDay, style, children}: Props) => (
   >
     {children}
   </Text>
-);
+)
 
-export default CardText;
+export default CardText

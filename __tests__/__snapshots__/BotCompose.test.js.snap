@@ -211,7 +211,7 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                     ]
                   }
-                  value={null}
+                  value={undefined}
                 />
               </View>
             </View>

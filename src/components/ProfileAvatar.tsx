@@ -6,7 +6,7 @@ import {IProfile} from 'wocky-client'
 
 type Props = {
   profile: IProfile
-  tappable: boolean
+  tappable?: boolean
   size: number
   style?: any
   wrapperStyle?: any

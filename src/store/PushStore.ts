@@ -1,5 +1,3 @@
-// @flow
-
 import {when, observable} from 'mobx'
 import * as log from '../utils/log'
 import PushNotification from 'react-native-push-notification'
@@ -9,7 +7,7 @@ class PushStore {
   requestedPermissions = false
   wocky: any
   analytics: any
-  @observable pushNotificationToken: string
+  @observable pushNotificationToken?: string
 
   constructor(wocky, analytics) {
     this.wocky = wocky
@@ -60,7 +58,7 @@ class PushStore {
 
   requestPushPermissions = async () => {
     if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
-      const res = await PushNotification.requestPermissions()
+      await PushNotification.requestPermissions()
       this.requestedPermissions = true
     }
   }

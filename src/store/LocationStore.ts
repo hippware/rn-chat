@@ -2,7 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
-import {ILocationSnapshot, Location, IWocky} from 'wocky-client'
+import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 
 const METRIC = 'METRIC'
@@ -113,12 +113,12 @@ const LocationStore = types
     setMetricSystem(type) {
       self.system = type
     },
-    setPosition(location: ILocationSnapshot) {
+    setPosition({latitude, longitude, accuracy}) {
       self.enabled = true
       if (!self.location) {
-        self.location = Location.create(location)
+        self.location = Location.create({latitude, longitude, accuracy})
       } else {
-        self.location.load(location)
+        self.location.load({latitude, longitude, accuracy})
       }
       self.loading = false
     },
