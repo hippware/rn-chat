@@ -27,7 +27,7 @@ export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
   socket: PhoenixSocket
-  botGuestVisitorsSubscription
+  botGuestVisitorsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -53,12 +53,28 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
+
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
       logger: (kind, msg, data) => {
         // uncomment to see all graphql messages!
-        // console.log(`${kind}: ${msg}`, JSON.stringify(data))
+        console.log('& socket:' + `${kind}: ${msg}`, data)
       }
     })
+    this.socket.onError(err => {
+      console.log('& graphql Phoenix socket error', err)
+      this.connected = false
+      // TODO: clean up subscriptions?
+    })
+    this.socket.onClose(err => {
+      console.log('& graphql Phoenix socket closed', err)
+      // TODO: clean up subscriptions?
+      // if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
+      this.connected = false
+    })
+    // this only fires *after* the login call (or presumably after whatever the first call on the socket is).
+    // would `sendHeartbeat` do anything?
+    this.socket.onOpen(() => console.log('& graphql open'))
+
     // todo: implement login when it's ready
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
@@ -75,6 +91,7 @@ export class GraphQLTransport implements IWockyTransport {
       }
     })
     try {
+      console.log('& graphql proceeding with login', this.client, this.socket)
       const res = await this.client.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
@@ -87,14 +104,17 @@ export class GraphQLTransport implements IWockyTransport {
         `,
         variables: {user, token: password}
       })
-      return !!res.data && res.data!.authenticate !== null
+      this.connected = !!res.data && res.data!.authenticate !== null
+      return this.connected
     } catch (err) {
       console.error(err)
+      this.connected = false
       return false
     }
   }
 
   async loadProfile(user: string): Promise<any> {
+    // console.log('& graphql load profile proceeding')
     const res = await this.client.query<any>({
       query: gql`
         query LoadProfile {
@@ -158,7 +178,7 @@ export class GraphQLTransport implements IWockyTransport {
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
-    const res = await this.client.mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
           userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
@@ -171,8 +191,8 @@ export class GraphQLTransport implements IWockyTransport {
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
-  async subscribeBotVisitors() {
-    this.botGuestVisitorsSubscription = await this.client
+  subscribeBotVisitors(): void {
+    this.botGuestVisitorsSubscription = this.client
       .subscribe({
         query: gql`
           subscription subscribeBotVisitors($ownUsername: String!){
@@ -233,8 +253,19 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    if (this.socket) {
-      this.socket.disconnect()
+    console.log('& graphql disconnect', this.client, this.socket && this.socket.isConnected)
+    if (this.socket && this.socket.isConnected()) {
+      return new Promise<void>((resolve, reject) => {
+        try {
+          this.socket.disconnect(something => {
+            // console.log('& graphql onDisconnect', something)
+            resolve()
+          })
+        } catch (err) {
+          console.log('& graphql disconnect err', err)
+          reject(err)
+        }
+      })
     }
   }
 
