@@ -68,7 +68,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
 
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
-      // reconnectAfterMs: tries => 100000000, // disable auto-reconnect
+      reconnectAfterMs: tries => 100000000, // disable auto-reconnect
       logger: (kind, msg, data) => {
         // uncomment to see all graphql messages!
         if (msg !== 'close') {
