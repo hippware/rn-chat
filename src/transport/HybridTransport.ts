@@ -8,7 +8,7 @@ export class HybridTransport implements IWockyTransport {
   }
   @computed
   get connecting() {
-    return this._xmpp.connecting
+    return this._xmpp.connecting || this._gql.connecting
   }
   @computed
   get username() {

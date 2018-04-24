@@ -22,6 +22,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     botVisitor: any;
     constructor(resource: string);
     login(user?: string, password?: string, host?: string): Promise<boolean>;
+    authenticate(user: string, token: string): Promise<boolean>;
     loadProfile(user: string): Promise<any>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
@@ -32,6 +33,7 @@ export declare class GraphQLTransport implements IWockyTransport {
         count: any;
     }>;
     setLocation(params: ILocationSnapshot): Promise<void>;
+    unsubscribeBotVisitors(): void;
     subscribeBotVisitors(): void;
     loadOwnBots(id: string, lastId?: string, max?: number): Promise<{
         list: any;
