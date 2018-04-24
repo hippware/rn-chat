@@ -26,7 +26,7 @@ import NotificationStore from './NotificationStore'
 import cp from './CodePushStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
-import connectivityStore from './ConnectivityStore'
+import connectivity from './ConnectivityStore'
 // import bugsnag from '../utils/errorReporting';
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
@@ -61,7 +61,7 @@ const env = {
   nativeEnv,
   backgroundFetch,
   backgroundGeolocation,
-  connectivityStore,
+  connectivityStore: connectivity,
 }
 
 const Store = types
@@ -85,7 +85,7 @@ const Store = types
   }))
   .actions(self => ({
     afterCreate() {
-      connectivityStore.start(self.wocky, logger, AppState, NetInfo)
+      connectivity.start(self.wocky, logger, AppState, NetInfo)
       analytics.identify(self.wocky)
     },
     reload: () => {
@@ -118,7 +118,8 @@ const theStore = PersistableStore.create(
 export const codePushStore = cp
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)
-export const notificationStore = new NotificationStore(theStore.wocky, connectivityStore)
+export const notificationStore = new NotificationStore(theStore.wocky, connectivity)
+export const connectivityStore = connectivity
 // bugsnag(theStore.wocky);
 
 // simple logging

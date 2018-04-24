@@ -10,12 +10,14 @@ import ListFooter from '../ListFooter'
 import {RText} from '../common'
 import HomeStreamHeader from './HomestreamHeader'
 import {IWocky, IEventBot} from 'wocky-client'
+import {ConnectivityStore} from '../../store/ConnectivityStore'
 
 type Props = {
   wocky?: IWocky
+  connectivityStore?: ConnectivityStore
 }
 
-@inject('wocky')
+@inject('wocky', 'connectivityStore')
 @observer
 class EventList extends React.Component<Props> {
   list: any
@@ -32,6 +34,7 @@ class EventList extends React.Component<Props> {
   keyExtractor = (item: any) => item.id
 
   onUpdate = () => {
+    this.props.connectivityStore!.tryReconnect()
     if (!this.props.wocky!.updatesToAdd.length || this.isRefreshing) return
     this.isRefreshing = true
     this.scrollToTop()
