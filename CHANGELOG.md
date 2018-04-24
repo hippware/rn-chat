@@ -7,6 +7,16 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Add location heartbeat (1 minute). Avoid double event firing.
   * Upload a location data point at least once every 3-4 minutes (#2171)
+* Adjust isGeo prop (PR #2212)
+  * Share Notifications do not have presence overlay (#2157)
+* Add tros url to key (PR #2211)
+  * Bot Edit: Changing the cover image does not show new image until leaving the bot (#2202)
+* Reset badge counter only for non-zero count (PR #2110)
+  * Related: Push notifications disappear when user opens app (#2155)
+* Make latest visitor always on the top (PRs #2209, hippware/wocky-client#29)
+  * Avatar displaying on geofence widget should be `most recent` visitor. (#2199)
+* Add location upload heartbeat and other changes (PR #2200)
+  * Incomplete: Upload a location data point at least once every 3-4 minutes (#2171)
 
 
 # 2.5.5 - 2018 Apr 19
