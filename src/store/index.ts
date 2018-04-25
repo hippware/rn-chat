@@ -1,7 +1,7 @@
 import {types, getEnv, addMiddleware} from 'mobx-state-tree'
 // import {useStrict} from 'mobx'
 import {simpleActionLogger} from 'mst-middlewares'
-import {AsyncStorage, AppState, NetInfo} from 'react-native'
+import {AsyncStorage, AppState /*, NetInfo*/} from 'react-native'
 import firebase from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import algoliasearch from 'algoliasearch/reactnative'
@@ -85,7 +85,7 @@ const Store = types
   }))
   .actions(self => ({
     afterCreate() {
-      connectivity.start(self.wocky, logger, AppState, NetInfo)
+      connectivity.start(self.wocky, logger, AppState /*, NetInfo*/)
       analytics.identify(self.wocky)
     },
     reload: () => {
