@@ -72,7 +72,7 @@ export class GraphQLTransport implements IWockyTransport {
       logger: (kind, msg, data) => {
         // uncomment to see all graphql messages!
         if (msg !== 'close') {
-          console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+          // console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
         }
       }
     })
@@ -92,14 +92,14 @@ export class GraphQLTransport implements IWockyTransport {
     })
     return new Promise<boolean>((resolve, reject) => {
       this.socket.onError(err => {
-        console.log('& graphql Phoenix socket error')
+        // console.log('& graphql Phoenix socket error')
       })
       this.socket.onClose(err => {
-        console.log('& graphql Phoenix socket closed')
+        // console.log('& graphql Phoenix socket closed')
         this.unsubscribeBotVisitors()
       })
       this.socket.onOpen(() => {
-        console.log('& graphql open')
+        // console.log('& graphql open')
         this.authenticate(this.username, this.password).then(res => {
           if (res) {
             this.subscribeBotVisitors()
@@ -123,7 +123,7 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(user: string, token: string): Promise<boolean> {
     try {
-      console.log('& graphql proceeding with login')
+      // console.log('& graphql proceeding with login')
       const res = await this.client.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
@@ -295,7 +295,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    console.log('& graphql disconnect')
+    // console.log('& graphql disconnect')
     if (this.socket && this.socket.isConnected()) {
       this.unsubscribeBotVisitors()
       return new Promise<void>((resolve, reject) => {
@@ -305,7 +305,7 @@ export class GraphQLTransport implements IWockyTransport {
             resolve()
           })
         } catch (err) {
-          console.log('& graphql disconnect err', err)
+          // console.log('& graphql disconnect err', err)
           reject(err)
         }
       })
