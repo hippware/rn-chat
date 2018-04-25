@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator'
-import {computed, observable, reaction, autorun, action} from 'mobx'
+import {computed, observable, reaction, action} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
 import {IWocky} from 'wocky-client'
@@ -13,21 +13,15 @@ class NotificationStore {
   wocky: IWocky
   offlineNotification?: Notification
   timeout?: any
-  connectivityStore: any
 
-  constructor(wocky: IWocky, connectivityStore) {
+  constructor(wocky: IWocky) {
     this.wocky = wocky
-    this.connectivityStore = connectivityStore
-    autorun('NotificationStore toggler', () => {
-      if (this.connectivityStore.isActive) this.start()
-      else this.reset()
-    })
   }
 
   @action
   start() {
     if (this.started) return
-    this.reset()
+    this.finish()
     this.started = true
 
     // initial check after timeout. Delay = debounce.
@@ -60,7 +54,7 @@ class NotificationStore {
   }
 
   @action
-  reset() {
+  finish() {
     if (this.disposer) this.disposer()
     if (this.timeout) {
       clearTimeout(this.timeout)
