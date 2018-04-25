@@ -17,6 +17,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Avatar displaying on geofence widget should be `most recent` visitor. (#2199)
 * Add location upload heartbeat and other changes (PR #2200)
   * Incomplete: Upload a location data point at least once every 3-4 minutes (#2171)
+* More javascript to typescript conversion (PR #2207)
+* Connectivity improvements (PR #2224)
+  * Rework: Offline Banner that does not go away (#2163)
 
 
 # 2.5.5 - 2018 Apr 19
