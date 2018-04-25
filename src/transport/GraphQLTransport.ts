@@ -4,7 +4,7 @@ import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
-import {observable, action} from 'mobx'
+import {observable, action, when} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
@@ -27,7 +27,7 @@ export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
   socket: PhoenixSocket
-  botGuestVisitorsSubscription
+  botGuestVisitorsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -43,7 +43,20 @@ export class GraphQLTransport implements IWockyTransport {
   constructor(resource: string) {
     this.resource = resource
   }
+  @action
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
+    if (this.connecting) {
+      // prevent duplicate login
+      return new Promise<boolean>((resolve, reject) => {
+        when(
+          () => !this.connecting,
+          () => {
+            resolve(this.connected)
+          }
+        )
+      })
+    }
+    this.connecting = true
     if (user) {
       this.username = user
     }
@@ -53,13 +66,16 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
+
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
+      reconnectAfterMs: tries => 100000000, // disable auto-reconnect
       logger: (kind, msg, data) => {
         // uncomment to see all graphql messages!
-        // console.log(`${kind}: ${msg}`, JSON.stringify(data))
+        if (msg !== 'close') {
+          // console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+        }
       }
     })
-    // todo: implement login when it's ready
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
       cache: new InMemoryCache(),
@@ -74,7 +90,40 @@ export class GraphQLTransport implements IWockyTransport {
         }
       }
     })
+    return new Promise<boolean>((resolve, reject) => {
+      this.socket.onError(err => {
+        // console.log('& graphql Phoenix socket error')
+      })
+      this.socket.onClose(err => {
+        // console.log('& graphql Phoenix socket closed')
+        this.unsubscribeBotVisitors()
+      })
+      this.socket.onOpen(() => {
+        // console.log('& graphql open')
+        this.authenticate(this.username, this.password).then(res => {
+          if (res) {
+            this.subscribeBotVisitors()
+          }
+          resolve(res)
+        })
+      })
+      // send first dump query to start websockets
+      this.client.query({
+        query: gql`
+          query {
+            currentUser {
+              id
+            }
+          }
+        `
+      })
+    })
+  }
+
+  @action
+  async authenticate(user: string, token: string): Promise<boolean> {
     try {
+      // console.log('& graphql proceeding with login')
       const res = await this.client.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
@@ -85,16 +134,20 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {user, token: password}
+        variables: {user, token}
       })
-      return !!res.data && res.data!.authenticate !== null
+      this.connected = !!res.data && res.data!.authenticate !== null
+      return this.connected
     } catch (err) {
-      console.error(err)
+      this.connected = false
       return false
+    } finally {
+      this.connecting = false
     }
   }
 
   async loadProfile(user: string): Promise<any> {
+    // console.log('& graphql load profile proceeding')
     const res = await this.client.query<any>({
       query: gql`
         query LoadProfile {
@@ -158,7 +211,7 @@ export class GraphQLTransport implements IWockyTransport {
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
-    const res = await this.client.mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
           userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
@@ -171,8 +224,18 @@ export class GraphQLTransport implements IWockyTransport {
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
-  async subscribeBotVisitors() {
-    this.botGuestVisitorsSubscription = await this.client
+  @action
+  unsubscribeBotVisitors() {
+    this.connected = false
+    this.connecting = false
+    if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
+    this.botGuestVisitorsSubscription = undefined
+  }
+  subscribeBotVisitors() {
+    if (this.botGuestVisitorsSubscription) {
+      return
+    }
+    this.botGuestVisitorsSubscription = this.client
       .subscribe({
         query: gql`
           subscription subscribeBotVisitors($ownUsername: String!){
@@ -208,7 +271,6 @@ export class GraphQLTransport implements IWockyTransport {
   async loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
     // load all guest bots
     const res = await this._loadBots('GUEST', userId, lastId, 100)
-    this.subscribeBotVisitors()
     return res
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
@@ -233,8 +295,20 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    if (this.socket) {
-      this.socket.disconnect()
+    // console.log('& graphql disconnect')
+    if (this.socket && this.socket.isConnected()) {
+      this.unsubscribeBotVisitors()
+      return new Promise<void>((resolve, reject) => {
+        try {
+          this.socket.disconnect(something => {
+            // console.log('& graphql onDisconnect', something)
+            resolve()
+          })
+        } catch (err) {
+          // console.log('& graphql disconnect err', err)
+          reject(err)
+        }
+      })
     }
   }
 

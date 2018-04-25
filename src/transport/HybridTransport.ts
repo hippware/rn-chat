@@ -4,11 +4,11 @@ import {computed} from 'mobx'
 export class HybridTransport implements IWockyTransport {
   @computed
   get connected() {
-    return this._xmpp.connected
+    return this._xmpp.connected && this._gql.connected
   }
   @computed
   get connecting() {
-    return this._xmpp.connecting
+    return this._xmpp.connecting || this._gql.connecting
   }
   @computed
   get username() {
@@ -55,7 +55,10 @@ export class HybridTransport implements IWockyTransport {
   }
 
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
-    return (await this._gql.login(user, password, host)) && (await this._xmpp.login(user, password, host))
+    // return (await this._gql.login(user, password, host)) && (await this._xmpp.login(user, password, host))
+    // parallel login
+    const logins = await Promise.all([this._gql.login(user, password, host), this._xmpp.login(user, password, host)])
+    return logins === [true, true]
   }
 
   register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}> {
@@ -71,8 +74,10 @@ export class HybridTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
+    console.log('& hybridtransport disconnect')
     await this._gql.disconnect()
     await this._xmpp.disconnect()
+    console.log('& hybridtransport disconnected')
   }
 
   loadProfile(user: string): Promise<any> {

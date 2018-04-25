@@ -1,4 +1,5 @@
 /// <reference types="phoenix" />
+/// <reference types="zen-observable" />
 import { ApolloClient } from 'apollo-client';
 import { IWockyTransport, IPagingList } from './IWockyTransport';
 import { Socket as PhoenixSocket } from 'phoenix';
@@ -7,7 +8,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     resource: string;
     client: ApolloClient<any>;
     socket: PhoenixSocket;
-    botGuestVisitorsSubscription: any;
+    botGuestVisitorsSubscription?: ZenObservable.Subscription;
     connected: boolean;
     connecting: boolean;
     username: string;
@@ -21,6 +22,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     botVisitor: any;
     constructor(resource: string);
     login(user?: string, password?: string, host?: string): Promise<boolean>;
+    authenticate(user: string, token: string): Promise<boolean>;
     loadProfile(user: string): Promise<any>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
@@ -31,7 +33,8 @@ export declare class GraphQLTransport implements IWockyTransport {
         count: any;
     }>;
     setLocation(params: ILocationSnapshot): Promise<void>;
-    subscribeBotVisitors(): Promise<void>;
+    unsubscribeBotVisitors(): void;
+    subscribeBotVisitors(): void;
     loadOwnBots(id: string, lastId?: string, max?: number): Promise<{
         list: any;
         cursor: any;
