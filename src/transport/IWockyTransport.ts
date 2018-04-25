@@ -23,6 +23,7 @@ export interface IWockyTransport {
   testRegister({phoneNumber}: {phoneNumber: string}, host: string): Promise<{username: string; password: string; host: string}>
   disconnect(): Promise<void>
   setLocation(params: ILocationSnapshot): Promise<void>
+  getLocationsVisited(limit?: number): Promise<any>
   loadProfile(user: string): Promise<any> // TODO define interface for Profile data
   requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>

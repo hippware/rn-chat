@@ -34,6 +34,7 @@ export declare class HybridTransport implements IWockyTransport {
         host: string;
     }>;
     setLocation(params: ILocationSnapshot): Promise<void>;
+    getLocationsVisited(limit?: number): Promise<void>;
     disconnect(): Promise<void>;
     loadProfile(user: string): Promise<any>;
     requestProfiles(users: string[]): Promise<any>;

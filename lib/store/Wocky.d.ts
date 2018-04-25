@@ -8188,6 +8188,7 @@ export declare const Wocky: IModelType<{
         longitude?: any;
         accuracy?: any;
     }>) => Promise<any>;
+    getLocationsVisited: () => Promise<{}>;
     _requestUpload: (a1: any) => Promise<any>;
     _loadUpdates: () => Promise<{}>;
     _loadHomestream: (a1: any) => Promise<any>;
