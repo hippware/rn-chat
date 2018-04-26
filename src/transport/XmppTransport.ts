@@ -327,7 +327,7 @@ export class XmppTransport implements IWockyTransport {
   }
   async downloadFile(tros: string, name: string, sourceUrl: string) {
     const folder = `${this.fileService.tempDir}/${tros.split('/').slice(-1)[0]}`
-    if (!await this.fileService.fileExists(folder)) {
+    if (!(await this.fileService.fileExists(folder))) {
       await this.fileService.mkdir(folder)
     }
     const mainFileName = `${folder}/main.jpeg`
@@ -692,6 +692,9 @@ export class XmppTransport implements IWockyTransport {
     return {list, count: parseInt(data.visitors.set.count)}
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
+    throw new Error('Not supported')
+  }
+  async getLocationsVisited(limit: number = 50): Promise<object[]> {
     throw new Error('Not supported')
   }
   async loadBotPosts(id: string, before?: string) {

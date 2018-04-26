@@ -86,7 +86,7 @@ export class GraphQLTransport implements IWockyTransport {
         },
         query: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'all'
+          errorPolicy: 'ignore'
         }
       }
     })
@@ -223,6 +223,33 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {...params, resource: this.resource}
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
+  }
+  async getLocationsVisited(limit: number = 50): Promise<object[]> {
+    const res = await this.client.query<any>({
+      // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
+      query: gql`
+        query getLocationsVisited($limit: Int!, $ownResource: String!) {
+          currentUser {
+            id
+            locations(first: $limit, device: $ownResource) {
+              totalCount
+              edges {
+                node {
+                  lat
+                  lon
+                  createdAt
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {limit, ownResource: this.resource}
+    })
+    return res.data.currentUser.locations.edges.map(e => {
+      const {createdAt, lat, lon, accuracy} = e.node
+      return {createdAt, lat, lon, accuracy}
+    })
   }
   @action
   unsubscribeBotVisitors() {

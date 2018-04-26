@@ -73,6 +73,10 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.setLocation(params)
   }
 
+  async getLocationsVisited(limit?: number): Promise<object[]> {
+    return this._gql.getLocationsVisited(limit)
+  }
+
   async disconnect(): Promise<void> {
     console.log('& hybridtransport disconnect')
     await this._gql.disconnect()

@@ -33,6 +33,7 @@ export declare class GraphQLTransport implements IWockyTransport {
         count: any;
     }>;
     setLocation(params: ILocationSnapshot): Promise<void>;
+    getLocationsVisited(limit?: number): Promise<object[]>;
     unsubscribeBotVisitors(): void;
     subscribeBotVisitors(): void;
     loadOwnBots(id: string, lastId?: string, max?: number): Promise<{

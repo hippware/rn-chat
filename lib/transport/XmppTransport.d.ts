@@ -99,6 +99,7 @@ export declare class XmppTransport implements IWockyTransport {
         count: number;
     }>;
     setLocation(params: ILocationSnapshot): Promise<void>;
+    getLocationsVisited(limit?: number): Promise<object[]>;
     loadBotPosts(id: string, before?: string): Promise<{
         count: number;
         list: any;
