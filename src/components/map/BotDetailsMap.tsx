@@ -1,10 +1,9 @@
-// @flow
-
 import React from 'react'
 import Map from './Map'
 import {observer} from 'mobx-react/native'
 import BotMarker from './BotMarker'
 import {IBot} from 'wocky-client'
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   bot: IBot
@@ -15,6 +14,7 @@ type Props = {
 
 const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
   const fullMap = scale === 0
+  if (!bot || !isAlive(bot)) return null
   return (
     <Map
       location={bot ? {...bot.location} : null}
@@ -28,7 +28,14 @@ const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
       rotateEnabled={fullMap}
       pitchEnabled={fullMap}
       zoomEnabled={fullMap}
-      marker={<BotMarker key={bot.id + scale + (bot && bot.image && bot.image.loaded)} {...props} scale={scale} bot={bot} />}
+      marker={
+        <BotMarker
+          key={bot.id + scale + (bot && bot.image && bot.image.loaded)}
+          {...props}
+          scale={scale}
+          bot={bot}
+        />
+      }
       {...props}
     />
   )
