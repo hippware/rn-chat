@@ -40,9 +40,10 @@ export default class BotMarker extends React.Component<Props> {
         key={
           (id || bot.id) +
           (bot && bot.image && bot.image.loaded) +
-          (bot && bot.image && bot.image.id) +
+          (bot && bot.image && bot.image.loading) +
+          (bot && bot.image && bot.image.thumbnail && bot.image.thumbnail.uri) +
           (bot && bot.address)
-        }
+        } // DIRTY workaround to re-render googlemaps marker without tracksViewChanges (otherwise we will have 100% CPU usage)
         identifier={bot.id}
         coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
         onPress={props.onImagePress}
