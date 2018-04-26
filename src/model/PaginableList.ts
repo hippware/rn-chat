@@ -107,7 +107,7 @@ export function createPaginable(type: any): IPaginable {
               self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
               Object.assign(self, data)
               list.forEach((el: any) => self.add(el))
-              self.finished = list.length === 0
+              self.finished = list.length === 0 || count === self.result.length
             } finally {
               self.loading = false
             }
