@@ -5,7 +5,7 @@ describe('GraphQL', () => {
     try {
       const gql = new GraphQLTransport('testing')
       gql.host = 'testing.dev.tinyrobot.com'
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 3; i++) {
         console.log('AUTHENTICATED: ', await gql.login())
         await gql.disconnect()
       }
