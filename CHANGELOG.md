@@ -4,7 +4,6 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-
 * Add location heartbeat (1 minute). Avoid double event firing.
   * Upload a location data point at least once every 3-4 minutes (#2171)
 * Adjust isGeo prop (PR #2212)
@@ -21,7 +20,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Connectivity improvements (PR #2224)
   * Rework: Offline Banner that does not go away (#2163)
 
-
 # 2.5.5 - 2018 Apr 19
 
 * Fix up mixpanel identify (PR #2167)
@@ -37,16 +35,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Upload error: undefined when uploading an image to an existing cover photo (#2181)
 * Geofence Widget: You're Here bot should stick to the left (#2179)
 
-
 # 2.5.4 - 2018 Apr 17
 
 Same as 2.5.3 but with an incremented version.
 
-
 # 2.5.3 - 2018 Apr 17
 
 * Refactoring Connectivity (continues #1936)
-  * Error in .../store/ConnectivityStore.ts:98 (#2132) 
+  * Error in .../store/ConnectivityStore.ts:98 (#2132)
 * Geofence Header not displaying after a clean install (#2135)
 * Enable empty UI for Visitors "Who's Here" screen (#2077)
 * User required to leave screen and return to see cover image (#2137)
@@ -60,16 +56,14 @@ Same as 2.5.3 but with an incremented version.
 * Update wocky-client to work with latest server
 * S3 URL support (hippware/wocky-client#24)
 
-
 # 2.5.2 - 2018 Apr 13
 
 * hot-fix: temporary disable retrieval of suscribed bots via graphql
 * hot-fix: broken firebase login fix
 
-
 # 2.5.1 - 2018 Apr 13
 
-* [dev] [refactor] make Connectivity.js "reactive" (#1936)
+* [dev][refactor] make Connectivity.js "reactive" (#1936)
 * You're Here UI shows for all geofence bots on geo header (#2092)
 * Bot Title is not tappable on geofence header (#2091)
 * HS: Tapping New Updates CTA scrolls geo header out of view (#2093)
@@ -84,7 +78,6 @@ Same as 2.5.3 but with an incremented version.
 * hot-fix: fix login/logout crash because of dead profile ref
 * hot-fix: Google maps performance improvement
 * Fix bugsnag crashes
-
 
 # 2.5.0 - 2018 Apr 6
 
@@ -105,7 +98,6 @@ Same as 2.5.3 but with an incremented version.
 * Change the geofence created notification to match the shared notification (#2034)
 * GraphQL support (work in progress)
 
-
 # 2.4.1-1 - 2018 Apr 19
 
 (codepush only)
@@ -113,12 +105,10 @@ Same as 2.5.3 but with an incremented version.
 * Fix up mixpanel identify (PR #2185, backports PR #2167)
   * Event `ios app release` is not reflecting on mixpanel (#2158)
 
-
 # 2.4.1 - 2018 Apr 4
 
 * `New Updates` Delete Tweak (#2030)
 * Infinite loader on HS (#2066)
-
 
 # 2.4.0 - 2018 Apr 2
 
@@ -131,7 +121,6 @@ Same as 2.5.3 but with an incremented version.
 * Location uploading 'debug' mode (Staging only) (Related #2029)
 * Various other small changes and improvements.
 
-
 # 2.3.1 - 2018 March 27
 
 * Display alert when user attempts to disable footprint CTA (#2033)
@@ -139,7 +128,6 @@ Same as 2.5.3 but with an incremented version.
 * Deeplink for bot visitors screen (#2038)
 * Deep linking doesn't work for background mode (#2041)
 * Footprint CTA should be removed with Un-Saving/Un-Subscribing from a bot (#2027)
-
 
 # 2.3.0 - 2018 March 23
 
@@ -154,7 +142,6 @@ Same as 2.5.3 but with an incremented version.
 * GEOFENCE v1: Geofence Bot Profile (Owner View) (Rework #1911)
   * Tweak default cover photo logic
 * App brought from the background receives "Background location is not enabled" (#2023)
-
 
 # 2.2.0 - 2018 March 22
 
@@ -179,13 +166,11 @@ Same as 2.5.3 but with an incremented version.
 * Spinner on bot deep link until gps loads (#1995)
 * Change modal description for camera & photo library access permission request (#2015)
 
-
 # 2.1.7, 2.1.8 - 2018 March 19
 
 * Fix bugsnags:
   * Dead bot reference in EventCard (#1999)
   * Same dead bot (#2000)
-
 
 # 2.1.6 - 2018 March 16
 
@@ -194,7 +179,6 @@ Same as 2.5.3 but with an incremented version.
 * Another speculative change for: New User: Constant Offline State (#1946)
 * Deep linking to bot results in App Crash (#1986)
 
-
 # 2.1.5 - 2018 March 15
 
 * Speculative fixes/changes for:
@@ -202,7 +186,6 @@ Same as 2.5.3 but with an incremented version.
   * Login resulted in App Crash (#1982)
   * New User: Constant Offline State (#1946)
 * Analytics: `migration_fail` firing on clean installs (#1984)
-
 
 # 2.1.4 - 2018 March 13
 
@@ -223,7 +206,6 @@ Same as 2.5.3 but with an incremented version.
 * Kill/reload required to remove deleted bot from the Saved Bot list (#1962)
 * Bot List Redesign: Decluttering (#1972)
 
-
 # 2.1.3 - 2018 March 8
 
 * Build scripts, Nevercode scripts and tests.
@@ -243,11 +225,9 @@ Same as 2.5.3 but with an incremented version.
 * Update and simplify codepush script.
 * Some preliminary work for #1911
 
-
 # 2.1.2 - 2018 March 5
 
 * Remove gps, magnetometer from UIRequiredDeviceCapabilities (Rework #1934)
-
 
 # 2.1.1 - 2018 March 5
 
@@ -263,7 +243,6 @@ Same as 2.5.3 but with an incremented version.
 * Deleted Bots break the HS (#1864)
 * Bots switched from Public to Private are not removed from users HS (#1819)
 * Error in .../src/components/event-cards/EventBotCard.js:21 (#1940)
-
 
 # 2.1.0 - 2018 February 28
 
@@ -284,7 +263,6 @@ Same as 2.5.3 but with an incremented version.
 * INVITE FRIENDS: CTA on Share Bot screen (#1766)
 * INVITE FRIENDS: Flow (#1767)
 
-
 # 2.0.16 - 2018 February 26
 
 * Missing the Discover, Share,(1-3 slides) screen with Logout (#1882)
@@ -294,11 +272,9 @@ Same as 2.5.3 but with an incremented version.
 * Bot Edit: Cover Photo not displaying in bot edit view (#1881)
 * Fix regression for deep linking
 
-
 # 2.0.15 - 2018 February 23
 
 * Update bugsnag script
-
 
 # 2.0.14 - 2018 February 23
 
@@ -308,13 +284,11 @@ Same as 2.5.3 but with an incremented version.
 * Un-saving a bot results in infinite spinner on Saved/My Bots List after a kill/reload (#1876)
 * Error in /Users/aksonov/Documents/rn-chat/src/components/SideMenu.js:30 (#1879)
 
-
 # 2.0.13 - 2018 February 22
 
 * NEW UPDATE CTA: Logout required to receive HS notifications (#1871)
 * Object has died: own profile (#1872)
 * Object is dead (EventBotCard) (#1873)
-
 
 # 2.0.12 - 2018 February 22
 
@@ -323,7 +297,6 @@ Same as 2.5.3 but with an incremented version.
 * Messages: Images do not display (#1868)
 * New Users with Welcome Banner do not see New Updates CTA (#1867)
 * Various other changes
-
 
 # 2.0.11 - 2018 February 21
 
@@ -336,11 +309,9 @@ Same as 2.5.3 but with an incremented version.
 * User tapped on Push Notification and received white/blank screen (#1672)
 * Home Stream: New bypass account has infinite loader, `End of Feed` UI missing (#1859)
 
-
 # 2.0.10 - 2018 February 20
 
 * hot-fix: HS/bot scroll issue fix
-
 
 # 2.0.9 - 2018 February 20
 
@@ -352,7 +323,6 @@ Same as 2.5.3 but with an incremented version.
 * Bot Share: HS share notification not received when user shares bot during creation flow (#1831)
 * HS share notifications are not received with push notifications (app closed or in the background) (#1846)
 * Deleted bots remain on HS and are tappable for subscribers. (#1830)
-
 
 # 2.0.8 - 2018 February 19
 
@@ -368,14 +338,12 @@ Same as 2.5.3 but with an incremented version.
 * Bot Profile: Bot Posts images display as grey assets (#1825)
 * Unfollow results in both users unfollowing (#1836)
 
-
 # 2.0.7 - 2018 February 16
 
 * Bot Create: A space enables the post CTA (#1820)
 * Logout never leaves loading screen (#1817)
 * Re-enable push notifications (#1809)
 * Implement the rest of the analytics calls (#1812)
-
 
 # 2.0.6 - 2018 February 15
 
@@ -384,7 +352,6 @@ Same as 2.5.3 but with an incremented version.
 * Re-enable push notifications (#1809)
 * Show avatar on profile lists (#1813)
 * Homestream: Default cover image on creation notifications. Cover images are not displaying. (#1814)
-
 
 # 2.0.5 - 2018 February 14
 
@@ -395,7 +362,6 @@ Same as 2.5.3 but with an incremented version.
 * Fix filtering of friends on Bot Share (#1803)
 * Fix MyAccount screen (#1804)
 
-
 # 2.0.4 - 2018 February 13
 
 * Update wocky-client
@@ -405,7 +371,6 @@ Same as 2.5.3 but with an incremented version.
 * Nav: Rename `Bots` to `Favorites` (#1750)
 * Rename Bots header to Favorites (#1751)
 
-
 # 2.0.3 - 2018 February 12
 
 * Fixes for building on Nevercode
@@ -414,7 +379,6 @@ Same as 2.5.3 but with an incremented version.
 * Quick fix - bot image
 * Recalibrate unit test snapshots
 
-
 # 2.0.2 - 2018 February 12
 
 * Move reactotron to separate file
@@ -422,11 +386,9 @@ Same as 2.5.3 but with an incremented version.
 * Speculative fix: Cannot call a class as a function (from Router) (#1791)
 * Other small changes
 
-
 # 2.0.1 - 2018 February 09
 
 * Re-enable bugsnag.
-
 
 # 2.0.0 - 2018 February 09
 
@@ -434,7 +396,6 @@ Major rewrite.
 
 * Refactor app to use custom elements for bot and user objects (#1724)
 * Modify app to take advantage of pre-generated image URLs (#1737)
-
 
 # 1.65.3 - 2017 December 20
 
@@ -449,7 +410,6 @@ Major rewrite.
 * Add 'private icon' to Bot List (Saved, My Bots) and User Profile (#1455)
 * Mixpanel events for diagnosing deep linking (#1714)
 * Onboarding: Refine the keyboard cta per field (#1677)
-
 
 # 1.65.2 - 2017 December 19
 
@@ -472,7 +432,6 @@ Major rewrite.
 * Fix an Explore Nearby crash (PR #1691)
 * Fix Bugsnag: null location in BotDetails (#1702)
 
-
 # 1.65.1 - 2017 December 16
 
 * Display `bot unavailable` for compromised bots (#1576)
@@ -483,7 +442,7 @@ Major rewrite.
 * App crash when user taps current location button (#1623)
 * Don't focus address bar for edit mode (Part of #1543)
 * HS: Save (Subscriber) resets to 0 with app kill (#1611)
-* Restore a unit test related to conversation ordering 
+* Restore a unit test related to conversation ordering
 * Bot Creation: Implement Static Bot Pin, allow "uber-like" panning (#1618)
 * Save button for private bots that are shared have no spacing between the ellipsis (#1467)
 * Bot Edit: Bot pin & cover photo do not center after panning on full map view (#1662)
@@ -493,7 +452,6 @@ Major rewrite.
 * 4 Loaders: User Profile loader (#1646)
 * 7 Loaders: Post loader (#1649)
 * Enable error tracking on mixpanel/bugsnag for complete profile signup flow error (#1674)
-
 
 # 1.65.0 - 2017 December 11
 
@@ -514,10 +472,9 @@ Major rewrite.
   * this.bot is null until it is downloaded
 * Bot Post: Return on the keyboard submits image upload (#1598)
 * Rework Friends, Followers and Following screens (Rework #1472)
-* Disable a unit test due to incorrect conversation ordering 
+* Disable a unit test due to incorrect conversation ordering
 * Bot Creation: Post Implementation Design Tweaks (#1614)
 * Bot Edit 8: Tapping "<" & approving alert = Discard Changes (#1563)
-
 
 # 1.64.0 - 2017 December 1
 
@@ -528,7 +485,6 @@ Major rewrite.
 * Add support for iPhone X.
 * Clear friends presence status before entering to background (Rework #1558)
 * Temporarily disable test 'retrieve list of own/following bots'.
-
 
 # 1.63.2 - 2017 November 29
 
@@ -541,13 +497,12 @@ Major rewrite.
 * Return empty array for empty subscriber list (saw bugsnag report)
 * App does not retrieve roster nor refresh presence display on non-app-kill foreground (#1558)
 
-
 # 1.63.1 - 2017 November 28
 
 1.63.0 had build errors and was never released.
 
 * Remove 'followers' from bot protocol and sources (#1450)
-* Introduce 'ordering' field to work correctly with latest staging 
+* Introduce 'ordering' field to work correctly with latest staging
 * Fix codepush script
 * Fix: White screen when tapping on New Updates (#1551)
 * Cache management
@@ -562,7 +517,6 @@ Major rewrite.
 * [dev] Refactor BotDetailsHeader (PR #1580)
 * Improve Bugsnag integration (#1581)
 
-
 # 1.62.2 - 2017 November 17
 
 * Improve code style (PR #1548)
@@ -572,28 +526,24 @@ Major rewrite.
 * Use `tinyrobotStaging://` for deep linking for Staging.
 * Don't process null events and null locations.
 
-
 # 1.62.1 - 2017 November 15
 
 * Onboarding: Keyboard doesn't slide away (#1529)
 * Copy Address crashes the app (#1531)
 * Also tweak keyboard dismissal code
 
-
 # 1.62.0 - 2017 November 15
 
 * Revert to tabs navigation because 'update' is not correctly processed
- * Related to React Native 0.50.0 upgrade (#1419)
+* Related to React Native 0.50.0 upgrade (#1419)
 * Code cleanup (PR #1518)
 * Better error handling (PR #1525, PR #1526)
 * Change deep linking uri scheme (part of #1458)
-
 
 # 1.61.0 - 2017 November 14
 
 * Upgrade bugsnag
 * Fix some bugsnag (crash) reports
-
 
 # 1.60.2 - 2017 November 14
 
@@ -605,14 +555,12 @@ Major rewrite.
 * Blank White Screen with Take Photo option (#1516)
 * Avoid exception when `_map` is not set yet
 
-
 # 1.60.1 - 2017 November 13
 
 * Analytics (#1459): Track follows from followers/following screens
 * Fix new cause of: App opens to a blank screen (#1499)
 * Fix styling of bottom row on BotDetails
 * Reporting: User stuck in Reporting screen (#1512)
-
 
 # 1.60.0 - 2017 November 13
 
@@ -621,7 +569,6 @@ Major rewrite.
 * Rework Friends, Followers and Following screens (#1472)
 * Cleanup some packages (PR #1514)
 * Upgrade React Native to 0.50.0 (#1419)
-
 
 # 1.59.1 - 2017 November 10
 
@@ -634,17 +581,14 @@ Major rewrite.
 * Tweak push notifications, support deep linking for push notifications
 * Tweak presence sending
 
-
 # 1.59.0 - 2017 November 9
 
 * Hotfix: re-add Firebase phone auth reCAPTCHA link (allow non-bypass login)
   * Accidentally overwritten by support for deep linking.
 
-
 # 1.58.1 - 2017 November 9
 
 * Re-enable location updates (#1500)
-
 
 # 1.58.0 - 2017 November 9
 
@@ -661,13 +605,11 @@ Major rewrite.
 * Preliminary support for deep linking (first stage of #1458).
 * Update mobx to 3.3.1.
 
-
 # 1.57.0 - 2017 November 4
 
 * Bug: When users share with more than one person using the 'user lookup' only the last person is shared (#1293)
 * Quick Fix: Update: Blocking Pop Up Dialog Box (#1210)
 * Use a canonical hostname for staging (PR #1233)
-
 
 # 1.56.4 - 2017 November 3
 
@@ -690,11 +632,9 @@ Major rewrite.
 * When users post a private bot, CTA should say Post (Private) (#1358)
 * Apply post text entry rules to 1:1 chat message entry box (#1207)
 
-
 # 1.56.3 - 2017 October 27
 
 Re-released 1.56.2 with debugging disabled.
-
 
 # 1.56.2 - 2017 October 26
 
@@ -718,7 +658,6 @@ Botched release because it was built with debugging enabled.
 * BOT PROFILE: Quick UI Tweaks (#1411)
 * Split app.js into multiple files (PR #1451)
 
-
 # 1.56.0 - 2017 October 20
 
 * Process user roles correctly
@@ -728,12 +667,10 @@ Botched release because it was built with debugging enabled.
   * Then reverted back to Apple Mapkit
 * Tapping on the "New Message" CTA kills the app (#1429)
 
-
 # 1.55.1 - 2017 October 20
 
 * Activate codepush from app start.
 * Simplify onboarding screen.
-
 
 # 1.55.0 - 2017 October 19
 
@@ -748,12 +685,10 @@ Botched release because it was built with debugging enabled.
 * Refactor: split BotInfo into sub-components. (PR #1420)
 * Changes on the note disappear when coming back from background (#1400)
 
-
 # 1.54.2 - 2017 October 15
 
 * Make VerifyCode screen scrollable (PR #1398)
   * Related to: 1.54.1 rejected: Resolve App Store Rejection Issues (#1397)
-
 
 # 1.54.1 - 2017 October 13
 
@@ -767,27 +702,22 @@ Botched release because it was built with debugging enabled.
 * Note Added Notification not showing on HS (#1321)
 * Correct disconnection from server after registering and backgrounding.
 
-
 # 1.54.0 - 2017 October 11
 
 * Remove push-registration-related infinite callback loop.
 
-
 # 1.53.1 - 2017 October 10
 
 * remove progress bar from Launch screen to avoid huge CPU overload
-
 
 # 1.53.0 - 2017 October 9
 
 * update location permission language
 * re-enable mixpanel (#1328)
 
-
 # 1.52.1 - 2017 October 6
 
 * Fix sign-up flow (discovered on App store beta review)
-
 
 # 1.52.0 - 2017 October 6
 
@@ -798,23 +728,19 @@ Botched release because it was built with debugging enabled.
 * Remporarily remove remote-notification and background fetch permissions (get us through the app store)
 * Re-enable "swizzling"
 
-
 # 1.51.0 - 2017 October 4
 
 * Update react-native-firebase to v3.0.0.
 * Enable reCAPTCHA auth flow for push notification disabled devices (#1338)
-
 
 # 1.50.2 - 2017 October 3
 
 * re-remove Firebase/Messaging
 * cleaner error message on failed firebase phone number verification
 
-
 # 1.50.1 - 2017 October 3
 
 * Unstick firebase registration bug that affects first time registration
-
 
 # 1.50.0 - 2017 October 3
 
@@ -826,11 +752,9 @@ Botched release because it was built with debugging enabled.
 * Re-add Firebase/Messaging.
 * Remove Twitter digits.
 
-
 # 1.49.0 - 2017 September 29
 
 * Update marketing icon for prod app (#1290)
-
 
 # 1.48.1 - 2017 September 29
 
@@ -838,7 +762,6 @@ Botched release because it was built with debugging enabled.
 * Enable app EULA and privacy policy to links to website (#1286)
   * ... and update text on Create Profile
 * Bug: Explore Nearby does not load the bot profile (but loads bot pin & preview) (#1317)
-
 
 # 1.48.0 - 2017 September 27
 
@@ -854,7 +777,6 @@ Botched release because it was built with debugging enabled.
   * Remove Firebase/Messaging
 * Disable Mixpanel analytics
 
-
 # 1.47.3 - 2017 September 22
 
 (Skipped a version)
@@ -864,7 +786,6 @@ Botched release because it was built with debugging enabled.
 * Upgrade Background Geolocation library for iOS 11
 * Tweak XCode location settings for iOS 11
 
-
 # 1.47.1 - 2017 September 21
 
 Broken release. Crashes upon login.
@@ -872,7 +793,6 @@ Broken release. Crashes upon login.
 * Tweaks for #1182, #1183, #1184, #1223
 * A fix for iOS 11
 * Update firebase library
-
 
 # 1.47.0 - 2017 September 21
 
@@ -895,7 +815,6 @@ A bit of a broken release due to iOS 11 API changes.
   * ... and then revert it
 * fix NetInfo call
 
-
 # 1.46.1 - 2017 September 15
 
 * Keyboard disappears when user goes to Messages for verification code (#1240)
@@ -905,7 +824,6 @@ A bit of a broken release due to iOS 11 API changes.
   * Addresses: homestream robustness (#1234)
   * Help with: Battery drain (hopefully) (#1245)
 
-
 # 1.46.0 - 2017 September 14
 
 * Firebase integration
@@ -914,17 +832,14 @@ A bit of a broken release due to iOS 11 API changes.
 * Onboarding w/Firebase: Confirmation Code Screen (#1178)
 * Onboarding w/Firebase: Resend Confirmation (#1179)
 
-
 # 1.45.4 - 2017 September 8
 
 * Disallow toggling Post order.
-
 
 # 1.45.3 - 2017 September 8
 
 * More homestream optimization (#1216)
 * Add toggle to change bot posts order.
-
 
 # 1.45.2 - 2017 September 7
 
@@ -932,7 +847,6 @@ A bit of a broken release due to iOS 11 API changes.
   * Fixes: HS won't load, spinning circle of doom (#1216)
 * Don't save bots with zero radius (after rounding down)
   * Fixes: lert when editing a bot, title, visibility, and note (#1211)
-
 
 # 1.45.1 - 2017 September 1
 
@@ -945,7 +859,6 @@ A bit of a broken release due to iOS 11 API changes.
 * Avatar and username not tappable in Blocked List (Rework #1087)
 * Enable checkboxes in share list (#1160)
 * Only allow tapping once on Send Report (#1197)
-
 
 # 1.45.0 - 2017 August 31
 
@@ -964,11 +877,9 @@ A bit of a broken release due to iOS 11 API changes.
 * Add image to post (#1108)
 * Bot Posts: Legacy Issue: Disable Add Photo UI (#1101)
 
-
 # 1.44.4 - 2017 August 22
 
 * Offline Indicator is showing user Offline when the user is Online (#1062)
-
 
 # 1.44.3 - 2017 August 21
 
@@ -976,12 +887,10 @@ A bit of a broken release due to iOS 11 API changes.
 * Following List: User Profile does not load when tapping Username (#1142)
 * Automatic logouts for both normal and bypass users with app kills (#1143)
 
-
 # 1.44.2 - 2017 August 18
 
 * Rework #1130
 * Fix crash during search when firstName or lastName is empty
-
 
 # 1.44.1 - 2017 August 18
 
@@ -993,7 +902,6 @@ A bit of a broken release due to iOS 11 API changes.
 * Non/Owner User Profile: Remove/Hide Follow when user is Following (#1111)
 * Bug: Hit slop for entire user field allows user to unfollow vs. just the 'Unfollow' CTA (#1133)
 * Quick double tap on HS opens several same screens (#1136)
-
 
 # 1.44.0 - 2017 August 17
 
@@ -1010,11 +918,9 @@ A bit of a broken release due to iOS 11 API changes.
 * switch to customized react-native-camera-kit (#1064)
 * Restore 'scroll to top' functionality for HS title tap (#1115)
 
-
 # 1.43.1 - 2017 August 8
 
 * Remove extra Camera/Photo Library pop (#1084, #1074)
-
 
 # 1.43.0 - 2017 August 8
 
@@ -1027,14 +933,12 @@ A bit of a broken release due to iOS 11 API changes.
 * Upgrade react native to 0.47.1.
 * Upgrade react-native-router-flux to 4.0.0-beta.17.
 
-
 # 1.42.1 - 2017 August 3
 
 * Show Launch screen during processing
   * Most efficient solution to remove delay once user signs up or logs in (#1044)
 * Prioritise Home Stream loading
   * Home Stream: Legacy Issues with HS Loading (#1050)
-
 
 # 1.42.0 - 2017 August 2
 
@@ -1049,14 +953,12 @@ A bit of a broken release due to iOS 11 API changes.
 * Messaging: Loading circle spinning but will not load previous thread (#1047)
 * Messaging: New Message Banner received when leaving a message thread (#1046)
 
-
 # 1.41.0 - 2017 July 28
 
 * Messaging: App is shown as "connecting" when coming from background and offline/connecting Banner is not below the header (Rework #1019)
 * Message Icon from Subscriber User Profile crashes app (#1033)
 * Onboarding: Numeric Keyboard should not appear (#1010)
 * Better infinite scroll/lazy loading for chat screen (#1012)
-
 
 # 1.40.2 - 2017 July 27
 
@@ -1068,7 +970,6 @@ A bit of a broken release due to iOS 11 API changes.
 * Bot Creation: The back caret from Bot Title screen gives current location (#1027)
 * User is unable to change address on bot (#1032)
 * 1:1 Chat improvements (#1012)
-
 
 # 1.40.1 - 2017 July 26
 
@@ -1100,8 +1001,6 @@ Many changes. This is an incomplete list.
 * App sent to the background breaks app (#1028)
 * Other unlisted changes.
 
-
-
 # 1.40.0 - 2017 July 20
 
 **'NEW NAVIGATION'**
@@ -1110,10 +1009,9 @@ This is an unstable work-in-progress and everything is potentially broken.
 
 * Upgrade to React Native 0.46.4
 * Change navigation to:
-  - react-native-router-flux 4.0.0-beta.12 + a few more commits
-  - react-navigation 1.0.0-beta.11
+  * react-native-router-flux 4.0.0-beta.12 + a few more commits
+  * react-navigation 1.0.0-beta.11
 * Lots and lots of other changes.
-
 
 # 1.33.2 - 2017 July 6
 
@@ -1122,23 +1020,21 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix: Create Bot: App goes to background when adding photo from library (#965)
 * Fix: Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
 
-
 # 1.33.1 - 2017 July 3
 
 * Replace icon.gif to remove beta (Rework #893)
 * Fix: Bug: Bot Edit: Unable to edit bot and change privacy settings (#930)
 * Change definition of 'new' follower so it expires after 1 week (#885)
 * Bot details param refactoring. Fixes:
-  - Bug: Bot creator unable to see subscribers (#944)
-  - Bot Creation: Next button slides the keyboard away (#949)
-  - Mileage Button takes user to another users bot (#950)
-  - Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
-  - App Crash on Lazy Loading of Images (#952)
-  - Bot Creation/Edit: Create Bot and Save Changes Button are not Static (#953)
+  * Bug: Bot creator unable to see subscribers (#944)
+  * Bot Creation: Next button slides the keyboard away (#949)
+  * Mileage Button takes user to another users bot (#950)
+  * Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
+  * App Crash on Lazy Loading of Images (#952)
+  * Bot Creation/Edit: Create Bot and Save Changes Button are not Static (#953)
 * Fix: Bot Subscriber does not see images on bot profile until kill/reload (#898)
 * Remove alert on cancelled image (Rework #875)
 * Change bot share filter opacity to 40% (Rework #882)
-
 
 # 1.33.0 - 2017 June 29
 
@@ -1155,7 +1051,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Move bot instance from singleton to BotDetails (#884)
 * Temporary work-around to 'allow newly created bots on BotDetails'.
 
-
 # 1.32.1 - 2017 June 20
 
 * Show welcome UI, session counter, improving HS UI layout (#832)
@@ -1165,7 +1060,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Onboarding: Enable "Push Notifications" ios permission request (#816)
 * Onboarding functionality. Refactored validation. (#806, #807, #808, #904, #905)
 * Onboarding style tweaks for smaller devices (Rework #803)
-
 
 # 1.32.0 - 2017 June 15
 
@@ -1181,11 +1075,9 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Onboarding: Sign Up Flow (#806)
 * Fix: Bot Share won't load in HS when app is in background (#847)
 
-
 # 1.31.9#2 - 2017 June 14
 
 * Fix: Bot Pins not loading (#857)
-
 
 # 1.31.9 - 2017 June 8
 
@@ -1203,7 +1095,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix: User gets stuck on Explore Nearby while playing on Explore Nearby (#825)
 * User Profile: Metadata Bar & other user details (#667)
 
-
 # 1.31.8 - 2017 June 2
 
 * Tweaks to rework: Home: Design Review (#660)
@@ -1212,7 +1103,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Home: Timecode (#532)
 * Fix: My Bot tab: Bots will not load, only displaying 4 bots (#791)
 * Add follow button. Part of User Profile: Public View: Bots (#673)
-
 
 # 1.31.7 - 2017 May 31
 
@@ -1227,7 +1117,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Partial User Profile work
 * Automated deploy scripts
 
-
 # 1.31.6 - 2017 May 25
 
 * Display boarding only for empty storage
@@ -1237,30 +1126,25 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Change timestamp handling to handle timestamp format of new server (#753)
 * Explore Nearby: Display "Create Bot" Icon in Explore Nearby (#659)
 
-
 # 1.31.5 - 2017 May 23
 
 * Fix: Add Photo Screen: Take a Photo button's is incorrect (#722)
 * Fix: People screen UI changed after RN ugprade (#727)
 * Differentiate 'name' and 'displayName' for codepush deployments
 
-
 # 1.31.4 - 2017 May 22
 
 * CodePush UI (#655, #656, #657, #658)
-
 
 # 1.31.3 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
 * Update statem from 0.5.4 to 0.5.5.
 
-
 # 1.31.2 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
 * Update statem from 0.5.3 to 0.5.4.
-
 
 # 1.31.1 - 2017 May 19
 
@@ -1268,7 +1152,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix '+' sign on bottom of cards introduced by upgrade to RN 0.44.0.
 * Remove alert for codepush status code.
 * Avoid app crash for many button touch event
-
 
 # 1.31.0 - 2017 May 18
 
@@ -1285,14 +1168,13 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Disable Night Mode (#621)
 * Preliminary support for CodePush (part of #658).
 
-
 # 1.30.0 - 2017 May 11
 
 * Restructure BotCard for different size usernames
   * Fixes: Bot List: Quick redesign to fit longer usernames (#502)
 * Tweak BotImage.js.
 * Rework: UI Clean Up: Remove pressed state for Cover Image within Bot Profile (#615)
-  - Restructure BotDetails.js
+  * Restructure BotDetails.js
 * Fix: Bot Profile: Alert when trying to delete images off old bots (#647)
 * UI Clean Up: Tighten Bot Share w/1 user (#613)
 * State flow refactoring (#680)
@@ -1306,18 +1188,15 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Attempt to fix: Messages visible then disappear (#663)
 * Avoid disconnect during iphone idle mode.
 
-
 # 1.29.2 - 2017 May 5
 
 * Fix: Home Stream: Incorrect Username on Bot Shares (#653)
 * Source code formatting changes
 * Fix: Can't delete bots (#645)
 
-
 # 1.29.1 - 2017 May 4
 
 * Fix incorrect DARK_GREY javascript reference (#644)
-
 
 # 1.29.0 - 2017 May 4
 
@@ -1333,7 +1212,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Home: event: Bot Shared - 4 (#585)
 * Home: event: Creation Update: Photo Added - 5 (#586)
 
-
 # 1.28.1 - 2017 April 28
 
 * Source code formatting changes
@@ -1343,7 +1221,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix: Blank image on carousel on first load after update (#603)
 * Fix: Create Bot after Delete Bot pulls deleted bot details (#607)
 * Fix: Lazy loading doesn't work on bot edit photo grid (#609)
-
 
 # 1.28.0 - 2017 April 27
 
@@ -1361,13 +1238,11 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Improve app loading time
 * Bot Edit: Tapping on Existing Photos should display Photo Grid (#543)
 
-
 # 1.27.6 - 2017 April 21
 
 * Add spacing and exclamation mark (Rework #505)
 * Fix: New Message: Select Friend takes you to message feed (#568)
 * Fix: Bot List Thumbnail doesn't reflect Cover Photo Change (#569)
-
 
 # 1.27.5 - 2017 April 20
 
@@ -1380,17 +1255,15 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Bot Profile: Sharing Flow 2 - User selected (#504)
 * Bot Profile: Sharing Flow 3 - Bot Shared (#505)
 
-
 # 1.27.4 - 2017 April 14
 
 * Fix: Unable to create bot (#551)
 
-
 # 1.27.3 - 2017 April 13
 
 * Upgrade:
-  - react-native-router-native from 0.2.1 to 0.2.2
-  - react-native-ios-controllers from 2.3.0 to 2.4.0
+  * react-native-router-native from 0.2.1 to 0.2.2
+  * react-native-ios-controllers from 2.3.0 to 2.4.0
 * Bot Creation: NEW Enable Note Upload Flow (#418)
 * Bot Creation #6: Add Photo (Inactive State) > Choose from Photo Library (#490)
 * Bot Creation #6: Add Photo (Inactive State) > Take Photo (#491)
@@ -1398,11 +1271,9 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix: Bots have inconsistent subscribed status (#547)
   * Fixes: Bots sometimes are not added to subscribed list for all users via HS (#542)
 
-
 # 1.27.2 - 2017 April 8
 
 * Fix: When adding an image to a bot, user receives var url error (#529)
-
 
 # 1.27.1 - 2017 April 7
 
@@ -1412,7 +1283,6 @@ This is an unstable work-in-progress and everything is potentially broken.
 * Fix: Tapping on the text doesn't toggle button. (Rework #444)
 * Upgrade react-native-ios-controllers to 2.4.0.
 * Tapping on name goes to Subscriber's User Profile (Rework #416)
-
 
 # 1.27.0 - 2017 April 6
 
@@ -1439,11 +1309,9 @@ Then:
 * Some code clean-up relating to bots.
 * Bot Creation: NEW Enable subscribers list (#416)
 
-
 # 1.26.2 - 2017 March 21
 
 * Fix: Remove overlay shadow when cover photo is NOT present (#480)
-
 
 # 1.26.1 - 2017 March 20
 
@@ -1453,7 +1321,6 @@ Then:
 * Don't remove already loaded bots from the map
   * Fixes: Staging: Bot Profile Map: Bot Icon Disappears (#471)
 
-
 # 1.26.0 - 2017 March 17
 
 * Display End of Feed UI for feeds (#389)
@@ -1462,12 +1329,10 @@ Then:
   * Add geosearch for bots API.
 * Bot List: Implement Bot List Redesign (#438)
 
-
 # 1.25.3 - 2017 March 13
 
 * Rework processing of photo download.
-   * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
-
+  * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
 
 # 1.25.2 - 2017 March 10
 
@@ -1478,11 +1343,9 @@ Then:
 * Remove bot button from Explore near by screen (Rework #439)
 * Replace current share icon with NEW Share Icon (#440)
 
-
 # 1.25.1 - 2017 March 9
 
 * Return setting default radius to 30000
-
 
 # 1.25.0 - 2017 March 9
 
@@ -1496,7 +1359,6 @@ Then:
 * Bot radius set to 0.
 * Right side navigation removed.
 
-
 # 1.24.3 - 2017 March 3
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
@@ -1504,11 +1366,9 @@ Then:
 * Disable logging for published apps to speed up loading
 * Fix: Preserve aspect ratio for images (#386 'cropped' sub-issue).
 
-
 # 1.24.2 - 2017 Feb 27
 
 * Upgrade react-native-image-picker to version 0.25.7.
-
 
 # 1.24.1 - 2017 Feb 27
 
@@ -1520,7 +1380,6 @@ Botched release: react-native-image-picker 0.25.6 resulted in iOS image permissi
 * Reverse order of HS items. Fixes: Scrolling or reorder of events (#428)
 * Upgrade react-native-image-picker to custom version #0.25.6.
 * Set image maximum upload size to 5000x5000, jpeg quality 0.95 (#386).
-
 
 # 1.24.0 - 2017 Feb 23
 
@@ -1542,10 +1401,9 @@ Botched release: react-native-image-picker 0.25.6 resulted in iOS image permissi
 * Fixed: Bot Creation: Not able to add Note + Photo during Bot Creation Flow (#388)
 * Set image maximum upload size to 3000x3000 (#386)
 
-
 # 1.23.1 - 2017 Feb 16
 
-* Fixed: Add By Username: Omit entries with empty handle.  
+* Fixed: Add By Username: Omit entries with empty handle.
 * Fixed: Uninitialised isStaging, isTesting variables.
   * Indirectly fixes New TR Account not visible in Add by Username #365.
 * Fixed: #393 Kill Lazy Load on Bot List or Refine Lazy Load
@@ -1565,11 +1423,9 @@ Many changes to the bot profile:
 * #383 Bot Profile: Enable Full Screen Map View
 * #390 Bot Owner View: Bot Profile: Display when only title and location are the only fields populated
 
-
 # 1.22 Build 21 - 2017 Feb 09
 
 Fixed: App creates multiple active ids for one device #249. Requires re-install.
-
 
 # 1.22 Build 17 - 2017 Feb 09
 
