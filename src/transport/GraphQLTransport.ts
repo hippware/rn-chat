@@ -10,7 +10,6 @@ import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {ILocationSnapshot} from '..'
-import _ from 'lodash'
 
 // TODO use GraphQL fragment for this?
 const PROFILE_PROPS = 'id firstName lastName handle avatar { thumbnailUrl fullUrl trosUrl }'
@@ -225,7 +224,7 @@ export class GraphQLTransport implements IWockyTransport {
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
-  async getLocationsVisited(limit: number = 50): Promise<any> {
+  async getLocationsVisited(limit: number = 50): Promise<object[]> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`

@@ -31,7 +31,7 @@ export interface IWockyTransport {
     }>;
     disconnect(): Promise<void>;
     setLocation(params: ILocationSnapshot): Promise<void>;
-    getLocationsVisited(limit?: number): Promise<any>;
+    getLocationsVisited(limit?: number): Promise<object[]>;
     loadProfile(user: string): Promise<any>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;

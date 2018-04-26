@@ -410,9 +410,9 @@ export const Wocky = types
     setLocation: flow(function*(location: ILocationSnapshot) {
       return yield self.transport.setLocation(location)
     }),
-    getLocationsVisited: flow(function*(limit?: number) {
-      return yield self.transport.getLocationsVisited(limit)
-    }),
+    getLocationsVisited: (limit?: number): Promise<object[]> => {
+      return self.transport.getLocationsVisited(limit)
+    },
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
       return yield self.transport.requestUpload({file, size, width, height, access})
