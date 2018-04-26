@@ -3,7 +3,7 @@ import {View, Animated, Alert, Image, TouchableOpacity, StyleSheet, Clipboard} f
 import {observer, inject} from 'mobx-react/native'
 import {k, width, height} from '../Global'
 import {colors} from '../../constants'
-import {getSnapshot} from 'mobx-state-tree'
+import {getSnapshot, isAlive} from 'mobx-state-tree'
 import BotButtons from './BotButtons'
 import UserInfoRow from './UserInfoRow'
 import {RText} from '../common'
@@ -81,7 +81,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   render() {
     const {bot, scale} = this.props
-    if (!bot) return null
+    if (!bot || !isAlive(bot)) return null
     return (
       <View style={{flex: 1}}>
         <View
