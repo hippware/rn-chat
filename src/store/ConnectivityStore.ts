@@ -5,20 +5,21 @@ export const DELAY = 1000
 
 class ConnectivityStore {
   @observable isActive: boolean = true
-  @observable netConnected: boolean = true
+  // @observable netConnected: boolean = true
+  // @observable connectionInfoType: string = 'none'
   @observable retryCount: number = 0
-  @observable connectionInfoType: string = 'none'
+  // @observable connectionInfoType: string = 'none'
   retryDelay: number = DELAY
   reconnecting: boolean = false
 
   private wocky?: IWocky
   private logger?: any
   private disposer?: () => void
-  private disposer2?: () => void
+  // private disposer2?: () => void
   private started: boolean = false
 
   @action
-  start(wocky: IWocky, logger: any, appState: any, netInfo: any) {
+  start(wocky: IWocky, logger: any, appState: any /*, netInfo: any*/) {
     if (this.started) return
     this.started = true
 
@@ -27,11 +28,11 @@ class ConnectivityStore {
     this.logger.log('ConnectivityStore START')
 
     appState.addEventListener('change', this._handleAppStateChange)
-    netInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
-    netInfo.getConnectionInfo().then((reach: any) => {
-      logger.log('NETINFO INITIAL:', reach)
-      this._handleConnectionInfoChange(reach)
-    })
+    // netInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
+    // netInfo.getConnectionInfo().then((reach: any) => {
+    //   logger.log('NETINFO INITIAL:', reach)
+    //   this._handleConnectionInfoChange(reach)
+    // })
 
     this.disposer = autorunAsync(
       'Connectivity: tryReconnect',
@@ -48,24 +49,24 @@ class ConnectivityStore {
       DELAY
     )
 
-    this.disposer2 = reaction(
-      () => this.connectionInfoType,
-      (type: string) => {
-        if (type === 'unknown') {
-          this.netConnected = true
-        } else if (type === 'none') {
-          this.netConnected = false
-          if (this.wocky && this.wocky.connected && !this.wocky.connecting) {
-            this.wocky.disconnect()
-          }
-        } else {
-          this.netConnected = true
-        }
-      },
-      {
-        delay: 100,
-      }
-    )
+    // this.disposer2 = reaction(
+    //   () => this.connectionInfoType,
+    //   (type: string) => {
+    //     if (type === 'unknown') {
+    //       this.netConnected = true
+    //     } else if (type === 'none') {
+    //       this.netConnected = false
+    //       if (this.wocky && this.wocky.connected && !this.wocky.connecting) {
+    //         this.wocky.disconnect()
+    //       }
+    //     } else {
+    //       this.netConnected = true
+    //     }
+    //   },
+    //   {
+    //     delay: 100,
+    //   }
+    // )
   }
 
   @action
@@ -115,15 +116,15 @@ class ConnectivityStore {
     }
   }
 
-  @action
-  private _handleConnectionInfoChange = (connectionInfo: any) => {
-    this.logger.log('_handleConnectionInfoChange', JSON.stringify(connectionInfo))
-    if (connectionInfo.type !== 'none') {
-      setTimeout(() => (this.connectionInfoType = connectionInfo.type), 50) // dirty hack to fix thebug with NetInfo
-    } else {
-      this.connectionInfoType = connectionInfo.type
-    }
-  }
+  // @action
+  // private _handleConnectionInfoChange = (connectionInfo: any) => {
+  //   this.logger.log('_handleConnectionInfoChange', JSON.stringify(connectionInfo))
+  //   if (connectionInfo.type !== 'none') {
+  //     // setTimeout(() => (this.connectionInfoType = connectionInfo.type), 50) // dirty hack to fix thebug with NetInfo
+  //   } else {
+  //     // this.connectionInfoType = connectionInfo.type
+  //   }
+  // }
 }
 
 export default new ConnectivityStore()
