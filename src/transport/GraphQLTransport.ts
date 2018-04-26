@@ -90,34 +90,24 @@ export class GraphQLTransport implements IWockyTransport {
         }
       }
     })
-    return new Promise<boolean>((resolve, reject) => {
-      this.socket.onError(err => {
-        // console.log('& graphql Phoenix socket error')
-      })
-      this.socket.onClose(err => {
-        // console.log('& graphql Phoenix socket closed')
-        this.unsubscribeBotVisitors()
-      })
-      this.socket.onOpen(() => {
-        // console.log('& graphql open')
-        this.authenticate(this.username, this.password).then(res => {
-          if (res) {
-            this.subscribeBotVisitors()
-          }
-          resolve(res)
-        })
-      })
-      // send first dump query to start websockets
-      this.client.query({
-        query: gql`
-          query {
-            currentUser {
-              id
-            }
-          }
-        `
-      })
+    this.socket.onError(err => {
+      // console.log('& graphql Phoenix socket error')
+      this.connected = false
     })
+    this.socket.onClose(err => {
+      // console.log('& graphql Phoenix socket closed')
+      this.unsubscribeBotVisitors()
+      this.connected = false
+    })
+    this.socket.onOpen(() => {
+      // console.log('& graphql open')
+    })
+
+    const res = await this.authenticate(this.username, this.password)
+    if (res) {
+      this.subscribeBotVisitors()
+    }
+    return res
   }
 
   @action
