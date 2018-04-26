@@ -3,6 +3,7 @@ import {View} from 'react-native'
 import {observer} from 'mobx-react/native'
 import BotButton from '../BotButton'
 import EventList from './EventListView'
+import Connectivity from '../Connectivity'
 
 @observer
 class Home extends React.Component<{}> {
@@ -24,6 +25,7 @@ class Home extends React.Component<{}> {
   render() {
     return (
       <View style={{flex: 1}} testID="screenHome">
+        <Connectivity />
         <EventList ref={ref => (this.eventList = ref)} />
         <BotButton />
       </View>

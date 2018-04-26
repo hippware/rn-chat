@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {reaction, autorun} from 'mobx'
+import {reaction} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -308,17 +308,11 @@ const LocationStore = types
   })
   .actions(self => {
     let wocky
-    let connectivityStore
     let handler
 
     function afterAttach() {
       self.initialize()
       ;({wocky} = getParent(self))
-      ;({connectivityStore} = getEnv(self))
-      autorun('LocationStore toggler', () => {
-        if (connectivityStore.isActive) start()
-        else finish()
-      })
     }
 
     function start() {
@@ -341,7 +335,7 @@ const LocationStore = types
         // is this necessary? Might turn off automatically without call
         self.stopBackground()
       }
-      handler()
+      if (handler) handler()
     }
 
     return {afterAttach, start, finish}
