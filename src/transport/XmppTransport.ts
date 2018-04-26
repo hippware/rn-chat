@@ -5,7 +5,7 @@ import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {ILocationSnapshot} from '..'
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
 const FILE_NS = 'hippware.com/hxep/http-file'
