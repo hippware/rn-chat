@@ -35,18 +35,16 @@ class ConnectivityStore {
     // })
 
     this.disposer = autorunAsync(
-      'Connectivity: tryReconnect',
+      'Connectivity: reconnect on foreground',
       () => {
-        const {netConnected, isActive} = this
-        const {username, password, connected, connecting} = this.wocky!
-        // if the app "should connect", has the necessary info, and isn't already trying...
-        if (netConnected && isActive && username && password && !(connected || connecting)) {
+        const {username, password, host, connected, connecting} = this.wocky!
+        if (this.isActive && username && password && host && !(connected || connecting)) {
           this.tryReconnect()
         } else {
           this.reset()
         }
       },
-      DELAY
+      1000
     )
 
     // this.disposer2 = reaction(
@@ -91,8 +89,15 @@ class ConnectivityStore {
       this.logger.warn('connectivity: no wocky!', this.retryCount)
       return
     }
-    const {username, password, host, login} = this.wocky
-    if (username && password && host && (!this.reconnecting || force)) {
+    const {username, password, host, login, connected, connecting} = this.wocky
+    if (
+      !(connected || connecting) &&
+      username &&
+      password &&
+      host &&
+      (!this.reconnecting || force) &&
+      this.isActive
+    ) {
       try {
         this.retryCount += 1
         this.reconnecting = true
