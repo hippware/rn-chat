@@ -17,6 +17,7 @@ class ConnectivityStore {
   private disposer?: () => void
   // private disposer2?: () => void
   private started: boolean = false
+  private timeout?: any
 
   @action
   start(wocky: IWocky, logger: any, appState: any /*, netInfo: any*/) {
@@ -71,6 +72,10 @@ class ConnectivityStore {
   reset() {
     this.retryCount = 0
     this.retryDelay = DELAY
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeout = undefined
+    }
     this.reconnecting = false
   }
 
@@ -105,7 +110,7 @@ class ConnectivityStore {
         this.reset()
       } catch (e) {
         this.retryDelay = this.retryDelay >= 5000 ? this.retryDelay : this.retryDelay * 1.5
-        setTimeout(() => this.tryReconnect(true), this.retryDelay)
+        this.timeout = setTimeout(() => this.tryReconnect(true), this.retryDelay)
       }
     }
   }
