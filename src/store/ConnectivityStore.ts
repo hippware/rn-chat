@@ -1,4 +1,4 @@
-import {autorunAsync, reaction, observable, action} from 'mobx'
+import {autorunAsync, observable, action} from 'mobx'
 import {IWocky} from 'wocky-client'
 
 export const DELAY = 1000
@@ -36,7 +36,7 @@ class ConnectivityStore {
     // })
 
     this.disposer = autorunAsync(
-      'Connectivity: reconnect on foreground',
+      'Connectivity: tryReconnect',
       () => {
         const {username, password, host, connected, connecting} = this.wocky!
         if (this.isActive && username && password && host && !(connected || connecting)) {
@@ -84,7 +84,6 @@ class ConnectivityStore {
   finish() {
     this.logger.log('ConnectivityStore STOP')
     if (this.disposer) this.disposer()
-    if (this.disposer2) this.disposer2()
     this.reset()
   }
 
