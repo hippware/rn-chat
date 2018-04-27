@@ -11,8 +11,8 @@ const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
-  'preventSuspend',
-  'heartbeatInterval',
+  // 'preventSuspend',
+  // 'heartbeatInterval',
   'stopTimeout',
   'desiredAccuracy',
   'distanceFilter',
