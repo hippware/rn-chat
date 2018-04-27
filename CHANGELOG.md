@@ -9,3 +9,4 @@ Internal use only.
 * Graphql connectivity test (PR #33)
 * Simplify graphql login logic (because internal reconnect is disabled) (PR #34)
 * Increase timeout to work with EDGE network (PR #36)
+* Fix finished flag (hippware/rn-chat#2213) (PR #37)
