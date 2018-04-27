@@ -17,8 +17,16 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add location upload heartbeat and other changes (PR #2200)
   * Incomplete: Upload a location data point at least once every 3-4 minutes (#2171)
 * More javascript to typescript conversion (PR #2207)
-* Connectivity improvements (PR #2224)
+* Connectivity changes
+  * Connectivity improvements (PR #2224)
+  * Revert connectivity to old react-based implementation (PR #2232)
   * Rework: Offline Banner that does not go away (#2163)
+* Show 50 most recent locations on debug view (PR #2237)
+  * Display list of recent location data points (debug) (#2223)
+* Deleted bot resulted in bugsnag (#2204)
+* Add more dynamic data to marker key to re-render (PR #2241)
+  * Pink blank cover images (#2225)
+* Update wocky-client (PR #2242)
 
 # 2.5.5 - 2018 Apr 19
 
