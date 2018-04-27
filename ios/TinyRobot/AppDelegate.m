@@ -21,7 +21,7 @@
 
 @import GoogleMaps;
 
-//#import <TSBackgroundFetch/TSBackgroundFetch.h>
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
 #import <Firebase.h>
 
 @implementation AppDelegate
@@ -114,9 +114,9 @@
 }
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-//  NSLog(@"RNBackgroundFetch AppDelegate received fetch event");
-//  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
-//  [fetchManager performFetchWithCompletionHandler:completionHandler];
+  NSLog(@"RNBackgroundFetch AppDelegate received fetch event");
+  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
+  [fetchManager performFetchWithCompletionHandler:completionHandler applicationState:application.applicationState];
 }
 // Add this above the `@end`:
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
