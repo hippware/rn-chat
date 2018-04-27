@@ -32,6 +32,7 @@ class BotAddress extends React.Component<Props> {
   mapReady: boolean = false
   _map: any
   addressBar: any
+  initalLocationLoaded: boolean = false
 
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500) // temporary workaround for slow react-navigation transition with Mapbox view!
@@ -56,7 +57,12 @@ class BotAddress extends React.Component<Props> {
 
   onLocationChange = async location => {
     if (this.mapReady) {
-      this.location = location
+      if (!this.props.edit && this.initalLocationLoaded) {
+        // prevent initial location set for botCreate
+        this.location = location
+      } else {
+        this.initalLocationLoaded = true
+      }
     }
   }
 
