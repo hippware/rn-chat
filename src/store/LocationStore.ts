@@ -220,7 +220,7 @@ const LocationStore = types
 
       // inital config (only applies to first app boot without explicitly setting `reset: true`)
       const state = yield backgroundGeolocation.ready({
-        reset: true, // todo: comment out
+        // reset: true, // todo: comment out
         desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
         elasticityMultiplier: 1,
         preventSuspend: false,
@@ -257,57 +257,26 @@ const LocationStore = types
       } else if (state.enabled && !self.alwaysOn) {
         backgroundGeolocation.stop()
       }
-    })
 
-    function startSuspend() {
+      // guarantee updates when user isn't active enough to trigger rnbgl events
       backgroundFetch.configure(
         {
-          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+          minimumFetchInterval: 15, // (15 minutes is minimum allowed)
         },
-        () => {
-          console.log('- backgroundfetch: Received background-fetch event')
-          // logger.log(prefix, 'heartbeat:', JSON.stringify(data))
-          // backgroundGeolocation.getCurrentPosition(
-          //   location => {
-          //     logger.log(prefix, 'Current position received: ', JSON.stringify(location))
-          //   },
-          //   errorCode => {
-          //     logger.log(prefix, 'A location error occurred: ' + errorCode)
-          //   },
-          //   {
-          //     timeout: 30, // 30 second timeout to fetch location
-          //     maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
-          //     desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
-          //     samples: 3, // How many location samples to attempt.
-          //   }
-          // )
-
-          // Required: Signal completion of your task to native code
-          // If you fail to do this, the OS can terminate your app
-          // or assign battery-blame for consuming too much background-time
+        async () => {
+          try {
+            // send last known location
+            await wocky.setLocation(self.location!)
+          } catch (err) {
+            logger.log('fetch error', err)
+          }
           backgroundFetch.finish()
-          // require('react-native-background-fetch').finish()
         },
         error => {
-          console.log('- backgroundfetch: RNBackgroundFetch failed to start', error)
+          logger.log('RNBackgroundFetch failed to start', error)
         }
       )
-
-      // Optional: Query the authorization status.
-      backgroundFetch.status(status => {
-        switch (status) {
-          case backgroundFetch.STATUS_RESTRICTED:
-            console.log('BackgroundFetch restricted')
-            break
-          case backgroundFetch.STATUS_DENIED:
-            console.log('BackgroundFetch denied')
-            break
-          case backgroundFetch.STATUS_AVAILABLE:
-            console.log('BackgroundFetch is enabled')
-            break
-        }
-      })
-    }
+    })
 
     function stopBackground() {
       backgroundGeolocation.stop()
@@ -354,7 +323,6 @@ const LocationStore = types
       getCurrentPosition,
       initialize,
       setBackgroundConfig,
-      startSuspend,
     }
   })
   .actions(self => {
@@ -370,18 +338,12 @@ const LocationStore = types
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')
       )
-      // Permissions.request('fetch').then(response => {
-      //   // Returns once the user has chosen to 'allow' or to 'not allow' access
-      //   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-      //   console.log('& fetch requested', response)
-      // })
       handler = reaction(
         () => wocky.connected,
         (connected: boolean) => {
           if (connected) {
             self.getCurrentPosition()
             self.startBackground()
-            self.startSuspend()
           }
         }
       )
