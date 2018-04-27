@@ -26,6 +26,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Deleted bot resulted in bugsnag (#2204)
 * Add more dynamic data to marker key to re-render (PR #2241)
   * Pink blank cover images (#2225)
+* Infinite loader on Saves List (#2213)
 * Update wocky-client (PR #2242)
 
 # 2.5.5 - 2018 Apr 19
