@@ -11,8 +11,8 @@ const METRIC_TYPE = types.literal(METRIC)
 const IMPERIAL_TYPE = types.literal(IMPERIAL)
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
-  'preventSuspend',
-  'heartbeatInterval',
+  // 'preventSuspend',
+  // 'heartbeatInterval',
   'stopTimeout',
   'desiredAccuracy',
   'distanceFilter',
@@ -154,25 +154,25 @@ const LocationStore = types
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, backgroundGeolocation} = getEnv(self)
+    const {logger, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
 
-    function onHeartbeat(data) {
-      logger.log(prefix, 'heartbeat:', JSON.stringify(data))
-      backgroundGeolocation.getCurrentPosition(
-        location => {
-          logger.log(prefix, 'Current position received: ', JSON.stringify(location))
-        },
-        errorCode => {
-          logger.log(prefix, 'A location error occurred: ' + errorCode)
-        },
-        {
-          timeout: 30, // 30 second timeout to fetch location
-          maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
-          desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
-          samples: 3, // How many location samples to attempt.
-        }
-      )
-    }
+    // function onHeartbeat(data) {
+    //   logger.log(prefix, 'heartbeat:', JSON.stringify(data))
+    //   backgroundGeolocation.getCurrentPosition(
+    //     location => {
+    //       logger.log(prefix, 'Current position received: ', JSON.stringify(location))
+    //     },
+    //     errorCode => {
+    //       logger.log(prefix, 'A location error occurred: ' + errorCode)
+    //     },
+    //     {
+    //       timeout: 30, // 30 second timeout to fetch location
+    //       maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
+    //       desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
+    //       samples: 3, // How many location samples to attempt.
+    //     }
+    //   )
+    // }
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -223,8 +223,8 @@ const LocationStore = types
         // reset: true,
         desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
         elasticityMultiplier: 1,
-        preventSuspend: true,
-        heartbeatInterval: 60,
+        preventSuspend: false,
+        // heartbeatInterval: 60,
         useSignificantChangesOnly: false,
         stationaryRadius: 25,
         distanceFilter: 30,
@@ -257,6 +257,25 @@ const LocationStore = types
       } else if (state.enabled && !self.alwaysOn) {
         backgroundGeolocation.stop()
       }
+
+      // guarantee updates when user isn't active enough to trigger rnbgl events
+      backgroundFetch.configure(
+        {
+          minimumFetchInterval: 15, // (15 minutes is minimum allowed)
+        },
+        async () => {
+          try {
+            // send last known location
+            await wocky.setLocation(self.location!)
+          } catch (err) {
+            logger.log('fetch error', err)
+          }
+          backgroundFetch.finish()
+        },
+        error => {
+          logger.log('RNBackgroundFetch failed to start', error)
+        }
+      )
     })
 
     function stopBackground() {
@@ -271,7 +290,7 @@ const LocationStore = types
       backgroundGeolocation.on('http', onHttp, onHttpError)
       backgroundGeolocation.on('error', self.positionError)
       backgroundGeolocation.on('motionchange', onMotionChange)
-      backgroundGeolocation.on('heartbeat', onHeartbeat)
+      // backgroundGeolocation.on('heartbeat', onHeartbeat)
       backgroundGeolocation.on('activitychange', onActivityChange)
       backgroundGeolocation.on('providerchange', onProviderChange)
     }

@@ -23,8 +23,8 @@ const Form = t.form.Form
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
-  preventSuspend: t.Boolean,
-  heartbeatInterval: t.Number,
+  // preventSuspend: t.Boolean,
+  // heartbeatInterval: t.Number,
   stopTimeout: t.Number,
   elasticityMultiplier: t.Number,
   desiredAccuracy: t.enums(LocationAccuracyChoices),
@@ -39,12 +39,12 @@ const options = {
     debug: {
       label: 'Background location debug mode',
     },
-    preventSuspend: {
-      label: 'preventSuspend',
-    },
-    heartbeatInterval: {
-      label: 'heartbeatInterval (in seconds, min 60)',
-    },
+    // preventSuspend: {
+    //   label: 'preventSuspend',
+    // },
+    // heartbeatInterval: {
+    //   label: 'heartbeatInterval (in seconds, min 60)',
+    // },
     stopTimeout: {
       label: 'stopTimeout (in minutes)',
     },

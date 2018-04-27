@@ -6318,7 +6318,7 @@ react-native-actionsheet@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
-react-native-background-fetch@^2.4.1, react-native-background-fetch@~2.4.1:
+react-native-background-fetch@~2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.4.1.tgz#5bb3c6ecc5d646f05b9ca5a8feec724152582d1d"
   dependencies:
