@@ -6,7 +6,7 @@ import {colors} from '../../constants/index'
 import * as log from '../../utils/log'
 import CurrentLocation from './CurrentLocation'
 import {RText, Separator} from '../common'
-import {observable, reaction} from 'mobx'
+import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Actions} from 'react-native-router-flux'
 import {IBot} from 'wocky-client'
@@ -178,13 +178,21 @@ class AddressBar extends React.Component<Props> {
 
   blur = () => (this.searchEnabled = false)
 
+  @computed
+  get showList() {
+    return this.searchEnabled && this.text.trim() !== ''
+  }
+
+  @computed
+  get showCurrentLocation() {
+    return this.searchEnabled && this.text.trim() === ''
+  }
+
   render() {
-    const showList = this.searchEnabled && this.text.trim() !== ''
-    const showCurrentLocation = this.searchEnabled && this.text.trim() === ''
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        <CurrentLocation enabled={showCurrentLocation} onPress={this.onLocationSelect} />
-        <View style={[showList && {flex: 1}]}>
+        <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+        <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
             <TextInput
