@@ -28,11 +28,13 @@ class AddressBar extends React.Component<Props> {
   @observable searchEnabled: boolean = false
   handler?: () => void
   handler2?: () => void
-  wrappedInstance: any // mobx-react property
+  wrappedInstance: any // mobx-react property for use by ancestors
 
   componentDidMount() {
-    // TODO: too much mobx magic
     this.handler = reaction(
+      // TODO: too much mobx magic
+
+      // update address suggestions on search view
       () => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}),
       this.setSuggestionsFromText,
       {delay: 500}
