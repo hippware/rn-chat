@@ -220,7 +220,7 @@ const LocationStore = types
 
       // inital config (only applies to first app boot without explicitly setting `reset: true`)
       const state = yield backgroundGeolocation.ready({
-        // reset: true, // todo: comment out
+        // reset: true,
         desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
         elasticityMultiplier: 1,
         preventSuspend: false,
