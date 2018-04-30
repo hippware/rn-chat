@@ -9,6 +9,7 @@ import {IBot, IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {RText} from '../common'
 import {width} from '../Global'
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -24,7 +25,8 @@ class ActiveBot extends React.Component<Props> {
   }
 
   render() {
-    return (
+    const {bot} = this.props
+    return bot && isAlive(bot) ? (
       <View style={styles.outer}>
         <View style={styles.inner}>
           <BotBubble bot={this.props.bot} scale={0} onImagePress={this.goToBot}>
@@ -56,7 +58,7 @@ class ActiveBot extends React.Component<Props> {
           </TouchableOpacity>
           <VisitorHeads bot={this.props.bot} />
         </View>
-      </View>
+    ) : null
     )
   }
 }
