@@ -4,6 +4,7 @@ export declare class HybridTransport implements IWockyTransport {
     readonly connecting: boolean;
     readonly username: string;
     readonly password: string;
+    readonly resource: string;
     readonly host: string;
     readonly geoBot: any;
     readonly message: {
