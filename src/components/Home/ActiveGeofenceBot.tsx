@@ -29,8 +29,8 @@ class ActiveBot extends React.Component<Props> {
     return bot && isAlive(bot) ? (
       <View style={styles.outer}>
         <View style={styles.inner}>
-          <BotBubble bot={this.props.bot} scale={0} onImagePress={this.goToBot}>
-            {this.props.bot.visitor ? (
+          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot}>
+            {bot.visitor ? (
               <View
                 style={{
                   backgroundColor: 'rgba(0,0,0,0.3)',
@@ -53,13 +53,13 @@ class ActiveBot extends React.Component<Props> {
           </BotBubble>
           <TouchableOpacity onPress={this.goToBot}>
             <RText size={13} style={{textAlign: 'center'}} numberOfLines={2} ellipsizeMode="tail">
-              {this.props.bot.title}
+              {bot.title}
             </RText>
           </TouchableOpacity>
-          <VisitorHeads bot={this.props.bot} />
+          <VisitorHeads bot={bot} />
         </View>
+      </View>
     ) : null
-    )
   }
 }
 
