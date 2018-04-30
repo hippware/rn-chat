@@ -4,6 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.1 - 2018 Apr 29
+
+* Send background location via http (PR #2258)
+  * Upload a location data point regularly using background fetch (#2230)
+* wocky-client changes
+  * Simplify graphql login logic (because internal reconnect is disabled)
+  * Increase timeout to work with EDGE network
+  * Adjust tests
+
 # 2.6.0 - 2018 Apr 27
 
 * Adjust isGeo prop (PR #2212)
