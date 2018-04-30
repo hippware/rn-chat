@@ -4,8 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Add location heartbeat (1 minute). Avoid double event firing.
-  * Upload a location data point at least once every 3-4 minutes (#2171)
+# 2.6.0 - 2018 Apr 27
+
 * Adjust isGeo prop (PR #2212)
   * Share Notifications do not have presence overlay (#2157)
 * Add tros url to key (PR #2211)
@@ -14,10 +14,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Related: Push notifications disappear when user opens app (#2155)
 * Make latest visitor always on the top (PRs #2209, hippware/wocky-client#29)
   * Avatar displaying on geofence widget should be `most recent` visitor. (#2199)
-* Add location upload heartbeat and other changes (PR #2200)
-  * Incomplete: Upload a location data point at least once every 3-4 minutes (#2171)
 * More javascript to typescript conversion (PR #2207)
-* Connectivity changes
+* Connectivity changes (reverted)
   * Connectivity improvements (PR #2224)
   * Revert connectivity to old react-based implementation (PR #2232)
   * Rework: Offline Banner that does not go away (#2163)
@@ -28,6 +26,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Pink blank cover images (#2225)
 * Infinite loader on Saves List (#2213)
 * Update wocky-client (PR #2242)
+* Bot Creation: Search field and Keyboard slide away (#2138)
+* Upload a location data point regularly using background fetch (#2230)
+  * Incomplete
+  * Supersedes: Upload a location data point at least once every 3-4 minutes (#2171)
 
 # 2.5.5 - 2018 Apr 19
 
