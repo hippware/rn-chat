@@ -46,10 +46,15 @@ const SearchStore = types
     function afterAttach() {
       ;({wocky} = getParent(self))
       addUsernameValidator()
-      handler1 = reaction(() => self.global, text => _searchGlobal(text), {
-        fireImmediately: false,
-        delay: 500,
-      })
+      handler1 = reaction(
+        () => self.global,
+        _searchGlobal
+        // NOTE: debouncing this reaction causes https://github.com/hippware/rn-chat/issues/2255
+        // , {
+        //   fireImmediately: false,
+        //   delay: 500,
+        // }
+      )
 
       // set initial list to all friends
       when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends))
