@@ -223,7 +223,7 @@ const LocationStore = types
         'X-Auth-Token': wocky.password!,
       }
 
-      // inital config (only applies to first app boot without explicitly setting `reset: true`)
+      // initial config (only applies to first app boot without explicitly setting `reset: true`)
       const state = yield backgroundGeolocation.ready({
         // reset: true,
         desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
