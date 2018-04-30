@@ -35,6 +35,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           horizontal
           keyExtractor={this.keyExtractor}
           renderItem={this.renderActiveBot}
+          showsHorizontalScrollIndicator={false}
         />
         <HeaderLocationOverlay />
       </View>
