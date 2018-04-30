@@ -2,11 +2,14 @@
 
 Internal use only.
 
+# iphone-2.6.1
+
 * Upgrade to latest nodejs and yarn (PR #35)
 * Graphql connectivity test (PR #33)
 * Simplify graphql login logic (because internal reconnect is disabled) (PR #34)
 * Increase timeout to work with EDGE network (PR #36)
 * Enable subscription disabled tests
+* expose `resource` on wocky.transport (PR #39)
 
 # iphone-2.6.0
 
