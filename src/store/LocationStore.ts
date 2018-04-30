@@ -217,6 +217,11 @@ const LocationStore = types
 
       const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
       logger.log(`LOCATION UPDATE URL: ${url}`)
+      const headers = {
+        Accept: 'application/json',
+        'X-Auth-User': wocky.username!,
+        'X-Auth-Token': wocky.password!,
+      }
 
       // inital config (only applies to first app boot without explicitly setting `reset: true`)
       const state = yield backgroundGeolocation.ready({
@@ -241,12 +246,7 @@ const LocationStore = types
         },
       })
       // apply this change every load to prevent stale auth headers
-      yield backgroundGeolocation.setConfig({
-        headers: {
-          'X-Auth-User': wocky.username,
-          'X-Auth-Token': wocky.password,
-        },
-      })
+      yield backgroundGeolocation.setConfig({headers})
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
@@ -266,7 +266,24 @@ const LocationStore = types
         async () => {
           try {
             // send last known location
-            await wocky.setLocation(self.location!)
+            if (self.location) {
+              const {latitude, longitude, accuracy} = self.location
+              await fetch(url, {
+                method: 'POST',
+                headers: {
+                  ...headers,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  location: [
+                    {
+                      coords: {latitude, longitude, accuracy},
+                    },
+                  ],
+                  resource: wocky.transport.resource,
+                }),
+              })
+            }
           } catch (err) {
             logger.log('fetch error', err)
           }
@@ -280,6 +297,7 @@ const LocationStore = types
 
     function stopBackground() {
       backgroundGeolocation.stop()
+      backgroundFetch.stop()
     }
 
     function initialize() {
