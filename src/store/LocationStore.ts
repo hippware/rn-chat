@@ -217,10 +217,15 @@ const LocationStore = types
 
       const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
       logger.log(`LOCATION UPDATE URL: ${url}`)
+
       const headers = {
         Accept: 'application/json',
         'X-Auth-User': wocky.username!,
         'X-Auth-Token': wocky.password!,
+      }
+
+      const params = {
+        resource: wocky.transport.resource,
       }
 
       // initial config (only applies to first app boot without explicitly setting `reset: true`)
@@ -241,12 +246,11 @@ const LocationStore = types
         startOnBoot: true,
         url,
         autoSync: true,
-        params: {
-          resource: 'testing',
-        },
+        params,
+        headers,
       })
       // apply this change every load to prevent stale auth headers
-      yield backgroundGeolocation.setConfig({headers})
+      yield backgroundGeolocation.setConfig({headers, params})
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
