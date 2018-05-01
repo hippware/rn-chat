@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * More typescript conversion (PR #2250)
+* Don't debounce MST action in mobx reaction (PR #2260)
+  * Typing in search field results in app freeze/crash (#2255)
+  * Error in /.../main.jsbundle:560 (#2226)
+* Set correct resource id on rnbgl http calls (PR #2261)
+  * Related: Display list of recent location data points (debug) (#2223)
+* Hide the horizontal scroller on the geofence header (widget) (#2227)
+* Only show 'alive' bots in geofence header (PR #2266)
+  * Widget: Deleted bot not completely removed (#2247)
 
 # 2.6.1 - 2018 Apr 29
 
