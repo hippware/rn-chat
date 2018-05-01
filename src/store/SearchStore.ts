@@ -44,7 +44,7 @@ const SearchStore = types
     let handler1, handler2
 
     function afterAttach() {
-      ;({wocky} = getParent(self))
+      ({wocky} = getParent(self))
       addUsernameValidator()
       handler1 = reaction(() => self.global, text => _searchGlobal(text), {
         fireImmediately: false,
