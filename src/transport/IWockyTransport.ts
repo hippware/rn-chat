@@ -12,6 +12,7 @@ export interface IWockyTransport {
   username: string
   password: string
   host: string
+  resource: string
   geoBot: any // TODO inteface for bot
   message: any // TODO interface for message
   presence: any // TODO interface for presence

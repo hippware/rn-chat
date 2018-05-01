@@ -19,6 +19,10 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.password
   }
   @computed
+  get resource() {
+    return this._xmpp.resource
+  }
+  @computed
   get host() {
     return this._xmpp.host
   }

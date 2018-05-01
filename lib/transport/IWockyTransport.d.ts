@@ -10,6 +10,7 @@ export interface IWockyTransport {
     username: string;
     password: string;
     host: string;
+    resource: string;
     geoBot: any;
     message: any;
     presence: any;
