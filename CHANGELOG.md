@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* More tsx conversion (PR #2250)
+
 # 2.6.1 - 2018 Apr 29
 
 * Send background location via http (PR #2258)
