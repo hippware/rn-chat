@@ -39,22 +39,72 @@ const SearchStore = types
     },
   }))
   .actions(self => {
-    const {searchIndex} = getEnv(self)
-    let wocky
-    let handler1, handler2
+    const _searchGlobal = flow(function*(text) {
+      const {wocky} = getParent(self)
+      if (!text.length) {
+        self.globalResult.clear()
+      } else {
+        try {
+          const data = yield _search(text)
+          const profileArr = data.hits.map(hit => wocky.createProfile(hit.objectID, hit))
+          self.globalResult.replace(profileArr)
+        } catch (err) {
+          // console.log('data hit err', err);
+        }
+      }
+    })
 
+    function _search(text) {
+      const {searchIndex} = getEnv(self)
+
+      return new Promise((resolve, reject) => {
+        searchIndex.search(text, (err, content) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(content)
+          }
+        })
+      })
+    }
+
+    function setGlobal(text: string) {
+      self.global = text
+    }
+
+    return {
+      setGlobal,
+      _searchGlobal,
+      _search,
+    }
+  })
+  .actions(self => ({
+    queryUsername: flow(function*(text: string) {
+      const res = yield self._search(text)
+      return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase()
+    }),
+  }))
+  .actions(self => ({
+    addUsernameValidator: () => {
+      validate.validators.usernameUniqueValidator = value => {
+        if (!value) return new validate.Promise(res => res())
+        return new validate.Promise(resolve => {
+          self.queryUsername(value).then(res => {
+            res ? resolve('not available') : resolve()
+          })
+        })
+      }
+    },
+  }))
+  .actions(self => {
+    let wocky, handler1, handler2
     function afterAttach() {
       ;({wocky} = getParent(self))
-      addUsernameValidator()
-      handler1 = reaction(
-        () => self.global,
-        _searchGlobal
-        // NOTE: debouncing this reaction causes https://github.com/hippware/rn-chat/issues/2255
-        // , {
-        //   fireImmediately: false,
-        //   delay: 500,
-        // }
-      )
+      self.addUsernameValidator()
+      handler1 = reaction(() => self.global, text => self._searchGlobal(text), {
+        fireImmediately: false,
+        delay: 500,
+      })
 
       // set initial list to all friends
       when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends))
@@ -94,53 +144,7 @@ const SearchStore = types
       })
     }
 
-    const _searchGlobal = flow(function*(text) {
-      if (!text.length) {
-        self.globalResult.clear()
-      } else {
-        try {
-          const data = yield _search(text)
-          const profileArr = data.hits.map(hit => wocky.createProfile(hit.objectID, hit))
-          self.globalResult.replace(profileArr)
-        } catch (err) {
-          // console.log('data hit err', err);
-        }
-      }
-    })
-
-    function addUsernameValidator() {
-      validate.validators.usernameUniqueValidator = value => {
-        if (!value) return new validate.Promise(res => res())
-        return new validate.Promise(resolve => {
-          queryUsername(value).then(res => {
-            res ? resolve('not available') : resolve()
-          })
-        })
-      }
-    }
-
-    function _search(text) {
-      return new Promise((resolve, reject) => {
-        searchIndex.search(text, (err, content) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(content)
-          }
-        })
-      })
-    }
-
-    const queryUsername = flow(function*(text: string) {
-      const res = yield _search(text)
-      return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase()
-    })
-
-    function setGlobal(text: string) {
-      self.global = text
-    }
-
-    return {afterAttach, beforeDestroy, setGlobal, queryUsername, _searchGlobal}
+    return {afterAttach, beforeDestroy}
   })
 
 export default SearchStore
