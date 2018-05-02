@@ -216,6 +216,7 @@ class TinyRobotRouter extends React.Component<Props> {
           <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />
           <Scene key="locationPrimer" component={modals.LocationPrimer} />
           <Scene key="sharePresencePrimer" component={modals.SharePresencePrimer} />
+          <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
         </Lightbox>
       </Router>
     )

@@ -75,6 +75,7 @@ const Store = types
     // codePushChannel: types.string,
     locationPrimed: false,
     sharePresencePrimed: false,
+    guestOnce: false,
   })
   .views(self => ({
     get getImageSize() {
@@ -94,6 +95,9 @@ const Store = types
     },
     dismissSharePresencePrimer: () => {
       self.sharePresencePrimed = true
+    },
+    dismissFirstTimeGuestPrimer: () => {
+      self.guestOnce = true
     },
   }))
 
