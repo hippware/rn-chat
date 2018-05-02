@@ -137,20 +137,31 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<any> {
-    // console.log('& graphql load profile proceeding')
-    const res = await this.client.query<any>({
-      query: gql`
-        query LoadProfile {
-          user(id: "${user}") {
-            id
-            handle
-            phoneNumber
-            email
+    let res
+    const userProps = 'id handle phoneNumber email'
+    if (user === this.username) {
+      res = await this.client.query<any>({
+        query: gql`
+          query LoadOwnProfile {
+            currentUser {
+              ${userProps}
+            }
           }
-        }
-      `
-    })
-    return res.data.user
+        `
+      })
+      return res.data.currentUser
+    } else {
+      res = await this.client.query<any>({
+        query: gql`
+          query LoadProfile {
+            user(id: "${user}") {
+              ${userProps}
+            }
+          }
+        `
+      })
+      return res.data.user
+    }
   }
   async requestRoster(): Promise<[any]> {
     throw 'Not supported'

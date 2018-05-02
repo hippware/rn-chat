@@ -35,7 +35,7 @@ describe('GraphQL', () => {
       const profile = await gql.loadProfile(user.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user.username)
-      expect(profile.__typename).to.equal('User')
+      expect(profile.__typename).to.equal('CurrentUser')
       done()
     } catch (e) {
       done(e)
