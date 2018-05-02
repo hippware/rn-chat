@@ -11,12 +11,11 @@ import {IWocky} from 'wocky-client'
 const footprint = require('../../../images/footprintWarning.png')
 
 type Props = {
-  botId: string
   store?: any
   wocky?: IWocky
 }
 
-@inject('store', 'wocky')
+@inject('store')
 @observer
 class FirstTimeGuestPrimer extends React.Component<Props> {
   dismiss = () => {
@@ -36,9 +35,9 @@ class FirstTimeGuestPrimer extends React.Component<Props> {
           <RText style={styles.text} weight="Light" size={15} color={colors.DARK_GREY}>
             {"Awesome! We'll let you know when\r\n"}
             <Text style={styles.bold}>{'you '}</Text>
-            {'or '}
-            <Text style={styles.bold}>{'other visitors'}</Text>
-            {' are here'}
+            {'or'}
+            <Text style={styles.bold}>{' other visitors '}</Text>
+            {'are here'}
           </RText>
           <TouchableOpacity style={[styles.button]} onPress={this.dismiss}>
             <RText color="white" size={17.5}>
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
     borderRadius: 5 * k,
     backgroundColor: colors.PINK,
     alignItems: 'center',
-    // margin: 10 * k,
     marginHorizontal: 10 * k,
     marginTop: 20 * k,
     justifyContent: 'center',

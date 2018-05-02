@@ -121,7 +121,7 @@ const ShareButton = ({bot}: {bot: IBot}) => (
 )
 
 const GeofenceButton = inject('store')(
-  observer(({bot, style, store}: {bot: IBot; style: any; store: any}) => {
+  observer(({bot, style, store}: {bot: IBot; style: any; store?: any}) => {
     let onPress, buttonStyle, image
     if (bot.guest) {
       onPress = () =>
