@@ -120,35 +120,42 @@ const ShareButton = ({bot}: {bot: IBot}) => (
   </TouchableOpacity>
 )
 
-const GeofenceButton = observer(({bot, style}: {bot: IBot; style: any}) => {
-  let onPress, buttonStyle, image
-  if (bot.guest) {
-    onPress = () =>
-      Alert.alert(
-        '',
-        'Are you sure you want to stop sharing your presence? You will no longer see who’s here.',
-        [
-          {text: 'Cancel', style: 'cancel'},
-          {
-            text: 'Stop Sharing',
-            style: 'destructive',
-            onPress: () => bot.unsubscribeGeofence(),
-          },
-        ]
-      )
-    buttonStyle = [style, {marginRight: 10 * k}]
-    image = require('../../../images/whiteFoot.png')
-  } else {
-    onPress = () => bot.subscribeGeofence()
-    buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}]
-    image = require('../../../images/footIcon.png')
-  }
-  return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
-      <Image source={image} resizeMode="contain" />
-    </TouchableOpacity>
-  )
-})
+const GeofenceButton = inject('store')(
+  observer(({bot, style, store}: {bot: IBot; style: any; store: any}) => {
+    let onPress, buttonStyle, image
+    if (bot.guest) {
+      onPress = () =>
+        Alert.alert(
+          '',
+          'Are you sure you want to stop sharing your presence? You will no longer see who’s here.',
+          [
+            {text: 'Cancel', style: 'cancel'},
+            {
+              text: 'Stop Sharing',
+              style: 'destructive',
+              onPress: () => bot.unsubscribeGeofence(),
+            },
+          ]
+        )
+      buttonStyle = [style, {marginRight: 10 * k}]
+      image = require('../../../images/whiteFoot.png')
+    } else {
+      onPress = () => {
+        bot.subscribeGeofence()
+        if (!store.guestOnce) {
+          Actions.firstTimeGuest({botId: 'a5cb8b80-21a4-11e8-92d5-0a580a020603'})
+        }
+      }
+      buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}]
+      image = require('../../../images/footIcon.png')
+    }
+    return (
+      <TouchableOpacity onPress={onPress} style={buttonStyle}>
+        <Image source={image} resizeMode="contain" />
+      </TouchableOpacity>
+    )
+  })
+)
 
 const MultiButton = props => (
   <TouchableOpacity
