@@ -23,7 +23,8 @@
     "version:bump": "babel-node ./scripts/version-increment.js",
     "deploy:stage": "babel-node ./scripts/deploy-stage.js",
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
-    "detox": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "detox:debug": "detox test --configuration ios.sim.debug",
+    "detox:release": "detox test --configuration ios.sim.release",
     "precommit": "pretty-quick --staged"
   },
   "jest": {
