@@ -444,7 +444,7 @@ export class GraphQLTransport implements IWockyTransport {
 }
 
 function convertImage(image) {
-  return image ? {id: image.trosUrl, source: {uri: image.fullUrl}, thumbnail: {uri: image.thumbnailUrl}} : null
+  return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
 function convertProfile({avatar, ...data}) {
   return {avatar: convertImage(avatar), ...data}
