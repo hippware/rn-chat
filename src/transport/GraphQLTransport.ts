@@ -138,13 +138,15 @@ export class GraphQLTransport implements IWockyTransport {
 
   async loadProfile(user: string): Promise<any> {
     let res
-    const userProps = 'id handle phoneNumber email'
+    const userPropsPublic = 'id handle'
     if (user === this.username) {
       res = await this.client.query<any>({
         query: gql`
           query LoadOwnProfile {
             currentUser {
-              ${userProps}
+              ${userPropsPublic}
+              phoneNumber
+              email
             }
           }
         `
@@ -155,7 +157,7 @@ export class GraphQLTransport implements IWockyTransport {
         query: gql`
           query LoadProfile {
             user(id: "${user}") {
-              ${userProps}
+              ${userPropsPublic}
             }
           }
         `
