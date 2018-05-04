@@ -71,7 +71,7 @@ describe('Geofence', () => {
       await enterBot(user1)
       await waitFor(() => bot.visitors.list.length === 1)
       expect(bot.visitorsSize).to.equal(1)
-      expect(user1.activeBots.length).to.equal(2)
+      await waitFor(() => user1.activeBots.length === 2)
       done()
     } catch (e) {
       done(e)
