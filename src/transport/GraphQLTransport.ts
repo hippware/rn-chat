@@ -137,18 +137,15 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<any> {
-    // console.log('& graphql load profile proceeding')
     const res = await this.client.query<any>({
       query: gql`
-        query LoadProfile {
-          user(id: "${user}") {
-            id
-            handle
-            phoneNumber
-            email
+          query LoadProfile {
+            user(id: "${user}") {
+              ${PROFILE_PROPS}
+              ${user === this.username ? '... on CurrentUser { email phoneNumber }' : ''}
+            }
           }
-        }
-      `
+        `
     })
     return res.data.user
   }
@@ -177,26 +174,50 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.client.query<any>({
-      query: gql`
-        query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
-          user(id: $userId) {
-            id
-            bots(first: $max after: $after relationship: $relationship) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  ${BOT_PROPS}
+    let bots
+    if (userId === this.username) {
+      const res = await this.client.query<any>({
+        query: gql`
+          query loadBots($max: Int!, $ownUsername: String!, $after: String, $relationship: String!) {
+            currentUser {
+              id
+              bots(first: $max after: $after relationship: $relationship) {
+                totalCount
+                edges {
+                  cursor
+                  node {
+                    ${BOT_PROPS}
+                  }
                 }
               }
             }
           }
-        }        
-      `,
-      variables: {userId, after, max, ownUsername: this.username, relationship}
-    })
-    const {bots} = res.data.user
+        `,
+        variables: {after, max, ownUsername: this.username, relationship}
+      })
+      bots = res.data.currentUser.bots
+    } else {
+      const res = await this.client.query<any>({
+        query: gql`
+          query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
+            user(id: $userId) {
+              id
+              bots(first: $max after: $after relationship: $relationship) {
+                totalCount
+                edges {
+                  cursor
+                  node {
+                    ${BOT_PROPS}
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {userId, after, max, ownUsername: this.username, relationship}
+      })
+      bots = res.data.user.bots
+    }
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
