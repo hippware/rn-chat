@@ -61,40 +61,42 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
-  .actions(self => {
-    const transport: IWockyTransport = getEnv(self).transport
-    return {
-      loadProfile: flow(function*(id: string) {
-        const isOwn = id === self.username
-        const data = yield transport.loadProfile(id)
-        if (isOwn) {
-          if (!self.profile) {
-            const profile = self.create(OwnProfile, {id, ...self._registerReferences(Profile, data), loaded: true, status: 'available'})
-            self.profile = profile
-          } else {
-            self.load(self.profile, data)
-          }
-          if (self.profile.handle) self.sessionCount = 3
-        }
-        return self.profiles.get(id, data)
-      })
-    }
-  })
-  .extend(self => {
+  .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
       throw 'Server transport is not defined'
     }
     return {
+      get transport(): IWockyTransport {
+        return transport
+      },
+      get connected() {
+        return transport.connected
+      }
+    }
+  })
+  .actions(self => ({
+    loadProfile: flow(function*(id: string) {
+      yield waitFor(() => self.connected)
+      const isOwn = id === self.username
+      const data = yield self.transport.loadProfile(id)
+      if (isOwn) {
+        if (!self.profile) {
+          const profile = self.create(OwnProfile, {id, ...self._registerReferences(Profile, data), loaded: true, status: 'available'})
+          self.profile = profile
+        } else {
+          self.load(self.profile, data)
+        }
+        if (self.profile.handle) self.sessionCount = 3
+      }
+      return self.profiles.get(id, data)
+    })
+  }))
+  .extend(self => {
+    return {
       views: {
-        get transport(): IWockyTransport {
-          return transport
-        },
-        get connected() {
-          return transport.connected
-        },
         get connecting() {
-          return transport.connecting
+          return self.transport.connecting
         },
         get sortedRoster(): Array<IProfile> {
           return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
@@ -127,7 +129,7 @@ export const Wocky = types
           if (!self.username || !self.password || !self.host) {
             throw `Cannot login without username/password/host:${self.username},${self.password},${self.host}`
           }
-          yield transport.login(self.username!, self.password!, self.host)
+          yield self.transport.login(self.username!, self.password!, self.host)
           yield self.loadProfile(self.username)
 
           self.sessionCount++
@@ -137,30 +139,30 @@ export const Wocky = types
           if (self.profile) {
             self.profile!.status = 'unavailable'
           }
-          yield transport.disconnect()
+          yield self.transport.disconnect()
         }),
         remove: flow(function*() {
-          yield transport.remove()
+          yield self.transport.remove()
         }),
         register: flow(function*(data: any, providerName: string) {
-          const res = yield transport.register(data, self.host, providerName)
+          const res = yield self.transport.register(data, self.host, providerName)
           Object.assign(self, res)
           return true
         }),
         testRegister: flow(function*(data: any) {
-          const res = yield transport.testRegister(data, self.host)
+          const res = yield self.transport.testRegister(data, self.host)
           Object.assign(self, res)
           return true
         }),
         _requestProfiles: flow(function*(users: string[]) {
-          const arr = yield transport.requestProfiles(users)
+          const arr = yield self.transport.requestProfiles(users)
           return arr.map((user: any) => self.profiles.get(user.id, user))
         }),
         _updateProfile: flow(function*(d: Object) {
-          yield transport.updateProfile(d)
+          yield self.transport.updateProfile(d)
         }),
         lookup: flow<string>(function*(handle: string) {
-          const profile = yield transport.lookup(handle)
+          const profile = yield self.transport.lookup(handle)
           return self.profiles.get(profile.id, profile)
         }),
         createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id}))
