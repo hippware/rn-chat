@@ -19,8 +19,8 @@ type Props = {
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   render() {
     const {wocky, onLayout} = this.props
-    const {profile} = wocky!
-    return wocky!.connected && profile && profile.handle && !!profile.activeBots.length ? (
+    const {activeBots} = wocky!
+    return !!activeBots.length ? (
       <View style={{backgroundColor: 'white'}} onLayout={onLayout}>
         <RText
           size={13}
@@ -31,7 +31,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           {"See Who's Here"}
         </RText>
         <FlatList
-          data={profile.activeBots}
+          data={activeBots}
           horizontal
           keyExtractor={this.keyExtractor}
           renderItem={this.renderActiveBot}
