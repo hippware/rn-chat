@@ -7,6 +7,7 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
+import FirstLoadOverlay from './FirstLoadOverlay'
 import {IBot, IWocky} from 'wocky-client'
 
 type Props = {
@@ -38,6 +39,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           showsHorizontalScrollIndicator={false}
         />
         <HeaderLocationOverlay />
+        <FirstLoadOverlay />
       </View>
     ) : null
   }
