@@ -9,7 +9,7 @@ import {when} from 'mobx'
 // const token = '$T$AFNkdiDaQHC/lI4o2xzmmf4pQ+LaHF39STooScbv6E4='
 
 const host = 'testing.dev.tinyrobot.com'
-let gql: GraphQLTransport, user: IWocky
+let gql: GraphQLTransport, user, user2: IWocky
 let bot, bot2: IBot
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
@@ -17,6 +17,7 @@ describe('GraphQL', () => {
   before('get credentials via XMPP', async done => {
     try {
       user = await createXmpp(35)
+      user2 = await createXmpp(36)
       await waitFor(() => user.profile !== null)
       await user.profile!.update({handle: 'abc134567', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
       // console.log('credentials', user.username, user.password)
@@ -35,7 +36,23 @@ describe('GraphQL', () => {
       const profile = await gql.loadProfile(user.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user.username)
-      expect(profile.__typename).to.equal('User')
+      expect(profile.email).to.equal('a@aa.com')
+      expect(profile.phoneNumber).to.equal('+155500000035')
+      expect(profile.__typename).to.equal('CurrentUser')
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('loads other profile', async done => {
+    try {
+      const profile = await gql.loadProfile(user2.username!)
+      // console.log('PROFILE:', JSON.stringify(profile))
+      expect(profile.id).to.equal(user2.username)
+      expect(profile.email).to.be.undefined
+      expect(profile.phoneNumber).to.be.undefined
+      expect(profile.__typename).to.equal('OtherUser')
       done()
     } catch (e) {
       done(e)
@@ -123,6 +140,7 @@ describe('GraphQL', () => {
   after('remove', async done => {
     try {
       await user.remove()
+      await user2.remove()
     } catch (e) {
       console.log(e)
     }
