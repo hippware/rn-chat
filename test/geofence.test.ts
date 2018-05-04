@@ -8,12 +8,12 @@ let bot: IBot, bot2: IBot, loadedBot: IBot
 
 async function enterBot(user: IWocky) {
   await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
-  await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+  user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
 }
 
 async function exitBot(user: IWocky) {
   await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
-  await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+  user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
 }
 
 describe('Geofence', () => {
