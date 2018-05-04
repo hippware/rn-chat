@@ -537,6 +537,7 @@ export const Wocky = types
   }))
   .actions(self => {
     function clearCache() {
+      self.geofenceBots.clear()
       self.profiles.clear()
       self.roster.clear()
       self.chats.clear()
