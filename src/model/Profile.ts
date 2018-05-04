@@ -111,14 +111,7 @@ export const Profile = types
           return geofenceBots
         },
         get activeBots(): Array<IBot> {
-          const arr = geofenceBots.list.filter((bot: IBot) => bot.visitorsSize).map((data, index) => ({data, index}))
-          return arr
-            .sort((a, b) => {
-              if (a.data.visitor && !b.data.visitor) return -1
-              if (!a.data.visitor && b.data.visitor) return 1
-              return a.index - b.index
-            })
-            .map(rec => rec.data)
+          return geofenceBots.list.filter((bot: IBot) => bot.visitorsSize)
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {

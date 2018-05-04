@@ -124,6 +124,12 @@ export const Bot = types
       if (data.addressData && typeof data.addressData === 'string') {
         data.addressData = JSON.parse(data.addressData)
       }
+      // load visitors
+      if (data.visitors) {
+        self.visitors.refresh()
+        data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
+        delete data.visitors
+      }
       Object.assign(self, data)
     }
   }))

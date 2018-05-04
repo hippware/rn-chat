@@ -454,6 +454,7 @@ export const Wocky = types
           botModel.visitor = true
         }
         botModel.visitorsSize = bot.visitorsSize
+        self.profile!.geofenceBots.remove(botModel.id)
         self.profile!.geofenceBots.addToTop(botModel)
       } else {
         if (id === self.username) {
