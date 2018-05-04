@@ -98,7 +98,7 @@ export const Bot = types
       self.isSubscribed = true
       self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
-      self.service.profile!.geofenceBots.addToTop(self)
+      self.service.geofenceBots.addToTop(self)
       self.followersSize = yield self.service._subscribeGeofenceBot(self.id)
     }),
     unsubscribe: flow(function*() {
@@ -110,7 +110,7 @@ export const Bot = types
     unsubscribeGeofence: flow(function*() {
       self.guest = false
       self.service.profile!.subscribedBots.remove(self.id)
-      self.service.profile!.geofenceBots.remove(self.id)
+      self.service.geofenceBots.remove(self.id)
       self.followersSize = yield self.service._unsubscribeGeofenceBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', action: string = 'share') => {

@@ -71,7 +71,7 @@ describe('Geofence', () => {
       await enterBot(user1)
       await waitFor(() => bot.visitors.list.length === 1)
       expect(bot.visitorsSize).to.equal(1)
-      expect(user1.profile.activeBots.length).to.equal(2)
+      expect(user1.activeBots.length).to.equal(2)
       done()
     } catch (e) {
       done(e)
@@ -87,7 +87,7 @@ describe('Geofence', () => {
       await exitBot(user1)
       await waitFor(() => bot.visitors.list.length === 0)
       expect(bot.visitorsSize).to.equal(0)
-      await waitFor(() => user1.profile.activeBots.length === 0)
+      await waitFor(() => user1.activeBots.length === 0)
       done()
     } catch (e) {
       done(e)
@@ -151,13 +151,13 @@ describe('Geofence', () => {
   it('user2 enters the bot and verify activeBots', async done => {
     try {
       expect(bot.visitorsSize).to.equal(0)
-      expect(user1.profile.activeBots.length).to.equal(0)
+      expect(user1.activeBots.length).to.equal(0)
       await enterBot(user1)
       await enterBot(user2)
       await waitFor(() => bot.visitorsSize === 2)
-      expect(user1.profile.activeBots.length).to.equal(2)
-      expect(user1.profile.activeBots[0].title).to.equal('Test bot')
-      expect(user1.profile.activeBots[1].title).to.equal('Test bot2')
+      expect(user1.activeBots.length).to.equal(2)
+      expect(user1.activeBots[0].title).to.equal('Test bot')
+      expect(user1.activeBots[1].title).to.equal('Test bot2')
       done()
     } catch (e) {
       done(e)
@@ -166,15 +166,15 @@ describe('Geofence', () => {
 
   it('verify activeBots after refresh', async done => {
     try {
-      await user1.profile.geofenceBots.refresh()
-      expect(user1.profile.activeBots.length).to.equal(0)
-      await user1.profile.geofenceBots.load()
-      expect(user1.profile.activeBots.length).to.equal(2)
-      expect(user1.profile.activeBots[0].title).to.equal('Test bot')
-      expect(user1.profile.activeBots[0].visitors.list.length).to.equal(1) // load only last visitor!
-      expect(user1.profile.activeBots[0].visitors.list[0].id).to.equal(user2.username)
-      expect(user1.profile.activeBots[1].title).to.equal('Test bot2')
-      expect(user1.profile.activeBots[1].visitors.list.length).to.equal(1)
+      await user1.geofenceBots.refresh()
+      expect(user1.activeBots.length).to.equal(0)
+      await user1.geofenceBots.load()
+      expect(user1.activeBots.length).to.equal(2)
+      expect(user1.activeBots[0].title).to.equal('Test bot')
+      expect(user1.activeBots[0].visitors.list.length).to.equal(1) // load only last visitor!
+      expect(user1.activeBots[0].visitors.list[0].id).to.equal(user2.username)
+      expect(user1.activeBots[1].title).to.equal('Test bot2')
+      expect(user1.activeBots[1].visitors.list.length).to.equal(1)
       done()
     } catch (e) {
       done(e)
