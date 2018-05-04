@@ -16,6 +16,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * App crash with onboarding new user with blank username (#2268)
   * New bypass account can't be created due to username (#2271)
 * Geofence: Pop-up for first time users (#2195)
+* Add bot image id to the bot marker key/hash (PR #2275)
+  * Bot Edit: Changing the cover image does not show new image until leaving the bot (#2202)
 
 # 2.6.1 - 2018 Apr 29
 
