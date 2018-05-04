@@ -6,7 +6,7 @@ import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
-import {Bot, IBot} from '../model/Bot'
+import {Bot, IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {EventBotCreate} from '../model/EventBotCreate'
 import {EventBotPost} from '../model/EventBotPost'
@@ -54,6 +54,7 @@ export const Wocky = types
       profile: types.maybe(OwnProfile),
       updates: types.optional(types.array(EventEntity), []),
       events: types.optional(EventList, {}),
+      geofenceBots: types.optional(BotPaginableList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {}),
       chats: types.optional(Chats, Chats.create()),
       version: ''
@@ -167,6 +168,16 @@ export const Wocky = types
     }
   })
   .views(self => ({
+    get activeBots(): Array<IBot> {
+      const arr = self.geofenceBots.list.filter((bot: IBot) => bot.visitorsSize).map((data, index) => ({data, index}))
+      return arr
+        .sort((a, b) => {
+          if (a.data.visitor && !b.data.visitor) return -1
+          if (!a.data.visitor && b.data.visitor) return 1
+          return a.index - b.index
+        })
+        .map(rec => rec.data)
+    },
     get all() {
       return self.sortedRoster.filter(x => !x.isBlocked)
     },
@@ -303,9 +314,9 @@ export const Wocky = types
       const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
-    _loadGeofenceBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+    _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadGeofenceBots(userId, lastId, max)
+      const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
@@ -454,7 +465,8 @@ export const Wocky = types
           botModel.visitor = true
         }
         botModel.visitorsSize = bot.visitorsSize
-        self.profile!.geofenceBots.addToTop(botModel)
+        self.geofenceBots.remove(botModel.id)
+        self.geofenceBots.addToTop(botModel)
       } else {
         if (id === self.username) {
           botModel.visitor = false
@@ -532,6 +544,7 @@ export const Wocky = types
   }))
   .actions(self => {
     function clearCache() {
+      self.geofenceBots.refresh()
       self.profiles.clear()
       self.roster.clear()
       self.chats.clear()
@@ -556,12 +569,12 @@ export const Wocky = types
       }),
       afterCreate: () => {
         self.events.setRequest(self._loadHomestream)
+        self.geofenceBots.setRequest(self._loadGeofenceBots)
         reaction(
           () => self.profile && self.connected,
           async (connected: boolean) => {
             if (connected) {
-              self.profile!.geofenceBots.refresh()
-              self.profile!.geofenceBots.load()
+              self.geofenceBots.load({refresh: true})
               await self.loadChats()
               self.requestRoster()
               if (!self.version) {

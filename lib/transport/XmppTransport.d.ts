@@ -81,7 +81,7 @@ export declare class XmppTransport implements IWockyTransport {
     }>>;
     generateId(): Promise<any>;
     removeBot(id: string): Promise<void>;
-    loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
+    loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>;
     loadOwnBots(userId: string, lastId?: string, max?: number): Promise<{
         list: any;
         count: number;

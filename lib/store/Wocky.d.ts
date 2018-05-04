@@ -132,8 +132,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -247,8 +245,6 @@ export declare const EventEntity: IType<({
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -357,8 +353,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -451,8 +445,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -566,8 +558,6 @@ export declare const EventEntity: IType<({
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -694,8 +684,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -809,8 +797,6 @@ export declare const EventEntity: IType<({
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -913,8 +899,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -1018,8 +1002,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -1133,8 +1115,6 @@ export declare const EventEntity: IType<({
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -1261,8 +1241,6 @@ export declare const EventEntity: IType<({
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -1376,8 +1354,6 @@ export declare const EventEntity: IType<({
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -1462,8 +1438,6 @@ export declare const EventEntity: IType<({
         readonly followed: any;
         readonly ownBots: any;
         readonly subscribedBots: any;
-        readonly geofenceBots: any;
-        readonly activeBots: IBot[];
         readonly displayName: string;
     } & {
         readonly $treenode?: any;
@@ -1512,6 +1486,7 @@ export declare const Wocky: IModelType<{
     profile?: any;
     updates?: any;
     events?: any;
+    geofenceBots?: any;
     geoBots?: any;
     chats?: any;
     version?: any;
@@ -1630,8 +1605,6 @@ export declare const Wocky: IModelType<{
         readonly followed: any;
         readonly ownBots: any;
         readonly subscribedBots: any;
-        readonly geofenceBots: any;
-        readonly activeBots: IBot[];
         readonly displayName: string;
     } & {
         readonly $treenode?: any;
@@ -1677,8 +1650,6 @@ export declare const Wocky: IModelType<{
         readonly followed: any;
         readonly ownBots: any;
         readonly subscribedBots: any;
-        readonly geofenceBots: any;
-        readonly activeBots: IBot[];
         readonly displayName: string;
     } & {
         uploading: boolean;
@@ -1779,8 +1750,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -1894,8 +1863,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -2004,8 +1971,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -2098,8 +2063,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -2213,8 +2176,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -2341,8 +2302,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -2456,8 +2415,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -2560,8 +2517,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -2665,8 +2620,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -2780,8 +2733,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -2908,8 +2859,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -3023,8 +2972,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -3109,8 +3056,6 @@ export declare const Wocky: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -3185,6 +3130,7 @@ export declare const Wocky: IModelType<{
         delete?: any;
     }))[]>;
     events: any;
+    geofenceBots: any;
     geoBots: IExtendedObservableMap<{
         id: string;
     } & {
@@ -3251,8 +3197,6 @@ export declare const Wocky: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -3366,8 +3310,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -3461,8 +3403,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -3525,8 +3465,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -3616,8 +3554,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -3698,8 +3634,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -3771,8 +3705,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -3836,8 +3768,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -3915,8 +3845,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4002,8 +3930,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4090,8 +4016,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -4154,8 +4078,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4245,8 +4167,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4327,8 +4247,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4400,8 +4318,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -4465,8 +4381,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4544,8 +4458,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4631,8 +4543,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4708,8 +4618,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -4772,8 +4680,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4863,8 +4769,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -4945,8 +4849,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5018,8 +4920,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -5083,8 +4983,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5162,8 +5060,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5249,8 +5145,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5328,8 +5222,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -5392,8 +5284,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5483,8 +5373,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5565,8 +5453,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5638,8 +5524,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -5703,8 +5587,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5782,8 +5664,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5869,8 +5749,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -5945,8 +5823,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -6009,8 +5885,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6100,8 +5974,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6182,8 +6054,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6255,8 +6125,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -6320,8 +6188,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6399,8 +6265,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6486,8 +6350,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6615,8 +6477,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -6730,8 +6590,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -6840,8 +6698,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -6934,8 +6790,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -7049,8 +6903,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -7177,8 +7029,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -7292,8 +7142,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -7396,8 +7244,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -7501,8 +7347,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -7616,8 +7460,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -7744,8 +7586,6 @@ export declare const Wocky: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -7859,8 +7699,6 @@ export declare const Wocky: IModelType<{
                     readonly followed: any;
                     readonly ownBots: any;
                     readonly subscribedBots: any;
-                    readonly geofenceBots: any;
-                    readonly activeBots: IBot[];
                     readonly displayName: string;
                 } & {
                     readonly $treenode?: any;
@@ -7945,8 +7783,6 @@ export declare const Wocky: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -7973,6 +7809,7 @@ export declare const Wocky: IModelType<{
         readonly $treenode?: any;
     }))[];
 } & {
+    readonly activeBots: IBot[];
     readonly all: IProfile[];
     readonly blocked: IProfile[];
     readonly friends: IProfile[];
@@ -8007,7 +7844,7 @@ export declare const Wocky: IModelType<{
 } & {
     createBot: () => Promise<IBot>;
     _loadOwnBots: (a1: string) => Promise<any>;
-    _loadGeofenceBots: (a1: string) => Promise<any>;
+    _loadGeofenceBots: () => Promise<{}>;
     _loadBotSubscribers: (a1: string) => Promise<any>;
     _loadBotGuests: (a1: string) => Promise<any>;
     _loadBotVisitors: (a1: string) => Promise<any>;
@@ -8080,8 +7917,6 @@ export declare const Wocky: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -8157,8 +7992,6 @@ export declare const Wocky: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;

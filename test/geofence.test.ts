@@ -4,14 +4,26 @@ import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
 
 let user1: IWocky, user2: IWocky
-let bot: IBot, loadedBot: IBot
+let bot: IBot, bot2: IBot, loadedBot: IBot
+
+async function enterBot(user: IWocky) {
+  await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+  await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+}
+
+async function exitBot(user: IWocky) {
+  await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+  await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+}
+
 describe('Geofence', () => {
   before(async done => {
     try {
       user1 = await createXmpp(26)
+      console.log('credentials', user1.username, user1.password)
       user2 = await createXmpp(27)
-      await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
-      await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+      await exitBot(user1)
+      await exitBot(user2)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
       await user1.profile!.update({handle: 'abcc3', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
@@ -37,11 +49,14 @@ describe('Geofence', () => {
       done(e)
     }
   })
-  it('load geofence bots', async done => {
+  it('creates a geofence bot2', async done => {
     try {
-      await user1.profile.geofenceBots.refresh()
-      await user1.profile.geofenceBots.load()
-      expect(user1.profile.geofenceBots.list.length).to.equal(1)
+      bot2 = await user1.createBot()
+      await bot2.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot2', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
+      // console.log('bot updated', bot.toJSON())
+      expect(bot2.geofence).to.be.true
+      expect(bot2.visitorsSize).to.equal(0)
+      expect(bot2.guestsSize).to.equal(0)
       done()
     } catch (e) {
       done(e)
@@ -53,11 +68,10 @@ describe('Geofence', () => {
       await bot.visitors.load!()
       expect(bot.visitors.list.length).to.equal(0)
       expect(bot.visitorsSize).to.equal(0)
-      await user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
-      user1.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+      await enterBot(user1)
       await waitFor(() => bot.visitors.list.length === 1)
       expect(bot.visitorsSize).to.equal(1)
-      expect(user1.profile.activeBots.length).to.equal(1)
+      expect(user1.activeBots.length).to.equal(2)
       done()
     } catch (e) {
       done(e)
@@ -70,11 +84,10 @@ describe('Geofence', () => {
       expect(bot.visitors.list.length).to.equal(0)
       await bot.visitors.load!()
       expect(bot.visitors.list.length).to.equal(1)
-      await user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
-      user1.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+      await exitBot(user1)
       await waitFor(() => bot.visitors.list.length === 0)
       expect(bot.visitorsSize).to.equal(0)
-      expect(user1.profile.activeBots.length).to.equal(0)
+      await waitFor(() => user1.activeBots.length === 0)
       done()
     } catch (e) {
       done(e)
@@ -135,6 +148,38 @@ describe('Geofence', () => {
       done(e)
     }
   })
+  it('user2 enters the bot and verify activeBots', async done => {
+    try {
+      expect(bot.visitorsSize).to.equal(0)
+      expect(user1.activeBots.length).to.equal(0)
+      await enterBot(user1)
+      await enterBot(user2)
+      await waitFor(() => bot.visitorsSize === 2)
+      expect(user1.activeBots.length).to.equal(2)
+      expect(user1.activeBots[0].title).to.equal('Test bot')
+      expect(user1.activeBots[1].title).to.equal('Test bot2')
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('verify activeBots after refresh', async done => {
+    try {
+      await user1.geofenceBots.refresh()
+      expect(user1.activeBots.length).to.equal(0)
+      await user1.geofenceBots.load()
+      expect(user1.activeBots.length).to.equal(2)
+      expect(user1.activeBots[0].title).to.equal('Test bot')
+      expect(user1.activeBots[0].visitors.list.length).to.equal(1) // load only last visitor!
+      expect(user1.activeBots[0].visitors.list[0].id).to.equal(user2.username)
+      expect(user1.activeBots[1].title).to.equal('Test bot2')
+      expect(user1.activeBots[1].visitors.list.length).to.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   it('geofence unsubscribe', async done => {
     try {
       await loadedBot.unsubscribeGeofence()
@@ -183,7 +228,7 @@ describe('Geofence', () => {
 
   after('remove', async done => {
     try {
-      await user1.removeBot(loadedBot.id)
+      await user2.removeBot(loadedBot.id)
     } catch (e) {}
     try {
       await user1.removeBot(bot.id)

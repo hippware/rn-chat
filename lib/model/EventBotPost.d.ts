@@ -91,8 +91,6 @@ export declare const EventBotPost: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
@@ -206,8 +204,6 @@ export declare const EventBotPost: IModelType<{
                 readonly followed: any;
                 readonly ownBots: any;
                 readonly subscribedBots: any;
-                readonly geofenceBots: any;
-                readonly activeBots: IBot[];
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
@@ -316,8 +312,6 @@ export declare const EventBotPost: IModelType<{
             readonly followed: any;
             readonly ownBots: any;
             readonly subscribedBots: any;
-            readonly geofenceBots: any;
-            readonly activeBots: IBot[];
             readonly displayName: string;
         } & {
             readonly $treenode?: any;

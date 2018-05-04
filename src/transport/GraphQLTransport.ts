@@ -306,10 +306,40 @@ export class GraphQLTransport implements IWockyTransport {
   async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     return await this._loadBots('SUBSCRIBED', userId, lastId, max)
   }
-  async loadGeofenceBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+  async loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList> {
     // load all guest bots
-    const res = await this._loadBots('GUEST', userId, lastId, 100)
-    return res
+    const res = await this.client.query<any>({
+      query: gql`
+        query getActiveBots($ownUsername: String!) {
+          currentUser {
+            id
+            activeBots(first: 20) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${BOT_PROPS}
+                  visitors: subscribers(first: 1, type: VISITOR) {
+                    edges {
+                      cursor
+                      node {
+                        ${PROFILE_PROPS}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        ownUsername: this.username
+      }
+    })
+    const bots = res.data.currentUser.activeBots
+    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
+    return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     throw 'Not supported'
@@ -470,7 +500,7 @@ function convertImage(image) {
 function convertProfile({avatar, ...data}) {
   return {avatar: convertImage(avatar), ...data}
 }
-function convertBot({lat, lon, image, addressData, isPublic, owner, items, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
+function convertBot({lat, lon, image, addressData, isPublic, owner, items, visitors, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
   try {
     const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
     const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
@@ -481,6 +511,7 @@ function convertBot({lat, lon, image, addressData, isPublic, owner, items, subsc
       addressData: addressData || {},
       totalItems: items ? items.totalCount : 0,
       followersSize: subscriberCount.totalCount - 1,
+      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
       visitorsSize: visitorCount.totalCount,
       guestsSize: guestCount.totalCount,
       location: {latitude: lat, longitude: lon},

@@ -580,7 +580,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host}).c('delete', {xmlns: BOT_NS, node: `bot/${id}`})
     await this.sendIQ(iq)
   }
-  async loadGeofenceBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadGeofenceBots(lastId?: string, max: number = 10): Promise<IPagingList> {
     throw new Error('Not supported')
   }
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
