@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList} from 'react-native'
+import {View, FlatList, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
 import {k} from '../Global'
@@ -32,14 +32,17 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         >
           {"See Who's Here"}
         </RText>
-        <FlatList
-          data={activeBots}
-          horizontal
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderActiveBot}
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={<ActiveBannerPlaceholder />}
-        />
+        <View>
+          <FlatList
+            data={activeBots}
+            horizontal
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderActiveBot}
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={<ActiveBannerPlaceholder />}
+          />
+          {!wocky!.connected && <View style={styles.overlay} />}
+        </View>
         <HeaderLocationOverlay />
         <FirstLoadOverlay />
       </View>
@@ -50,3 +53,14 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
 
   renderActiveBot = ({item}: {item: IBot}) => <ActiveGeofenceBot bot={item} />
 }
+
+const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: colors.addAlpha(colors.WHITE, 0.7),
+  },
+})
