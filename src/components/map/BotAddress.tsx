@@ -57,8 +57,8 @@ class BotAddress extends React.Component<Props> {
 
   onLocationChange = async location => {
     if (this.mapReady) {
-      if (!this.props.edit && this.initialLocationLoaded) {
-        // prevent initial location set for botCreate
+      if (this.props.edit || this.initialLocationLoaded) {
+        // prevent initial, automatic onLocationChange for botCreate
         this.location = location
       } else {
         this.initialLocationLoaded = true
