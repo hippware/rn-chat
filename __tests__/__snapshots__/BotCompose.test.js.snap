@@ -1074,6 +1074,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "totalItems": 0,
                       "visibility": 100,
                       "visitor": false,
+                      "visitors": Object {
+                        "count": null,
+                        "cursor": null,
+                        "result": Array [],
+                      },
                       "visitorsSize": 0,
                     }
                   }
@@ -1132,6 +1137,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "totalItems": 0,
                         "visibility": 100,
                         "visitor": false,
+                        "visitors": Object {
+                          "count": null,
+                          "cursor": null,
+                          "result": Array [],
+                        },
                         "visitorsSize": 0,
                       },
                       "4321": Object {
@@ -1162,6 +1172,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "totalItems": 0,
                         "visibility": 100,
                         "visitor": false,
+                        "visitors": Object {
+                          "count": null,
+                          "cursor": null,
+                          "result": Array [],
+                        },
                         "visitorsSize": 0,
                       },
                     },
@@ -1170,6 +1185,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "_list": Array [],
                   },
                   "events": Object {
+                    "count": null,
+                    "cursor": null,
+                    "result": Array [],
+                  },
+                  "geofenceBots": Object {
                     "count": null,
                     "cursor": null,
                     "result": Array [],

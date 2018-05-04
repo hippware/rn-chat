@@ -14,14 +14,10 @@ type Props = {
 
 @observer
 class VisitorHeads extends React.Component<Props> {
-  componentDidMount() {
-    this.props.bot.visitors.load!()
-  }
-
   render() {
     const {list} = this.props.bot.visitors!
     const profile = list!.length ? list![0] : null
-    const rest = list!.length - 1
+    const rest = this.props.bot.visitorsSize - 1
     const size = 30
     return profile ? (
       <View style={{position: 'absolute', top: -15, right: -8}}>
