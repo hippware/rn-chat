@@ -1,6 +1,5 @@
 import { IModelType, IType, ISnapshottable } from 'mobx-state-tree';
 import { IPaginable } from './PaginableList';
-import { IBot } from './Bot';
 import { IObservableArray } from 'mobx';
 export declare type __IObs = IObservableArray<any>;
 export declare type __ISnap = ISnapshottable<any>;
@@ -63,8 +62,6 @@ export declare const Profile: IModelType<{
     readonly followed: any;
     readonly ownBots: any;
     readonly subscribedBots: any;
-    readonly geofenceBots: any;
-    readonly activeBots: IBot[];
     readonly displayName: string;
 }>;
 export declare const ProfilePaginableList: IPaginable;
@@ -113,8 +110,6 @@ export declare const ProfileRef: IType<string | number | null | undefined, ({
     readonly followed: any;
     readonly ownBots: any;
     readonly subscribedBots: any;
-    readonly geofenceBots: any;
-    readonly activeBots: IBot[];
     readonly displayName: string;
 } & {
     readonly $treenode?: any;

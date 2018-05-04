@@ -4,7 +4,7 @@ import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable, IPaginable} from './PaginableList'
-import {IBotPaginableList, IBot} from './Bot'
+import {IBotPaginableList} from './Bot'
 import {IObservableArray} from 'mobx'
 
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
@@ -35,7 +35,7 @@ export const Profile = types
   )
   .named('Profile')
   .extend(self => {
-    let followers: IProfilePaginableListType, followed: IProfilePaginableListType, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList, geofenceBots: IBotPaginableList
+    let followers: IProfilePaginableListType, followed: IProfilePaginableListType, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
     const {BotPaginableList} = require('./Bot')
     return {
       actions: {
@@ -49,8 +49,6 @@ export const Profile = types
             ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             subscribedBots = BotPaginableList.create({})
             subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
-            geofenceBots = BotPaginableList.create({})
-            geofenceBots.setRequest(self.service._loadGeofenceBots.bind(self.service, self.id))
             if (!self.loaded) {
               self.service.loadProfile(self.id)
             }
@@ -106,12 +104,6 @@ export const Profile = types
         },
         get subscribedBots(): IBotPaginableList {
           return subscribedBots
-        },
-        get geofenceBots(): IBotPaginableList {
-          return geofenceBots
-        },
-        get activeBots(): Array<IBot> {
-          return geofenceBots.list.filter((bot: IBot) => bot.visitorsSize)
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {

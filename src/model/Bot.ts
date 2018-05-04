@@ -146,7 +146,6 @@ export const Bot = types
       delete res.error
       delete res.subscribers
       delete res.guests
-      delete res.visitors
       return res
     }
   }))
