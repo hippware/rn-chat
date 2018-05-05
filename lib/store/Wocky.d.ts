@@ -6381,6 +6381,9 @@ export declare const Wocky: IModelType<{
     };
     version: string;
 } & {
+    readonly transport: IWockyTransport;
+    readonly connected: boolean;
+} & {
     loadProfile: (a1: string) => Promise<any>;
 } & {
     postProcessSnapshot: (snapshot: any) => any;
@@ -6394,8 +6397,6 @@ export declare const Wocky: IModelType<{
     lookup: (a1: string) => Promise<any>;
     createChat: (id: string) => IChat;
 } & {
-    readonly transport: IWockyTransport;
-    readonly connected: boolean;
     readonly connecting: boolean;
     readonly sortedRoster: IProfile[];
     readonly updatesToAdd: (({

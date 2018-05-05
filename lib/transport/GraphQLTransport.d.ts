@@ -3,6 +3,7 @@
 import { ApolloClient } from 'apollo-client';
 import { IWockyTransport, IPagingList } from './IWockyTransport';
 import { Socket as PhoenixSocket } from 'phoenix';
+import { IProfilePartial } from '../model/Profile';
 import { ILocationSnapshot } from '..';
 export declare class GraphQLTransport implements IWockyTransport {
     resource: string;
@@ -23,7 +24,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     constructor(resource: string);
     login(user?: string, password?: string, host?: string): Promise<boolean>;
     authenticate(user: string, token: string): Promise<boolean>;
-    loadProfile(user: string): Promise<any>;
+    loadProfile(user: string): Promise<IProfilePartial>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
     loadBot(id: string, server: any): Promise<any>;

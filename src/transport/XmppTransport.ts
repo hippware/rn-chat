@@ -4,6 +4,7 @@ import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
+import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 const TIMEOUT = 30000
 const BOT_NS = 'hippware.com/hxep/bot'
@@ -199,7 +200,7 @@ export class XmppTransport implements IWockyTransport {
       )
     )
   }
-  async loadProfile(user: string) {
+  async loadProfile(user: string): Promise<IProfilePartial> {
     const id = user
     const isOwn = id === this.username
     const node = `user/${user}`
@@ -213,7 +214,8 @@ export class XmppTransport implements IWockyTransport {
       iq = iq.c('field', {var: field}).up()
     })
     const stanza = await this.sendIQ(iq)
-    return {id, ...processMap(stanza)}
+    console.log('loadProfile XMPP', {id, ...processMap(stanza)})
+    return {id, ...processMap(stanza)} as IProfilePartial
   }
   async requestProfiles(users: string[]): Promise<any> {
     if (!users || !users.length) {

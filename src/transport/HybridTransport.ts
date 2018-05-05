@@ -1,4 +1,5 @@
 import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
+import {IProfilePartial} from '../model/Profile'
 import {computed} from 'mobx'
 
 export class HybridTransport implements IWockyTransport {
@@ -88,8 +89,9 @@ export class HybridTransport implements IWockyTransport {
     console.log('& hybridtransport disconnected')
   }
 
-  loadProfile(user: string): Promise<any> {
-    return this._xmpp.loadProfile(user)
+  loadProfile(user: string): Promise<IProfilePartial> {
+    return this._gql.loadProfile(user)
+    // return this._xmpp.loadProfile(user)
   }
 
   requestProfiles(users: string[]): Promise<any> {
