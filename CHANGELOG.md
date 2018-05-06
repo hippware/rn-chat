@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 2.6.2 - 2018 may 4
+# 2.6.2 - 2018 May 4
 
 * More typescript conversion (PR #2250)
 * Set correct resource id on rnbgl http calls (PR #2261)
