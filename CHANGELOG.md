@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.2 - 2018 may 4
+
 * More typescript conversion (PR #2250)
 * Set correct resource id on rnbgl http calls (PR #2261)
   * Related: Display list of recent location data points (debug) (#2223)
@@ -18,6 +20,18 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Geofence: Pop-up for first time users (#2195)
 * Add bot image id to the bot marker key/hash (PR #2275)
   * Bot Edit: Changing the cover image does not show new image until leaving the bot (#2202)
+* Correct conditional logic of PR #2251 (PR #2276)
+  * Reworks: Bot Creation: Search field and Keyboard slide away (#2138)
+  * Fixes: Bot Edit: Unable to change bot location (#2272)
+* Use new 'active bots' query from wocky-client (PR #2282)
+  * Bug: Order of the bots on widget is incorrect (#2244)
+  * Some changes for: Geofence Widget: Improvements (#2243)
+* Pink blank cover images (#2225)
+
+* wocky-client
+  * New 'currentUser' query
+  * Don't use amazon urls as file uri
+  * New 'active bots' query
 
 # 2.6.1 - 2018 Apr 29
 
