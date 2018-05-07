@@ -20,7 +20,7 @@ class VisitorHeads extends React.Component<Props> {
     const rest = this.props.bot.visitorsSize - 1
     const size = 30
     return profile ? (
-      <View style={{position: 'absolute', top: -15, right: -8}}>
+      <View style={{position: 'absolute', top: -15 * k, right: -8 * k}}>
         {rest > 0 && (
           <View
             style={{
@@ -47,7 +47,7 @@ class VisitorHeads extends React.Component<Props> {
           tappable={false}
           size={size}
           hideDot
-          style={{position: 'absolute', right: rest > 0 ? 12 : 0, top: 0}}
+          style={{position: 'absolute', right: rest > 0 ? 22 * k : 0, top: 0}}
         />
       </View>
     ) : null
