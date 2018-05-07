@@ -374,12 +374,14 @@ export class GraphQLTransport implements IWockyTransport {
       }
     })
     let list = res.data.bot.subscribers.edges
+    let count = res.data.bot.subscribers.totalCount
     if (!includeCurrentUser) {
       list = list.filter(p => {
         return p.node.__typename !== 'CurrentUser'
       })
+      count -= 1
     }
-    return {list: list.map(p => convertProfile(p.node)), count: res.data.bot.subscribers.totalCount}
+    return {list: list.map(p => convertProfile(p.node)), count}
   }
 
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
