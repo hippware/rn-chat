@@ -38,6 +38,7 @@ export async function createXmpp(num: number): Promise<IWocky> {
       emailAddress: '',
       'X-Verify-Credentials-Authorization': ''
     })
+    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()
     return service
   } catch (e) {

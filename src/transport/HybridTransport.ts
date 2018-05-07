@@ -99,7 +99,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   updateProfile(d: any): Promise<void> {
-    return this._xmpp.updateProfile(d)
+    return this._gql.updateProfile(d)
   }
 
   lookup(handle: string): Promise<any> {

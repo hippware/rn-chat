@@ -392,7 +392,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    throw 'Not supported'
+    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values = {}
+    fields.forEach(field => {
+      if (d[field]) {
+        values[field] = d[field]
+      }
+    })
+    await this.client.mutate({
+      mutation: gql`
+        mutation userUpdate($values: UserParams!) {
+          userUpdate(input: {values: $values}) {
+            successful
+          }
+        }
+      `,
+      variables: {values}
+    })
   }
 
   async lookup(handle: string): Promise<any> {

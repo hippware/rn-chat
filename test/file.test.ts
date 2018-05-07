@@ -31,9 +31,8 @@ describe('FileStore', () => {
       expect(user1.profile!.updated).to.be.false
       await user1.profile!.save()
       expect(user1.profile!.updated).to.be.true
-      // const profile = await user1.loadProfile(user1.username!)
-      // console.log('PROFILE:', JSON.stringify(profile))
-      // expect(profile.avatar).to.be.not.null
+      const profile = await user1.loadProfile(user1.username!)
+      expect(profile.avatar).to.be.not.null
       when(
         () => user1.profile !== null && user1.profile.avatar !== null && user1.profile.avatar.thumbnail !== null,
         () => {
