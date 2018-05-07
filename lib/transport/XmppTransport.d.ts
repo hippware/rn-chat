@@ -85,10 +85,7 @@ export declare class XmppTransport implements IWockyTransport {
         list: any;
         count: number;
     }>;
-    loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<{
-        list: any;
-        count: number;
-    }>;
+    loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotGuests(id: string, lastId?: string, max?: number): Promise<{
         list: any;
         count: number;

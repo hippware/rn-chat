@@ -348,8 +348,34 @@ export class GraphQLTransport implements IWockyTransport {
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
+
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    throw 'Not supported'
+    const res = await this.client.query<any>({
+      query: gql`
+        query getBotSubscribers($botId: UUID!, $cursor: String, $limit: Int) {
+          bot(id: $botId) {
+            id
+            subscribers(after: $cursor, first: $limit, type: SUBSCRIBER) {
+              totalCount
+              edges {
+                cursor
+                relationships
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        botId: id,
+        cursor: lastId,
+        limit: max
+      }
+    })
+    const list = res.data.bot.subscribers.edges.filter(p => !p.relationships.includes('OWNED')).map(p => convertProfile(p.node))
+    return {list, count: res.data.bot.subscribers.totalCount}
   }
   async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     throw 'Not supported'
