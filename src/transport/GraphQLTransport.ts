@@ -151,9 +151,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `
     })
-    console.log('loadProfile GQL', convertProfile(res.data.user))
-    const {id, handle, firstName, lastName, botsSize, followersSize, followedSize, avatar} = convertProfile(res.data.user)
-    return {id, handle, firstName, lastName, botsSize, followersSize, followedSize, avatar}
+    return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<[any]> {
     throw 'Not supported'
