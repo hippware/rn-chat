@@ -57,16 +57,20 @@ exports[`EventBotCard renders 1`] = `
       >
         <View
           style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "rgb(228,228,228)",
-              "borderColor": "white",
-              "borderRadius": 72,
-              "borderWidth": 4,
-              "height": 144,
-              "justifyContent": "center",
-              "width": 144,
-            }
+            Array [
+              Object {
+                "borderRadius": 72,
+                "borderWidth": 4,
+                "height": 144,
+                "width": 144,
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgb(228,228,228)",
+                "borderColor": "rgb(255,255,255)",
+                "justifyContent": "center",
+              },
+            ]
           }
         >
           <Text
