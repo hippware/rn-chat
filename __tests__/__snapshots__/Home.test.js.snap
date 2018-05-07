@@ -65,205 +65,359 @@ exports[`Home renders with no data 1`] = `
         >
           <View>
             <View
-              leftActionActivationDistance={125}
-              leftActionReleaseAnimationConfig={null}
-              leftActionReleaseAnimationFn={null}
-              leftButtonWidth={75}
-              leftButtonsActivationDistance={75}
-              leftButtonsCloseReleaseAnimationConfig={null}
-              leftButtonsCloseReleaseAnimationFn={null}
-              leftButtonsOpenReleaseAnimationConfig={null}
-              leftButtonsOpenReleaseAnimationFn={null}
               onLayout={[Function]}
-              onLeftActionActivate={[Function]}
-              onLeftActionComplete={[Function]}
-              onLeftActionDeactivate={[Function]}
-              onLeftActionRelease={[Function]}
-              onLeftButtonsActivate={[Function]}
-              onLeftButtonsCloseComplete={[Function]}
-              onLeftButtonsCloseRelease={[Function]}
-              onLeftButtonsDeactivate={[Function]}
-              onLeftButtonsOpenComplete={[Function]}
-              onLeftButtonsOpenRelease={[Function]}
-              onMoveShouldSetResponder={[Function]}
-              onMoveShouldSetResponderCapture={[Function]}
-              onPanAnimatedValueRef={[Function]}
-              onRef={[Function]}
-              onResponderEnd={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderReject={[Function]}
-              onResponderRelease={[Function]}
-              onResponderStart={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onRightActionActivate={[Function]}
-              onRightActionComplete={[Function]}
-              onRightActionDeactivate={[Function]}
-              onRightActionRelease={[Function]}
-              onRightButtonsActivate={[Function]}
-              onRightButtonsCloseComplete={[Function]}
-              onRightButtonsCloseRelease={[Function]}
-              onRightButtonsDeactivate={[Function]}
-              onRightButtonsOpenComplete={[Function]}
-              onRightButtonsOpenRelease={[Function]}
-              onStartShouldSetResponder={[Function]}
-              onStartShouldSetResponderCapture={[Function]}
-              onSwipeComplete={[Function]}
-              onSwipeMove={[Function]}
-              onSwipeRelease={[Function]}
-              onSwipeStart={[Function]}
-              rightActionActivationDistance={125}
-              rightActionReleaseAnimationConfig={null}
-              rightActionReleaseAnimationFn={null}
-              rightButtonWidth={75}
-              rightButtonsActivationDistance={75}
-              rightButtonsCloseReleaseAnimationConfig={null}
-              rightButtonsCloseReleaseAnimationFn={null}
-              rightButtonsOpenReleaseAnimationConfig={null}
-              rightButtonsOpenReleaseAnimationFn={null}
               style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                  },
-                  undefined,
-                ]
-              }
-              swipeReleaseAnimationConfig={
                 Object {
-                  "duration": 250,
-                  "easing": [Function],
-                  "toValue": Object {
-                    "x": 0,
-                    "y": 0,
-                  },
+                  "backgroundColor": "white",
                 }
               }
-              swipeReleaseAnimationFn={[Function]}
-              swipeStartMinDistance={15}
             >
-              <View
-                collapsable={undefined}
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
                 style={
-                  Object {
-                    "marginLeft": -0,
-                    "transform": Array [
-                      Object {
-                        "translateX": 0.5,
-                      },
-                    ],
-                    "width": 0,
-                  }
+                  Array [
+                    Object {
+                      "color": "rgb(253,95,108)",
+                      "fontFamily": "Roboto-Bold",
+                      "fontSize": 13,
+                    },
+                    Object {
+                      "margin": 30,
+                      "marginBottom": 20,
+                    },
+                  ]
                 }
               >
-                <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
-                />
+                See Who's Here
+              </Text>
+              <View>
+                <RCTScrollView
+                  ListEmptyComponent={<ActiveBannerPlaceholder />}
+                  data={Array []}
+                  disableVirtualization={false}
+                  getItem={[Function]}
+                  getItemCount={[Function]}
+                  horizontal={true}
+                  initialNumToRender={10}
+                  keyExtractor={[Function]}
+                  maxToRenderPerBatch={10}
+                  numColumns={1}
+                  onContentSizeChange={[Function]}
+                  onEndReachedThreshold={2}
+                  onLayout={[Function]}
+                  onMomentumScrollEnd={[Function]}
+                  onScroll={[Function]}
+                  onScrollBeginDrag={[Function]}
+                  onScrollEndDrag={[Function]}
+                  renderItem={[Function]}
+                  scrollEventThrottle={50}
+                  showsHorizontalScrollIndicator={false}
+                  stickyHeaderIndices={Array []}
+                  updateCellsBatchingPeriod={50}
+                  viewabilityConfigCallbackPairs={Array []}
+                  windowSize={21}
+                >
+                  <View>
+                    <View
+                      onLayout={[Function]}
+                      style={null}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignSelf": "flex-start",
+                            "backgroundColor": "white",
+                            "flex": 0,
+                            "paddingBottom": 30,
+                            "paddingLeft": 50,
+                          }
+                        }
+                      >
+                        <Image
+                          resizeMode="contain"
+                          source={
+                            Object {
+                              "testUri": "../../../images/geoBotPlaceholder.png",
+                            }
+                          }
+                          style={
+                            Object {
+                              "height": 158,
+                              "width": 144,
+                            }
+                          }
+                        />
+                        <Text
+                          accessible={true}
+                          allowFontScaling={true}
+                          ellipsizeMode="tail"
+                          numberOfLines={2}
+                          style={
+                            Array [
+                              Object {
+                                "color": "rgb(155,155,155)",
+                                "fontFamily": "Roboto-Regular",
+                                "fontSize": 13,
+                              },
+                              Object {
+                                "left": -10,
+                                "textAlign": "center",
+                              },
+                            ]
+                          }
+                        >
+                          No Current
+Visitors
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </RCTScrollView>
               </View>
-              <View
-                collapsable={undefined}
+              <BlurView
+                blurAmount={10}
+                blurType="xlight"
                 style={
-                  Object {
-                    "flex": 1,
-                    "transform": Array [
-                      Object {
-                        "translateX": 0.5,
-                      },
-                    ],
-                  }
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
+                      "alignItems": "center",
+                      "bottom": 0,
+                      "flexDirection": "row",
+                      "left": 0,
+                      "padding": 40,
+                      "paddingHorizontal": 60,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                  ]
                 }
               >
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      "rgba(255,151,77,1)",
-                      "rgba(253,56,134,1)",
-                    ]
+                <Image
+                  resizeMode="contain"
+                  source={
+                    Object {
+                      "testUri": "../../../images/footOpaquePink.png",
+                    }
                   }
                   style={
                     Object {
-                      "flexDirection": "row",
-                      "height": 190,
-                      "paddingLeft": 35,
-                      "paddingRight": 53.2,
-                      "paddingTop": 35,
+                      "height": 89,
+                      "marginRight": 40,
+                      "width": 69,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "justifyContent": "center",
                     }
                   }
                 >
-                  <Image
-                    source={
-                      Object {
-                        "testUri": "../../../images/white.png",
-                      }
-                    }
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
                     style={
-                      Object {
-                        "height": 73,
-                        "width": 63.4,
-                      }
+                      Array [
+                        Object {
+                          "color": "rgb(253,95,108)",
+                          "fontFamily": "Roboto-Bold",
+                          "fontSize": 15,
+                        },
+                        undefined,
+                      ]
                     }
-                  />
+                  >
+                    SHARE YOUR VISITS!
+                  </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(155,155,155)",
+                          "fontFamily": "Roboto-Regular",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "marginTop": 10,
+                        },
+                      ]
+                    }
+                  >
+                    Know when your friends visit your favorite places!
+                  </Text>
                   <View
+                    accessibilityComponentType={undefined}
+                    accessibilityLabel={undefined}
+                    accessibilityTraits={undefined}
+                    accessible={true}
+                    collapsable={undefined}
+                    hasTVPreferredFocus={undefined}
+                    hitSlop={undefined}
+                    isTVSelectable={true}
+                    nativeID={undefined}
+                    onLayout={undefined}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
                       Object {
-                        "flex": 1,
+                        "alignSelf": "flex-start",
+                        "borderColor": "rgb(253,95,108)",
+                        "borderRadius": 2,
+                        "borderWidth": 0.5,
+                        "marginTop": 20,
+                        "opacity": 1,
+                        "padding": 16,
                       }
                     }
+                    testID={undefined}
+                    tvParallaxProperties={undefined}
                   >
                     <Text
                       accessible={true}
                       allowFontScaling={true}
                       ellipsizeMode="tail"
                       style={
-                        Object {
-                          "backgroundColor": "transparent",
-                          "color": "white",
-                          "fontFamily": "Roboto-Regular",
-                          "fontSize": 30,
-                          "paddingLeft": 39.6,
-                        }
+                        Array [
+                          Object {
+                            "color": "rgb(253,95,108)",
+                            "fontFamily": "Roboto-Medium",
+                            "fontSize": 14,
+                          },
+                          undefined,
+                        ]
                       }
                     >
-                      Welcome to 
-                      <Text
-                        accessible={true}
-                        allowFontScaling={true}
-                        ellipsizeMode="tail"
-                        style={
-                          Object {
-                            "fontFamily": "Roboto-Bold",
-                          }
-                        }
-                      >
-                        tinyrobot
-                      </Text>
-                      ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+                      GIVE LOCATION ACCESS
                     </Text>
                   </View>
-                </BVLinearGradient>
-              </View>
+                </View>
+              </BlurView>
               <View
-                collapsable={undefined}
                 style={
                   Object {
-                    "marginRight": -0,
-                    "transform": Array [
-                      Object {
-                        "translateX": 0.5,
-                      },
-                    ],
-                    "width": 0,
+                    "alignItems": "center",
+                    "backgroundColor": "rgb(255,255,255)",
+                    "bottom": 0,
+                    "flexDirection": "row",
+                    "left": 0,
+                    "padding": 40,
+                    "paddingHorizontal": 60,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
                   }
                 }
               >
-                <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
+                <Image
+                  resizeMode="cover"
+                  source={
+                    Object {
+                      "testUri": "../../../images/bannerBg.png",
+                    }
+                  }
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
                 />
+                <Image
+                  resizeMode="contain"
+                  source={
+                    Object {
+                      "testUri": "../../../images/footOpaquePink.png",
+                    }
+                  }
+                  style={
+                    Object {
+                      "height": 89,
+                      "marginRight": 40,
+                      "width": 69,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(253,95,108)",
+                          "fontFamily": "Roboto-Bold",
+                          "fontSize": 15,
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Find out when your friends
+visit your favorite places!
+                  </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(155,155,155)",
+                          "fontFamily": "Roboto-Regular",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "marginTop": 10,
+                        },
+                      ]
+                    }
+                  >
+                    Start by tapping 
+                    <Image
+                      resizeMode="contain"
+                      source={
+                        Object {
+                          "testUri": "../../../images/footOpaquePink.png",
+                        }
+                      }
+                      style={
+                        Object {
+                          "height": 18,
+                          "width": 15,
+                        }
+                      }
+                    />
+                     on your
+favorite bots!
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
