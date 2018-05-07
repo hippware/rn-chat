@@ -44,7 +44,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     }>;
     loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>;
-    private getBotProfiles(relationship, includeOwned, id, lastId?, max?);
+    private getBotProfiles(relationship, includeCurrentUser, id, lastId?, max?);
     loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>;

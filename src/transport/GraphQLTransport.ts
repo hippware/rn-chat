@@ -349,17 +349,16 @@ export class GraphQLTransport implements IWockyTransport {
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
 
-  private async getBotProfiles(relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR', includeOwned: boolean, id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  private async getBotProfiles(relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR', includeCurrentUser: boolean, id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     const res = await this.client.query<any>({
       query: gql`
-        query getBotSubscribers($botId: UUID!, $cursor: String, $limit: Int) {
+        query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
           bot(id: $botId) {
             id
             subscribers(after: $cursor, first: $limit, type: ${relationship}) {
               totalCount
               edges {
                 cursor
-                relationships
                 node {
                   ${PROFILE_PROPS}
                 }
@@ -374,11 +373,13 @@ export class GraphQLTransport implements IWockyTransport {
         limit: max
       }
     })
-    let list = res.data.bot.subscribers.edges.map(p => convertProfile(p.node))
-    if (!includeOwned) {
-      list = list.filter(p => !p.relationships.includes('OWNED'))
+    let list = res.data.bot.subscribers.edges
+    if (!includeCurrentUser) {
+      list = list.filter(p => {
+        return p.node.__typename !== 'CurrentUser'
+      })
     }
-    return {list, count: res.data.bot.subscribers.totalCount}
+    return {list: list.map(p => convertProfile(p.node)), count: res.data.bot.subscribers.totalCount}
   }
 
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
