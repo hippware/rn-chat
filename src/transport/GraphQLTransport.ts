@@ -151,6 +151,9 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `
     })
+    if (!res.data.user) {
+      throw new Error(`Profile doesn't exist for user with id: ${user}`)
+    }
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<[any]> {
@@ -499,7 +502,6 @@ export class GraphQLTransport implements IWockyTransport {
 }
 
 function convertImage(image) {
-  console.log('convert image', image)
   return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
 function convertProfile({avatar, bots, followers, followed, ...data}): IProfilePartial {
@@ -520,7 +522,7 @@ function convertBot({lat, lon, image, addressData, isPublic, owner, items, visit
       ...data,
       owner: convertProfile(owner),
       image: convertImage(image),
-      addressData: addressData || {},
+      addressData: addressData ? JSON.parse(addressData) : {},
       totalItems: items ? items.totalCount : 0,
       followersSize: subscriberCount.totalCount - 1,
       visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
