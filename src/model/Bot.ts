@@ -123,6 +123,7 @@ export const Bot = types
       const data = {...d}
       if (data.addressData && typeof data.addressData === 'string') {
         data.addressData = JSON.parse(data.addressData)
+        delete data.addressData
       }
       // load visitors
       if (data.visitors) {

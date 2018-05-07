@@ -2,6 +2,13 @@
 
 Internal use only.
 
+# iphone-2.6.2
+
+* New 'currentUser' query (PR #40)
+* Don't use amazon urls as file uri (PR #41, related: hippware/rn-chat#2225)
+* New 'active bots' query (PR #42)
+* Fix unit tests
+
 # iphone-2.6.1
 
 * Upgrade to latest nodejs and yarn (PR #35)
