@@ -1,4 +1,5 @@
 import {ILocationSnapshot} from '../model/Location'
+import {IProfilePartial} from '../model/Profile'
 
 export interface IPagingList {
   list: any[]
@@ -25,7 +26,7 @@ export interface IWockyTransport {
   disconnect(): Promise<void>
   setLocation(params: ILocationSnapshot): Promise<void>
   getLocationsVisited(limit?: number): Promise<object[]>
-  loadProfile(user: string): Promise<any> // TODO define interface for Profile data
+  loadProfile(user: string): Promise<IProfilePartial>
   requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
   lookup(handle: string): Promise<any>

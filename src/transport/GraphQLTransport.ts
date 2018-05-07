@@ -9,10 +9,15 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
+import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 
-// TODO use GraphQL fragment for this?
-const PROFILE_PROPS = 'id firstName lastName handle avatar { thumbnailUrl fullUrl trosUrl }'
+const PROFILE_PROPS = `id firstName lastName handle
+  avatar { thumbnailUrl fullUrl trosUrl }
+  bots(first:0, relationship: OWNED) { totalCount }
+  followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
+  followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
+`
 const BOT_PROPS = `id title address isPublic: public addressData description geofence public radius server shortname 
   image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
@@ -113,7 +118,6 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(user: string, token: string): Promise<boolean> {
     try {
-      // console.log('& graphql proceeding with login')
       const res = await this.client.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
@@ -136,7 +140,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadProfile(user: string): Promise<any> {
+  async loadProfile(user: string): Promise<IProfilePartial> {
     const res = await this.client.query<any>({
       query: gql`
           query LoadProfile {
@@ -147,7 +151,10 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `
     })
-    return res.data.user
+    if (!res.data.user) {
+      throw new Error(`Profile doesn't exist for user with id: ${user}`)
+    }
+    return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<[any]> {
     throw 'Not supported'
@@ -385,7 +392,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    throw 'Not supported'
+    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values = {}
+    fields.forEach(field => {
+      if (d[field]) {
+        values[field] = d[field]
+      }
+    })
+    await this.client.mutate({
+      mutation: gql`
+        mutation userUpdate($values: UserParams!) {
+          userUpdate(input: {values: $values}) {
+            successful
+          }
+        }
+      `,
+      variables: {values}
+    })
   }
 
   async lookup(handle: string): Promise<any> {
@@ -497,8 +520,15 @@ export class GraphQLTransport implements IWockyTransport {
 function convertImage(image) {
   return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
-function convertProfile({avatar, ...data}) {
-  return {avatar: convertImage(avatar), ...data}
+function convertProfile({avatar, bots, followers, followed, ...data}): IProfilePartial {
+  // console.log('convertProfile', bots, followers, followed, data)
+  return {
+    avatar: convertImage(avatar),
+    botsSize: bots.totalCount,
+    followersSize: followers.totalCount,
+    followedSize: followed.totalCount,
+    ...data
+  } as IProfilePartial
 }
 function convertBot({lat, lon, image, addressData, isPublic, owner, items, visitors, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
   try {
@@ -508,7 +538,7 @@ function convertBot({lat, lon, image, addressData, isPublic, owner, items, visit
       ...data,
       owner: convertProfile(owner),
       image: convertImage(image),
-      addressData: addressData || {},
+      addressData: addressData ? JSON.parse(addressData) : {},
       totalItems: items ? items.totalCount : 0,
       followersSize: subscriberCount.totalCount - 1,
       visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,

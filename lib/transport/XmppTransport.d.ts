@@ -1,6 +1,7 @@
 import { IFileService } from './FileService';
 import './XmppStropheV2';
 import { IWockyTransport, IPagingList } from './IWockyTransport';
+import { IProfilePartial } from '../model/Profile';
 import { ILocationSnapshot } from '..';
 export declare class XmppTransport implements IWockyTransport {
     provider: any;
@@ -41,9 +42,7 @@ export declare class XmppTransport implements IWockyTransport {
     }>;
     disconnect(): Promise<void>;
     sendIQ(data: any, withoutTo?: boolean): Promise<any>;
-    loadProfile(user: string): Promise<{
-        id: string;
-    }>;
+    loadProfile(user: string): Promise<IProfilePartial>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;
     lookup(handle: string): Promise<{

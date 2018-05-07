@@ -1,4 +1,5 @@
 import { IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot } from '../';
+import { IProfilePartial } from '../model/Profile';
 export declare class HybridTransport implements IWockyTransport {
     readonly connected: boolean;
     readonly connecting: boolean;
@@ -37,7 +38,7 @@ export declare class HybridTransport implements IWockyTransport {
     setLocation(params: ILocationSnapshot): Promise<void>;
     getLocationsVisited(limit?: number): Promise<object[]>;
     disconnect(): Promise<void>;
-    loadProfile(user: string): Promise<any>;
+    loadProfile(user: string): Promise<IProfilePartial>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;
     lookup(handle: string): Promise<any>;

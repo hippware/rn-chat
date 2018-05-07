@@ -139,3 +139,17 @@ export const ProfileRef = types.maybe(
     }
   })
 )
+
+export interface IProfilePartial {
+  id: string
+  handle: string
+  firstName: string
+  lastName: string
+  botsSize: number
+  followersSize: number
+  followedSize: number
+  avatar: {
+    id: string
+    url: string
+  } | null
+}
