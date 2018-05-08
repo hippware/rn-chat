@@ -58,6 +58,12 @@ export default class Avatar extends React.Component<Props> {
     const showLoader = !(profile.avatar && profile.avatar.loaded)
     title = title.length > 1 ? title[0] : title
     const Clazz = tappable ? TouchableOpacity : View
+    const sharedStyle = {
+      width: size * k,
+      height: size * k,
+      borderRadius: size * k / 2,
+      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+    }
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
         <View style={[style, {height: size * k, width: size * k}]}>
@@ -66,21 +72,10 @@ export default class Avatar extends React.Component<Props> {
               {...this.props}
               source={profile.avatar.thumbnail}
               showLoader={showLoader}
-              size={size}
+              style={sharedStyle}
             />
           ) : (
-            <View
-              style={{
-                width: size * k,
-                height: size * k,
-                borderRadius: size * k / 2,
-                justifyContent: 'center',
-                borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                borderColor: 'white',
-                alignItems: 'center',
-                backgroundColor: 'rgb(228,228,228)',
-              }}
-            >
+            <View style={[sharedStyle, styles.avatarContainer]}>
               <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>
                 {title.toUpperCase()}
               </Text>
@@ -128,27 +123,18 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
 
 const AvatarImage = ({
   source,
-  borderWidth,
   style,
-  size,
   showLoader,
 }: {
   source: ImageRequireSource
-  borderWidth?: any
   style?: any
-  size: any
   showLoader: any
 }) => {
-  const theStyle = [
-    {
-      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-      borderColor: colors.WHITE,
-      backgroundColor: colors.gray(222),
-    },
-    style,
-    {width: size * k, height: size * k, borderRadius: size * k / 2},
-  ]
-  return showLoader ? <View style={theStyle} /> : <Image source={source} style={theStyle} />
+  return showLoader ? (
+    <View style={[style, styles.avatarContainer]} />
+  ) : (
+    <Image source={source} style={[style, styles.avatarContainer]} />
+  )
 }
 
 const styles = StyleSheet.create({
@@ -159,6 +145,12 @@ const styles = StyleSheet.create({
   dot: {
     position: 'absolute',
     borderColor: 'white',
+  },
+  avatarContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: colors.WHITE,
+    backgroundColor: 'rgb(228,228,228)',
   },
   frameOuter: {
     position: 'absolute',
