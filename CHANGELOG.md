@@ -2,6 +2,9 @@
 
 Internal use only.
 
+* Speculative fix: [dev] MST bot conversion warning (hippware/rn-chat#2285)
+* GraphQL - load profile (PR #44)
+
 # iphone-2.6.2
 
 * New 'currentUser' query (PR #40)
