@@ -576,7 +576,7 @@ export const Wocky = types
           () => self.profile && self.connected,
           async (connected: boolean) => {
             if (connected) {
-              self.geofenceBots.load({refresh: true})
+              self.geofenceBots.load({force: true})
               await self.loadChats()
               self.requestRoster()
               if (!self.version) {
