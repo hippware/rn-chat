@@ -4,7 +4,6 @@ import React from 'react'
 import BotBubble from './BotBubble'
 import MapView from 'react-native-maps'
 import {observer} from 'mobx-react/native'
-import {observable, action} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 
@@ -20,10 +19,29 @@ type Props = {
 
 @observer
 export default class BotMarker extends React.Component<Props> {
-  @observable tracking = true
+  mounted = false
+  state = {tracking: true}
 
   componentDidMount() {
-    setTimeout(action(() => (this.tracking = false)), 400)
+    this.mounted = true
+    setTimeout(() => this.mounted && this.setState({tracking: false}), 1000)
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
+  }
+
+  componentDidUpdate(_0, previousState) {
+    if (previousState.tracking && !this.state.tracking) {
+      return
+    }
+    if (!previousState.tracking && this.state.tracking) {
+      return
+    }
+    if (this.mounted && !this.state.tracking) {
+      this.setState({tracking: true})
+      setTimeout(() => this.mounted && this.setState({tracking: false}), 500)
+    }
   }
 
   render() {
@@ -32,21 +50,11 @@ export default class BotMarker extends React.Component<Props> {
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
-    const key =
-      (id || bot.id) +
-      (bot && bot.image && bot.image.loaded) +
-      (bot && bot.image && bot.image.loading) +
-      (bot && bot.image && bot.image.id) +
-      (bot && bot.image && bot.image.thumbnail && bot.image.thumbnail.uri) +
-      (bot && bot.address)
-    // DIRTY workaround to re-render googlemaps marker without tracksViewChanges (otherwise we will have 100% CPU usage)
-
     return (
       <MapView.Marker.Animated
         anchor={{x: 0.5, y}}
-        tracksViewChanges={this.tracking}
+        tracksViewChanges={this.state.tracking}
         style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
-        key={key}
         identifier={bot.id}
         coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
         onPress={props.onImagePress}
