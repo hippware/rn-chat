@@ -613,7 +613,7 @@ export class XmppTransport implements IWockyTransport {
     }
     return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
   }
-  async loadBotSubscribers(id: string, lastId?: string, max: number = 10) {
+  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     const iq = $iq({type: 'get', to: this.host})
       .c('subscribers', {
         xmlns: BOT_NS,

@@ -348,19 +348,57 @@ export class GraphQLTransport implements IWockyTransport {
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
   }
+
+  private async getBotProfiles(relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR', includeCurrentUser: boolean, id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    const res = await this.client.query<any>({
+      query: gql`
+        query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
+          bot(id: $botId) {
+            id
+            subscribers(after: $cursor, first: $limit, type: ${relationship}) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        botId: id,
+        cursor: lastId,
+        limit: max
+      }
+    })
+    let list = res.data.bot.subscribers.edges
+    let count = res.data.bot.subscribers.totalCount
+    if (!includeCurrentUser) {
+      list = list.filter(p => {
+        return p.node.__typename !== 'CurrentUser'
+      })
+      count -= 1
+    }
+    return {list: list.map(p => convertProfile(p.node)), count}
+  }
+
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    throw 'Not supported'
+    return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
   }
   async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    throw 'Not supported'
+    return this.getBotProfiles('GUEST', true, id, lastId, max)
   }
   async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    throw 'Not supported'
+    return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
   async loadBotPosts(id: string, before?: string): Promise<IPagingList> {
     throw 'Not supported'
   }
-  shareBot(id: string, server: string, recepients: string[], message: string, action: string) {}
+  shareBot(id: string, server: string, recepients: string[], message: string, action: string) {
+    throw 'Not supported'
+  }
   async register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}> {
     throw 'Not supported'
   }

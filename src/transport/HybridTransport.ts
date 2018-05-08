@@ -235,15 +235,18 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.loadGeofenceBots(lastId, max)
   }
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadBotSubscribers(id, lastId, max)
+    // return this._xmpp.loadBotSubscribers(id, lastId, max)
+    return this._gql.loadBotSubscribers(id, lastId, max)
   }
 
   loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadBotGuests(id, lastId, max)
+    // return this._xmpp.loadBotGuests(id, lastId, max)
+    return this._gql.loadBotGuests(id, lastId, max)
   }
 
   loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadBotVisitors(id, lastId, max)
+    // return this._xmpp.loadBotVisitors(id, lastId, max)
+    return this._gql.loadBotVisitors(id, lastId, max)
   }
 
   loadBotPosts(id: string, lastId?: string): Promise<IPagingList> {
