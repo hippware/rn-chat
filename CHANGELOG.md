@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Geofence widget improvements (PR #2286, #2243)
+
 # 2.6.2 - 2018 May 4
 
 * More typescript conversion (PR #2250)
