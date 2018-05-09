@@ -1,3 +1,4 @@
+declare var Strophe: any
 import {when, isObservableArray} from 'mobx'
 
 export async function waitFor(condition: () => boolean) {
@@ -92,7 +93,10 @@ export function processMap(data: {[key: string]: any}) {
         } else if (key === 'subscribers') {
           res.followersSize = parseInt(value.size)
         } else if (key === 'location') {
-          res.location = {latitude: parseFloat(value.geoloc.lat), longitude: parseFloat(value.geoloc.lon)}
+          res.location = {
+            latitude: parseFloat(value.geoloc.lat),
+            longitude: parseFloat(value.geoloc.lon),
+          }
         } else if (key === 'updated') {
           res.time = iso8601toDate(value).getTime()
         } else if (key === 'radius') {
@@ -103,13 +107,13 @@ export function processMap(data: {[key: string]: any}) {
         }
       }
     } catch (e) {
-      console.error(`Cannot process key ${key} value: ${value}`)
+      // console.error(`Cannot process key ${key} value: ${value}`) TODO
     }
   })
   delete res.id
   return res
 }
-export function fromCamelCase(data: any = {}): Object {
+export function fromCamelCase(data: any = {}) {
   const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data
   if (phoneNumber) {
     result.phone_number = phoneNumber
@@ -169,8 +173,8 @@ export function getNodeJid(jid: string) {
  *    A unique string to be used for the id attribute.
  */
 export function getUniqueId(suffix: string) {
-  let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    let r = (Math.random() * 16) | 0, // eslint-disable-line
+  const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0, // eslint-disable-line
       v = c === 'x' ? r : (r & 0x3) | 0x8 // eslint-disable-line
     return v.toString(16)
   })
@@ -186,10 +190,6 @@ export function generateID() {
 }
 
 export function parseXml(xml: any, arrayTags?: [string]) {
-  function isArray(o: any) {
-    return Object.prototype.toString.apply(o) === '[object Array]'
-  }
-
   function parseNode(xmlNode: any, res: any) {
     if (!xmlNode) {
       return
@@ -260,7 +260,9 @@ export function iso8601toDate(date: string) {
     minutesOffset = 0
   if (isNaN(timestamp)) {
     // eslint-disable-next-line
-    let struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(date)
+    const struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(
+      date
+    )
     if (struct) {
       if (struct[8] !== 'Z') {
         minutesOffset = +struct[10] * 60 + +struct[11]
@@ -268,7 +270,15 @@ export function iso8601toDate(date: string) {
           minutesOffset = -minutesOffset
         }
       }
-      return new Date(+struct[1], +struct[2] - 1, +struct[3], +struct[4], +struct[5] + minutesOffset, +struct[6], struct[7] ? +struct[7].substr(0, 3) : 0)
+      return new Date(
+        +struct[1],
+        +struct[2] - 1,
+        +struct[3],
+        +struct[4],
+        +struct[5] + minutesOffset,
+        +struct[6],
+        struct[7] ? +struct[7].substr(0, 3) : 0
+      )
     } else {
       // XEP-0091 dateAsString
       timestamp = Date.parse(`${date.replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')}Z`)

@@ -4,10 +4,10 @@ import {types, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-s
 import {IObservableArray} from 'mobx'
 import {Base} from './Base'
 
-export function createUploadable(property: string, access: string | Function) {
+export function createUploadable(property: string, access: string | ((self) => void)) {
   return types
     .compose(Base, types.model('Uploadable', {}))
-    .volatile(self => ({
+    .volatile(() => ({
       uploading: false,
       uploaded: false,
       uploadError: ''
@@ -18,7 +18,13 @@ export function createUploadable(property: string, access: string | Function) {
           try {
             self.uploaded = false
             self.uploading = true
-            const url = yield self.service._requestUpload({file, size, width, height, access: typeof access === 'function' ? access(self) : access})
+            const url = yield self.service._requestUpload({
+              file,
+              size,
+              width,
+              height,
+              access: typeof access === 'function' ? access(self) : access
+            })
             self.service.files.get(url)
             self.uploaded = true
             self[property] = url
@@ -27,7 +33,7 @@ export function createUploadable(property: string, access: string | Function) {
               self[property].setSource({uri: file.uri, size, width, height})
             }
           } catch (e) {
-            console.error(e)
+            // console.error(e) TODO
             self.uploadError = e
           } finally {
             self.uploading = false

@@ -1,5 +1,5 @@
 import { IModelType } from 'mobx-state-tree';
-export declare function createUploadable(property: string, access: string | Function): IModelType<{
+export declare function createUploadable(property: string, access: string | ((self) => void)): IModelType<{
     id?: any;
 } & {}, {
     id: string;

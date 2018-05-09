@@ -70,8 +70,7 @@ export const Storages = types
           }
           const res: any = {}
           if (!props) {
-            console.warn('No properties for type:', type.name)
-            return
+            throw new Error('No properties for type:' + type.name)
           }
           if (!data) {
             return

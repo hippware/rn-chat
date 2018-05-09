@@ -2,7 +2,6 @@ import { IFileService } from './FileService';
 import './XmppStropheV2';
 import { IWockyTransport, IPagingList } from './IWockyTransport';
 import { IProfilePartial } from '../model/Profile';
-import { ILocationSnapshot } from '..';
 export declare class XmppTransport implements IWockyTransport {
     provider: any;
     botVisitor: any;
@@ -46,7 +45,7 @@ export declare class XmppTransport implements IWockyTransport {
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;
     lookup(handle: string): Promise<{
-        id: string;
+        id: any;
     }>;
     remove(): Promise<void>;
     loadRelations(userId: string, relation?: string, lastId?: string, max?: number): Promise<{
@@ -80,7 +79,7 @@ export declare class XmppTransport implements IWockyTransport {
     }>>;
     generateId(): Promise<any>;
     removeBot(id: string): Promise<void>;
-    loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>;
+    loadGeofenceBots(): Promise<IPagingList>;
     loadOwnBots(userId: string, lastId?: string, max?: number): Promise<{
         list: any;
         count: number;
@@ -94,8 +93,8 @@ export declare class XmppTransport implements IWockyTransport {
         list: any;
         count: number;
     }>;
-    setLocation(params: ILocationSnapshot): Promise<void>;
-    getLocationsVisited(limit?: number): Promise<object[]>;
+    setLocation(): Promise<void>;
+    getLocationsVisited(): Promise<object[]>;
     loadBotPosts(id: string, before?: string): Promise<{
         count: number;
         list: any;
@@ -109,7 +108,7 @@ export declare class XmppTransport implements IWockyTransport {
         id: any;
     }>;
     removeBotPost(id: string, postId: string): Promise<void>;
-    shareBot(id: string, server: string, recepients: string[], message: string, action: string): void;
+    shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string): void;
     publishBotPost(botId: string, post: any): Promise<void>;
     subscribeBot(id: string, geofence?: boolean): Promise<number>;
     unsubscribeBot(id: string, geofence?: boolean): Promise<number>;

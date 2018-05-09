@@ -14,11 +14,11 @@ export const Loadable = types.model({loaded: false}).actions((self: any) => ({
 
 export type ILoadable = typeof Loadable.Type
 
-export function createLoadable(load: (self: any) => Function) {
+export function createLoadable(load: (self: any) => (self) => void) {
   return types
     .compose(
       Loadable,
-      types.model({}).volatile(self => ({
+      types.model({}).volatile(() => ({
         loading: false,
         loadError: ''
       }))
@@ -34,7 +34,7 @@ export function createLoadable(load: (self: any) => Function) {
               self.load(res)
             }
           } catch (e) {
-            console.error(e)
+            // console.error(e) TODO
             self.loadError = e
           } finally {
             self.loading = false

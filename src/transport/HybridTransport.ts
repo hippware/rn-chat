@@ -62,15 +62,25 @@ export class HybridTransport implements IWockyTransport {
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
     // return (await this._gql.login(user, password, host)) && (await this._xmpp.login(user, password, host))
     // parallel login
-    const logins = await Promise.all([this._gql.login(user, password, host), this._xmpp.login(user, password, host)])
+    const logins = await Promise.all([
+      this._gql.login(user, password, host),
+      this._xmpp.login(user, password, host),
+    ])
     return logins === [true, true]
   }
 
-  register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}> {
+  register(
+    data: any,
+    host?: string,
+    providerName?: string
+  ): Promise<{username: string; password: string; host: string}> {
     return this._xmpp.register(data, host, providerName)
   }
 
-  testRegister({phoneNumber}: {phoneNumber: string}, host: string): Promise<{username: string; password: string; host: string}> {
+  testRegister(
+    {phoneNumber}: {phoneNumber: string},
+    host: string
+  ): Promise<{username: string; password: string; host: string}> {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
@@ -83,10 +93,8 @@ export class HybridTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    console.log('& hybridtransport disconnect')
     await this._gql.disconnect()
     await this._xmpp.disconnect()
-    console.log('& hybridtransport disconnected')
   }
 
   loadProfile(user: string): Promise<IProfilePartial> {
@@ -127,7 +135,13 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.downloadTROS(tros)
   }
 
-  requestUpload(params: {file: any; size: number; width: number; height: number; access: string}): Promise<string> {
+  requestUpload(params: {
+    file: any
+    size: number
+    width: number
+    height: number
+    access: string
+  }): Promise<string> {
     return this._xmpp.requestUpload(params)
   }
 
@@ -163,8 +177,8 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.loadChats(max)
   }
 
-  loadBot(id: string, server: any): Promise<any> {
-    return this._gql.loadBot(id, server)
+  loadBot(id: string): Promise<any> {
+    return this._gql.loadBot(id)
   }
 
   removeBot(id: string): Promise<void> {
@@ -183,11 +197,22 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.updateBot(bot)
   }
 
-  shareBot(id: string, server: string, recepients: string[], message: string, action: string): void {
+  shareBot(
+    id: string,
+    server: string,
+    recepients: string[],
+    message: string,
+    action: string
+  ): void {
     this._xmpp.shareBot(id, server, recepients, message, action)
   }
 
-  loadRelations(userId: string, relation: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadRelations(
+    userId: string,
+    relation: string,
+    lastId?: string,
+    max?: number
+  ): Promise<IPagingList> {
     return this._xmpp.loadRelations(userId, relation, lastId, max)
   }
 
@@ -195,7 +220,12 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.publishBotPost(botId, post)
   }
 
-  geosearch(props: {latitude: number; longitude: number; latitudeDelta: number; longitudeDelta: number}): Promise<void> {
+  geosearch(props: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<void> {
     return this._xmpp.geosearch(props)
   }
 
@@ -231,8 +261,8 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.loadOwnBots(userId, lastId, max)
   }
 
-  loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList> {
-    return this._gql.loadGeofenceBots(lastId, max)
+  loadGeofenceBots(): Promise<IPagingList> {
+    return this._gql.loadGeofenceBots()
   }
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList> {
     // return this._xmpp.loadBotSubscribers(id, lastId, max)

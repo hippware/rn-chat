@@ -23,7 +23,7 @@ import {IWockyTransport, ILocationSnapshot} from '..'
 export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
 export type IEventEntity = typeof EventEntity.Type
 // export interface IEventEntity extends IEventEntityType {}
-export const EventList = createPaginable(EventEntity).actions(self => ({
+export const EventList = createPaginable(EventEntity).actions(() => ({
   postProcessSnapshot: (snapshot: any) => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)
@@ -64,7 +64,7 @@ export const Wocky = types
   .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
-      throw 'Server transport is not defined'
+      throw new Error('Server transport is not defined')
     }
     return {
       get transport(): IWockyTransport {
@@ -82,7 +82,12 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          const profile = self.create(OwnProfile, {id, ...self._registerReferences(Profile, data), loaded: true, status: 'available'})
+          const profile = self.create(OwnProfile, {
+            id,
+            ...self._registerReferences(Profile, data),
+            loaded: true,
+            status: 'available'
+          })
           self.profile = profile
         } else {
           self.load(self.profile, data)
@@ -98,7 +103,7 @@ export const Wocky = types
         get connecting() {
           return self.transport.connecting
         },
-        get sortedRoster(): Array<IProfile> {
+        get sortedRoster(): IProfile[] {
           return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
             return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
           })
@@ -127,7 +132,7 @@ export const Wocky = types
             self.host = host
           }
           if (!self.username || !self.password || !self.host) {
-            throw `Cannot login without username/password/host:${self.username},${self.password},${self.host}`
+            throw new Error(`Cannot login without username/password/host:${self.username},${self.password},${self.host}`)
           }
           yield self.transport.login(self.username!, self.password!, self.host)
           yield self.loadProfile(self.username)
@@ -158,7 +163,7 @@ export const Wocky = types
           const arr = yield self.transport.requestProfiles(users)
           return arr.map((user: any) => self.profiles.get(user.id, user))
         }),
-        _updateProfile: flow(function*(d: Object) {
+        _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
         lookup: flow<string>(function*(handle: string) {
@@ -170,7 +175,7 @@ export const Wocky = types
     }
   })
   .views(self => ({
-    get activeBots(): Array<IBot> {
+    get activeBots(): IBot[] {
       const arr = self.geofenceBots.list.filter((bot: IBot) => bot.visitorsSize).map((data, index) => ({data, index}))
       return arr
         .sort((a, b) => {
@@ -288,7 +293,7 @@ export const Wocky = types
           const data = yield self.transport.loadBot(id, server)
           self.load(bot, data)
         } catch (e) {
-          console.error(e)
+          // console.error(e) TODO
           bot.setError(JSON.stringify(e))
         } finally {
           bot.finishLoading()
@@ -325,17 +330,29 @@ export const Wocky = types
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
+      return {
+        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+        count,
+        cursor
+      }
     }),
     _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadBotGuests(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
+      return {
+        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+        count,
+        cursor
+      }
     }),
     _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadBotVisitors(id, lastId, max)
-      return {list: list.map((profile: any) => self.profiles.get(profile.id, profile)), count, cursor}
+      return {
+        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+        count,
+        cursor
+      }
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       yield waitFor(() => self.connected)
@@ -393,8 +410,8 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
       const res: any = []
-      for (let i = 0; i < list.length; i++) {
-        const {id} = list[i]
+      for (const rec of list) {
+        const {id} = rec
         // TODO avoid extra request to load profile (server-side)
         const profile = yield self.getProfile(id)
         res.push(profile)
@@ -480,7 +497,7 @@ export const Wocky = types
     _onNotification: flow(function*({changed, version, ...data}: any) {
       // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
       if (!version) {
-        console.error('No version for notification:', JSON.stringify(data))
+        throw new Error('No version for notification:' + JSON.stringify(data))
       }
       self.version = version
       // ignore /changed and /description delete
