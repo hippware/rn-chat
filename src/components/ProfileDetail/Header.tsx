@@ -1,27 +1,27 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {StyleSheet, View} from 'react-native'
+import {observer} from 'mobx-react/native'
 
-import ProfileAvatar from '../ProfileAvatar';
-import Card from '../Card';
-import {Profile} from 'wocky-client';
-import {k} from '../Global';
-import {colors} from '../../constants';
-import {RText} from '../common';
-import MetaBar from './MetaBar';
-import FollowButton from './FollowButton';
-import {isAlive} from 'mobx-state-tree';
+import ProfileAvatar from '../ProfileAvatar'
+import Card from '../Card'
+import {Profile} from 'wocky-client'
+import {k} from '../Global'
+import {colors} from '../../constants'
+import {RText} from '../common'
+import MetaBar from './MetaBar'
+import FollowButton from './FollowButton'
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
-  profile: Profile,
-};
+  profile: Profile
+}
 
 const Header = observer((props: Props) => {
-  const {profile} = props;
+  const {profile} = props
   if (!profile || !isAlive(profile)) {
-    return null;
+    return null
   }
   return (
     <View style={{backgroundColor: colors.WHITE}}>
@@ -37,10 +37,10 @@ const Header = observer((props: Props) => {
       </Card>
       <FollowButton {...props} />
     </View>
-  );
-});
+  )
+})
 
-export default Header;
+export default Header
 
 const styles = StyleSheet.create({
   header: {
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
     color: colors.navBarTextColorDay,
     textAlign: 'center',
   },
-});
+})
