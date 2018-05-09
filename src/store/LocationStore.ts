@@ -55,6 +55,9 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   activityRecognitionInterval: types.maybe(types.number),
 })
 
+// background configuration should only happen once every app start (not every foreground)
+let backgroundStarted = false
+
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
@@ -212,6 +215,8 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
+      if (backgroundStarted) return
+      backgroundStarted = true
       const wocky: IWocky = getParent(self).wocky
       logger.log(prefix, 'BACKGROUND LOCATION START')
 
