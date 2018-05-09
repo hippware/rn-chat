@@ -176,8 +176,8 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.5.1.tgz#a38f69c62528d56ba7bd1f91335a8004988d72f7"
 
 "@types/react-native@^0.55.1":
-  version "0.55.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.1.tgz#dbcfbeb9294ef69b55d5531d330c1927f5d8629e"
+  version "0.55.12"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.12.tgz#35778c709db57ff3092573d7a53f15ca380601ab"
   dependencies:
     "@types/react" "*"
 
