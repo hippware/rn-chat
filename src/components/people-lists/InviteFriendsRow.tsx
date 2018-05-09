@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, View, Image, TouchableOpacity, Share} from 'react-native'
 
@@ -7,11 +5,13 @@ import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import {inject, observer} from 'mobx-react/native'
+import {IWocky} from 'wocky-client'
 
 type Props = {
   style?: any
   subtext?: string
   botTitle?: string
+  wocky?: IWocky
 }
 
 const InviteFriendsRow = inject('wocky')(
@@ -54,7 +54,7 @@ const InviteFriendsRow = inject('wocky')(
 )
 
 async function share(message) {
-  const res = await Share.share(
+  const res = await (Share as any).share(
     {
       message: `${message} Download the app at`,
       // title: 'title',
