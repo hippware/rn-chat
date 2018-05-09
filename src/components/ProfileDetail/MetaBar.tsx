@@ -1,11 +1,9 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, TouchableOpacity, View} from 'react-native'
-import {observer} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 
-import {Profile} from 'wocky-client'
+import {IProfile, IWocky} from 'wocky-client'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -33,42 +31,44 @@ const NewFollowerDot = () => (
   />
 )
 
-const MetaBar = observer(({profile}: {profile: Profile}) => (
-  <View style={styles.metabar}>
-    <View style={{flex: 1}}>
-      <RText size={22} style={styles.number}>
-        {profile.botsSize}
-      </RText>
-      <RText weight="Light" size={11} style={styles.word}>
-        BOTS
-      </RText>
-    </View>
-    <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.id})}>
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+const MetaBar = inject('wocky')(
+  observer(({profile, wocky}: {profile: IProfile; wocky?: IWocky}) => (
+    <View style={styles.metabar}>
+      <View style={{flex: 1}}>
         <RText size={22} style={styles.number}>
-          {profile.followersSize}
+          {profile.botsSize}
         </RText>
-        {profile.isOwn &&
-          profile.newFollowers &&
-          profile.newFollowers.length > 0 && <NewFollowerDot />}
+        <RText weight="Light" size={11} style={styles.word}>
+          BOTS
+        </RText>
       </View>
-      <RText weight="Light" size={11} style={styles.word}>
-        FOLLOWERS
-      </RText>
-    </TouchableOpacity>
-    <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followed({userId: profile.id})}>
-      <RText size={22} style={styles.number}>
-        {profile.followedSize}
-      </RText>
+      <Separator />
+      <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.id})}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <RText size={22} style={styles.number}>
+            {profile.followersSize}
+          </RText>
+          {profile.isOwn &&
+            wocky.newFollowers &&
+            wocky.newFollowers.length > 0 && <NewFollowerDot />}
+        </View>
+        <RText weight="Light" size={11} style={styles.word}>
+          FOLLOWERS
+        </RText>
+      </TouchableOpacity>
+      <Separator />
+      <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followed({userId: profile.id})}>
+        <RText size={22} style={styles.number}>
+          {profile.followedSize}
+        </RText>
 
-      <RText weight="Light" size={11} style={styles.word}>
-        FOLLOWING
-      </RText>
-    </TouchableOpacity>
-  </View>
-))
+        <RText weight="Light" size={11} style={styles.word}>
+          FOLLOWING
+        </RText>
+      </TouchableOpacity>
+    </View>
+  ))
+)
 
 export default MetaBar
 
