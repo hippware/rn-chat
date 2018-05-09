@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {reaction} from 'mobx'
+import {autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -360,15 +360,13 @@ const LocationStore = types
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')
       )
-      handler = reaction(
-        () => wocky.connected,
-        (connected: boolean) => {
-          if (connected) {
+      handler = autorun(() => {
+        if (wocky.connected) {
+          self.startBackground().then(() => {
             self.getCurrentPosition()
-            self.startBackground()
-          }
+          })
         }
-      )
+      })
     }
 
     function finish() {
