@@ -152,7 +152,7 @@ export class GraphQLTransport implements IWockyTransport {
         `,
     })
     if (!res.data.user) {
-      throw new Error(`Profile doesn't exist for user with id: ${user}`)
+      return null
     }
     return convertProfile(res.data.user)
   }
@@ -575,6 +575,10 @@ export class GraphQLTransport implements IWockyTransport {
         limit: max,
       },
     })
+    // return empty list for null data
+    if (!res.data.bot || !res.data.bot.subscribers) {
+      return {list: [], count: 0}
+    }
     let list = res.data.bot.subscribers.edges
     let count = res.data.bot.subscribers.totalCount
     if (!includeCurrentUser) {
