@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View} from 'react-native'
 import {Provider} from 'mobx-react/native'
@@ -24,7 +22,7 @@ const App = () => (
     {...logger}
   >
     <ErrorHandler>
-      <View style={{flex: 1}} testId={wrapper}>
+      <View style={{flex: 1}} testID="wrapper">
         <TinyRobotRouter />
         <NotificationBanner />
       </View>
