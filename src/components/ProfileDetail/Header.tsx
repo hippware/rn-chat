@@ -1,12 +1,10 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
 import {observer} from 'mobx-react/native'
 
 import ProfileAvatar from '../ProfileAvatar'
 import Card from '../Card'
-import {Profile} from 'wocky-client'
+import {Profile, IProfile} from 'wocky-client'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -15,7 +13,7 @@ import FollowButton from './FollowButton'
 import {isAlive} from 'mobx-state-tree'
 
 type Props = {
-  profile: Profile
+  profile: IProfile
 }
 
 const Header = observer((props: Props) => {
@@ -30,9 +28,9 @@ const Header = observer((props: Props) => {
         <RText size={16} style={styles.displayName}>
           {profile.displayName}
         </RText>
-        <RText size={13} style={styles.tagline}>
+        {/* <RText size={13} style={styles.tagline}>
           {profile.tagline}
-        </RText>
+        </RText> */}
         <MetaBar profile={profile} />
       </Card>
       <FollowButton {...props} />
