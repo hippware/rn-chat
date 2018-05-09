@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Geofence widget improvements (PR #2286, #2243)
+* [dev] Use graphql to retrieve user profile data (#2281)
+* DRY up Avatar (PR #2292)
+  * Widget: Visitor count avatar is hidden behind avatar (#2269)
+* Attempt to improve buggy google markers (PR #2299)
+  * Reworks: Pink blank cover images (#2225)
 
 # 2.6.2 - 2018 May 4
 
