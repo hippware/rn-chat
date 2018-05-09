@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
@@ -17,26 +15,18 @@ import {colors} from '../constants'
 import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import {IWocky} from 'wocky-client'
+
+type Props = {
+  wocky?: IWocky
+  profileValidationStore?: any
+}
 
 @inject('wocky', 'profileValidationStore')
 @observer
-class MyAccount extends React.Component<{}> {
+class MyAccount extends React.Component<Props> {
   static title = () => <Title />
   static rightButton = () => <Right />
-
-  @observable saving: boolean = false
-  @observable vProfile: ValidatableProfile
-  handle: any
-  firstName: any
-  lastName: any
-  email: any
-
-  componentDidMount() {
-    if (this.props.wocky.profile) {
-      this.vProfile = new ValidatableProfile(this.props.wocky.profile)
-      this.props.profileValidationStore.setProfile(this.vProfile)
-    }
-  }
 
   static submit = async profileValidationStore => {
     try {
@@ -49,11 +39,25 @@ class MyAccount extends React.Component<{}> {
     }
   }
 
+  @observable saving: boolean = false
+  @observable vProfile: ValidatableProfile
+  handle: any
+  firstName: any
+  lastName: any
+  email: any
+
+  componentDidMount() {
+    if (this.props.wocky!.profile) {
+      this.vProfile = new ValidatableProfile(this.props.wocky.profile)
+      this.props.profileValidationStore.setProfile(this.vProfile)
+    }
+  }
+
   render() {
     const {profile} = this.props.wocky
     if (!profile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR})
-      return <Screen isDay />
+      return <Screen />
     }
     return (
       <Screen>
