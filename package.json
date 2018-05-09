@@ -28,6 +28,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+       "./__tests__/utils/testSetup.js"
+     ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
@@ -49,7 +52,6 @@
       "node"
     ],
     "globals": {
-      "window": true,
       "ts-jest": {
         "useBabelrc": true
       }
