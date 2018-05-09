@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {reaction} from 'mobx'
+import {autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -44,8 +44,8 @@ const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   elasticityMultiplier: types.maybe(types.number),
-  preventSuspend: true,
-  heartbeatInterval: types.maybe(types.number),
+  // preventSuspend: true,
+  // heartbeatInterval: types.maybe(types.number),
   stopTimeout: types.maybe(types.number),
   desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybe(types.number),
@@ -54,6 +54,9 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   activityType: types.maybe(types.enumeration(ActivityTypeValues)),
   activityRecognitionInterval: types.maybe(types.number),
 })
+
+// background configuration should only happen once every app start (not every foreground)
+let backgroundStarted = false
 
 const LocationStore = types
   .model('LocationStore', {
@@ -154,7 +157,7 @@ const LocationStore = types
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, backgroundGeolocation, backgroundFetch} = getEnv(self)
+    const {logger, nativeEnv, backgroundGeolocation, backgroundFetch, analytics} = getEnv(self)
 
     // function onHeartbeat(data) {
     //   logger.log(prefix, 'heartbeat:', JSON.stringify(data))
@@ -185,17 +188,20 @@ const LocationStore = types
     }
 
     function onHttp(response) {
-      logger.log(prefix, 'http sent:', response)
+      logger.log(prefix, 'on http', response)
       if (response.status >= 200 && response.status < 300) {
         if (self.debugSounds) backgroundGeolocation.playSound(1016) // tweet sent
+        analytics.track('location_bg_success', {location: self.location})
       } else {
         if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+        analytics.track('location_bg_fail', {response})
       }
     }
 
     function onHttpError(err) {
-      logger.warn(prefix, 'http error:', err)
+      logger.log(prefix, 'on http error', err)
       if (self.debugSounds) backgroundGeolocation.playSound(1024) // descent
+      analytics.track('location_bg_error', {error: err})
     }
 
     function onMotionChange(location) {
@@ -211,18 +217,54 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
+    async function sendLastKnownLocation(): Promise<void> {
+      logger.log(prefix, 'send last known location')
+      if (self.location) {
+        const {latitude, longitude, accuracy} = self.location
+        const {url, headers, params} = await backgroundGeolocation.getState()
+        logger.log(prefix, 'options:', url, headers, params)
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+              ...headers,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              location: [
+                {
+                  coords: {latitude, longitude, accuracy},
+                },
+              ],
+              resource: params.resource,
+            }),
+          })
+          onHttp(res)
+        } catch (err) {
+          onHttpError(err)
+        }
+      } else {
+        analytics.track('location_bg_error', {error: 'no location stored'})
+      }
+    }
+
     const startBackground = flow(function*() {
+      if (backgroundStarted) return
+      backgroundStarted = true
+
       const wocky: IWocky = getParent(self).wocky
-      logger.log(prefix, 'BACKGROUND LOCATION START')
 
       const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-      logger.log(`LOCATION UPDATE URL: ${url}`)
 
       const headers = {
         Accept: 'application/json',
         'X-Auth-User': wocky.username!,
         'X-Auth-Token': wocky.password!,
       }
+
+      logger.log(prefix, 'BACKGROUND LOCATION START')
+
+      logger.log(`LOCATION UPDATE URL: ${url}`)
 
       const params = {
         resource: wocky.transport.resource,
@@ -250,7 +292,7 @@ const LocationStore = types
         headers,
       })
       // apply this change every load to prevent stale auth headers
-      yield backgroundGeolocation.setConfig({headers, params})
+      yield backgroundGeolocation.setConfig({headers, params, url})
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
@@ -262,35 +304,19 @@ const LocationStore = types
         backgroundGeolocation.stop()
       }
 
-      // guarantee updates when user isn't active enough to trigger rnbgl events
+      // guarantee updates when user isn't moving enough to trigger rnbgl events
       backgroundFetch.configure(
         {
           minimumFetchInterval: 15, // (15 minutes is minimum allowed)
         },
         async () => {
           try {
-            // send last known location
-            if (self.location) {
-              const {latitude, longitude, accuracy} = self.location
-              await fetch(url, {
-                method: 'POST',
-                headers: {
-                  ...headers,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  location: [
-                    {
-                      coords: {latitude, longitude, accuracy},
-                    },
-                  ],
-                  resource: wocky.transport.resource,
-                }),
-              })
-            }
+            analytics.track('location_bg_fetch_start')
+            await sendLastKnownLocation()
           } catch (err) {
-            logger.log('fetch error', err)
+            onHttpError(err)
           }
+          analytics.track('location_bg_fetch_finish')
           backgroundFetch.finish()
         },
         error => {
@@ -360,20 +386,17 @@ const LocationStore = types
       Permissions.check('location', {type: 'always'}).then(response =>
         self.setAlwaysOn(response === 'authorized')
       )
-      handler = reaction(
-        () => wocky.connected,
-        (connected: boolean) => {
-          if (connected) {
+      handler = autorun(() => {
+        if (wocky.connected) {
+          self.startBackground().then(() => {
             self.getCurrentPosition()
-            self.startBackground()
-          }
+          })
         }
-      )
+      })
     }
 
     function finish() {
       if (!self.alwaysOn) {
-        // is this necessary? Might turn off automatically without call
         self.stopBackground()
       }
       if (handler) handler()
