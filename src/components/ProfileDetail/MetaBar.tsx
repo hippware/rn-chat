@@ -1,16 +1,25 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {observer} from 'mobx-react/native';
-import {Actions} from 'react-native-router-flux';
+import React from 'react'
+import {StyleSheet, TouchableOpacity, View} from 'react-native'
+import {observer} from 'mobx-react/native'
+import {Actions} from 'react-native-router-flux'
 
-import {Profile} from 'wocky-client';
-import {k} from '../Global';
-import {colors} from '../../constants';
-import {RText} from '../common';
+import {Profile} from 'wocky-client'
+import {k} from '../Global'
+import {colors} from '../../constants'
+import {RText} from '../common'
 
-const Separator = () => <View style={{width: StyleSheet.hairlineWidth, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
+const Separator = () => (
+  <View
+    style={{
+      width: StyleSheet.hairlineWidth,
+      top: 7 * k,
+      height: 34 * k,
+      backgroundColor: colors.SILVER,
+    }}
+  />
+)
 
 const NewFollowerDot = () => (
   <View
@@ -22,7 +31,7 @@ const NewFollowerDot = () => (
       borderRadius: 4,
     }}
   />
-);
+)
 
 const MetaBar = observer(({profile}: {profile: Profile}) => (
   <View style={styles.metabar}>
@@ -30,7 +39,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
       <RText size={22} style={styles.number}>
         {profile.botsSize}
       </RText>
-      <RText weight='Light' size={11} style={styles.word}>
+      <RText weight="Light" size={11} style={styles.word}>
         BOTS
       </RText>
     </View>
@@ -40,9 +49,11 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
         <RText size={22} style={styles.number}>
           {profile.followersSize}
         </RText>
-        {profile.isOwn && profile.newFollowers && profile.newFollowers.length > 0 && <NewFollowerDot />}
+        {profile.isOwn &&
+          profile.newFollowers &&
+          profile.newFollowers.length > 0 && <NewFollowerDot />}
       </View>
-      <RText weight='Light' size={11} style={styles.word}>
+      <RText weight="Light" size={11} style={styles.word}>
         FOLLOWERS
       </RText>
     </TouchableOpacity>
@@ -52,14 +63,14 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
         {profile.followedSize}
       </RText>
 
-      <RText weight='Light' size={11} style={styles.word}>
+      <RText weight="Light" size={11} style={styles.word}>
         FOLLOWING
       </RText>
     </TouchableOpacity>
   </View>
-));
+))
 
-export default MetaBar;
+export default MetaBar
 
 const styles = StyleSheet.create({
   metabar: {
@@ -74,4 +85,4 @@ const styles = StyleSheet.create({
     color: colors.DARK_GREY,
     textAlign: 'center',
   },
-});
+})
