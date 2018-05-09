@@ -34,7 +34,7 @@
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 
     /* Strict Type-Checking Options */
-    "strict": true /* Enable all strict type-checking options. */,
+    // "strict": true /* Enable all strict type-checking options. */,
     "noImplicitAny": false,
     "skipLibCheck": true,
     // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
@@ -45,7 +45,7 @@
     // "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
 
     /* Additional Checks */
-    "noUnusedLocals": true /* Report errors on unused locals. */,
+    "noUnusedLocals": false /* Report errors on unused locals. */,
     "noUnusedParameters": true /* Report errors on unused parameters. */,
     // "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
@@ -54,7 +54,9 @@
     "moduleResolution":
       "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
-    // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+    "paths": {
+      "wocky-client": ["third-party/wocky-client/src"]
+    },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     "types": ["react", "react-native"], // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15960                           /* Type declaration files to be included in compilation. */
