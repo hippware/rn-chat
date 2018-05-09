@@ -68,7 +68,7 @@ const InviteFriendsRow = inject('wocky')(
 )
 
 async function share(message) {
-  const res = await (Share as any).share(
+  await (Share as any).share(
     {
       message: `${message} Download the app at`,
       // title: 'title',
@@ -81,7 +81,6 @@ async function share(message) {
       // tintColor: ''
     }
   )
-  // console.log('res', res);
 }
 
 export default InviteFriendsRow
