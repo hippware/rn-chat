@@ -63,13 +63,21 @@
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/tinyrobotStaging.app",
         "build": "xcodebuild -workspace ios/tinyRobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone 7"
+        "name": "iPhone 7",
+        "permissions": {
+          "location": "always", 
+          "notifications": "YES"
+        }
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/tinyrobotStaging.app",
         "build": "xcodebuild -workspace ios/tinyRobot.xcworkspace -scheme tinyrobotStaging -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone 7"
+        "name": "iPhone 7",
+        "permissions": {
+          "location": "always", 
+          "notifications": "YES"
+        }
       }
     }
   },
