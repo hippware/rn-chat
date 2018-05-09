@@ -1,24 +1,24 @@
-import React from 'react';
-import {StyleSheet, Alert, TouchableOpacity, Text} from 'react-native';
-import Button from 'apsl-react-native-button';
-import {settings} from '../globals';
-import {k} from './Global';
-import {Actions} from 'react-native-router-flux';
+import React from 'react'
+import {StyleSheet, Alert, TouchableOpacity, Text} from 'react-native'
+import Button from 'apsl-react-native-button'
+import {settings} from '../globals'
+import {k} from './Global'
+import {Actions} from 'react-native-router-flux'
 
 const LogoutButton = () => {
   if (settings.isTesting) {
     return (
       <Button
-        testID='logout'
+        testID="logout"
         onPress={() => {
-          Actions.logout({remove: true});
+          Actions.logout({remove: true})
         }}
         style={styles.button}
         textStyle={styles.text}
       >
         Logout
       </Button>
-    );
+    )
   } else {
     return (
       <TouchableOpacity
@@ -29,9 +29,9 @@ const LogoutButton = () => {
               text: 'Log Out',
               style: 'destructive',
               onPress: async () => {
-                Actions.pop({animated: false});
-                Actions.pop({animated: false});
-                Actions.logout();
+                Actions.pop({animated: false})
+                Actions.pop({animated: false})
+                Actions.logout()
               },
             },
           ])
@@ -40,9 +40,9 @@ const LogoutButton = () => {
       >
         <Text style={styles.text}>Logout</Text>
       </TouchableOpacity>
-    );
+    )
   }
-};
+}
 
 const styles = StyleSheet.create({
   text: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: 'white'},
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
 
-export default LogoutButton;
+export default LogoutButton
