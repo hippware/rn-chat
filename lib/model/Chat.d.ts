@@ -2,7 +2,7 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 import { IProfile } from './Profile';
 import { IBot } from './Bot';
-export declare type __IObservableArray<s> = IObservableArray<any>;
+export declare type __IObservableArray = IObservableArray<any>;
 export declare type __IBot = IBot;
 export declare const Chat: IModelType<{
     id?: any;

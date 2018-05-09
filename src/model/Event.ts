@@ -9,10 +9,10 @@ import {IProfile} from './Profile'
 export const Event = types
   .compose(Base, Timeable)
   .named('Event')
-  .views(self => ({
+  .views(() => ({
     get target(): IProfile {
-      throw 'Abstract method!'
-    }
+      throw new Error('Abstract method!')
+    },
   }))
   .named('Event')
 

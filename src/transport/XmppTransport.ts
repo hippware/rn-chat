@@ -1,3 +1,5 @@
+declare var Strophe, $iq, $pres, $msg: any
+
 import {observable, when, action, runInAction} from 'mobx'
 import * as Utils from './utils'
 import {upload, IFileService} from './FileService'
@@ -50,12 +52,8 @@ export class XmppTransport implements IWockyTransport {
     provider.onIQ = action((iq: any) => {
       this.iq = iq
       // console.log('ON IQ:', JSON.stringify(iq))
-      try {
-        if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid) {
-          this.rosterItem = processRosterItem(iq.query.item, this.host)
-        }
-      } catch (e) {
-        console.error(e)
+      if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid) {
+        this.rosterItem = processRosterItem(iq.query.item, this.host)
       }
     })
     provider.onMessage = action((msg: any) => {
@@ -78,7 +76,7 @@ export class XmppTransport implements IWockyTransport {
         } else if (msg.notification.delete) {
           this.notification = {...msg.notification.delete, delete: true}
         } else {
-          console.warn('& notification: unhandled homestream notification', msg.notification)
+          // console.warn('& notification: unhandled homestream notification', msg.notification) TODO logger
         }
       }
     })
@@ -103,7 +101,10 @@ export class XmppTransport implements IWockyTransport {
         this.host = host
       }
       runInAction(() => (this.connecting = true))
-      await timeout(this.provider.login(this.username, this.password, this.host, this.resource), TIMEOUT)
+      await timeout(
+        this.provider.login(this.username, this.password, this.host, this.resource),
+        TIMEOUT
+      )
       return true
     } catch (e) {
       runInAction(() => (this.connected = false))
@@ -114,7 +115,11 @@ export class XmppTransport implements IWockyTransport {
   }
 
   @action
-  async register(data: any, host?: string, providerName = 'digits'): Promise<{username: string; password: string; host: string}> {
+  async register(
+    data: any,
+    host?: string,
+    providerName = 'digits'
+  ): Promise<{username: string; password: string; host: string}> {
     if (host) {
       this.host = host
     }
@@ -122,7 +127,7 @@ export class XmppTransport implements IWockyTransport {
       provider: providerName,
       resource: this.resource,
       token: true,
-      provider_data: data!
+      provider_data: data!,
     })}`
     try {
       await this.provider.login('register', password, this.host, this.resource)
@@ -149,7 +154,7 @@ export class XmppTransport implements IWockyTransport {
         throw d.text ? new Error(d.text) : error
       }
     }
-    throw 'register must throw exception'
+    throw new Error('register must throw exception')
   }
   async testRegister({phoneNumber}: {phoneNumber: string}, host: string) {
     return await this.register(
@@ -161,7 +166,7 @@ export class XmppTransport implements IWockyTransport {
         emailAddressIsVerified: false,
         'X-Auth-Service-Provider': 'http://localhost:9999',
         emailAddress: '',
-        'X-Verify-Credentials-Authorization': ''
+        'X-Verify-Credentials-Authorization': '',
       },
       host
     )
@@ -191,7 +196,11 @@ export class XmppTransport implements IWockyTransport {
         () => {
           const stanza = this.iq
           if (stanza.type === 'error') {
-            reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error['#text'] || stanza.error)
+            reject(
+              stanza.error && stanza.error.text
+                ? stanza.error.text['#text']
+                : stanza.error['#text'] || stanza.error
+            )
             // reject('ERROR for stanza: ' + data.toString() + ' ' + (stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error))
           } else {
             resolve(stanza)
@@ -204,7 +213,17 @@ export class XmppTransport implements IWockyTransport {
     const id = user
     const isOwn = id === this.username
     const node = `user/${user}`
-    const fields = ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles']
+    const fields = [
+      'avatar',
+      'handle',
+      'first_name',
+      'tagline',
+      'last_name',
+      'bots+size',
+      'followers+size',
+      'followed+size',
+      'roles',
+    ]
     if (isOwn) {
       fields.push('email')
       fields.push('phone_number')
@@ -214,7 +233,6 @@ export class XmppTransport implements IWockyTransport {
       iq = iq.c('field', {var: field}).up()
     })
     const stanza = await this.sendIQ(iq)
-    console.log('loadProfile XMPP', {id, ...processMap(stanza)})
     return {id, ...processMap(stanza)} as IProfilePartial
   }
   async requestProfiles(users: string[]): Promise<any> {
@@ -237,14 +255,14 @@ export class XmppTransport implements IWockyTransport {
     const data = fromCamelCase(d)
     let iq = $iq({type: 'set'}).c('set', {
       xmlns: USER,
-      node: `user/${this.username}`
+      node: `user/${this.username}`,
     })
     fields.forEach(field => {
       if (data[field]) {
         iq = iq
           .c('field', {
             var: field,
-            type: field === 'avatar' ? 'file' : 'string'
+            type: field === 'avatar' ? 'file' : 'string',
           })
           .c('value')
           .t(data[field])
@@ -270,14 +288,19 @@ export class XmppTransport implements IWockyTransport {
     await this.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))
     await this.disconnect()
   }
-  async loadRelations(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
+  async loadRelations(
+    userId: string,
+    relation: string = 'following',
+    lastId?: string,
+    max: number = 10
+  ) {
     const iq = $iq({
       type: 'get',
-      to: this.host
+      to: this.host,
     })
       .c('contacts', {
         xmlns: 'hippware.com/hxep/user',
-        node: `user/${userId}`
+        node: `user/${userId}`,
       })
       .c('association')
       .t(relation)
@@ -298,7 +321,9 @@ export class XmppTransport implements IWockyTransport {
     if (!isArray(children)) {
       children = [children]
     }
-    const list = children.filter(({jid}: any) => Strophe.getDomainFromJid(jid)).map(({jid}: any) => ({id: Strophe.getNodeFromJid(jid)}))
+    const list = children
+      .filter(({jid}: any) => Strophe.getDomainFromJid(jid))
+      .map(({jid}: any) => ({id: Strophe.getNodeFromJid(jid)}))
     return {list, count: parseInt(stanza.contacts.set.count)}
   }
 
@@ -309,10 +334,10 @@ export class XmppTransport implements IWockyTransport {
       .t(tros)
     let data: any = await this.sendIQ(iq)
     if (!data) {
-      throw 'invalid data'
+      throw new Error('invalid data')
     }
     if (!data.download) {
-      throw 'file data should be defined'
+      throw new Error('file data should be defined')
     }
     data = data.download
     const headers: any = {}
@@ -329,7 +354,7 @@ export class XmppTransport implements IWockyTransport {
   }
   async downloadFile(tros: string, name: string, sourceUrl: string) {
     const folder = `${this.fileService.tempDir}/${tros.split('/').slice(-1)[0]}`
-    if (!(await this.fileService.fileExists(folder))) {
+    if (!await this.fileService.fileExists(folder)) {
       await this.fileService.mkdir(folder)
     }
     const mainFileName = `${folder}/main.jpeg`
@@ -356,7 +381,7 @@ export class XmppTransport implements IWockyTransport {
         return res
       }
     }
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       when(
         () => this.connected,
         async () => {
@@ -372,7 +397,9 @@ export class XmppTransport implements IWockyTransport {
           } catch (e) {
             try {
               await this.fileService.removeFile(fileName)
-            } catch (err) {}
+            } catch (err) {
+              // ignore error
+            }
             resolve()
             return
           }
@@ -456,7 +483,7 @@ export class XmppTransport implements IWockyTransport {
   }
   async requestRoster() {
     const iq = $iq({type: 'get', to: `${this.username}@${this.host}`}).c('query', {
-      xmlns: ROSTER
+      xmlns: ROSTER,
     })
     const stanza = await this.sendIQ(iq)
     let children = stanza.query.item
@@ -469,7 +496,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set'}).c('enable', {
       xmlns: PUSH_NS,
       platform: 'apple',
-      device: token
+      device: token,
     })
     const data = await this.sendIQ(iq)
     if (!data || !(data.enabled || data.enabled === '')) throw data
@@ -483,7 +510,7 @@ export class XmppTransport implements IWockyTransport {
     let stanza = $msg({
       to: `${msg!.to!}@${this.host}`,
       type: 'chat',
-      id: msg.id
+      id: msg.id,
     })
       .c('body')
       .t(msg.body ? msg.body.trim() : '')
@@ -561,7 +588,13 @@ export class XmppTransport implements IWockyTransport {
       const sender: string = Utils.getNodeJid(other_jid)!
       const from = outgoing === 'true' ? this.username : sender
       const to = outgoing === 'true' ? sender : this.username
-      return {id: sender, message: processMessage({...message, to, from, time: Utils.iso8601toDate(timestamp).getTime()}, this.username!)}
+      return {
+        id: sender,
+        message: processMessage(
+          {...message, to, from, time: Utils.iso8601toDate(timestamp).getTime()},
+          this.username!
+        ),
+      }
     })
   }
 
@@ -575,14 +608,14 @@ export class XmppTransport implements IWockyTransport {
         return data['new-id']
       }
     } else {
-      throw 'Cannot generate ID'
+      throw new Error('Cannot generate ID')
     }
   }
   async removeBot(id: string) {
     const iq = $iq({type: 'set', to: this.host}).c('delete', {xmlns: BOT_NS, node: `bot/${id}`})
     await this.sendIQ(iq)
   }
-  async loadGeofenceBots(lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadGeofenceBots(): Promise<IPagingList> {
     throw new Error('Not supported')
   }
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
@@ -611,13 +644,16 @@ export class XmppTransport implements IWockyTransport {
     if (!isArray(bots)) {
       bots = [bots]
     }
-    return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
+    return {
+      list: bots.map((item: any) => ({id: item.id, ...processMap(item)})),
+      count: parseInt(data.bots.set.count),
+    }
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     const iq = $iq({type: 'get', to: this.host})
       .c('subscribers', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       .up()
@@ -643,7 +679,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'get', to: this.host})
       .c('guests', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
 
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
@@ -670,7 +706,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'get', to: this.host})
       .c('visitors', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
 
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
@@ -693,10 +729,10 @@ export class XmppTransport implements IWockyTransport {
     const list = await this.requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
     return {list, count: parseInt(data.visitors.set.count)}
   }
-  async setLocation(params: ILocationSnapshot): Promise<void> {
+  async setLocation(): Promise<void> {
     throw new Error('Not supported')
   }
-  async getLocationsVisited(limit: number = 50): Promise<object[]> {
+  async getLocationsVisited(): Promise<object[]> {
     throw new Error('Not supported')
   }
   async loadBotPosts(id: string, before?: string) {
@@ -735,16 +771,16 @@ export class XmppTransport implements IWockyTransport {
           handle: post.author_handle,
           firstName: post.author_first_name,
           lastName: post.author_last_name,
-          avatar: post.author_avatar
+          avatar: post.author_avatar,
         }
         return {
           id: post.id,
           content: post.content,
           image: post.image,
           time: Utils.iso8601toDate(post.updated).getTime(),
-          profile
+          profile,
         }
-      })
+      }),
     }
   }
   async loadSubscribedBots(userId: string, lastId?: string, max: number = 10) {
@@ -773,15 +809,29 @@ export class XmppTransport implements IWockyTransport {
     if (!isArray(bots)) {
       bots = [bots]
     }
-    return {list: bots.map((item: any) => ({id: item.id, ...processMap(item)})), count: parseInt(data.bots.set.count)}
+    return {
+      list: bots.map((item: any) => ({id: item.id, ...processMap(item)})),
+      count: parseInt(data.bots.set.count),
+    }
   }
   async updateBot(bot: any) {
-    const {title, image, description, address, location, visibility, geofence, radius, id, addressData} = bot
+    const {
+      title,
+      image,
+      description,
+      address,
+      location,
+      visibility,
+      geofence,
+      radius,
+      id,
+      addressData,
+    } = bot
     const iq = bot.isNew
       ? $iq({type: 'set'}).c('create', {xmlns: BOT_NS})
       : $iq({type: 'set'}).c('fields', {
           xmlns: BOT_NS,
-          node: `bot/${bot.id}`
+          node: `bot/${bot.id}`,
         })
 
     addValues(iq, {
@@ -793,14 +843,17 @@ export class XmppTransport implements IWockyTransport {
       radius: Math.round(radius),
       address,
       image,
-      visibility
+      visibility,
     })
     addField(iq, 'location', 'geoloc')
     location!.addToIQ(iq)
     await this.sendIQ(iq)
   }
   async loadBot(id: string, server: any) {
-    const iq = $iq({type: 'get', to: server || this.host}).c('bot', {xmlns: BOT_NS, node: `bot/${id}`})
+    const iq = $iq({type: 'get', to: server || this.host}).c('bot', {
+      xmlns: BOT_NS,
+      node: `bot/${id}`,
+    })
     const data = await this.sendIQ(iq)
     return {id: data.bot.id, ...processMap(data.bot)}
   }
@@ -810,11 +863,11 @@ export class XmppTransport implements IWockyTransport {
       .c('item', {id: postId})
     await this.sendIQ(iq)
   }
-  shareBot(id: string, server: string, recepients: string[], message: string, action: string) {
+  shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string) {
     const msg = $msg({
       from: this.username + '@' + this.host,
       type: 'headline',
-      to: this.host
+      to: this.host,
     }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
 
     recepients.forEach(user => {
@@ -843,7 +896,7 @@ export class XmppTransport implements IWockyTransport {
       .t(server)
       .up()
       .c('action')
-      .t(action)
+      .t(shareAction)
 
     this.sendStanza(msg)
   }
@@ -874,7 +927,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host})
       .c('subscribe', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('geofence')
       .t(geofence.toString())
@@ -885,7 +938,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host})
       .c('unsubscribe', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('geofence')
       .t(geofence.toString())
@@ -926,7 +979,7 @@ export class XmppTransport implements IWockyTransport {
   subscribeToHomestream(version: string) {
     const iq = $pres({to: `${this.username}@${this.host}/home_stream`}).c('query', {
       xmlns: EVENT_NS,
-      version
+      version,
     })
     this.sendStanza(iq)
   }
@@ -936,13 +989,19 @@ export class XmppTransport implements IWockyTransport {
         this.isGeoSearching = true
         const iq = $iq({type: 'get', to: this.host})
           .c('bots', {
-            xmlns: BOT_NS
+            xmlns: BOT_NS,
           })
-          .c('explore-nearby', {limit: 100, lat_delta: latitudeDelta, lon_delta: longitudeDelta, lat: latitude, lon: longitude})
+          .c('explore-nearby', {
+            limit: 100,
+            lat_delta: latitudeDelta,
+            lon_delta: longitudeDelta,
+            lat: latitude,
+            lon: longitude,
+          })
         await this.sendIQ(iq)
       } catch (e) {
         // TODO: how do we handle errors here?
-        console.error(e)
+        // console.error(e)
       } finally {
         this.isGeoSearching = false
       }
@@ -1002,7 +1061,7 @@ export function processMessage(stanza: any, ownUserId: string) {
     id,
     time,
     unread,
-    media: stanza.image && stanza.image.url ? stanza.image.url : null
+    media: stanza.image && stanza.image.url ? stanza.image.url : null,
   }
   return res
 }
@@ -1068,69 +1127,82 @@ export function processHomestreamResponse(data: any, username: string) {
     if (!isArray(deletes)) {
       deletes = [deletes]
     }
-    deletes.forEach((rec: any) => list.push({id: rec.id, time: Utils.iso8601toDate(rec.version).getTime(), delete: true}))
+    deletes.forEach((rec: any) =>
+      list.push({id: rec.id, time: Utils.iso8601toDate(rec.version).getTime(), delete: true})
+    )
   }
 
   return {
     list,
     bots,
     version: data.items.version,
-    count: parseInt((data.items && data.items.set && data.items.set.count) || 0)
+    count: parseInt((data.items && data.items.set && data.items.set.count) || 0),
   }
 }
 
 export function processItem(item: any, delay: any, username: string): any {
-  try {
-    const time = Utils.iso8601toDate(item.version).getTime()
-    if (item.message) {
-      const {message, id, from} = item
-      const {bot, event, body, media, image} = message
-      if (bot && bot.action === 'show') {
-        return {id, bot: bot.id, time, created: true}
-      }
-
-      if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
-        const userId = Utils.getNodeJid(bot['user-jid'])
-        return {id, bot: bot.id, time, profile: userId, isEnter: bot.action === 'enter'}
-      }
-
-      if (event && event.item && event.item.entry) {
-        const {entry, author} = event.item
-        const eventId = event.node.split('/')[1]
-        return {id, bot: eventId, time, post: {id: eventId + id, image: entry.image, content: entry.content, profile: Utils.getNodeJid(author)}}
-      }
-
-      if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
-        const noteBot = item.message['bot-description-changed'].bot
-        return {id: item.id, bot: noteBot.id, time: Utils.iso8601toDate(item.version).getTime(), note: noteBot.description}
-      }
-
-      if (event && event.retract) {
-        return {id: event.retract.id, delete: true}
-      }
-      if (body || media || image || bot) {
-        const msg = processMessage(
-          {
-            ...message,
-            from,
-            to: username
-          },
-          username
-        )
-        if (!message.delay) {
-          if (delay && delay.stamp) {
-            msg.time = Utils.iso8601toDate(delay.stamp).getTime()
-          } else {
-            msg.time = Utils.iso8601toDate(item.version).getTime()
-          }
-        }
-        return bot ? {id, bot: bot.id, time, message: msg, action: bot.action} : null
-      }
-    } else {
-      console.log('& UNSUPPORTED ITEM!', item)
+  const time = Utils.iso8601toDate(item.version).getTime()
+  if (item.message) {
+    const {message, id, from} = item
+    const {bot, event, body, media, image} = message
+    if (bot && bot.action === 'show') {
+      return {id, bot: bot.id, time, created: true}
     }
-  } catch (err) {
-    console.log('EventStore.processItem ERROR:', err)
+
+    if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
+      const userId = Utils.getNodeJid(bot['user-jid'])
+      return {id, bot: bot.id, time, profile: userId, isEnter: bot.action === 'enter'}
+    }
+
+    if (event && event.item && event.item.entry) {
+      const {entry, author} = event.item
+      const eventId = event.node.split('/')[1]
+      return {
+        id,
+        bot: eventId,
+        time,
+        post: {
+          id: eventId + id,
+          image: entry.image,
+          content: entry.content,
+          profile: Utils.getNodeJid(author),
+        },
+      }
+    }
+
+    if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
+      const noteBot = item.message['bot-description-changed'].bot
+      return {
+        id: item.id,
+        bot: noteBot.id,
+        time: Utils.iso8601toDate(item.version).getTime(),
+        note: noteBot.description,
+      }
+    }
+
+    if (event && event.retract) {
+      return {id: event.retract.id, delete: true}
+    }
+    if (body || media || image || bot) {
+      const msg = processMessage(
+        {
+          ...message,
+          from,
+          to: username,
+        },
+        username
+      )
+      if (!message.delay) {
+        if (delay && delay.stamp) {
+          msg.time = Utils.iso8601toDate(delay.stamp).getTime()
+        } else {
+          msg.time = Utils.iso8601toDate(item.version).getTime()
+        }
+      }
+      return bot ? {id, bot: bot.id, time, message: msg, action: bot.action} : null
+    }
+  } else {
+    // console.log('& UNSUPPORTED ITEM!', item) TODO
   }
   return null
 }
@@ -1157,26 +1229,26 @@ function processRosterItem(item: any = {}, host: string) {
     isNew: groups.includes(NEW_GROUP) && days <= 7,
     isBlocked: group === BLOCKED_GROUP,
     isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-    isFollower: subscription === 'from' || subscription === 'both'
+    isFollower: subscription === 'from' || subscription === 'both',
   }
 }
 
 function timeout(promise: Promise<any>, timeoutMillis: number) {
-  let timeout: any
+  let _timeout: any
   return Promise.race([
     promise,
-    new Promise(function(resolve, reject) {
-      timeout = setTimeout(function() {
+    new Promise((_0, reject) => {
+      _timeout = setTimeout(() => {
         reject('Operation timed out')
       }, timeoutMillis)
-    })
+    }),
   ]).then(
-    function(v) {
-      clearTimeout(timeout)
+    v => {
+      clearTimeout(_timeout)
       return v
     },
-    function(err) {
-      clearTimeout(timeout)
+    err => {
+      clearTimeout(_timeout)
       throw err
     }
   )

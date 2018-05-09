@@ -6,7 +6,7 @@ export declare function processMap(data: {
 }): {
     [key: string]: any;
 };
-export declare function fromCamelCase(data?: any): Object;
+export declare function fromCamelCase(data?: any): any;
 export declare function getJid(username: string, host: string, resource: string): string;
 export declare function getNodeJid(jid: string): string;
 /** Function: getUniqueId

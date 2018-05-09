@@ -1,5 +1,14 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, destroy, getEnv, flow, getParent, IModelType, isAlive, ISnapshottable} from 'mobx-state-tree'
+import {
+  types,
+  destroy,
+  getEnv,
+  flow,
+  getParent,
+  IModelType,
+  isAlive,
+  ISnapshottable,
+} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 
@@ -12,7 +21,7 @@ export interface IPaginable extends IModelType<any, any> {
   finished?: boolean
   add?: (i: any) => any
   refresh?: () => void
-  load?: (args?: {force?: boolean}) => Promise<Array<any>>
+  load?: (args?: {force?: boolean}) => Promise<any[]>
   addToTop?: (i: any) => any
   remove?: (id: string) => void
 }
@@ -22,12 +31,12 @@ export function createPaginable(type: any): IPaginable {
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
       cursor: types.maybe(types.string),
-      count: types.maybe(types.number)
+      count: types.maybe(types.number),
     })
     .named('PaginableList')
-    .volatile(self => ({
+    .volatile(() => ({
       loading: false,
-      finished: false
+      finished: false,
     }))
     .actions(self => ({
       add: (item: any) => {
@@ -39,16 +48,16 @@ export function createPaginable(type: any): IPaginable {
         if (!self.result.find((el: any) => el.id === item.id)) {
           self.result.unshift(item)
         }
-      }
+      },
     }))
     .extend(self => {
-      let request: Function
+      let request: (cursor: string | null, max?: number) => any
       return {
         views: {
           get length() {
             return self.result.length
           },
-          get list(): Array<any> {
+          get list(): any[] {
             return self.result.filter((x: any) => isAlive(x))
           },
           get first(): any {
@@ -56,10 +65,10 @@ export function createPaginable(type: any): IPaginable {
           },
           get last(): any {
             return self.result.length > 0 ? self.result[self.result.length - 1] : null
-          }
+          },
         },
         actions: {
-          setRequest: (req: Function) => (request = req),
+          setRequest: (req: (cursor, max) => any) => (request = req),
           exists: (id: string): boolean => {
             return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
           },
@@ -92,7 +101,7 @@ export function createPaginable(type: any): IPaginable {
             self.cursor = null
             self.finished = false
           },
-          load: flow<Array<any>>(function* load({force}: {force?: boolean} = {}) {
+          load: flow<any[]>(function* load({force}: {force?: boolean} = {}) {
             if (self.loading || (self.finished && !force)) {
               return self.result
             }
@@ -115,8 +124,8 @@ export function createPaginable(type: any): IPaginable {
               self.loading = false
             }
             return self.result
-          })
-        }
+          }),
+        },
       }
     })
 }

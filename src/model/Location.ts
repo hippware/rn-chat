@@ -6,10 +6,10 @@ export const Location = types
   .model('Location', {
     latitude: types.number,
     longitude: types.number,
-    accuracy: types.maybe(types.number)
+    accuracy: types.maybe(types.number),
   })
-  .volatile(self => ({
-    isCurrent: false
+  .volatile(() => ({
+    isCurrent: false,
   }))
   .actions(self => ({
     load: (data: any) => {
@@ -28,7 +28,7 @@ export const Location = types
       if (self.accuracy) {
         iq.c('accuracy').t(self.accuracy)
       }
-    }
+    },
   }))
 
 export type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>

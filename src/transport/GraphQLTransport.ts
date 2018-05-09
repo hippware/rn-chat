@@ -52,7 +52,7 @@ export class GraphQLTransport implements IWockyTransport {
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
     if (this.connecting) {
       // prevent duplicate login
-      return new Promise<boolean>((resolve, reject) => {
+      return new Promise<boolean>(resolve => {
         when(
           () => !this.connecting,
           () => {
@@ -73,13 +73,13 @@ export class GraphQLTransport implements IWockyTransport {
     }
 
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
-      reconnectAfterMs: tries => 100000000, // disable auto-reconnect
-      logger: (kind, msg, data) => {
-        // uncomment to see all graphql messages!
-        if (msg !== 'close') {
-          // console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-        }
-      }
+      reconnectAfterMs: () => 100000000, // disable auto-reconnect
+      // uncomment to see all graphql messages!
+      // logger: (kind, msg, data) => {
+      // if (msg !== 'close') {
+      //  console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      // }
+      // },
     })
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
@@ -87,19 +87,19 @@ export class GraphQLTransport implements IWockyTransport {
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'ignore'
+          errorPolicy: 'ignore',
         },
         query: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'ignore'
-        }
-      }
+          errorPolicy: 'ignore',
+        },
+      },
     })
-    this.socket.onError(err => {
+    this.socket.onError(() => {
       // console.log('& graphql Phoenix socket error')
       this.connected = false
     })
-    this.socket.onClose(err => {
+    this.socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
       this.unsubscribeBotVisitors()
       this.connected = false
@@ -128,7 +128,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {user, token}
+        variables: {user, token},
       })
       this.connected = !!res.data && res.data!.authenticate !== null
       return this.connected
@@ -149,7 +149,7 @@ export class GraphQLTransport implements IWockyTransport {
               ${user === this.username ? '... on CurrentUser { email phoneNumber }' : ''}
             }
           }
-        `
+        `,
     })
     if (!res.data.user) {
       throw new Error(`Profile doesn't exist for user with id: ${user}`)
@@ -157,13 +157,13 @@ export class GraphQLTransport implements IWockyTransport {
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<[any]> {
-    throw 'Not supported'
+    throw new Error('Not supported')
   }
 
   async generateId(): Promise<string> {
-    throw 'Not supported'
+    throw new Error('Not supported')
   }
-  async loadBot(id: string, server: any): Promise<any> {
+  async loadBot(id: string): Promise<any> {
     const res = await this.client.query<any>({
       query: gql`
         query loadBot($id: String!, $ownUsername: String!){
@@ -174,8 +174,8 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {
         id,
-        ownUsername: this.username
-      }
+        ownUsername: this.username,
+      },
     })
     return convertBot(res.data.bot)
   }
@@ -200,7 +200,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {after, max, ownUsername: this.username, relationship}
+        variables: {after, max, ownUsername: this.username, relationship},
       })
       bots = res.data.currentUser.bots
     } else {
@@ -221,24 +221,35 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {userId, after, max, ownUsername: this.username, relationship}
+        variables: {userId, after, max, ownUsername: this.username, relationship},
       })
       bots = res.data.user.bots
     }
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
+    return {
+      list,
+      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
+      count: bots.totalCount,
+    }
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
     const res = await this.client!.mutate({
       mutation: gql`
-        mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
-          userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+        mutation setLocation(
+          $latitude: Float!
+          $longitude: Float!
+          $accuracy: Float!
+          $resource: String!
+        ) {
+          userLocationUpdate(
+            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}
+          ) {
             result
             successful
           }
         }
       `,
-      variables: {...params, resource: this.resource}
+      variables: {...params, resource: this.resource},
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
@@ -262,7 +273,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {limit, ownResource: this.resource}
+      variables: {limit, ownResource: this.resource},
     })
     return res.data.currentUser.locations.edges.map(e => {
       const {createdAt, lat, lon, accuracy} = e.node
@@ -296,24 +307,32 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `,
         variables: {
-          ownUsername: this.username
-        }
+          ownUsername: this.username,
+        },
       })
       .subscribe({
         next: action((result: any) => {
           const update = result.data.botGuestVisitors
-          this.botVisitor = {visitor: convertProfile(update.visitor), bot: convertBot(update.bot), action: update.action}
-        })
+          this.botVisitor = {
+            visitor: convertProfile(update.visitor),
+            bot: convertBot(update.bot),
+            action: update.action,
+          }
+        }),
       })
   }
 
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this._loadBots('OWNED', id, lastId, max)
   }
-  async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadSubscribedBots(
+    userId: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList> {
     return await this._loadBots('SUBSCRIBED', userId, lastId, max)
   }
-  async loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList> {
+  async loadGeofenceBots(): Promise<IPagingList> {
     // load all guest bots
     const res = await this.client.query<any>({
       query: gql`
@@ -341,15 +360,198 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        ownUsername: this.username
-      }
+        ownUsername: this.username,
+      },
     })
     const bots = res.data.currentUser.activeBots
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    return {list, cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null, count: bots.totalCount}
+    return {
+      list,
+      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
+      count: bots.totalCount,
+    }
   }
 
-  private async getBotProfiles(relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR', includeCurrentUser: boolean, id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
+  }
+  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    return this.getBotProfiles('GUEST', true, id, lastId, max)
+  }
+  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+    return this.getBotProfiles('VISITOR', true, id, lastId, max)
+  }
+  async loadBotPosts(): Promise<IPagingList> {
+    throw new Error('Not supported')
+  }
+  shareBot() {
+    throw new Error('Not supported')
+  }
+  async register(): Promise<{username: string; password: string; host: string}> {
+    throw new Error('Not supported')
+  }
+
+  async testRegister(): Promise<{username: string; password: string; host: string}> {
+    throw new Error('Not supported')
+  }
+
+  async disconnect(): Promise<void> {
+    // console.log('& graphql disconnect')
+    if (this.socket && this.socket.isConnected()) {
+      this.unsubscribeBotVisitors()
+      return new Promise<void>((resolve, reject) => {
+        try {
+          this.socket.disconnect(() => {
+            // console.log('& graphql onDisconnect', something)
+            resolve()
+          })
+        } catch (err) {
+          // console.log('& graphql disconnect err', err)
+          reject(err)
+        }
+      })
+    }
+  }
+
+  async requestProfiles(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async updateProfile(d: any): Promise<void> {
+    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values = {}
+    fields.forEach(field => {
+      if (d[field]) {
+        values[field] = d[field]
+      }
+    })
+    await this.client.mutate({
+      mutation: gql`
+        mutation userUpdate($values: UserParams!) {
+          userUpdate(input: {values: $values}) {
+            successful
+          }
+        }
+      `,
+      variables: {values},
+    })
+  }
+
+  async lookup(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async remove(): Promise<void> {
+    // TODO: remove user
+    return this.disconnect()
+  }
+
+  async downloadURL(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async downloadFile(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async downloadThumbnail(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async downloadTROS(): Promise<any> {
+    throw new Error('Not supported')
+  }
+
+  async requestUpload(): Promise<string> {
+    throw new Error('Not supported')
+  }
+
+  async follow(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async unfollow(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async block(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async unblock(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async subscribeBot(): Promise<number> {
+    throw new Error('Not supported')
+  }
+
+  async unsubscribeBot(): Promise<number> {
+    throw new Error('Not supported')
+  }
+
+  async loadChats(): Promise<Array<{id: string; message: any}>> {
+    throw new Error('Not supported')
+  }
+
+  async removeBot(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async removeBotPost(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async updateBot(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async loadRelations(): Promise<IPagingList> {
+    throw new Error('Not supported')
+  }
+
+  async publishBotPost(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async geosearch(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  sendMessage(): void {
+    throw new Error('Not supported')
+  }
+
+  async loadChat(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  subscribeToHomestream(): void {
+    throw new Error('Not supported')
+  }
+
+  async enablePush(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async disablePush(): Promise<void> {
+    throw new Error('Not supported')
+  }
+
+  async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
+    throw new Error('Not supported')
+  }
+
+  async loadHomestream(): Promise<IPagingList> {
+    throw new Error('Not supported')
+  }
+  private async getBotProfiles(
+    relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
+    includeCurrentUser: boolean,
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList> {
     const res = await this.client.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
@@ -370,8 +572,8 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {
         botId: id,
         cursor: lastId,
-        limit: max
-      }
+        limit: max,
+      },
     })
     let list = res.data.bot.subscribers.edges
     let count = res.data.bot.subscribers.totalCount
@@ -382,176 +584,6 @@ export class GraphQLTransport implements IWockyTransport {
       count -= 1
     }
     return {list: list.map(p => convertProfile(p.node)), count}
-  }
-
-  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
-  }
-  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    return this.getBotProfiles('GUEST', true, id, lastId, max)
-  }
-  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
-    return this.getBotProfiles('VISITOR', true, id, lastId, max)
-  }
-  async loadBotPosts(id: string, before?: string): Promise<IPagingList> {
-    throw 'Not supported'
-  }
-  shareBot(id: string, server: string, recepients: string[], message: string, action: string) {
-    throw 'Not supported'
-  }
-  async register(data: any, host?: string, providerName?: string): Promise<{username: string; password: string; host: string}> {
-    throw 'Not supported'
-  }
-
-  async testRegister({phoneNumber}: {phoneNumber: string}, host: string): Promise<{username: string; password: string; host: string}> {
-    throw 'Not supported'
-  }
-
-  async disconnect(): Promise<void> {
-    // console.log('& graphql disconnect')
-    if (this.socket && this.socket.isConnected()) {
-      this.unsubscribeBotVisitors()
-      return new Promise<void>((resolve, reject) => {
-        try {
-          this.socket.disconnect(something => {
-            // console.log('& graphql onDisconnect', something)
-            resolve()
-          })
-        } catch (err) {
-          // console.log('& graphql disconnect err', err)
-          reject(err)
-        }
-      })
-    }
-  }
-
-  async requestProfiles(users: string[]): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async updateProfile(d: any): Promise<void> {
-    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
-    const values = {}
-    fields.forEach(field => {
-      if (d[field]) {
-        values[field] = d[field]
-      }
-    })
-    await this.client.mutate({
-      mutation: gql`
-        mutation userUpdate($values: UserParams!) {
-          userUpdate(input: {values: $values}) {
-            successful
-          }
-        }
-      `,
-      variables: {values}
-    })
-  }
-
-  async lookup(handle: string): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async remove(): Promise<void> {
-    // TODO: remove user
-    return this.disconnect()
-  }
-
-  async downloadURL(tros: string): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async downloadFile(tros: string, name: string, sourceUrl: string): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async downloadThumbnail(url: string, tros: string): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async downloadTROS(tros: string): Promise<any> {
-    throw 'Not supported'
-  }
-
-  async requestUpload(params: {file: any; size: number; width: number; height: number; access: string}): Promise<string> {
-    throw 'Not supported'
-  }
-
-  async follow(username: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async unfollow(username: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async block(username: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async unblock(username: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async subscribeBot(id: string, geofence?: boolean): Promise<number> {
-    throw 'Not supported'
-  }
-
-  async unsubscribeBot(id: string, geofence?: boolean): Promise<number> {
-    throw 'Not supported'
-  }
-
-  async loadChats(max?: number): Promise<Array<{id: string; message: any}>> {
-    throw 'Not supported'
-  }
-
-  async removeBot(id: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async removeBotPost(id: string, postId: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async updateBot(bot: any): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async loadRelations(userId: string, relation: string, lastId?: string, max?: number): Promise<IPagingList> {
-    throw 'Not supported'
-  }
-
-  async publishBotPost(botId: string, post: any): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async geosearch(props: {latitude: number; longitude: number; latitudeDelta: number; longitudeDelta: number}): Promise<void> {
-    throw 'Not supported'
-  }
-
-  sendMessage(msg: any): void {}
-
-  async loadChat(userId: string, lastId?: string, max?: number): Promise<void> {
-    throw 'Not supported'
-  }
-
-  subscribeToHomestream(version: string): void {}
-
-  async enablePush(token: string): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async disablePush(): Promise<void> {
-    throw 'Not supported'
-  }
-
-  async loadUpdates(ver: string): Promise<{list: [any]; version: string; bots: [any]}> {
-    throw 'Not supported'
-  }
-
-  async loadHomestream(lastId: any, max?: number): Promise<IPagingList> {
-    throw 'Not supported'
   }
 }
 
@@ -565,10 +597,24 @@ function convertProfile({avatar, bots, followers, followed, ...data}): IProfileP
     botsSize: bots.totalCount,
     followersSize: followers.totalCount,
     followedSize: followed.totalCount,
-    ...data
+    ...data,
   } as IProfilePartial
 }
-function convertBot({lat, lon, image, addressData, isPublic, owner, items, visitors, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
+function convertBot({
+  lat,
+  lon,
+  image,
+  addressData,
+  isPublic,
+  owner,
+  items,
+  visitors,
+  subscriberCount,
+  visitorCount,
+  guestCount,
+  subscribers,
+  ...data
+}: any) {
   try {
     const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
     const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
@@ -586,10 +632,10 @@ function convertBot({lat, lon, image, addressData, isPublic, owner, items, visit
       visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
       guest: contains('GUEST'),
       visitor: contains('VISITOR'),
-      isSubscribed: contains('SUBSCRIBED')
+      isSubscribed: contains('SUBSCRIBED'),
     }
   } catch (e) {
-    console.error('ERROR CONVERTING:', arguments[0], e)
+    // console.error('ERROR CONVERTING:', arguments[0], e)
   }
 }
 

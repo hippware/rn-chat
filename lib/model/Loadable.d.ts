@@ -7,7 +7,7 @@ export declare const Loadable: IModelType<{
     load: (data: any) => void;
 }>;
 export declare type ILoadable = typeof Loadable.Type;
-export declare function createLoadable(load: (self: any) => Function): IModelType<{
+export declare function createLoadable(load: (self: any) => (self) => void): IModelType<{
     loaded?: any;
 } & {}, {
     loaded: boolean;

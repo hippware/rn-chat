@@ -10,7 +10,7 @@ export interface IPaginable extends IModelType<any, any> {
     refresh?: () => void;
     load?: (args?: {
         force?: boolean;
-    }) => Promise<Array<any>>;
+    }) => Promise<any[]>;
     addToTop?: (i: any) => any;
     remove?: (id: string) => void;
 }

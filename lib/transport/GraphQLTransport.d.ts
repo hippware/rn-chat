@@ -27,7 +27,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     loadProfile(user: string): Promise<IProfilePartial>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
-    loadBot(id: string, server: any): Promise<any>;
+    loadBot(id: string): Promise<any>;
     _loadBots(relationship: string, userId: string, after?: string, max?: number): Promise<{
         list: any;
         cursor: any;
@@ -43,71 +43,58 @@ export declare class GraphQLTransport implements IWockyTransport {
         count: any;
     }>;
     loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>;
-    loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>;
-    private getBotProfiles(relationship, includeCurrentUser, id, lastId?, max?);
+    loadGeofenceBots(): Promise<IPagingList>;
     loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>;
     loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>;
-    loadBotPosts(id: string, before?: string): Promise<IPagingList>;
-    shareBot(id: string, server: string, recepients: string[], message: string, action: string): void;
-    register(data: any, host?: string, providerName?: string): Promise<{
+    loadBotPosts(): Promise<IPagingList>;
+    shareBot(): void;
+    register(): Promise<{
         username: string;
         password: string;
         host: string;
     }>;
-    testRegister({phoneNumber}: {
-        phoneNumber: string;
-    }, host: string): Promise<{
+    testRegister(): Promise<{
         username: string;
         password: string;
         host: string;
     }>;
     disconnect(): Promise<void>;
-    requestProfiles(users: string[]): Promise<any>;
+    requestProfiles(): Promise<any>;
     updateProfile(d: any): Promise<void>;
-    lookup(handle: string): Promise<any>;
+    lookup(): Promise<any>;
     remove(): Promise<void>;
-    downloadURL(tros: string): Promise<any>;
-    downloadFile(tros: string, name: string, sourceUrl: string): Promise<any>;
-    downloadThumbnail(url: string, tros: string): Promise<any>;
-    downloadTROS(tros: string): Promise<any>;
-    requestUpload(params: {
-        file: any;
-        size: number;
-        width: number;
-        height: number;
-        access: string;
-    }): Promise<string>;
-    follow(username: string): Promise<void>;
-    unfollow(username: string): Promise<void>;
-    block(username: string): Promise<void>;
-    unblock(username: string): Promise<void>;
-    subscribeBot(id: string, geofence?: boolean): Promise<number>;
-    unsubscribeBot(id: string, geofence?: boolean): Promise<number>;
-    loadChats(max?: number): Promise<Array<{
+    downloadURL(): Promise<any>;
+    downloadFile(): Promise<any>;
+    downloadThumbnail(): Promise<any>;
+    downloadTROS(): Promise<any>;
+    requestUpload(): Promise<string>;
+    follow(): Promise<void>;
+    unfollow(): Promise<void>;
+    block(): Promise<void>;
+    unblock(): Promise<void>;
+    subscribeBot(): Promise<number>;
+    unsubscribeBot(): Promise<number>;
+    loadChats(): Promise<Array<{
         id: string;
         message: any;
     }>>;
-    removeBot(id: string): Promise<void>;
-    removeBotPost(id: string, postId: string): Promise<void>;
-    updateBot(bot: any): Promise<void>;
-    loadRelations(userId: string, relation: string, lastId?: string, max?: number): Promise<IPagingList>;
-    publishBotPost(botId: string, post: any): Promise<void>;
-    geosearch(props: {
-        latitude: number;
-        longitude: number;
-        latitudeDelta: number;
-        longitudeDelta: number;
-    }): Promise<void>;
-    sendMessage(msg: any): void;
-    loadChat(userId: string, lastId?: string, max?: number): Promise<void>;
-    subscribeToHomestream(version: string): void;
-    enablePush(token: string): Promise<void>;
+    removeBot(): Promise<void>;
+    removeBotPost(): Promise<void>;
+    updateBot(): Promise<void>;
+    loadRelations(): Promise<IPagingList>;
+    publishBotPost(): Promise<void>;
+    geosearch(): Promise<void>;
+    sendMessage(): void;
+    loadChat(): Promise<void>;
+    subscribeToHomestream(): void;
+    enablePush(): Promise<void>;
     disablePush(): Promise<void>;
-    loadUpdates(ver: string): Promise<{
+    loadUpdates(): Promise<{
         list: [any];
         version: string;
         bots: [any];
     }>;
-    loadHomestream(lastId: any, max?: number): Promise<IPagingList>;
+    loadHomestream(): Promise<IPagingList>;
+    private getBotProfiles(relationship, includeCurrentUser, id, lastId?, max?);
 }

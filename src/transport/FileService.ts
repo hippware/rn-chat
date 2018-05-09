@@ -12,13 +12,13 @@ export async function upload({method, headers, url, file}: any) {
     const request = new XMLHttpRequest()
     request.open(method, url, true)
     const resheaders: any = {}
-    let headerArr = headers.header ? headers.header : []
+    const headerArr = headers.header ? headers.header : []
     for (const header of headerArr) {
       resheaders[header.name] = header.value
       request.setRequestHeader(header.name, header.value)
     }
     request.send(process.env.NODE_ENV === 'test' ? file.body : {uri: file.uri})
-    request.onreadystatechange = function(oEvent) {
+    request.onreadystatechange = () => {
       if (request.readyState === 4) {
         if (request.status === 200) {
           resolve()

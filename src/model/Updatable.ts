@@ -1,15 +1,23 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, onSnapshot, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {
+  types,
+  onSnapshot,
+  getEnv,
+  flow,
+  getParent,
+  IModelType,
+  ISnapshottable,
+} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 
-export function createUpdatable(update: (self: any, data: any) => Function) {
+export function createUpdatable(update: (self: any, data: any) => (self) => void) {
   return types
     .model('Updatable', {})
-    .volatile(self => ({
+    .volatile(() => ({
       updated: false,
       updating: false,
-      updateError: ''
+      updateError: '',
     }))
     .actions(self => ({
       update: flow(function*(data: any) {
@@ -31,11 +39,11 @@ export function createUpdatable(update: (self: any, data: any) => Function) {
             self.updating = false
           }
         }
-      })
+      }),
     }))
     .actions(self => ({
       save: flow(function*() {
         yield self.update({})
-      })
+      }),
     }))
 }
