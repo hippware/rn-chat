@@ -4,6 +4,8 @@ Internal use only.
 
 * Speculative fix: [dev] MST bot conversion warning (hippware/rn-chat#2285)
 * GraphQL - load profile (PR #44)
+* Remove bot from geofenceBot (PR #46)
+  * 2248?
 
 # iphone-2.6.2
 
