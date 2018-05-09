@@ -14,5 +14,7 @@ if (!global.window.navigator) {
 }
 try {
   global.window.navigator.userAgent = 'ReactNative'
-} catch (e) {}
+} catch (e) {
+  // ignore error
+}
 import 'strophejs'
