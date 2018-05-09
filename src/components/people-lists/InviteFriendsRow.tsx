@@ -14,6 +14,8 @@ type Props = {
   wocky?: IWocky
 }
 
+const icon = require('../../../images/followers.png')
+
 const InviteFriendsRow = inject('wocky')(
   observer(({style, subtext, botTitle, wocky}: Props) => {
     const {profile} = wocky
@@ -29,6 +31,7 @@ const InviteFriendsRow = inject('wocky')(
             borderTopWidth: StyleSheet.hairlineWidth,
             borderColor: colors.DARK_GREY,
             padding: 13 * k,
+            paddingVertical: 20 * k,
             alignItems: 'center',
           },
           style,
@@ -47,6 +50,17 @@ const InviteFriendsRow = inject('wocky')(
           <RText size={14} weight="Light" color={colors.DARK_PURPLE}>
             {subtext || 'To discover their favorite places!'}
           </RText>
+        </View>
+        <View
+          style={{
+            padding: 8 * k,
+            paddingHorizontal: 16 * k,
+            borderWidth: 1,
+            borderRadius: 4,
+            borderColor: colors.PINK,
+          }}
+        >
+          <Image source={icon} />
         </View>
       </TouchableOpacity>
     )
