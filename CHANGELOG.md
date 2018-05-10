@@ -12,6 +12,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Reworks: Pink blank cover images (#2225)
 * Background location improvements (PR #2302)
   * Upload a location data point regularly using background fetch (#2230)
+* Include wocky-client (temporary) (PR #2303)
+* Handling of null reponse for profile and bot lists (PR #2304)
+  * App may ... crash when the app requests non-existed user (#2295)
+  * TypeError in node_modules/.../GraphQLTransport.js:351 (#2296)
 
 # 2.6.2 - 2018 May 4
 
