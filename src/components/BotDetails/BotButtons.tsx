@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, TouchableOpacity, Image, Alert} from 'react-native'
+import {StyleSheet, View, TouchableOpacity, Image, Alert, Share, Clipboard} from 'react-native'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
 import SaveOrEditButton from './SaveOrEditButton'
@@ -19,43 +19,6 @@ type Props = {
   unsubscribe: () => void
   isSubscribed: boolean
 }
-
-const ownerActions = [
-  {name: 'Edit', action: ({bot}) => Actions.botEdit({botId: bot ? bot.id : null})},
-  {name: 'Copy Address', action: ({copyAddress}) => copyAddress()},
-  {
-    name: 'Delete',
-    action: ({wocky, bot}) => {
-      Alert.alert('', 'Are you sure you want to delete this bot?', [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            wocky.removeBot(bot ? bot.id : null)
-            Actions.pop()
-            Actions.pop({animated: false})
-          },
-        },
-      ])
-    },
-    destructive: true,
-  },
-  {name: 'Cancel', action: () => {}}, // tslint:disable-line
-]
-
-const nonOwnerActions = [
-  {
-    name: 'Copy Address',
-    action: ({copyAddress}) => copyAddress(),
-  },
-  {
-    name: 'Report',
-    action: ({bot}) => Actions.reportBot({botId: bot.id}),
-    destructive: true,
-  },
-  {name: 'Cancel', action: () => {}}, // tslint:disable-line
-]
 
 @inject('wocky', 'locationStore')
 @observer
@@ -83,7 +46,7 @@ class BotButtons extends React.Component<Props> {
     if (!bot || !bot.owner) return null
     const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions
     const isShareable = bot.isPublic || bot.owner.isOwn
-    const destructiveIndex = actions.findIndex(a => !!a.destructive)
+    const destructiveIndex = actions.findIndex((a: any) => !!a.destructive)
     return (
       <View
         style={{
@@ -187,3 +150,70 @@ const styles = StyleSheet.create({
     marginRight: 5 * k,
   },
 })
+
+const copyAddr = {
+  name: 'Copy Address',
+  action: ({copyAddress}) => copyAddress(),
+}
+
+const shareVia = {
+  name: 'Share via',
+  action: ({bot}: {bot: IBot}) =>
+    (Share as any).share(
+      {
+        message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
+        // title: 'title',
+        url: `http://html.dev.tinyrobot.com/${bot.id}`,
+      },
+      {
+        subject: `Hey, take a look at "${bot.title}" on tinyrobot!`,
+        // excludedActivityTypes: [],
+        // tintColor: ''
+      }
+    ),
+}
+
+const copyLink = {
+  name: 'Copy Link',
+  action: ({bot}) => Clipboard.setString(`http://html.dev.tinyrobot.com/${bot.id}`),
+}
+
+const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
+
+const ownerActions = [
+  shareVia,
+  copyLink,
+  copyAddr,
+  {name: 'Edit', action: ({bot}) => Actions.botEdit({botId: bot ? bot.id : null})},
+  {
+    name: 'Delete',
+    action: ({wocky, bot}) => {
+      Alert.alert('', 'Are you sure you want to delete this bot?', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            wocky.removeBot(bot ? bot.id : null)
+            Actions.pop()
+            Actions.pop({animated: false})
+          },
+        },
+      ])
+    },
+    destructive: true,
+  },
+  cancel,
+]
+
+const nonOwnerActions = [
+  shareVia,
+  copyLink,
+  copyAddr,
+  {
+    name: 'Report',
+    action: ({bot}) => Actions.reportBot({botId: bot.id}),
+    destructive: true,
+  },
+  cancel,
+]
