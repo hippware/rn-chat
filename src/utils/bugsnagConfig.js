@@ -1,5 +1,5 @@
 // NOTE: below is automatically generated in codepush.sh
-const codeBundleId = "2.5.2-symbols3"
+const codeBundleId = 'test-size'
 
 // -------------------------------------------------------------------------------------------------
 // Create a singleton instance of the bugsnag client so we don't have to duplicate our configuration
