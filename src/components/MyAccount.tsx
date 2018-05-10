@@ -16,6 +16,7 @@ import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
+import {settings} from '../globals'
 
 type Props = {
   wocky?: IWocky
@@ -121,9 +122,7 @@ class MyAccount extends React.Component<Props> {
             {/* <Cell image={icon} style={{justifyContent: 'center'}} imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}> */}
           </Card>
 
-          <View style={{height: 100}}>
-            <LogoutButton />
-          </View>
+          <LogoutButton />
         </KeyboardAwareScrollView>
       </Screen>
     )
