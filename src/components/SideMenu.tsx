@@ -98,16 +98,11 @@ class SideMenu extends React.Component<Props> {
     }
     return (
       <View style={{flex: 1, backgroundColor: 'transparent'}}>
-        <View
-          style={{
-            overflow: 'hidden',
-            width: 300,
-            position: 'absolute',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Image source={require('../../images/sideMenuBackground.png')} />
-        </View>
+        <Image
+          source={require('../../images/sideMenuBackground.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
         <MenuItemWrapper
           onPress={() => Actions.profileDetails({item: wocky.username})}
           style={{height: 151}}
@@ -175,5 +170,12 @@ const styles = StyleSheet.create({
     color: colors.WHITE,
     fontFamily: 'Roboto-Medium',
     fontSize: 17,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 })
