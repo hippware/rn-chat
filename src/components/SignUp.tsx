@@ -94,6 +94,7 @@ class SignUp extends React.Component<Props> {
             marginTop: 47.5 * k,
             flexDirection: 'row',
           }}
+          testID="signUpTopRow"
         >
           <Image
             style={{width: 60 * k, height: 69 * k}}
@@ -112,37 +113,37 @@ class SignUp extends React.Component<Props> {
           <FormTextInput
             icon={require('../../images/iconUsernameNew.png')}
             ref={r => (this.handle = r)}
-            name="handle"
             label="Username"
             autoCapitalize="none"
             onSubmitEditing={() => this.firstName.focus()}
             store={this.vProfile && this.vProfile.handle}
+            testID="signUpUsername"
           />
           <FormTextInput
             icon={require('../../images/iconSubsNew.png')}
-            name="firstName"
             label="First Name"
             ref={r => (this.firstName = r)}
             onSubmitEditing={() => this.lastName.focus()}
             store={this.vProfile && this.vProfile.firstName}
+            testID="signUpFirstName"
           />
           <FormTextInput
-            name="lastName"
             label="Last Name"
             ref={r => (this.lastName = r)}
             onSubmitEditing={() => this.email.focus()}
             store={this.vProfile && this.vProfile.lastName}
+            testID="signUpLastName"
           />
           <FormTextInput
-            onSubmit={this.done}
+            onSubmitEditing={this.done}
             icon={require('../../images/iconEmailNew.png')}
-            name="email"
             label="Email"
             autoCapitalize="none"
             keyboardType="email-address"
             returnKeyType="done"
             ref={r => (this.email = r)}
             store={this.vProfile && this.vProfile.email}
+            testID="signUpEmail"
           />
         </View>
         <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>

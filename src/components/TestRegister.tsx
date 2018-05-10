@@ -97,6 +97,7 @@ class TestRegister extends React.Component<Props, State> {
               width: 300 * k,
               height: 30 * k,
             }}
+            testID="bypassPhoneInput"
           />
         </View>
         <View
