@@ -94,6 +94,7 @@ class SignUp extends React.Component<Props> {
             marginTop: 47.5 * k,
             flexDirection: 'row',
           }}
+          testID="signUpTopRow"
         >
           <Image
             style={{width: 60 * k, height: 69 * k}}
@@ -116,6 +117,7 @@ class SignUp extends React.Component<Props> {
             autoCapitalize="none"
             onSubmitEditing={() => this.firstName.focus()}
             store={this.vProfile && this.vProfile.handle}
+            testID="signUpUsername"
           />
           <FormTextInput
             icon={require('../../images/iconSubsNew.png')}
@@ -123,12 +125,14 @@ class SignUp extends React.Component<Props> {
             ref={r => (this.firstName = r)}
             onSubmitEditing={() => this.lastName.focus()}
             store={this.vProfile && this.vProfile.firstName}
+            testID="signUpFirstName"
           />
           <FormTextInput
             label="Last Name"
             ref={r => (this.lastName = r)}
             onSubmitEditing={() => this.email.focus()}
             store={this.vProfile && this.vProfile.lastName}
+            testID="signUpLastName"
           />
           <FormTextInput
             onSubmitEditing={this.done}
@@ -139,6 +143,7 @@ class SignUp extends React.Component<Props> {
             returnKeyType="done"
             ref={r => (this.email = r)}
             store={this.vProfile && this.vProfile.email}
+            testID="signUpEmail"
           />
         </View>
         <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>

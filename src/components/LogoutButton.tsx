@@ -74,8 +74,9 @@ const RemoveProfileButton = inject('wocky')(
           )
         }}
         style={[styles.button, {marginTop: 80 * k}]}
+        testID="deleteProfile"
       >
-        <Text style={styles.text}>Remove Profile</Text>
+        <Text style={styles.text}>Delete Profile</Text>
       </TouchableOpacity>
     ) : null
   })

@@ -62,7 +62,7 @@ class MyAccount extends React.Component<Props> {
     }
     return (
       <Screen>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView testID="myAccountScrollView">
           <SignUpAvatar
             style={{
               top: 5,
