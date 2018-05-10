@@ -43,6 +43,7 @@ exports[`Signup renders 1`] = `
           "marginTop": 95,
         }
       }
+      testID="signUpTopRow"
     >
       <Image
         source={
@@ -229,7 +230,6 @@ exports[`Signup renders 1`] = `
                 }
               }
               label="Username"
-              name="handle"
               onChangeText={[Function]}
               onSubmitEditing={[Function]}
               placeholder="Username"
@@ -251,6 +251,7 @@ exports[`Signup renders 1`] = `
                   "fontSize": 36,
                 }
               }
+              testID="signUpUsername"
               underlineColorAndroid="transparent"
               value="jerkham"
             />
@@ -356,7 +357,6 @@ exports[`Signup renders 1`] = `
                 }
               }
               label="First Name"
-              name="firstName"
               onChangeText={[Function]}
               onSubmitEditing={[Function]}
               placeholder="First Name"
@@ -378,6 +378,7 @@ exports[`Signup renders 1`] = `
                   "fontSize": 36,
                 }
               }
+              testID="signUpFirstName"
               underlineColorAndroid="transparent"
               value="eric"
             />
@@ -460,7 +461,6 @@ exports[`Signup renders 1`] = `
               autoCorrect={false}
               clearButtonMode="while-editing"
               label="Last Name"
-              name="lastName"
               onChangeText={[Function]}
               onSubmitEditing={[Function]}
               placeholder="Last Name"
@@ -482,6 +482,7 @@ exports[`Signup renders 1`] = `
                   "fontSize": 36,
                 }
               }
+              testID="signUpLastName"
               underlineColorAndroid="transparent"
               value="kirkham"
             />
@@ -589,9 +590,8 @@ exports[`Signup renders 1`] = `
               }
               keyboardType="email-address"
               label="Email"
-              name="email"
               onChangeText={[Function]}
-              onSubmit={[Function]}
+              onSubmitEditing={[Function]}
               placeholder="Email"
               placeholderTextColor="rgb(212,212,212)"
               returnKeyType="done"
@@ -611,6 +611,7 @@ exports[`Signup renders 1`] = `
                   "fontSize": 36,
                 }
               }
+              testID="signUpEmail"
               underlineColorAndroid="transparent"
               value="eric.kirkham@gmail.com"
             />

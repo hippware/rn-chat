@@ -74,6 +74,7 @@ exports[`MyAccount renders 1`] = `
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
+      testID="myAccountScrollView"
       viewIsInsideTabBar={false}
     >
       <View>
@@ -171,6 +172,7 @@ exports[`MyAccount renders 1`] = `
                   "padding": 30,
                 }
               }
+              testID="profileInfo"
             >
               <Text
                 accessible={true}
@@ -765,73 +767,62 @@ exports[`MyAccount renders 1`] = `
           </View>
         </View>
         <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "alignItems": "center",
+              "alignSelf": "stretch",
+              "backgroundColor": "rgb(254,92,108)",
+              "borderRadius": 4,
+              "borderWidth": 0,
+              "flexDirection": "row",
               "height": 100,
+              "justifyContent": "center",
+              "margin": 30,
+              "marginBottom": 10,
+              "opacity": 1,
             }
           }
+          testID={undefined}
+          tvParallaxProperties={undefined}
         >
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
+          <Text
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
             style={
-              Object {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "backgroundColor": "rgb(254,92,108)",
-                "borderRadius": 4,
-                "borderWidth": 0,
-                "bottom": 80,
-                "flexDirection": "row",
-                "height": 100,
-                "justifyContent": "center",
-                "left": 30,
-                "marginBottom": 10,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 30,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "white",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 30,
+                },
+              ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "flex": 1,
-                    "fontSize": 18,
-                    "textAlign": "center",
-                  },
-                  Object {
-                    "color": "white",
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 30,
-                  },
-                ]
-              }
-            >
-              Logout
-            </Text>
-          </View>
+            Logout
+          </Text>
         </View>
       </View>
     </RCTScrollView>
