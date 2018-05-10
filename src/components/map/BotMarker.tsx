@@ -11,7 +11,7 @@ type Props = {
   bot: IBot
   id?: string
   scale: number
-  onImagePress: () => void
+  onImagePress: ({nativeEvent}) => void
   image?: any
   style?: any
   showLoader?: boolean

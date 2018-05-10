@@ -10,7 +10,7 @@ import {IBot} from 'wocky-client'
 type Props = {
   bot: IBot
   scale: number
-  onImagePress?: () => void
+  onImagePress?: ({nativeEvent}) => void
   image?: ImageRequireSource
   showLoader?: boolean
 }

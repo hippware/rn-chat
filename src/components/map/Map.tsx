@@ -1,7 +1,5 @@
-// @flow
-
-import React, {Component} from 'react'
-import MapView from 'react-native-maps'
+import React from 'react'
+import MapView, {MapViewProps} from 'react-native-maps'
 import {Alert, StyleSheet, Image, View, InteractionManager} from 'react-native'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
@@ -17,29 +15,30 @@ import CurrentLocationMarker from './CurrentLocationMarker'
 import {colors} from '../../constants/index'
 import Geofence from './Geofence'
 import mapStyle from './mapStyle'
+import {IBot, IWocky, ILocationSnapshot} from 'wocky-client'
+import {ILocationStore} from '../../store/LocationStore'
 
 export const DELTA_FULL_MAP = 0.04
 export const DELTA_BOT_PROFILE = 0.2
 export const DELTA_GEOFENCE = 0.01
 
-class OwnMessageBar extends MessageBar {
-  componentWillReceiveProps() {}
-}
-
-type Props = {
+interface IProps extends MapViewProps {
   selectedBot?: string
-  bot?: Bot
+  bot?: IBot
   followUser?: boolean
   showUser?: boolean
   showOnlyBot?: boolean
   fullMap: boolean
   geofence?: boolean
-  location?: Object
+  location?: any
   children?: any
   marker?: any
-  onMapPress?: Function
+  onMapPress?: () => void
   scale?: number
   autoZoom?: boolean
+  locationStore?: ILocationStore
+  wocky?: IWocky
+  style: any
 }
 
 type RegionProps = {
@@ -51,7 +50,7 @@ type RegionProps = {
 
 @inject('locationStore', 'wocky')
 @observer
-export default class Map extends Component<Props> {
+export default class Map extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
@@ -63,44 +62,44 @@ export default class Map extends Component<Props> {
   _map: any
   _alert: any
   loaded: boolean = false
-  handler: Function
+  handler: () => void
   @observable selectedBot: string
   @observable followUser: boolean
   @observable markerSelected: boolean = false
 
   @computed
-  get botMarkerList(): Array<any> {
+  get botMarkerList(): any[] {
     const {wocky, bot} = this.props
-    const list = (wocky.geoBots && wocky.geoBots.values().filter(bot => isAlive(bot))) || []
+    const list = (wocky.geoBots && wocky.geoBots.values().filter(b => isAlive(b))) || []
 
     if (bot && list.indexOf(bot) === -1) {
       list.push(bot)
     }
     const bots = list.filter(
-      bot =>
-        (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) &&
-        bot &&
-        bot.location &&
-        bot.location.latitude
+      b =>
+        (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === b.id)) &&
+        b &&
+        b.location &&
+        b.location.latitude
     )
-    const res = bots.map((bot, index) => (
+    const res = bots.map((b, index) => (
       <BotMarker
-        style={{zIndex: index + (this.selectedBot === bot.id ? 1000 : 0)}}
-        key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'}
+        style={{zIndex: index + (this.selectedBot === b.id ? 1000 : 0)}}
+        key={this.selectedBot === b.id ? 'selected' : b.id || 'newBot'}
         scale={0}
-        bot={bot}
+        bot={b}
         onImagePress={this.onOpenAnnotation}
       />
     ))
 
     bots
-      .filter(bot => bot.geofence)
-      .map(bot => <Geofence coords={{...bot.location}} key={`${bot.id}circle`} />)
+      .filter(b => b.geofence)
+      .map(b => <Geofence coords={{...b.location}} key={`${b.id}circle`} />)
       .forEach(rec => res.push(rec))
     return res
   }
 
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props)
     this.latitude = 0
     this.longitude = 0
@@ -124,7 +123,7 @@ export default class Map extends Component<Props> {
     }
   }
 
-  componentWillReceiveProps(newProps: Props) {
+  componentWillReceiveProps(newProps: IProps) {
     if (newProps.fullMap === false && this.selectedBot) {
       this.selectedBot = ''
       MessageBarManager.hideAlert()
@@ -148,8 +147,8 @@ export default class Map extends Component<Props> {
     }
   }
 
-  goToCoords = ({scale, geofence, location, autoZoom}) => {
-    const config = {
+  goToCoords = ({scale, geofence, location, autoZoom}: any) => {
+    const config: any = {
       latitude: location.latitude,
       longitude: location.longitude,
     }
@@ -182,12 +181,12 @@ export default class Map extends Component<Props> {
         }
       )
     } else {
-      this._map && this._map.animateToCoordinate({latitude, longitude})
+      if (this._map) this._map.animateToCoordinate({latitude, longitude})
     }
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    log.log('onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta)
+    log.log('& onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta)
     if (!this.props.showOnlyBot) {
       this.latitude = latitude
       this.longitude = longitude
@@ -206,7 +205,7 @@ export default class Map extends Component<Props> {
     const {locationStore} = this.props
     const {location, loading} = locationStore
     when(
-      () => !loading && location,
+      () => !loading && !!location,
       () =>
         this.setCenterCoordinate(
           locationStore.location.latitude,
@@ -228,7 +227,7 @@ export default class Map extends Component<Props> {
 
     const list = this.props.wocky.geoBots.values()
 
-    const annotation = list.find(bot => nativeEvent.id === bot.id)
+    const annotation = list.find(b => nativeEvent.id === b.id)
     if (!annotation) {
       return
     }
@@ -238,7 +237,7 @@ export default class Map extends Component<Props> {
       return
     }
     this.selectedBot = annotation.id
-    const bot: Bot = annotation
+    const bot: IBot = annotation
     if (!bot) {
       Alert.alert('Cannot find bot with id:', annotation.id)
     }
@@ -334,7 +333,7 @@ export default class Map extends Component<Props> {
         </MapView>
         {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
         {children}
-        <OwnMessageBar ref={this.setAlert} />
+        <MessageBar ref={this.setAlert} />
       </View>
     )
   }
