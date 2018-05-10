@@ -160,6 +160,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 key="logged"
                 type="replace"
                 hideNavBar
+                drawerWidth={300}
                 contentComponent={SideMenu}
                 drawerImage={require('../../images/iconMenu.png')}
                 onRight={() => Actions.messaging()}

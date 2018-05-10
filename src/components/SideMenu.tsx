@@ -1,7 +1,7 @@
 // tslint:disable jsx-no-lambda
 import React from 'react'
 import {Actions} from 'react-native-router-flux'
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, Image, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native'
 import {k} from './Global'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
@@ -25,6 +25,28 @@ type MenuItemProps = {
   stayOpen?: boolean
 }
 
+type MenuItemWrapperProps = {
+  onPress?: () => void
+  testID?: string
+  style?: any
+  children?: any
+  stayOpen?: boolean
+}
+
+const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: MenuItemWrapperProps) => (
+  <TouchableHighlight
+    underlayColor={'rgba(255,255,255,0.23)'}
+    style={style}
+    onPress={() => {
+      if (!stayOpen) Actions.drawerClose()
+      if (onPress) onPress()
+    }}
+    testID={testID}
+  >
+    {children}
+  </TouchableHighlight>
+)
+
 const MenuItem = ({
   onPress,
   testID,
@@ -35,20 +57,14 @@ const MenuItem = ({
   children,
   stayOpen,
 }: MenuItemProps) => (
-  <TouchableOpacity
-    onPress={() => {
-      if (!stayOpen) Actions.drawerClose()
-      if (onPress) onPress()
-    }}
-    testID={testID}
-  >
+  <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
       <View style={styles.menuImageContainer}>
         {icon || (image && <MenuImage image={image} />)}
       </View>
       <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>{children}</View>
     </View>
-  </TouchableOpacity>
+  </MenuItemWrapper>
 )
 
 const showCodePushOptions = () => {
@@ -80,40 +96,45 @@ class SideMenu extends React.Component<Props> {
     if (!profile || !isAlive(profile)) {
       return null
     }
-    let displayName = ' '
-    if (profile && profile.displayName) {
-      displayName = profile.displayName
-    }
     return (
-      <View style={{flex: 1, backgroundColor: 'rgba(63,50,77,1)'}}>
-        <View style={{height: 20}} />
-        <MenuItem
-          testID="myAccountMenuItem"
-          innerStyle={{flexDirection: 'column'}}
-          onPress={() => Actions.profileDetails({item: wocky.username})}
-          style={{backgroundColor: 'transparent'}}
-          icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
+      <View style={{flex: 1, backgroundColor: 'transparent'}}>
+        <View
+          style={{
+            overflow: 'hidden',
+            width: 300,
+            position: 'absolute',
+            backgroundColor: 'transparent',
+          }}
         >
-          <Text style={styles.displayName}>{displayName}</Text>
-          <Text style={styles.viewAccount}>View Account</Text>
-        </MenuItem>
+          <Image source={require('../../images/sideMenuBackground.png')} />
+        </View>
+        <MenuItemWrapper
+          onPress={() => Actions.profileDetails({item: wocky.username})}
+          style={{height: 151}}
+          testID="myAccountMenuItem"
+        >
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Avatar size={62} profile={profile} style={{borderWidth: 0}} />
+            <Text style={styles.displayName}>@{profile.handle}</Text>
+          </View>
+        </MenuItemWrapper>
         <MenuItem onPress={() => Actions.home()} image={require('../../images/menuHome.png')}>
-          <Text style={styles.text}>HOME</Text>
+          <Text style={styles.text}>Home</Text>
         </MenuItem>
         <MenuItem onPress={() => Actions.fullMap()} image={require('../../images/menuExplore.png')}>
-          <Text style={styles.text}>EXPLORE NEARBY</Text>
+          <Text style={styles.text}>Explore Nearby</Text>
         </MenuItem>
         <MenuItem
           onPress={() => Actions.botsScene()}
           image={require('../../images/heartWhite.png')}
         >
-          <Text style={styles.text}>FAVORITES</Text>
+          <Text style={styles.text}>Favorites</Text>
         </MenuItem>
         <MenuItem
           onPress={() => Actions.friendsMain({profile})}
           image={require('../../images/menuFriends.png')}
         >
-          <Text style={styles.text}>FRIENDS</Text>
+          <Text style={styles.text}>Friends</Text>
         </MenuItem>
         {settings.isStaging && (
           <MenuItem onPress={() => Actions.locationDebug()}>
@@ -141,10 +162,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderRadius: 1,
-    borderColor: 'rgba(63,50,77,1)',
-    backgroundColor: 'rgba(255,255,255,0.05)',
   },
   menuImageContainer: {width: 80 * k, alignItems: 'center'},
   menuImage: {width: 32 * k, height: 32 * k},
@@ -154,8 +171,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   displayName: {
+    padding: 10,
     color: colors.WHITE,
     fontFamily: 'Roboto-Medium',
-    fontSize: 15,
+    fontSize: 17,
   },
 })
