@@ -47,11 +47,12 @@ export default class BotMarker extends React.Component<Props> {
   render() {
     const {id, bot, scale, style, ...props} = this.props
     const y = scale === 1 ? 0.5 : 1 // fullMap ? -35 : -106
+    const MapView1 = MapView as any
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
     return (
-      <MapView.Marker.Animated
+      <MapView1.Marker.Animated
         anchor={{x: 0.5, y}}
         tracksViewChanges={this.state.tracking}
         style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
@@ -60,7 +61,7 @@ export default class BotMarker extends React.Component<Props> {
         onPress={props.onImagePress}
       >
         <BotBubble bot={bot} scale={scale} {...props} />
-      </MapView.Marker.Animated>
+      </MapView1.Marker.Animated>
     )
   }
 }

@@ -80,10 +80,11 @@ class BotAddress extends React.Component<Props> {
     const {latitude, longitude} = bot.location!
     const coords = this.location || bot.location
     const delta = bot.geofence ? DELTA_GEOFENCE : DELTA_FULL_MAP
+    const MapView1 = MapView as any
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
-          <MapView
+          <MapView1
             provider={'google'}
             customMapStyle={mapStyle}
             ref={map => {
@@ -111,7 +112,7 @@ class BotAddress extends React.Component<Props> {
             >
               <Image source={require('../../../images/newBotMarker.png')} />
             </View>
-          </MapView>
+          </MapView1>
         )}
         <AddressBar
           edit={this.props.edit}
