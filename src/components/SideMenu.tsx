@@ -97,7 +97,7 @@ class SideMenu extends React.Component<Props> {
       return null
     }
     return (
-      <View style={{flex: 1, backgroundColor: 'transparent'}}>
+      <View style={{flex: 1, backgroundColor: 'transparent', overflow: 'hidden'}}>
         <Image
           source={require('../../images/sideMenuBackground.png')}
           style={styles.backgroundImage}
@@ -177,5 +177,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    height: undefined,
+    // width: undefined,
   },
 })
