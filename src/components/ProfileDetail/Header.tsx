@@ -4,7 +4,7 @@ import {observer} from 'mobx-react/native'
 
 import ProfileAvatar from '../ProfileAvatar'
 import Card from '../Card'
-import {Profile, IProfile} from 'wocky-client'
+import {IProfile} from 'wocky-client'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'

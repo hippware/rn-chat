@@ -4,7 +4,6 @@ import Button from 'apsl-react-native-button'
 import {settings} from '../globals'
 import {k} from './Global'
 import {Actions} from 'react-native-router-flux'
-import {RText} from './common'
 import {inject, observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
 

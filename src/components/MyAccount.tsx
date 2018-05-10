@@ -16,7 +16,6 @@ import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
-import {settings} from '../globals'
 
 type Props = {
   wocky?: IWocky
