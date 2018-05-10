@@ -105,7 +105,7 @@ class SideMenu extends React.Component<Props> {
         />
         <MenuItemWrapper
           onPress={() => Actions.profileDetails({item: wocky.username})}
-          style={{height: 151}}
+          style={{height: 151, paddingTop: 20 * k}}
           testID="myAccountMenuItem"
         >
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
