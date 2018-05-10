@@ -1,7 +1,5 @@
-// @flow
-
 import React from 'react'
-import {Image, View, TextInput} from 'react-native'
+import {Image, View, TextInput, TextInputProps} from 'react-native'
 import autobind from 'autobind-decorator'
 import {k} from './Global'
 import {colors} from '../constants'
@@ -10,7 +8,7 @@ import {ValidateItem} from '../utils/formValidation'
 import {RText} from './common'
 import Cell from './Cell'
 
-type Props = {
+interface IProps extends TextInputProps {
   icon?: any
   label: string
   store?: ValidateItem
@@ -18,7 +16,7 @@ type Props = {
 
 @autobind
 @observer
-class FormTextInput extends React.Component<Props> {
+class FormTextInput extends React.Component<IProps> {
   input: any
 
   focus() {

@@ -112,7 +112,6 @@ class SignUp extends React.Component<Props> {
           <FormTextInput
             icon={require('../../images/iconUsernameNew.png')}
             ref={r => (this.handle = r)}
-            name="handle"
             label="Username"
             autoCapitalize="none"
             onSubmitEditing={() => this.firstName.focus()}
@@ -120,23 +119,20 @@ class SignUp extends React.Component<Props> {
           />
           <FormTextInput
             icon={require('../../images/iconSubsNew.png')}
-            name="firstName"
             label="First Name"
             ref={r => (this.firstName = r)}
             onSubmitEditing={() => this.lastName.focus()}
             store={this.vProfile && this.vProfile.firstName}
           />
           <FormTextInput
-            name="lastName"
             label="Last Name"
             ref={r => (this.lastName = r)}
             onSubmitEditing={() => this.email.focus()}
             store={this.vProfile && this.vProfile.lastName}
           />
           <FormTextInput
-            onSubmit={this.done}
+            onSubmitEditing={this.done}
             icon={require('../../images/iconEmailNew.png')}
-            name="email"
             label="Email"
             autoCapitalize="none"
             keyboardType="email-address"
