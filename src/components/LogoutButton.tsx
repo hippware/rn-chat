@@ -12,7 +12,6 @@ const LogoutButton = () => {
   if (settings.isTesting) {
     return (
       <Button
-        testID="logout"
         onPress={() => {
           Actions.logout({remove: true})
         }}
@@ -41,6 +40,7 @@ const LogoutButton = () => {
             ])
           }}
           style={styles.button}
+          testID="logout"
         >
           <Text style={styles.text}>Logout</Text>
         </TouchableOpacity>

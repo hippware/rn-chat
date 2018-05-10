@@ -46,6 +46,10 @@ describe('Detox', () => {
 
   it('should logout', async () => {
     await element(by.id('logout')).tap()
+    // NOTE: apparently 2 dialogs are created (?) so we must use `atIndex` to match just one
+    await element(by.text('Log Out'))
+      .atIndex(1)
+      .tap()
     await waitFor(element(by.id('onboarding')))
       .toBeVisible()
       .withTimeout(2000)
