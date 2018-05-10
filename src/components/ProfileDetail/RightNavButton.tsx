@@ -1,23 +1,22 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {Actions} from 'react-native-router-flux'
-import {Profile} from 'wocky-client'
+import {IProfile, IWocky} from 'wocky-client'
 import {k} from '../Global'
 import BlockReport from './BlockReport'
 import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   item: string
+  wocky?: IWocky
 }
 
 @inject('wocky')
 @observer
 class Right extends React.Component<Props> {
-  @observable profile: Profile
+  @observable profile: IProfile
   async componentWillMount() {
     this.profile = await this.props.wocky.getProfile(this.props.item)
   }
@@ -27,7 +26,11 @@ class Right extends React.Component<Props> {
     }
     if (this.profile.isOwn) {
       return (
-        <TouchableOpacity onPress={Actions.myAccount} style={styles.rightContainer}>
+        <TouchableOpacity
+          onPress={Actions.myAccount}
+          style={styles.rightContainer}
+          testID="myAccountEdit"
+        >
           <Image source={require('../../../images/settings.png')} />
         </TouchableOpacity>
       )
