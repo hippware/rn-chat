@@ -77,7 +77,7 @@ const VersionFooter = () => (
   <View style={{flex: 1, justifyContent: 'flex-end'}}>
     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
       <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-        <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+        <Text style={{color: colors.WHITE}}>{version}</Text>
       </TouchableOpacity>
     </View>
   </View>
