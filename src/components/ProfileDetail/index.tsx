@@ -41,14 +41,14 @@ class ProfileDetail extends React.Component<Props> {
     this.props.wocky!.loadProfile(this.props.item)
   }
 
-  _header = () => <Header profile={this.profile} isDay />
+  _header = () => <Header profile={this.profile} />
 
   render() {
     if (!this.profile || !isAlive(this.profile)) {
       return null
     }
     return (
-      <Screen>
+      <Screen testID="profileDetail">
         <BotListView
           ref={r => (this.list = r)}
           list={this.profile.ownBots}

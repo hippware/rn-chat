@@ -1,5 +1,7 @@
 /* global device, element, by, waitFor, before */
 
+const navLeftButtonCoords = {x: 35, y: 35}
+
 describe('Detox', () => {
   // beforeEach(async () => {
   //   await device.reloadReactNative()
@@ -24,12 +26,23 @@ describe('Detox', () => {
   })
 
   it('should open sidemenu', async () => {
-    // this throws iOS error: 'Error: *** -[__NSPlaceholderArray initWithObjects:count:]: attempt to insert nil object from objects[0]'
-    await element(by.id('wrapper')).tapAtPoint({x: 35, y: 35})
+    await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
     await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
   })
 
-  // await element(by.id('screenHome')).swipe('right', 'fast', 0.99)
+  it('should navigate to ProfileDetail screen', async () => {
+    await element(by.id('myAccountMenuItem')).tap()
+    // await expect(element(by.id('profileDetail'))).toBeVisible()
+    await waitFor(element(by.id('profileDetail')))
+      .toBeVisible()
+      .withTimeout(1000)
+  })
+
+  it('should navigate to MyAccount screen', async () => {
+    await element(by.id('myAccountEdit')).tap()
+    await expect(element(by.id('profileInfo'))).toBeVisible()
+    // await waitFor(element(by.id('myAccount'))).toBeVisible().withTimeout(1000)
+  })
 
   // it('should logout', async () => {
 
