@@ -3,9 +3,10 @@
 const navLeftButtonCoords = {x: 35, y: 35}
 
 describe('Detox', () => {
-  // beforeEach(async () => {
-  //   await device.reloadReactNative()
-  // })
+  before(async () => {
+    // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
+    await device.launchApp({permissions: {location: 'always', notifications: 'YES'}})
+  })
 
   it('should successfully bypass register and get to home screen', async () => {
     await expect(element(by.id('onboarding'))).toBeVisible()
@@ -41,10 +42,12 @@ describe('Detox', () => {
   it('should navigate to MyAccount screen', async () => {
     await element(by.id('myAccountEdit')).tap()
     await expect(element(by.id('profileInfo'))).toBeVisible()
-    // await waitFor(element(by.id('myAccount'))).toBeVisible().withTimeout(1000)
   })
 
-  // it('should logout', async () => {
-
-  // })
+  it('should logout', async () => {
+    await element(by.id('logout')).tap()
+    await waitFor(element(by.id('onboarding')))
+      .toBeVisible()
+      .withTimeout(2000)
+  })
 })
