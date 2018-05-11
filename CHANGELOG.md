@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.3 - 2018 May 10
+
 * Geofence widget improvements (PR #2286, #2243)
 * [dev] Use graphql to retrieve user profile data (#2281)
 * DRY up Avatar (PR #2292)
@@ -16,6 +18,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Handling of null reponse for profile and bot lists (PR #2304)
   * App may ... crash when the app requests non-existed user (#2295)
   * TypeError in node_modules/.../GraphQLTransport.js:351 (#2296)
+* Speculative fix: [dev] MST bot conversion warning (hippware/rn-chat#2285)
+* Remove bot from geofenceBot (PR #46, hippware/rn-chat#2248)
+* Invite Friends: UI Tweaks (#2246)
+* Detox tests for user creation and deletion (#1977)
+  * Adds a "Delete Profile" button to the bottom of MyAccount screen (Staging only)
+  * Temporarily disabled
+* New side menu UI (PR #2312), for Main Nav: UI Tweaks (#2301)
 
 # 2.6.2 - 2018 May 4
 
