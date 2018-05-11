@@ -1,8 +1,7 @@
 import React from 'react'
-import MapView, {MapViewProps, Marker} from 'react-native-maps'
+import {MapViewProps, Marker} from 'react-native-maps'
 import ClusteredMapView from 'react-native-maps-super-cluster'
-import {Alert, StyleSheet, Image, View, InteractionManager, Text} from 'react-native'
-import {k} from '../Global'
+import {Alert, StyleSheet, View, InteractionManager} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable, computed, when} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
@@ -16,7 +15,7 @@ import CurrentLocationMarker from './CurrentLocationMarker'
 import {colors} from '../../constants/index'
 import Geofence from './Geofence'
 import mapStyle from './mapStyle'
-import {IBot, IWocky, ILocationSnapshot} from 'wocky-client'
+import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 
 export const DELTA_FULL_MAP = 0.04
@@ -303,8 +302,8 @@ export default class Map extends React.Component<IProps> {
 
   renderCluster = (cluster, onPress) => {
     const pointCount = cluster.pointCount,
-      coordinate = cluster.coordinate,
-      clusterId = cluster.clusterId
+      coordinate = cluster.coordinate
+    // clusterId = cluster.clusterId
 
     // use pointCount to calculate cluster size scaling
     // and apply it to "style" prop below
@@ -352,7 +351,7 @@ export default class Map extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore, showUser, geofence, marker, fullMap, children, location} = this.props
+    const {locationStore, showUser, geofence, fullMap, children, location} = this.props
     const currentLoc = locationStore.location
     const coords = location || currentLoc
     if (!coords || !coords.latitude) {
@@ -365,7 +364,7 @@ export default class Map extends React.Component<IProps> {
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude
     this.latitude = coords.latitude
-    const heading = coords && coords.heading
+    // const heading = coords && coords.heading
     const delta = this.props.geofence
       ? DELTA_GEOFENCE
       : this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE

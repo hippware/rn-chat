@@ -907,7 +907,13 @@ exports[`BotCompose renders with owned bot 1`] = `
             }
           >
             <MapView
+              animateClusters={true}
               autoZoom={true}
+              clusterInitialDimension={30}
+              clusterInitialFontSize={12}
+              clusterPressMaxChildren={100}
+              clusteringEnabled={true}
+              containerStyle={Object {}}
               customMapStyle={
                 Array [
                   Object {
@@ -1019,8 +1025,19 @@ exports[`BotCompose renders with owned bot 1`] = `
                   },
                 ]
               }
+              data={Array []}
+              edgePadding={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              extent={512}
               fullMap={false}
               geofence={false}
+              height={1334}
               initialRegion={
                 Object {
                   "latitude": 5,
@@ -1093,22 +1110,25 @@ exports[`BotCompose renders with owned bot 1`] = `
                   showLoader={null}
                 />
               }
+              maxZoom={20}
+              minZoom={1}
               onMapPress={[Function]}
               onMarkerPress={[Function]}
               onPress={[Function]}
               onRegionChangeComplete={[Function]}
               pitchEnabled={false}
+              preserveClusterPressBehavior={true}
               provider="google"
+              renderCluster={[Function]}
+              renderMarker={[Function]}
               rotateEnabled={false}
               scale={0.5}
               scrollEnabled={false}
               showOnlyBot={true}
               showUser={false}
-              style={
-                Object {
-                  "flex": 1,
-                }
-              }
+              style={Object {}}
+              textStyle={Object {}}
+              width={750}
               wocky={
                 Object {
                   "bots": Object {
@@ -1243,151 +1263,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                 }
               }
               zoomEnabled={false}
-            >
-              <Marker
-                anchor={
-                  Object {
-                    "x": 0.5,
-                    "y": 1,
-                  }
-                }
-                coordinate={
-                  Object {
-                    "latitude": 5,
-                    "longitude": 5,
-                  }
-                }
-                identifier="4321"
-                onPress={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "top": -2000,
-                    },
-                    undefined,
-                  ]
-                }
-                tracksViewChanges={true}
-              >
-                <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
-                  accessible={true}
-                  collapsable={undefined}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
-                  isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                    }
-                  }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                      }
-                    }
-                  >
-                    <View
-                      collapsable={undefined}
-                      style={
-                        Object {
-                          "backgroundColor": "rgb(253,95,108)",
-                          "borderColor": "rgb(253,95,108)",
-                          "borderRadius": 7.2,
-                          "borderWidth": 1.2,
-                          "height": 203,
-                          "overflow": "hidden",
-                          "width": 175,
-                        }
-                      }
-                    >
-                      <Image
-                        collapsable={undefined}
-                        resizeMode="contain"
-                        source={
-                          Object {
-                            "testUri": "../../../images/addBotPhoto.png",
-                          }
-                        }
-                        style={
-                          Object {
-                            "height": 175,
-                            "width": 175,
-                          }
-                        }
-                      />
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
-                        }
-                      >
-                        <Text
-                          accessible={true}
-                          allowFontScaling={true}
-                          ellipsizeMode="middle"
-                          numberOfLines={1}
-                          style={
-                            Array [
-                              Object {
-                                "color": "rgb(255,255,255)",
-                                "fontFamily": "Roboto-Regular",
-                                "fontSize": 13,
-                              },
-                              Object {
-                                "padding": 2,
-                              },
-                            ]
-                          }
-                        >
-                          123 address
-                        </Text>
-                      </View>
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "transparent",
-                            "borderStyle": "solid",
-                            "height": 0,
-                            "width": 0,
-                          },
-                          Object {
-                            "borderBottomColor": "transparent",
-                            "borderBottomWidth": 0,
-                            "borderLeftColor": "transparent",
-                            "borderLeftWidth": 5.5,
-                            "borderRightColor": "transparent",
-                            "borderRightWidth": 5.5,
-                            "borderTopColor": "rgb(253,95,108)",
-                            "borderTopWidth": 11,
-                          },
-                          undefined,
-                        ]
-                      }
-                    />
-                  </View>
-                </View>
-              </Marker>
-            </MapView>
+            />
             <View
               collapsable={undefined}
               style={

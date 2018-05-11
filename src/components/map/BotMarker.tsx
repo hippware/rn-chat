@@ -1,6 +1,6 @@
 import React from 'react'
 import BotBubble from './BotBubble'
-import MapView, {MarkerAnimated} from 'react-native-maps'
+import {MarkerAnimated} from 'react-native-maps'
 import {observer} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
