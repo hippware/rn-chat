@@ -1,6 +1,7 @@
 import React from 'react'
-import MapView, {MapViewProps} from 'react-native-maps'
-import {Alert, StyleSheet, Image, View, InteractionManager} from 'react-native'
+import MapView, {MapViewProps, Marker} from 'react-native-maps'
+import ClusteredMapView from 'react-native-maps-super-cluster'
+import {Alert, StyleSheet, Image, View, InteractionManager, Text} from 'react-native'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
 import {observable, computed, when} from 'mobx'
@@ -66,6 +67,7 @@ export default class Map extends React.Component<IProps> {
   @observable selectedBot: string
   @observable followUser: boolean
   @observable markerSelected: boolean = false
+  mounted: boolean = false
 
   @computed
   get botMarkerList(): any[] {
@@ -82,21 +84,22 @@ export default class Map extends React.Component<IProps> {
         b.location &&
         b.location.latitude
     )
-    const res = bots.map((b, index) => (
-      <BotMarker
-        style={{zIndex: index + (this.selectedBot === b.id ? 1000 : 0)}}
-        key={this.selectedBot === b.id ? 'selected' : b.id || 'newBot'}
-        scale={0}
-        bot={b}
-        onImagePress={this.onOpenAnnotation}
-      />
-    ))
+    // const res = bots.map((b, index) => (
+    //   <BotMarker
+    //     style={{zIndex: index + (this.selectedBot === b.id ? 1000 : 0)}}
+    //     key={this.selectedBot === b.id ? 'selected' : b.id || 'newBot'}
+    //     scale={0}
+    //     bot={b}
+    //     onImagePress={this.onOpenAnnotation}
+    //   />
+    // ))
 
-    bots
-      .filter(b => b.geofence)
-      .map(b => <Geofence coords={{...b.location}} key={`${b.id}circle`} />)
-      .forEach(rec => res.push(rec))
-    return res
+    // bots
+    //   .filter(b => b.geofence)
+    //   .map(b => <Geofence coords={{...b.location}} key={`${b.id}circle`} />)
+    //   .forEach(rec => res.push(rec))
+    // return res
+    return bots
   }
 
   constructor(props: IProps) {
@@ -108,6 +111,7 @@ export default class Map extends React.Component<IProps> {
   }
 
   componentDidMount() {
+    this.mounted = true
     if (!this.props.showOnlyBot) {
       if (this._alert) MessageBarManager.registerMessageBar(this._alert)
       else log.warn("Can't register message-bar ref!")
@@ -115,6 +119,7 @@ export default class Map extends React.Component<IProps> {
   }
 
   componentWillUnmount() {
+    this.mounted = false
     if (!this.props.showOnlyBot) {
       MessageBarManager.unregisterMessageBar()
     }
@@ -157,11 +162,11 @@ export default class Map extends React.Component<IProps> {
       config.latitudeDelta = delta
       config.longitudeDelta = delta
     }
-    if (this._map) {
+    if (this._map && this.mounted) {
       this._map.animateToRegion(config)
     } else {
       // HACK for slow loading map on deeplink. https://github.com/hippware/rn-chat/issues/1986
-      setTimeout(() => this._map && this._map.animateToRegion(config), 1000)
+      setTimeout(() => this.mounted && this._map && this._map.animateToRegion(config), 1000)
     }
   }
 
@@ -277,12 +282,73 @@ export default class Map extends React.Component<IProps> {
   }
 
   setMapRef = map => {
-    this._map = map
+    this._map = map && map.getMapRef
+    // console.log('& this._map', this._map)
   }
 
   setAlert = r => {
     // NOTE: this ref alternates between null and value...weird
     this._alert = r
+  }
+
+  renderMarker = (b: IBot, index: number) => (
+    <BotMarker
+      style={{zIndex: index + (this.selectedBot === b.id ? 1000 : 0)}}
+      key={this.selectedBot === b.id ? 'selected' : b.id || 'newBot'}
+      scale={0}
+      bot={b}
+      onImagePress={this.onOpenAnnotation}
+    />
+  )
+
+  renderCluster = (cluster, onPress) => {
+    const pointCount = cluster.pointCount,
+      coordinate = cluster.coordinate,
+      clusterId = cluster.clusterId
+
+    // use pointCount to calculate cluster size scaling
+    // and apply it to "style" prop below
+
+    // eventually get clustered points by using
+    // underlying SuperCluster instance
+    // Methods ref: https://github.com/mapbox/supercluster
+    // const clusteringEngine = this.map.getClusteringEngine(),
+    //   clusteredPoints = clusteringEngine.getLeaves(clusterId, 100)
+
+    return (
+      <Marker coordinate={coordinate} onPress={onPress}>
+        <View
+          style={{
+            height: 40,
+            width: 40,
+            borderRadius: 20,
+            borderColor: colors.PINK,
+            borderWidth: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <RText size={20} color={colors.PINK}>
+            {pointCount}
+          </RText>
+        </View>
+        {/*
+            Eventually use <Callout /> to
+            show clustered point thumbs, i.e.:
+            <Callout>
+              <ScrollView>
+                {
+                  clusteredPoints.map(p => (
+                    <Image source={p.image}>
+                  ))
+                }
+              </ScrollView>
+            </Callout>
+
+            IMPORTANT: be aware that Marker's onPress event isn't really consistent when using Callout.
+           */}
+      </Marker>
+    )
   }
 
   render() {
@@ -315,7 +381,7 @@ export default class Map extends React.Component<IProps> {
           left: 0,
         }}
       >
-        <MapView
+        <ClusteredMapView
           provider={'google'}
           ref={this.setMapRef}
           onPress={this.onPress}
@@ -324,13 +390,16 @@ export default class Map extends React.Component<IProps> {
           customMapStyle={mapStyle}
           onRegionChangeComplete={this.onRegionDidChange}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
+          data={this.botMarkerList}
+          renderMarker={this.renderMarker}
+          renderCluster={this.renderCluster}
           {...this.props}
         >
           {geofence &&
             coords && <Geofence coords={coords} key={`${coords.longitude}-${coords.latitude}`} />}
-          {marker || this.botMarkerList}
+          {/* {marker || this.botMarkerList} */}
           {(this.followUser || showUser) && <CurrentLocationMarker />}
-        </MapView>
+        </ClusteredMapView>
         {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
         {children}
         <MessageBar ref={this.setAlert} />
