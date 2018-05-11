@@ -29,8 +29,8 @@
   "jest": {
     "preset": "react-native",
     "setupFiles": [
-       "./__tests__/utils/testSetup.js"
-     ],
+      "./__tests__/utils/testSetup.js"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
@@ -116,6 +116,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-linear-gradient": "^2.3.0",
     "react-native-maps": "^0.21.0",
+    "react-native-maps-super-cluster": "^1.4.0",
     "react-native-message-bar": "^2.0.7",
     "react-native-mixpanel": "^0.0.16",
     "react-native-native-env": "github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6",
