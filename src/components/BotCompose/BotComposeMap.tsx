@@ -62,6 +62,7 @@ class BotComposeMap extends React.Component<Props> {
               bot={bot}
             />
           }
+          style={{}}
         />
       </View>
     )
