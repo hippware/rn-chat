@@ -907,7 +907,13 @@ exports[`BotCompose renders with owned bot 1`] = `
             }
           >
             <MapView
+              animateClusters={true}
               autoZoom={true}
+              clusterInitialDimension={30}
+              clusterInitialFontSize={12}
+              clusterPressMaxChildren={100}
+              clusteringEnabled={true}
+              containerStyle={Object {}}
               customMapStyle={
                 Array [
                   Object {
@@ -1019,8 +1025,19 @@ exports[`BotCompose renders with owned bot 1`] = `
                   },
                 ]
               }
+              data={Array []}
+              edgePadding={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              extent={512}
               fullMap={false}
               geofence={false}
+              height={1334}
               initialRegion={
                 Object {
                   "latitude": 5,
@@ -1093,12 +1110,17 @@ exports[`BotCompose renders with owned bot 1`] = `
                   showLoader={null}
                 />
               }
+              maxZoom={20}
+              minZoom={1}
               onMapPress={[Function]}
               onMarkerPress={[Function]}
               onPress={[Function]}
               onRegionChangeComplete={[Function]}
               pitchEnabled={false}
+              preserveClusterPressBehavior={true}
               provider="google"
+              renderCluster={[Function]}
+              renderMarker={[Function]}
               rotateEnabled={false}
               scale={0.5}
               scrollEnabled={false}
@@ -1109,6 +1131,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                   "flex": 1,
                 }
               }
+              textStyle={Object {}}
+              width={750}
               wocky={
                 Object {
                   "bots": Object {
