@@ -20,7 +20,13 @@ exports[`Explore Nearby renders with no data 1`] = `
     }
   >
     <MapView
+      animateClusters={true}
       autoZoom={true}
+      clusterInitialDimension={30}
+      clusterInitialFontSize={12}
+      clusterPressMaxChildren={100}
+      clusteringEnabled={true}
+      containerStyle={Object {}}
       customMapStyle={
         Array [
           Object {
@@ -132,8 +138,19 @@ exports[`Explore Nearby renders with no data 1`] = `
           },
         ]
       }
+      data={Array []}
+      edgePadding={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "right": 10,
+          "top": 10,
+        }
+      }
+      extent={512}
       followUser={true}
       fullMap={true}
+      height={1334}
       initialRegion={
         Object {
           "latitude": 2,
@@ -161,15 +178,22 @@ exports[`Explore Nearby renders with no data 1`] = `
           },
         }
       }
+      maxZoom={20}
+      minZoom={1}
       onMarkerPress={[Function]}
       onPress={[Function]}
       onRegionChangeComplete={[Function]}
+      preserveClusterPressBehavior={true}
       provider="google"
+      renderCluster={[Function]}
+      renderMarker={[Function]}
       style={
         Object {
           "flex": 1,
         }
       }
+      textStyle={Object {}}
+      width={750}
       wocky={Object {}}
     >
       <Marker

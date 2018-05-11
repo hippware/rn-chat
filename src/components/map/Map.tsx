@@ -1,15 +1,14 @@
 import React from 'react'
 import MapView, {MapViewProps, Marker} from 'react-native-maps'
 import ClusteredMapView from 'react-native-maps-super-cluster'
-import {Alert, StyleSheet, Image, View, InteractionManager, Text} from 'react-native'
-import {k} from '../Global'
+import {Alert, StyleSheet, View, InteractionManager} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable, computed, when} from 'mobx'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {MessageBar, MessageBarManager} from 'react-native-message-bar'
 import * as log from '../../utils/log'
-import {RText, Spinner} from '../common'
+import {Spinner} from '../common'
 import BotMarker from './BotMarker'
 import ClusterMarker from './ClusterMarker'
 import CurrentLocationIndicator from './CurrentLocationIndicator'
@@ -17,7 +16,7 @@ import CurrentLocationMarker from './CurrentLocationMarker'
 import {colors} from '../../constants/index'
 import Geofence from './Geofence'
 import mapStyle from './mapStyle'
-import {IBot, IWocky, ILocationSnapshot} from 'wocky-client'
+import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 
 export const DELTA_FULL_MAP = 0.04
@@ -324,7 +323,6 @@ export default class Map extends React.Component<IProps> {
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude
     this.latitude = coords.latitude
-    const heading = coords && coords.heading
     const delta = this.props.geofence
       ? DELTA_GEOFENCE
       : this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE
