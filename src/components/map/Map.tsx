@@ -25,29 +25,29 @@ export const DELTA_BOT_PROFILE = 0.2
 export const DELTA_GEOFENCE = 0.01
 
 interface IProps extends MapViewProps {
-  selectedBot?: string;
-  bot?: IBot;
-  followUser?: boolean;
-  showUser?: boolean;
-  showOnlyBot?: boolean;
-  fullMap: boolean;
-  geofence?: boolean;
-  location?: any;
-  children?: any;
-  marker?: any;
-  onMapPress?: () => void;
-  scale?: number;
-  autoZoom?: boolean;
-  locationStore?: ILocationStore;
-  wocky?: IWocky;
-  style: any;
+  selectedBot?: string
+  bot?: IBot
+  followUser?: boolean
+  showUser?: boolean
+  showOnlyBot?: boolean
+  fullMap: boolean
+  geofence?: boolean
+  location?: any
+  children?: any
+  marker?: any
+  onMapPress?: () => void
+  scale?: number
+  autoZoom?: boolean
+  locationStore?: ILocationStore
+  wocky?: IWocky
+  style: any
 }
 
 type RegionProps = {
-  latitude: number,
-  longitude: number,
-  latitudeDelta: number,
-  longitudeDelta: number,
+  latitude: number
+  longitude: number
+  latitudeDelta: number
+  longitudeDelta: number
 }
 
 @inject('locationStore', 'wocky')
@@ -353,6 +353,9 @@ export default class Map extends React.Component<IProps> {
           {geofence &&
             coords && <Geofence coords={coords} key={`${coords.longitude}-${coords.latitude}`} />}
           {marker}
+          {this.botMarkerList
+            .filter(b => b.geofence)
+            .map(b => <Geofence coords={{...b.location}} key={`${b.id}circle`} />)}
           {(this.followUser || showUser) && <CurrentLocationMarker />}
         </ClusteredMapView>
         {fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
