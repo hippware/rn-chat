@@ -24,7 +24,8 @@ export const DELTA_FULL_MAP = 0.04
 export const DELTA_BOT_PROFILE = 0.2
 export const DELTA_GEOFENCE = 0.01
 
-interface IProps extends MapViewProps {
+// interface IProps extends MapViewProps {
+interface IProps {
   selectedBot?: string
   bot?: IBot
   followUser?: boolean
@@ -40,7 +41,10 @@ interface IProps extends MapViewProps {
   autoZoom?: boolean
   locationStore?: ILocationStore
   wocky?: IWocky
-  style: any
+  scrollEnabled?: boolean
+  rotateEnabled?: boolean
+  pitchEnabled?: boolean
+  zoomEnabled?: boolean
 }
 
 type RegionProps = {
