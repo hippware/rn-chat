@@ -302,7 +302,7 @@ export default class Map extends React.Component<IProps> {
     />
   )
 
-  renderCluster = ({pointCount, coordinate, clusterId}, onPress) => {
+  renderCluster = ({pointCount, coordinate}, onPress) => {
     return <ClusterMarker coordinate={coordinate} pointCount={pointCount} onPress={onPress} />
   }
 
