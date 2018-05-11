@@ -1,8 +1,6 @@
-// @flow
-
 import React from 'react'
 import BotBubble from './BotBubble'
-import MapView from 'react-native-maps'
+import {MarkerAnimated} from 'react-native-maps'
 import {observer} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
@@ -11,7 +9,6 @@ type Props = {
   bot: IBot
   id?: string
   scale: number
-  // onImagePress: () => void
   onImagePress: any
   image?: any
   style?: any
@@ -48,12 +45,11 @@ export default class BotMarker extends React.Component<Props> {
   render() {
     const {id, bot, scale, style, ...props} = this.props
     const y = scale === 1 ? 0.5 : 1 // fullMap ? -35 : -106
-    const MapView1 = MapView as any
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
     return (
-      <MapView1.Marker.Animated
+      <MarkerAnimated
         anchor={{x: 0.5, y}}
         tracksViewChanges={this.state.tracking}
         style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
@@ -62,7 +58,7 @@ export default class BotMarker extends React.Component<Props> {
         onPress={props.onImagePress}
       >
         <BotBubble bot={bot} scale={scale} {...props} />
-      </MapView1.Marker.Animated>
+      </MarkerAnimated>
     )
   }
 }
