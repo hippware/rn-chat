@@ -1,7 +1,5 @@
-// @flow
-
 import React from 'react'
-import MapView from 'react-native-maps'
+import {Circle} from 'react-native-maps'
 import {colors} from '../../constants/index'
 
 type Props = {
@@ -12,7 +10,7 @@ type Props = {
 }
 
 const Geofence = ({coords, ...rest}: Props) => (
-  <MapView.Circle
+  <Circle
     center={coords}
     radius={100}
     fillColor={colors.PINK_MASK}
