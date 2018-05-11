@@ -37,6 +37,7 @@ const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
         />
       }
       {...props}
+      style={{}}
     />
   )
 })
