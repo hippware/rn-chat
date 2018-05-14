@@ -76,9 +76,9 @@ export class GraphQLTransport implements IWockyTransport {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
       // logger: (kind, msg, data) => {
-      // if (msg !== 'close') {
-      //  console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-      // }
+      //   if (msg !== 'close') {
+      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   }
       // },
     })
     this.client = new ApolloClient({
@@ -587,7 +587,11 @@ export class GraphQLTransport implements IWockyTransport {
       })
       count -= 1
     }
-    return {list: list.map(p => convertProfile(p.node)), count}
+    return {
+      list: list.map(p => convertProfile(p.node)),
+      cursor: list.length ? list[list.length - 1].cursor : null,
+      count,
+    }
   }
 }
 
