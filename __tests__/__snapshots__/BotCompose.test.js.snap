@@ -1061,7 +1061,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                 }
               }
               marker={
-                <BotMarker
+                <_class
                   bot={
                     Object {
                       "address": "123 address",
@@ -1099,7 +1099,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "visitorsSize": 0,
                     }
                   }
-                  id="4321"
                   image={
                     Object {
                       "testUri": "../../../images/addBotPhoto.png",
@@ -1282,7 +1281,14 @@ exports[`BotCompose renders with owned bot 1`] = `
                   }
                 }
                 identifier="4321"
+                image={
+                  Object {
+                    "testUri": "../../../images/addBotPhoto.png",
+                  }
+                }
+                onImagePress={[Function]}
                 onPress={[Function]}
+                showLoader={null}
                 style={
                   Array [
                     Object {
