@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* SideMenu improvements (PR #2314), for Main Nav: UI Tweaks (#2301)
+* Re-enable Detox tests (PR #2315)
+* Lock typescript version (PR #2317)
+* HTML Bot Link Shares: Bot Profile, Action Sheet, Owner View (#2308)
+* HTML Bot Links: Bot Profile, Action Sheet, Non-Owner View (#2309)
+* HTML Bot Link Shares: Action Sheet, Share Via (#2310)
+
 # 2.6.3 - 2018 May 10
 
 * Geofence widget improvements (PR #2286, #2243)
