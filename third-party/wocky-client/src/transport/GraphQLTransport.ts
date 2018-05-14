@@ -140,7 +140,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadProfile(user: string): Promise<IProfilePartial> {
+  async loadProfile(user: string): Promise<IProfilePartial | null> {
     const res = await this.client.query<any>({
       query: gql`
           query LoadProfile {
@@ -425,16 +425,22 @@ export class GraphQLTransport implements IWockyTransport {
         values[field] = d[field]
       }
     })
-    await this.client.mutate({
+    const data: any = await this.client.mutate({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
           userUpdate(input: {values: $values}) {
             successful
+            messages {
+              message
+            }
           }
         }
       `,
       variables: {values},
     })
+    if (!data.data.userUpdate.successful) {
+      throw new Error(JSON.stringify(data.data.userUpdate.messages))
+    }
   }
 
   async lookup(): Promise<any> {

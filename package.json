@@ -13,6 +13,7 @@
     "tsc": "node node_modules/.bin/tsc",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill  --require mocha-steps --timeout 10000",
+    "mochaWocky": "mocha ./third-party/wocky-client/test/* --require ts-node/register  --require ./third-party/wocky-client/test/support/setup.js --timeout 10000",
     "jest:all": "jest --testPathPattern __tests__/*.test.js",
     "jest": "jest",
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
