@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageRequireSource,
-  ViewStyle,
+  ViewStyle
 } from 'react-native'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
@@ -34,7 +34,7 @@ type Props = {
 @observer
 export default class Avatar extends React.Component<Props> {
   static defaultProps = {
-    tappable: true,
+    tappable: true
   }
 
   goToProfile = () => Actions.profileDetails({item: this.props.profile.id})
@@ -49,7 +49,7 @@ export default class Avatar extends React.Component<Props> {
       profile,
       tappable,
       smallFont,
-      hideDot,
+      hideDot
     } = this.props
     if (!profile || !isAlive(profile)) {
       return null
@@ -62,7 +62,7 @@ export default class Avatar extends React.Component<Props> {
       width: size * k,
       height: size * k,
       borderRadius: size * k / 2,
-      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k
     }
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
@@ -106,7 +106,7 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
     height: d,
     width: d,
     top: shift,
-    left: shift,
+    left: shift
   }
 
   if (profile) {
@@ -124,7 +124,7 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
 const AvatarImage = ({
   source,
   style,
-  showLoader,
+  showLoader
 }: {
   source: ImageRequireSource
   style?: any
@@ -140,17 +140,17 @@ const AvatarImage = ({
 const styles = StyleSheet.create({
   title: {
     color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   dot: {
     position: 'absolute',
-    borderColor: 'white',
+    borderColor: 'white'
   },
   avatarContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: colors.WHITE,
-    backgroundColor: 'rgb(228,228,228)',
+    backgroundColor: 'rgb(228,228,228)'
   },
   frameOuter: {
     position: 'absolute',
@@ -158,6 +158,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })

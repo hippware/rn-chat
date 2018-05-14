@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 40 * k,
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 4
   },
   text: {
-    textAlign: 'center',
+    textAlign: 'center'
   },
   bold: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto-Medium'
   },
   button: {
     height: 50 * k,
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10 * k,
     marginTop: 20 * k,
     justifyContent: 'center',
-    alignSelf: 'stretch',
-  },
+    alignSelf: 'stretch'
+  }
 })

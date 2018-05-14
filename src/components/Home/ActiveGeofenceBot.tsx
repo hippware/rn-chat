@@ -40,7 +40,7 @@ class ActiveBot extends React.Component<Props> {
                   left: 0,
                   bottom: 0,
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <RText
@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   outer: {
     padding: 15,
     width: width / 3.5,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   inner: {
-    width: 75,
-  },
+    width: 75
+  }
 })

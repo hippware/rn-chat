@@ -56,7 +56,7 @@ class SignUp extends React.Component<Props> {
         () => !profile!.updating && !profile!.updateError,
         () => {
           this.props.analytics.track('createprofile_complete', {
-            profile: getSnapshot(this.props.wocky!.profile!),
+            profile: getSnapshot(this.props.wocky!.profile!)
           })
           Actions.logged()
         }
@@ -64,7 +64,7 @@ class SignUp extends React.Component<Props> {
     } catch (err) {
       this.props.analytics.track('createprofile_fail', {
         profile: getSnapshot(this.props.wocky!.profile!),
-        error: err,
+        error: err
       })
     }
   }
@@ -92,7 +92,7 @@ class SignUp extends React.Component<Props> {
             marginLeft: 70 * k,
             marginRight: 70 * k,
             marginTop: 47.5 * k,
-            flexDirection: 'row',
+            flexDirection: 'row'
           }}
           testID="signUpTopRow"
         >
@@ -186,13 +186,13 @@ const styles = StyleSheet.create({
     borderRadius: 4 * k,
     height: 50 * k,
     borderWidth: 0,
-    backgroundColor: 'rgb(254,92,108)',
+    backgroundColor: 'rgb(254,92,108)'
   },
   agreeNote: {
     marginTop: 35 * k,
     marginBottom: 35 * k,
     fontSize: 12.5 * k,
-    textAlign: 'center',
+    textAlign: 'center'
   },
-  paginationStyle: {bottom: 170 * k},
+  paginationStyle: {bottom: 170 * k}
 })

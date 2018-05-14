@@ -45,8 +45,8 @@ class BotCompose extends React.Component<Props> {
                   // TODO: undo on BotCompose
                   // botStore.bot.load(oldBot);
                   Actions.pop()
-                },
-              },
+                }
+              }
             ])
           } else {
             Actions.pop()

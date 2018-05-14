@@ -6,7 +6,7 @@ const ProfileValidationStore = types
   .views(self => ({
     get wocky() {
       return getParent(self).wocky
-    },
+    }
   }))
   .actions(self => {
     let vProfile: ValidatableProfile = null

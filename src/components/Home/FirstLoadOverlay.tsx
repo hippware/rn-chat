@@ -48,23 +48,23 @@ const styles = StyleSheet.create({
     padding: 20 * k,
     paddingHorizontal: 30 * k,
     backgroundColor: colors.WHITE,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   bgImage: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 0
   },
   image: {
     height: 89,
     width: 69,
-    marginRight: 20 * k,
+    marginRight: 20 * k
   },
   icon: {
     height: 18,
-    width: 15,
+    width: 15
   },
   button: {
     borderColor: colors.PINK,
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 8 * k,
     alignSelf: 'flex-start',
-    marginTop: 10 * k,
-  },
+    marginTop: 10 * k
+  }
 })

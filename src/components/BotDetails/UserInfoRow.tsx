@@ -112,17 +112,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10 * k,
-    paddingBottom: 15 * k,
+    paddingBottom: 15 * k
   },
   userInfoRow: {
     marginTop: 10 * k,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.WHITE
   },
   botLocationButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-  },
+    flexDirection: 'row'
+  }
 })

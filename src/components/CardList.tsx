@@ -4,7 +4,7 @@ import React from 'react'
 import {StyleSheet} from 'react-native'
 import {
   KeyboardAwareFlatList,
-  KeyboardAwareFlatListProps,
+  KeyboardAwareFlatListProps
 } from 'react-native-keyboard-aware-scroll-view'
 import {colors} from '../constants'
 
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     shadowOffset: {height: 1, width: 0},
     shadowRadius: 2,
-    shadowOpacity: 0.12,
-  },
+    shadowOpacity: 0.12
+  }
 })

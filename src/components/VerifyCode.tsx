@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from 'react-native'
 import Button from 'apsl-react-native-button'
 import DeviceInfo from 'react-native-device-info'
@@ -176,23 +176,23 @@ const styles = StyleSheet.create({
     backgroundColor: colors.PINK,
     alignItems: 'center',
     marginHorizontal: 5 * k,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   resendBtn: {
     backgroundColor: colors.WHITE,
 
     borderWidth: 1,
-    borderColor: colors.PINK,
+    borderColor: colors.PINK
   },
   resendTxt: {
     color: colors.PINK,
     fontSize: 17.5,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   verifyTxt: {
     color: colors.WHITE,
     fontSize: 17.5,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular'
   },
   hiddenText: {
     height: 1,
@@ -201,6 +201,6 @@ const styles = StyleSheet.create({
     color: colors.WHITE,
     position: 'absolute',
     top: -100,
-    left: -100,
-  },
+    left: -100
+  }
 })

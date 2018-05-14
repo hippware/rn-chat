@@ -27,7 +27,7 @@ class BottomButton extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      height: new Animated.Value(0),
+      height: new Animated.Value(0)
     }
   }
 
@@ -54,9 +54,9 @@ class BottomButton extends React.Component<Props, State> {
             right: 0,
             left: 0,
             padding: 0,
-            margin: 0,
+            margin: 0
           },
-          style,
+          style
         ]}
       >
         <Button
@@ -65,7 +65,7 @@ class BottomButton extends React.Component<Props, State> {
             margin: 0,
             bottom: 0,
             right: 0,
-            left: 0,
+            left: 0
           }}
           {...rest}
         >
@@ -82,7 +82,7 @@ class BottomButton extends React.Component<Props, State> {
         this.animating = true
         this.animation = Animated.timing(this.state.height, {
           toValue: endCoordinates.height,
-          duration,
+          duration
         }).start(this.animationCb)
       }
     )
@@ -95,7 +95,7 @@ class BottomButton extends React.Component<Props, State> {
         this.animating = true
         this.animation = Animated.timing(this.state.height, {
           toValue: 0,
-          duration,
+          duration
         }).start(this.animationCb)
       }
     )

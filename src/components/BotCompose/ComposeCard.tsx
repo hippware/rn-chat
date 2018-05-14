@@ -118,7 +118,7 @@ class ComposeCard extends React.Component<Props> {
                 shadowColor: '#000',
                 shadowOpacity: 0.5,
                 shadowRadius: 0,
-                shadowOffset: {height: 0, width: 0},
+                shadowOffset: {height: 0, width: 0}
               }}
             />
           </Cell>
@@ -133,16 +133,16 @@ export default ComposeCard
 const styles = StyleSheet.create({
   separator: {
     borderTopWidth: 1,
-    borderTopColor: colors.WARM_GREY,
+    borderTopColor: colors.WARM_GREY
   },
   textWrapper: {
     flex: 1,
     paddingRight: 10 * k,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   titleInput: {
     height: 25 * k,
     fontFamily: 'Roboto-Regular',
-    fontSize: 15,
-  },
+    fontSize: 15
+  }
 })

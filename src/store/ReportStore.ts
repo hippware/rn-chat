@@ -29,9 +29,9 @@ class ReportStore {
       ticket: {
         subject,
         comment: {
-          body: message,
-        },
-      },
+          body: message
+        }
+      }
     }
     this.submitting = true
     try {
@@ -39,9 +39,9 @@ class ReportStore {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Basic ${auth}`,
+          Authorization: `Basic ${auth}`
         },
-        body: JSON.stringify(body), // stringify-safe?
+        body: JSON.stringify(body) // stringify-safe?
       })
       let parsed
       if (

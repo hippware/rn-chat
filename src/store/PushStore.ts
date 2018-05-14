@@ -43,10 +43,10 @@ class PushStore {
       permissions: {
         alert: true,
         badge: true,
-        sound: true,
+        sound: true
       },
       popInitialNotification: true,
-      requestPermissions: false,
+      requestPermissions: false
     })
     PushNotification.getApplicationIconBadgeNumber((badgeCount: number) => {
       if (badgeCount > 0) {

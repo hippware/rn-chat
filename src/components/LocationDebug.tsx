@@ -9,7 +9,7 @@ import {
   ILocationStore,
   LocationAccuracyChoices,
   ActivityTypeChoices,
-  BG_STATE_PROPS,
+  BG_STATE_PROPS
 } from '../store/LocationStore'
 import Screen from './Screen'
 import _ from 'lodash'
@@ -31,13 +31,13 @@ const debuggerSettings = t.struct({
   distanceFilter: t.Number,
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
-  activityRecognitionInterval: t.Number,
+  activityRecognitionInterval: t.Number
 })
 
 const options = {
   fields: {
     debug: {
-      label: 'Background location debug mode',
+      label: 'Background location debug mode'
     },
     // preventSuspend: {
     //   label: 'preventSuspend',
@@ -46,27 +46,27 @@ const options = {
     //   label: 'heartbeatInterval (in seconds, min 60)',
     // },
     stopTimeout: {
-      label: 'stopTimeout (in minutes)',
+      label: 'stopTimeout (in minutes)'
     },
     elasticityMultiplier: {
-      label: 'elasticityMultiplier',
+      label: 'elasticityMultiplier'
     },
     desiredAccuracy: {
-      label: 'desiredAccuracy',
+      label: 'desiredAccuracy'
     },
     distanceFilter: {
-      label: 'distanceFilter (in meters)',
+      label: 'distanceFilter (in meters)'
     },
     stationaryRadius: {
-      label: 'stationaryRadius (in meters, min 25)',
+      label: 'stationaryRadius (in meters, min 25)'
     },
     activityType: {
-      label: 'activityType',
+      label: 'activityType'
     },
     activityRecognitionInterval: {
-      label: 'activityRecognitionInterval (in ms)',
-    },
-  },
+      label: 'activityRecognitionInterval (in ms)'
+    }
+  }
 }
 
 type Props = {
@@ -129,7 +129,7 @@ export default class LocationDebug extends React.Component<Props> {
                   borderRadius: 2,
                   marginLeft: 10,
                   width: 100,
-                  alignItems: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <RText size={20} color={colors.WHITE}>

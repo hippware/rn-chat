@@ -26,6 +26,6 @@ export default ListFooter
 const styles = StyleSheet.create({
   padding: {
     marginTop: 10,
-    marginBottom: 21,
-  },
+    marginBottom: 21
+  }
 })

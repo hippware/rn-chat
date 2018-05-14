@@ -88,6 +88,6 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
         return true
       }
       return false
-    }),
+    })
   }
 })

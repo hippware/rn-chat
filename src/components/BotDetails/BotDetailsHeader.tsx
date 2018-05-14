@@ -33,7 +33,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      fadeAnim: new Animated.Value(0),
+      fadeAnim: new Animated.Value(0)
     }
   }
 
@@ -60,8 +60,8 @@ class BotDetailsHeader extends React.Component<Props, State> {
       {
         text: 'Remove',
         style: 'destructive',
-        onPress: () => this.props.bot.unsubscribe(),
-      },
+        onPress: () => this.props.bot.unsubscribe()
+      }
     ])
   }
 
@@ -88,7 +88,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           style={{
             height: scale === 0 ? height - 60 * k : width,
             backgroundColor: 'white',
-            overflow: 'hidden',
+            overflow: 'hidden'
           }}
         >
           <BotDetailsMap
@@ -134,8 +134,8 @@ class BotDetailsHeader extends React.Component<Props, State> {
                   alignSelf: 'stretch',
                   marginTop: 8.5,
                   flexDirection: 'row',
-                  alignItems: 'center',
-                },
+                  alignItems: 'center'
+                }
               ]}
             >
               <Image
@@ -182,10 +182,10 @@ export default BotDetailsHeader
 const styles = StyleSheet.create({
   rowContainer: {
     backgroundColor: 'white',
-    padding: 20 * k,
+    padding: 20 * k
   },
   descriptionContainer: {
-    paddingBottom: 15 * k,
+    paddingBottom: 15 * k
   },
   botAddedContainer: {
     height: width,
@@ -193,6 +193,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 })

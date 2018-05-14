@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
   rightContainer: {
     marginRight: 10 * k,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   rightButton: {
     marginLeft: 15,
     width: 24,
     height: 24,
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })
