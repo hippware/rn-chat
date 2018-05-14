@@ -49,7 +49,9 @@ describe('ConnectStore', () => {
       done('Exception should be thrown')
     } catch (e) {
       expect(user1.profile!.updated).to.be.false
-      // expect(e).to.be.equal('Handle should be at least 3 character(s).')
+      expect(e.message).to.be.equal(
+        '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
+      )
       done()
     }
   })

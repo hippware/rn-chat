@@ -35,7 +35,7 @@ export async function createXmpp(num: number): Promise<IWocky> {
       {
         transport,
         fileService,
-        logger: {log: (msg: string, ...params: Array<any>) => console.log(msg, ...params)},
+        logger: {log: (msg: string, ...params: any[]) => console.log(msg, ...params)},
       }
     )
     addMiddleware(service, simpleActionLogger)
@@ -50,7 +50,7 @@ export async function createXmpp(num: number): Promise<IWocky> {
         emailAddress: '',
         'X-Verify-Credentials-Authorization': '',
       },
-      'testing'
+      'digits'
     )
     console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()

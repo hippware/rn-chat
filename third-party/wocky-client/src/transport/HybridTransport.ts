@@ -97,7 +97,7 @@ export class HybridTransport implements IWockyTransport {
     await this._xmpp.disconnect()
   }
 
-  loadProfile(user: string): Promise<IProfilePartial> {
+  loadProfile(user: string): Promise<IProfilePartial | null> {
     return this._gql.loadProfile(user)
     // return this._xmpp.loadProfile(user)
   }

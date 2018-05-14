@@ -209,7 +209,7 @@ export class XmppTransport implements IWockyTransport {
       )
     )
   }
-  async loadProfile(user: string): Promise<IProfilePartial> {
+  async loadProfile(user: string): Promise<IProfilePartial | null> {
     const id = user
     const isOwn = id === this.username
     const node = `user/${user}`
