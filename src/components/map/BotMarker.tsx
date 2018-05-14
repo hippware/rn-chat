@@ -15,7 +15,6 @@ type Props = {
 }
 
 const BotMarker = observer(({bot, scale, ...props}: Props) => {
-  const y = scale === 1 ? 0.5 : 1 // fullMap ? -35 : -106
   if (!bot || !isAlive(bot) || !bot.location) {
     return null
   }
