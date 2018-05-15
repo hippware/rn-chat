@@ -1,5 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, IType, isAlive, flow, IModelType} from 'mobx-state-tree'
+import {types, isAlive, flow} from 'mobx-state-tree'
 import {Base} from './Base'
 
 export const FileSource = types
@@ -8,7 +7,7 @@ export const FileSource = types
     contentType: types.maybe(types.string),
     width: types.maybe(types.number),
     height: types.maybe(types.number),
-    cached: false,
+    cached: false
   })
   .named('FileSource')
 export type IFileSource = typeof FileSource.Type
@@ -19,19 +18,19 @@ export const File = types
       id: types.identifier(types.string),
       source: types.maybe(FileSource),
       thumbnail: types.maybe(FileSource),
-      url: '',
+      url: ''
     })
   )
   .named('File')
   .volatile(() => ({
     loading: false,
     isNew: false,
-    error: '',
+    error: ''
   }))
   .views(self => ({
     get loaded() {
       return self.thumbnail !== null // self.source !== null
-    },
+    }
   }))
   .actions(self => {
     return {
@@ -75,7 +74,7 @@ export const File = types
             self.loading = false
           }
         }
-      }),
+      })
     }
   })
   .actions(self => ({
@@ -85,7 +84,7 @@ export const File = types
       } else {
         yield self.download()
       }
-    }),
+    })
   }))
 export type IFileType = typeof File.Type
 export interface IFile extends IFileType {}
@@ -102,6 +101,6 @@ export const FileRef = types.maybe(
     },
     set(value: IFile) {
       return value.id
-    },
+    }
   })
 )

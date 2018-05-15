@@ -1,7 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types} from 'mobx-state-tree'
 import {Event} from './Event'
 import {IProfile} from './Profile'
 
@@ -12,7 +9,7 @@ export const EventDelete = types
   .compose(
     Event,
     types.model('EventDelete', {
-      delete: types.boolean,
+      delete: types.boolean
     })
   )
   .named('EventDelete')

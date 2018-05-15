@@ -1,0 +1,13 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "prettier.printWidth": 180,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "explorer.confirmDelete": false,
+  "prettier.bracketSpacing": false,
+  "prettier.eslintIntegration": false
+}

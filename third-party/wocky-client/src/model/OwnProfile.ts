@@ -1,15 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {
-  types,
-  flow,
-  onSnapshot,
-  getSnapshot,
-  IModelType,
-  ISimpleType,
-  ISnapshottable,
-} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types, getSnapshot} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
@@ -27,7 +16,7 @@ export const OwnProfile = types
     ),
     types.model('OwnProfile', {
       email: types.maybe(types.string),
-      phoneNumber: types.maybe(types.string),
+      phoneNumber: types.maybe(types.string)
     })
   )
   .named('OwnProfile')
