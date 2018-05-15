@@ -10,6 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HTML Bot Link Shares: Bot Profile, Action Sheet, Owner View (#2308)
 * HTML Bot Links: Bot Profile, Action Sheet, Non-Owner View (#2309)
 * HTML Bot Link Shares: Action Sheet, Share Via (#2310)
+* Added cursor, onEndReached handler (PR #2322)
+  * for Infinite loader on Saves List (#2213)
+* Enable wocky-client tests and fix failed ones (PR #2323)
 
 # 2.6.3 - 2018 May 10
 
