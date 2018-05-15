@@ -1,8 +1,7 @@
 {
   "name": "wocky-client",
   "version": "1.0.2",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "src/index.ts",
   "license": "CC0-1.0",
   "scripts": {
     "build": "tsc",
