@@ -31,7 +31,7 @@ class BotSubscriberList extends React.Component<Props> {
     return (
       <Screen>
         <CardList
-          emptyUI={<EmptyList text="No one favorited it yet" />}
+          emptyUI={<EmptyList text="No one favorited it yet!" />}
           keyboardShouldPersistTaps="always"
           data={list.slice()}
           ItemSeparatorComponent={() => <Separator />}
