@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
@@ -9,7 +7,7 @@ import {Separator} from '../common'
 import {FollowableProfileItem} from './customProfileItems'
 import ListFooter from '../ListFooter'
 import {IBot, IWocky} from 'wocky-client'
-
+import EmptyList from '../EmptyList'
 type Props = {
   item: string
   wocky?: IWocky
@@ -33,6 +31,7 @@ class BotSubscriberList extends React.Component<Props> {
     return (
       <Screen>
         <CardList
+          emptyUI={<EmptyList text="No one favorited it yet!" />}
           keyboardShouldPersistTaps="always"
           data={list.slice()}
           ItemSeparatorComponent={() => <Separator />}
