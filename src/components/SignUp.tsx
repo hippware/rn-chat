@@ -49,6 +49,7 @@ class SignUp extends React.Component<Props> {
   }
 
   done = () => {
+    if (!this.vProfile.isValid) return
     const {profile} = this.props.wocky!
     try {
       profile!.update(this.vProfile.asObject)
