@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import {View} from 'react-native'
 import {autorun, observable} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'

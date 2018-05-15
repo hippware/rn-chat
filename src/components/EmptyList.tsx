@@ -1,5 +1,5 @@
 import React from 'react'
-import {FlatList, View, Image} from 'react-native'
+import {View, Image} from 'react-native'
 import {RText} from './common'
 import {colors} from '../constants'
 import {k} from './Global'
