@@ -1,7 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types, flow, getParent} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {ProfileRef} from './Profile'
 import {Base} from './Base'
@@ -27,7 +24,7 @@ export const BotPost = types
       content: '',
       title: '',
       image: FileRef,
-      profile: ProfileRef,
+      profile: ProfileRef
     })
   )
   .named('BotPost')
@@ -36,7 +33,7 @@ export const BotPost = types
     setTitle: (title: string) => (self.title = title),
     publish: flow(function*() {
       yield self.service._publishBotPost(self)
-    }),
+    })
   }))
 
 export type IBotPost = typeof BotPost.Type

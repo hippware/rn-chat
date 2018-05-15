@@ -1,7 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types} from 'mobx-state-tree'
 import {EventBot} from './EventBot'
 import {IProfile} from './Profile'
 import {IBot} from './Bot'
@@ -15,7 +12,7 @@ export const EventBotNote = types
   .compose(
     EventBot,
     types.model('EventBotNote', {
-      note: types.string,
+      note: types.string
     })
   )
   .named('EventBotNote')

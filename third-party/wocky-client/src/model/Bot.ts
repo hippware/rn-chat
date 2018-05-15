@@ -1,18 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {
-  types,
-  flow,
-  isAlive,
-  onSnapshot,
-  getParent,
-  getSnapshot,
-  getEnv,
-  IType,
-  IModelType,
-  ISnapshottable,
-} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types, flow, isAlive} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList} from './Profile'
 import {FileRef} from './File'
 import {Location} from './Location'
@@ -58,12 +44,12 @@ export const Bot = types
       guests: types.optional(ProfilePaginableList, {}),
       visitors: types.optional(ProfilePaginableList, {}),
       posts: types.optional(BotPostPaginableList, {}),
-      error: '',
+      error: ''
     })
   )
   .volatile(() => ({
     isNew: false,
-    loading: false,
+    loading: false
   }))
   .named('Bot')
   .actions(self => ({
@@ -145,7 +131,7 @@ export const Bot = types
         delete data.visitors
       }
       Object.assign(self, data)
-    },
+    }
   }))
   .actions(self => ({
     shareToFriends: (message: string = '') => {
@@ -161,7 +147,7 @@ export const Bot = types
       delete res.subscribers
       delete res.guests
       return res
-    },
+    }
   }))
   .views(self => ({
     get isPublic(): boolean {
@@ -169,7 +155,7 @@ export const Bot = types
     },
     get coverColor(): number {
       return utils.hashCode(self.id)
-    },
+    }
   }))
 
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
@@ -193,5 +179,5 @@ export const BotRef = types.reference(Bot, {
   },
   set(value: IBot) {
     return value.id
-  },
+  }
 })

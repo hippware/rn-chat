@@ -1,15 +1,14 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, ISnapshottable} from 'mobx-state-tree'
 const GEOLOC_NS = 'http://jabber.org/protocol/geoloc'
 
 export const Location = types
   .model('Location', {
     latitude: types.number,
     longitude: types.number,
-    accuracy: types.maybe(types.number),
+    accuracy: types.maybe(types.number)
   })
   .volatile(() => ({
-    isCurrent: false,
+    isCurrent: false
   }))
   .actions(self => ({
     load: (data: any) => {
@@ -28,7 +27,7 @@ export const Location = types
       if (self.accuracy) {
         iq.c('accuracy').t(self.accuracy)
       }
-    },
+    }
   }))
 
 export type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>
