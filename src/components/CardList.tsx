@@ -12,16 +12,21 @@ const {backgroundColorCardDay} = colors
 
 interface IProps extends KeyboardAwareFlatListProps<any> {
   innerStyle?: any
+  emptyUI?: any
+  data: any[]
 }
 
 const CardList = (props: IProps) => {
-  const {style, innerStyle, ...others} = props
+  const {style, data, emptyUI, innerStyle, ...others} = props
   const backgroundColor = backgroundColorCardDay
-  return (
+  return data.length || !emptyUI ? (
     <KeyboardAwareFlatList
+      data={data}
       {...others}
       contentContainerStyle={[styles.inner, {backgroundColor}, innerStyle]}
     />
+  ) : (
+    emptyUI
   )
 }
 
