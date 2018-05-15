@@ -16,7 +16,8 @@ describe('Address', () => {
   })
   it('bot address', async done => {
     try {
-      const data = '{"city":"Los Angeles","country":"United States","state":"CA","county":"Los Angeles County","address":""}'
+      const data =
+        '{"city":"Los Angeles","country":"United States","state":"CA","county":"Los Angeles County","address":""}'
       const bot = Bot.create({id: '1', owner: '1'})
       bot.load({addressData: data})
       expect(bot.addressData!.city).to.be.equal('Los Angeles')

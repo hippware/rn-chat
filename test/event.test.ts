@@ -17,15 +17,15 @@ const env = {
     _loadBotSubscribers: () => {},
     _loadBotPosts: () => {},
     _loadRelations: () => {},
-    _loadOwnBots: () => {}
-  }
+    _loadOwnBots: () => {},
+  },
 }
 
 const TestModel = types.compose(
   Base,
   Storages,
   types.model({
-    home: types.optional(EventList, {})
+    home: types.optional(EventList, {}),
   })
 )
 let snapshot: any
@@ -38,7 +38,11 @@ describe('Home stream', () => {
       const target = testModel.profiles.get('1', {handle: 'test', avatar})
       const bot = testModel.bots.get('123', {title: 'testBot', owner: target})
       const eventNote = testModel.create(EventBotNote, {id: '1', bot: bot.id, note: 'Wow!'})
-      const eventBotPost = testModel.create(EventBotPost, {id: '2', bot: bot.id, post: {id: '1', content: 'Really?', profile: target}})
+      const eventBotPost = testModel.create(EventBotPost, {
+        id: '2',
+        bot: bot.id,
+        post: {id: '1', content: 'Really?', profile: target},
+      })
       testModel.home.add(eventNote)
       testModel.home.add(eventBotPost)
 
@@ -62,7 +66,10 @@ describe('Home stream', () => {
   })
 
   it('parse HS data', () => {
-    const {list, count, version, bots} = processHomestreamResponse(homestreamTestData, homestreamTestData.to.split('@')[0])
+    const {list, count, version, bots} = processHomestreamResponse(
+      homestreamTestData,
+      homestreamTestData.to.split('@')[0]
+    )
     expect(list.length).to.be.equal(3)
     expect(bots.length).to.be.equal(2)
     expect(version).to.be.equal('2018-02-04T14:04:10.944022Z')
@@ -84,9 +91,9 @@ describe('Home stream', () => {
           jid: 'testing.dev.tinyrobot.com/bot/3d577dbe-09b4-11e8-b7e5-0a580a02057d',
           id: '3d577dbe-09b4-11e8-b7e5-0a580a02057d',
           server: 'testing.dev.tinyrobot.com',
-          action: 'share'
-        }
-      }
+          action: 'share',
+        },
+      },
     }
     const testModel = TestModel.create({id: 'testmodel'}, env)
     const itemData = processItem(data, null, '39e09af8-09b4-11e8-80d4-0a580a02057d')

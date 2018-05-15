@@ -20,6 +20,7 @@
     "no-string-literal": false,
     "no-use-before-declare": false,
     "no-var-keyword": true,
+    "trailing-comma": [false],
     "radix": false,
     // "one-line": [true, "check-open-brace", "check-whitespace", "check-catch"],
     "ordered-imports": false,

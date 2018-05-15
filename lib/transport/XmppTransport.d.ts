@@ -41,7 +41,7 @@ export declare class XmppTransport implements IWockyTransport {
     }>;
     disconnect(): Promise<void>;
     sendIQ(data: any, withoutTo?: boolean): Promise<any>;
-    loadProfile(user: string): Promise<IProfilePartial>;
+    loadProfile(user: string): Promise<IProfilePartial | null>;
     requestProfiles(users: string[]): Promise<any>;
     updateProfile(d: any): Promise<void>;
     lookup(handle: string): Promise<{

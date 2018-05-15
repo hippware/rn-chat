@@ -37,7 +37,7 @@ exports.XMLHttpRequest = function() {
   // Set some default headers
   var defaultHeaders = {
     'User-Agent': 'node-XMLHttpRequest',
-    Accept: '*/*'
+    Accept: '*/*',
   }
 
   var headers = {}
@@ -66,7 +66,7 @@ exports.XMLHttpRequest = function() {
     'trailer',
     'transfer-encoding',
     'upgrade',
-    'via'
+    'via',
   ]
 
   // These request methods are not allowed
@@ -121,7 +121,9 @@ exports.XMLHttpRequest = function() {
    * @return boolean False if not allowed, otherwise true
    */
   var isAllowedHttpHeader = function(header) {
-    return disableHeaderCheck || (header && forbiddenRequestHeaders.indexOf(header.toLowerCase()) === -1)
+    return (
+      disableHeaderCheck || (header && forbiddenRequestHeaders.indexOf(header.toLowerCase()) === -1)
+    )
   }
 
   /**
@@ -161,7 +163,7 @@ exports.XMLHttpRequest = function() {
       url: url.toString(),
       async: typeof async !== 'boolean' ? true : async,
       user: user || null,
-      password: password || null
+      password: password || null,
     }
 
     setState(this.OPENED)
@@ -371,7 +373,7 @@ exports.XMLHttpRequest = function() {
       method: settings.method,
       headers,
       agent: false,
-      withCredentials: self.withCredentials
+      withCredentials: self.withCredentials,
     }
 
     // Reset error flag
@@ -395,7 +397,12 @@ exports.XMLHttpRequest = function() {
         response = resp
         // Check for redirect
         // @TODO Prevent looped redirects
-        if (response.statusCode === 301 || response.statusCode === 302 || response.statusCode === 303 || response.statusCode === 307) {
+        if (
+          response.statusCode === 301 ||
+          response.statusCode === 302 ||
+          response.statusCode === 303 ||
+          response.statusCode === 307
+        ) {
           // Change URL to the redirect location
           settings.url = response.headers.location
           var url = Url.parse(settings.url)
@@ -408,7 +415,7 @@ exports.XMLHttpRequest = function() {
             path: url.path,
             method: response.statusCode === 303 ? 'GET' : settings.method,
             headers,
-            withCredentials: self.withCredentials
+            withCredentials: self.withCredentials,
           }
 
           // Issue the new request
@@ -471,7 +478,8 @@ exports.XMLHttpRequest = function() {
       fs.writeFileSync(syncFile, '', 'utf8')
       // The async request the other Node process executes
       var execString =
-        `${"var http = require('http'), https = require('https'), fs = require('fs');" + 'var doRequest = http'}${ssl ? 's' : ''}.request;` +
+        `${"var http = require('http'), https = require('https'), fs = require('fs');" +
+          'var doRequest = http'}${ssl ? 's' : ''}.request;` +
         `var options = ${JSON.stringify(options)};` +
         "var responseText = '';" +
         'var req = doRequest(options, function(response) {' +
@@ -547,7 +555,11 @@ exports.XMLHttpRequest = function() {
 
     errorFlag = true
 
-    if (this.readyState !== this.UNSENT && (this.readyState !== this.OPENED || sendFlag) && this.readyState !== this.DONE) {
+    if (
+      this.readyState !== this.UNSENT &&
+      (this.readyState !== this.OPENED || sendFlag) &&
+      this.readyState !== this.DONE
+    ) {
       sendFlag = false
       setState(this.DONE)
     }

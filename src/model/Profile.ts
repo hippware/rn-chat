@@ -30,21 +30,28 @@ export const Profile = types
       followersSize: 0,
       followedSize: 0,
       botsSize: 0,
-      roles: types.optional(types.array(types.string), [])
+      roles: types.optional(types.array(types.string), []),
     })
   )
   .named('Profile')
   .extend(self => {
-    let followers: IProfilePaginableListType, followed: IProfilePaginableListType, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
+    let followers: IProfilePaginableListType,
+      followed: IProfilePaginableListType,
+      ownBots: IBotPaginableList,
+      subscribedBots: IBotPaginableList
     const {BotPaginableList} = require('./Bot')
     return {
       actions: {
         afterAttach: () => {
           if (self.service) {
             followers = ProfilePaginableList.create({})
-            followers.setRequest(self.service._loadRelations.bind(self.service, self.id, 'follower'))
+            followers.setRequest(
+              self.service._loadRelations.bind(self.service, self.id, 'follower')
+            )
             followed = ProfilePaginableList.create({})
-            followed.setRequest(self.service._loadRelations.bind(self.service, self.id, 'following'))
+            followed.setRequest(
+              self.service._loadRelations.bind(self.service, self.id, 'following')
+            )
             ownBots = BotPaginableList.create({})
             ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             subscribedBots = BotPaginableList.create({})
@@ -80,7 +87,7 @@ export const Profile = types
           const res: any = {...snapshot}
           delete res.status
           return res
-        }
+        },
       },
       views: {
         get isOwn(): boolean {
@@ -118,8 +125,8 @@ export const Profile = types
           } else {
             return ' (Not completed) '
           }
-        }
-      }
+        },
+      },
     }
   })
 
@@ -132,11 +139,17 @@ export interface IProfile extends IProfileType {}
 export const ProfileRef = types.maybe(
   types.reference(Profile, {
     get(id: string, parent: any) {
-      return parent && parent.service && parent.service.profiles && isAlive(parent.service.profiles.get(id)) && parent.service.profiles.get(id)
+      return (
+        parent &&
+        parent.service &&
+        parent.service.profiles &&
+        isAlive(parent.service.profiles.get(id)) &&
+        parent.service.profiles.get(id)
+      )
     },
     set(value) {
       return value.id
-    }
+    },
   })
 )
 

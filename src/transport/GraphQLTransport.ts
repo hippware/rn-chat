@@ -76,9 +76,9 @@ export class GraphQLTransport implements IWockyTransport {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
       // logger: (kind, msg, data) => {
-      // if (msg !== 'close') {
-      //  console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-      // }
+      //   if (msg !== 'close') {
+      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   }
       // },
     })
     this.client = new ApolloClient({
@@ -140,7 +140,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadProfile(user: string): Promise<IProfilePartial> {
+  async loadProfile(user: string): Promise<IProfilePartial | null> {
     const res = await this.client.query<any>({
       query: gql`
           query LoadProfile {
@@ -152,7 +152,7 @@ export class GraphQLTransport implements IWockyTransport {
         `,
     })
     if (!res.data.user) {
-      throw new Error(`Profile doesn't exist for user with id: ${user}`)
+      return null
     }
     return convertProfile(res.data.user)
   }
@@ -425,16 +425,22 @@ export class GraphQLTransport implements IWockyTransport {
         values[field] = d[field]
       }
     })
-    await this.client.mutate({
+    const data: any = await this.client.mutate({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
           userUpdate(input: {values: $values}) {
             successful
+            messages {
+              message
+            }
           }
         }
       `,
       variables: {values},
     })
+    if (!data.data.userUpdate.successful) {
+      throw new Error(JSON.stringify(data.data.userUpdate.messages))
+    }
   }
 
   async lookup(): Promise<any> {
@@ -575,6 +581,10 @@ export class GraphQLTransport implements IWockyTransport {
         limit: max,
       },
     })
+    // return empty list for null data
+    if (!res.data.bot || !res.data.bot.subscribers) {
+      return {list: [], count: 0}
+    }
     let list = res.data.bot.subscribers.edges
     let count = res.data.bot.subscribers.totalCount
     if (!includeCurrentUser) {
@@ -583,7 +593,11 @@ export class GraphQLTransport implements IWockyTransport {
       })
       count -= 1
     }
-    return {list: list.map(p => convertProfile(p.node)), count}
+    return {
+      list: list.map(p => convertProfile(p.node)),
+      cursor: list.length ? list[list.length - 1].cursor : null,
+      count,
+    }
   }
 }
 

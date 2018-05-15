@@ -15,7 +15,7 @@ export const EventBotNote = types
   .compose(
     EventBot,
     types.model('EventBotNote', {
-      note: types.string
+      note: types.string,
     })
   )
   .named('EventBotNote')

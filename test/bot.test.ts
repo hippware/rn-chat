@@ -15,8 +15,18 @@ describe('BotStore', () => {
       await waitFor(() => user2.profile !== null)
       const profile1 = await user2.loadProfile(user1.username!)
       await profile1.follow()
-      await user1.profile!.update({handle: 'abcc1', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
-      await user2.profile!.update({handle: 'abcc2', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
+      await user1.profile!.update({
+        handle: 'abcc1',
+        firstName: 'name1',
+        lastName: 'lname1',
+        email: 'a@aa.com',
+      })
+      await user2.profile!.update({
+        handle: 'abcc2',
+        firstName: 'name2',
+        lastName: 'lname2',
+        email: 'a2@aa.com',
+      })
       done()
     } catch (e) {
       done(e)
@@ -35,7 +45,12 @@ describe('BotStore', () => {
   })
 
   it('update bot', async done => {
-    bot.update({visibility: 0, location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', addressData: {city: 'Koper', country: 'Slovenia'}})
+    bot.update({
+      visibility: 0,
+      location: {latitude: 1.1, longitude: 2.1},
+      title: 'Test bot',
+      addressData: {city: 'Koper', country: 'Slovenia'},
+    })
     await waitFor(() => bot.updated)
     expect(bot.isNew).to.be.false
     expect(bot.isPublic).to.be.false
@@ -115,7 +130,11 @@ describe('BotStore', () => {
       expect(expectedImage()).to.be.equal(fs.readFileSync(bot.image!.source!.uri).toString())
       done()
     } catch (e) {
-      done(`ERROR comparing content for ${bot.image!.source!.uri} and ${__dirname}/../img/test-thumbnail.jpg`)
+      done(
+        `ERROR comparing content for ${
+          bot.image!.source!.uri
+        } and ${__dirname}/../img/test-thumbnail.jpg`
+      )
     }
   })
 
@@ -185,7 +204,12 @@ describe('BotStore', () => {
   it('geosearch', async done => {
     try {
       expect(user1.geoBots.keys().length).to.be.equal(0)
-      await user1.geosearch({latitude: 1.2, longitude: 2.2, latitudeDelta: 0.5, longitudeDelta: 0.5})
+      await user1.geosearch({
+        latitude: 1.2,
+        longitude: 2.2,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5,
+      })
       await waitFor(() => user1.geoBots.keys().length >= 2)
       done()
     } catch (e) {

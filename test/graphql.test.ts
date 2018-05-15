@@ -19,7 +19,12 @@ describe('GraphQL', () => {
       user = await createXmpp(35)
       user2 = await createXmpp(36)
       await waitFor(() => user.profile !== null)
-      await user.profile!.update({handle: 'abc134567', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
+      await user.profile!.update({
+        handle: 'abc134567',
+        firstName: 'name1',
+        lastName: 'lname1',
+        email: 'a@aa.com',
+      })
       // console.log('credentials', user.username, user.password)
       gql = new GraphQLTransport('testing')
       await gql.login(user.username!, user.password!, host)
@@ -62,9 +67,19 @@ describe('GraphQL', () => {
   it('gets some bots', async done => {
     try {
       bot = await user.createBot()
-      await bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
+      await bot.update({
+        location: {latitude: 1.1, longitude: 2.1},
+        title: 'Test bot',
+        geofence: true,
+        addressData: {city: 'Koper', country: 'Slovenia'},
+      })
       bot2 = await user.createBot()
-      await bot2.update({location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2', geofence: false, addressData: {city: 'New York', country: 'US'}})
+      await bot2.update({
+        location: {latitude: 1.2, longitude: 2.2},
+        title: 'Test bot2',
+        geofence: false,
+        addressData: {city: 'New York', country: 'US'},
+      })
       const bots = await gql.loadOwnBots(user.username!, null, 1)
       // console.log('bots', bots)
       expect(bots.count).to.equal(2)

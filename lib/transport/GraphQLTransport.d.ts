@@ -24,7 +24,7 @@ export declare class GraphQLTransport implements IWockyTransport {
     constructor(resource: string);
     login(user?: string, password?: string, host?: string): Promise<boolean>;
     authenticate(user: string, token: string): Promise<boolean>;
-    loadProfile(user: string): Promise<IProfilePartial>;
+    loadProfile(user: string): Promise<IProfilePartial | null>;
     requestRoster(): Promise<[any]>;
     generateId(): Promise<string>;
     loadBot(id: string): Promise<any>;

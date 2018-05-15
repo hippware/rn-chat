@@ -15,8 +15,8 @@ moment.updateLocale('en', {
     d: '1d',
     dd: '%dd',
     y: '1y',
-    yy: '%dy'
-  }
+    yy: '%dy',
+  },
 })
 
 // http://momentjs.com/docs/#/customization/relative-time-threshold/
@@ -25,7 +25,7 @@ moment.relativeTimeThreshold('M', 0)
 
 export const Timeable = types
   .model('Timeable', {
-    time: types.optional(types.number, () => Date.now())
+    time: types.optional(types.number, () => Date.now()),
   })
   .views(self => ({
     get date(): Date {
@@ -36,5 +36,5 @@ export const Timeable = types
     },
     get relativeDateAsString(): string {
       return moment(self.time).fromNow(true)
-    }
+    },
   }))

@@ -18,13 +18,16 @@ export type __IBot = IBot
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
-    createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${getParent(getParent(getParent(self))).id}`),
+    createUploadable(
+      'image',
+      (self: any) => `redirect:${self.service.host}/bot/${getParent(getParent(getParent(self))).id}`
+    ),
     types.model('BotPost', {
       id: types.identifier(types.string),
       content: '',
       title: '',
       image: FileRef,
-      profile: ProfileRef
+      profile: ProfileRef,
     })
   )
   .named('BotPost')
@@ -33,7 +36,7 @@ export const BotPost = types
     setTitle: (title: string) => (self.title = title),
     publish: flow(function*() {
       yield self.service._publishBotPost(self)
-    })
+    }),
   }))
 
 export type IBotPost = typeof BotPost.Type

@@ -252,6 +252,7 @@ export declare type __IPaginable = IPaginable;
 export declare type IBotType = typeof Bot.Type;
 export interface IBot extends IBotType {
     visitors: IPaginable;
+    subscribers: IPaginable;
 }
 export declare const BotPaginableList: IPaginable;
 export declare type IBotPaginableList = typeof BotPaginableList.Type;

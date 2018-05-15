@@ -49,7 +49,9 @@ describe('ConnectStore', () => {
       done('Exception should be thrown')
     } catch (e) {
       expect(user1.profile!.updated).to.be.false
-      // expect(e).to.be.equal('Handle should be at least 3 character(s).')
+      expect(e.message).to.be.equal(
+        '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
+      )
       done()
     }
   })
@@ -92,7 +94,9 @@ describe('ConnectStore', () => {
       chat.message.send()
       chat.message.setBody('hello2')
       chat.message.send()
-      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].messages.length === 2)
+      await waitFor(
+        () => user2.chats.list.length === 1 && user2.chats.list[0].messages.length === 2
+      )
       expect(user2.chats.list[0].last!.body).to.be.equal('hello2')
       done()
     } catch (e) {
@@ -103,7 +107,11 @@ describe('ConnectStore', () => {
     try {
       const fileName = `${__dirname}/img/test.jpg`
       const fileNameThumb = `${__dirname}/img/test-thumbnail.jpg`
-      const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
+      const file = {
+        name: fileName.substring(fileName.lastIndexOf('/') + 1),
+        body: fs.readFileSync(fileName),
+        type: 'image/jpeg',
+      }
       const chat = user1.createChat(user2.username!)
       await chat.message.upload({height: 300, width: 300, size: 3801, file})
       chat.message.send()

@@ -26,8 +26,18 @@ describe('Geofence', () => {
       await exitBot(user2)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
-      await user1.profile!.update({handle: 'abcc3', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
-      await user2.profile!.update({handle: 'abcc4', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
+      await user1.profile!.update({
+        handle: 'abcc3',
+        firstName: 'name1',
+        lastName: 'lname1',
+        email: 'a@aa.com',
+      })
+      await user2.profile!.update({
+        handle: 'abcc4',
+        firstName: 'name2',
+        lastName: 'lname2',
+        email: 'a2@aa.com',
+      })
       const profile1 = await user2.loadProfile(user1.username!)
       await profile1.follow()
       done()
@@ -39,7 +49,12 @@ describe('Geofence', () => {
   it('creates a geofence bot', async done => {
     try {
       bot = await user1.createBot()
-      await bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
+      await bot.update({
+        location: {latitude: 1.1, longitude: 2.1},
+        title: 'Test bot',
+        geofence: true,
+        addressData: {city: 'Koper', country: 'Slovenia'},
+      })
       // console.log('bot updated', bot.toJSON())
       expect(bot.geofence).to.be.true
       expect(bot.visitorsSize).to.equal(0)
@@ -52,7 +67,12 @@ describe('Geofence', () => {
   it('creates a geofence bot2', async done => {
     try {
       bot2 = await user1.createBot()
-      await bot2.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot2', geofence: true, addressData: {city: 'Koper', country: 'Slovenia'}})
+      await bot2.update({
+        location: {latitude: 1.1, longitude: 2.1},
+        title: 'Test bot2',
+        geofence: true,
+        addressData: {city: 'Koper', country: 'Slovenia'},
+      })
       // console.log('bot updated', bot.toJSON())
       expect(bot2.geofence).to.be.true
       expect(bot2.visitorsSize).to.equal(0)

@@ -17,7 +17,11 @@ const moment = require('moment')
 
 export const Message = types
   .compose(
-    types.compose(Base, Timeable, createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)),
+    types.compose(
+      Base,
+      Timeable,
+      createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)
+    ),
     types.model('Message', {
       id: types.optional(types.string, utils.generateID),
       archiveId: '',
@@ -25,14 +29,14 @@ export const Message = types
       to: '',
       media: FileRef,
       unread: false,
-      body: ''
+      body: '',
     })
   )
   .named('Message')
   .views(self => ({
     get date() {
       return moment(self.time).calendar()
-    }
+    },
   }))
   .actions(self => ({
     read: () => (self.unread = false),
@@ -43,13 +47,13 @@ export const Message = types
     },
     setBody: (text: string) => {
       self.body = text
-    }
+    },
   }))
   .actions(self => ({
     send: () => {
       self.time = Date.now()
       self.service._sendMessage(self)
       self.clear()
-    }
+    },
   }))
 export type IMessage = typeof Message.Type

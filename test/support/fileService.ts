@@ -37,7 +37,7 @@ export class FileService implements IFileService {
             host: url.hostname,
             port: url.port,
             path: url.path,
-            headers
+            headers,
           },
           (response: any) => {
             if (response.statusCode !== 200) {

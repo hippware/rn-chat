@@ -1,5 +1,15 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, hasParent, onSnapshot, getType, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {
+  types,
+  hasParent,
+  onSnapshot,
+  getType,
+  getEnv,
+  flow,
+  getParent,
+  IModelType,
+  ISnapshottable,
+} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 
@@ -9,7 +19,7 @@ export const Loadable = types.model({loaded: false}).actions((self: any) => ({
       Object.assign(self, data)
       self.loaded = true
     }
-  }
+  },
 }))
 
 export type ILoadable = typeof Loadable.Type
@@ -20,7 +30,7 @@ export function createLoadable(load: (self: any) => (self) => void) {
       Loadable,
       types.model({}).volatile(() => ({
         loading: false,
-        loadError: ''
+        loadError: '',
       }))
     )
     .named('Loadable')
@@ -40,6 +50,6 @@ export function createLoadable(load: (self: any) => (self) => void) {
             self.loading = false
           }
         }
-      })
+      }),
     }))
 }

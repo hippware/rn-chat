@@ -1,5 +1,20 @@
 // tslint:disable-next-line:no_unused-variable
-import {IModelType, types, isAlive, clone, IType, getType, getParent, getEnv, flow, destroy, IExtendedObservableMap, ISnapshottable, getSnapshot, onSnapshot} from 'mobx-state-tree'
+import {
+  IModelType,
+  types,
+  isAlive,
+  clone,
+  IType,
+  getType,
+  getParent,
+  getEnv,
+  flow,
+  destroy,
+  IExtendedObservableMap,
+  ISnapshottable,
+  getSnapshot,
+  onSnapshot,
+} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer, when, reaction, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
@@ -20,7 +35,14 @@ import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocationSnapshot} from '..'
-export const EventEntity = types.union(EventBotPost, EventBotNote, EventBotShare, EventBotCreate, EventBotGeofence, EventDelete)
+export const EventEntity = types.union(
+  EventBotPost,
+  EventBotNote,
+  EventBotShare,
+  EventBotCreate,
+  EventBotGeofence,
+  EventDelete
+)
 export type IEventEntity = typeof EventEntity.Type
 // export interface IEventEntity extends IEventEntityType {}
 export const EventList = createPaginable(EventEntity).actions(() => ({
@@ -31,7 +53,7 @@ export const EventList = createPaginable(EventEntity).actions(() => ({
       return {...snapshot, result, cursor}
     }
     return snapshot
-  }
+  },
 }))
 export type IEventListType = typeof EventList.Type
 export interface IEventList extends IEventListType {}
@@ -57,7 +79,7 @@ export const Wocky = types
       geofenceBots: types.optional(BotPaginableList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {}),
       chats: types.optional(Chats, Chats.create()),
-      version: ''
+      version: '',
     })
   )
   .named(SERVICE_NAME)
@@ -72,7 +94,7 @@ export const Wocky = types
       },
       get connected() {
         return transport.connected
-      }
+      },
     }
   })
   .actions(self => ({
@@ -86,7 +108,7 @@ export const Wocky = types
             id,
             ...self._registerReferences(Profile, data),
             loaded: true,
-            status: 'available'
+            status: 'available',
           })
           self.profile = profile
         } else {
@@ -95,7 +117,7 @@ export const Wocky = types
         if (self.profile.handle) self.sessionCount = 3
       }
       return self.profiles.get(id, data)
-    })
+    }),
   }))
   .extend(self => {
     return {
@@ -112,7 +134,7 @@ export const Wocky = types
           return self.updates.filter((e: IEventEntity) => {
             return getType(e).name !== EventDelete.name
           })
-        }
+        },
       },
       actions: {
         postProcessSnapshot: (snapshot: any) => {
@@ -132,7 +154,11 @@ export const Wocky = types
             self.host = host
           }
           if (!self.username || !self.password || !self.host) {
-            throw new Error(`Cannot login without username/password/host:${self.username},${self.password},${self.host}`)
+            throw new Error(
+              `Cannot login without username/password/host:${self.username},${self.password},${
+                self.host
+              }`
+            )
           }
           yield self.transport.login(self.username!, self.password!, self.host)
           yield self.loadProfile(self.username)
@@ -170,13 +196,15 @@ export const Wocky = types
           const profile = yield self.transport.lookup(handle)
           return self.profiles.get(profile.id, profile)
         }),
-        createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id}))
-      }
+        createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id})),
+      },
     }
   })
   .views(self => ({
     get activeBots(): IBot[] {
-      const arr = self.geofenceBots.list.filter((bot: IBot) => bot.visitorsSize).map((data, index) => ({data, index}))
+      const arr = self.geofenceBots.list
+        .filter((bot: IBot) => bot.visitorsSize)
+        .map((data, index) => ({data, index}))
       return arr
         .sort((a, b) => {
           if (a.data.visitor && !b.data.visitor) return -1
@@ -202,7 +230,7 @@ export const Wocky = types
     },
     get followed() {
       return self.sortedRoster.filter(x => !x.isBlocked && x.isFollowed)
-    }
+    },
   }))
   .actions(self => ({
     addRosterItem: (profile: any) => {
@@ -219,7 +247,9 @@ export const Wocky = types
       return self.profiles.get(id, processMap(data))
     },
     getBot: ({id, server, ...data}: {id: string; server?: string; owner?: string | null}): IBot => {
-      const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
+      const bot = self.bots.storage.get(id)
+        ? self.bots.get(id, data)
+        : self.bots.get(id, {server, owner: data.owner})
       if (data && Object.keys(data).length) {
         self.load(bot, data)
       }
@@ -250,7 +280,7 @@ export const Wocky = types
       self.geofenceBots.remove(id)
       self.geoBots.delete(id)
       self.bots.delete(id)
-    }
+    },
   }))
   .actions(self => ({
     _follow: flow(function*(username: string) {
@@ -307,7 +337,7 @@ export const Wocky = types
       // const events = self.events.list.filter(event => event.bot && event.bot === id)
       // events.forEach(event => self.events.remove(event.id))
       self.deleteBot(id)
-    })
+    }),
   }))
   .actions(self => ({
     createBot: flow<IBot>(function*() {
@@ -333,7 +363,7 @@ export const Wocky = types
       return {
         list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
         count,
-        cursor
+        cursor,
       }
     }),
     _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
@@ -342,7 +372,7 @@ export const Wocky = types
       return {
         list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
         count,
-        cursor
+        cursor,
       }
     }),
     _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
@@ -351,7 +381,7 @@ export const Wocky = types
       return {
         list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
         count,
-        cursor
+        cursor,
       }
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
@@ -376,7 +406,13 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.removeBotPost(id, postId)
     }),
-    _shareBot: (id: string, server: string, recepients: string[], message: string, action: string) => {
+    _shareBot: (
+      id: string,
+      server: string,
+      recepients: string[],
+      message: string,
+      action: string
+    ) => {
       self.transport.shareBot(id, server, recepients, message, action)
     },
     _publishBotPost: flow(function*(post: IBotPost) {
@@ -406,7 +442,12 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
     }),
-    _loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
+    _loadRelations: flow(function*(
+      userId: string,
+      relation: string = 'following',
+      lastId?: string,
+      max: number = 10
+    ) {
       yield waitFor(() => self.connected)
       const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
       const res: any = []
@@ -560,7 +601,7 @@ export const Wocky = types
     }),
     setSessionCount: (value: number) => {
       self.sessionCount = value
-    }
+    },
   }))
   .actions(self => {
     function clearCache() {
@@ -604,7 +645,9 @@ export const Wocky = types
               }
               self._subscribeToHomestream(self.version)
             } else {
-              self.profiles.storage.values().forEach((profile: any) => profile.setStatus('unavailable'))
+              self.profiles.storage
+                .values()
+                .forEach((profile: any) => profile.setStatus('unavailable'))
             }
           }
         )
@@ -623,7 +666,7 @@ export const Wocky = types
         reaction(() => self.transport.message, self._addMessage)
         reaction(() => self.transport.notification, self._onNotification)
         reaction(() => self.transport.botVisitor, self._onBotVisitor)
-      }
+      },
     }
   })
 
