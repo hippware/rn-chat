@@ -1,1 +1,0 @@
-{"version":3,"file":"EventBotCreate.js","sourceRoot":"","sources":["../../src/model/EventBotCreate.ts"],"names":[],"mappings":";;AAAA,8CAA8C;AAC9C,qDAAuE;AAGvE,yCAAmC;AAStB,QAAA,cAAc,GAAG,uBAAK;KAChC,OAAO,CACN,mBAAQ,EACR,uBAAK,CAAC,KAAK,CAAC,gBAAgB,EAAE;IAC5B,OAAO,EAAE,uBAAK,CAAC,OAAO;CACvB,CAAC,CACH;KACA,KAAK,CAAC,gBAAgB,CAAC,CAAA"}

@@ -1,1 +1,0 @@
-{"version":3,"file":"EventBotPost.js","sourceRoot":"","sources":["../../src/model/EventBotPost.ts"],"names":[],"mappings":";;AAAA,8CAA8C;AAC9C,qDAAuE;AAGvE,yCAAmC;AACnC,uCAAiC;AASpB,QAAA,YAAY,GAAG,uBAAK;KAC9B,OAAO,CACN,mBAAQ,EACR,uBAAK,CAAC,KAAK,CAAC,cAAc,EAAE;IAC1B,IAAI,EAAE,iBAAO;CACd,CAAC,CACH;KACA,KAAK,CAAC,cAAc,CAAC,CAAA"}
