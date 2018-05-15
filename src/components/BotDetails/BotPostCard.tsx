@@ -35,7 +35,7 @@ const BotPostCard = (props: Props) => {
               paddingRight: 8 * k,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile!.id})}>
@@ -70,18 +70,18 @@ export default observer(BotPostCard)
 
 const styles = StyleSheet.create({
   hyperlink: {
-    letterSpacing: -0.1,
+    letterSpacing: -0.1
   },
   action: {
     color: colors.PURPLISH_GREY,
     fontFamily: 'Roboto-Regular',
     fontSize: 13 * k,
-    letterSpacing: -0.1,
+    letterSpacing: -0.1
   },
   title: {
     flex: 1,
     fontFamily: 'Roboto-Regular',
-    fontSize: 15 * k,
+    fontSize: 15 * k
   },
   container: {
     position: 'absolute',
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })

@@ -23,7 +23,7 @@ const EventBotMetabar = inject('locationStore')(
         height: 18 * k,
         alignItems: 'center',
         margin: 10 * k,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
     >
       <View style={{flexDirection: 'row'}}>
@@ -40,7 +40,7 @@ const EventBotMetabar = inject('locationStore')(
             paddingHorizontal: 5 * k,
             flexDirection: 'row',
             borderColor: colors.WARM_GREY,
-            borderRightWidth: 1,
+            borderRightWidth: 1
           }}
         >
           <Image source={heart} style={{marginRight: 5 * k}} />

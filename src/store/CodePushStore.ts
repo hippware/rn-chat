@@ -40,7 +40,7 @@ class CodePushStore {
           installMode: isMandatory
             ? codePush.InstallMode.IMMEDIATE
             : codePush.InstallMode.ON_NEXT_RESTART,
-          deploymentKey: deployKey,
+          deploymentKey: deployKey
         }
         codePush.sync(syncOptions, this.syncStatusChanged)
       }
@@ -63,7 +63,7 @@ class CodePushStore {
             if (update) {
               this.channelUpdates.push({
                 ...channel,
-                updateDescription: update.description,
+                updateDescription: update.description
               })
             }
           })
@@ -83,7 +83,7 @@ class CodePushStore {
       UP_TO_DATE,
       UPDATE_INSTALLED,
       UPDATE_IGNORED,
-      UNKNOWN_ERROR,
+      UNKNOWN_ERROR
     } = codePush.SyncStatus
     switch (status) {
       case AWAITING_USER_ACTION:
@@ -139,10 +139,10 @@ class CodePushStore {
   sync = (channel: any) => {
     const syncOptions = {
       updateDialog: {
-        appendReleaseDescription: true,
+        appendReleaseDescription: true
       },
       installMode: codePush.InstallMode.IMMEDIATE,
-      deploymentKey: channel.key,
+      deploymentKey: channel.key
     }
     this.syncing = true
     this.syncStatus.clear()

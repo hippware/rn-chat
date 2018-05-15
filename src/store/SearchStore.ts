@@ -18,7 +18,7 @@ const SearchStore = types
     local: '',
     localResult: types.optional(SelectableProfileList, {}),
     global: '',
-    globalResult: types.optional(SelectableProfileList, {}),
+    globalResult: types.optional(SelectableProfileList, {})
   })
   .views(() => ({
     postProcessSnapshot: (snapshot: any) => {
@@ -28,7 +28,7 @@ const SearchStore = types
       delete res.local
       delete res.localResult
       return res
-    },
+    }
   }))
   .actions(self => ({
     clear: () => {
@@ -36,7 +36,7 @@ const SearchStore = types
       self.globalResult.clear()
       self.local = ''
       self.global = ''
-    },
+    }
   }))
   .actions(self => {
     const _searchGlobal = flow(function*(text) {
@@ -75,14 +75,14 @@ const SearchStore = types
     return {
       setGlobal,
       _searchGlobal,
-      _search,
+      _search
     }
   })
   .actions(self => ({
     queryUsername: flow(function*(text: string) {
       const res = yield self._search(text)
       return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase()
-    }),
+    })
   }))
   .actions(self => ({
     addUsernameValidator: () => {
@@ -94,7 +94,7 @@ const SearchStore = types
           })
         })
       }
-    },
+    }
   }))
   .actions(self => {
     let wocky, handler1, handler2
@@ -103,7 +103,7 @@ const SearchStore = types
       self.addUsernameValidator()
       handler1 = reaction(() => self.global, text => self._searchGlobal(text), {
         fireImmediately: false,
-        delay: 500,
+        delay: 500
       })
 
       // set initial list to all friends
@@ -140,7 +140,7 @@ const SearchStore = types
         local: '',
         localResult: {},
         global: '',
-        globalResult: '',
+        globalResult: ''
       })
     }
 

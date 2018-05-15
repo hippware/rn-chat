@@ -18,7 +18,7 @@ type Props = {
 
 const onProfile = (profile: IProfile) => {
   Actions.profileDetails({
-    item: profile.id,
+    item: profile.id
   })
 }
 
@@ -33,9 +33,9 @@ const EventBotTitle = observer((props: Props) => {
           paddingVertical: 10 * k,
           paddingHorizontal: 15 * k,
           borderBottomWidth: 1,
-          borderColor: colors.GREY,
+          borderColor: colors.GREY
         },
-        style,
+        style
       ]}
     >
       <Avatar size={36 * k} profile={profile} style={{marginRight: 15 * k}} />
@@ -76,6 +76,6 @@ export default EventBotTitle
 
 const styles = StyleSheet.create({
   text: {
-    letterSpacing: -0.1,
-  },
+    letterSpacing: -0.1
+  }
 })

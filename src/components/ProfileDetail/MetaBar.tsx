@@ -14,7 +14,7 @@ const Separator = () => (
       width: StyleSheet.hairlineWidth,
       top: 7 * k,
       height: 34 * k,
-      backgroundColor: colors.SILVER,
+      backgroundColor: colors.SILVER
     }}
   />
 )
@@ -26,7 +26,7 @@ const NewFollowerDot = () => (
       width: 1,
       borderWidth: 4,
       borderColor: colors.PINK,
-      borderRadius: 4,
+      borderRadius: 4
     }}
   />
 )
@@ -75,14 +75,14 @@ export default MetaBar
 const styles = StyleSheet.create({
   metabar: {
     flexDirection: 'row',
-    paddingBottom: 30 * k,
+    paddingBottom: 30 * k
   },
   number: {
     color: colors.navBarTextColorDay,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   word: {
     color: colors.DARK_GREY,
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 })

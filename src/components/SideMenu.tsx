@@ -55,7 +55,7 @@ const MenuItem = ({
   image,
   innerStyle,
   children,
-  stayOpen,
+  stayOpen
 }: MenuItemProps) => (
   <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
@@ -150,26 +150,26 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Roboto-Medium',
     fontSize: 15,
-    letterSpacing: 0.5,
+    letterSpacing: 0.5
   },
   menuItem: {
     height: 60 * k,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   menuImageContainer: {width: 80 * k, alignItems: 'center'},
   menuImage: {width: 32 * k, height: 32 * k},
   viewAccount: {
     color: colors.addAlpha(colors.WHITE, 0.57),
     fontFamily: 'Roboto-Regular',
-    fontSize: 12,
+    fontSize: 12
   },
   displayName: {
     padding: 10,
     color: colors.WHITE,
     fontFamily: 'Roboto-Medium',
-    fontSize: 17,
+    fontSize: 17
   },
   backgroundImage: {
     position: 'absolute',
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: undefined,
+    height: undefined
     // width: undefined,
-  },
+  }
 })

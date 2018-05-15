@@ -32,9 +32,9 @@ const InviteFriendsRow = inject('wocky')(
             borderColor: colors.DARK_GREY,
             padding: 13 * k,
             paddingVertical: 20 * k,
-            alignItems: 'center',
+            alignItems: 'center'
           },
-          style,
+          style
         ]}
         onPress={() => share(message)}
       >
@@ -57,7 +57,7 @@ const InviteFriendsRow = inject('wocky')(
             paddingHorizontal: 16 * k,
             borderWidth: 1,
             borderRadius: 4,
-            borderColor: colors.PINK,
+            borderColor: colors.PINK
           }}
         >
           <Image source={icon} />
@@ -73,10 +73,10 @@ async function share(message) {
       message: `${message} Download the app at`,
       // title: 'title',
       url:
-        'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8',
+        'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8'
     },
     {
-      subject: 'Check out tinyrobot',
+      subject: 'Check out tinyrobot'
       // excludedActivityTypes: [],
       // tintColor: ''
     }

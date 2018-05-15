@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20 * k,
     paddingHorizontal: 30 * k,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   image: {
     height: 89,
     width: 69,
-    marginRight: 20 * k,
+    marginRight: 20 * k
   },
   button: {
     borderColor: colors.PINK,
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 8 * k,
     alignSelf: 'flex-start',
-    marginTop: 10 * k,
-  },
+    marginTop: 10 * k
+  }
 })

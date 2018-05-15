@@ -18,7 +18,7 @@ const eventCardMap: {[key: string]: any} = {
   EventBotCreate: EventBotCard,
   EventBotPost: EventBotPostCard,
   EventBotShare: EventBotShareCard,
-  EventBotNote: EventBotNoteCard,
+  EventBotNote: EventBotNoteCard
 }
 @inject('log')
 @observer
@@ -57,7 +57,7 @@ class EventCard extends React.Component<Props> {
             paddingTop: 10 * k,
             paddingLeft: 0,
             paddingRight: 0,
-            paddingBottom: 0,
+            paddingBottom: 0
           }}
         >
           <CardClass ref={this.setCardRef} item={row} />

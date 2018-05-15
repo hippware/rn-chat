@@ -19,5 +19,5 @@ export {
   BotSubscriberList,
   BotShareSelectFriends,
   ProfileList,
-  GeofenceShare,
+  GeofenceShare
 }

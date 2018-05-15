@@ -72,7 +72,7 @@ class BotVisitorList extends React.Component<Props> {
               flex: 1,
               backgroundColor: colors.LIGHT_GREY,
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Image

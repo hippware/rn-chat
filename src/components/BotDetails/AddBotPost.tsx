@@ -117,7 +117,7 @@ class AddBotPost extends React.Component<Props> {
           top: 0,
           right: 0,
           left: 0,
-          backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent',
+          backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'
         }}
         pointerEvents="box-none"
       >
@@ -130,7 +130,7 @@ class AddBotPost extends React.Component<Props> {
             height,
             backgroundColor: colors.WHITE,
             borderTopWidth: 1,
-            borderColor: colors.GREY,
+            borderColor: colors.GREY
           }}
         >
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
@@ -224,26 +224,26 @@ export default AddBotPost
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   listView: {
-    flex: 1,
+    flex: 1
   },
   textInputContainerDay: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   textInputContainerNight: {
-    backgroundColor: 'rgba(63,50,77,0.9)',
+    backgroundColor: 'rgba(63,50,77,0.9)'
   },
   textInputContainer: {
     flexDirection: 'row',
     paddingHorizontal: 15,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   textInput: {
     alignSelf: 'center',
@@ -252,37 +252,37 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     paddingTop: 0,
-    paddingHorizontal: 11,
+    paddingHorizontal: 11
   },
   textInputDay: {
-    color: colors.DARK_PURPLE,
+    color: colors.DARK_PURPLE
   },
   textInputNight: {
-    color: 'white',
+    color: 'white'
   },
   date: {
     color: '#aaaaaa',
     fontSize: 12,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   link: {
     color: '#007aff',
-    textDecorationLine: 'underline',
+    textDecorationLine: 'underline'
   },
   linkLeft: {
-    color: '#000',
+    color: '#000'
   },
   linkRight: {
-    color: '#fff',
+    color: '#fff'
   },
   loadEarlierMessages: {
     height: 44,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   loadEarlierMessagesButton: {
-    fontSize: 14,
-  },
+    fontSize: 14
+  }
 })

@@ -19,5 +19,5 @@ export {
   Spinner,
   ProgressiveImage,
   Separator,
-  BottomButton,
+  BottomButton
 }

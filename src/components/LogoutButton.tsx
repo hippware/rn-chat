@@ -34,8 +34,8 @@ const LogoutButton = () => {
                   Actions.pop({animated: false})
                   Actions.pop({animated: false})
                   Actions.logout()
-                },
-              },
+                }
+              }
             ])
           }}
           style={styles.button}
@@ -67,8 +67,8 @@ const RemoveProfileButton = inject('wocky')(
                   Actions.pop({animated: false})
                   Actions.logout()
                   wocky!.remove()
-                },
-              },
+                }
+              }
             ]
           )
         }}
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     borderRadius: 2 * k,
     backgroundColor: 'rgb(254,92,108)',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })
 
 export default LogoutButton

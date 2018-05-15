@@ -63,7 +63,7 @@ export default class Connectivity extends React.Component<Props> {
       try {
         this.props.analytics.track('reconnect_try', {
           delay: this.retryDelay,
-          connectionInfo: this.connectionInfo,
+          connectionInfo: this.connectionInfo
         })
         await model.login()
         this.props.analytics.track('reconnect_success')
@@ -98,7 +98,7 @@ export default class Connectivity extends React.Component<Props> {
   _handleAppStateChange = async currentAppState => {
     this.retryDelay = 1000
     this.props.log('CURRENT APPSTATE:', currentAppState, {
-      level: log.levels.INFO,
+      level: log.levels.INFO
     })
     // reconnect automatically
     if (currentAppState === 'active') {

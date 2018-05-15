@@ -28,7 +28,7 @@ class CurrentLocation extends React.Component<Props, State> {
   state: State = {
     marginTop: new Animated.Value(SHOWN),
     address: '',
-    meta: {},
+    meta: {}
   }
 
   componentDidMount() {
@@ -56,7 +56,7 @@ class CurrentLocation extends React.Component<Props, State> {
       location: this.props.locationStore!.location,
       address: this.state.address,
       meta: this.state.meta,
-      isCurrent: true,
+      isCurrent: true
     })
   }
 
@@ -71,7 +71,7 @@ class CurrentLocation extends React.Component<Props, State> {
           borderColor: colors.LIGHT_GREY,
           borderBottomWidth: 1,
           paddingVertical: 10 * k,
-          backgroundColor: colors.WHITE,
+          backgroundColor: colors.WHITE
           // backgroundColor: 'red',
         }}
       >

@@ -15,12 +15,12 @@ const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
     token: types.maybe(types.string),
-    resource: types.maybe(types.string),
+    resource: types.maybe(types.string)
   })
   .volatile(() => ({
     buttonText: 'Verify',
     registered: false,
-    errorMessage: '', // to avoid strange typescript errors when set it to string or null,
+    errorMessage: '' // to avoid strange typescript errors when set it to string or null,
   }))
   .actions(self => ({
     setState(state: State) {
@@ -30,7 +30,7 @@ const FirebaseStore = types
       self.registered = false
       self.errorMessage = ''
       self.buttonText = 'Verify'
-    },
+    }
   }))
   .actions(self => {
     const {auth, logger, analytics} = getEnv(self)
@@ -163,7 +163,7 @@ const FirebaseStore = types
       } finally {
         self.setState({
           buttonText: 'Verify',
-          errorMessage: '',
+          errorMessage: ''
         })
       }
     })

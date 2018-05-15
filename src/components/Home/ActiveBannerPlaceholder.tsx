@@ -15,7 +15,7 @@ const ActiveBannerPlaceholder = () => {
         paddingLeft: 25 * k,
         paddingBottom: 15 * k,
         flex: 0,
-        alignSelf: 'flex-start',
+        alignSelf: 'flex-start'
       }}
     >
       <Image source={placeholderImg} style={{width: 72 * k, height: 79 * k}} resizeMode="contain" />

@@ -3,7 +3,7 @@ import {types, flow, getParent, ISimpleType} from 'mobx-state-tree'
 const NewBotStore = types
   .model('NewBotStore', {})
   .volatile(() => ({
-    botId: types.maybe(types.string),
+    botId: types.maybe(types.string)
   }))
   .actions(self => ({
     setId: (id: ISimpleType<string>) => {
@@ -15,7 +15,7 @@ const NewBotStore = types
       const bot = wocky.getBot({id: self.botId})
       yield bot.save()
       return bot
-    }),
+    })
   }))
 
 export default NewBotStore
