@@ -1,4 +1,4 @@
-declare var Strophe, $iq, $pres, $msg: any
+declare var Strophe, $pres: any
 /* tslint:disable */
 import * as Utils from './utils'
 

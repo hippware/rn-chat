@@ -1,16 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {
-  types,
-  destroy,
-  getEnv,
-  flow,
-  getParent,
-  IModelType,
-  isAlive,
-  ISnapshottable,
-} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types, flow, IModelType, isAlive} from 'mobx-state-tree'
 
 export interface IPaginable extends IModelType<any, any> {
   result?: any[]
@@ -31,12 +19,12 @@ export function createPaginable(type: any): IPaginable {
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
       cursor: types.maybe(types.string),
-      count: types.maybe(types.number),
+      count: types.maybe(types.number)
     })
     .named('PaginableList')
     .volatile(() => ({
       loading: false,
-      finished: false,
+      finished: false
     }))
     .actions(self => ({
       add: (item: any) => {
@@ -48,7 +36,7 @@ export function createPaginable(type: any): IPaginable {
         if (!self.result.find((el: any) => el.id === item.id)) {
           self.result.unshift(item)
         }
-      },
+      }
     }))
     .extend(self => {
       let request: (cursor: string | null, max?: number) => any
@@ -65,7 +53,7 @@ export function createPaginable(type: any): IPaginable {
           },
           get last(): any {
             return self.result.length > 0 ? self.result[self.result.length - 1] : null
-          },
+          }
         },
         actions: {
           setRequest: (req: (cursor, max) => any) => (request = req),
@@ -124,8 +112,8 @@ export function createPaginable(type: any): IPaginable {
               self.loading = false
             }
             return self.result
-          }),
-        },
+          })
+        }
       }
     })
 }

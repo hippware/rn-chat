@@ -1,7 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
-import {IObservableArray} from 'mobx'
+import {types} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
 import * as utils from '../transport/utils'
@@ -29,14 +26,14 @@ export const Message = types
       to: '',
       media: FileRef,
       unread: false,
-      body: '',
+      body: ''
     })
   )
   .named('Message')
   .views(self => ({
     get date() {
       return moment(self.time).calendar()
-    },
+    }
   }))
   .actions(self => ({
     read: () => (self.unread = false),
@@ -47,13 +44,13 @@ export const Message = types
     },
     setBody: (text: string) => {
       self.body = text
-    },
+    }
   }))
   .actions(self => ({
     send: () => {
       self.time = Date.now()
       self.service._sendMessage(self)
       self.clear()
-    },
+    }
   }))
 export type IMessage = typeof Message.Type

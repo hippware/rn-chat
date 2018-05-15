@@ -1,6 +1,4 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, flow, getEnv, IModelType, ISnapshottable} from 'mobx-state-tree'
-// tslint:disable-next-line:no_unused-variable
+import {types, flow, getEnv} from 'mobx-state-tree'
 import {IObservableArray} from 'mobx'
 import {Profile, IProfile} from './Profile'
 import {Message, IMessage} from './Message'
@@ -23,11 +21,11 @@ export const Chat = types
       isPrivate: true,
       participants: types.optional(types.array(types.reference(Profile)), []),
       _messages: types.optional(types.array(Message), []),
-      message: types.optional(Message, {}),
+      message: types.optional(Message, {})
     })
   )
   .volatile(() => ({
-    loading: false,
+    loading: false
   }))
   // .named('Chat')
   .views(self => ({
@@ -42,7 +40,7 @@ export const Chat = types
     },
     get followedParticipants() {
       return self.participants.filter(p => p.isFollowed)
-    },
+    }
   }))
   .views(self => ({
     get last(): IMessage | null {
@@ -50,17 +48,17 @@ export const Chat = types
     },
     get first(): IMessage | null {
       return self.messages.length ? self.messages[0] : null
-    },
+    }
   }))
   .views(self => ({
     get time() {
       return self.last ? self.last!.time : Date.now()
-    },
+    }
   }))
   .views(self => ({
     get date() {
       return moment(self.time).calendar()
-    },
+    }
   }))
   .actions(self => {
     const {logger} = getEnv(self)
@@ -102,14 +100,14 @@ export const Chat = types
         if (!self.participants.find(el => el.id === profile.id)) {
           self.participants.push(profile)
         }
-      },
+      }
     }
   })
   .actions(self => ({
     afterAttach: () => {
       self.message = self.service.create(Message, {to: self.id, from: self.service.username!})
       self.addParticipant(self.service.profiles.get(self.id))
-    },
+    }
   }))
 
 export type IChatType = typeof Chat.Type

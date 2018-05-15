@@ -1,12 +1,12 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, IModelType, getParent} from 'mobx-state-tree'
+import {types, getParent} from 'mobx-state-tree'
 
 export const Address = types
   .model('Address', {
     city: '',
     country: '',
     state: '',
-    county: '',
+    county: ''
   })
   .views(self => ({
     get locationShort(): string {
@@ -33,5 +33,5 @@ export const Address = types
         }
         return ''
       }
-    },
+    }
   }))
