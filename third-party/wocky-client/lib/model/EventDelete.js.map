@@ -1,0 +1,1 @@
+{"version":3,"file":"EventDelete.js","sourceRoot":"","sources":["../../src/model/EventDelete.ts"],"names":[],"mappings":";;AAAA,8CAA8C;AAC9C,qDAAuE;AAGvE,mCAA6B;AAMhB,QAAA,WAAW,GAAG,uBAAK;KAC7B,OAAO,CACN,aAAK,EACL,uBAAK,CAAC,KAAK,CAAC,aAAa,EAAE;IACzB,MAAM,EAAE,uBAAK,CAAC,OAAO;CACtB,CAAC,CACH;KACA,KAAK,CAAC,aAAa,CAAC,CAAA"}
