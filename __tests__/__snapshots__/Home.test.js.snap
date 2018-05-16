@@ -66,6 +66,7 @@ exports[`Home renders with no data 1`] = `
           <View>
             <View
               onLayout={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
                   "backgroundColor": "white",
