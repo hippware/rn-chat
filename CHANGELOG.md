@@ -12,7 +12,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HTML Bot Link Shares: Action Sheet, Share Via (#2310)
 * Added cursor, onEndReached handler (PR #2322)
   * for Infinite loader on Saves List (#2213)
-* Enable wocky-client tests and fix failed ones (PR #2323)
+* Profile validation fix (PR #2329)
+  * Speculative fix: A user was able to onboard with a null username (#2263)
+* Enable empty UI for Saves (now Favorites) screen (#2078)
+
+* wocky-client:
+  * Formatting, fix unit tests, use git subtree (PR #2323, PR #2330)
 
 # 2.6.3 - 2018 May 10
 
