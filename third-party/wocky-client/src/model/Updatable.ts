@@ -1,4 +1,4 @@
-import {types, flow} from 'mobx-state-tree'
+import {types, flow, getSnapshot, applySnapshot} from 'mobx-state-tree'
 
 export function createUpdatable(update: (self: any, data: any) => (self) => void) {
   return types
@@ -12,6 +12,7 @@ export function createUpdatable(update: (self: any, data: any) => (self) => void
       update: flow(function*(data: any) {
         self.updated = false
         self.updateError = ''
+        const oldSnapshot = getSnapshot(self)
         if (data) {
           Object.assign(self, data)
         }
@@ -24,6 +25,10 @@ export function createUpdatable(update: (self: any, data: any) => (self) => void
               Object.assign(self, res)
             }
             self.updated = true
+          } catch (e) {
+            self.updateError = e.message
+            // revert to old data!
+            applySnapshot(self, oldSnapshot)
           } finally {
             self.updating = false
           }
