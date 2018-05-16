@@ -19,9 +19,10 @@ type Props = {
   wocky: IWocky
   notificationStore: any // TODO proper
   store: any // TODO proper type
+  analytics?: any
 }
 
-@inject('wocky', 'notificationStore', 'store')
+@inject('wocky', 'notificationStore', 'store', 'analytics')
 @observer
 class GeofenceShare extends React.Component<Props> {
   static rightButton = (props: Props) => <RightButton {...props} />
@@ -49,6 +50,7 @@ class GeofenceShare extends React.Component<Props> {
       )
       Actions.pop({animated: false})
       Actions.botDetails({item: this.props.botId, isNew: true})
+      this.props.analytics.track('geofence_share')
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.')
       // console.warn(e)
@@ -75,23 +77,26 @@ class GeofenceShare extends React.Component<Props> {
   }
 }
 
-const RightButton = observer(({botId}) => {
-  return (
-    <TouchableOpacity
-      style={{marginRight: 15 * k}}
-      // tslint:disable-next-line
-      onPress={() => {
-        // TODO: fix hacky nav animation
-        Actions.pop({animated: false})
-        Actions.botDetails({item: botId, isNew: true})
-      }}
-    >
-      <RText size={15} color={colors.DARK_GREY}>
-        Skip
-      </RText>
-    </TouchableOpacity>
-  )
-})
+const RightButton = inject('analytics')(
+  observer(({botId, analytics}) => {
+    return (
+      <TouchableOpacity
+        style={{marginRight: 15 * k}}
+        // tslint:disable-next-line
+        onPress={() => {
+          // TODO: fix hacky nav animation
+          Actions.pop({animated: false})
+          Actions.botDetails({item: botId, isNew: true})
+          analytics.track('geofence_share_skip')
+        }}
+      >
+        <RText size={15} color={colors.DARK_GREY}>
+          Skip
+        </RText>
+      </TouchableOpacity>
+    )
+  })
+)
 
 export default GeofenceShare
 
