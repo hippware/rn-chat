@@ -19,9 +19,10 @@ type Props = {
   wocky?: IWocky
   bot?: IBot
   locationStore?: ILocationStore
+  analytics?: any
 }
 
-@inject('bot', 'wocky', 'locationStore')
+@inject('bot', 'wocky', 'locationStore', 'analytics')
 @observer
 class ComposeCard extends React.Component<Props> {
   botTitle: any
@@ -107,7 +108,7 @@ class ComposeCard extends React.Component<Props> {
               switchHeight={38}
               switchWidth={63}
               active={bot.geofence}
-              onChangeState={bot.setGeofence}
+              onChangeState={this.toggleGeofence}
               activeBackgroundColor={colors.PINK}
               inactiveBackgroundColor={colors.GREY}
               activeButtonColor="white"
@@ -125,6 +126,11 @@ class ComposeCard extends React.Component<Props> {
         )}
       </View>
     )
+  }
+
+  toggleGeofence = (on: boolean) => {
+    this.props.bot.setGeofence(on)
+    this.props.analytics.track(on ? 'geofence_toggle_on' : 'geofence_toggle_off')
   }
 }
 
