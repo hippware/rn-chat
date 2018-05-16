@@ -10,20 +10,29 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import FirstLoadOverlay from './FirstLoadOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
+import {analyticsGeoWidgetTap} from '../../utils/analytics'
 
 type Props = {
   wocky?: IWocky
   onLayout: (nativeEvent: any) => void
+  analytics?: any
 }
 
-@inject('wocky', 'locationStore')
+@inject('wocky', 'locationStore', 'analytics')
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   render() {
     const {wocky, onLayout} = this.props
     const {activeBots} = wocky!
     return (
-      <View style={{backgroundColor: 'white'}} onLayout={onLayout}>
+      <View
+        style={{backgroundColor: 'white'}}
+        onLayout={onLayout}
+        onStartShouldSetResponder={() => {
+          this.props.analytics.track(analyticsGeoWidgetTap)
+          return false
+        }}
+      >
         <RText
           size={13}
           weight="Bold"
