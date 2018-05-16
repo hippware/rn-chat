@@ -1,12 +1,11 @@
 # Change Log
 
-Internal use only.
+Internal use only..
 
 * Speculative fix: [dev] MST bot conversion warning (hippware/rn-chat#2285)
 * GraphQL - load profile (PR #44)
 * Remove bot from geofenceBot (PR #46, hippware/rn-chat#2248)
 * Tslint upgrade and code improvements (PR #47)
-
 
 # iphone-2.6.2
 
