@@ -92,7 +92,9 @@ class AddBotPost extends React.Component<Props> {
       const {size, width, height} = response
       this.imageSrc = source
       this.image = {source, size, width, height}
-      this.textInput.focus()
+      if (this.textInput) {
+        this.textInput.focus()
+      }
     })
   }
 
