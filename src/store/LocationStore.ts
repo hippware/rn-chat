@@ -214,36 +214,36 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
-    async function sendLastKnownLocation(): Promise<void> {
-      logger.log(prefix, 'send last known location')
-      if (self.location) {
-        const {latitude, longitude, accuracy} = self.location
-        const {url, headers, params} = await backgroundGeolocation.getState()
-        logger.log(prefix, 'options:', url, headers, params)
-        try {
-          const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-              ...headers,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              location: [
-                {
-                  coords: {latitude, longitude, accuracy}
-                }
-              ],
-              resource: params.resource
-            })
-          })
-          onHttp(res)
-        } catch (err) {
-          onHttpError(err)
-        }
-      } else {
-        analytics.track('location_bg_error', {error: 'no location stored'})
-      }
-    }
+    // async function sendLastKnownLocation(): Promise<void> {
+    //   logger.log(prefix, 'send last known location')
+    //   if (self.location) {
+    //     const {latitude, longitude, accuracy} = self.location
+    //     const {url, headers, params} = await backgroundGeolocation.getState()
+    //     logger.log(prefix, 'options:', url, headers, params)
+    //     try {
+    //       const res = await fetch(url, {
+    //         method: 'POST',
+    //         headers: {
+    //           ...headers,
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //           location: [
+    //             {
+    //               coords: {latitude, longitude, accuracy}
+    //             }
+    //           ],
+    //           resource: params.resource
+    //         })
+    //       })
+    //       onHttp(res)
+    //     } catch (err) {
+    //       onHttpError(err)
+    //     }
+    //   } else {
+    //     analytics.track('location_bg_error', {error: 'no location stored'})
+    //   }
+    // }
 
     const startBackground = flow(function*() {
       const wocky: IWocky = getParent(self).wocky
@@ -298,24 +298,24 @@ const LocationStore = types
       }
 
       // guarantee updates when user isn't moving enough to trigger rnbgl events
-      backgroundFetch.configure(
-        {
-          minimumFetchInterval: 15 // (15 minutes is minimum allowed)
-        },
-        async () => {
-          try {
-            analytics.track('location_bg_fetch_start')
-            await sendLastKnownLocation()
-          } catch (err) {
-            onHttpError(err)
-          }
-          analytics.track('location_bg_fetch_finish')
-          backgroundFetch.finish()
-        },
-        error => {
-          logger.log('RNBackgroundFetch failed to start', error)
-        }
-      )
+      // backgroundFetch.configure(
+      //   {
+      //     minimumFetchInterval: 15 // (15 minutes is minimum allowed)
+      //   },
+      //   async () => {
+      //     try {
+      //       analytics.track('location_bg_fetch_start')
+      //       await sendLastKnownLocation()
+      //     } catch (err) {
+      //       onHttpError(err)
+      //     }
+      //     analytics.track('location_bg_fetch_finish')
+      //     backgroundFetch.finish()
+      //   },
+      //   error => {
+      //     logger.log('RNBackgroundFetch failed to start', error)
+      //   }
+      // )
     })
 
     function stopBackground() {
