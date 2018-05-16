@@ -19,9 +19,10 @@ type Props = {
   subscribe: () => void
   unsubscribe: () => void
   isSubscribed: boolean
+  analytics?: any
 }
 
-@inject('wocky', 'locationStore')
+@inject('wocky', 'locationStore', 'analytics')
 @observer
 class BotButtons extends React.Component<Props> {
   actionSheet: any
@@ -169,8 +170,9 @@ const linkPrefix = settings.isStaging
 
 const shareVia = {
   name: 'Share via',
-  action: ({bot}: {bot: IBot}) =>
-    (Share as any).share(
+  action: async ({bot, analytics}: {bot: IBot; analytics: any}) => {
+    analytics.track('bot_share_choose_activity')
+    const {action, activityType} = await (Share as any).share(
       {
         message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
         // title: 'title',
@@ -182,11 +184,16 @@ const shareVia = {
         // tintColor: ''
       }
     )
+    analytics.track('bot_share_choose_activity_choice', {action, activityType})
+  }
 }
 
 const copyLink = {
   name: 'Copy Link',
-  action: ({bot}) => Clipboard.setString(`${linkPrefix}${bot.id}`)
+  action: ({bot, analytics}) => {
+    Clipboard.setString(`${linkPrefix}${bot.id}`)
+    analytics.track('bot_share_copy_link')
+  }
 }
 
 const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
