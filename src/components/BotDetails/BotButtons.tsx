@@ -84,41 +84,47 @@ const ShareButton = ({bot}: {bot: IBot}) => (
   </TouchableOpacity>
 )
 
-const GeofenceButton = inject('store')(
-  observer(({bot, style, store}: {bot: IBot; style: any; store?: any}) => {
-    let onPress, buttonStyle, image
-    if (bot.guest) {
-      onPress = () =>
-        Alert.alert(
-          '',
-          'Are you sure you want to stop sharing your presence? You will no longer see who’s here.',
-          [
-            {text: 'Cancel', style: 'cancel'},
-            {
-              text: 'Stop Sharing',
-              style: 'destructive',
-              onPress: () => bot.unsubscribeGeofence()
-            }
-          ]
-        )
-      buttonStyle = [style, {marginRight: 10 * k}]
-      image = require('../../../images/whiteFoot.png')
-    } else {
-      onPress = () => {
-        bot.subscribeGeofence()
-        if (!store.guestOnce) {
-          Actions.firstTimeGuest({botId: 'a5cb8b80-21a4-11e8-92d5-0a580a020603'})
+const GeofenceButton = inject('store', 'analytics')(
+  observer(
+    ({bot, style, store, analytics}: {bot: IBot; style: any; store?: any; analytics?: any}) => {
+      let onPress, buttonStyle, image
+      if (bot.guest) {
+        onPress = () =>
+          Alert.alert(
+            '',
+            'Are you sure you want to stop sharing your presence? You will no longer see who’s here.',
+            [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Stop Sharing',
+                style: 'destructive',
+                onPress: () => {
+                  bot.unsubscribeGeofence()
+                  analytics.track('bot_geoshare_off')
+                }
+              }
+            ]
+          )
+        buttonStyle = [style, {marginRight: 10 * k}]
+        image = require('../../../images/whiteFoot.png')
+      } else {
+        onPress = () => {
+          bot.subscribeGeofence()
+          if (!store.guestOnce) {
+            Actions.firstTimeGuest({botId: 'a5cb8b80-21a4-11e8-92d5-0a580a020603'})
+          }
+          analytics.track('bot_geoshare_on')
         }
+        buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}]
+        image = require('../../../images/footIcon.png')
       }
-      buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}]
-      image = require('../../../images/footIcon.png')
+      return (
+        <TouchableOpacity onPress={onPress} style={buttonStyle}>
+          <Image source={image} resizeMode="contain" />
+        </TouchableOpacity>
+      )
     }
-    return (
-      <TouchableOpacity onPress={onPress} style={buttonStyle}>
-        <Image source={image} resizeMode="contain" />
-      </TouchableOpacity>
-    )
-  })
+  )
 )
 
 const MultiButton = props => (
