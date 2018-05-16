@@ -9,6 +9,7 @@ import {colors} from '../../constants'
 import {autorun} from 'mobx'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
+import {settings} from '../../globals'
 
 type Props = {
   bot: IBot
@@ -156,6 +157,10 @@ const copyAddr = {
   action: ({copyAddress}) => copyAddress()
 }
 
+const linkPrefix = settings.isStaging
+  ? 'http://html.dev.tinyrobot.com/bot/'
+  : 'https://tinyro.bot/bot/'
+
 const shareVia = {
   name: 'Share via',
   action: ({bot}: {bot: IBot}) =>
@@ -163,7 +168,7 @@ const shareVia = {
       {
         message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
         // title: 'title',
-        url: `http://html.dev.tinyrobot.com/${bot.id}`
+        url: `${linkPrefix}${bot.id}`
       },
       {
         subject: `Hey, take a look at "${bot.title}" on tinyrobot!`
@@ -175,7 +180,7 @@ const shareVia = {
 
 const copyLink = {
   name: 'Copy Link',
-  action: ({bot}) => Clipboard.setString(`http://html.dev.tinyrobot.com/${bot.id}`)
+  action: ({bot}) => Clipboard.setString(`${linkPrefix}${bot.id}`)
 }
 
 const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
