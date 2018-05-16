@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, Text, Linking} from 'react-native'
+import {View, Alert, Image, StyleSheet, Text, Linking} from 'react-native'
 import {observable, when, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
@@ -82,7 +82,13 @@ class SignUp extends React.Component<Props> {
     const {updating, updateError} = profile
     // TODO: handle update errors with notificationStore. Watch for updateError in componentDidMount and flash error
     if (updateError !== '') {
-      this.props.warn('update error?', updateError)
+      // TODO display whole list of errors nicely as red messages, not alert
+      try {
+        const error = JSON.parse(updateError)[0].message
+        Alert.alert(null, error)
+      } catch {
+        Alert.alert(null, updateError)
+      }
     }
 
     const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || updating
