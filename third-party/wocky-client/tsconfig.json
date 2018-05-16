@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": true,
+    "module": "commonjs",
+    "removeComments": false,
+    "outDir": "lib/",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noEmit": true,
+    "importHelpers": true,
+    // "noUnusedLocals": true,
+    "lib": [
+      "dom",
+      "es6",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.proxy",
+      "es2015.reflect",
+      "es2015.symbol",
+      "es2015.symbol.wellknown",
+      "esnext.asynciterable"
+    ]
+  },
+  "files": ["src/index.ts"]
+}
