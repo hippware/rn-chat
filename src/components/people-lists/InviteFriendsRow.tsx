@@ -12,12 +12,16 @@ type Props = {
   subtext?: string
   botTitle?: string
   wocky?: IWocky
+  analytics?: any
 }
 
 const icon = require('../../../images/followers.png')
 
-const InviteFriendsRow = inject('wocky')(
-  observer(({style, subtext, botTitle, wocky}: Props) => {
+@inject('wocky', 'analytics')
+@observer
+class InviteFriendsRow extends React.Component<Props> {
+  render() {
+    const {style, subtext, botTitle, wocky} = this.props
     const {profile} = wocky
     const handle = profile ? profile.handle : ''
     const message = botTitle
@@ -36,7 +40,7 @@ const InviteFriendsRow = inject('wocky')(
           },
           style
         ]}
-        onPress={() => share(message)}
+        onPress={() => this.share(message)}
       >
         <Image
           source={require('../../../images/iconBot.png')}
@@ -64,23 +68,25 @@ const InviteFriendsRow = inject('wocky')(
         </View>
       </TouchableOpacity>
     )
-  })
-)
+  }
 
-async function share(message) {
-  await (Share as any).share(
-    {
-      message: `${message} Download the app at`,
-      // title: 'title',
-      url:
-        'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8'
-    },
-    {
-      subject: 'Check out tinyrobot'
-      // excludedActivityTypes: [],
-      // tintColor: ''
-    }
-  )
+  share = async message => {
+    this.props.analytics!.track('invite_friends')
+    const {action, activityType} = await (Share as any).share(
+      {
+        message: `${message} Download the app at`,
+        // title: 'title',
+        url:
+          'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8'
+      },
+      {
+        subject: 'Check out tinyrobot'
+        // excludedActivityTypes: [],
+        // tintColor: ''
+      }
+    )
+    this.props.analytics!.track('invite_friends_action_sheet', {action, activityType})
+  }
 }
 
 export default InviteFriendsRow
