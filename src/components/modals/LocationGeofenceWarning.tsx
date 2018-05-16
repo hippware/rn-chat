@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native'
 import {colors} from '../../constants'
@@ -9,14 +7,18 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import {reaction} from 'mobx'
 import ModalContainer from './ModalContainer'
+import {IBot} from 'wocky-client'
+import {ILocationStore} from '../../store/LocationStore'
 
 const footprint = require('../../../images/footprint.png')
 
 type Props = {
-  bot: Bot
+  bot: IBot
+  locationStore?: ILocationStore
+  analytics?: any
 }
 
-@inject('locationStore')
+@inject('locationStore', 'analytics')
 @observer
 class LocationGeofenceWarning extends React.Component<Props> {
   handler: any
@@ -54,13 +56,14 @@ class LocationGeofenceWarning extends React.Component<Props> {
             style={styles.button}
             onPress={() => {
               Linking.openURL('app-settings:{1}')
+              this.props.analytics.track('location_overlay_change_settings')
             }}
           >
             <RText color="white" size={17.5}>
               Always Allow
             </RText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={Actions.pop}>
+          <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={this.cancel}>
             <RText color="white" size={17.5}>
               Cancel
             </RText>
@@ -68,6 +71,11 @@ class LocationGeofenceWarning extends React.Component<Props> {
         </View>
       </ModalContainer>
     )
+  }
+
+  cancel = () => {
+    this.props.analytics.track('location_overlay_cancel')
+    Actions.pop()
   }
 }
 
