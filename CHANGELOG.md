@@ -12,7 +12,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HTML Bot Link Shares: Action Sheet, Share Via (#2310)
 * Added cursor, onEndReached handler (PR #2322)
   * for Infinite loader on Saves List (#2213)
-* Enable wocky-client tests and fix failed ones (PR #2323)
+* Profile validation fix (PR #2329)
+  * Speculative fix: A user was able to onboard with a null username (#2263)
+* Enable empty UI for Saves (now Favorites) screen (#2078)
+* Use URL format `https://tinyro.bot/bot/<bot-id>` for Prod html bot shares (#2334)
+  * Staging URL format: `https://html.dev.tinyrobot.com/bot/<bot-id>`
+* Deleted bot with no connectivity and opened app later to app crash (#2333)
+
+wocky-client
+  * Formatting, fix unit tests, use git subtree (PR #2323, PR #2330)
 
 # 2.6.3 - 2018 May 10
 
@@ -60,7 +68,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Some changes for: Geofence Widget: Improvements (#2243)
 * Pink blank cover images (#2225)
 
-* wocky-client
+wocky-client
   * New 'currentUser' query
   * Don't use amazon urls as file uri
   * New 'active bots' query

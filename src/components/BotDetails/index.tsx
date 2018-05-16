@@ -48,7 +48,10 @@ class BotDetails extends React.Component<Props> {
   viewTimeout: any
 
   _footerComponent = observer(() => {
-    return this.props.wocky!.connected && this.bot && this.bot.posts.loading ? (
+    return this.props.wocky!.connected &&
+      this.bot &&
+      isAlive(this.bot) &&
+      this.bot.posts.loading ? (
       <Loader />
     ) : (
       <View style={{height: 60}} />
