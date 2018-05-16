@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {autorun} from 'mobx'
+import {when} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -54,9 +54,6 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   activityType: types.maybe(types.enumeration(ActivityTypeValues)),
   activityRecognitionInterval: types.maybe(types.number)
 })
-
-// background configuration should only happen once every app start (not every foreground)
-let backgroundStarted = false
 
 const LocationStore = types
   .model('LocationStore', {
@@ -249,9 +246,6 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
-      if (backgroundStarted) return
-      backgroundStarted = true
-
       const wocky: IWocky = getParent(self).wocky
 
       const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
@@ -263,7 +257,6 @@ const LocationStore = types
       }
 
       logger.log(prefix, 'BACKGROUND LOCATION START')
-
       logger.log(`LOCATION UPDATE URL: ${url}`)
 
       const params = {
@@ -298,7 +291,7 @@ const LocationStore = types
 
       if (!state.enabled && self.alwaysOn) {
         backgroundGeolocation.start(() => {
-          logger.log(prefix, 'Start success')
+          logger.log('BNBGL: Start success')
         })
       } else if (state.enabled && !self.alwaysOn) {
         backgroundGeolocation.stop()
@@ -383,16 +376,17 @@ const LocationStore = types
     }
 
     function start() {
-      Permissions.check('location', {type: 'always'}).then(response =>
+      Permissions.check('location', {type: 'always'}).then(response => {
         self.setAlwaysOn(response === 'authorized')
-      )
-      handler = autorun(() => {
-        if (wocky.connected) {
+      })
+      handler = when(
+        () => wocky.connected,
+        () => {
           self.startBackground().then(() => {
             self.getCurrentPosition()
           })
         }
-      })
+      )
     }
 
     function finish() {
