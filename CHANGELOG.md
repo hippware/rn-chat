@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Analytics (#1905, #2105, #2351, PR #2359)
+
 # 2.6.4 - 2018 May 16
 
 * SideMenu improvements (PR #2314), for Main Nav: UI Tweaks (#2301)
