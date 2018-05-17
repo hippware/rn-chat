@@ -44,16 +44,12 @@ describe('ConnectStore', () => {
 
   it('update profile with invalid handle', async done => {
     expect(user1.profile!.updated).to.be.false
-    try {
-      await user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
-      done('Exception should be thrown')
-    } catch (e) {
-      expect(user1.profile!.updated).to.be.false
-      expect(e.message).to.be.equal(
-        '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
-      )
-      done()
-    }
+    await user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
+    expect(user1.profile!.updated).to.be.false
+    expect(user1.profile!.updateError).to.be.equal(
+      '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
+    )
+    done()
   })
   it('update profile', async done => {
     try {
@@ -110,7 +106,7 @@ describe('ConnectStore', () => {
       const file = {
         name: fileName.substring(fileName.lastIndexOf('/') + 1),
         body: fs.readFileSync(fileName),
-        type: 'image/jpeg',
+        type: 'image/jpeg'
       }
       const chat = user1.createChat(user2.username!)
       await chat.message.upload({height: 300, width: 300, size: 3801, file})

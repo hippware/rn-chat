@@ -1,5 +1,17 @@
-import {types, isAlive, clone, getType, getParent, getEnv, flow} from 'mobx-state-tree'
-import {reaction} from 'mobx'
+import {
+  types,
+  isAlive,
+  clone,
+  getType,
+  getParent,
+  getEnv,
+  flow,
+  ISnapshottable,
+  IType,
+  IModelType,
+  IExtendedObservableMap
+} from 'mobx-state-tree'
+import {reaction, IObservableArray} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
 import {Storages} from './Factory'
@@ -27,6 +39,11 @@ export const EventEntity = types.union(
   EventDelete
 )
 export type IEventEntity = typeof EventEntity.Type
+export type __IModelType = IModelType<any, any>
+export type __IType = IType<any, any>
+export type __IObservableArray = IObservableArray<any>
+export type __ISnapshotable = ISnapshottable<any>
+export type __IExtendedObservableMap = IExtendedObservableMap<any>
 // export interface IEventEntity extends IEventEntityType {}
 export const EventList = createPaginable(EventEntity).actions(() => ({
   postProcessSnapshot: (snapshot: any) => {
@@ -539,6 +556,7 @@ export const Wocky = types
           return
         }
         if (!self.events.exists(data.id)) return
+        self.events.remove(data.id)
       }
       if (changed && data.bot) {
         yield self.loadBot(data.bot.id, data.bot.server)
