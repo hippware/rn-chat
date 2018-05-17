@@ -20,7 +20,7 @@ class VisitorHeads extends React.Component<Props> {
     const rest = this.props.bot.visitorsSize - 1
     const size = 30
     return profile ? (
-      <View style={{position: 'absolute', top: -15 * k, right: -8 * k}}>
+      <View style={{position: 'absolute', top: -15, right: -8}}>
         {rest > 0 && (
           <View
             style={{
