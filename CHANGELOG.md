@@ -4,9 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.5 - 2018 May 17
+
 * Analytics (#1905, #2105, #2351, PR #2359)
 * Re-activate background fetch on Staging (PR #2361)
   * ...and throttle overly verbose mixpanel calls
+* iPhoneX tweaks (PR #2362)
+  * Main Nav: UI Tweaks (#2301)
+  * Iphone X, add more margin to Geofence Widget (#2353)
+* Better image handling (PR #2363)
+  * Non device owners see default cover photo in created notifications #2356
 
 # 2.6.4 - 2018 May 16
 
