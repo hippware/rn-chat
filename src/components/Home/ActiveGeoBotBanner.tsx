@@ -1,8 +1,6 @@
 import React from 'react'
 import {View, FlatList, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-
-import {k} from '../Global'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
@@ -33,12 +31,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           return false
         }}
       >
-        <RText
-          size={13}
-          weight="Bold"
-          color={colors.PINK}
-          style={{margin: 15 * k, marginBottom: 10 * k}}
-        >
+        <RText size={13} weight="Bold" color={colors.PINK} style={{margin: 15, marginBottom: 10}}>
           {"See Who's Here"}
         </RText>
         <View>

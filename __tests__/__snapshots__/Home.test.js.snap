@@ -85,8 +85,8 @@ exports[`Home renders with no data 1`] = `
                       "fontSize": 13,
                     },
                     Object {
-                      "margin": 30,
-                      "marginBottom": 20,
+                      "margin": 15,
+                      "marginBottom": 10,
                     },
                   ]
                 }

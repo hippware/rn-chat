@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native'
+import {Dimensions, Platform} from 'react-native'
 
 export const {width, height} = Dimensions.get('window')
 export const k = height / 667
@@ -9,3 +9,12 @@ export const defaultCover = [
   require('../../images/defaultCover2.png'),
   require('../../images/defaultCover3.png')
 ]
+
+export const isIphoneX = () => {
+  return (
+    // This has to be iOS duh
+    Platform.OS === 'ios' &&
+    // Accounting for the height in either orientation
+    (height === 812 || width === 812)
+  )
+}

@@ -2,7 +2,7 @@
 import React from 'react'
 import {Actions} from 'react-native-router-flux'
 import {View, Text, Image, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native'
-import {k} from './Global'
+import {k, isIphoneX} from './Global'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {colors} from '../constants'
@@ -105,7 +105,7 @@ class SideMenu extends React.Component<Props> {
         />
         <MenuItemWrapper
           onPress={() => Actions.profileDetails({item: wocky.username})}
-          style={{height: 151, paddingTop: 20 * k}}
+          style={{height: isIphoneX() ? 191 : 151, paddingTop: 20 * k}}
           testID="myAccountMenuItem"
         >
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
