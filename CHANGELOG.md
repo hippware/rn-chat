@@ -4,23 +4,34 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.4 - 2018 May 16
+
 * SideMenu improvements (PR #2314), for Main Nav: UI Tweaks (#2301)
-* Re-enable Detox tests (PR #2315)
 * Lock typescript version (PR #2317)
 * HTML Bot Link Shares: Bot Profile, Action Sheet, Owner View (#2308)
 * HTML Bot Links: Bot Profile, Action Sheet, Non-Owner View (#2309)
 * HTML Bot Link Shares: Action Sheet, Share Via (#2310)
 * Added cursor, onEndReached handler (PR #2322)
   * for Infinite loader on Saves List (#2213)
-* Profile validation fix (PR #2329)
-  * Speculative fix: A user was able to onboard with a null username (#2263)
 * Enable empty UI for Saves (now Favorites) screen (#2078)
 * Use URL format `https://tinyro.bot/bot/<bot-id>` for Prod html bot shares (#2334)
   * Staging URL format: `https://html.dev.tinyrobot.com/bot/<bot-id>`
 * Deleted bot with no connectivity and opened app later to app crash (#2333)
+* Run RNBGL 1st session (PR #2345)
+  * Get accelerometer permission on 1st session (#2294)
+* Validation fixes:
+  * Profile validation fix (PR #2329)
+  * A user was able to onboard with a null username (#2263)
+  * Process server-side errors (PR #2346)
+  * Any server-side error during user profile registration/update is ignored by the app (#2343)
+* Disable background fetch (#2342, PR #2347)
+  * Staging and Prod
+* Bot cover photo related bugsnag crash (#2344)
+* Detox tests
+  * Enabled (PR #2315) and then disabled.
 
-wocky-client
-  * Formatting, fix unit tests, use git subtree (PR #2323, PR #2330)
+wocky-client (PR #2323, PR #2330, PR #2348)
+  * Formatting, fix unit tests, import as git subtree
 
 # 2.6.3 - 2018 May 10
 
