@@ -380,7 +380,7 @@ export class XmppTransport implements IWockyTransport {
         return res
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       when(
         () => this.connected,
         async () => {
@@ -399,7 +399,7 @@ export class XmppTransport implements IWockyTransport {
             } catch (err) {
               // ignore error
             }
-            resolve()
+            reject(e)
             return
           }
           res.cached = true
