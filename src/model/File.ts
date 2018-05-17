@@ -1,6 +1,7 @@
-import {types, isAlive, flow} from 'mobx-state-tree'
+import {types, isAlive, flow, IModelType, IType} from 'mobx-state-tree'
 import {Base} from './Base'
-
+export type __IModelType = IModelType<any, any>
+export type __IType = IType<any, any>
 export const FileSource = types
   .model('FileSource', {
     uri: types.string,
@@ -32,6 +33,21 @@ export const File = types
       return self.thumbnail !== null // self.source !== null
     }
   }))
+  .actions(self => ({
+    download: flow(function*() {
+      if (!self.source && !self.loading) {
+        try {
+          self.error = ''
+          self.loading = true
+          self.thumbnail = self.source = yield self.service.downloadTROS(self.id)
+        } catch (e) {
+          self.error = e
+        } finally {
+          self.loading = false
+        }
+      }
+    })
+  }))
   .actions(self => {
     return {
       postProcessSnapshot: (snapshot: any) => {
@@ -55,23 +71,13 @@ export const File = types
             self.loading = true
             self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
             self.url = ''
+            self.loading = false
           } catch (e) {
             self.error = e
-          } finally {
+            self.url = ''
             self.loading = false
-          }
-        }
-      }),
-      download: flow(function*() {
-        if (!self.source && !self.loading) {
-          try {
-            self.error = ''
-            self.loading = true
-            self.thumbnail = self.source = yield self.service.downloadTROS(self.id)
-          } catch (e) {
-            self.error = e
-          } finally {
-            self.loading = false
+            // try to load tros
+            yield self.download()
           }
         }
       })
