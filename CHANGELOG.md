@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.7 - 2018 May 17
+
+* Re-enable geofence UI for Production.
+
 # 2.6.6 - 2018 May 17
 
 * Reverted: Deleted bot is not removed from HS (#2364)
