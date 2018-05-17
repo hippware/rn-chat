@@ -5,6 +5,8 @@ import * as log from '../utils/log'
 import {IWocky} from 'wocky-client'
 import Mixpanel from 'react-native-mixpanel'
 
+export const analyticsGeoWidgetTap = 'geofence_widget_tap'
+
 class Analytics {
   inSession: boolean = false
 

@@ -10,18 +10,21 @@ import {Actions} from 'react-native-router-flux'
 import {RText} from '../common'
 import {width} from '../Global'
 import {isAlive} from 'mobx-state-tree'
+import {analyticsGeoWidgetTap} from '../../utils/analytics'
 
 type Props = {
   wocky?: IWocky
   bot: IBot
+  analytics?: any
 }
 
-@inject('wocky')
+@inject('wocky', 'analytics')
 @observer
 class ActiveBot extends React.Component<Props> {
   goToBot = (): void => {
     Actions.botDetails({item: this.props.bot.id})
     setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
+    this.props.analytics.track(analyticsGeoWidgetTap)
   }
 
   render() {

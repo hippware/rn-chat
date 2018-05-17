@@ -161,21 +161,31 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 }
 
-const GeofenceCTA = observer(({bot}) => (
-  <View style={{flexDirection: 'row'}}>
-    <Image source={require('../../../images/footOpaquePink.png')} style={{width: 26, height: 34}} />
-    <TouchableOpacity onPress={() => Actions.visitors({item: bot.id})}>
-      <View style={{marginLeft: 10 * k}}>
-        <RText color={colors.PINK} size={15}>
-          See Who's Here
-        </RText>
-        <RText color={colors.DARK_GREY} size={12}>
-          {bot.visitorsSize} people
-        </RText>
-      </View>
-    </TouchableOpacity>
-  </View>
-))
+const GeofenceCTA = inject('analytics')(
+  observer(({bot, analytics}) => (
+    <View style={{flexDirection: 'row'}}>
+      <Image
+        source={require('../../../images/footOpaquePink.png')}
+        style={{width: 26, height: 34}}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          Actions.visitors({item: bot.id})
+          analytics.track('geofence_visitors_view')
+        }}
+      >
+        <View style={{marginLeft: 10 * k}}>
+          <RText color={colors.PINK} size={15}>
+            See Who's Here
+          </RText>
+          <RText color={colors.DARK_GREY} size={12}>
+            {bot.visitorsSize} people
+          </RText>
+        </View>
+      </TouchableOpacity>
+    </View>
+  ))
+)
 
 export default BotDetailsHeader
 
