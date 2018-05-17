@@ -50,7 +50,7 @@ class GeofenceShare extends React.Component<Props> {
       )
       Actions.pop({animated: false})
       Actions.botDetails({item: this.props.botId, isNew: true})
-      this.props.analytics.track('geofence_share')
+      this.props.analytics.track('bot_share_geo')
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.')
       // console.warn(e)
@@ -87,7 +87,7 @@ const RightButton = inject('analytics')(
           // TODO: fix hacky nav animation
           Actions.pop({animated: false})
           Actions.botDetails({item: botId, isNew: true})
-          analytics.track('geofence_share_skip')
+          analytics.track('bot_share_geo_skip')
         }}
       >
         <RText size={15} color={colors.DARK_GREY}>

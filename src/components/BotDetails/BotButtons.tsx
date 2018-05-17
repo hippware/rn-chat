@@ -171,7 +171,7 @@ const linkPrefix = settings.isStaging
 const shareVia = {
   name: 'Share via',
   action: async ({bot, analytics}: {bot: IBot; analytics: any}) => {
-    analytics.track('bot_share_choose_activity')
+    analytics.track('bot_share_link_choose_activity')
     const {action, activityType} = await (Share as any).share(
       {
         message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
@@ -184,7 +184,7 @@ const shareVia = {
         // tintColor: ''
       }
     )
-    analytics.track('bot_share_choose_activity_choice', {action, activityType})
+    analytics.track('bot_share_link_choose_activity_choice', {action, activityType})
   }
 }
 
@@ -192,7 +192,7 @@ const copyLink = {
   name: 'Copy Link',
   action: ({bot, analytics}) => {
     Clipboard.setString(`${linkPrefix}${bot.id}`)
-    analytics.track('bot_share_copy_link')
+    analytics.track('bot_share_link_copy')
   }
 }
 
