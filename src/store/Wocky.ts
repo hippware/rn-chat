@@ -556,7 +556,7 @@ export const Wocky = types
           return
         }
         if (!self.events.exists(data.id)) return
-        self.events.remove(data.id)
+        // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
       }
       if (changed && data.bot) {
         yield self.loadBot(data.bot.id, data.bot.server)
