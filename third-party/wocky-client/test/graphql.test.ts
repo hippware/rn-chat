@@ -106,10 +106,10 @@ describe('GraphQL', () => {
         () => {
           expect(gql.botVisitor.bot.id).to.equal(bot.id)
           expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.visitor.handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.visitor.firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.visitor.lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.visitor.avatar).to.be.null
+          expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
+          expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
+          expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
+          expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
           expect(gql.botVisitor.action).to.equal('ARRIVE')
           done()
         }
@@ -127,10 +127,6 @@ describe('GraphQL', () => {
         () => {
           expect(gql.botVisitor.bot.id).to.equal(bot.id)
           expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.visitor.handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.visitor.firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.visitor.lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.visitor.avatar).to.be.null
           expect(gql.botVisitor.action).to.equal('DEPART')
           done()
         }
