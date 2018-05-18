@@ -181,31 +181,8 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    let bots
-    if (userId === this.username) {
-      const res = await this.client.query<any>({
-        query: gql`
-          query loadBots($max: Int!, $ownUsername: String!, $after: String, $relationship: String!) {
-            currentUser {
-              id
-              bots(first: $max after: $after relationship: $relationship) {
-                totalCount
-                edges {
-                  cursor
-                  node {
-                    ${BOT_PROPS}
-                  }
-                }
-              }
-            }
-          }
-        `,
-        variables: {after, max, ownUsername: this.username, relationship},
-      })
-      bots = res.data.currentUser.bots
-    } else {
-      const res = await this.client.query<any>({
-        query: gql`
+    const res = await this.client.query<any>({
+      query: gql`
           query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
             user(id: $userId) {
               id
@@ -221,10 +198,13 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {userId, after, max, ownUsername: this.username, relationship},
-      })
-      bots = res.data.user.bots
+      variables: {userId, after, max, ownUsername: this.username, relationship},
+    })
+    // return empty list for non-existed user
+    if (!res.data.user) {
+      return {list: [], count: 0}
     }
+    const bots = res.data.user.bots
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {
       list,
@@ -299,9 +279,17 @@ export class GraphQLTransport implements IWockyTransport {
               action
               bot {
                 ${BOT_PROPS}
+                visitors: subscribers(first: 1, type: VISITOR) {
+                    edges {
+                      cursor
+                      node {
+                        ${PROFILE_PROPS}
+                      }
+                    }
+                  }
               }
               visitor {
-                ${PROFILE_PROPS}
+                id
               }
             }
           }
@@ -314,7 +302,7 @@ export class GraphQLTransport implements IWockyTransport {
         next: action((result: any) => {
           const update = result.data.botGuestVisitors
           this.botVisitor = {
-            visitor: convertProfile(update.visitor),
+            visitor: {id: update.visitor.id},
             bot: convertBot(update.bot),
             action: update.action,
           }
