@@ -7,7 +7,6 @@ import DeviceInfo from 'react-native-device-info'
 import algoliasearch from 'algoliasearch/reactnative'
 import {Wocky, XmppTransport, HybridTransport, GraphQLTransport} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
-import backgroundGeolocation from 'react-native-background-geolocation'
 import backgroundFetch from 'react-native-background-fetch'
 
 import {settings} from '../globals'
@@ -58,8 +57,7 @@ const env = {
   searchIndex,
   analytics,
   nativeEnv,
-  backgroundFetch,
-  backgroundGeolocation
+  backgroundFetch
 }
 
 const Store = types
