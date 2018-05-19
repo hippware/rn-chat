@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.6.8 - 2018 May 18
+
+* Re-add more logic to handle 'while in use' mode for RNBGL (PR #2368)
+  * While Using: App brought from the background receives "Background location is not enabled" (#2023)
+* Simplify bot list load, fix depart subscriptions (PR #2369)
+  * No Avatar on Widget with exit of presence bot (#2366)
+
 # 2.6.7 - 2018 May 17
 
 * Re-enable geofence UI for Production.
