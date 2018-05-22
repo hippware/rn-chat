@@ -7,11 +7,11 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
-  - CocoaLumberjack (3.4.1):
-    - CocoaLumberjack/Default (= 3.4.1)
-    - CocoaLumberjack/Extensions (= 3.4.1)
-  - CocoaLumberjack/Default (3.4.1)
-  - CocoaLumberjack/Extensions (3.4.1):
+  - CocoaLumberjack (3.4.2):
+    - CocoaLumberjack/Default (= 3.4.2)
+    - CocoaLumberjack/Extensions (= 3.4.2)
+  - CocoaLumberjack/Default (3.4.2)
+  - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
   - CodePush (5.1.3):
     - CodePush/Base64 (= 5.1.3)
@@ -27,25 +27,26 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.1.3):
     - React
-  - Firebase/Auth (4.11.0):
-    - Firebase/Core
-    - FirebaseAuth (= 4.5.0)
-  - Firebase/Core (4.11.0):
-    - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.18)
-  - FirebaseAnalytics (4.1.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - Firebase/Auth (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.0.0)
+  - Firebase/Core (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.0)
+  - Firebase/CoreOnly (5.0.1):
+    - FirebaseCore (= 5.0.1)
+  - FirebaseAnalytics (5.0.0):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.5.0):
-    - FirebaseAnalytics (~> 4.1)
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+  - FirebaseAuth (5.0.0):
+    - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.18):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
+  - FirebaseCore (5.0.1):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (3.0.0):
+    - FirebaseCore (~> 5.0)
   - Google-Maps-iOS-Utils (2.1.0):
     - Google-Maps-iOS-Utils/Clustering (= 2.1.0)
     - Google-Maps-iOS-Utils/Geometry (= 2.1.0)
@@ -67,21 +68,14 @@ PODS:
   - GoogleMaps/Base (2.5.0)
   - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - GTMSessionFetcher/Core (1.1.14)
-  - KissXML (5.1.2):
-    - KissXML/Core (= 5.1.2)
-  - KissXML/Core (5.1.2)
-  - Mixpanel (3.2.9)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GTMSessionFetcher/Core (1.1.15)
+  - KissXML (5.1.4):
+    - KissXML/Core (= 5.1.4)
+  - KissXML/Core (5.1.4)
+  - Mixpanel (3.3.2)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -144,15 +138,16 @@ PODS:
   - RNBackgroundGeolocation (2.12.0-beta.2):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNFirebase (3.3.1):
+  - RNFirebase (4.2.0):
+    - Firebase/Core
     - React
   - RNXMPP (1.1.2):
     - React
     - XMPPFramework
   - RSKImageCropper (2.0.1)
-  - XMPPFramework (3.7.3):
-    - XMPPFramework/All (= 3.7.3)
-  - XMPPFramework/All (3.7.3):
+  - XMPPFramework (3.7.6):
+    - XMPPFramework/All (= 3.7.6)
+  - XMPPFramework/All (3.7.6):
     - XMPPFramework/BandwidthMonitor
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
@@ -201,113 +196,113 @@ PODS:
     - XMPPFramework/XEP-0357
     - XMPPFramework/XEP-0363
     - XMPPFramework/XMPPMUCLight
-  - XMPPFramework/BandwidthMonitor (3.7.3):
+  - XMPPFramework/BandwidthMonitor (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/Core (3.7.3):
+  - XMPPFramework/Core (3.7.6):
     - CocoaAsyncSocket (~> 7.5.0)
     - CocoaLumberjack (~> 3.0)
-    - KissXML (~> 5.1.2)
-  - XMPPFramework/CoreDataStorage (3.7.3):
+    - KissXML
+  - XMPPFramework/CoreDataStorage (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/FileTransfer (3.7.3):
+  - XMPPFramework/FileTransfer (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/GoogleSharedStatus (3.7.3):
+  - XMPPFramework/GoogleSharedStatus (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/ProcessOne (3.7.3):
+  - XMPPFramework/ProcessOne (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/Reconnect (3.7.3):
+  - XMPPFramework/Reconnect (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/Roster (3.7.3):
+  - XMPPFramework/Roster (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
-  - XMPPFramework/XEP-0009 (3.7.3):
+  - XMPPFramework/XEP-0009 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0012 (3.7.3):
+  - XMPPFramework/XEP-0012 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0016 (3.7.3):
+  - XMPPFramework/XEP-0016 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0045 (3.7.3):
+  - XMPPFramework/XEP-0045 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0054 (3.7.3):
+  - XMPPFramework/XEP-0054 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/Roster
-  - XMPPFramework/XEP-0059 (3.7.3):
+  - XMPPFramework/XEP-0059 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0060 (3.7.3):
+  - XMPPFramework/XEP-0060 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0065 (3.7.3):
+  - XMPPFramework/XEP-0065 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0066 (3.7.3):
+  - XMPPFramework/XEP-0066 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0077 (3.7.3):
+  - XMPPFramework/XEP-0077 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0082 (3.7.3):
+  - XMPPFramework/XEP-0082 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0085 (3.7.3):
+  - XMPPFramework/XEP-0085 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0092 (3.7.3):
+  - XMPPFramework/XEP-0092 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0100 (3.7.3):
+  - XMPPFramework/XEP-0100 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0106 (3.7.3):
+  - XMPPFramework/XEP-0106 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0115 (3.7.3):
+  - XMPPFramework/XEP-0115 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
-  - XMPPFramework/XEP-0136 (3.7.3):
+  - XMPPFramework/XEP-0136 (3.7.6):
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0085
     - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0147 (3.7.3):
+  - XMPPFramework/XEP-0147 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0153 (3.7.3):
+  - XMPPFramework/XEP-0153 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/XEP-0054
-  - XMPPFramework/XEP-0172 (3.7.3):
+  - XMPPFramework/XEP-0172 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0184 (3.7.3):
+  - XMPPFramework/XEP-0184 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0191 (3.7.3):
+  - XMPPFramework/XEP-0191 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0198 (3.7.3):
+  - XMPPFramework/XEP-0198 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0199 (3.7.3):
+  - XMPPFramework/XEP-0199 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0202 (3.7.3):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0082
-  - XMPPFramework/XEP-0203 (3.7.3):
+  - XMPPFramework/XEP-0202 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/XEP-0082
-  - XMPPFramework/XEP-0223 (3.7.3):
+  - XMPPFramework/XEP-0203 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0224 (3.7.3):
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0223 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0280 (3.7.3):
+  - XMPPFramework/XEP-0224 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0297 (3.7.3):
+  - XMPPFramework/XEP-0280 (3.7.6):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0297 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0308 (3.7.3):
+  - XMPPFramework/XEP-0308 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0313 (3.7.3):
+  - XMPPFramework/XEP-0313 (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/XEP-0059
-  - XMPPFramework/XEP-0333 (3.7.3):
+  - XMPPFramework/XEP-0333 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0334 (3.7.3):
+  - XMPPFramework/XEP-0334 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0335 (3.7.3):
+  - XMPPFramework/XEP-0335 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0352 (3.7.3):
+  - XMPPFramework/XEP-0352 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0357 (3.7.3):
+  - XMPPFramework/XEP-0357 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XEP-0363 (3.7.3):
+  - XMPPFramework/XEP-0363 (3.7.6):
     - XMPPFramework/Core
-  - XMPPFramework/XMPPMUCLight (3.7.3):
+  - XMPPFramework/XMPPMUCLight (3.7.6):
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0203
@@ -319,6 +314,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - GoogleMaps
+  - KissXML (from `https://github.com/aksonov/KissXML.git`, branch `5.1.4`)
   - QBImagePickerController
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
@@ -342,61 +338,85 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - RSKImageCropper
-  - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
+  - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.6`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseInstanceID
+    - Google-Maps-iOS-Utils
+    - GoogleMaps
+    - GoogleToolboxForMac
+    - GTMSessionFetcher
+    - Mixpanel
+    - nanopb
+    - QBImagePickerController
+    - RSKImageCropper
 
 EXTERNAL SOURCES:
   BugsnagReactNative:
-    :path: ../node_modules/bugsnag-react-native/
+    :path: "../node_modules/bugsnag-react-native/"
   CodePush:
-    :path: ../node_modules/react-native-code-push
+    :path: "../node_modules/react-native-code-push"
+  KissXML:
+    :branch: 5.1.4
+    :git: https://github.com/aksonov/KissXML.git
   React:
-    :path: ../node_modules/react-native
+    :path: "../node_modules/react-native"
   react-native-blur:
-    :path: ../node_modules/react-native-blur
+    :path: "../node_modules/react-native-blur"
   react-native-google-maps:
-    :path: ../node_modules/react-native-maps
+    :path: "../node_modules/react-native-maps"
   react-native-maps:
-    :path: ../node_modules/react-native-maps
+    :path: "../node_modules/react-native-maps"
   react-native-mixpanel:
-    :path: ../node_modules/react-native-mixpanel
+    :path: "../node_modules/react-native-mixpanel"
   ReactNativePermissions:
-    :path: ../node_modules/react-native-permissions
+    :path: "../node_modules/react-native-permissions"
   RNBackgroundFetch:
-    :path: ../node_modules/react-native-background-fetch
+    :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
-    :path: ../node_modules/react-native-background-geolocation
+    :path: "../node_modules/react-native-background-geolocation"
   RNFirebase:
-    :path: ../node_modules/react-native-firebase/ios
+    :path: "../node_modules/react-native-firebase/ios"
   RNXMPP:
-    :path: ../node_modules/react-native-xmpp
+    :path: "../node_modules/react-native-xmpp"
   XMPPFramework:
-    :branch: 3.7.3
+    :branch: 3.7.6
     :git: https://github.com/aksonov/XMPPFramework.git
   yoga:
-    :path: ../node_modules/react-native/ReactCommon/yoga
+    :path: "../node_modules/react-native/ReactCommon/yoga"
 
 CHECKOUT OPTIONS:
+  KissXML:
+    :commit: aa9efa0baab626a10e75418cb35f8bea9b77adae
+    :git: https://github.com/aksonov/KissXML.git
   XMPPFramework:
-    :commit: d2b0cd1ef93a93d5ff0a460bfc39582501485b47
+    :commit: 1dbd16cc3aa5913b2cdb3243493054bbef9456f5
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
-  CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
+  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   CodePush: af67b07310e4037ecd5c38f03c7a51c6350240b5
-  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
-  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseAuth: 147bf340a0706b44ca1753d6b41ebafd9687cfe6
-  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
+  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
+  FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
+  FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
+  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
-  KissXML: 246c842586bb77110e04fb88e19376d96245c856
-  Mixpanel: 85cd02171dc84a8b0295bbe3db65604e2934b920
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  KissXML: f0cb6444b28b650f569a5d5deea964cc6f81ec9e
+  Mixpanel: be4de218d0ffaaae59b498078b2ecf2db1f8072c
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 988a7dbd5626e0dd4f4b63fb444fa7e3d975e5b7
@@ -407,12 +427,12 @@ SPEC CHECKSUMS:
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
   RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
-  RNFirebase: dff98ceb517ef0b5e1858deb59eca186acc6edb0
+  RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
   RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
   RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
-  XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
+  XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 8bd67360c7442bef6e8c503d84f9eed71abe6a12
+PODFILE CHECKSUM: 13227bda07962ed659b31769a28e007dba09831e
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2
