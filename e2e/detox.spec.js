@@ -1,5 +1,7 @@
 /* global device, element, by, waitFor, before */
 
+const {takeScreenshot} = require('./helpers')
+
 const navLeftButtonCoords = {x: 35, y: 35}
 
 describe('Detox', () => {
@@ -8,15 +10,21 @@ describe('Detox', () => {
     await device.launchApp({permissions: {location: 'always', notifications: 'YES'}})
   })
 
+  afterEach(async () => {
+    takeScreenshot()
+  })
+
   it('should successfully bypass register new user and get to home screen', async () => {
     await expect(element(by.id('onboarding'))).toBeVisible()
     await element(by.id('bypassButton')).tap()
     await element(by.id('bypassPhoneInput')).typeText('444')
     await element(by.id('bypassRegisterButton')).tap()
+    takeScreenshot()
 
     await waitFor(element(by.id('signUpTopRow')))
       .toBeVisible()
       .withTimeout(3000)
+    takeScreenshot()
 
     // fill out the form and hit return on the last entry
     await element(by.id('signUpUsername')).tap()

@@ -61,4 +61,6 @@ jobs:
     - store_artifacts:
         path: /tmp/circleci-artifacts 
     - store_artifacts:
+        path: /tmp/screenshots
+    - store_artifacts:
         path: /tmp/circleci-test-results
