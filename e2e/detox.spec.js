@@ -20,7 +20,7 @@ describe('Detox', () => {
 
     // fill out the form and hit return on the last entry
     await element(by.id('signUpUsername')).tap()
-    await element(by.id('signUpUsername')).typeText('fourfy')
+    await element(by.id('signUpUsername')).typeText(makeid(8))
     await element(by.id('signUpFirstName')).tap()
     await element(by.id('signUpFirstName')).typeText('four')
     await element(by.id('signUpLastName')).tap()
@@ -37,35 +37,45 @@ describe('Detox', () => {
       .withTimeout(4000)
   })
 
-  // it('should open sidemenu', async () => {
-  //   await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
-  //   await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
-  // })
+  it('should open sidemenu', async () => {
+    await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
+    await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
+  })
 
-  // it('should navigate to ProfileDetail screen', async () => {
-  //   await element(by.id('myAccountMenuItem')).tap()
-  //   // await expect(element(by.id('profileDetail'))).toBeVisible()
-  //   await waitFor(element(by.id('profileDetail')))
-  //     .toBeVisible()
-  //     .withTimeout(1000)
-  // })
+  it('should navigate to ProfileDetail screen', async () => {
+    await element(by.id('myAccountMenuItem')).tap()
+    // await expect(element(by.id('profileDetail'))).toBeVisible()
+    await waitFor(element(by.id('profileDetail')))
+      .toBeVisible()
+      .withTimeout(1000)
+  })
 
-  // it('should navigate to MyAccount screen', async () => {
-  //   await element(by.id('myAccountEdit')).tap()
-  //   await expect(element(by.id('profileInfo'))).toBeVisible()
-  // })
+  it('should navigate to MyAccount screen', async () => {
+    await element(by.id('myAccountEdit')).tap()
+    await expect(element(by.id('profileInfo'))).toBeVisible()
+  })
 
-  // it('should logout and delete profile', async () => {
-  //   await element(by.id('myAccountScrollView')).scrollTo('bottom')
-  //   await element(by.id('deleteProfile')).tap()
+  it('should logout and delete profile', async () => {
+    await element(by.id('myAccountScrollView')).scrollTo('bottom')
+    await element(by.id('deleteProfile')).tap()
 
-  //   // NOTE: apparently 2 dialogs are created (?) so we must use `atIndex` to match just one
-  //   await element(by.text('Delete Profile'))
-  //     .atIndex(1)
-  //     .tap()
+    // NOTE: apparently 2 dialogs are created (?) so we must use `atIndex` to match just one
+    await element(by.text('Delete Profile'))
+      .atIndex(1)
+      .tap()
 
-  //   await waitFor(element(by.id('onboarding')))
-  //     .toBeVisible()
-  //     .withTimeout(2000)
-  // })
+    await waitFor(element(by.id('onboarding')))
+      .toBeVisible()
+      .withTimeout(2000)
+  })
 })
+
+function makeid(length) {
+  var text = ''
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+
+  return text
+}
