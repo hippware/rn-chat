@@ -3,7 +3,7 @@ import {Profile, IProfile} from 'wocky-client'
 
 export const SelectableProfile = types.model({
   profile: types.reference(Profile),
-  selected: false
+  selected: false,
 })
 
 export type ISelectableProfile = typeof SelectableProfile.Type
@@ -13,7 +13,7 @@ const SelectableProfileList = types
     list: types.optional(types.array(SelectableProfile), []),
     filter: '',
     multiSelect: true,
-    selection: types.optional(types.map(types.boolean), {})
+    selection: types.optional(types.map(types.boolean), {}),
   })
   .views(self => ({
     get selected(): IProfile[] {
@@ -26,14 +26,14 @@ const SelectableProfileList = types
 
     get filteredList(): ISelectableProfile[] {
       return self.list.filter(el => _filterFn(el, self.filter))
-    }
+    },
   }))
   .actions(self => ({
     deselectAll: () => {
       self.list.forEach(el => {
         el.selected = false
       })
-    }
+    },
   }))
   .actions(self => {
     function setList(list: any[]) {

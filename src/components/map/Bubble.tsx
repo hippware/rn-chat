@@ -34,12 +34,12 @@ export default class Bubble extends React.Component<Props> {
     const fullImage = scale === 1
     const width = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
-      outputRange: [58, 175, w]
+      outputRange: [58, 175, w],
     })
 
     const height = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
-      outputRange: [58, 203, w]
+      outputRange: [58, 203, w],
     })
     const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2
     // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
@@ -53,7 +53,7 @@ export default class Bubble extends React.Component<Props> {
             height,
             overflow: 'hidden',
             borderWidth: fullImage ? 0 : 1.2,
-            borderColor: colors.PINK
+            borderColor: colors.PINK,
           }}
         >
           {showLoader ? (

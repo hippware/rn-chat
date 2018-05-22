@@ -68,7 +68,7 @@ class MyAccount extends React.Component<Props> {
               backgroundColor: 'rgb(243,244,246)',
               borderRadius: 33 * k,
               width: 66 * k,
-              height: 66 * k
+              height: 66 * k,
             }}
           />
           <Card isDay style={{opacity: 0.95}}>
@@ -138,7 +138,7 @@ const Title = inject('wocky')(
           size={16}
           style={{
             letterSpacing: 0.5,
-            color: colors.DARK_PURPLE
+            color: colors.DARK_PURPLE,
           }}
         >
           {`@${wocky.profile.handle}`}
@@ -160,7 +160,7 @@ const Right = inject('profileValidationStore', 'wocky')(
           style={{
             marginRight: 10 * k,
             color: colors.PINK,
-            opacity: profile.updating ? 0.5 : 1
+            opacity: profile.updating ? 0.5 : 1,
           }}
         >
           Save

@@ -87,11 +87,11 @@ class AddressBar extends React.Component<Props> {
     const title = isPlace ? placeName : bot.title ? bot.title : address
     await bot.load({
       location: {
-        ...location
+        ...location,
       },
       address,
       addressData: meta,
-      title
+      title,
     })
     bot.location!.load({isCurrent})
     if (edit) {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.12)',
     shadowOffset: {height: 1, width: 0},
     shadowRadius: 5 * k,
-    shadowOpacity: 0.12
+    shadowOpacity: 0.12,
   },
   textInput: {
     flex: 1,
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     height: 20 * k,
     fontFamily: 'Roboto-Regular',
     color: colors.DARK_PURPLE,
-    fontSize: 15 * k
+    fontSize: 15 * k,
   },
   suggestionRow: {
     flexDirection: 'row',
@@ -263,10 +263,10 @@ const styles = StyleSheet.create({
     paddingLeft: 14 * k,
     paddingTop: 13 * k,
     paddingBottom: 13 * k,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   searchToggleButton: {
     marginLeft: 8 * k,
-    marginRight: 5 * k
-  }
+    marginRight: 5 * k,
+  },
 })

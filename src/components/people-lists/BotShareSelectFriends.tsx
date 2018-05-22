@@ -111,24 +111,24 @@ const styles = StyleSheet.create({
     position: 'relative',
     shadowOffset: {height: -1, width: 0},
     shadowRadius: 4,
-    shadowOpacity: 0.11
+    shadowOpacity: 0.11,
   },
   shareButton: {
     height: 50 * k,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 0,
-    backgroundColor: colors.PINK
+    backgroundColor: colors.PINK,
   },
   shareText: {
     fontSize: 15 * k,
     fontFamily: 'Roboto-Regular',
     color: colors.WHITE,
-    letterSpacing: 0.8
+    letterSpacing: 0.8,
   },
   input: {
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
-    color: colors.PURPLE
-  }
+    color: colors.PURPLE,
+  },
 })

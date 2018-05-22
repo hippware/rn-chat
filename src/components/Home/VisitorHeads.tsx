@@ -34,7 +34,7 @@ class VisitorHeads extends React.Component<Props> {
               borderWidth: 2 * k,
               borderColor: colors.WHITE,
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <RText size={12} color={colors.WHITE} weight="Medium">

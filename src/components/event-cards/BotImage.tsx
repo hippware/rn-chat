@@ -27,7 +27,7 @@ const BotImage = observer(({bot, image, isGeo}: Props) => {
           left: 0,
           right: 0,
           bottom: 0,
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Image source={geoOverlay} style={styles.image} resizeMode="cover" />
@@ -41,5 +41,5 @@ const BotImage = observer(({bot, image, isGeo}: Props) => {
 export default BotImage
 
 const styles = StyleSheet.create({
-  image: {height: width, width}
+  image: {height: width, width},
 })

@@ -67,7 +67,7 @@ export default EditControls
 const styles = StyleSheet.create({
   separator: {
     borderTopWidth: 1,
-    borderTopColor: colors.WARM_GREY
+    borderTopColor: colors.WARM_GREY,
   },
   crud: {
     bottom: 0,
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 0,
     position: 'relative',
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 })

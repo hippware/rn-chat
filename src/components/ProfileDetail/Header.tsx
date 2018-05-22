@@ -44,16 +44,16 @@ const styles = StyleSheet.create({
   header: {
     paddingLeft: 0,
     paddingRight: 0,
-    paddingTop: 0
+    paddingTop: 0,
   },
   displayName: {
     paddingTop: 10 * k,
     color: colors.navBarTextColorDay,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   tagline: {
     paddingBottom: 23 * k,
     color: colors.navBarTextColorDay,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 })

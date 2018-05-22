@@ -131,7 +131,7 @@ class BotDetails extends React.Component<Props> {
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: this.post ? this.post.imgContainerHeight : 0
+            paddingBottom: this.post ? this.post.imgContainerHeight : 0,
           }}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}
@@ -172,7 +172,7 @@ const Header = inject('notificationStore')(
           size={18}
           color={colors.DARK_PURPLE}
           style={{
-            textAlign: 'center'
+            textAlign: 'center',
           }}
         >
           {bot.error ? 'Bot Unavailable' : bot.title}
@@ -225,7 +225,7 @@ const Loader = () => (
       alignItems: 'center',
       paddingTop: 20 * k,
       paddingBottom: 80 * k,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
     }}
   >
     <Spinner />
@@ -237,6 +237,6 @@ export default BotDetails
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.LIGHT_GREY
-  }
+    backgroundColor: colors.LIGHT_GREY,
+  },
 })

@@ -14,9 +14,9 @@ const CardText = ({isDay, style, children}: Props) => (
       {
         fontFamily: 'Roboto-Regular',
         color: isDay ? 'rgb(81,67,96)' : 'white',
-        fontSize: 15
+        fontSize: 15,
       },
-      style
+      style,
     ]}
   >
     {children}

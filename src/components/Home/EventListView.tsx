@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
     paddingTop: 17.5 * k,
     paddingRight: 26.6 * k,
     paddingLeft: 17.5 * k,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   welcome: {
     paddingLeft: 19.8 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
     color: 'white',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   updateButton: {
     position: 'absolute',
@@ -123,6 +123,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 17 * k,
     flexDirection: 'row',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })

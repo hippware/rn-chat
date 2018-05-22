@@ -59,8 +59,8 @@ class BotCreate extends React.Component<Props> {
         location: {
           latitude: location.latitude,
           longitude: location.longitude,
-          accuracy: location.accuracy
-        }
+          accuracy: location.accuracy,
+        },
       })
       bot.location!.load({isCurrent: true})
     }
