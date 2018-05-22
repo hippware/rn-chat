@@ -13,9 +13,9 @@ const Separator = ({width, backgroundColor, style, ...rest}: Props) => (
     style={[
       {
         height: width ? width * k : StyleSheet.hairlineWidth,
-        backgroundColor: backgroundColor || 'rgba(155,155,155,0.15)'
+        backgroundColor: backgroundColor || 'rgba(155,155,155,0.15)',
       },
-      style
+      style,
     ]}
     {...rest}
   />

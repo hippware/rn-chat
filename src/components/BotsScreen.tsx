@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   text: {
     color: colors.DARK_GREY,
     fontFamily: 'Roboto-Regular',
-    fontSize: 16 * k
+    fontSize: 16 * k,
   },
   selectedText: {
     color: colors.DARK_PURPLE,
     fontFamily: 'Roboto-Medium',
     fontSize: 16 * k,
-    letterSpacing: 0.5
+    letterSpacing: 0.5,
   },
   indicator: {
     backgroundColor: colors.PINK,
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     left: 15 * k,
     bottom: 0,
     width: 155 * k,
-    height: 3 * k
-  }
+    height: 3 * k,
+  },
 })
 
 export default BotScreen

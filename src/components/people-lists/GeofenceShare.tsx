@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
     // borderRadius: 0,
-    backgroundColor: colors.PINK
+    backgroundColor: colors.PINK,
   },
   shareText: {
-    letterSpacing: 0.8
-  }
+    letterSpacing: 0.8,
+  },
 })

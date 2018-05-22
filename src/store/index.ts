@@ -57,7 +57,7 @@ const env = {
   searchIndex,
   analytics,
   nativeEnv,
-  backgroundFetch
+  backgroundFetch,
 }
 
 const Store = types
@@ -73,12 +73,12 @@ const Store = types
     // codePushChannel: types.string,
     locationPrimed: false,
     sharePresencePrimed: false,
-    guestOnce: false
+    guestOnce: false,
   })
   .views(self => ({
     get getImageSize() {
       return getEnv(self).fileService.getImageSize
-    }
+    },
   }))
   .actions(self => ({
     afterCreate() {
@@ -96,7 +96,7 @@ const Store = types
     },
     dismissFirstTimeGuestPrimer: () => {
       self.guestOnce = true
-    }
+    },
   }))
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore')
@@ -109,7 +109,7 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
-    version: settings.version
+    version: settings.version,
   },
   env
 )

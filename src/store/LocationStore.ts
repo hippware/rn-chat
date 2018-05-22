@@ -19,7 +19,7 @@ export const BG_STATE_PROPS = [
   'stationaryRadius',
   'activityType',
   'activityRecognitionInterval',
-  'debug'
+  'debug',
 ]
 
 const prefix = 'BGGL'
@@ -29,7 +29,7 @@ export const LocationAccuracyChoices = {
   '-1': 'HIGH',
   '10': 'MEDIUM',
   '100': 'LOW',
-  '1000': 'VERY_LOW'
+  '1000': 'VERY_LOW',
 }
 const LocationAccuracyValues = Object.keys(LocationAccuracyChoices)
 
@@ -38,7 +38,7 @@ export const ActivityTypeChoices = {
   '1': 'OTHER',
   '2': 'AUTOMOTIVE_NAVIGATION',
   '3': 'FITNESS',
-  '4': 'OTHER_NAVIGATION'
+  '4': 'OTHER_NAVIGATION',
 }
 const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
@@ -52,14 +52,14 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   stationaryRadius: types.maybe(types.number),
   debug: types.maybe(types.boolean),
   activityType: types.maybe(types.enumeration(ActivityTypeValues)),
-  activityRecognitionInterval: types.maybe(types.number)
+  activityRecognitionInterval: types.maybe(types.number),
 })
 
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
     location: types.maybe(Location),
-    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {})
+    backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
     enabled: true,
@@ -68,7 +68,7 @@ const LocationStore = types
     watch: null,
     system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
-    debugSounds: false
+    debugSounds: false,
   }))
   .actions(self => ({
     disposeBackgroundGeolocation: () => {
@@ -77,12 +77,12 @@ const LocationStore = types
         self.backgroundGeolocation.removeListeners()
         self.backgroundGeolocation = null
       }
-    }
+    },
   }))
   .views(self => ({
     get isMetric() {
       return METRIC_TYPE.is(self.system)
-    }
+    },
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -107,7 +107,7 @@ const LocationStore = types
       // } else {
       //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
       // }
-    }
+    },
   }))
   .views(self => ({
     distanceFromBot: (botLoc: {latitude: number; longitude: number}): string | undefined => {
@@ -118,7 +118,7 @@ const LocationStore = types
         )
       }
       return undefined
-    }
+    },
   }))
   .actions(self => ({
     setMetricSystem(type) {
@@ -155,13 +155,13 @@ const LocationStore = types
         backgroundOptions: {
           ...options,
           desiredAccuracy: options.desiredAccuracy.toString(),
-          activityType: options.activityType.toString()
-        }
+          activityType: options.activityType.toString(),
+        },
       })
     },
     setState(value) {
       Object.assign(self, value)
-    }
+    },
   }))
   .actions(self => {
     const {logger, nativeEnv, backgroundFetch, analytics} = getEnv(self)
@@ -243,16 +243,16 @@ const LocationStore = types
             method: 'POST',
             headers: {
               ...headers,
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               location: [
                 {
-                  coords: {latitude, longitude, accuracy}
-                }
+                  coords: {latitude, longitude, accuracy},
+                },
               ],
-              resource: params.resource
-            })
+              resource: params.resource,
+            }),
           })
           onHttp(res)
         } catch (err) {
@@ -286,14 +286,14 @@ const LocationStore = types
       const headers = {
         Accept: 'application/json',
         'X-Auth-User': wocky.username!,
-        'X-Auth-Token': wocky.password!
+        'X-Auth-Token': wocky.password!,
       }
 
       logger.log(prefix, 'BACKGROUND LOCATION START')
       logger.log(`LOCATION UPDATE URL: ${url}`)
 
       const params = {
-        resource: wocky.transport.resource
+        resource: wocky.transport.resource,
       }
 
       // initial config (only applies to first app boot without explicitly setting `reset: true`)
@@ -315,7 +315,7 @@ const LocationStore = types
         url,
         autoSync: true,
         params,
-        headers
+        headers,
       })
       // apply this change every load to prevent stale auth headers
       yield self.backgroundGeolocation.setConfig({headers, params, url})
@@ -334,7 +334,7 @@ const LocationStore = types
         // guarantee updates when user isn't moving enough to trigger rnbgl events
         backgroundFetch.configure(
           {
-            minimumFetchInterval: 15 // (15 minutes is minimum allowed)
+            minimumFetchInterval: 15, // (15 minutes is minimum allowed)
           },
           async () => {
             try {
@@ -377,7 +377,7 @@ const LocationStore = types
             {
               timeout: 20,
               maximumAge: 1000,
-              enableHighAccuracy: false
+              enableHighAccuracy: false,
             }
           )
         }
@@ -388,7 +388,7 @@ const LocationStore = types
         const position = yield self.backgroundGeolocation.getCurrentPosition({
           timeout: 20,
           maximumAge: 1000,
-          enableHighAccuracy: false
+          enableHighAccuracy: false,
         })
         self.setPosition(position.coords)
       } catch (err) {
@@ -407,7 +407,7 @@ const LocationStore = types
       startBackground,
       getCurrentPosition,
       initialize,
-      setBackgroundConfig
+      setBackgroundConfig,
     }
   })
   .actions(self => {

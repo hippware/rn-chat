@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
     bottom: 20 * k,
     width: 62 * k,
     right: 20 * k,
-    height: 30 * k
+    height: 30 * k,
   },
   editButtonText: {
     fontFamily: 'Roboto-Medium',
     fontSize: 11 * k,
     color: colors.PURPLE,
-    letterSpacing: 0.5
-  }
+    letterSpacing: 0.5,
+  },
 })

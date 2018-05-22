@@ -14,7 +14,7 @@ const EmptyList = ({text}: Props) => (
       flex: 1,
       backgroundColor: colors.LIGHT_GREY,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     }}
   >
     <Image

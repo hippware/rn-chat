@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: colors.addAlpha(colors.WHITE, 0.7)
-  }
+    backgroundColor: colors.addAlpha(colors.WHITE, 0.7),
+  },
 })

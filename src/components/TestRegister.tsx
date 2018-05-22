@@ -20,7 +20,7 @@ type State = {
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
-    text: ''
+    text: '',
   }
 
   onRegister = async () => {
@@ -43,7 +43,7 @@ class TestRegister extends React.Component<Props, State> {
             paddingTop: 15 * k,
             fontFamily: 'Roboto-Light',
             fontSize: 18,
-            color: colors.PINK
+            color: colors.PINK,
           }}
         >
           STAGING
@@ -56,7 +56,7 @@ class TestRegister extends React.Component<Props, State> {
             textAlign: 'left',
             fontFamily: 'Roboto-Medium',
             fontSize: 16,
-            color: colors.PINK
+            color: colors.PINK,
           }}
         >
           Enter your test phone number
@@ -65,7 +65,7 @@ class TestRegister extends React.Component<Props, State> {
           style={{
             height: 0.5 * k,
             width,
-            backgroundColor: colors.GREY
+            backgroundColor: colors.GREY,
           }}
         />
         <View
@@ -73,13 +73,13 @@ class TestRegister extends React.Component<Props, State> {
             flexDirection: 'row',
             alignItems: 'center',
             width,
-            padding: 10 * k
+            padding: 10 * k,
           }}
         >
           <Text
             style={{
               fontFamily: 'Roboto-Regular',
-              fontSize: 16 * k
+              fontSize: 16 * k,
             }}
           >
             +1555
@@ -95,7 +95,7 @@ class TestRegister extends React.Component<Props, State> {
               fontSize: 16 * k,
               fontFamily: 'Roboto-Regular',
               width: 300 * k,
-              height: 30 * k
+              height: 30 * k,
             }}
             testID="bypassPhoneInput"
           />
@@ -104,7 +104,7 @@ class TestRegister extends React.Component<Props, State> {
           style={{
             height: 0.5 * k,
             width,
-            backgroundColor: colors.GREY
+            backgroundColor: colors.GREY,
           }}
         />
 
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
     borderRadius: 2 * k,
     backgroundColor: 'rgb(254,92,108)',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   textStyle: {
     fontSize: 15 * k,
     fontFamily: 'Roboto-Regular',
-    color: 'white'
-  }
+    color: 'white',
+  },
 })
 
 export default TestRegister

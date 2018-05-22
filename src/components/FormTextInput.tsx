@@ -51,7 +51,7 @@ class FormTextInput extends React.Component<IProps> {
               flex: 1,
               color: colors.DARK_PURPLE,
               fontFamily: 'Roboto-Regular',
-              fontSize: 18 * k
+              fontSize: 18 * k,
             }}
             placeholder={label}
             clearButtonMode="while-editing"
