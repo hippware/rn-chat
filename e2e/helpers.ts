@@ -11,9 +11,14 @@ const SCREENSHOT_OPTIONS = {
 let screenshotIndex = 0
 
 const takeScreenshot = () => {
-  if (!existsSync(SCREENSHOT_DIR)) mkdirSync(SCREENSHOT_DIR)
-  const screenshotFilename = `${SCREENSHOT_DIR}/screenshot-${screenshotIndex++}.png`
-  execSync(`xcrun simctl io booted screenshot ${screenshotFilename}`, SCREENSHOT_OPTIONS)
+  try {
+    if (!existsSync(SCREENSHOT_DIR)) mkdirSync(SCREENSHOT_DIR)
+    const screenshotFilename = `${SCREENSHOT_DIR}/screenshot-${screenshotIndex++}.png`
+    execSync(`xcrun simctl io booted screenshot ${screenshotFilename}`, SCREENSHOT_OPTIONS)
+  } catch (err) {
+    // TODO: get screenshots working on Nevercode?
+    console.log('Screenshot failed:', err)
+  }
 }
 
 // module.exports = {takeScreenshot}
