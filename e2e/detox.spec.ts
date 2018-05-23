@@ -1,6 +1,7 @@
-/* global device, element, by, waitFor, before */
+require('./init')
 
-const {takeScreenshot} = require('./helpers')
+// const {takeScreenshot} = require('./helpers')
+import takeScreenshot from './helpers'
 
 const navLeftButtonCoords = {x: 35, y: 35}
 
@@ -79,10 +80,10 @@ describe('Detox', () => {
 })
 
 function makeid(length) {
-  var text = ''
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
-  for (var i = 0; i < length; i++)
+  for (let i = 0; i < length; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length))
 
   return text

@@ -1,0 +1,4 @@
+--require ts-node/register
+--timeout 120000
+--bail
+e2e/**/*.spec.ts

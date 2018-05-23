@@ -4,7 +4,7 @@ const {existsSync, mkdirSync} = require('fs')
 const SCREENSHOT_DIR = '/tmp/screenshots'
 
 const SCREENSHOT_OPTIONS = {
-  timeout: 1000,
+  timeout: 5000,
   killSignal: 'SIGKILL',
 }
 
@@ -16,4 +16,5 @@ const takeScreenshot = () => {
   execSync(`xcrun simctl io booted screenshot ${screenshotFilename}`, SCREENSHOT_OPTIONS)
 }
 
-module.exports = {takeScreenshot}
+// module.exports = {takeScreenshot}
+export default takeScreenshot
