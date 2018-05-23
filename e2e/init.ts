@@ -1,11 +1,10 @@
-const detox = require('detox')
+const detox1 = require('detox')
 const config = require('../package.json').detox
-// import detox from 'detox'
 
 before(async () => {
-  await detox.init(config)
+  await detox1.init(config)
 })
 
 after(async () => {
-  await detox.cleanup()
+  await detox1.cleanup()
 })
