@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+npm install -g appcenter-cli
 
 #cd $NEVERCODE_BUILD_DIR
 set -e	# exit on first failed command
