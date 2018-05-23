@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.7.?
+
+* Update cocoapods to run with XCode 9.3 (#2073, PR #2377)
+
 # 2.6.8 - 2018 May 18
 
 * Re-add more logic to handle 'while in use' mode for RNBGL (PR #2368)
