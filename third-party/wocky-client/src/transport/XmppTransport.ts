@@ -126,7 +126,7 @@ export class XmppTransport implements IWockyTransport {
       provider: providerName,
       resource: this.resource,
       token: true,
-      provider_data: data!
+      provider_data: data!,
     })}`
     try {
       await this.provider.login('register', password, this.host, this.resource)
@@ -165,7 +165,7 @@ export class XmppTransport implements IWockyTransport {
         emailAddressIsVerified: false,
         'X-Auth-Service-Provider': 'http://localhost:9999',
         emailAddress: '',
-        'X-Verify-Credentials-Authorization': ''
+        'X-Verify-Credentials-Authorization': '',
       },
       host
     )
@@ -221,7 +221,7 @@ export class XmppTransport implements IWockyTransport {
       'bots+size',
       'followers+size',
       'followed+size',
-      'roles'
+      'roles',
     ]
     if (isOwn) {
       fields.push('email')
@@ -254,14 +254,14 @@ export class XmppTransport implements IWockyTransport {
     const data = fromCamelCase(d)
     let iq = $iq({type: 'set'}).c('set', {
       xmlns: USER,
-      node: `user/${this.username}`
+      node: `user/${this.username}`,
     })
     fields.forEach(field => {
       if (data[field]) {
         iq = iq
           .c('field', {
             var: field,
-            type: field === 'avatar' ? 'file' : 'string'
+            type: field === 'avatar' ? 'file' : 'string',
           })
           .c('value')
           .t(data[field])
@@ -295,11 +295,11 @@ export class XmppTransport implements IWockyTransport {
   ) {
     const iq = $iq({
       type: 'get',
-      to: this.host
+      to: this.host,
     })
       .c('contacts', {
         xmlns: 'hippware.com/hxep/user',
-        node: `user/${userId}`
+        node: `user/${userId}`,
       })
       .c('association')
       .t(relation)
@@ -403,12 +403,17 @@ export class XmppTransport implements IWockyTransport {
             return
           }
           res.cached = true
-          const response = await this.fileService.getImageSize(fileName)
-          if (response) {
-            res.width = response.width
-            res.height = response.height
+          // need to catch exceptions from getImageSize
+          try {
+            const response = await this.fileService.getImageSize(fileName)
+            if (response) {
+              res.width = response.width
+              res.height = response.height
+            }
+            resolve(res)
+          } catch (e) {
+            reject(e)
           }
-          resolve(res)
         }
       )
     })
@@ -444,7 +449,7 @@ export class XmppTransport implements IWockyTransport {
     const stanza = await this.sendIQ(iq)
     const data = {...stanza.upload, file}
     // run upload in background
-    upload(data)
+    await upload(data)
     return data.reference_url
   }
   sendStanza(stanza: any) {
@@ -482,7 +487,7 @@ export class XmppTransport implements IWockyTransport {
   }
   async requestRoster() {
     const iq = $iq({type: 'get', to: `${this.username}@${this.host}`}).c('query', {
-      xmlns: ROSTER
+      xmlns: ROSTER,
     })
     const stanza = await this.sendIQ(iq)
     let children = stanza.query.item
@@ -495,7 +500,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set'}).c('enable', {
       xmlns: PUSH_NS,
       platform: 'apple',
-      device: token
+      device: token,
     })
     const data = await this.sendIQ(iq)
     if (!data || !(data.enabled || data.enabled === '')) throw data
@@ -509,7 +514,7 @@ export class XmppTransport implements IWockyTransport {
     let stanza = $msg({
       to: `${msg!.to!}@${this.host}`,
       type: 'chat',
-      id: msg.id
+      id: msg.id,
     })
       .c('body')
       .t(msg.body ? msg.body.trim() : '')
@@ -592,7 +597,7 @@ export class XmppTransport implements IWockyTransport {
         message: processMessage(
           {...message, to, from, time: Utils.iso8601toDate(timestamp).getTime()},
           this.username!
-        )
+        ),
       }
     })
   }
@@ -645,14 +650,14 @@ export class XmppTransport implements IWockyTransport {
     }
     return {
       list: bots.map((item: any) => ({id: item.id, ...processMap(item)})),
-      count: parseInt(data.bots.set.count)
+      count: parseInt(data.bots.set.count),
     }
   }
   async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     const iq = $iq({type: 'get', to: this.host})
       .c('subscribers', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       .up()
@@ -678,7 +683,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'get', to: this.host})
       .c('guests', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
 
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
@@ -705,7 +710,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'get', to: this.host})
       .c('visitors', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
 
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
@@ -770,16 +775,16 @@ export class XmppTransport implements IWockyTransport {
           handle: post.author_handle,
           firstName: post.author_first_name,
           lastName: post.author_last_name,
-          avatar: post.author_avatar
+          avatar: post.author_avatar,
         }
         return {
           id: post.id,
           content: post.content,
           image: post.image,
           time: Utils.iso8601toDate(post.updated).getTime(),
-          profile
+          profile,
         }
-      })
+      }),
     }
   }
   async loadSubscribedBots(userId: string, lastId?: string, max: number = 10) {
@@ -810,7 +815,7 @@ export class XmppTransport implements IWockyTransport {
     }
     return {
       list: bots.map((item: any) => ({id: item.id, ...processMap(item)})),
-      count: parseInt(data.bots.set.count)
+      count: parseInt(data.bots.set.count),
     }
   }
   async updateBot(bot: any) {
@@ -824,13 +829,13 @@ export class XmppTransport implements IWockyTransport {
       geofence,
       radius,
       id,
-      addressData
+      addressData,
     } = bot
     const iq = bot.isNew
       ? $iq({type: 'set'}).c('create', {xmlns: BOT_NS})
       : $iq({type: 'set'}).c('fields', {
           xmlns: BOT_NS,
-          node: `bot/${bot.id}`
+          node: `bot/${bot.id}`,
         })
 
     addValues(iq, {
@@ -842,7 +847,7 @@ export class XmppTransport implements IWockyTransport {
       radius: Math.round(radius),
       address,
       image,
-      visibility
+      visibility,
     })
     addField(iq, 'location', 'geoloc')
     location!.addToIQ(iq)
@@ -851,7 +856,7 @@ export class XmppTransport implements IWockyTransport {
   async loadBot(id: string, server: any) {
     const iq = $iq({type: 'get', to: server || this.host}).c('bot', {
       xmlns: BOT_NS,
-      node: `bot/${id}`
+      node: `bot/${id}`,
     })
     const data = await this.sendIQ(iq)
     return {id: data.bot.id, ...processMap(data.bot)}
@@ -866,7 +871,7 @@ export class XmppTransport implements IWockyTransport {
     const msg = $msg({
       from: this.username + '@' + this.host,
       type: 'headline',
-      to: this.host
+      to: this.host,
     }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
 
     recepients.forEach(user => {
@@ -926,7 +931,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host})
       .c('subscribe', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('geofence')
       .t(geofence.toString())
@@ -937,7 +942,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host})
       .c('unsubscribe', {
         xmlns: BOT_NS,
-        node: `bot/${id}`
+        node: `bot/${id}`,
       })
       .c('geofence')
       .t(geofence.toString())
@@ -978,7 +983,7 @@ export class XmppTransport implements IWockyTransport {
   subscribeToHomestream(version: string) {
     const iq = $pres({to: `${this.username}@${this.host}/home_stream`}).c('query', {
       xmlns: EVENT_NS,
-      version
+      version,
     })
     this.sendStanza(iq)
   }
@@ -988,14 +993,14 @@ export class XmppTransport implements IWockyTransport {
         this.isGeoSearching = true
         const iq = $iq({type: 'get', to: this.host})
           .c('bots', {
-            xmlns: BOT_NS
+            xmlns: BOT_NS,
           })
           .c('explore-nearby', {
             limit: 100,
             lat_delta: latitudeDelta,
             lon_delta: longitudeDelta,
             lat: latitude,
-            lon: longitude
+            lon: longitude,
           })
         await this.sendIQ(iq)
       } catch (e) {
@@ -1060,7 +1065,7 @@ export function processMessage(stanza: any, ownUserId: string) {
     id,
     time,
     unread,
-    media: stanza.image && stanza.image.url ? stanza.image.url : null
+    media: stanza.image && stanza.image.url ? stanza.image.url : null,
   }
   return res
 }
@@ -1135,7 +1140,7 @@ export function processHomestreamResponse(data: any, username: string) {
     list,
     bots,
     version: data.items.version,
-    count: parseInt((data.items && data.items.set && data.items.set.count) || 0)
+    count: parseInt((data.items && data.items.set && data.items.set.count) || 0),
   }
 }
 
@@ -1164,8 +1169,8 @@ export function processItem(item: any, delay: any, username: string): any {
           id: eventId + id,
           image: entry.image,
           content: entry.content,
-          profile: Utils.getNodeJid(author)
-        }
+          profile: Utils.getNodeJid(author),
+        },
       }
     }
 
@@ -1175,7 +1180,7 @@ export function processItem(item: any, delay: any, username: string): any {
         id: item.id,
         bot: noteBot.id,
         time: Utils.iso8601toDate(item.version).getTime(),
-        note: noteBot.description
+        note: noteBot.description,
       }
     }
 
@@ -1187,7 +1192,7 @@ export function processItem(item: any, delay: any, username: string): any {
         {
           ...message,
           from,
-          to: username
+          to: username,
         },
         username
       )
@@ -1228,7 +1233,7 @@ function processRosterItem(item: any = {}, host: string) {
     isNew: groups.includes(NEW_GROUP) && days <= 7,
     isBlocked: group === BLOCKED_GROUP,
     isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-    isFollower: subscription === 'from' || subscription === 'both'
+    isFollower: subscription === 'from' || subscription === 'both',
   }
 }
 
@@ -1240,7 +1245,7 @@ function timeout(promise: Promise<any>, timeoutMillis: number) {
       _timeout = setTimeout(() => {
         reject('Operation timed out')
       }, timeoutMillis)
-    })
+    }),
   ]).then(
     v => {
       clearTimeout(_timeout)
