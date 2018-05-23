@@ -1,24 +1,21 @@
 require('./init')
-
-// const {takeScreenshot} = require('./helpers')
 import takeScreenshot from './helpers'
 
 const navLeftButtonCoords = {x: 35, y: 35}
 
 describe('Detox', () => {
-  before(async () => {
-    // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
-    await device.launchApp({permissions: {location: 'always', notifications: 'YES'}})
-  })
-
-  afterEach(async () => {
-    takeScreenshot()
-  })
-
-  it('should successfully bypass register new user and get to home screen', async () => {
+  it('shows onboarding screen', async () => {
     await expect(element(by.id('onboarding'))).toBeVisible()
     takeScreenshot('onboarding-visible')
+  })
+
+  it('navs to bypass register screen', async () => {
     await element(by.id('bypassButton')).tap()
+    await expect(element(by.id('bypassPhoneInput'))).toBeVisible()
+    takeScreenshot('bypass-register-visible')
+  })
+
+  it('registers bypass number and navs to new profile screen', async () => {
     await element(by.id('bypassPhoneInput')).typeText('444')
     await element(by.id('bypassRegisterButton')).tap()
     takeScreenshot('register-tap')
@@ -27,7 +24,9 @@ describe('Detox', () => {
       .toBeVisible()
       .withTimeout(3000)
     takeScreenshot('signup-visible')
+  })
 
+  it('registers new bypass user and navs to home screen', async () => {
     // fill out the form and hit return on the last entry
     await element(by.id('signUpUsername')).tap()
     await element(by.id('signUpUsername')).typeText(makeid(8))
@@ -49,13 +48,14 @@ describe('Detox', () => {
     takeScreenshot('home-screen')
   })
 
-  it('should open sidemenu', async () => {
+  it('opens sidemenu', async () => {
     await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
     takeScreenshot('sidemenu-opening')
     await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
+    takeScreenshot('sidemenu-open')
   })
 
-  it('should navigate to ProfileDetail screen', async () => {
+  it('navs to ProfileDetail screen', async () => {
     await element(by.id('myAccountMenuItem')).tap()
     // await expect(element(by.id('profileDetail'))).toBeVisible()
     await waitFor(element(by.id('profileDetail')))
@@ -64,13 +64,13 @@ describe('Detox', () => {
     takeScreenshot('profile-detail')
   })
 
-  it('should navigate to MyAccount screen', async () => {
+  it('navs to MyAccount screen', async () => {
     await element(by.id('myAccountEdit')).tap()
     await expect(element(by.id('profileInfo'))).toBeVisible()
     takeScreenshot('my-account')
   })
 
-  it('should logout and delete profile', async () => {
+  it('logs out and deletes profile', async () => {
     await element(by.id('myAccountScrollView')).scrollTo('bottom')
     await element(by.id('deleteProfile')).tap()
     takeScreenshot('delete-tap')
