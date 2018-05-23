@@ -5,7 +5,7 @@ set -e	# exit on first failed command
 set -x  # print all executed commands to the terminal
 node -v
 npm -v
-npm install react-native-cli yarn detox-cli -g
+npm install react-native-cli yarn@1.3.2 detox-cli -g
 yarn
 date
 yarn test
