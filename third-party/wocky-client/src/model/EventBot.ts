@@ -10,13 +10,13 @@ export const EventBot = types
   .compose(
     Event,
     types.model('EventBot', {
-      bot: types.reference(Bot)
+      bot: types.reference(Bot),
     })
   )
   .views(self => ({
     get target(): IProfile {
       return self.bot.owner!
-    }
+    },
   }))
   .named('EventBot')
 

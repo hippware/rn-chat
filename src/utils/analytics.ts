@@ -32,7 +32,7 @@ class Analytics {
           $first_name: firstName,
           $last_name: lastName,
           phone: phoneNumber,
-          username: handle
+          username: handle,
         })
         this.sessionStart()
       }

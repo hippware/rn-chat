@@ -24,7 +24,7 @@ export const BotPost = types
       content: '',
       title: '',
       image: FileRef,
-      profile: ProfileRef
+      profile: ProfileRef,
     })
   )
   .named('BotPost')
@@ -33,7 +33,7 @@ export const BotPost = types
     setTitle: (title: string) => (self.title = title),
     publish: flow(function*() {
       yield self.service._publishBotPost(self)
-    })
+    }),
   }))
 
 export type IBotPost = typeof BotPost.Type

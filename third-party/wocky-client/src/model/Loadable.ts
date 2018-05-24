@@ -6,7 +6,7 @@ export const Loadable = types.model({loaded: false}).actions((self: any) => ({
       Object.assign(self, data)
       self.loaded = true
     }
-  }
+  },
 }))
 
 export type ILoadable = typeof Loadable.Type
@@ -17,7 +17,7 @@ export function createLoadable(load: (self: any) => (self) => void) {
       Loadable,
       types.model({}).volatile(() => ({
         loading: false,
-        loadError: ''
+        loadError: '',
       }))
     )
     .named('Loadable')
@@ -37,6 +37,6 @@ export function createLoadable(load: (self: any) => (self) => void) {
             self.loading = false
           }
         }
-      })
+      }),
     }))
 }

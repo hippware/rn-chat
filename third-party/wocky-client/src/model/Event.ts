@@ -9,7 +9,7 @@ export const Event = types
   .views(() => ({
     get target(): IProfile {
       throw new Error('Abstract method!')
-    }
+    },
   }))
   .named('Event')
 

@@ -62,7 +62,7 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
       const data = await loadFromStorage(modelName)
       parsed = JSON.parse(data)
       // throw new Error('Hydrate minimally');
-      applySnapshot(self, parsed)
+      // applySnapshot(self, parsed)
     } catch (err) {
       logger.log('hydration error', modelName, parsed, err)
       if (modelName === 'MainStore' && parsed && parsed.wocky) {
@@ -88,6 +88,6 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
         return true
       }
       return false
-    })
+    }),
   }
 })

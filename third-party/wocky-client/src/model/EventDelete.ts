@@ -9,7 +9,7 @@ export const EventDelete = types
   .compose(
     Event,
     types.model('EventDelete', {
-      delete: types.boolean
+      delete: types.boolean,
     })
   )
   .named('EventDelete')

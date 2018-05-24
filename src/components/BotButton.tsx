@@ -20,9 +20,9 @@ export default (props: Props) => (
         borderRadius: 27,
         shadowOffset: {height: 0, width: 2},
         shadowRadius: 4,
-        shadowOpacity: 0.18
+        shadowOpacity: 0.18,
       },
-      props.style
+      props.style,
     ]}
     onPress={Actions.botContainer}
   >
@@ -30,7 +30,7 @@ export default (props: Props) => (
       style={{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <Image style={props.style} source={require('../../images/iconCreateBot.png')} />

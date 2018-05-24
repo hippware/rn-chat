@@ -12,7 +12,7 @@ const GeocodingStore = types
   .views(self => ({
     get locationStore() {
       return getParent(self).locationStore
-    }
+    },
   }))
   .actions(self => {
     const {logger} = getEnv(self)
@@ -66,7 +66,7 @@ const GeocodingStore = types
               center: [lng, lat],
               place_name: item.formatted_address,
               distanceMeters: distance,
-              distance: latitude ? self.locationStore.distanceToString(distance) : 0
+              distance: latitude ? self.locationStore.distanceToString(distance) : 0,
             })
           }
           result.sort((a, b) => a.distanceMeters - b.distanceMeters)
@@ -95,7 +95,7 @@ const GeocodingStore = types
           return {
             ...convert(json.result),
             isPlace: !(json.result.types.length === 1 && json.result.types[0] === 'street_address'),
-            placeName: json.result.name
+            placeName: json.result.name,
           }
         }
       } catch (e) {
@@ -126,7 +126,7 @@ const GeocodingStore = types
             ? json.predictions.map(p => ({
                 ...p.structured_formatting,
                 place_name: p.description,
-                place_id: p.place_id
+                place_id: p.place_id,
               }))
             : []
         } else {
@@ -158,8 +158,8 @@ const GeocodingStore = types
           route: res.route_short,
           street: res.street_number_short,
           neightborhood: res.neighborhood_short,
-          county: res.administrative_area_level_2_short
-        }
+          county: res.administrative_area_level_2_short,
+        },
       }
     }
 
@@ -179,7 +179,7 @@ const GeocodingStore = types
         } else if (json.status === 'ZERO_RESULTS') {
           return {
             address: `GPS: ${latitude}, ${longitude}`,
-            meta: {city: '', country: '', state: ''}
+            meta: {city: '', country: '', state: ''},
           }
         } else {
           logger.log(`Server returned status code ${json.status}`)

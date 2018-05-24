@@ -91,16 +91,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 30 * k
+    paddingHorizontal: 30 * k,
   },
   title: {
     marginVertical: 15 * k,
     lineHeight: 32 * k,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   muted: {
     marginTop: 10 * k,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   button: {
     height: 50 * k,
@@ -109,11 +109,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.PINK,
     alignItems: 'center',
     margin: 10 * k,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonCancel: {
     backgroundColor: 'transparent',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'white'
-  }
+    borderColor: 'white',
+  },
 })

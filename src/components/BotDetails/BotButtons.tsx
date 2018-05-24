@@ -55,7 +55,7 @@ class BotButtons extends React.Component<Props> {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          paddingBottom: 5 * k
+          paddingBottom: 5 * k,
         }}
       >
         {bot.geofence && <GeofenceButton style={styles.button} bot={bot} />}
@@ -102,8 +102,8 @@ const GeofenceButton = inject('store', 'analytics')(
                 onPress: () => {
                   bot.unsubscribeGeofence()
                   analytics.track('bot_geoshare_off')
-                }
-              }
+                },
+              },
             ]
           )
         buttonStyle = [style, {marginRight: 10 * k}]
@@ -132,7 +132,7 @@ const MultiButton = props => (
   <TouchableOpacity
     style={[
       styles.button,
-      {width: 44 * k, backgroundColor: colors.WHITE, flex: 0, marginLeft: 10 * k}
+      {width: 44 * k, backgroundColor: colors.WHITE, flex: 0, marginLeft: 10 * k},
     ]}
     {...props}
   >
@@ -152,16 +152,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5 * k,
     borderColor: colors.PINK,
-    borderWidth: 1
+    borderWidth: 1,
   },
   buttonIcon: {
-    marginRight: 5 * k
-  }
+    marginRight: 5 * k,
+  },
 })
 
 const copyAddr = {
   name: 'Copy Address',
-  action: ({copyAddress}) => copyAddress()
+  action: ({copyAddress}) => copyAddress(),
 }
 
 const linkPrefix = settings.isStaging
@@ -176,16 +176,16 @@ const shareVia = {
       {
         message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
         // title: 'title',
-        url: `${linkPrefix}${bot.id}`
+        url: `${linkPrefix}${bot.id}`,
       },
       {
-        subject: `Hey, take a look at "${bot.title}" on tinyrobot!`
+        subject: `Hey, take a look at "${bot.title}" on tinyrobot!`,
         // excludedActivityTypes: [],
         // tintColor: ''
       }
     )
     analytics.track('bot_share_link_choose_activity_choice', {action, activityType})
-  }
+  },
 }
 
 const copyLink = {
@@ -193,7 +193,7 @@ const copyLink = {
   action: ({bot, analytics}) => {
     Clipboard.setString(`${linkPrefix}${bot.id}`)
     analytics.track('bot_share_link_copy')
-  }
+  },
 }
 
 const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
@@ -215,13 +215,13 @@ const ownerActions = [
             wocky.removeBot(bot ? bot.id : null)
             Actions.pop()
             Actions.pop({animated: false})
-          }
-        }
+          },
+        },
       ])
     },
-    destructive: true
+    destructive: true,
   },
-  cancel
+  cancel,
 ]
 
 const nonOwnerActions = [
@@ -231,7 +231,7 @@ const nonOwnerActions = [
   {
     name: 'Report',
     action: ({bot}) => Actions.reportBot({botId: bot.id}),
-    destructive: true
+    destructive: true,
   },
-  cancel
+  cancel,
 ]

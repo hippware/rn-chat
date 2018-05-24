@@ -12,7 +12,7 @@ export const EventBotCreate = types
   .compose(
     EventBot,
     types.model('EventBotCreate', {
-      created: types.boolean
+      created: types.boolean,
     })
   )
   .named('EventBotCreate')

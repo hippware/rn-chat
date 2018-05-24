@@ -8,7 +8,7 @@ export type __IBot = IBot
 export function createFactory(type: IType<any, any>) {
   return types
     .model({
-      storage: types.optional(types.map(type), {})
+      storage: types.optional(types.map(type), {}),
     })
     .named(`Factory${type.name}`)
     .views(self => ({
@@ -20,7 +20,7 @@ export function createFactory(type: IType<any, any>) {
           }
         })
         return {storage}
-      }
+      },
     }))
     .actions(self => ({
       clear: () => {
@@ -34,7 +34,7 @@ export function createFactory(type: IType<any, any>) {
           const entity = getParent(self).create(type, {
             id,
             ...data,
-            loaded: data && !!Object.keys(data).length
+            loaded: data && !!Object.keys(data).length,
           })
           self.storage.put(entity)
         } else {
@@ -44,7 +44,7 @@ export function createFactory(type: IType<any, any>) {
           }
         }
         return self.storage.get(id)!
-      }
+      },
     }))
 }
 
@@ -52,7 +52,7 @@ export const Storages = types
   .model({
     files: types.optional(createFactory(File), {}),
     bots: types.optional(createFactory(Bot), {}),
-    profiles: types.optional(createFactory(Profile), {})
+    profiles: types.optional(createFactory(Profile), {}),
   })
   .extend((self: any) => {
     const map: any = {}
@@ -101,13 +101,13 @@ export const Storages = types
             }
           })
           return res
-        }
+        },
       },
       views: {
         get map() {
           return map
-        }
-      }
+        },
+      },
     }
   })
   .actions(self => ({
@@ -116,5 +116,5 @@ export const Storages = types
     },
     load: (instance: any, data: {[key: string]: any}) => {
       instance.load(self._registerReferences(getType(instance), data))
-    }
+    },
   }))

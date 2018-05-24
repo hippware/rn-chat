@@ -37,7 +37,7 @@ class NotificationStore {
             this.offlineNotification = this.show(
               connecting ? `Connecting...` : `You're offline 😰`,
               {
-                color: colors.DARK_GREY
+                color: colors.DARK_GREY,
               }
             )
           } else {
@@ -47,7 +47,7 @@ class NotificationStore {
         {
           delay: 1000,
           fireImmediately: true,
-          name: 'offline notification check'
+          name: 'offline notification check',
         }
       )
     }, 5000)
@@ -83,7 +83,7 @@ class NotificationStore {
     const notification = new Notification({
       message,
       onClosed: () => this.dismiss(notification),
-      ...options
+      ...options,
     })
     const index = this.stack.findIndex(n => n.message === notification.message)
     if (index === -1) {

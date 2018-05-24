@@ -11,13 +11,13 @@ export const EventBotGeofence = types
     EventBot,
     types.model('EventBotGeofence', {
       isEnter: types.boolean,
-      profile: types.reference(Profile)
+      profile: types.reference(Profile),
     })
   )
   .views(self => ({
     get target(): IProfile {
       return self.profile
-    }
+    },
   }))
   .named('EventBotGeofence')
 

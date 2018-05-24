@@ -6,7 +6,7 @@ export const Address = types
     city: '',
     country: '',
     state: '',
-    county: ''
+    county: '',
   })
   .views(self => ({
     get locationShort(): string {
@@ -33,5 +33,5 @@ export const Address = types
         }
         return ''
       }
-    }
+    },
   }))
