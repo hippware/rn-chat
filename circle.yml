@@ -50,6 +50,12 @@ jobs:
         - ./node_modules
         # - ios/Pods
     - run: detox build --configuration ios.sim.release
+    - run:
+          name: list available iPhone sims
+          command: xcrun instruments -s
+    - run:
+          name: pre-start simulator
+          command: xcrun instruments -w "iPhone 7 (10.3.1) [" -t Blank
     - run: detox clean-framework-cache && detox build-framework-cache
     - run: detox test --configuration ios.sim.release --cleanup --loglevel verbose
     # Teardown
