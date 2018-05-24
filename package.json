@@ -89,6 +89,7 @@
     "base-64": "^0.1.0",
     "bugsnag-react-native": "^2.9.1",
     "cd": "^0.3.3",
+    "detox": "^7.3.7",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "libphonenumber-js": "^0.4.29",
