@@ -18,7 +18,9 @@ export const Bot = types
     Base,
     types.compose(
       createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
-      createUpdatable((self, data) => self.service._updateBot({...getSnapshot(self), ...data}))
+      createUpdatable((self, data) =>
+        self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data})
+      )
     ),
     types.model('Bot', {
       id: types.identifier(types.string),
