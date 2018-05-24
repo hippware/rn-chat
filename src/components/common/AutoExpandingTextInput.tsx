@@ -3,6 +3,7 @@ import {TextInput, TextInputProperties} from 'react-native'
 
 interface IProps extends TextInputProperties {
   height?: number
+  maxHeight?: number
 }
 
 type State = {

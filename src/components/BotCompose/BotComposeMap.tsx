@@ -20,11 +20,11 @@ type Props = {
 class BotComposeMap extends React.Component<Props> {
   onCoverPhoto = (): void => {
     showImagePicker(null, async (source, response) => {
-      await this.props.bot!.upload({file: source, ...response})
-      if (this.props.bot!.image.uploadError) {
-        this.props.notificationStore.flash(`Upload error: ${this.props.bot!.image.uploadError}`)
-      } else {
+      try {
+        await this.props.bot!.upload({file: source, ...response})
         this.props.afterPhotoPost()
+      } catch (e) {
+        this.props.notificationStore.flash(`Upload error: ${e}`)
       }
     })
   }
@@ -36,7 +36,7 @@ class BotComposeMap extends React.Component<Props> {
       bot.image && bot.image.loaded
         ? bot.image.thumbnail
         : require('../../../images/addBotPhoto.png')
-    const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading)
+    const showLoader = bot.uploading || (bot.image && !bot.image.loaded)
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
         <Map
@@ -54,7 +54,8 @@ class BotComposeMap extends React.Component<Props> {
           marker={
             <BotMarker
               key={`coverimage${bot.image && bot.image.loaded}${bot.address}`}
-              onImagePress={this.onCoverPhoto}
+              id={bot.id}
+              onImagePress={() => !bot.uploading && this.onCoverPhoto()}
               image={image}
               showLoader={showLoader}
               scale={0.5}

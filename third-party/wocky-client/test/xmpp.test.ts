@@ -43,23 +43,27 @@ describe('ConnectStore', () => {
   })
 
   it('update profile with invalid handle', async done => {
-    expect(user1.profile!.updated).to.be.false
-    await user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
-    expect(user1.profile!.updated).to.be.false
-    expect(user1.profile!.updateError).to.be.equal(
-      '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
-    )
-    done()
+    try {
+      expect(user1.profile!.updated).to.be.false
+      await user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
+      done('exception should be thrown')
+    } catch (e) {
+      expect(user1.profile!.updated).to.be.false
+      expect(e.message).to.be.equal(
+        '[{"message":"should be at least 3 character(s)","__typename":"ValidationMessage"}]'
+      )
+      done()
+    }
   })
   it('update profile', async done => {
     try {
-      user2.profile!.update({handle: 'aaac12', firstName: 'b', lastName: 'c'})
-      user1.profile!.update({handle: 'aaac11', firstName: 'b', lastName: 'c'})
+      await user2.profile!.update({handle: 'aaac12', firstName: 'b', lastName: 'c'})
+      await user1.profile!.update({handle: 'aaac11', firstName: 'b', lastName: 'c'})
       const data = user1.profile!
       expect(data.handle).to.be.equal('aaac11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
-      user1.profile!.update({handle: 'aaacc13'})
+      await user1.profile!.update({handle: 'aaacc13'})
       expect(data.handle).to.be.equal('aaacc13')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
@@ -106,7 +110,7 @@ describe('ConnectStore', () => {
       const file = {
         name: fileName.substring(fileName.lastIndexOf('/') + 1),
         body: fs.readFileSync(fileName),
-        type: 'image/jpeg'
+        type: 'image/jpeg',
       }
       const chat = user1.createChat(user2.username!)
       await chat.message.upload({height: 300, width: 300, size: 3801, file})
