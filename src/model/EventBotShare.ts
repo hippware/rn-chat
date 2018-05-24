@@ -11,13 +11,13 @@ export const EventBotShare = types
     EventBot,
     types.model('EventBotShare', {
       message: Message,
-      action: types.string
+      action: types.string,
     })
   )
   .views(self => ({
     get target(): IProfile {
       return self.message.from!
-    }
+    },
   }))
 
   .named('EventBotShare')

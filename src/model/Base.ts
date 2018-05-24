@@ -22,7 +22,7 @@ export const Base = types
         }
       }
       return getType(getParent(target)).name === SERVICE_NAME ? getParent(target) : null
-    }
+    },
   }))
 
 export type IBaseType = typeof Base.Type

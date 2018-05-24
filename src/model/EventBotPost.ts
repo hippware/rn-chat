@@ -13,7 +13,7 @@ export const EventBotPost = types
   .compose(
     EventBot,
     types.model('EventBotPost', {
-      post: BotPost
+      post: BotPost,
     })
   )
   .named('EventBotPost')

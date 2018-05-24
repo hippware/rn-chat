@@ -29,7 +29,7 @@ export const Profile = types
       followersSize: 0,
       followedSize: 0,
       botsSize: 0,
-      roles: types.optional(types.array(types.string), [])
+      roles: types.optional(types.array(types.string), []),
     })
   )
   .named('Profile')
@@ -86,7 +86,7 @@ export const Profile = types
           const res: any = {...snapshot}
           delete res.status
           return res
-        }
+        },
       },
       views: {
         get isOwn(): boolean {
@@ -124,8 +124,8 @@ export const Profile = types
           } else {
             return ' (Not completed) '
           }
-        }
-      }
+        },
+      },
     }
   })
 
@@ -148,7 +148,7 @@ export const ProfileRef = types.maybe(
     },
     set(value) {
       return value.id
-    }
+    },
   })
 )
 
