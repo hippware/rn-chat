@@ -7,7 +7,6 @@ export function createUploadable(property: string, access: string | ((self) => v
     .volatile(() => ({
       uploading: false,
       uploaded: false,
-      uploadError: ''
     }))
     .actions((self: any) => ({
       upload: flow(function*({file, size, width, height}: any) {
@@ -20,22 +19,15 @@ export function createUploadable(property: string, access: string | ((self) => v
               size,
               width,
               height,
-              access: typeof access === 'function' ? access(self) : access
+              access: typeof access === 'function' ? access(self) : access,
             })
             self.service.files.get(url)
             self.uploaded = true
             self[property] = url
-            // show local image first
-            if (file.uri) {
-              self[property].setSource({uri: file.uri, size, width, height})
-            }
-          } catch (e) {
-            // console.error(e) TODO
-            self.uploadError = e
           } finally {
             self.uploading = false
           }
         }
-      })
+      }),
     }))
 }
