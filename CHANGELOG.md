@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update cocoapods to run with XCode 9.3 (#2073, PR #2377)
 * Distance string display tweak for: Polish mileage calculation (#1303)
+* hot-fix: formatting and avoid bugsnag report for getImageSize
 
 # 2.6.8 - 2018 May 18
 
