@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {StyleSheet} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import {colors} from '../constants'
 import PropTypes from 'prop-types'
 
-export default class BackgroundGradient extends Component {
+export default class BackgroundGradient extends React.Component<any> {
   render() {
     if (this.props.isDay) {
       return (
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
 })
-
-BackgroundGradient.propTypes = {
+;(BackgroundGradient as any).propTypes = {
   isDay: PropTypes.bool.isRequired,
 }

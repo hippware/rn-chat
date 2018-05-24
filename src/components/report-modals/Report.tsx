@@ -11,6 +11,7 @@ import {Actions} from 'react-native-router-flux'
 type Props = {
   subtitle: string
   placeholder: string
+  reportStore?: any
 }
 
 @inject('reportStore')
@@ -52,7 +53,7 @@ export default class Report extends React.Component<Props> {
             {subtitle}
           </RText>
         </View>
-        <View style={[styles.row, {borderBottomWidth: k}]} color={colors.DARK_PURPLE}>
+        <View style={[styles.row, {borderBottomWidth: k}]}>
           <RText weight="Medium" size={16}>
             Reason
           </RText>

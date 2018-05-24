@@ -9,9 +9,9 @@ import ListFooter from './ListFooter'
 
 type Props = {
   filter?: string
-  user?: string
-  list?: Bots
+  list?: any
   header?: any
+  wocky?: any
 }
 
 const img = require('../../images/graphicEndBots.png')
@@ -31,7 +31,7 @@ export default class BotListView extends React.Component<Props> {
     if (!wocky.profile) {
       return null
     }
-    const bots: Bots =
+    const bots =
       filter === 'all'
         ? wocky.profile.subscribedBots
         : filter === 'own' ? wocky.profile.ownBots : list

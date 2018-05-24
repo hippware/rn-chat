@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Animated} from 'react-native'
 
-export default class extends Component {
+export default class extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {

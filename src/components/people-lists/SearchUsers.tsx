@@ -12,7 +12,7 @@ import {k} from '../Global'
 
 @inject('searchStore')
 @observer
-class SearchUsers extends React.Component<{}> {
+class SearchUsers extends React.Component<any> {
   static rightButton = null
 
   renderItem = ({item}) => {
@@ -54,7 +54,7 @@ class SearchUsers extends React.Component<{}> {
           autoFocus
         />
         {globalResult.list && globalResult.list.length ? (
-          <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />
+          <ProfileList selection={searchStore.globalResult} renderItem={this.renderItem} />
         ) : (
           this.renderEmpty()
         )}

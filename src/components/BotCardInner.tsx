@@ -10,6 +10,7 @@ import {RText} from './common'
 type Props = {
   style?: any
   item: any
+  locationStore?: any
 }
 
 const BotCardInner = inject('locationStore')(
@@ -42,7 +43,7 @@ const BotCardInner = inject('locationStore')(
   ))
 )
 
-const MainImage = observer(({item}: {item: Bot}) => {
+const MainImage = observer(({item}: {item: any}) => {
   const img = item.image
   const source = img && img.thumbnail
   return (
@@ -58,7 +59,7 @@ const MainImage = observer(({item}: {item: Bot}) => {
   )
 })
 
-const BottomLine = observer(({bot}: {bot: Bot}) => {
+const BottomLine = observer(({bot}: {bot: any}) => {
   return (
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Image

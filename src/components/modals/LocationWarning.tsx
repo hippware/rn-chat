@@ -13,7 +13,7 @@ const botIcon = require('../../../images/iconBot.png')
 
 @inject('locationStore')
 @observer
-class LocationWarning extends React.Component<{}> {
+class LocationWarning extends React.Component<any> {
   componentDidMount() {
     when(() => this.props.locationStore.enabled, Actions.pop)
   }

@@ -8,9 +8,9 @@ import {colors} from '../constants'
 
 type Props = {
   // isDay: boolean,
-  style: any
-  innerStyle: any
-  onPress: any
+  style?: any
+  innerStyle?: any
+  onPress?: any
   footer?: any
   children: any
 }

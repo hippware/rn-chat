@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {observer, inject} from 'mobx-react/native'
-import MapView from 'react-native-maps'
+import {Marker} from 'react-native-maps'
 import {View, Image} from 'react-native'
 @inject('locationStore', 'wocky')
 @observer
-export default class CurrentLocationMarker extends Component {
+export default class CurrentLocationMarker extends React.Component<any> {
   state = {tracking: true}
 
   // workaround for https://github.com/react-community/react-native-maps/issues/1031#issuecomment-378881118
@@ -19,16 +19,16 @@ export default class CurrentLocationMarker extends Component {
     }
     const heading = currentLoc && currentLoc.heading
     return (
-      <MapView.Marker
+      <Marker
         tracksViewChanges={this.state.tracking}
-        pointerEvents="none"
+        // pointerEvents="none"
         style={{zIndex: 1000}}
         coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}
       >
         <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
           <Image source={require('../../../images/location-indicator.png')} />
         </View>
-      </MapView.Marker>
+      </Marker>
     )
   }
 }

@@ -7,6 +7,7 @@ import {CameraKitCameraScreen} from 'react-native-camera-kit'
 
 type Props = {
   callback: any
+  store?: any
 }
 
 @inject('store')

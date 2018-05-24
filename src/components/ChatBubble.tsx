@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
 
 @autobind
 @observer
-export default class ChatBubble extends React.Component {
+export default class ChatBubble extends React.Component<any> {
   componentWillMount() {
     Object.assign(styles, this.props.styles)
   }
 
-  renderMedia(media = '', position) {
+  renderMedia(media: any = '', position) {
     // if (!media.loaded) {}
     const w = position === 'left' ? width - 150 * k : width - 93
     return (
@@ -177,7 +177,7 @@ export default class ChatBubble extends React.Component {
   }
 }
 
-ChatBubble.propTypes = {
+;(ChatBubble as any).propTypes = {
   position: PropTypes.oneOf(['left', 'right', 'center']),
   status: PropTypes.string,
   text: PropTypes.string,

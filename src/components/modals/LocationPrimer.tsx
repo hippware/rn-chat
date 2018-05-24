@@ -12,7 +12,10 @@ import ModalContainer from './ModalContainer'
 
 const footprint = require('../../../images/footprint.png')
 
-type Props = {}
+type Props = {
+  locationStore?: any
+  store?: any
+}
 
 @inject('locationStore', 'store')
 @observer

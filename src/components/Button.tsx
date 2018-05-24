@@ -11,7 +11,7 @@ type Props = {
   buttonStyle?: any
   textStyle?: any
   disabledStyle?: any
-  onPress: any
+  onPress?: any
   children?: any
 }
 

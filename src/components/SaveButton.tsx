@@ -3,7 +3,7 @@ import {TouchableOpacity, View, Text} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 
-export default class SaveButton extends React.Component {
+export default class SaveButton extends React.Component<any> {
   render() {
     const title = this.props.title || 'Save'
     return this.props.active ? (
@@ -59,6 +59,6 @@ export default class SaveButton extends React.Component {
   }
 }
 
-SaveButton.defaultProps = {
+;(SaveButton as any).defaultProps = {
   active: true,
 }

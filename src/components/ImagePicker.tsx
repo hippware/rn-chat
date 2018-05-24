@@ -106,6 +106,6 @@ export const showImagePicker = (title: string, callback: any, cropping: boolean 
     ;(options as any).title = title
   }
   ActionSheetIOS.showActionSheetWithOptions(options, index => {
-    if (index < photoActions.length) photoActions[index].action(callback, cropping)
+    if (index < photoActions.length) (photoActions[index] as any).action(callback, cropping)
   })
 }

@@ -9,7 +9,9 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
 
-type Props = {}
+type Props = {
+  store?: any
+}
 
 @inject('store')
 @observer

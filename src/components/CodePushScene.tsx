@@ -73,7 +73,7 @@ const SyncStatus = inject('codePushStore')(
 
 @inject('codePushStore')
 @observer
-class CodePushScene extends React.Component<{}> {
+class CodePushScene extends React.Component<any> {
   componentWillMount() {
     this.props.codePushStore.getFreshData()
   }

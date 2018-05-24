@@ -10,11 +10,11 @@ import {RText} from './common'
 type Props = {
   style: any
   imageStyle: any
-  textStyle: any
+  textStyle?: any
   image: any
-  children: any
-  onRemove: any
-  onPress: any
+  children?: any
+  onRemove?: any
+  onPress?: any
 }
 
 const Cell = observer(

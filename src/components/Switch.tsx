@@ -7,7 +7,7 @@ import autobind from 'autobind-decorator'
 
 type Props = {
   active: boolean
-  styles: any
+  styles?: any
   inactiveButtonColor: string
   inactiveButtonPressedColor: string
   activeButtonColor: string
@@ -23,17 +23,18 @@ type Props = {
   }
   activeBackgroundColor: string
   inactiveBackgroundColor: string
-  buttonRadius: number
+  buttonRadius?: number
   switchWidth: number
   switchHeight: number
-  buttonContent: null
-  enableSlide: true
-  switchAnimationTime: number
-  onActivate: any
-  onDeactivate: any
-  onChangeState: any
-  toggleWidth: number
-  toggleHeight: number
+  buttonContent?: any
+  enableSlide?: boolean
+  switchAnimationTime?: number
+  onActivate?: any
+  onDeactivate?: any
+  onChangeState?: any
+  toggleWidth?: number
+  toggleHeight?: number
+  style?: any
 }
 
 type State = {

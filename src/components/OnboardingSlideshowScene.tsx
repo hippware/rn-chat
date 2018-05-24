@@ -19,12 +19,15 @@ const maskLeft = require('../../images/maskLeft.png')
 const maskCenter = require('../../images/maskCenter.png')
 const maskRight = require('../../images/maskRight.png')
 
-class Onboarding extends React.Component<{}> {
+class Onboarding extends React.Component<any> {
+  swiper: any
+
   render() {
+    const SwiperAny = Swiper as any // TODO: swiper types broken
     // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
     return this.props.routeName === 'onboarding' ? (
       <View style={{flex: 1}} testID="onboarding">
-        <Swiper
+        <SwiperAny
           paginationStyle={{bottom: 95 * k}}
           dotColor={colors.GREY}
           activeDotColor={colors.PINK}
@@ -43,7 +46,7 @@ class Onboarding extends React.Component<{}> {
           <Slide bgImg={bg3} iconImg={explore}>
             {"Explore what's\r\naround you!"}
           </Slide>
-        </Swiper>
+        </SwiperAny>
         <ButtonRow />
         <BypassButton />
       </View>
@@ -54,7 +57,7 @@ class Onboarding extends React.Component<{}> {
 const BG_IMG_RATIO = 667 / 375 // height / width of background images
 const FLEX = 55
 
-const Slide = ({bgImg, iconImg, left, center, children}) => {
+const Slide = ({bgImg, iconImg, left, center, children}: any) => {
   const align = left ? 'flex-start' : center ? 'center' : 'flex-end'
   const mask = left ? maskLeft : center ? maskCenter : maskRight
   return (
