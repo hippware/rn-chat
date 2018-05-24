@@ -394,10 +394,11 @@ export const Wocky = types
       const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
-    _updateBot: flow(function*(bot: IBot) {
+    _updateBot: flow(function*(d: any) {
       yield waitFor(() => self.connected)
-      yield self.transport.updateBot(bot)
+      yield self.transport.updateBot(d)
       // subscribe owner to his bot
+      const bot = self.bots.storage.get(d.id)
       self.profile!.ownBots.addToTop(bot)
       self.profiles.get(self.username!)!.ownBots.addToTop(bot)
       return {isNew: false}
