@@ -53,9 +53,12 @@ jobs:
     - run:
           name: list available iPhone sims
           command: xcrun instruments -s
-    - run:
-          name: pre-start simulator
-          command: xcrun instruments -w "iPhone 7 (11.2) [" -t Blank
+
+    # below times out on CircleCI despite docs suggestion: https://circleci.com/docs/2.0/testing-ios/#pre-starting-the-simulator
+    # - run:
+    #       name: pre-start simulator
+    #       command: xcrun instruments -w "iPhone 7 (11.2) [" -t Blank
+
     - run: detox clean-framework-cache && detox build-framework-cache
     - run: detox test --configuration ios.sim.release --cleanup --loglevel verbose
     # Teardown
