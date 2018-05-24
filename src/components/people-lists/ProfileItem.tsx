@@ -1,20 +1,20 @@
 // @flow
 
-import React from 'react';
-import {View, Text, Image} from 'react-native';
-import Avatar from '../common/Avatar';
-import {k} from '../Global';
-import {observer} from 'mobx-react/native';
-import {Profile} from 'wocky-client';
-import {ProfileHandle} from '../common';
+import React from 'react'
+import {View, Text, Image} from 'react-native'
+import Avatar from '../common/Avatar'
+import {k} from '../Global'
+import {observer} from 'mobx-react/native'
+import {Profile} from 'wocky-client'
+import {ProfileHandle} from '../common'
 
 type Props = {
-  profile: Profile,
-  style: ?Object,
-  children: any,
-  selected?: boolean,
-  tappable?: boolean,
-};
+  profile: any
+  style: any
+  children: any
+  selected?: boolean
+  tappable?: boolean
+}
 
 const ProfileItem = observer(({profile, style, children, selected, tappable}: Props) => {
   return profile && profile.handle ? (
@@ -46,11 +46,15 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
         </Text>
       </View>
       {selected !== undefined && (
-        <View style={{width: 40 * k, padding: 10 * k}}>{selected && <Image style={{right: 20 * k}} source={require('../../../images/contactSelect.png')} />}</View>
+        <View style={{width: 40 * k, padding: 10 * k}}>
+          {selected && (
+            <Image style={{right: 20 * k}} source={require('../../../images/contactSelect.png')} />
+          )}
+        </View>
       )}
       {children}
     </View>
-  ) : null;
-});
+  ) : null
+})
 
-export default ProfileItem;
+export default ProfileItem
