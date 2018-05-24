@@ -8,9 +8,13 @@ import {colors} from '../constants'
 import {RText} from './common'
 import {k} from './Global'
 
-const VisibilitySwitch = inject('bot')(
-  observer(({bot}) => {
+@inject('bot')
+@observer
+class VisibilitySwitch extends React.Component<any> {
+  switch: any
+  render() {
     const color = colors.DARK_PURPLE
+    const {bot} = this.props
     return (
       <View
         style={{
@@ -80,7 +84,7 @@ const VisibilitySwitch = inject('bot')(
     //   </TouchableOpacity>
     // </Cell> */}
     // );
-  })
-)
+  }
+}
 
 export default VisibilitySwitch
