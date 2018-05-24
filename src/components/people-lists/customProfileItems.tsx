@@ -1,21 +1,21 @@
 // @flow
 
-import React from 'react';
-import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native';
-import {observer, inject} from 'mobx-react/native';
-import {colors} from '../../constants';
-import {Profile} from 'wocky-client';
-import {Actions} from 'react-native-router-flux';
-import ProfileItem from './ProfileItem';
-import {RText} from '../common';
-import {k} from '../Global';
+import React from 'react'
+import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
+import {colors} from '../../constants'
+import {Profile} from 'wocky-client'
+import {Actions} from 'react-native-router-flux'
+import ProfileItem from './ProfileItem'
+import {RText} from '../common'
+import {k} from '../Global'
 
 const FollowButton = inject('analytics')(({profile, analytics}) => (
   <TouchableOpacity
     style={[styles.button, styles.follow]}
     onPress={async () => {
-      await profile.follow();
-      analytics.track('user_follow', profile.toJSON());
+      await profile.follow()
+      analytics.track('user_follow', profile.toJSON())
     }}
   >
     <View style={{flexDirection: 'row'}}>
@@ -25,21 +25,21 @@ const FollowButton = inject('analytics')(({profile, analytics}) => (
       </RText>
     </View>
   </TouchableOpacity>
-));
+))
 
 const FollowingButton = inject('analytics')(({profile, analytics}) => (
   <TouchableOpacity
     style={[styles.button, styles.following]}
     onPress={async () => {
-      await unfollow(profile);
-      analytics.track('user_unfollow', profile.toJSON());
+      await unfollow(profile)
+      analytics.track('user_unfollow', profile.toJSON())
     }}
   >
     <RText size={10} color={colors.WHITE}>
       FOLLOWING
     </RText>
   </TouchableOpacity>
-));
+))
 
 const BlockedButton = ({profile}) => (
   <TouchableOpacity style={[styles.button, styles.following]} onPress={() => unblock(profile)}>
@@ -47,25 +47,25 @@ const BlockedButton = ({profile}) => (
       UNBLOCK
     </RText>
   </TouchableOpacity>
-);
+)
 
 const unfollow = async (profile: Profile) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Unfollow',
         style: 'destructive',
         onPress: async () => {
-          await profile.unfollow();
-          resolve();
+          await profile.unfollow()
+          resolve()
         },
       },
-    ]);
-  });
-};
+    ])
+  })
+}
 
-const unblock = (profile) => {
+const unblock = profile => {
   Alert.alert(null, `Are you sure you want to unblock @${profile.handle}?`, [
     {text: 'Cancel', style: 'cancel'},
     {
@@ -73,32 +73,37 @@ const unblock = (profile) => {
       style: 'destructive',
       onPress: profile.unblock,
     },
-  ]);
-};
+  ])
+}
 
 type Props = {
-  profile: Profile,
-};
+  profile: Profile
+}
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
   <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem isDay profile={profile}>
-      {!profile.isOwn && (profile.isFollowed ? <FollowingButton profile={profile} /> : <FollowButton profile={profile} />)}
+      {!profile.isOwn &&
+        (profile.isFollowed ? (
+          <FollowingButton profile={profile} />
+        ) : (
+          <FollowButton profile={profile} />
+        ))}
     </ProfileItem>
   </TouchableOpacity>
-));
+))
 
 export const TappableProfileItem = observer(({profile}: Props) => (
   <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem profile={profile} />
   </TouchableOpacity>
-));
+))
 
 export const BlockableProfileItem = ({profile}: Props) => (
   <ProfileItem isDay profile={profile} tappable={false}>
     <BlockedButton profile={profile} />
   </ProfileItem>
-);
+)
 
 const styles = StyleSheet.create({
   button: {
@@ -116,4 +121,4 @@ const styles = StyleSheet.create({
   following: {
     backgroundColor: colors.PINK,
   },
-});
+})

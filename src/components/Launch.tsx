@@ -1,16 +1,16 @@
-import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
-import {width, height, k} from './Global';
-import {colors} from '../constants';
+import React from 'react'
+import {View, Image, StyleSheet} from 'react-native'
+import {width, height, k} from './Global'
+import {colors} from '../constants'
 
 export default props => (
-  <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]} testID='screenLaunch'>
+  <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]} testID="screenLaunch">
     <View style={styles.container}>
       <Image style={{width, height}} source={require('../../images/Launch.gif')} />
     </View>
     {props.children}
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

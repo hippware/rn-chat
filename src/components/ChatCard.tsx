@@ -1,38 +1,38 @@
 // @flow
 
-import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react/native';
-import Card from './Card';
-import {CardText} from './common';
-import Avatar from './common/Avatar';
-import {k} from './Global';
-import ResizedImage from './ResizedImage';
-import {colors} from '../constants';
-import {isAlive} from 'mobx-state-tree';
+import React from 'react'
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {observer} from 'mobx-react/native'
+import Card from './Card'
+import {CardText} from './common'
+import Avatar from './common/Avatar'
+import {k} from './Global'
+import ResizedImage from './ResizedImage'
+import {colors} from '../constants'
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
-  item: any,
-  onPostOptions?: Function,
-  onPress: Function,
-  style: any,
-};
+  item: any
+  onPostOptions?: Function
+  onPress: Function
+  style: any
+}
 
 @observer
 export default class ChatCard extends React.Component<Props> {
-  button: any;
+  button: any
 
   render() {
-    const isDay = true;
-    const chat = this.props.item;
-    if (!chat || !isAlive(chat)) return null;
-    const msg = chat.last;
-    const {participants} = chat;
-    let media = null;
+    const isDay = true
+    const chat = this.props.item
+    if (!chat || !isAlive(chat)) return null
+    const msg = chat.last
+    const {participants} = chat
+    let media = null
     try {
-      media = msg.media && msg.media.source ? msg.media : null;
+      media = msg.media && msg.media.source ? msg.media : null
     } catch (err) {
-      console.log('TODO: Fix msg.media reference error', err);
+      console.log('TODO: Fix msg.media reference error', err)
     }
     return (
       <Card
@@ -50,7 +50,11 @@ export default class ChatCard extends React.Component<Props> {
               height: 40 * k,
             }}
           >
-            <View style={{flex: 1, flexDirection: 'row'}}>{participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}</View>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              {participants.map(profile => (
+                <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />
+              ))}
+            </View>
 
             <Date {...this.props}>
               <Text
@@ -68,7 +72,9 @@ export default class ChatCard extends React.Component<Props> {
       >
         {!!msg.body && (
           <Text style={{padding: 15 * k}}>
-            {!!msg.from && <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`}: </CardText>}
+            {!!msg.from && (
+              <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`}: </CardText>
+            )}
             <Text
               style={{
                 fontFamily: 'Roboto-Light',
@@ -118,12 +124,12 @@ export default class ChatCard extends React.Component<Props> {
           </View>
         )}
       </Card>
-    );
+    )
   }
 }
 
 const Date = ({onPostOptions, children}) =>
-  (onPostOptions ? (
+  onPostOptions ? (
     <TouchableOpacity onPress={e => onPostOptions(e, e.nativeEvent.target)} style={styles.date}>
       {children}
       <Image style={{marginLeft: 5 * k}} source={require('../../images/iconPostOptions.png')} />
@@ -141,7 +147,7 @@ const Date = ({onPostOptions, children}) =>
     >
       {children}
     </View>
-  ));
+  )
 
 const styles = StyleSheet.create({
   smallText: {
@@ -156,4 +162,4 @@ const styles = StyleSheet.create({
     top: 20 * k,
     right: 20 * k,
   },
-});
+})

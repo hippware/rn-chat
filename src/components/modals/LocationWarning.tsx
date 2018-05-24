@@ -1,47 +1,53 @@
 // @flow
 
-import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
-import {when} from 'mobx';
-import {Actions} from 'react-native-router-flux';
-import {colors} from '../../constants';
-import {k} from '../Global';
-import PopupBlur from './PopupBlur';
-import {observer, inject} from 'mobx-react/native';
+import React from 'react'
+import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native'
+import {when} from 'mobx'
+import {Actions} from 'react-native-router-flux'
+import {colors} from '../../constants'
+import {k} from '../Global'
+import PopupBlur from './PopupBlur'
+import {observer, inject} from 'mobx-react/native'
 
-const botIcon = require('../../../images/iconBot.png');
+const botIcon = require('../../../images/iconBot.png')
 
 @inject('locationStore')
 @observer
 class LocationWarning extends React.Component<{}> {
   componentDidMount() {
-    when(() => this.props.locationStore.enabled, Actions.pop);
+    when(() => this.props.locationStore.enabled, Actions.pop)
   }
 
   render() {
     return (
       <PopupBlur>
         <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
-        <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{"We need your location to show you\r\nwhat's happening nearby!"}</Text>
+        <Image
+          source={botIcon}
+          style={{width: 60, height: 60, marginVertical: 15 * k}}
+          resizeMode="contain"
+        />
+        <Text style={[styles.muted, {textAlign: 'center'}]}>
+          {"We need your location to show you\r\nwhat's happening nearby!"}
+        </Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              Actions.pop();
+              Actions.pop()
               // Actions.home();
-              Linking.openURL('app-settings:{1}');
+              Linking.openURL('app-settings:{1}')
             }}
           >
             <Text style={styles.btnText}>Change Settings</Text>
           </TouchableOpacity>
         </View>
       </PopupBlur>
-    );
+    )
   }
 }
 
-export default LocationWarning;
+export default LocationWarning
 
 const styles = StyleSheet.create({
   title: {
@@ -72,4 +78,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: colors.WHITE,
   },
-});
+})

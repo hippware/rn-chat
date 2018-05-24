@@ -1,30 +1,30 @@
 // @flow
 
-import React from 'react';
-import {Animated, View, StyleSheet, PanResponder} from 'react-native';
-import {observer, inject} from 'mobx-react/native';
-import {observable, autorun} from 'mobx';
-import {k} from './Global';
-import {RText} from './common';
-import {colors} from '../constants';
+import React from 'react'
+import {Animated, View, StyleSheet, PanResponder} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
+import {observable, autorun} from 'mobx'
+import {k} from './Global'
+import {RText} from './common'
+import {colors} from '../constants'
 
 type State = {
-  top: any,
-  pan: any,
-};
+  top: any
+  pan: any
+}
 
 @inject('notificationStore')
 @observer
 class NotificationBanner extends React.Component<{}, State> {
-  state: State;
-  _panResponder: any;
+  state: State
+  _panResponder: any
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       top: new Animated.Value(-100),
       pan: new Animated.ValueXY(),
-    };
+    }
 
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -33,44 +33,52 @@ class NotificationBanner extends React.Component<{}, State> {
       onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (e, gestureState) => {
-        this.state.pan.setValue({x: 0, y: 0});
+        this.state.pan.setValue({x: 0, y: 0})
       },
 
       onPanResponderMove: Animated.event([null, {dx: this.state.pan.x, dy: this.state.pan.y}]),
 
       onPanResponderRelease: (e, {vx, vy}) => {},
-    });
+    })
   }
 
   componentDidMount() {
     autorun('NotificationBanner', () => {
-      const {notificationStore} = this.props;
+      const {notificationStore} = this.props
       if (notificationStore.current) {
-        const {isOpening, isClosing} = notificationStore.current;
+        const {isOpening, isClosing} = notificationStore.current
         if (isOpening) {
           // console.log('& start top', this.state.top);
-          Animated.timing(this.state.top, {toValue: 0, duration: 500}).start();
+          Animated.timing(this.state.top, {toValue: 0, duration: 500}).start()
         } else if (isClosing) {
-          Animated.timing(this.state.top, {toValue: -100, duration: 500}).start();
+          Animated.timing(this.state.top, {toValue: -100, duration: 500}).start()
         }
       }
-    });
+    })
   }
 
   render() {
-    const {current} = this.props.notificationStore;
-    const {top, pan} = this.state;
+    const {current} = this.props.notificationStore
+    const {top, pan} = this.state
     return current ? (
-      <Animated.View pointerEvents='none' style={[styles.container, {top, backgroundColor: current.color}]} {...this._panResponder.panHandlers}>
-        <RText size={15} color={colors.addAlpha(colors.WHITE, 0.75)} style={{textAlign: 'center', letterSpacing: 0.6}}>
+      <Animated.View
+        pointerEvents="none"
+        style={[styles.container, {top, backgroundColor: current.color}]}
+        {...this._panResponder.panHandlers}
+      >
+        <RText
+          size={15}
+          color={colors.addAlpha(colors.WHITE, 0.75)}
+          style={{textAlign: 'center', letterSpacing: 0.6}}
+        >
           {current.message}
         </RText>
       </Animated.View>
-    ) : null;
+    ) : null
   }
 }
 
-export default NotificationBanner;
+export default NotificationBanner
 
 const styles = StyleSheet.create({
   container: {
@@ -84,4 +92,4 @@ const styles = StyleSheet.create({
     paddingBottom: 10 * k,
     height: 64, // TODO: export a variable in RNRF that we can use here instead of hardcoding?
   },
-});
+})

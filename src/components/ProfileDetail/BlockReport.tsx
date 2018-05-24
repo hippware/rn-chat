@@ -1,25 +1,25 @@
 // @flow
 
-import React from 'react';
-import {TouchableOpacity, Alert, Image} from 'react-native';
-import {observer} from 'mobx-react/native';
-import ActionSheet from 'react-native-actionsheet';
-import {Actions} from 'react-native-router-flux';
-import {Profile} from 'wocky-client';
+import React from 'react'
+import {TouchableOpacity, Alert, Image} from 'react-native'
+import {observer} from 'mobx-react/native'
+import ActionSheet from 'react-native-actionsheet'
+import {Actions} from 'react-native-router-flux'
+import {Profile} from 'wocky-client'
 
 type Props = {
-  profile: Profile,
-};
+  profile: Profile
+}
 
 @observer
 class BlockReport extends React.Component<Props> {
-  actionSheet: any;
+  actionSheet: any
 
   onTap = (index: number) => {
     if (index === 0) {
-      Actions.reportUser({userId: this.props.profile.id});
+      Actions.reportUser({userId: this.props.profile.id})
     } else if (index === 1) {
-      const {handle} = this.props.profile;
+      const {handle} = this.props.profile
       Alert.alert(
         `Are you sure you want to block @${handle}?`,
         `If you’re friends, blocking @${handle} will unfriend him/her, and you will no longer be able to view each other's profiles and bots.`,
@@ -30,14 +30,14 @@ class BlockReport extends React.Component<Props> {
             style: 'destructive',
             onPress: async () => {
               // TODO: spinner
-              await this.props.profile.block();
+              await this.props.profile.block()
               Actions.pop()
             },
           },
-        ],
-      );
+        ]
+      )
     }
-  };
+  }
 
   render() {
     return (
@@ -51,10 +51,16 @@ class BlockReport extends React.Component<Props> {
         }}
       >
         <Image source={require('../../../images/ellipsis.png')} />
-        <ActionSheet ref={o => (this.actionSheet = o)} options={['Report', 'Block', 'Cancel']} cancelButtonIndex={2} destructiveButtonIndex={1} onPress={this.onTap} />
+        <ActionSheet
+          ref={o => (this.actionSheet = o)}
+          options={['Report', 'Block', 'Cancel']}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={1}
+          onPress={this.onTap}
+        />
       </TouchableOpacity>
-    );
+    )
   }
 }
 
-export default BlockReport;
+export default BlockReport

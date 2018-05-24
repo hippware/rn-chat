@@ -7,12 +7,12 @@ import {k} from './Global'
 import {colors} from '../constants'
 
 type Props = {
-  style?: any,
-  buttonStyle?: any,
-  textStyle?: any,
-  disabledStyle?: any,
-  onPress: Function,
-  children?: any,
+  style?: any
+  buttonStyle?: any
+  textStyle?: any
+  disabledStyle?: any
+  onPress: Function
+  children?: any
 }
 
 export default (props: Props) => (

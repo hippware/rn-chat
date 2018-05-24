@@ -1,27 +1,27 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native';
-import {observer, inject} from 'mobx-react/native';
-import {observable} from 'mobx';
-import {Profile} from 'wocky-client';
-import {k} from '../Global';
+import React from 'react'
+import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
+import {Profile} from 'wocky-client'
+import {k} from '../Global'
 
 type Props = {
-  profile: Profile,
-};
+  profile: Profile
+}
 
-const imgFollowing = require('../../../images/buttonFollowing.png');
-const imgFollow = require('../../../images/buttonFollow.png');
+const imgFollowing = require('../../../images/buttonFollowing.png')
+const imgFollow = require('../../../images/buttonFollow.png')
 
 @inject('analytics')
 @observer
 class FollowButton extends React.Component<Props> {
-  @observable pendingFollowChange: boolean = false;
+  @observable pendingFollowChange: boolean = false
 
   toggleFollow = async () => {
-    const {profile} = this.props;
-    this.pendingFollowChange = true;
+    const {profile} = this.props
+    this.pendingFollowChange = true
     if (profile.isFollowed) {
       Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
         {text: 'Cancel', style: 'cancel'},
@@ -29,33 +29,41 @@ class FollowButton extends React.Component<Props> {
           text: 'Unfollow',
           style: 'destructive',
           onPress: async () => {
-            this.pendingFollowChange = true;
-            await profile.unfollow();
-            this.props.analytics.track('user_unfollow', profile.toJSON());
-            this.pendingFollowChange = false;
+            this.pendingFollowChange = true
+            await profile.unfollow()
+            this.props.analytics.track('user_unfollow', profile.toJSON())
+            this.pendingFollowChange = false
           },
         },
-      ]);
+      ])
     } else {
-      await profile.follow();
-      this.props.analytics.track('user_follow', profile.toJSON());
-      this.pendingFollowChange = false;
+      await profile.follow()
+      this.props.analytics.track('user_follow', profile.toJSON())
+      this.pendingFollowChange = false
     }
-  };
+  }
 
   render() {
-    const {profile} = this.props;
+    const {profile} = this.props
     return !profile.isOwn ? (
       <View style={styles.followContainer}>
-        <TouchableOpacity onPress={this.toggleFollow} style={styles.followButton} disabled={this.pendingFollowChange}>
-          {this.pendingFollowChange ? <ActivityIndicator /> : <Image source={profile.isFollowed ? imgFollowing : imgFollow} />}
+        <TouchableOpacity
+          onPress={this.toggleFollow}
+          style={styles.followButton}
+          disabled={this.pendingFollowChange}
+        >
+          {this.pendingFollowChange ? (
+            <ActivityIndicator />
+          ) : (
+            <Image source={profile.isFollowed ? imgFollowing : imgFollow} />
+          )}
         </TouchableOpacity>
       </View>
-    ) : null;
+    ) : null
   }
 }
 
-export default FollowButton;
+export default FollowButton
 
 const styles = StyleSheet.create({
   followContainer: {
@@ -65,4 +73,4 @@ const styles = StyleSheet.create({
   followButton: {
     marginTop: -30 * k,
   },
-});
+})

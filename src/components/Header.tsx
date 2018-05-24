@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import {navBarTextColorDay} from '../globals';
-import {k} from './Global';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {View, Text} from 'react-native'
+import {navBarTextColorDay} from '../globals'
+import {k} from './Global'
+import {observer} from 'mobx-react/native'
 
 const Header = observer(({children}) => (
   <View style={{padding: 15 * k}}>
@@ -16,6 +16,6 @@ const Header = observer(({children}) => (
       {children}
     </Text>
   </View>
-));
+))
 
-export default Header;
+export default Header

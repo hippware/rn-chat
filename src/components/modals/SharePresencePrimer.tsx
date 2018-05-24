@@ -1,54 +1,54 @@
 // @flow
 
-import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {colors} from '../../constants';
-import {k} from '../Global';
-import {RText} from '../common';
-import {Actions} from 'react-native-router-flux';
-import {observer, inject} from 'mobx-react/native';
-import ModalContainer from './ModalContainer';
+import React from 'react'
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {colors} from '../../constants'
+import {k} from '../Global'
+import {RText} from '../common'
+import {Actions} from 'react-native-router-flux'
+import {observer, inject} from 'mobx-react/native'
+import ModalContainer from './ModalContainer'
 
-type Props = {};
+type Props = {}
 
 @inject('store')
 @observer
 class SharePresencePrimer extends React.Component<Props> {
-  handler: any;
+  handler: any
 
   dismiss = () => {
-    this.props.store.dismissSharePresencePrimer();
-    Actions.pop();
-  };
+    this.props.store.dismissSharePresencePrimer()
+    Actions.pop()
+  }
 
   render() {
     return (
       <ModalContainer onPress={this.dismiss}>
-        <View style={styles.inner} pointerEvents='box-none'>
-          <RText style={styles.title} weight='Light' size={30} color={colors.PINK}>
+        <View style={styles.inner} pointerEvents="box-none">
+          <RText style={styles.title} weight="Light" size={30} color={colors.PINK}>
             {'Who do you\r\nwant to share\r\npresence with?'}
           </RText>
           <RText style={styles.muted} color={colors.WARM_GREY_2} size={15}>
             Once they tap the
-            <Image source={footprint} style={styles.footIcon} resizeMode='contain' />
+            <Image source={footprint} style={styles.footIcon} resizeMode="contain" />
             {"button, we'll let you know when they are here."}
           </RText>
           <View style={{marginTop: 25 * k, alignSelf: 'stretch', alignItems: 'stretch'}}>
             <TouchableOpacity style={styles.button} onPress={this.dismiss}>
-              <RText color='white' size={17.5}>
+              <RText color="white" size={17.5}>
                 OK
               </RText>
             </TouchableOpacity>
           </View>
         </View>
       </ModalContainer>
-    );
+    )
   }
 }
 
-export default SharePresencePrimer;
+export default SharePresencePrimer
 
-const footprint = require('../../../images/footOpaquePink.png');
+const footprint = require('../../../images/footOpaquePink.png')
 
 const styles = StyleSheet.create({
   inner: {
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     width: 23,
     height: 18,
   },
-});
+})

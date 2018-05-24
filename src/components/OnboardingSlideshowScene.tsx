@@ -1,30 +1,39 @@
 // @flow
 
-import React from 'react';
-import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
-import Swiper from 'react-native-swiper';
-import {Actions} from 'react-native-router-flux';
-import {colors} from '../constants';
-import {settings} from '../globals';
-import {TouchableOpTrack, RText} from './common';
-import {width, height, k} from './Global';
+import React from 'react'
+import {Image, StyleSheet, View, TouchableOpacity} from 'react-native'
+import Swiper from 'react-native-swiper'
+import {Actions} from 'react-native-router-flux'
+import {colors} from '../constants'
+import {settings} from '../globals'
+import {TouchableOpTrack, RText} from './common'
+import {width, height, k} from './Global'
 
-const bg1 = require('../../images/slide1.png');
-const footprints = require('../../images/foot.png');
-const bg2 = require('../../images/slide2.png');
-const discover = require('../../images/discover.png');
-const bg3 = require('../../images/slide3.png');
-const explore = require('../../images/magnifinder.png');
-const maskLeft = require('../../images/maskLeft.png');
-const maskCenter = require('../../images/maskCenter.png');
-const maskRight = require('../../images/maskRight.png');
+const bg1 = require('../../images/slide1.png')
+const footprints = require('../../images/foot.png')
+const bg2 = require('../../images/slide2.png')
+const discover = require('../../images/discover.png')
+const bg3 = require('../../images/slide3.png')
+const explore = require('../../images/magnifinder.png')
+const maskLeft = require('../../images/maskLeft.png')
+const maskCenter = require('../../images/maskCenter.png')
+const maskRight = require('../../images/maskRight.png')
 
 class Onboarding extends React.Component<{}> {
   render() {
     // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
     return this.props.routeName === 'onboarding' ? (
-      <View style={{flex: 1}} testID='onboarding'>
-        <Swiper paginationStyle={{bottom: 95 * k}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces ref={r => (this.swiper = r)} autoplay autoplayTimeout={5} loop>
+      <View style={{flex: 1}} testID="onboarding">
+        <Swiper
+          paginationStyle={{bottom: 95 * k}}
+          dotColor={colors.GREY}
+          activeDotColor={colors.PINK}
+          bounces
+          ref={r => (this.swiper = r)}
+          autoplay
+          autoplayTimeout={5}
+          loop
+        >
           <Slide bgImg={bg1} iconImg={footprints} left>
             {"See who's at your\r\nfavorite places!"}
           </Slide>
@@ -38,58 +47,74 @@ class Onboarding extends React.Component<{}> {
         <ButtonRow />
         <BypassButton />
       </View>
-    ) : null;
+    ) : null
   }
 }
 
-const BG_IMG_RATIO = 667 / 375; // height / width of background images
-const FLEX = 55;
+const BG_IMG_RATIO = 667 / 375 // height / width of background images
+const FLEX = 55
 
 const Slide = ({bgImg, iconImg, left, center, children}) => {
-  const align = left ? 'flex-start' : center ? 'center' : 'flex-end';
-  const mask = left ? maskLeft : center ? maskCenter : maskRight;
+  const align = left ? 'flex-start' : center ? 'center' : 'flex-end'
+  const mask = left ? maskLeft : center ? maskCenter : maskRight
   return (
     <View style={styles.slide}>
       <View style={styles.bgContainer}>
         <Image source={bgImg} style={{width, height: BG_IMG_RATIO * width}} />
-        <Image source={mask} style={{position: 'absolute', top: height * FLEX * 0.01 - 60, width}} />
+        <Image
+          source={mask}
+          style={{position: 'absolute', top: height * FLEX * 0.01 - 60, width}}
+        />
       </View>
       <View style={[styles.textContainer, {alignSelf: align, alignItems: align}]}>
-        <Image source={iconImg} style={styles.icon} resizeMode='contain' />
-        <RText style={[styles.title, {textAlign: left ? 'left' : center ? 'center' : 'right'}]} color={colors.PINK} size={24} weight='Light'>
+        <Image source={iconImg} style={styles.icon} resizeMode="contain" />
+        <RText
+          style={[styles.title, {textAlign: left ? 'left' : center ? 'center' : 'right'}]}
+          color={colors.PINK}
+          size={24}
+          weight="Light"
+        >
           {children}
         </RText>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const BypassButton = () => {
   return settings.isStaging || settings.isTesting ? (
-    <TouchableOpacity onPress={Actions.testRegisterScene} style={styles.bypassButton} testID='bypassButton'>
+    <TouchableOpacity
+      onPress={Actions.testRegisterScene}
+      style={styles.bypassButton}
+      testID="bypassButton"
+    >
       <RText color={colors.PINK}>Bypass</RText>
     </TouchableOpacity>
-  ) : null;
-};
+  ) : null
+}
 
 const ButtonRow = () => (
   <View style={styles.footerButtons}>
-    <TouchableOpTrack style={[styles.button, styles.login]} onPress={Actions.signIn} trackName='login'>
+    <TouchableOpTrack
+      style={[styles.button, styles.login]}
+      onPress={Actions.signIn}
+      trackName="login"
+    >
       <RText size={15} color={colors.PINK}>
         Log in
       </RText>
     </TouchableOpTrack>
-    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName='signup'>
+    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName="signup">
       <RText size={15} color={colors.WHITE}>
         Sign up
       </RText>
     </TouchableOpTrack>
   </View>
-);
+)
 
-export default Onboarding;
+export default Onboarding
 
-const FOOTER_HEIGHT = 75 * k;
+const FOOTER_HEIGHT = 75 * k
 
 const styles = StyleSheet.create({
   absolute: {
@@ -150,4 +175,4 @@ const styles = StyleSheet.create({
     borderColor: colors.PINK,
     backgroundColor: colors.WHITE,
   },
-});
+})

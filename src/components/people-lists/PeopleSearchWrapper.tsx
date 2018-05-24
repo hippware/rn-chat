@@ -1,19 +1,19 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import {observer, inject} from 'mobx-react/native';
+import React from 'react'
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native'
+import {Actions} from 'react-native-router-flux'
+import {observer, inject} from 'mobx-react/native'
 
-import {k} from '../Global';
-import Screen from '../Screen';
-import SearchBar from './SearchBar';
-import ProfileList from './ProfileList';
-import {FollowableProfileItem} from './customProfileItems';
+import {k} from '../Global'
+import Screen from '../Screen'
+import SearchBar from './SearchBar'
+import ProfileList from './ProfileList'
+import {FollowableProfileItem} from './customProfileItems'
 
 type Props = {
-  children: any,
-};
+  children: any
+}
 
 @inject('wocky', 'searchStore')
 @observer
@@ -23,15 +23,21 @@ class SearchWrapper extends React.Component<Props> {
       <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.id})}>
         <FollowableProfileItem profile={item.profile} />
       </TouchableOpacity>
-    );
-  };
+    )
+  }
 
   render() {
-    const {searchStore} = this.props;
-    const {globalResult, global} = searchStore;
+    const {searchStore} = this.props
+    const {globalResult, global} = searchStore
     return (
       <Screen isDay>
-        <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' placeholder='Search name or username' />
+        <SearchBar
+          onChangeText={searchStore.setGlobal}
+          value={searchStore.global}
+          autoCorrect={false}
+          autoCapitalize="none"
+          placeholder="Search name or username"
+        />
         {global.length > 0 ? (
           globalResult.list && globalResult.list.length ? (
             <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />
@@ -40,8 +46,8 @@ class SearchWrapper extends React.Component<Props> {
           this.props.children
         )}
       </Screen>
-    );
+    )
   }
 }
 
-export default SearchWrapper;
+export default SearchWrapper

@@ -1,35 +1,35 @@
 // @flow
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import {View, Text, StyleSheet, TouchableHighlight, ActivityIndicator} from 'react-native';
+import PropTypes from 'prop-types'
+import React from 'react'
+import {View, Text, StyleSheet, TouchableHighlight, ActivityIndicator} from 'react-native'
 
 class ErrorButton extends React.Component {
   static defaultProps = {
     onErrorButtonPress: () => {},
     rowData: {},
     styles: {},
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isLoading: false,
-    };
+    }
 
-    this.onPress = this.onPress.bind(this);
+    this.onPress = this.onPress.bind(this)
   }
 
   componentWillMount() {
-    Object.assign(styles, this.props.styles);
+    Object.assign(styles, this.props.styles)
   }
 
   onPress() {
     this.setState({
       isLoading: true,
-    });
+    })
 
-    this.props.onErrorButtonPress(this.props.rowData);
+    this.props.onErrorButtonPress(this.props.rowData)
   }
 
   render() {
@@ -47,11 +47,11 @@ class ErrorButton extends React.Component {
       </View>
     ) : (
       <View style={styles.errorButtonContainer}>
-        <TouchableHighlight underlayColor='transparent' onPress={this.onPress}>
+        <TouchableHighlight underlayColor="transparent" onPress={this.onPress}>
           <Text style={styles.errorButton}>↻</Text>
         </TouchableHighlight>
       </View>
-    );
+    )
   }
 }
 
@@ -59,9 +59,9 @@ ErrorButton.propTypes = {
   styles: PropTypes.object,
   onErrorButtonPress: PropTypes.func,
   rowData: PropTypes.object,
-};
+}
 
-export default ErrorButton;
+export default ErrorButton
 
 const styles = StyleSheet.create({
   errorButtonContainer: {
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: -5,
   },
-});
+})

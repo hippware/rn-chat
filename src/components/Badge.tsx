@@ -1,5 +1,5 @@
-import {Text, View, StyleSheet} from 'react-native';
-import React from 'react';
+import {Text, View, StyleSheet} from 'react-native'
+import React from 'react'
 
 export default class IconBadge extends React.Component {
   render() {
@@ -10,7 +10,9 @@ export default class IconBadge extends React.Component {
           this.props.MainElement
         }
         {!!this.props.children && (
-          <View style={[styles.IconBadge, this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}]}>
+          <View
+            style={[styles.IconBadge, this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}]}
+          >
             {
               // badge element
               <Text
@@ -26,7 +28,7 @@ export default class IconBadge extends React.Component {
           </View>
         )}
       </View>
-    );
+    )
   }
 }
 const styles = StyleSheet.create({
@@ -41,4 +43,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgb(254,92,108)',
   },
-});
+})

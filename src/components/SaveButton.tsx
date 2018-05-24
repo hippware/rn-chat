@@ -1,11 +1,11 @@
-import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
-import {k} from './Global';
-import {colors} from '../constants';
+import React from 'react'
+import {TouchableOpacity, View, Text} from 'react-native'
+import {k} from './Global'
+import {colors} from '../constants'
 
 export default class SaveButton extends React.Component {
   render() {
-    const title = this.props.title || 'Save';
+    const title = this.props.title || 'Save'
     return this.props.active ? (
       <TouchableOpacity
         onPress={this.props.onSave}
@@ -55,10 +55,10 @@ export default class SaveButton extends React.Component {
           {title}
         </Text>
       </View>
-    );
+    )
   }
 }
 
 SaveButton.defaultProps = {
   active: true,
-};
+}

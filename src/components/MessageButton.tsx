@@ -1,7 +1,7 @@
-import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
-import {k} from './Global';
-import {Actions} from 'react-native-router-flux';
+import React from 'react'
+import {View, Image, TouchableOpacity} from 'react-native'
+import {k} from './Global'
+import {Actions} from 'react-native-router-flux'
 
 export default ({style}) => (
   <TouchableOpacity
@@ -29,4 +29,4 @@ export default ({style}) => (
       <Image style={style} source={require('../../images/iconNewMsg.png')} />
     </View>
   </TouchableOpacity>
-);
+)

@@ -1,10 +1,10 @@
-import React from 'react';
-import {Image, StyleSheet, View, TouchableOpacity, TouchableHighlight, Text} from 'react-native';
-import styles from './styles';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
-import {k} from './Global';
-import location from '../store/locationStore';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {Image, StyleSheet, View, TouchableOpacity, TouchableHighlight, Text} from 'react-native'
+import styles from './styles'
+import {navBarTextColorDay, navBarTextColorNight} from '../globals'
+import {k} from './Global'
+import location from '../store/locationStore'
+import {observer} from 'mobx-react/native'
 
 @observer
 export default class Cell extends React.Component {
@@ -51,17 +51,20 @@ export default class Cell extends React.Component {
           {this.props.children}
         </Text>
         {this.props.onRemove && (
-          <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={this.props.onRemove}>
+          <TouchableOpacity
+            style={{justifyContent: 'center', alignItems: 'center'}}
+            onPress={this.props.onRemove}
+          >
             <Image source={require('../../images/iconClose.png')} />
           </TouchableOpacity>
         )}
       </View>
-    );
+    )
 
     if (this.props.onPress) {
-      return <TouchableOpacity {...this.props}>{cell}</TouchableOpacity>;
+      return <TouchableOpacity {...this.props}>{cell}</TouchableOpacity>
     } else {
-      return cell;
+      return cell
     }
   }
 }

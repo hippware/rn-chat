@@ -1,8 +1,8 @@
-import React from 'react';
-import {StyleSheet, PixelRatio, Dimensions} from 'react-native';
-import {width, height, k} from './Global';
+import React from 'react'
+import {StyleSheet, PixelRatio, Dimensions} from 'react-native'
+import {width, height, k} from './Global'
 
-const coef = k;
+const coef = k
 
 export default StyleSheet.create({
   error: {
@@ -157,4 +157,4 @@ export default StyleSheet.create({
   },
   linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
   paginationStyle: {bottom: 170 * coef},
-});
+})

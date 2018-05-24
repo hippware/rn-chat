@@ -1,26 +1,26 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import Card from './Card';
-import {k} from './Global';
-import BotCardInner from './BotCardInner';
+import React from 'react'
+import {StyleSheet} from 'react-native'
+import Card from './Card'
+import {k} from './Global'
+import BotCardInner from './BotCardInner'
 
 type Props = {
-  item: Bot,
-  onPress: Function,
-};
+  item: Bot
+  onPress: Function
+}
 
 const BotCard = (props: Props) => {
-  const {item, onPress} = props;
+  const {item, onPress} = props
   return (
     <Card style={styles.card} onPress={() => onPress(item)} innerStyle={styles.inner}>
       <BotCardInner {...props} />
     </Card>
-  );
-};
+  )
+}
 
-export default BotCard;
+export default BotCard
 
 const styles = StyleSheet.create({
   card: {
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
     paddingBottom: 0 * k,
     height: 120 * k,
   },
-});
+})

@@ -1,31 +1,42 @@
 // @flow
 
-import React from 'react';
-import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
-import Screen from './Screen';
-import {k} from './Global';
-import {ProfileList} from './people-lists';
-import Button from 'apsl-react-native-button';
-import {Actions} from 'react-native-router-flux';
-import {observer, inject} from 'mobx-react/native';
-import {observable} from 'mobx';
-import SelectableProfileList from '../store/SelectableProfileList';
+import React from 'react'
+import {
+  TouchableOpacity,
+  TextInput,
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  InteractionManager,
+} from 'react-native'
+import Screen from './Screen'
+import {k} from './Global'
+import {ProfileList} from './people-lists'
+import Button from 'apsl-react-native-button'
+import {Actions} from 'react-native-router-flux'
+import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
+import SelectableProfileList from '../store/SelectableProfileList'
 
 @inject('wocky')
 @observer
 class CreateMessage extends React.Component<{}> {
   // @observable selection: SelectableProfileList = new SelectableProfileList(wocky.friends, false);
-  @observable selection = SelectableProfileList.create({});
+  @observable selection = SelectableProfileList.create({})
 
   componentDidMount() {
-    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})));
+    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})))
   }
 
   static backButton = ({state, style, textButtonStyle}) => (
-    <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+    <TouchableOpacity
+      onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
+      style={style}
+    >
       <Text style={textButtonStyle}>Cancel</Text>
     </TouchableOpacity>
-  );
+  )
 
   render() {
     return (
@@ -44,11 +55,11 @@ class CreateMessage extends React.Component<{}> {
           </View>
           <TextInput
             autoCorrect={false}
-            autoCapitalize='none'
+            autoCapitalize="none"
             onChangeText={text => this.selection.setFilter(text)}
             value={this.selection.filter}
-            placeholder='Search Friends'
-            placeholderColor='rgb(211,211,211)'
+            placeholder="Search Friends"
+            placeholderColor="rgb(211,211,211)"
             style={{
               fontSize: 15 * k,
               fontFamily: 'Roboto-Light',
@@ -65,10 +76,10 @@ class CreateMessage extends React.Component<{}> {
         <ProfileList
           selection={this.selection}
           isDay
-          onSelect={(profile) => {
-            Actions.pop();
+          onSelect={profile => {
+            Actions.pop()
             // messageStore.createChat(profile);
-            Actions.chat({item: profile.id});
+            Actions.chat({item: profile.id})
           }}
         />
         {!!this.selection.selected.length && (
@@ -87,12 +98,12 @@ class CreateMessage extends React.Component<{}> {
           </Button>
         )}
       </Screen>
-    );
+    )
     //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }
 }
 
-export default CreateMessage;
+export default CreateMessage
 
 const styles = StyleSheet.create({
   button: {
@@ -108,4 +119,4 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: {height: -2, width: 0},
   },
-});
+})

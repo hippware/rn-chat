@@ -1,32 +1,32 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {k} from '../Global';
-import {colors} from '../../constants';
-import {RText} from '../common';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {StyleSheet, View} from 'react-native'
+import {k} from '../Global'
+import {colors} from '../../constants'
+import {RText} from '../common'
+import {observer} from 'mobx-react/native'
 
 type Props = {
-  section: Object,
-  title: string,
-  children?: any,
-  count: number,
-};
+  section: Object
+  title: string
+  children?: any
+  count: number
+}
 
 const SectionHeader = observer(({section, title, children, count}: Props) => (
   <View style={styles.headerBar} key={section.key}>
     <RText size={13}>
-      <RText size={16} weight='Bold'>
+      <RText size={16} weight="Bold">
         {count}
       </RText>
       {` ${title}`}
     </RText>
     {children}
   </View>
-));
+))
 
-export default SectionHeader;
+export default SectionHeader
 
 const styles = StyleSheet.create({
   headerBar: {
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-});
+})

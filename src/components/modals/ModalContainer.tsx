@@ -1,21 +1,21 @@
 // @flow
 
-import React from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
-import {k} from '../Global';
+import React from 'react'
+import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native'
+import {k} from '../Global'
 
 type Props = {
-  onPress?: Function,
-};
+  onPress?: Function
+}
 
 // translucent black background
 const ModalContainer = ({children, onPress}) => (
   <TouchableWithoutFeedback onPress={onPress}>
     <View style={styles.container}>{children}</View>
   </TouchableWithoutFeedback>
-);
+)
 
-export default ModalContainer;
+export default ModalContainer
 
 const styles = StyleSheet.create({
   container: {
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 30 * k,
   },
-});
+})

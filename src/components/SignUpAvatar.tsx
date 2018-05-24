@@ -1,22 +1,22 @@
 // @flow
 
-import React from 'react';
-import {Image, TouchableOpacity} from 'react-native';
-import {k} from './Global';
-import {showImagePicker} from './ImagePicker';
-import {observer, inject} from 'mobx-react/native';
-import {observable} from 'mobx';
+import React from 'react'
+import {Image, TouchableOpacity} from 'react-native'
+import {k} from './Global'
+import {showImagePicker} from './ImagePicker'
+import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
 
 type Props = {
-  style?: Object,
-};
+  style?: Object
+}
 
-const AVATAR_DIMENSION = 80 * k;
+const AVATAR_DIMENSION = 80 * k
 
 @inject('wocky')
 @observer
 class SignUpAvatar extends React.Component<Props> {
-  @observable source: Object;
+  @observable source: Object
 
   imageSelected = async (src, response) => {
     try {
@@ -25,21 +25,25 @@ class SignUpAvatar extends React.Component<Props> {
         width: response.width,
         height: response.height,
         size: response.size,
-      });
-      this.source = src;
+      })
+      this.source = src
     } catch (err) {
       // TODO handle upload error
-      console.warn('upload error', err);
+      console.warn('upload error', err)
     }
-  };
+  }
 
   render() {
-    const {profile} = this.props.wocky;
-    const {avatar} = profile;
+    const {profile} = this.props.wocky
+    const {avatar} = profile
     // TODO: should we switch to source instead of thumbnail?
-    const theAvatar = this.source || (avatar && avatar.thumbnail) || require('../../images/addPhoto.png');
+    const theAvatar =
+      this.source || (avatar && avatar.thumbnail) || require('../../images/addPhoto.png')
     return (
-      <TouchableOpacity style={{alignItems: 'center'}} onPress={() => showImagePicker('Select Avatar', this.imageSelected)}>
+      <TouchableOpacity
+        style={{alignItems: 'center'}}
+        onPress={() => showImagePicker('Select Avatar', this.imageSelected)}
+      >
         <Image
           style={[
             {
@@ -50,11 +54,11 @@ class SignUpAvatar extends React.Component<Props> {
             this.props.style,
           ]}
           source={theAvatar}
-          resizeMode='cover'
+          resizeMode="cover"
         />
       </TouchableOpacity>
-    );
+    )
   }
 }
 
-export default SignUpAvatar;
+export default SignUpAvatar

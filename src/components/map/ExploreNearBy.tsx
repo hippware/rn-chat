@@ -1,9 +1,9 @@
 // @flow
 
-import React from 'react';
-import {View} from 'react-native';
-import Map from './Map';
-import BotButton from '../BotButton';
+import React from 'react'
+import {View} from 'react-native'
+import Map from './Map'
+import BotButton from '../BotButton'
 
 class FullMap extends React.Component<{}> {
   render() {
@@ -13,8 +13,8 @@ class FullMap extends React.Component<{}> {
           <BotButton />
         </Map>
       </View>
-    );
+    )
   }
 }
 
-export default FullMap;
+export default FullMap

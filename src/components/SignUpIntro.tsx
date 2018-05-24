@@ -1,8 +1,8 @@
-import React from 'react';
-import {Text} from 'react-native';
-import BackgroundImage from './BackgroundImage';
-import {k} from './Global';
-import {colors} from '../constants';
+import React from 'react'
+import {Text} from 'react-native'
+import BackgroundImage from './BackgroundImage'
+import {k} from './Global'
+import {colors} from '../constants'
 
 export default () => (
   <BackgroundImage source={require('../../images/bG.png')}>
@@ -21,4 +21,4 @@ export default () => (
       Awesome!{'\n'}Now, it’s time to set up your profile…
     </Text>
   </BackgroundImage>
-);
+)

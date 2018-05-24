@@ -1,17 +1,21 @@
-import React from 'react';
-import {View, Image} from 'react-native';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import {View, Image} from 'react-native'
+import {observer} from 'mobx-react/native'
 
 @observer
 export default class extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   render() {
     return (
-      <View onLayout={({nativeEvent: {layout: {x, y, width, height}}}) => this.setState({dwidth: width})}>
+      <View
+        onLayout={({nativeEvent: {layout: {x, y, width, height}}}) =>
+          this.setState({dwidth: width})
+        }
+      >
         <Image
           style={{
             width: this.state.dwidth,
@@ -21,7 +25,7 @@ export default class extends React.Component {
           source={this.props.image}
         />
       </View>
-    );
+    )
     // return (
     //     <View onLayout={({nativeEvent: {layout: {x, y, width, height}}})=>this.setState({dwidth:width})}>
     //         {this.state.width && <Image style={{width:this.state.dwidth, height:this.state.height*this.state.dwidth/this.state.width}}
