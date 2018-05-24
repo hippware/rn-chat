@@ -12,11 +12,11 @@ export const OwnProfile = types
     types.compose(
       Profile,
       createUploadable('avatar', 'all'),
-      createUpdatable(self => self.service._updateProfile(getSnapshot(self)))
+      createUpdatable((self, data) => self.service._updateProfile({...getSnapshot(self), ...data}))
     ),
     types.model('OwnProfile', {
       email: types.maybe(types.string),
-      phoneNumber: types.maybe(types.string)
+      phoneNumber: types.maybe(types.string),
     })
   )
   .named('OwnProfile')
