@@ -1,5 +1,4 @@
 import React from 'react'
-import MapView, {MapViewProps, Marker} from 'react-native-maps'
 import ClusteredMapView from 'react-native-maps-super-cluster'
 import {Alert, StyleSheet, View, InteractionManager} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
