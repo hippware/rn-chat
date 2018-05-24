@@ -104,6 +104,7 @@
     "react": "^16.2.0",
     "react-native": "0.53.0",
     "react-native-actionsheet": "^2.2.2",
+    "react-native-background-fetch": "^2.4.3",
     "react-native-background-geolocation": "^2.12.0-beta.2",
     "react-native-blur": "^3.2.2",
     "react-native-camera-kit": "github:aksonov/react-native-camera-kit#6fb593bed81547a68e039a77c5042f070e3a9fa1",
