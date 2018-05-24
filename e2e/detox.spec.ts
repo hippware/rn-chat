@@ -1,5 +1,6 @@
 require('./init')
 import takeScreenshot from './helpers'
+import chalk from 'chalk'
 
 const navLeftButtonCoords = {x: 35, y: 35}
 
@@ -17,8 +18,18 @@ describe('Detox', () => {
   })
 
   it('registers bypass number and navs to new profile screen', async () => {
-    // await element(by.id('bypassPhoneInput')).typeText('444')
-    await element(by.id('bypassPhoneInput')).typeText('00000044')
+    try {
+      await element(by.id('bypassPhoneInput')).typeText('00000044')
+    } catch (err) {
+      if (err.message.indexOf('keyboard was not shown on screen') > 0) {
+        console.log(
+          chalk.yellow(
+            'NOTE: if this is a non-CI detox run, hardware keyboard is enabled. Please disable with Cmd-K on simulator.'
+          )
+        )
+        throw err
+      }
+    }
     await element(by.id('bypassRegisterButton')).tap()
     takeScreenshot('register-tap')
 
@@ -31,9 +42,6 @@ describe('Detox', () => {
   it('registers new bypass user and navs to home screen', async () => {
     // fill out the form and hit return on the last entry
     await element(by.id('signUpUsername')).tap()
-
-    // TODO: process error for keyboard: 'keyboard was not shown on screen'
-
     await element(by.id('signUpUsername')).typeText(makeid(8))
     await element(by.id('signUpFirstName')).tap()
     await element(by.id('signUpFirstName')).typeText('four')
