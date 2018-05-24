@@ -14,6 +14,7 @@ const FILE_NS = 'hippware.com/hxep/http-file'
 const ROSTER = 'jabber:iq:roster'
 const NEW_GROUP = '__new__'
 const BLOCKED_GROUP = '__blocked__'
+const GEOLOC_NS = 'http://jabber.org/protocol/geoloc'
 const PUSH_NS = 'hippware.com/hxep/notifications'
 const MEDIA = 'hippware.com/hxep/media'
 const CONVERSATION_NS = 'hippware.com/hxep/conversations'
@@ -849,8 +850,21 @@ export class XmppTransport implements IWockyTransport {
       image,
       visibility,
     })
-    addField(iq, 'location', 'geoloc')
-    location!.addToIQ(iq)
+    if (location && location.latitude !== undefined && location.longitude !== undefined) {
+      addField(iq, 'location', 'geoloc')
+      iq
+        .c('geoloc', {xmlns: GEOLOC_NS})
+        .c('lat')
+        .t(location.latitude)
+        .up()
+        .c('lon')
+        .t(location.longitude)
+        .up()
+
+      if (location.accuracy) {
+        iq.c('accuracy').t(location.accuracy)
+      }
+    }
     await this.sendIQ(iq)
   }
   async loadBot(id: string, server: any) {
