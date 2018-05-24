@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Alert, Image, StyleSheet, Text, Linking} from 'react-native'
-import {observable, when, runInAction} from 'mobx'
+import {observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -48,24 +48,28 @@ class SignUp extends React.Component<Props> {
     }
   }
 
-  done = () => {
+  done = async () => {
     if (!this.vProfile.isValid) return
     const {profile} = this.props.wocky!
+    if (profile.updating) return
     try {
-      profile!.update(this.vProfile.asObject)
-      this.when = when(
-        () => !profile!.updating && !profile!.updateError,
-        () => {
-          this.props.analytics.track('createprofile_complete', {
-            profile: getSnapshot(this.props.wocky!.profile!)
-          })
-          Actions.logged()
-        }
-      )
-    } catch (err) {
-      this.props.analytics.track('createprofile_fail', {
+      await profile!.update(this.vProfile.asObject)
+      Actions.logged()
+      this.props.analytics.track('createprofile_complete', {
         profile: getSnapshot(this.props.wocky!.profile!),
-        error: err
+      })
+    } catch (err) {
+      // notificationStore is probably not good here, user must read and confirm
+      try {
+        // display first error if it is GraphQL error
+        const error = JSON.parse(err.message)[0].message
+        Alert.alert(null, error)
+      } catch {
+        Alert.alert(null, err.message)
+      }
+      this.props.analytics.track('createprofile_fail', {
+        profile: this.vProfile.asObject, // send entered data to mixpanel, not original profile
+        error: err,
       })
     }
   }
@@ -79,19 +83,7 @@ class SignUp extends React.Component<Props> {
         </View>
       )
     }
-    const {updating, updateError} = profile
-    // TODO: handle update errors with notificationStore. Watch for updateError in componentDidMount and flash error
-    if (updateError !== '') {
-      // TODO display whole list of errors nicely as red messages, not alert
-      try {
-        const error = JSON.parse(updateError)[0].message
-        Alert.alert(null, error)
-      } catch {
-        Alert.alert(null, updateError)
-      }
-    }
-
-    const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || updating
+    const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || profile.updating
     return (
       <KeyboardAwareScrollView style={{flex: 1}}>
         <View
@@ -99,7 +91,7 @@ class SignUp extends React.Component<Props> {
             marginLeft: 70 * k,
             marginRight: 70 * k,
             marginTop: 47.5 * k,
-            flexDirection: 'row'
+            flexDirection: 'row',
           }}
           testID="signUpTopRow"
         >
@@ -176,7 +168,7 @@ class SignUp extends React.Component<Props> {
           style={styles.submitButton}
           textStyle={styles.text}
         >
-          {updating ? <Spinner color="white" size={22} /> : 'Done'}
+          {profile.updating ? <Spinner color="white" size={22} /> : 'Done'}
         </Button>
       </KeyboardAwareScrollView>
     )
@@ -193,13 +185,13 @@ const styles = StyleSheet.create({
     borderRadius: 4 * k,
     height: 50 * k,
     borderWidth: 0,
-    backgroundColor: 'rgb(254,92,108)'
+    backgroundColor: 'rgb(254,92,108)',
   },
   agreeNote: {
     marginTop: 35 * k,
     marginBottom: 35 * k,
     fontSize: 12.5 * k,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  paginationStyle: {bottom: 170 * k}
+  paginationStyle: {bottom: 170 * k},
 })
