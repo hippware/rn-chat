@@ -5,10 +5,9 @@ import {TouchableOpacity, Alert, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 import ActionSheet from 'react-native-actionsheet'
 import {Actions} from 'react-native-router-flux'
-import {Profile} from 'wocky-client'
 
 type Props = {
-  profile: Profile
+  profile: any
 }
 
 @observer

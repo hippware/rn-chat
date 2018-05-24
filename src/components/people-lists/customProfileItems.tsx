@@ -4,7 +4,6 @@ import React from 'react'
 import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
-import {Profile} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import ProfileItem from './ProfileItem'
 import {RText} from '../common'
@@ -49,7 +48,7 @@ const BlockedButton = ({profile}) => (
   </TouchableOpacity>
 )
 
-const unfollow = async (profile: Profile) => {
+const unfollow = async (profile: any) => {
   return new Promise(resolve => {
     Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
@@ -77,12 +76,12 @@ const unblock = profile => {
 }
 
 type Props = {
-  profile: Profile
+  profile: any
 }
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
   <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
-    <ProfileItem isDay profile={profile}>
+    <ProfileItem profile={profile}>
       {!profile.isOwn &&
         (profile.isFollowed ? (
           <FollowingButton profile={profile} />
@@ -100,7 +99,7 @@ export const TappableProfileItem = observer(({profile}: Props) => (
 ))
 
 export const BlockableProfileItem = ({profile}: Props) => (
-  <ProfileItem isDay profile={profile} tappable={false}>
+  <ProfileItem profile={profile} tappable={false}>
     <BlockedButton profile={profile} />
   </ProfileItem>
 )

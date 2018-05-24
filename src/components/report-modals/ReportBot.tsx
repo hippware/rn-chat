@@ -4,12 +4,12 @@ import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
-import {Profile} from 'wocky-client'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'
 
 type Props = {
   botId: string
+  wocky: any
 }
 
 const sendActive = require('../../../images/sendActive.png')

@@ -2,25 +2,23 @@
 
 import React from 'react'
 import {TouchableOpacity} from 'react-native'
-import {backgroundColorCardDay, backgroundColorCardNight} from '../../constants/colors'
+import {backgroundColorCardDay} from '../../constants/colors'
 import assert from 'assert'
-import {Profile} from 'wocky-client'
 import ProfileItem from './ProfileItem'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 
 type Props = {
-  profile: Profile
-  isDay: boolean
-  children: any
+  profile: any
+  children?: any
 }
 
-const FriendCard = observer(({profile, isDay, children}: Props) => {
+const FriendCard = observer(({profile, children}: Props) => {
   assert(profile, 'Profile is not defined')
-  const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight
+  const backgroundColor = backgroundColorCardDay
   return (
     <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
-      <ProfileItem profile={profile} isDay={isDay} style={{backgroundColor}}>
+      <ProfileItem profile={profile} style={{backgroundColor}}>
         {children}
       </ProfileItem>
     </TouchableOpacity>

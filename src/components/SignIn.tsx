@@ -13,7 +13,6 @@ import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {parse, asYouType} from 'libphonenumber-js'
-import FirebaseStore from '../store/FirebaseStore'
 
 // TODO: inject this dependency
 const CarrierInfo = NativeModules.RNCarrierInfo
@@ -22,14 +21,14 @@ const countryMap = {}
 getAllCountries().forEach(country => (countryMap[country.cca2] = country))
 
 type Props = {
-  firebaseStore: FirebaseStore
+  firebaseStore: any
 }
 
 @inject('firebaseStore')
 @observer
 class SignIn extends React.Component<Props> {
   picker: any
-  @observable cca2: string = 'US'
+  @observable cca2: any = 'US'
   @observable callingCode: string = '1'
   @observable countryName: string = 'United States'
   @observable phoneValue: string = ''
@@ -38,7 +37,7 @@ class SignIn extends React.Component<Props> {
   phoneText: any
 
   componentDidMount() {
-    CarrierInfo &&
+    if (CarrierInfo)
       CarrierInfo.isoCountryCode(result => {
         if (result && result !== 'nil') {
           this.cca2 = result.toUpperCase()
@@ -78,7 +77,6 @@ class SignIn extends React.Component<Props> {
   }
 
   render() {
-    const {firebaseStore} = this.props
     return (
       <KeyboardAwareScrollView
         style={{flex: 1, backgroundColor: colors.WHITE}}
@@ -122,7 +120,7 @@ class SignIn extends React.Component<Props> {
                 icon={require('../../images/globe.png')}
                 label="Country Code"
                 autoCapitalize="none"
-                validate={() => {}}
+                // validate={() => {}}
                 value={`${this.countryName} +${this.callingCode}`}
                 editable={false}
                 pointerEvents="none"

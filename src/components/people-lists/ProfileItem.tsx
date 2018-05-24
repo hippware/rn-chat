@@ -5,13 +5,12 @@ import {View, Text, Image} from 'react-native'
 import Avatar from '../common/Avatar'
 import {k} from '../Global'
 import {observer} from 'mobx-react/native'
-import {Profile} from 'wocky-client'
 import {ProfileHandle} from '../common'
 
 type Props = {
   profile: any
-  style: any
-  children: any
+  style?: any
+  children?: any
   selected?: boolean
   tappable?: boolean
 }

@@ -5,11 +5,11 @@ import {Image, StyleSheet, View, TextInput} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
 
-type Props = {
-  style?: Object
-}
+// type Props = {
+//   style?: any
+// }
 
-const SearchBar = (props: Props) => {
+const SearchBar = (props: any) => {
   const {style, ...rest} = props
   return (
     <View style={styles.searchBar}>

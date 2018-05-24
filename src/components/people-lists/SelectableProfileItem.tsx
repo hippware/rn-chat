@@ -7,20 +7,18 @@ import ProfileItem from './ProfileItem'
 import {observer} from 'mobx-react/native'
 
 type Props = {
-  row: Object
-  isDay: boolean
+  row: any
   selection: any
-  onSelect?: Function
+  onSelect?: any
 }
 
 const SelectableProfileItem = observer((props: Props) => {
-  const {row, isDay, selection, onSelect} = props
+  const {row, selection, onSelect} = props
   assert(selection, 'selection should be defined')
   return (
     <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}>
       <ProfileItem
         key={row.profile.id}
-        isDay={isDay}
         profile={row.profile}
         selected={onSelect ? undefined : row.selected}
       />

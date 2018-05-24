@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity} from 'react-native'
 import {k} from './Global'
 import {Actions} from 'react-native-router-flux'
 
-export default ({style}) => (
+export default ({style}: any) => (
   <TouchableOpacity
     style={[
       {

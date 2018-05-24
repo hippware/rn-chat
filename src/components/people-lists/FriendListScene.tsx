@@ -13,15 +13,19 @@ import {alphaSectionIndex} from '../../utils/friendUtils'
 import PeopleSearchWrapper from './PeopleSearchWrapper'
 import InviteFriendsRow from './InviteFriendsRow'
 
-type Props = {}
+type Props = {
+  wocky: any
+}
 
 @inject('wocky')
 @observer
 class FriendListScene extends React.Component<Props> {
-  renderItem = ({item}) => <FriendCard isDay profile={item} />
+  searchText: any
+
+  renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    const {friends, profile} = this.props.wocky
+    const {friends} = this.props.wocky
     const onlineFriends = friends.filter(f => f.status === 'available')
     return (
       <PeopleSearchWrapper>
@@ -35,7 +39,9 @@ class FriendListScene extends React.Component<Props> {
                   <PeopleList
                     renderItem={this.renderItem}
                     sections={alphaSectionIndex(this.searchText, onlineFriends)}
-                    loadMore={() => {}}
+                    loadMore={() => {
+                      /**/
+                    }}
                   />
                 </View>
               ) : null}
@@ -57,7 +63,9 @@ class FriendListScene extends React.Component<Props> {
             </View>
           )}
           sections={alphaSectionIndex(this.searchText, this.props.wocky.friends)}
-          loadMore={() => {}}
+          loadMore={() => {
+            /**/
+          }}
         />
       </PeopleSearchWrapper>
     )

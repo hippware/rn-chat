@@ -3,7 +3,6 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
-import {Profile} from 'wocky-client'
 import PeopleList from './PeopleList'
 import SectionHeader from './SectionHeader'
 import {FollowableProfileItem} from './customProfileItems'
@@ -14,19 +13,20 @@ import InviteFriendsRow from './InviteFriendsRow'
 
 type Props = {
   userId: string
+  wocky: any
 }
 
 @inject('wocky')
 @observer
 class FollowedList extends React.Component<Props> {
   @observable searchText: string
-  @observable profile: Profile
+  @observable profile: any
   disposer: any
 
   async componentDidMount() {
     this.profile = await this.props.wocky.getProfile(this.props.userId)
     if (!this.profile) {
-      console.error(`Cannot load profile for user:${this.props.userId}`)
+      // console.error(`Cannot load profile for user:${this.props.userId}`)
     }
     await this.profile.followed.load()
   }
@@ -36,7 +36,7 @@ class FollowedList extends React.Component<Props> {
     if (!this.profile) return null
     const following = this.profile.isOwn ? this.props.wocky.followed : this.profile.followed.list
     const followedCount = this.profile.isOwn ? wocky.followed.length : this.profile.followedSize
-    const {connected, profile} = wocky
+    const {connected} = wocky
     const {finished, loading} = this.profile.isOwn
       ? {finished: true, loading: false}
       : this.profile.followed

@@ -13,7 +13,9 @@ const BlockedList = inject('wocky')(
       <PeopleList
         renderItem={({item}) => <BlockableProfileItem profile={item} />}
         sections={[{key: 'blocked', data: _.sortBy(wocky.blocked, 'handle')}]}
-        loadMore={() => {}}
+        loadMore={() => {
+          /**/
+        }}
       />
     </Screen>
   ))

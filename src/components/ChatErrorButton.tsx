@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {View, Text, StyleSheet, TouchableHighlight, ActivityIndicator} from 'react-native'
 
-class ErrorButton extends React.Component {
+class ErrorButton extends React.Component<any, any> {
   static defaultProps = {
-    onErrorButtonPress: () => {},
+    onErrorButtonPress: () => {
+      /**/
+    },
     rowData: {},
     styles: {},
   }
@@ -55,7 +57,7 @@ class ErrorButton extends React.Component {
   }
 }
 
-ErrorButton.propTypes = {
+;(ErrorButton as any).propTypes = {
   styles: PropTypes.object,
   onErrorButtonPress: PropTypes.func,
   rowData: PropTypes.object,

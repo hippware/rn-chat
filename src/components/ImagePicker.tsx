@@ -6,7 +6,7 @@ import {log, levels} from '../utils/log'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 
-const createHandler = (callback: Function) => (response: Image) => {
+const createHandler = (callback: any) => (response: Image) => {
   log('SIZE:', response, response, {level: levels.VERBOSE})
   const source = {
     uri: response.path,
@@ -21,15 +21,15 @@ type Image = {
   data: any
   height: number
   width: number
-  mime: String
-  path: String
+  mime: string
+  path: string
   size: number
 }
 
 const IMG_DEFAULT_SIZE = 1000
 
 export const launchImageLibrary = async (
-  callback: Function,
+  callback: any,
   cropping: boolean = true
 ): Promise<void> => {
   try {
@@ -43,14 +43,14 @@ export const launchImageLibrary = async (
       // compressImageMaxHeight: 480,
       // compressImageQuality: 0.5,
     })
-    createHandler(callback)(image)
+    createHandler(callback)(image as Image)
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
     // log('launchImageLibrary error', err, {level: levels.ERROR});
   }
 }
 
-export const launchCamera = async (callback: Function, cropping: boolean = true): Promise<void> => {
+export const launchCamera = async (callback: any /*cropping: boolean = true*/): Promise<void> => {
   const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
@@ -97,19 +97,15 @@ const photoActions = [
 ]
 
 // @ANDROID
-export const showImagePicker = (
-  title: string,
-  callback: Function,
-  cropping: boolean = true
-): void => {
+export const showImagePicker = (title: string, callback: any, cropping: boolean = true): void => {
   const options = {
     options: [...photoActions.map(a => a.title), 'Cancel'],
     cancelButtonIndex: photoActions.length,
   }
   if (title) {
-    options.title = title
+    ;(options as any).title = title
   }
   ActionSheetIOS.showActionSheetWithOptions(options, index => {
-    index < photoActions.length && photoActions[index].action(callback, cropping)
+    if (index < photoActions.length) photoActions[index].action(callback, cropping)
   })
 }

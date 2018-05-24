@@ -29,28 +29,24 @@ type Props = {
   buttonContent: null
   enableSlide: true
   switchAnimationTime: number
-  onActivate: Function
-  onDeactivate: Function
-  onChangeState: Function
+  onActivate: any
+  onDeactivate: any
+  onChangeState: any
   toggleWidth: number
+  toggleHeight: number
 }
 
 type State = {
   width: number
   state: boolean
   position: any
-  pressed: any
+  pressed?: any
 }
 
 const padding = 2
 
 @autobind
-class MaterialSwitch extends React.Component {
-  props: Props
-  state: State
-  _panResponder: any
-  start: Object = {}
-
+class MaterialSwitch extends React.Component<any, any> {
   static defaultProps = {
     active: false,
     styles: {},
@@ -72,10 +68,21 @@ class MaterialSwitch extends React.Component {
     buttonContent: null,
     enableSlide: true,
     switchAnimationTime: 200,
-    onActivate() {},
-    onDeactivate() {},
-    onChangeState() {},
+    onActivate() {
+      /**/
+    },
+    onDeactivate() {
+      /**/
+    },
+    onChangeState() {
+      /**/
+    },
   }
+
+  props: Props
+  state: State
+  _panResponder: any
+  start: any = {}
 
   constructor(props: Props) {
     super(props)
@@ -198,7 +205,7 @@ class MaterialSwitch extends React.Component {
   }
 
   changeState(state) {
-    var callHandlers = this.start.state !== state
+    // var callHandlers = this.start.state !== state
     setTimeout(() => {
       this.setState({state})
       this.callback()
@@ -206,7 +213,7 @@ class MaterialSwitch extends React.Component {
   }
 
   callback() {
-    var state = this.state.state
+    const state = this.state.state
     if (state) {
       this.props.onActivate()
     } else {

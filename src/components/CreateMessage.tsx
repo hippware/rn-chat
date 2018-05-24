@@ -21,14 +21,7 @@ import SelectableProfileList from '../store/SelectableProfileList'
 
 @inject('wocky')
 @observer
-class CreateMessage extends React.Component<{}> {
-  // @observable selection: SelectableProfileList = new SelectableProfileList(wocky.friends, false);
-  @observable selection = SelectableProfileList.create({})
-
-  componentDidMount() {
-    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})))
-  }
-
+class CreateMessage extends React.Component<any> {
   static backButton = ({state, style, textButtonStyle}) => (
     <TouchableOpacity
       onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
@@ -38,9 +31,16 @@ class CreateMessage extends React.Component<{}> {
     </TouchableOpacity>
   )
 
+  // @observable selection: SelectableProfileList = new SelectableProfileList(wocky.friends, false);
+  @observable selection = SelectableProfileList.create({})
+
+  componentDidMount() {
+    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})))
+  }
+
   render() {
     return (
-      <Screen isDay>
+      <Screen>
         <View
           style={{
             flexDirection: 'row',
@@ -59,7 +59,7 @@ class CreateMessage extends React.Component<{}> {
             onChangeText={text => this.selection.setFilter(text)}
             value={this.selection.filter}
             placeholder="Search Friends"
-            placeholderColor="rgb(211,211,211)"
+            // placeholderColor="rgb(211,211,211)"
             style={{
               fontSize: 15 * k,
               fontFamily: 'Roboto-Light',
@@ -75,7 +75,6 @@ class CreateMessage extends React.Component<{}> {
         </View>
         <ProfileList
           selection={this.selection}
-          isDay
           onSelect={profile => {
             Actions.pop()
             // messageStore.createChat(profile);

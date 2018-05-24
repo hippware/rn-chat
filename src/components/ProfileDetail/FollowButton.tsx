@@ -4,11 +4,11 @@ import React from 'react'
 import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
-import {Profile} from 'wocky-client'
 import {k} from '../Global'
 
 type Props = {
-  profile: Profile
+  profile: any
+  analytics?: any
 }
 
 const imgFollowing = require('../../../images/buttonFollowing.png')

@@ -1,6 +1,5 @@
-import React from 'react'
-import {StyleSheet, PixelRatio, Dimensions} from 'react-native'
-import {width, height, k} from './Global'
+import {StyleSheet} from 'react-native'
+import {k} from './Global'
 
 const coef = k
 

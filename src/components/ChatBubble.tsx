@@ -5,7 +5,7 @@ import ResizedImage from './ResizedImage'
 import {k} from './Global'
 import ParsedText from 'react-native-parsed-text'
 
-const {height, width} = Dimensions.get('window')
+const {width} = Dimensions.get('window')
 import {observer} from 'mobx-react/native'
 import autobind from 'autobind-decorator'
 import {colors} from '../constants'

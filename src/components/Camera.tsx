@@ -6,7 +6,7 @@ import {inject} from 'mobx-react/native'
 import {CameraKitCameraScreen} from 'react-native-camera-kit'
 
 type Props = {
-  callback: Function
+  callback: any
 }
 
 @inject('store')

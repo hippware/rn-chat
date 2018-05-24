@@ -11,18 +11,19 @@ import SectionHeader from './SectionHeader'
 import {FollowableProfileItem} from './customProfileItems'
 import {followersSectionIndex} from '../../utils/friendUtils'
 import ListFooter from '../ListFooter'
-import {Profile} from 'wocky-client'
 import PeopleSearchWrapper from './PeopleSearchWrapper'
 import InviteFriendsRow from './InviteFriendsRow'
 
 type Props = {
   userId: string
+  wocky: any
 }
 
 @inject('wocky')
 @observer
 class FollowersList extends React.Component<Props> {
-  @observable profile: Profile
+  @observable profile: any
+  searchText: any
 
   componentDidMount() {
     this.getList()
@@ -33,7 +34,7 @@ class FollowersList extends React.Component<Props> {
       ? await this.props.wocky.getProfile(this.props.userId)
       : this.props.wocky.profile
     if (!this.profile) {
-      console.error(`Cannot load profile for user:${this.props.userId}`)
+      // console.error(`Cannot load profile for user:${this.props.userId}`)
     }
     await this.profile.followers.load()
   }
@@ -43,7 +44,7 @@ class FollowersList extends React.Component<Props> {
     const followers = this.profile.isOwn ? this.props.wocky.followers : this.profile.followers.list
     const newFollowers = this.profile.isOwn ? this.props.wocky.newFollowers : []
     const followersCount = this.profile.followersSize
-    const {connected, profile} = this.props.wocky
+    const {connected} = this.props.wocky
     const {finished, loading} = this.profile.isOwn
       ? {finished: true, loading: false}
       : this.profile.followers
@@ -59,7 +60,7 @@ class FollowersList extends React.Component<Props> {
                 <TouchableOpacity
                   onPress={() => {
                     // TODO: batch follow in wocky-client?
-                    section.data.length && section.data.forEach(profile => profile.follow())
+                    if (section.data.length) section.data.forEach(prof => prof.follow())
                   }}
                 >
                   <RText style={{color: colors.PINK}}>Follow All</RText>

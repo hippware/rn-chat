@@ -1,11 +1,9 @@
 // @flow
 
 import React from 'react'
-import {StyleSheet, View, Image, TouchableOpacity} from 'react-native'
+import {TouchableOpacity} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
-
-import {k} from '../Global'
 import Screen from '../Screen'
 import SearchBar from './SearchBar'
 import ProfileList from './ProfileList'
@@ -13,6 +11,7 @@ import {FollowableProfileItem} from './customProfileItems'
 
 type Props = {
   children: any
+  searchStore?: any
 }
 
 @inject('wocky', 'searchStore')
@@ -30,7 +29,7 @@ class SearchWrapper extends React.Component<Props> {
     const {searchStore} = this.props
     const {globalResult, global} = searchStore
     return (
-      <Screen isDay>
+      <Screen>
         <SearchBar
           onChangeText={searchStore.setGlobal}
           value={searchStore.global}
@@ -40,7 +39,7 @@ class SearchWrapper extends React.Component<Props> {
         />
         {global.length > 0 ? (
           globalResult.list && globalResult.list.length ? (
-            <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />
+            <ProfileList selection={searchStore.globalResult} renderItem={this.renderItem} />
           ) : null
         ) : (
           this.props.children

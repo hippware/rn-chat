@@ -8,7 +8,7 @@ import {RText} from '../common'
 import {observer} from 'mobx-react/native'
 
 type Props = {
-  section: Object
+  section: any
   title: string
   children?: any
   count: number

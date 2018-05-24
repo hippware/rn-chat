@@ -15,7 +15,7 @@ const footerImage = require('../../images/graphicEndMsgs.png')
 
 @inject('wocky')
 @observer
-class ChatListScreen extends React.Component<{}> {
+class ChatListScreen extends React.Component<any> {
   list: any
 
   scrollTo = params => {
@@ -27,13 +27,13 @@ class ChatListScreen extends React.Component<{}> {
   keyExtractor = item => `${item.id}`
 
   render() {
-    const {list: chats, unread: number} = this.props.wocky.chats
+    const {list: chats, unread: num} = this.props.wocky.chats
     return (
       <Screen>
         <FlatList
           style={{flex: 1, flexDirection: 'column'}}
           ref={l => (this.list = l)}
-          contentContainerStyle={{marginTop: number ? 47 : 10}}
+          contentContainerStyle={{marginTop: num ? 47 : 10}}
           data={chats}
           initialNumToRender={6}
           ListFooterComponent={
@@ -44,7 +44,7 @@ class ChatListScreen extends React.Component<{}> {
           keyExtractor={this.keyExtractor}
         />
         <MessageButton />
-        {!!number && (
+        {!!num && (
           <View style={styles.button}>
             <RText weight="Italic" color="white">
               New Messages

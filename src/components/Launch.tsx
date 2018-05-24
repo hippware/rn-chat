@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
-import {width, height, k} from './Global'
-import {colors} from '../constants'
+import {width, height} from './Global'
 
 export default props => (
   <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]} testID="screenLaunch">

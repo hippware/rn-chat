@@ -8,7 +8,8 @@ import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 
 type Props = {
-  style?: Object
+  style?: any
+  wocky?: any
 }
 
 const AVATAR_DIMENSION = 80 * k
@@ -16,7 +17,7 @@ const AVATAR_DIMENSION = 80 * k
 @inject('wocky')
 @observer
 class SignUpAvatar extends React.Component<Props> {
-  @observable source: Object
+  @observable source: any
 
   imageSelected = async (src, response) => {
     try {
@@ -29,7 +30,7 @@ class SignUpAvatar extends React.Component<Props> {
       this.source = src
     } catch (err) {
       // TODO handle upload error
-      console.warn('upload error', err)
+      // console.warn('upload error', err)
     }
   }
 

@@ -13,9 +13,9 @@ import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   item: any
-  onPostOptions?: Function
-  onPress: Function
-  style: any
+  onPostOptions?: any
+  onPress: any
+  style?: any
 }
 
 @observer
@@ -32,12 +32,11 @@ export default class ChatCard extends React.Component<Props> {
     try {
       media = msg.media && msg.media.source ? msg.media : null
     } catch (err) {
-      console.log('TODO: Fix msg.media reference error', err)
+      // console.log('TODO: Fix msg.media reference error', err)
     }
     return (
       <Card
         style={[this.props.style]}
-        isDay={isDay}
         onPress={() => this.props.onPress(chat)}
         innerStyle={{paddingTop: 20 * k}}
         footer={
@@ -52,7 +51,7 @@ export default class ChatCard extends React.Component<Props> {
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
               {participants.map(profile => (
-                <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />
+                <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} />
               ))}
             </View>
 
@@ -128,7 +127,7 @@ export default class ChatCard extends React.Component<Props> {
   }
 }
 
-const Date = ({onPostOptions, children}) =>
+const Date = ({onPostOptions, children}: any) =>
   onPostOptions ? (
     <TouchableOpacity onPress={e => onPostOptions(e, e.nativeEvent.target)} style={styles.date}>
       {children}

@@ -5,21 +5,23 @@ import {View, SectionList} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {observer} from 'mobx-react/native'
-import {observable} from 'mobx'
 import {RText} from '../common'
 
 type Props = {
-  loadMore: Function
-  sections: Object[]
+  loadMore: any
+  sections: any[]
   renderSectionHeader?: any
-  renderItem: Function
+  renderItem: any
+  ListHeaderComponent?: any
+  ListFooterComponent?: any
 }
 
 @observer
 class PeopleList extends React.Component<Props> {
   render() {
+    const SL = SectionList as any
     return this.props.sections.length ? (
-      <SectionList
+      <SL
         style={{backgroundColor: 'white'}}
         keyExtractor={item => item.id}
         SectionSeparatorComponent={() => (

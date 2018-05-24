@@ -10,8 +10,8 @@ type Props = {
   // isDay: boolean,
   style: any
   innerStyle: any
-  onPress: Function
-  footer: any
+  onPress: any
+  footer?: any
   children: any
 }
 
@@ -24,7 +24,7 @@ const Card = observer((props: Props) => {
       <View style={[styles.inner, {backgroundColor}, innerStyle]}>
         {React.Children.map(
           children,
-          child => (child && props ? React.cloneElement(child, rest) : child)
+          child => (child && props ? React.cloneElement(child as any, rest) : child)
         )}
       </View>
       {footer}

@@ -5,11 +5,12 @@ import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native'
 import {k} from '../Global'
 
 type Props = {
-  onPress?: Function
+  onPress?: any
+  children: any
 }
 
 // translucent black background
-const ModalContainer = ({children, onPress}) => (
+const ModalContainer = ({children, onPress}: Props) => (
   <TouchableWithoutFeedback onPress={onPress}>
     <View style={styles.container}>{children}</View>
   </TouchableWithoutFeedback>

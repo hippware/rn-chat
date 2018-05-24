@@ -1,8 +1,8 @@
 import React from 'react'
-import {StyleSheet, View, Image, PixelRatio, Dimensions} from 'react-native'
-import {k, width, height} from './Global'
+import {View, Image} from 'react-native'
+import {width, height} from './Global'
 
-export default class extends React.Component {
+export default class extends React.Component<{source: any}> {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', backgroundColor: 'transparent'}}>

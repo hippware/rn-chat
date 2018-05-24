@@ -8,8 +8,8 @@ import * as colors from '../constants/colors'
 import {RText} from './common'
 
 type Props = {
-  style: any
-  item: Bot
+  style?: any
+  item: any
 }
 
 const BotCardInner = inject('locationStore')(

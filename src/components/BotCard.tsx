@@ -7,8 +7,8 @@ import {k} from './Global'
 import BotCardInner from './BotCardInner'
 
 type Props = {
-  item: Bot
-  onPress: Function
+  item: any
+  onPress: any
 }
 
 const BotCard = (props: Props) => {

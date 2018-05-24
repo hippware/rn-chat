@@ -3,7 +3,7 @@ import {View, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 
 @observer
-export default class extends React.Component {
+export default class extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {}
@@ -11,17 +11,13 @@ export default class extends React.Component {
 
   render() {
     return (
-      <View
-        onLayout={({nativeEvent: {layout: {x, y, width, height}}}) =>
-          this.setState({dwidth: width})
-        }
-      >
+      <View onLayout={({nativeEvent: {layout: {width}}}) => this.setState({dwidth: width})}>
         <Image
           style={{
             width: this.state.dwidth,
             height: this.props.image.height * this.state.dwidth / this.props.image.width,
           }}
-          resizeMode={Image.resizeMode.contain}
+          resizeMode="contain"
           source={this.props.image}
         />
       </View>
