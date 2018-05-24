@@ -26,10 +26,10 @@ echo "Installing detox cli..."
 npm install -g detox-cli
 
 echo "Building the project..."
-yarn
+npm install
 
 echo "Run tests"
-yarn test
+npm test
 
 echo "Run detox"
-yarn detox
+npm detox
