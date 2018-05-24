@@ -130,7 +130,6 @@ exports[`MyAccount renders 1`] = `
           />
         </View>
         <View
-          isDay={true}
           style={
             Array [
               Object {
@@ -166,7 +165,6 @@ exports[`MyAccount renders 1`] = `
             }
           >
             <View
-              isDay={true}
               style={
                 Object {
                   "padding": 30,
@@ -195,7 +193,6 @@ exports[`MyAccount renders 1`] = `
               </Text>
             </View>
             <View
-              isDay={true}
               style={
                 Array [
                   Object {
@@ -286,7 +283,6 @@ exports[`MyAccount renders 1`] = `
                         "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
-                    isDay={true}
                     label="First Name"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
@@ -390,7 +386,6 @@ exports[`MyAccount renders 1`] = `
                     allowFontScaling={true}
                     autoCorrect={false}
                     clearButtonMode="while-editing"
-                    isDay={true}
                     label="Last Name"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
@@ -518,7 +513,6 @@ exports[`MyAccount renders 1`] = `
                         "testUri": "../../../images/iconUsernameNew.png",
                       }
                     }
-                    isDay={true}
                     label="Username"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
@@ -645,7 +639,6 @@ exports[`MyAccount renders 1`] = `
                         "testUri": "../../../images/iconEmailNew.png",
                       }
                     }
-                    isDay={true}
                     label="Email"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}

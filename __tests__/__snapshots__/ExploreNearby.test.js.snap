@@ -203,7 +203,6 @@ exports[`Explore Nearby renders with no data 1`] = `
             "longitude": 2,
           }
         }
-        pointerEvents="none"
         style={
           Object {
             "zIndex": 1000,
