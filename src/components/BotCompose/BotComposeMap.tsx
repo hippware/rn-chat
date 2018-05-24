@@ -54,7 +54,6 @@ class BotComposeMap extends React.Component<Props> {
           marker={
             <BotMarker
               key={`coverimage${bot.image && bot.image.loaded}${bot.address}`}
-              id={bot.id}
               onImagePress={() => !bot.uploading && this.onCoverPhoto()}
               image={image}
               showLoader={showLoader}

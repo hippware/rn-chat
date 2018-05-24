@@ -63,7 +63,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Enabled (PR #2315) and then disabled.
 
 wocky-client (PR #2323, PR #2330, PR #2348)
-  * Formatting, fix unit tests, import as git subtree
+
+* Formatting, fix unit tests, import as git subtree
 
 # 2.6.3 - 2018 May 10
 
@@ -112,9 +113,10 @@ wocky-client (PR #2323, PR #2330, PR #2348)
 * Pink blank cover images (#2225)
 
 wocky-client
-  * New 'currentUser' query
-  * Don't use amazon urls as file uri
-  * New 'active bots' query
+
+* New 'currentUser' query
+* Don't use amazon urls as file uri
+* New 'active bots' query
 
 # 2.6.1 - 2018 Apr 29
 

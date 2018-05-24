@@ -586,7 +586,9 @@ export const Wocky = types
       self.updates.clear()
     },
     _onGeoBot: (bot: any) => {
-      self.geoBots.put(self.getBot(bot))
+      if (!self.geoBots.has(bot.id)) {
+        self.geoBots.put(self.getBot(bot))
+      }
     },
     enablePush: flow(function*(token: string) {
       yield waitFor(() => self.connected)
