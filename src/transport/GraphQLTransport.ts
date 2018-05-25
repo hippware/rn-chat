@@ -319,7 +319,7 @@ export class GraphQLTransport implements IWockyTransport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList> {
-    return await this._loadBots('SUBSCRIBED', userId, lastId, max)
+    return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
   async loadGeofenceBots(): Promise<IPagingList> {
     // load all guest bots
