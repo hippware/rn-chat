@@ -16,7 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Refactor entity update (PR #2395)
   * A user onboarded but no user information stored on the server (#2385)
 * Map clustering (#2112, PR #2320)
-* Fix detox on CI (PR #2382)
+* Fix detox on CI (#2380, PR #2382)
 * Convert the rest of the React Components to tsx (#2270, PR #2397)
 * Make bg-fetch result configurable (PR #2398, related to #2230)
 
