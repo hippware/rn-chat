@@ -157,6 +157,7 @@ export class GraphQLTransport implements IWockyTransport {
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<[any]> {
+    // This is supported via the User.Contacts connection
     throw new Error('Not supported')
   }
 
@@ -370,6 +371,7 @@ export class GraphQLTransport implements IWockyTransport {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
   async loadBotPosts(): Promise<IPagingList> {
+    // This is supported via the Bot.Items connection
     throw new Error('Not supported')
   }
   shareBot() {
@@ -402,6 +404,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async requestProfiles(): Promise<any> {
+    // This is supported through the User query
     throw new Error('Not supported')
   }
 
@@ -457,6 +460,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async requestUpload(): Promise<string> {
+    // This is now supported through the MediaUpload mutation
     throw new Error('Not supported')
   }
 
@@ -477,14 +481,18 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async subscribeBot(): Promise<number> {
+    // Supported via the BotSubscribe mutation
     throw new Error('Not supported')
   }
 
   async unsubscribeBot(): Promise<number> {
+    // Supported via the BotUnsubscribe mutation
     throw new Error('Not supported')
   }
 
   async loadChats(): Promise<Array<{id: string; message: any}>> {
+    // Assuming this is what we call "conversations" on the server, this
+    // is avaialble via the CurrentUser.Conversations connection
     throw new Error('Not supported')
   }
 
@@ -497,6 +505,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async updateBot(): Promise<void> {
+    // Avaialble via the BotUpdate mutation
     throw new Error('Not supported')
   }
 
@@ -521,6 +530,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   subscribeToHomestream(): void {
+    // Available via the HomeStream subscription
     throw new Error('Not supported')
   }
 
@@ -537,6 +547,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadHomestream(): Promise<IPagingList> {
+    // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
   private async getBotProfiles(

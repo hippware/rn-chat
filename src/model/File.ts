@@ -48,6 +48,21 @@ export const File = types
       }
     }),
   }))
+  .actions(self => ({
+    download: flow(function*() {
+      if (!self.source && !self.loading) {
+        try {
+          self.error = ''
+          self.loading = true
+          self.thumbnail = self.source = yield self.service.downloadTROS(self.id)
+        } catch (e) {
+          self.error = e
+        } finally {
+          self.loading = false
+        }
+      }
+    }),
+  }))
   .actions(self => {
     return {
       postProcessSnapshot: (snapshot: any) => {
