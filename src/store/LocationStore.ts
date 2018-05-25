@@ -44,8 +44,6 @@ const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   elasticityMultiplier: types.maybe(types.number),
-  // preventSuspend: true,
-  // heartbeatInterval: types.maybe(types.number),
   stopTimeout: types.maybe(types.number),
   desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
   distanceFilter: types.maybe(types.number),
@@ -60,6 +58,7 @@ const LocationStore = types
     // should we persist location?
     location: types.maybe(Location),
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
+    fetchResult: 0,
   })
   .volatile(() => ({
     enabled: true,
@@ -167,24 +166,6 @@ const LocationStore = types
   .actions(self => {
     const {logger, nativeEnv, backgroundFetch, analytics} = getEnv(self)
 
-    // function onHeartbeat(data) {
-    //   logger.log(prefix, 'heartbeat:', JSON.stringify(data))
-    //   self.backgroundGeolocation.getCurrentPosition(
-    //     location => {
-    //       logger.log(prefix, 'Current position received: ', JSON.stringify(location))
-    //     },
-    //     errorCode => {
-    //       logger.log(prefix, 'A location error occurred: ' + errorCode)
-    //     },
-    //     {
-    //       timeout: 30, // 30 second timeout to fetch location
-    //       maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
-    //       desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
-    //       samples: 3, // How many location samples to attempt.
-    //     }
-    //   )
-    // }
-
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
       self.setPosition(position.coords)
@@ -276,7 +257,6 @@ const LocationStore = types
         self.backgroundGeolocation.on('http', onHttp, onHttpError)
         self.backgroundGeolocation.on('error', self.positionError)
         self.backgroundGeolocation.on('motionchange', onMotionChange)
-        // self.backgroundGeolocation.on('heartbeat', onHeartbeat)
         self.backgroundGeolocation.on('activitychange', onActivityChange)
         self.backgroundGeolocation.on('providerchange', onProviderChange)
         self.backgroundGeolocation = self.backgroundGeolocation
@@ -303,7 +283,6 @@ const LocationStore = types
         desiredAccuracy: self.backgroundGeolocation.DESIRED_ACCURACY_HIGH,
         elasticityMultiplier: 1,
         preventSuspend: false,
-        // heartbeatInterval: 60,
         useSignificantChangesOnly: false,
         stationaryRadius: 25,
         distanceFilter: 30,
@@ -344,8 +323,8 @@ const LocationStore = types
             } catch (err) {
               onHttpError(err)
             }
-            analytics.track('location_bg_fetch_finish')
-            backgroundFetch.finish()
+            analytics.track('location_bg_fetch_finish', {result: self.fetchResult})
+            backgroundFetch.finish(self.fetchResult)
           },
           error => {
             logger.log('RNBackgroundFetch failed to start', error)
@@ -399,7 +378,10 @@ const LocationStore = types
 
     function setBackgroundConfig(config) {
       if (config.debugSounds && !self.debugSounds) self.backgroundGeolocation.playSound(1028) // newsflash
-      self.setState({debugSounds: config.debugSounds})
+      self.setState({
+        debugSounds: config.debugSounds,
+        fetchResult: Number.parseInt(config.fetchResult) || 0,
+      })
       self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 

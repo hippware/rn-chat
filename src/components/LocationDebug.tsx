@@ -20,11 +20,16 @@ import {colors} from '../constants'
 
 const Form = t.form.Form
 
+// https://github.com/transistorsoft/react-native-background-fetch#methods
+export const FetchResultChoices = {
+  '0': 'NEW DATA',
+  '1': 'NO DATA',
+  '2': 'FAILED',
+}
+
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
-  // preventSuspend: t.Boolean,
-  // heartbeatInterval: t.Number,
   stopTimeout: t.Number,
   elasticityMultiplier: t.Number,
   desiredAccuracy: t.enums(LocationAccuracyChoices),
@@ -32,6 +37,7 @@ const debuggerSettings = t.struct({
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
   activityRecognitionInterval: t.Number,
+  fetchResult: t.enums(FetchResultChoices),
 })
 
 const options = {
@@ -39,12 +45,6 @@ const options = {
     debug: {
       label: 'Background location debug mode',
     },
-    // preventSuspend: {
-    //   label: 'preventSuspend',
-    // },
-    // heartbeatInterval: {
-    //   label: 'heartbeatInterval (in seconds, min 60)',
-    // },
     stopTimeout: {
       label: 'stopTimeout (in minutes)',
     },
@@ -65,6 +65,9 @@ const options = {
     },
     activityRecognitionInterval: {
       label: 'activityRecognitionInterval (in ms)',
+    },
+    fetchResult: {
+      label: 'fetchResult (background fetch)',
     },
   },
 }
@@ -103,10 +106,10 @@ export default class LocationDebug extends React.Component<Props> {
   )
 
   render() {
-    const {backgroundOptions, debugSounds} = this.props.locationStore!
+    const {backgroundOptions, debugSounds, fetchResult} = this.props.locationStore!
     if (!backgroundOptions) return null
     let value = _.pick(backgroundOptions, BG_STATE_PROPS)
-    value = _.assign(value, {debugSounds})
+    value = _.assign(value, {debugSounds, fetchResult})
     const syncing = this.syncing || !this.props.wocky!.connected
 
     return (
