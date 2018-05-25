@@ -87,6 +87,10 @@
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.30.tgz#dc1e40f7af3b9c815013a7860e6252f6352a84df"
 
+"@types/detox@^7.3.0":
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-7.3.0.tgz#1ecd3a9a4e79a137e9a8e6e14f1f512584b3b7d0"
+
 "@types/form-data@*":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
@@ -2337,7 +2341,7 @@ commander@^2.11.0, commander@^2.9.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
-commander@^2.12.1:
+commander@^2.12.1, commander@^2.15.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -2734,12 +2738,12 @@ detox-server@^7.0.0:
     npmlog "^4.0.2"
     ws "^1.1.0"
 
-detox@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-7.1.0.tgz#74f4c750bab3e502b8c86b5217a0ef2de55aee94"
+detox@^7.3.7:
+  version "7.3.7"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-7.3.7.tgz#257a2bdb805b98a5c9c001e4b30a16bf72ce7ba6"
   dependencies:
     child-process-promise "^2.2.0"
-    commander "^2.9.0"
+    commander "^2.15.1"
     detox-server "^7.0.0"
     fs-extra "^4.0.2"
     get-port "^2.1.0"
