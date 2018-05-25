@@ -1117,7 +1117,7 @@ function addValue(iq: any, name: string, value: any) {
     addField(iq, name, type)
     iq
       .c('value')
-      .t(name === 'image' ? value.id : value)
+      .t(value)
       .up()
       .up()
   }
