@@ -171,6 +171,7 @@ exports[`Explore Nearby renders with no data 1`] = `
             "stationaryRadius": null,
             "stopTimeout": null,
           },
+          "fetchResult": 0,
           "location": Object {
             "accuracy": 2,
             "latitude": 2,
