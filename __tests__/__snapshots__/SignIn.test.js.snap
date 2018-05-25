@@ -251,7 +251,6 @@ your phone number.
                       }
                     }
                     underlineColorAndroid="transparent"
-                    validate={[Function]}
                     value="United States +1"
                   />
                   <View

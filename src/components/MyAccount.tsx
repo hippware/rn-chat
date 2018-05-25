@@ -71,7 +71,7 @@ class MyAccount extends React.Component<Props> {
               height: 66 * k,
             }}
           />
-          <Card isDay style={{opacity: 0.95}}>
+          <Card style={{opacity: 0.95}}>
             <View style={{padding: 15 * k}} testID="profileInfo">
               <RText size={16} weight="Medium" style={{color: colors.navBarTextColorDay}}>
                 Profile Info

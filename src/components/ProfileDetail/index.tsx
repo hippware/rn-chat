@@ -49,12 +49,7 @@ class ProfileDetail extends React.Component<Props> {
     }
     return (
       <Screen testID="profileDetail">
-        <BotListView
-          ref={r => (this.list = r)}
-          list={this.profile.ownBots}
-          user={this.profile}
-          header={this._header}
-        />
+        <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} header={this._header} />
         <BotButton />
       </Screen>
     )

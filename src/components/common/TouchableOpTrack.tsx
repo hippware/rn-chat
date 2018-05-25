@@ -7,6 +7,7 @@ type Props = {
   trackData?: object
   onPress: (args?: any) => void
   analytics?: any
+  style?: any
 }
 
 const TouchableOpTrack = inject('analytics')((props: Props) => (

@@ -11,8 +11,8 @@ import {RText, Separator} from '../common'
 
 type Props = {
   selection: any // TODO change to ISelectableProfileList
-  onSelect?: () => void
-  renderItem?: () => React.ReactElement<any>
+  onSelect?: (profile: any) => void
+  renderItem?: (obj: any) => React.ReactElement<any>
 }
 
 @observer
