@@ -4,6 +4,9 @@ import chalk from 'chalk'
 
 const navLeftButtonCoords = {x: 35, y: 35}
 
+function sleep(delay) {
+  return new Promise(resolve => setTimeout(() => resolve(), delay))
+}
 describe('Detox', () => {
   it('shows onboarding screen', async () => {
     takeScreenshot('first-open')
@@ -35,7 +38,8 @@ describe('Detox', () => {
 
     await waitFor(element(by.id('signUpTopRow')))
       .toBeVisible()
-      .withTimeout(3000)
+      .withTimeout(5000)
+
     takeScreenshot('signup-visible')
   })
 
