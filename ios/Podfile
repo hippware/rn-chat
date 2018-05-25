@@ -34,6 +34,11 @@ def testing_pods
     pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
     pod 'Firebase/Auth'
     pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
+    # Pods for AppCenter
+  pod 'AppCenter/Analytics', '~> 1.6.1'
+  pod 'AppCenter/Crashes', '~> 1.6.1'
+  pod 'AppCenterReactNativeShared', '~> 1.5.1'
+  platform :ios, '9.0'
 end
 
 target 'tinyrobot' do

@@ -8,6 +8,9 @@
  */
 
 #import "AppDelegate.h"
+#import <AppCenterReactNativeAnalytics/AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes/AppCenterReactNativeCrashes.h>
+#import <AppCenterReactNative/AppCenterReactNative.h>
 
 #import <React/RCTRootView.h>
 #import <React/RCTAssert.h>
@@ -75,6 +78,12 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
   NSURL *jsCodeLocation;
+
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
+
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
+
+  [AppCenterReactNative register];  // Initialize AppCenter 
 
   #ifdef DEBUG
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];

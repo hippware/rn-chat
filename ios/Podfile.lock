@@ -1,4 +1,11 @@
 PODS:
+  - AppCenter/Analytics (1.6.1):
+    - AppCenter/Core
+  - AppCenter/Core (1.6.1)
+  - AppCenter/Crashes (1.6.1):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (1.5.1):
+    - AppCenter/Core (= 1.6.1)
   - BugsnagReactNative (2.9.1):
     - BugsnagReactNative/Core (= 2.9.1)
     - React
@@ -309,6 +316,9 @@ PODS:
   - yoga (0.53.0.React)
 
 DEPENDENCIES:
+  - AppCenter/Analytics (~> 1.6.1)
+  - AppCenter/Crashes (~> 1.6.1)
+  - AppCenterReactNativeShared (~> 1.5.1)
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - Firebase/Auth
@@ -343,6 +353,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AppCenter
+    - AppCenterReactNativeShared
     - CocoaAsyncSocket
     - CocoaLumberjack
     - Firebase
@@ -402,6 +414,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
+  AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
+  AppCenterReactNativeShared: 5b40dc5bbaf891697d1982e0ae0e9b1120dd4274
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
@@ -433,6 +447,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 13227bda07962ed659b31769a28e007dba09831e
+PODFILE CHECKSUM: 4b023a72e6af8eb24d5274de082de28ddcf9405f
 
 COCOAPODS: 1.5.2
