@@ -16,8 +16,8 @@ export PATH=$PATH:./simutils/build/Build/Products/Release
 echo "Detecting applesimutils"
 which applesimutils
 npm install detox-cli -g
-echo 'Yarn install'
-set -ex
-yarn
-yarn test
-yarn detox
+# echo 'Detox install'
+# set -ex
+# yarn
+# yarn test
+# yarn detox
