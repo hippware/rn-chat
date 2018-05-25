@@ -9,6 +9,16 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Update cocoapods to run with XCode 9.3 (#2073, PR #2377)
 * Distance string display tweak for: Polish mileage calculation (#1303)
 * hot-fix: formatting and avoid bugsnag report for getImageSize
+  * Error in src/store/ProfileValidationStore.ts:25 (#2355)
+* Better image upload errors handling (PR #2389)
+  * Unhandled exception is raised for failed image upload (#2387)
+  * Handle failed image upload for conversation UI (#2394)
+* Refactor entity update (PR #2395)
+  * A user onboarded but no user information stored on the server (#2385)
+* Map clustering (#2112, PR #2320)
+* Fix detox on CI (PR #2382)
+* Convert the rest of the React Components to tsx (#2270, PR #2397)
+* Make bg-fetch result configurable (PR #2398, related to #2230)
 
 # 2.6.8 - 2018 May 18
 
