@@ -19,6 +19,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix detox on CI (#2380, PR #2382)
 * Convert the rest of the React Components to tsx (#2270, PR #2397)
 * Make bg-fetch result configurable (PR #2398, related to #2230)
+* Change name of relationship to 'SUBSCRIBED_NOT_OWNED' (PR #2399)
+  * Newly created bots should not appear in the saved bot list (#1701)
 
 # 2.6.8 - 2018 May 18
 
