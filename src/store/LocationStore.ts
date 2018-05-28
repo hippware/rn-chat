@@ -402,10 +402,17 @@ const LocationStore = types
       ;({wocky} = getParent(self))
     }
 
-    function start() {
-      Permissions.check('location', {type: 'always'}).then(response => {
-        self.setAlwaysOn(response === 'authorized')
-      })
+    const start = flow(function*() {
+      const resp1 = yield Permissions.check('location', {type: 'always'})
+      if (resp1 === 'authorized') {
+        self.setAlwaysOn(true)
+        self.setState({enabled: true})
+      } else {
+        self.setAlwaysOn(false)
+        const resp2 = yield Permissions.check('location', {type: 'whenInUse'})
+        self.setState({enabled: resp2 !== 'denied'})
+      }
+
       if (!self.alwaysOn) {
         self.stopBackground()
       }
@@ -417,7 +424,7 @@ const LocationStore = types
           })
         }
       )
-    }
+    })
 
     function finish() {
       if (handler) handler()
