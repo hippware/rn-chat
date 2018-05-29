@@ -15,8 +15,7 @@ def testing_pods
         'RCTSettings',
         'RCTText',
         'RCTVibration',
-        'RCTWebSocket',
-        'BatchedBridge'
+        'RCTWebSocket'
     ]
     pod 'GoogleMaps'
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
