@@ -53,6 +53,10 @@ android/app/libs
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+# Bundle artifact
+*.jsbundle
+
 .tmp/
 .project 
 yarn-error.log
