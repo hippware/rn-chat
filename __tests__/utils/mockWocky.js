@@ -1,38 +1,39 @@
 // @flow
 
-import {Wocky} from 'wocky-client'
-import {simpleActionLogger} from 'mst-middlewares'
-import {addMiddleware} from 'mobx-state-tree'
-import {observable} from 'mobx'
+import {Wocky} from 'wocky-client';
+import {simpleActionLogger} from 'mst-middlewares';
+import {addMiddleware} from 'mobx-state-tree';
+import {observable} from 'mobx';
 
 export class XmppTransport {
-  provider: any
-  fileService: any
-  resource: string
-  @observable connected: boolean = true
-  @observable connecting: boolean = false
-  @observable iq: any = {}
-  @observable rosterItem: any = {}
-  @observable message: {id: string, message: any}
-  @observable presence: {status: string, id: string}
-  @observable username: string
-  @observable password: string
-  @observable host: string
-  @observable geoBot: any
-  @observable notification: any
-  isGeoSearching: boolean = false
+  provider: any;
+  fileService: any;
+  resource: string;
+  @observable connected: boolean = true;
+  @observable connecting: boolean = false;
+  @observable iq: any = {};
+  @observable rosterItem: any = {};
+  @observable message: {id: string, message: any};
+  @observable presence: {status: string, id: string};
+  @observable username: string;
+  @observable password: string;
+  @observable host: string;
+  @observable geoBot: any;
+  @observable notification: any;
+  isGeoSearching: boolean = false;
 
   async login(user?: string, password?: string, host?: string) {
-    this.user = user
-    this.password = password
-    this.host = host
-    this.connected = true
+    console.log('WOCKY LOGIN');
+    this.user = user;
+    this.password = password;
+    this.host = host;
+    this.connected = true;
   }
 
   async disconnect() {
     // this.provider.disconnectAfterSending()
     // await new Promise(resolve => when(() => !this.connected, resolve))
-    this.connected = false
+    this.connected = false;
   }
 
   async sendIQ(data: any, withoutTo: boolean = false): Promise<any> {}
@@ -51,12 +52,7 @@ export class XmppTransport {
   }
   async remove() {}
 
-  async loadRelations(
-    userId: string,
-    relation: string = 'following',
-    lastId?: string,
-    max: number = 10
-  ) {
+  async loadRelations(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
     // return {list, count: parseInt(stanza.contacts.set.count)}
   }
 
@@ -65,10 +61,10 @@ export class XmppTransport {
   }
   async downloadFile(tros: string, name: string, sourceUrl: string) {}
   async downloadThumbnail(url: string, tros: string) {
-    return this.downloadFile(tros, 'thumbnail', url)
+    return this.downloadFile(tros, 'thumbnail', url);
   }
   async downloadTROS(tros: string) {
-    return this.downloadFile(tros, 'main', '')
+    return this.downloadFile(tros, 'main', '');
   }
   async requestUpload({file, size, width, height, access}: any) {
     // return data.reference_url
@@ -111,7 +107,7 @@ export class XmppTransport {
     // } else {
     //   throw 'Cannot generate ID'
     // }
-    return '4321'
+    return '4321';
   }
   async removeBot(id: string) {}
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
@@ -188,37 +184,34 @@ export class XmppTransport {
 
 class FakeFileService {
   get tempDir() {
-    return null
+    return null;
   }
   fileExists(filePath: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      resolve(true)
-    })
+      resolve(true);
+    });
   }
   mkdir(folder: string) {
     // return mkdir(folder);
   }
   getImageSize(filename: string): Promise<{width: number, height: number}> {
-    return new Promise((resolve, reject) => resolve({width: 0, height: 0}))
+    return new Promise((resolve, reject) => resolve({width: 0, height: 0}));
   }
   downloadHttpFile(urlString: string, fileName: string, headers: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      resolve()
-    })
+      resolve();
+    });
   }
   removeFile() {}
 }
 
-const transport = new XmppTransport()
-const fileService = new FakeFileService()
-const logger = console
+const transport = new XmppTransport();
+const fileService = new FakeFileService();
+const logger = console;
 export function createWocky(env = {}) {
-  const wocky = Wocky.create(
-    {host: 'testing.dev.tinyrobot.com'},
-    {analytics: {track: () => {}}, transport, fileService, logger, ...env}
-  )
-  addMiddleware(wocky, simpleActionLogger)
-  return wocky
+  const wocky = Wocky.create({host: 'testing.dev.tinyrobot.com'}, {analytics: {track: () => {}}, transport, fileService, logger, ...env});
+  addMiddleware(wocky, simpleActionLogger);
+  return wocky;
 }
 
-export default createWocky()
+export default createWocky();
