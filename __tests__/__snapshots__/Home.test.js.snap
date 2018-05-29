@@ -45,7 +45,6 @@ exports[`Home renders with no data 1`] = `
       refreshControl={
         <RefreshControlMock
           onRefresh={[Function]}
-          progressViewOffset={undefined}
           refreshing={false}
         />
       }
@@ -259,16 +258,8 @@ Visitors
                     Know when your friends visit your favorite places!
                   </Text>
                   <View
-                    accessibilityComponentType={undefined}
-                    accessibilityLabel={undefined}
-                    accessibilityTraits={undefined}
                     accessible={true}
-                    collapsable={undefined}
-                    hasTVPreferredFocus={undefined}
-                    hitSlop={undefined}
                     isTVSelectable={true}
-                    nativeID={undefined}
-                    onLayout={undefined}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -286,8 +277,6 @@ Visitors
                         "padding": 16,
                       }
                     }
-                    testID={undefined}
-                    tvParallaxProperties={undefined}
                   >
                     <Text
                       accessible={true}
@@ -463,16 +452,8 @@ favorite bots!
     </RCTScrollView>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -497,8 +478,6 @@ favorite bots!
         "width": 54,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <View
       style={
@@ -515,7 +494,6 @@ favorite bots!
             "testUri": "../../../images/iconCreateBot.png",
           }
         }
-        style={undefined}
       />
     </View>
   </View>
