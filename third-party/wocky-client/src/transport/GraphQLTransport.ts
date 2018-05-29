@@ -146,7 +146,11 @@ export class GraphQLTransport implements IWockyTransport {
           query LoadProfile {
             user(id: "${user}") {
               ${PROFILE_PROPS}
-              ${user === this.username ? '... on CurrentUser { email phoneNumber }' : ''}
+              ${
+                user === this.username
+                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence }'
+                  : ''
+              }
             }
           }
         `,
