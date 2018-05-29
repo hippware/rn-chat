@@ -1,6 +1,6 @@
 global.window = global
-jest.mock('mobx-react/native', () => require('mobx-react/custom'))
-jest.mock('Linking', () => {
+jest.doMock('mobx-react/native', () => require('mobx-react/custom'))
+jest.doMock('Linking', () => {
   return {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
