@@ -21,6 +21,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Make bg-fetch result configurable (PR #2398, related to #2230)
 * Change name of relationship to 'SUBSCRIBED_NOT_OWNED' (PR #2399)
   * Newly created bots should not appear in the saved bot list (#1701)
+* Allow Location Access not displaying with location set to Never (#2371)
+* Bugsnag crash (#2388)
 
 # 2.6.8 - 2018 May 18
 
