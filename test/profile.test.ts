@@ -11,7 +11,7 @@ describe('ProfileStore', () => {
       user1 = await createXmpp(31)
       await waitFor(() => user1.profile !== null)
       await user1.profile!.update({
-        handle: 'abc1',
+        handle: 'abc12',
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
