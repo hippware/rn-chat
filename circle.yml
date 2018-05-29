@@ -38,6 +38,7 @@ jobs:
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
     - run: yarn
+    - run: node --version
     - run: npm test
     - run: brew tap wix/brew
     - run: brew install applesimutils
