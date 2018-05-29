@@ -1,6 +1,6 @@
 // from https://github.com/react-community/react-native-maps/issues/889#issuecomment-300637902
 
-jest.doMock('react-native-maps', () => {
+jest.mock('react-native-maps', () => {
   const React = require.requireActual('react')
   const MapView = require.requireActual('react-native-maps')
 
