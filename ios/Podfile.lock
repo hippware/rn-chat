@@ -6,6 +6,7 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (1.5.1):
     - AppCenter/Core (= 1.6.1)
+  - Base64 (1.1.2)
   - BugsnagReactNative (2.9.1):
     - BugsnagReactNative/Core (= 2.9.1)
     - React
@@ -20,20 +21,11 @@ PODS:
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - CodePush (5.1.3):
-    - CodePush/Base64 (= 5.1.3)
-    - CodePush/Core (= 5.1.3)
-    - CodePush/JWT (= 5.1.3)
-    - CodePush/SSZipArchive (= 5.1.3)
+  - CodePush (5.3.4):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.7)
     - React
-  - CodePush/Base64 (5.1.3):
-    - React
-  - CodePush/Core (5.1.3):
-    - React
-  - CodePush/JWT (5.1.3):
-    - React
-  - CodePush/SSZipArchive (5.1.3):
-    - React
+    - SSZipArchive (~> 2.1)
   - Firebase/Auth (5.0.1):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.0)
@@ -79,6 +71,8 @@ PODS:
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GTMSessionFetcher/Core (1.1.15)
+  - JWT (3.0.0-beta.8):
+    - Base64 (~> 1.1.2)
   - KissXML (5.1.4):
     - KissXML/Core (= 5.1.4)
   - KissXML/Core (5.1.4)
@@ -144,6 +138,7 @@ PODS:
     - React
     - XMPPFramework
   - RSKImageCropper (2.0.1)
+  - SSZipArchive (2.1.2)
   - XMPPFramework (3.7.6):
     - XMPPFramework/All (= 3.7.6)
   - XMPPFramework/All (3.7.6):
@@ -346,6 +341,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AppCenter
     - AppCenterReactNativeShared
+    - Base64
     - CocoaAsyncSocket
     - CocoaLumberjack
     - Firebase
@@ -357,10 +353,12 @@ SPEC REPOS:
     - GoogleMaps
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - JWT
     - Mixpanel
     - nanopb
     - QBImagePickerController
     - RSKImageCropper
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   BugsnagReactNative:
@@ -407,10 +405,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
   AppCenterReactNativeShared: 5b40dc5bbaf891697d1982e0ae0e9b1120dd4274
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
-  CodePush: af67b07310e4037ecd5c38f03c7a51c6350240b5
+  CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
   Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
@@ -420,6 +419,7 @@ SPEC CHECKSUMS:
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  JWT: 6e7ec473b6febcb7498affc84f0e75d393914411
   KissXML: f0cb6444b28b650f569a5d5deea964cc6f81ec9e
   Mixpanel: be4de218d0ffaaae59b498078b2ecf2db1f8072c
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -435,6 +435,7 @@ SPEC CHECKSUMS:
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
   RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
   RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
+  SSZipArchive: d4009d2ce5520a421f231fd97028cc0e2667eed8
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
