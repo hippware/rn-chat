@@ -18,7 +18,7 @@ const FirstLoadOverlay = inject('wocky')(
   observer(({wocky}: Props) => {
     return (
       wocky!.profile &&
-      wocky!.profile!.hasUsedGeofence && (
+      !wocky!.profile!.hasUsedGeofence && (
         <View style={styles.container}>
           <Image source={bg} style={styles.bgImage} resizeMode="cover" />
           <Image source={foot} style={styles.image} resizeMode="contain" />
