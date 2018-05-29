@@ -14,13 +14,13 @@ let bot, bot2: IBot
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
-  before('get credentials via XMPP', async done => {
+  it('get credentials via XMPP', async done => {
     try {
       user = await createXmpp(35)
       user2 = await createXmpp(36)
       await waitFor(() => user.profile !== null)
       await user.profile!.update({
-        handle: 'abc1345678',
+        handle: 'abc13456789',
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com'
