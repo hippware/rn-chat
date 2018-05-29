@@ -19,21 +19,21 @@ async function exitBot(user: IWocky) {
 describe('Geofence', () => {
   before(async done => {
     try {
-      user1 = await createXmpp(26)
+      user1 = await createXmpp(28)
       console.log('credentials', user1.username, user1.password)
-      user2 = await createXmpp(27)
+      user2 = await createXmpp(29)
       await exitBot(user1)
       await exitBot(user2)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
       await user1.profile!.update({
-        handle: 'abcc3',
+        handle: 'abccc3',
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
       })
       await user2.profile!.update({
-        handle: 'abcc4',
+        handle: 'abccc4',
         firstName: 'name2',
         lastName: 'lname2',
         email: 'a2@aa.com',

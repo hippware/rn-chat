@@ -14,16 +14,16 @@ let bot, bot2: IBot
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
-  before('get credentials via XMPP', async done => {
+  it('get credentials via XMPP', async done => {
     try {
       user = await createXmpp(35)
       user2 = await createXmpp(36)
       await waitFor(() => user.profile !== null)
       await user.profile!.update({
-        handle: 'abc134567',
+        handle: 'abc13456789',
         firstName: 'name1',
         lastName: 'lname1',
-        email: 'a@aa.com',
+        email: 'a@aa.com'
       })
       // console.log('credentials', user.username, user.password)
       gql = new GraphQLTransport('testing')
@@ -71,14 +71,14 @@ describe('GraphQL', () => {
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         geofence: true,
-        addressData: {city: 'Koper', country: 'Slovenia'},
+        addressData: {city: 'Koper', country: 'Slovenia'}
       })
       bot2 = await user.createBot()
       await bot2.update({
         location: {latitude: 1.2, longitude: 2.2},
         title: 'Test bot2',
         geofence: false,
-        addressData: {city: 'New York', country: 'US'},
+        addressData: {city: 'New York', country: 'US'}
       })
       const bots = await gql.loadOwnBots(user.username!, null, 1)
       // console.log('bots', bots)
@@ -151,6 +151,10 @@ describe('GraphQL', () => {
   after('remove', async done => {
     try {
       await user.remove()
+    } catch (e) {
+      console.log(e)
+    }
+    try {
       await user2.remove()
     } catch (e) {
       console.log(e)
