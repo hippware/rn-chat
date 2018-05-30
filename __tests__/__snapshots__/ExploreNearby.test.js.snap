@@ -229,16 +229,8 @@ exports[`Explore Nearby renders with no data 1`] = `
       </Marker>
     </MapView>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -255,8 +247,6 @@ exports[`Explore Nearby renders with no data 1`] = `
           "width": 100,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Image
         source={
@@ -267,16 +257,8 @@ exports[`Explore Nearby renders with no data 1`] = `
       />
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -301,8 +283,6 @@ exports[`Explore Nearby renders with no data 1`] = `
           "width": 54,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -319,12 +299,10 @@ exports[`Explore Nearby renders with no data 1`] = `
               "testUri": "../../../images/iconCreateBot.png",
             }
           }
-          style={undefined}
         />
       </View>
     </View>
     <View
-      collapsable={undefined}
       style={
         Object {
           "backgroundColor": "#007bff",
@@ -348,16 +326,8 @@ exports[`Explore Nearby renders with no data 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -370,8 +340,6 @@ exports[`Explore Nearby renders with no data 1`] = `
             "opacity": 1,
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <View
           style={
