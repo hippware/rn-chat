@@ -45,7 +45,6 @@ exports[`BotDetailsHeader renders with test bot 1`] = `
       />
     </View>
     <View
-      collapsable={undefined}
       pointerEvents="none"
       style={
         Object {

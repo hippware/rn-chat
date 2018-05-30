@@ -139,16 +139,8 @@ Why not start a conversation?
       </View>
     </RCTScrollView>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -167,8 +159,6 @@ Why not start a conversation?
           "width": 54,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -185,7 +175,6 @@ Why not start a conversation?
               "testUri": "../../../images/iconNewMsg.png",
             }
           }
-          style={undefined}
         />
       </View>
     </View>
