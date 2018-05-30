@@ -23,6 +23,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Newly created bots should not appear in the saved bot list (#1701)
 * Allow Location Access not displaying with location set to Never (#2371)
 * Bugsnag crash (#2388)
+* New requirement for welcome header from (PR #2405)
+  * Geofence Widget State: When user has NOT enabled footprint and has location setting: Always (#2327)
 
 # 2.6.8 - 2018 May 18
 
