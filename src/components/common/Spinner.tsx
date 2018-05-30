@@ -1,11 +1,11 @@
 import React from 'react'
-import {Image, ViewStyle} from 'react-native'
+import {Image, ImageStyle} from 'react-native'
 import {k} from '../Global'
 
 type Props = {
   color?: 'pink' | 'white'
   size?: number
-  style?: ViewStyle
+  style?: ImageStyle
 }
 
 const Spinner = ({color, size, style}: Props) => {

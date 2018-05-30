@@ -1,17 +1,16 @@
-// @flow
-
 import React from 'react'
 import {FlatList} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import BotCard from './BotCard'
 import ListFooter from './ListFooter'
+import {IWocky, IBot} from 'wocky-client'
 
 type Props = {
   filter?: string
   list?: any
   header?: any
-  wocky?: any
+  wocky?: IWocky
 }
 
 const img = require('../../images/graphicEndBots.png')
@@ -21,44 +20,52 @@ const img = require('../../images/graphicEndBots.png')
 export default class BotListView extends React.Component<Props> {
   props: Props
   list: any
+  bots?: any
+
+  componentWillMount() {
+    const {filter, wocky, list} = this.props
+    this.bots =
+      filter === 'all'
+        ? wocky.profile.subscribedBots
+        : filter === 'own' ? wocky.profile.ownBots : list
+    this.bots.load()
+  }
 
   scrollToTop = () => {
     this.list.scrollToOffset({x: 0, y: 0})
   }
 
   render() {
-    const {filter, list, header, wocky} = this.props
+    const {header, wocky} = this.props
     if (!wocky.profile) {
       return null
     }
-    const bots =
-      filter === 'all'
-        ? wocky.profile.subscribedBots
-        : filter === 'own' ? wocky.profile.ownBots : list
-    const {finished} = bots
+    const {finished} = this.bots
     const {connected} = wocky
 
     return (
-      <FlatList
-        data={bots.list.slice()}
-        ref={l => (this.list = l)}
-        onEndReachedThreshold={0.5}
-        onEndReached={bots.load}
-        ListHeaderComponent={header}
-        ListFooterComponent={
-          connected ? (
-            <ListFooter
-              footerImage={img}
-              finished={finished}
-              style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}}
-            />
-          ) : null
-        }
-        renderItem={({item}) => (
-          <BotCard item={item} onPress={i => Actions.botDetails({item: i.id})} />
-        )}
-        keyExtractor={item => `${item.id}`}
-      />
+      this.bots && (
+        <FlatList
+          data={this.bots.list.slice()}
+          ref={l => (this.list = l)}
+          onEndReachedThreshold={0.5}
+          onEndReached={this.bots.load}
+          ListHeaderComponent={header}
+          ListFooterComponent={
+            connected ? (
+              <ListFooter
+                footerImage={img}
+                finished={finished}
+                style={{marginTop: !finished && this.bots.list.length === 0 ? 100 : 0}}
+              />
+            ) : null
+          }
+          renderItem={({item}) => (
+            <BotCard item={item} onPress={i => Actions.botDetails({item: i.id})} />
+          )}
+          keyExtractor={(item: IBot) => `${item.id}`}
+        />
+      )
     )
   }
 }
