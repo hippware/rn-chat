@@ -3733,11 +3733,6 @@
 		D8962421BA56D0F6008D62E50345B56D /* YGNodePrint.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = YGNodePrint.cpp; path = yoga/YGNodePrint.cpp; sourceTree = "<group>"; };
 		D89BC0B62D50CFED2C913DB43B32B9AC /* BSG_KSCrashSentry_MachException.c */ = {isa = PBXFileReference; includeInIndex = 1; path = BSG_KSCrashSentry_MachException.c; sourceTree = "<group>"; };
 		D8B589C327C96CD6A1A002EACA2ECD9C /* RCTProfileTrampoline-x86_64.S */ = {isa = PBXFileReference; includeInIndex = 1; path = "RCTProfileTrampoline-x86_64.S"; sourceTree = "<group>"; };
-		D8D5EB2C7D93C4BB9D5A2EC7641ADE43 /* RCTTabBarManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RCTTabBarManager.h; sourceTree = "<group>"; };
-		D9229CAD8B6A4DBAC21DEE225267C65B /* RCTConvert.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = RCTConvert.m; sourceTree = "<group>"; };
-		D996D3F46765EADE5F8A04FE44C54890 /* GTMSessionFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcher.h; path = Source/GTMSessionFetcher.h; sourceTree = "<group>"; };
-		D9A5145D2ED443FCD90E662CEB9CA054 /* FIRGetAccountInfoResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRGetAccountInfoResponse.m; path = Firebase/Auth/Source/RPCs/FIRGetAccountInfoResponse.m; sourceTree = "<group>"; };
-		D9D0BDB95866142D5587D77FDE257E99 /* DummyView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DummyView.m; path = lib/ios/AirGoogleMaps/DummyView.m; sourceTree = "<group>"; };
 		D9E44F6CEE0782E5B70E283EF9F0FC77 /* XMPPResourceCoreDataStorageObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPResourceCoreDataStorageObject.h; path = Extensions/Roster/CoreDataStorage/XMPPResourceCoreDataStorageObject.h; sourceTree = "<group>"; };
 		D9F8D3148046C56E8E3F36FCC65D6853 /* RCTFabricSurfaceHostingView.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = RCTFabricSurfaceHostingView.mm; sourceTree = "<group>"; };
 		DA0475EB1564CB1EF2FEEC44B92646F4 /* GTMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -4797,19 +4792,22 @@
 			path = CocoaLumberjack;
 			sourceTree = "<group>";
 		};
-		2D2CE5C30B0FB7233676C420DB1372A4 /* Pods-tinyrobotStaging */ = {
+		245E03876EF49E569D1164C6A68A29E0 /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
-				70E7720A0C98AB5ED8247A4DB4EE1113 /* Pods-tinyrobotStaging-acknowledgements.markdown */,
-				55AE0C1090F127A4EF1E60A54675E9B3 /* Pods-tinyrobotStaging-acknowledgements.plist */,
-				83397FA4F35FC2FE18178482A1D133F2 /* Pods-tinyrobotStaging-dummy.m */,
-				BA25FAC525EA46F68681FF5203587BE0 /* Pods-tinyrobotStaging-frameworks.sh */,
-				9B962CDC38D4359D07B0487EC72BAD28 /* Pods-tinyrobotStaging-resources.sh */,
-				6A6EFE21FFF5198D8674F87FC2473057 /* Pods-tinyrobotStaging.debug.xcconfig */,
-				87AE57682D16B066FE00780D2E814137 /* Pods-tinyrobotStaging.release.xcconfig */,
+				FC3A99913226CC3B3EB4E32B9D950C6B /* RCTFPSGraph.h */,
+				2A7C1BA53690A9BEE6CC55C1CE11CD5B /* RCTFPSGraph.m */,
+				BB43F835A32785AC4A76528669E0B2E5 /* RCTMacros.h */,
+				4C257F2CDAD4A20E3188FA268FCAF31F /* RCTPerfMonitor.m */,
+				49EB3EA3C542082624DBDD8C4CBC4690 /* RCTProfile.h */,
+				ED09A5A1C1F8C03B7DED71AA3E14FE7B /* RCTProfile.m */,
+				1012FFE920DE524998F2467514BDF4C5 /* RCTProfileTrampoline-arm.S */,
+				0C1C5C41EDEA0E6E4E3CF4200778A6B4 /* RCTProfileTrampoline-arm64.S */,
+				CAF1E21AF3409DF91FAC2BE8F4FB7C07 /* RCTProfileTrampoline-i386.S */,
+				D8B589C327C96CD6A1A002EACA2ECD9C /* RCTProfileTrampoline-x86_64.S */,
 			);
-			name = "Pods-tinyrobotStaging";
-			path = "Target Support Files/Pods-tinyrobotStaging";
+			name = Profiler;
+			path = React/Profiler;
 			sourceTree = "<group>";
 		};
 		2DAE485BB6A9FBC90B6CE5756F7D1F75 /* Support Files */ = {
@@ -6140,7 +6138,6 @@
 			children = (
 				1C3F4B9A9BFA69FE639D6FF66D224BEC /* Frameworks */,
 			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 		8483109AE51D3FE0BAC537F90375DAE1 /* AppCenter */ = {
@@ -6710,8 +6707,7 @@
 				35712B5FB9EF6D891CE553E3D1248F1F /* Recording */,
 				77A2D9423FB40181F74AEC035E8D2884 /* Reporting */,
 			);
-			name = KSCrash;
-			path = KSCrash;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B3486AA00EC39C20E9AF6974946818FD /* react-native-blur */ = {
@@ -7539,19 +7535,13 @@
 			name = RCTWebSocket;
 			sourceTree = "<group>";
 		};
-		DC036B81F6146B1A0B8169727958897F /* Pods-tinyrobotTesting */ = {
+		ECBF50D222C3E5BC6986B6F0A9065267 /* KSCrash */ = {
 			isa = PBXGroup;
 			children = (
-				F3E5D780FA8AE510A7FF09E844CD53B7 /* Pods-tinyrobotTesting-acknowledgements.markdown */,
-				ED7AA6AE7E7E5583C544704812C8B2CE /* Pods-tinyrobotTesting-acknowledgements.plist */,
-				8404FF7C2D2549C2FF2E27B850371E4A /* Pods-tinyrobotTesting-dummy.m */,
-				7C14749B1F08F78AA58BFBCC781ADFC0 /* Pods-tinyrobotTesting-frameworks.sh */,
-				3C289DF9ED0A10351AE41A6EB02DC8F3 /* Pods-tinyrobotTesting-resources.sh */,
-				EEA6F67F682C10366A28565FED38455F /* Pods-tinyrobotTesting.debug.xcconfig */,
-				CB2B9BC32A4E4B56B6722CC0338BC718 /* Pods-tinyrobotTesting.release.xcconfig */,
+				99946EE97CA7571B862B66929D030415 /* Source */,
 			);
-			name = "Pods-tinyrobotTesting";
-			path = "Target Support Files/Pods-tinyrobotTesting";
+			name = KSCrash;
+			path = KSCrash;
 			sourceTree = "<group>";
 		};
 		DD7112707E5090A0313A6CB5114AB7E8 /* AppCenterReactNativeShared */ = {
@@ -8035,8 +8025,8 @@
 				407C11E04C2FF31F01A99561394D08DA /* CodePush-dummy.m */,
 				7A219760A7814F8B4B87EEF7BC2AAA15 /* CodePush-prefix.pch */,
 			);
-			name = "Support Files";
-			path = "../../ios/Pods/Target Support Files/CodePush";
+			name = CodePush;
+			path = "../../node_modules/react-native-code-push";
 			sourceTree = "<group>";
 		};
 		F52948FDEBCD098D758A450F8CB3A183 /* FirebaseCore */ = {
@@ -11569,6 +11559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C07BBB5727056AA9BB62639FF48A6E03 /* RNBackgroundGeolocation.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

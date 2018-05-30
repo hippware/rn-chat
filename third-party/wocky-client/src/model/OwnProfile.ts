@@ -17,6 +17,15 @@ export const OwnProfile = types
     types.model('OwnProfile', {
       email: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
+      hasUsedGeofence: false,
     })
   )
+  .actions(self => ({
+    setHasUsedGeofence: value => {
+      self.hasUsedGeofence = value
+    },
+  }))
   .named('OwnProfile')
+
+export type IOwnProfileType = typeof OwnProfile.Type
+export interface IOwnProfile extends IOwnProfileType {}

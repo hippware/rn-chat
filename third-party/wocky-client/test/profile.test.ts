@@ -11,7 +11,7 @@ describe('ProfileStore', () => {
       user1 = await createXmpp(31)
       await waitFor(() => user1.profile !== null)
       await user1.profile!.update({
-        handle: 'abc1',
+        handle: 'abc12',
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
@@ -111,9 +111,9 @@ describe('ProfileStore', () => {
   })
   it('test lookup', async done => {
     try {
-      const profile = await user1.lookup('abc1')
+      const profile = await user1.lookup('abc12')
       expect(profile.id).to.be.equal(user1.username)
-      expect(profile.handle).to.be.equal('abc1')
+      expect(profile.handle).to.be.equal('abc12')
       expect(profile.firstName).to.be.equal('name1')
       expect(profile.lastName).to.be.equal('lname1')
       done()

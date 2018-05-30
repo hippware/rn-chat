@@ -16,22 +16,25 @@ const bg = require('../../../images/bannerBg.png')
 
 const FirstLoadOverlay = inject('wocky')(
   observer(({wocky}: Props) => {
-    return wocky!.sessionCount <= 2 ? (
-      <View style={styles.container}>
-        <Image source={bg} style={styles.bgImage} resizeMode="cover" />
-        <Image source={foot} style={styles.image} resizeMode="contain" />
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <RText color={colors.PINK} size={15} weight="Bold">
-            {'Find out when your friends\r\nvisit your favorite places!'}
-          </RText>
-          <RText size={13} color={colors.DARK_GREY} style={{marginTop: 5 * k}}>
-            {'Start by tapping '}
-            <Image source={foot} style={styles.icon} resizeMode="contain" />
-            {' on your\r\nfavorite bots!'}
-          </RText>
+    return (
+      wocky!.profile &&
+      !wocky!.profile!.hasUsedGeofence && (
+        <View style={styles.container}>
+          <Image source={bg} style={styles.bgImage} resizeMode="cover" />
+          <Image source={foot} style={styles.image} resizeMode="contain" />
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <RText color={colors.PINK} size={15} weight="Bold">
+              {'Find out when your friends\r\nvisit your favorite places!'}
+            </RText>
+            <RText size={13} color={colors.DARK_GREY} style={{marginTop: 5 * k}}>
+              {'Start by tapping '}
+              <Image source={foot} style={styles.icon} resizeMode="contain" />
+              {' on your\r\nfavorite bots!'}
+            </RText>
+          </View>
         </View>
-      </View>
-    ) : null
+      )
+    )
   })
 )
 

@@ -114,7 +114,10 @@ export const Wocky = types
         } else {
           self.load(self.profile, data)
         }
+        // add own profile to the storage
+        self.profiles.get(id, data)
         if (self.profile.handle) self.sessionCount = 3
+        return self.profile
       }
       return self.profiles.get(id, data)
     }),
@@ -397,6 +400,9 @@ export const Wocky = types
     _updateBot: flow(function*(d: any) {
       yield waitFor(() => self.connected)
       yield self.transport.updateBot(d)
+      if (d.geofence) {
+        self.profile!.setHasUsedGeofence(true)
+      }
       // subscribe owner to his bot
       const bot = self.bots.storage.get(d.id)
       self.profile!.ownBots.addToTop(bot)
@@ -425,6 +431,7 @@ export const Wocky = types
     }),
     _subscribeGeofenceBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
+      self.profile!.setHasUsedGeofence(true)
       return yield self.transport.subscribeBot(id, true)
     }),
     _subscribeBot: flow(function*(id: string) {

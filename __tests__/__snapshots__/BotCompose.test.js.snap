@@ -1184,6 +1184,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "followedSize": 0,
                     "followersSize": 0,
                     "handle": null,
+                    "hasUsedGeofence": false,
                     "id": "user",
                     "isBlocked": false,
                     "isFollowed": false,

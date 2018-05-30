@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
-import {IWocky} from '../src/store/Wocky'
+import {IWocky, IProfile, IOwnProfile} from '../src'
 import {IBot} from '../src/model/Bot'
 
 let user1: IWocky, user2: IWocky
@@ -19,21 +19,21 @@ async function exitBot(user: IWocky) {
 describe('Geofence', () => {
   before(async done => {
     try {
-      user1 = await createXmpp(26)
+      user1 = await createXmpp(28)
       console.log('credentials', user1.username, user1.password)
-      user2 = await createXmpp(27)
+      user2 = await createXmpp(29)
       await exitBot(user1)
       await exitBot(user2)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
       await user1.profile!.update({
-        handle: 'abcc3',
+        handle: 'abccc3',
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
       })
       await user2.profile!.update({
-        handle: 'abcc4',
+        handle: 'abccc4',
         firstName: 'name2',
         lastName: 'lname2',
         email: 'a2@aa.com',
@@ -46,8 +46,19 @@ describe('Geofence', () => {
     }
   })
 
+  it('load own profile, check hasUsedGeofence', async done => {
+    try {
+      const profile1: IOwnProfile = await user1.loadProfile(user1.username!)
+      expect(profile1.hasUsedGeofence).to.be.false
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
   it('creates a geofence bot', async done => {
     try {
+      expect(user1.profile.hasUsedGeofence).to.be.false
       bot = await user1.createBot()
       await bot.update({
         location: {latitude: 1.1, longitude: 2.1},
@@ -55,10 +66,20 @@ describe('Geofence', () => {
         geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
+      expect(user1.profile.hasUsedGeofence).to.be.true
       // console.log('bot updated', bot.toJSON())
       expect(bot.geofence).to.be.true
       expect(bot.visitorsSize).to.equal(0)
       expect(bot.guestsSize).to.equal(0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('load own profile, check hasUsedGeofence', async done => {
+    try {
+      const profile1: IOwnProfile = await user1.loadProfile(user1.username!)
+      expect(profile1.hasUsedGeofence).to.be.true
       done()
     } catch (e) {
       done(e)

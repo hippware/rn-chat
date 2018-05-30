@@ -146,7 +146,11 @@ export class GraphQLTransport implements IWockyTransport {
           query LoadProfile {
             user(id: "${user}") {
               ${PROFILE_PROPS}
-              ${user === this.username ? '... on CurrentUser { email phoneNumber }' : ''}
+              ${
+                user === this.username
+                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence }'
+                  : ''
+              }
             }
           }
         `,
@@ -319,7 +323,7 @@ export class GraphQLTransport implements IWockyTransport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList> {
-    return await this._loadBots('SUBSCRIBED', userId, lastId, max)
+    return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
   async loadGeofenceBots(): Promise<IPagingList> {
     // load all guest bots

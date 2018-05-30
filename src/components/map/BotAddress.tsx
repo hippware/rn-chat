@@ -77,7 +77,7 @@ class BotAddress extends React.Component<Props> {
   render() {
     const {bot} = this.props
     if (!bot || !isAlive(bot)) return null
-    const {latitude, longitude} = bot.location!
+    const {latitude, longitude} = bot.location || {latitude: undefined, longitude: undefined}
     const coords = this.location || bot.location
     const delta = bot.geofence ? DELTA_GEOFENCE : DELTA_FULL_MAP
     const MapView1 = MapView as any
