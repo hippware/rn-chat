@@ -25,7 +25,7 @@ export function expectedImage() {
 export async function createXmpp(num: number): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()
-    const xmppTransport = new XmppTransport(provider, fileService, 'testing')
+    const xmppTransport = new XmppTransport(provider, 'testing')
     const gql = new GraphQLTransport('testing')
     const transport = new HybridTransport(xmppTransport, gql)
     // const provider = new XmppStropheV2(console.log)
