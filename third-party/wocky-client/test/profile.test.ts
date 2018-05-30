@@ -14,7 +14,7 @@ describe('ProfileStore', () => {
         handle: 'abc12',
         firstName: 'name1',
         lastName: 'lname1',
-        email: 'a@aa.com'
+        email: 'a@aa.com',
       })
       done()
     } catch (e) {
@@ -29,7 +29,7 @@ describe('ProfileStore', () => {
         handle: 'abc2',
         firstName: 'name2',
         lastName: 'lname2',
-        email: 'a2@aa.com'
+        email: 'a2@aa.com',
       })
       done()
     } catch (e) {

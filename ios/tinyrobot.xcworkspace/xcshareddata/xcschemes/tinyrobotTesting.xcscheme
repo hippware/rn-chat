@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "879C0F071E36216300C751E9"
-               BuildableName = "tinyrobotStaging.app"
-               BlueprintName = "tinyrobotStaging"
+               BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
+               BuildableName = "tinyrobotTesting.app"
+               BlueprintName = "tinyrobotTesting"
                ReferencedContainer = "container:TinyRobot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -40,16 +40,35 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "87A381751E3BB88E00E68472"
+               BuildableName = "tinyrobotTestingUITests.xctest"
+               BlueprintName = "tinyrobotTestingUITests"
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "tinyrobotTests.xctest"
+               BlueprintName = "tinyrobotTests"
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "879C0F071E36216300C751E9"
-            BuildableName = "tinyrobotStaging.app"
-            BlueprintName = "tinyrobotStaging"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
+            BuildableName = "tinyrobotTesting.app"
+            BlueprintName = "tinyrobotTesting"
             ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,7 +79,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -71,9 +89,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "879C0F071E36216300C751E9"
-            BuildableName = "tinyrobotStaging.app"
-            BlueprintName = "tinyrobotStaging"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
+            BuildableName = "tinyrobotTesting.app"
+            BlueprintName = "tinyrobotTesting"
             ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -97,9 +115,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "879C0F071E36216300C751E9"
-            BuildableName = "tinyrobotStaging.app"
-            BlueprintName = "tinyrobotStaging"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
+            BuildableName = "tinyrobotTesting.app"
+            BlueprintName = "tinyrobotTesting"
             ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
