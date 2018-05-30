@@ -14,6 +14,7 @@ import {
 import {reaction, IObservableArray} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
+import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot, BotPaginableList} from '../model/Bot'
@@ -478,15 +479,6 @@ export const Wocky = types
     downloadURL: flow(function*(tros: string) {
       return yield self.transport.downloadURL(tros)
     }),
-    downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
-      return yield self.transport.downloadFile(tros, name, sourceUrl)
-    }),
-    downloadThumbnail: flow(function*(url: string, tros: string) {
-      return yield self.transport.downloadThumbnail(url, tros)
-    }),
-    downloadTROS: flow(function*(tros: string) {
-      return yield self.transport.downloadTROS(tros)
-    }),
     setLocation: flow(function*(location: ILocationSnapshot) {
       return yield self.transport.setLocation(location)
     }),
@@ -495,7 +487,9 @@ export const Wocky = types
     },
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
-      return yield self.transport.requestUpload({file, size, width, height, access})
+      const data = yield self.transport.requestUpload({file, size, width, height, access})
+      yield upload(data)
+      return data.reference_url
     }),
     _loadUpdates: flow(function*() {
       yield waitFor(() => self.connected)
@@ -608,6 +602,48 @@ export const Wocky = types
     setSessionCount: (value: number) => {
       self.sessionCount = value
     },
+  }))
+  .actions(self => {
+    const fs: IFileService = getEnv(self).fileService
+    return {
+      downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
+        const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
+        if (!(yield fs.fileExists(folder))) {
+          yield fs.mkdir(folder)
+        }
+        // check main cached picture first
+        let fileName = `${folder}/main.jpeg`
+        let cached = yield fs.fileExists(fileName)
+
+        // check thumbnail
+        if (!cached && name !== 'main') {
+          fileName = `${folder}/${name}.jpeg`
+          cached = yield fs.fileExists(fileName)
+        }
+        if (!cached) {
+          yield waitFor(() => self.connected)
+          let url = sourceUrl
+          let headers = {}
+          // request S3 URL if it is not passed
+          if (!url) {
+            const data = yield self.downloadURL(tros)
+            url = data.url
+            headers = data.headers
+          }
+          yield fs.downloadHttpFile(url, fileName, headers)
+        }
+        const {width, height} = yield fs.getImageSize(fileName)
+        return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
+      }),
+    }
+  })
+  .actions(self => ({
+    downloadThumbnail: flow(function*(url: string, tros: string) {
+      return yield self.downloadFile(tros, 'thumbnail', url)
+    }),
+    downloadTROS: flow(function*(tros: string) {
+      return yield self.downloadFile(tros, 'main', '')
+    }),
   }))
   .actions(self => {
     function clearCache() {

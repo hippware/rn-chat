@@ -1,7 +1,7 @@
 import fs from 'react-native-fs'
 import {Image} from 'react-native'
-
-export class FileService {
+import {IFileService} from 'wocky-client'
+export class FileService implements IFileService {
   get tempDir() {
     return fs.CachesDirectoryPath
   }
@@ -34,6 +34,11 @@ export class FileService {
     const {promise} = fs.downloadFile({fromUrl, toFile, headers})
     const {statusCode} = await promise
     if (statusCode !== 200) {
+      try {
+        await this.removeFile(toFile)
+      } catch (e) {
+        // do nothing
+      }
       throw new Error(`Cannot download file ${fromUrl}`)
     }
   }
