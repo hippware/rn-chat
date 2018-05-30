@@ -14,7 +14,7 @@ import {
 import {reaction, IObservableArray} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
-import {IFileService} from '../transport/FileService'
+import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot, BotPaginableList} from '../model/Bot'
@@ -487,7 +487,9 @@ export const Wocky = types
     },
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
-      return yield self.transport.requestUpload({file, size, width, height, access})
+      const data = yield self.transport.requestUpload({file, size, width, height, access})
+      yield upload(data)
+      return data.reference_url
     }),
     _loadUpdates: flow(function*() {
       yield waitFor(() => self.connected)
