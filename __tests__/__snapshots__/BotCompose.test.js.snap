@@ -51,7 +51,6 @@ exports[`BotCompose renders with no data 1`] = `
   >
     <RCTScrollView
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -211,7 +210,6 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                     ]
                   }
-                  value={undefined}
                 />
               </View>
             </View>
@@ -334,15 +332,8 @@ exports[`BotCompose renders with no data 1`] = `
                   }
                 />
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -358,11 +349,8 @@ exports[`BotCompose renders with no data 1`] = `
                       "width": 65,
                     }
                   }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
                 >
                   <View
-                    collapsable={undefined}
                     onMoveShouldSetResponder={[Function]}
                     onMoveShouldSetResponderCapture={[Function]}
                     onResponderEnd={[Function]}
@@ -432,16 +420,8 @@ exports[`BotCompose renders with no data 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -455,8 +435,6 @@ exports[`BotCompose renders with no data 1`] = `
                     "width": 113,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
                   accessible={true}
@@ -497,15 +475,8 @@ exports[`BotCompose renders with no data 1`] = `
                   }
                 />
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -521,11 +492,8 @@ exports[`BotCompose renders with no data 1`] = `
                       "width": 137,
                     }
                   }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
                 >
                   <View
-                    collapsable={undefined}
                     onMoveShouldSetResponder={[Function]}
                     onMoveShouldSetResponderCapture={[Function]}
                     onResponderEnd={[Function]}
@@ -576,16 +544,8 @@ exports[`BotCompose renders with no data 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -599,8 +559,6 @@ exports[`BotCompose renders with no data 1`] = `
                     "width": 113,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
                   accessible={true}
@@ -695,7 +653,6 @@ exports[`BotCompose renders with no data 1`] = `
       </View>
     </RCTScrollView>
     <View
-      collapsable={undefined}
       style={
         Object {
           "bottom": -12,
@@ -854,7 +811,6 @@ exports[`BotCompose renders with owned bot 1`] = `
   >
     <RCTScrollView
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -1300,16 +1256,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                 tracksViewChanges={true}
               >
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  collapsable={undefined}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -1321,8 +1269,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "opacity": 1,
                     }
                   }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     style={
@@ -1332,7 +1278,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     }
                   >
                     <View
-                      collapsable={undefined}
                       style={
                         Object {
                           "backgroundColor": "rgb(253,95,108)",
@@ -1346,7 +1291,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                       }
                     >
                       <Image
-                        collapsable={undefined}
                         resizeMode="contain"
                         source={
                           Object {
@@ -1419,7 +1363,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               </Marker>
             </MapView>
             <View
-              collapsable={undefined}
               style={
                 Object {
                   "backgroundColor": "#007bff",
@@ -1443,16 +1386,8 @@ exports[`BotCompose renders with owned bot 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1465,8 +1400,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "opacity": 1,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
                   style={
@@ -1708,15 +1641,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                   }
                 />
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -1732,11 +1658,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "width": 65,
                     }
                   }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
                 >
                   <View
-                    collapsable={undefined}
                     onMoveShouldSetResponder={[Function]}
                     onMoveShouldSetResponderCapture={[Function]}
                     onResponderEnd={[Function]}
@@ -1806,16 +1729,8 @@ exports[`BotCompose renders with owned bot 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1829,8 +1744,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "width": 113,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
                   accessible={true}
@@ -1871,15 +1784,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                   }
                 />
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -1895,11 +1801,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "width": 137,
                     }
                   }
-                  testID={undefined}
-                  tvParallaxProperties={undefined}
                 >
                   <View
-                    collapsable={undefined}
                     onMoveShouldSetResponder={[Function]}
                     onMoveShouldSetResponderCapture={[Function]}
                     onResponderEnd={[Function]}
@@ -1950,16 +1853,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1973,8 +1868,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "width": 113,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
                   accessible={true}
@@ -2066,16 +1959,8 @@ exports[`BotCompose renders with owned bot 1`] = `
             </View>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -2100,8 +1985,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                 "right": 0,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
               accessible={true}
@@ -2136,7 +2019,6 @@ exports[`BotCompose renders with owned bot 1`] = `
       </View>
     </RCTScrollView>
     <View
-      collapsable={undefined}
       style={
         Object {
           "bottom": -12,
@@ -2149,16 +2031,8 @@ exports[`BotCompose renders with owned bot 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -2185,8 +2059,6 @@ exports[`BotCompose renders with owned bot 1`] = `
             "right": 0,
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
           accessible={true}

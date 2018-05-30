@@ -57,6 +57,7 @@ exports[`ChatScreen renders with no data 1`] = `
       getItemCount={[Function]}
       horizontal={false}
       initialNumToRender={10}
+      invertStickyHeaders={true}
       inverted={true}
       keyExtractor={[Function]}
       maxToRenderPerBatch={10}
@@ -119,16 +120,8 @@ exports[`ChatScreen renders with no data 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -150,8 +143,6 @@ exports[`ChatScreen renders with no data 1`] = `
             "paddingTop": 4,
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Image
           source={
@@ -193,16 +184,8 @@ exports[`ChatScreen renders with no data 1`] = `
         value=""
       />
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -214,8 +197,6 @@ exports[`ChatScreen renders with no data 1`] = `
             "opacity": 1,
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Image
           source={
