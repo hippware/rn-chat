@@ -114,6 +114,8 @@ export const Wocky = types
         } else {
           self.load(self.profile, data)
         }
+        // add own profile to the storage
+        self.profiles.get(id, data)
         if (self.profile.handle) self.sessionCount = 3
         return self.profile
       }
