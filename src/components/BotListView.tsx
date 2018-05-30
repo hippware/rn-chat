@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import BotCard from './BotCard'
 import ListFooter from './ListFooter'
-import {IWocky} from 'wocky-client'
+import {IWocky, IBot} from 'wocky-client'
 
 type Props = {
   filter?: string
@@ -63,7 +63,7 @@ export default class BotListView extends React.Component<Props> {
           renderItem={({item}) => (
             <BotCard item={item} onPress={i => Actions.botDetails({item: i.id})} />
           )}
-          keyExtractor={item => `${item.id}`}
+          keyExtractor={(item: IBot) => `${item.id}`}
         />
       )
     )
