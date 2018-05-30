@@ -2,7 +2,6 @@ declare var Strophe, $iq, $pres, $msg: any
 
 import {observable, when, action, runInAction} from 'mobx'
 import * as Utils from './utils'
-import {upload} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
@@ -373,10 +372,7 @@ export class XmppTransport implements IWockyTransport {
     }
     // pass file to the result
     const stanza = await this.sendIQ(iq)
-    const data = {...stanza.upload, file}
-    // run upload in background
-    await upload(data)
-    return data.reference_url
+    return {...stanza.upload, file}
   }
   sendStanza(stanza: any) {
     this.provider.sendStanza(stanza)
