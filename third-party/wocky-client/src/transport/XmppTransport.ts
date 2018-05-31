@@ -232,6 +232,9 @@ export class XmppTransport implements IWockyTransport {
     const stanza = await this.sendIQ(iq)
     return {id, ...processMap(stanza)} as IProfilePartial
   }
+  async removeUpload(tros: string) {
+    throw new Error('Not supported')
+  }
   async requestProfiles(users: string[]): Promise<any> {
     if (!users || !users.length) {
       return []
