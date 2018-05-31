@@ -491,6 +491,10 @@ export const Wocky = types
       yield upload(data)
       return data.reference_url
     }),
+    _removeUpload: flow(function*(tros: string) {
+      yield waitFor(() => self.connected)
+      yield self.transport.removeUpload(tros)
+    }),
     _loadUpdates: flow(function*() {
       yield waitFor(() => self.connected)
       const {list, bots, version} = yield self.transport.loadUpdates(self.version)

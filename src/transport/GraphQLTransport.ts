@@ -554,6 +554,18 @@ export class GraphQLTransport implements IWockyTransport {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
+  async removeUpload(tros: string) {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation mediaDelete($tros: String!) {
+          mediaDelete(input: {url: $tros}) {
+            successful
+          }
+        }
+      `,
+      variables: {tros},
+    })
+  }
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
     includeCurrentUser: boolean,
