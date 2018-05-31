@@ -1,6 +1,8 @@
 import {AppRegistry, YellowBox} from 'react-native'
 import App from './src/App'
 
+// test appcenter
+
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated', // TODO: fixed in RN56. https://github.com/facebook/react-native/issues/18868#issuecomment-382671739
   'Module RCTImageLoader requires main', // TODO: fixed in RN56. https://github.com/facebook/react-native/issues/17504
