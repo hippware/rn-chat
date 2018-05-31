@@ -555,7 +555,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
   async removeUpload(tros: string) {
-    const res = await this.client.mutate({
+    await this.client.mutate({
       mutation: gql`
         mutation mediaDelete($tros: String!) {
           mediaDelete(input: {url: $tros}) {
