@@ -46,6 +46,7 @@ export interface IWockyTransport {
     height: number
     access: string
   }): Promise<string>
+  removeUpload(tros: string): Promise<void>
   follow(username: string): Promise<void>
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>

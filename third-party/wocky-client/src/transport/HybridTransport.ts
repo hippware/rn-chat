@@ -274,4 +274,8 @@ export class HybridTransport implements IWockyTransport {
   async loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
     return await this._gql.loadSubscribedBots(userId, lastId, max)
   }
+
+  async removeUpload(tros: string) {
+    await this._gql.removeUpload(tros)
+  }
 }
