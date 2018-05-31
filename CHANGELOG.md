@@ -6,6 +6,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 2.7.?
 
+Many many changes
+
 * Update cocoapods to run with XCode 9.3 (#2073, PR #2377)
 * Distance string display tweak for: Polish mileage calculation (#1303)
 * hot-fix: formatting and avoid bugsnag report for getImageSize
@@ -25,6 +27,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bugsnag crash (#2388)
 * New requirement for welcome header from (PR #2405)
   * Geofence Widget State: When user has NOT enabled footprint and has location setting: Always (#2327)
+* Update React Native to 0.55.4 (#2279, PR #2411)
+* hot-fix: load own profile into storage
+* AppCenter integration (PR #2400, #2403, #2413)
+* [dev] refactoring of image download/upload within wocky-client (#2416)
 
 # 2.6.8 - 2018 May 18
 

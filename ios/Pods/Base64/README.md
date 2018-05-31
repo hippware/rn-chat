@@ -11,7 +11,7 @@ In files where you want to use Base64 encoding/decoding, simply include the head
 Example use:
 #import "MF_Base64Additions.h"
 
- NSString *helloWorld = @"Hello World";
+NSString *helloWorld = @"Hello World";
 NSString *helloInBase64 = [helloWorld base64String];
 NSString \*helloDecoded = [NSString stringFromBase64String:helloInBase64];
 
