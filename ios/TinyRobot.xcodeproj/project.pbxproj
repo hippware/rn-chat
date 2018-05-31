@@ -25,6 +25,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		179FD701F58D43B28E7B93FD /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 030B7E0D54694E11B8114A00 /* libRNFS.a */; };
 		2DA0AD9BBC25720776BE5C88 /* libPods-tinyrobotTesting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A87F8D10B4CAFBB7FF4EB306 /* libPods-tinyrobotTesting.a */; };
+		39F3E94320C0BBB800E58F35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8716BBC21F5D7CC5002B7515 /* GoogleService-Info.plist */; };
 		3A14B0066004418FA03618E3 /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B9FF2FAA4C4E469C0008E8 /* libAppCenterReactNative.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6B37DE747E7543AEBF2C94C3 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E88D09A340D742EFAEFA8DD4 /* libRNDeviceInfo.a */; };
@@ -2059,6 +2060,7 @@
 				8792263920BBF0AB004BFF25 /* Roboto-Light.ttf in Resources */,
 				8792263A20BBF0AB004BFF25 /* RobotoCondensed-Regular.ttf in Resources */,
 				8792263B20BBF0AB004BFF25 /* RobotoCondensed-Italic.ttf in Resources */,
+				39F3E94320C0BBB800E58F35 /* GoogleService-Info.plist in Resources */,
 				8792263C20BBF0AB004BFF25 /* icon.gif in Resources */,
 				8792263D20BBF0AB004BFF25 /* Roboto-BlackItalic.ttf in Resources */,
 				8792263E20BBF0AB004BFF25 /* Roboto-ThinItalic.ttf in Resources */,
