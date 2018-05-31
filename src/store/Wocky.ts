@@ -488,8 +488,13 @@ export const Wocky = types
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
       const data = yield self.transport.requestUpload({file, size, width, height, access})
-      yield upload(data)
-      return data.reference_url
+      try {
+        yield upload(data)
+        return data.reference_url
+      } catch (e) {
+        yield self.transport.removeUpload(data.reference_url)
+        throw e
+      }
     }),
     _removeUpload: flow(function*(tros: string) {
       yield waitFor(() => self.connected)
