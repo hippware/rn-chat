@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 2.7.?
+# 2.7.0 - 2018 May 31
 
 Many many changes
 
@@ -31,6 +31,8 @@ Many many changes
 * hot-fix: load own profile into storage
 * AppCenter integration (PR #2400, #2403, #2413)
 * [dev] refactoring of image download/upload within wocky-client (#2416)
+* [dev] Remove TROS id after failed image upload (#2407)
+  * New API to delete TROS URLs (PR #2423)
 
 # 2.6.8 - 2018 May 18
 
