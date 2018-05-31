@@ -1,0 +1,45 @@
+{
+  "production": [
+    {
+      "name": "Production",
+      "key": "BUxbD38d3cP8p0nIQtIMcLHWS80aB1hrmkRym",
+      "displayName": "Prod",
+      "description": "self-explanatory"
+    }
+  ],
+  "staging": [
+    {
+      "name": "Staging",
+      "key": "puUQpnaJvXUEo1g7nIUYwHHvMMhLBJZqLtBk7",
+      "displayName": "Staging",
+      "description":
+        "fallback deployment that should mirror the latest version pushed to TestFlight"
+    },
+    {
+      "name": "StagingBeta",
+      "key": "qIa9WmJmwfpWOuH8tzY8aTpZ3GZgr1O2e1R1Q",
+      "displayName": "Staging-beta",
+      "description": "self-explanatory"
+    },
+    {
+      "name": "StagingPavel",
+      "key": "O8lt-x6go5TKetthPQoOKiP1zWlJrkcsgkCkQ",
+      "displayName": "Staging-Pavel",
+      "description": "Pavel's channel"
+    },
+    {
+      "name": "StagingEric",
+      "key": "J5dS1IjfzDUZ34PCydInTSNzB0WYSkenxyCkm",
+      "displayName": "Staging-Eric",
+      "description": "Eric's channel"
+    }
+  ],
+  "local": [
+    {
+      "name": "Local",
+      "key": "n-8Flrqf-qA7wUXLYjJFXRO-qN2aBkynXyAJm",
+      "displayName": "Local",
+      "description": "use this to test the CodePush process *only* on your local machine"
+    }
+  ]
+}
