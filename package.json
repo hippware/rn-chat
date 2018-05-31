@@ -157,7 +157,7 @@
     "@types/react-native": "^0.55.16",
     "@types/strophe": "1.2.27",
     "@types/xmldom": "^0.1.29",
-    "appcenter-cli": "^1.0.2",
+    "appcenter-cli": "^1.0.17",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
