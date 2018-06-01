@@ -130,6 +130,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-push-notification": "^3.0.1",
     "react-native-router-flux": "github:aksonov/react-native-router-flux#37c6553c168b9fb6947a5e533df9bd37793f1f68",
+    "react-native-snap-carousel": "^3.7.0",
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-tab-view": "^0.0.73",
