@@ -536,11 +536,7 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/graphql@0.12.6":
-  version "0.12.6"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.7.tgz#392e46d6c1bceb7d68c117233cea787dde72780c"
-
-"@types/graphql@^0.12.7":
+"@types/graphql@0.12.6", "@types/graphql@^0.12.7":
   version "0.12.7"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.12.7.tgz#392e46d6c1bceb7d68c117233cea787dde72780c"
 
@@ -7149,6 +7145,13 @@ react-addons-pure-render-mixin@^15.4.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-addons-shallow-compare@15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.2.tgz#198a00b91fc37623db64a28fd17b596ba362702f"
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-addons-test-utils@^15.4.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.0.tgz#062d36117fe8d18f3ba5e06eb33383b0b85ea5b9"
@@ -7379,6 +7382,13 @@ react-native-push-notification@^3.0.1:
     path-to-regexp "^2.1.0"
     prop-types "^15.6.0"
     react-navigation "1.0.0-beta.21"
+
+react-native-snap-carousel@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.0.tgz#7d2794339c661d3e1f8ec4786b6335ae7cb23262"
+  dependencies:
+    prop-types "^15.6.1"
+    react-addons-shallow-compare "15.6.2"
 
 react-native-swipeable@^0.6.0:
   version "0.6.0"
