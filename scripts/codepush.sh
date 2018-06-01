@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Usage: ./codepush.sh [version number] [deployment name] [description]
+# Usage: ./codepush.sh [deployment name] [description] [bugsnag unique id] 
 
-RELEASE_ID=$1
-DEPLOYMENT_NAME=$2
-DESCRIPTION=$3
+DEPLOYMENT_NAME=$1
+DESCRIPTION=$2
+RELEASE_ID=$3
 BUILD_DIR=cpbuild
 BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
 
@@ -13,21 +13,21 @@ BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
 #     exit 1
 # fi
 
-if [ -z "$RELEASE_ID" ]; then
-    echo "No version number specified"
-    echo "Usage: $0 [version number] [deploymentName] [description]"
-    exit 1
-fi
-
 if [ -z "$DEPLOYMENT_NAME" ]; then
     echo "No deployment name (e.g. StagingPavel) specified"
-    echo "Usage: $0 [version number] [deploymentName] [description]"
+    echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
     exit 1
 fi
 
 if [ -z "$DESCRIPTION" ]; then
     echo "No description specified"
-    echo "Usage: $0 [version number] [deploymentName] [description]"
+    echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
+    exit 1
+fi
+
+if [ -z "$RELEASE_ID" ]; then
+    echo "No bugsnag unique id specified"
+    echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
     exit 1
 fi
 
@@ -38,25 +38,20 @@ sed -e "2s/.*/const codeBundleId = \"$RELEASE_ID\"/" -i '' src/utils/bugsnagConf
 # Release iOS App
 ## Release JS bundle via Code Push
 
-# below didn't write anything to output-dir
-# appcenter codepush release-react -a southerneer/tinyrobot \
-#     -d $DEPLOYMENT_NAME \
-#     --description "$DESCRIPTION" \
-#     --output-dir $BUILD_DIR
+node ./node_modules/.bin/appcenter codepush release-react -a Hippware/tinyrobot -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR
 
-code-push release-react tinyrobot ios \
-    --outputDir $BUILD_DIR \
-    --deploymentName $DEPLOYMENT_NAME \
-    --description "$DESCRIPTION" \
 
 ## Upload source map and sources to Bugsnag
 yarn bugsnag-sourcemaps upload \
     --api-key $BUGSNAG_API_KEY \
     --code-bundle-id $RELEASE_ID \
-    --source-map $BUILD_DIR/main.jsbundle.map \
-    --minified-file $BUILD_DIR/main.jsbundle \
+    --source-map $BUILD_DIR/CodePush/main.jsbundle.map \
+    --minified-file $BUILD_DIR/CodePush/main.jsbundle \
     --minified-url main.jsbundle \
     --upload-sources \
     --add-wildcard-prefix
 
 rm -rf $BUILD_DIR
+
+# discard changes to bugsnagConfig.js
+git checkout -- src/utils/bugsnagConfig.js

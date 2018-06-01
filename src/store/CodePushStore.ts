@@ -1,8 +1,9 @@
 import {action, observable} from 'mobx'
-import deployments from '../constants/codepush-deployments'
 import {settings} from '../globals'
 import * as log from '../utils/log'
 import codePush from 'react-native-code-push'
+
+const deployments = require('../constants/codepush-deployments.json')
 
 class CodePushStore {
   @observable metadata?: object
