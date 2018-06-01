@@ -233,6 +233,7 @@ const LocationStore = types
                   coords: {latitude, longitude, accuracy},
                 },
               ],
+              isFetch: true,
               resource: params.resource,
             }),
           })
