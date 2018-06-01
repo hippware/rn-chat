@@ -89,7 +89,6 @@
 		8792263D20BBF0AB004BFF25 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BC1E29216E0011DB95 /* Roboto-BlackItalic.ttf */; };
 		8792263E20BBF0AB004BFF25 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C61E29216E0011DB95 /* Roboto-ThinItalic.ttf */; };
 		8792263F20BBF0AB004BFF25 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
-		8792264020BBF0AB004BFF25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8716BBC51F5D7CD2002B7515 /* GoogleService-Info.plist */; };
 		8792264120BBF0AB004BFF25 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C71E29216E0011DB95 /* RobotoCondensed-Bold.ttf */; };
 		8792264220BBF0AB004BFF25 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */; };
 		8792264320BBF0AB004BFF25 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BF1E29216E0011DB95 /* Roboto-Italic.ttf */; };
@@ -2065,7 +2064,6 @@
 				8792263D20BBF0AB004BFF25 /* Roboto-BlackItalic.ttf in Resources */,
 				8792263E20BBF0AB004BFF25 /* Roboto-ThinItalic.ttf in Resources */,
 				8792263F20BBF0AB004BFF25 /* LaunchScreen.xib in Resources */,
-				8792264020BBF0AB004BFF25 /* GoogleService-Info.plist in Resources */,
 				8792264120BBF0AB004BFF25 /* RobotoCondensed-Bold.ttf in Resources */,
 				8792264220BBF0AB004BFF25 /* DigitsKitResources.bundle in Resources */,
 				8792264320BBF0AB004BFF25 /* Roboto-Italic.ttf in Resources */,
