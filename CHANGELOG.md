@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Move to AppCenter for CodePush (new configuration) (#2414)
+* Fix up GoogleService-Info.plist to XCode target (PR #2429)
+  * Onboarding: Not receiving sms code on 2.7.0 (unable to login) (#2427)
+
 # 2.7.0 - 2018 May 31
 
 Many many changes
