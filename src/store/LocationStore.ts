@@ -211,7 +211,7 @@ const LocationStore = types
       }
     }
 
-    async function sendLastKnownLocation(): Promise<void> {
+    async function sendLastKnownLocation(extraParams?: object): Promise<void> {
       if (!self.backgroundGeolocation) {
         return
       }
@@ -228,6 +228,7 @@ const LocationStore = types
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+              ...extraParams,
               location: [
                 {
                   coords: {latitude, longitude, accuracy},
@@ -319,7 +320,7 @@ const LocationStore = types
           async () => {
             try {
               analytics.track('location_bg_fetch_start')
-              await sendLastKnownLocation()
+              await sendLastKnownLocation({isFetch: true})
             } catch (err) {
               onHttpError(err)
             }
