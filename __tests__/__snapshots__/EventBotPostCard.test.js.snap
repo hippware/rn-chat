@@ -255,8 +255,8 @@ exports[`EventBotPostCard renders 1`] = `
     }
     style={
       Object {
-        "height": undefined,
-        "width": undefined,
+        "height": 750,
+        "width": 750,
       }
     }
   />
