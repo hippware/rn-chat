@@ -13,7 +13,7 @@
     graphql "0.11.7"
     zen-observable "0.6.0"
 
-"@absinthe/socket@0.1.10":
+"@absinthe/socket@0.1.10", "@absinthe/socket@github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4":
   version "0.1.10"
   resolved "https://codeload.github.com/aksonov/absinthe-socket/tar.gz/6b14cd8ecb18068a4bea95c80e75b23790926da4"
   dependencies:
@@ -8398,7 +8398,7 @@ wordwrap@~0.0.2:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
 
 world-countries@1.8.0:
-  version v1.8.0
+  version "1.8.0"
   resolved "https://registry.yarnpkg.com/world-countries/-/world-countries-1.8.0.tgz#17f48e7e8470ac5a2136ad6938dfc656fc2bcb95"
 
 wrap-ansi@^2.0.0:
@@ -8626,10 +8626,6 @@ zen-observable-ts@^0.8.9:
   dependencies:
     zen-observable "^0.8.0"
 
-zen-observable@0.6.0, zen-observable@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.6.0.tgz#8a6157ed15348d185d948cfc4a59d90a2c0f70ee"
-
-zen-observable@^0.8.0:
+zen-observable@0.6.0, zen-observable@^0.6.0, zen-observable@^0.8.0, "zen-observable@github:aksonov/zen-observable#62be6b655646c01ae3b1f43b2c6d13247cf06581":
   version "0.8.8"
   resolved "https://codeload.github.com/aksonov/zen-observable/tar.gz/62be6b655646c01ae3b1f43b2c6d13247cf06581"
