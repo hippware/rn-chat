@@ -168,7 +168,6 @@ const Header = inject('notificationStore')(
           // must wait for solution to https://github.com/facebook/react-native/issues/14981
           // adjustsFontSizeToFit
           minimumFontScale={0.8}
-          weight="Medium"
           size={18}
           color={colors.DARK_PURPLE}
           style={{
