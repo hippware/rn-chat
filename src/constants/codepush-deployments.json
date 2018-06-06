@@ -1,4 +1,12 @@
 {
+  "production": [
+    {
+      "name": "Production",
+      "key": "rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ",
+      "displayName": "Prod",
+      "description": "self-explanatory"
+    }
+  ],
   "staging": [
     {
       "name": "Staging",
