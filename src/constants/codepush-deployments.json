@@ -16,10 +16,10 @@
         "fallback deployment that should mirror the latest version pushed to TestFlight"
     },
     {
-      "name": "StagingBeta",
-      "key": "zJXYrjRQiTMw51fioYjGqeRNpp4JHyAnOhHeX",
-      "displayName": "Staging-beta",
-      "description": "self-explanatory"
+      "name": "StagingRollback",
+      "key": "m3G8j9pxVPT8MkZQ1eA1o-J2vE13H19uuyIxX",
+      "displayName": "Staging rollback",
+      "description": "roll an existing codepush deploy back to the TestFlight version"
     },
     {
       "name": "StagingPavel",
