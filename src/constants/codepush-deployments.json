@@ -1,35 +1,27 @@
 {
-  "production": [
-    {
-      "name": "Production",
-      "key": "BUxbD38d3cP8p0nIQtIMcLHWS80aB1hrmkRym",
-      "displayName": "Prod",
-      "description": "self-explanatory"
-    }
-  ],
   "staging": [
     {
       "name": "Staging",
-      "key": "puUQpnaJvXUEo1g7nIUYwHHvMMhLBJZqLtBk7",
+      "key": "kjbwL0kvOAUoLXj-QMozErfAWuUJrJ9yb3rxX",
       "displayName": "Staging",
       "description":
         "fallback deployment that should mirror the latest version pushed to TestFlight"
     },
     {
       "name": "StagingBeta",
-      "key": "qIa9WmJmwfpWOuH8tzY8aTpZ3GZgr1O2e1R1Q",
+      "key": "zJXYrjRQiTMw51fioYjGqeRNpp4JHyAnOhHeX",
       "displayName": "Staging-beta",
       "description": "self-explanatory"
     },
     {
       "name": "StagingPavel",
-      "key": "O8lt-x6go5TKetthPQoOKiP1zWlJrkcsgkCkQ",
+      "key": "vjrKCPgLTNZCl7ZDG86MPXGbhq9nryFn_nrem",
       "displayName": "Staging-Pavel",
       "description": "Pavel's channel"
     },
     {
       "name": "StagingEric",
-      "key": "J5dS1IjfzDUZ34PCydInTSNzB0WYSkenxyCkm",
+      "key": "cMTcB3NU9aAs28OyvCYov8vWFN4SHy73_2rlX",
       "displayName": "Staging-Eric",
       "description": "Eric's channel"
     }
@@ -37,7 +29,7 @@
   "local": [
     {
       "name": "Local",
-      "key": "n-8Flrqf-qA7wUXLYjJFXRO-qN2aBkynXyAJm",
+      "key": "0CGMwYJzUqem-cZsnL4Se8VKfznjHyhwt2Hx7",
       "displayName": "Local",
       "description": "use this to test the CodePush process *only* on your local machine"
     }
