@@ -55,6 +55,7 @@ const dayNavBar = {
   backButtonImage: require('../../images/iconBackGrayNew.png'),
   titleStyle: {
     fontSize: 16 * k,
+    fontWeight: undefined,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
     fontFamily: 'Roboto-Regular',

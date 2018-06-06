@@ -38,7 +38,7 @@ sed -e "2s/.*/const codeBundleId = \"$RELEASE_ID\"/" -i '' src/utils/bugsnagConf
 # Release iOS App
 ## Release JS bundle via Code Push
 
-node ./node_modules/.bin/appcenter codepush release-react -a Hippware/tinyrobot -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR
+./node_modules/.bin/appcenter codepush release-react -a Hippware/tinyrobot -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR
 
 
 ## Upload source map and sources to Bugsnag
