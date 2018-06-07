@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Fix font-weight for react-navigation (PR #2449, related to #1874)
+
 # 2.8.0 - 2018 June 5
 
 * Move to AppCenter for CodePush (new configuration) (#2414)
