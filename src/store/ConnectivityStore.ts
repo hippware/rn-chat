@@ -1,4 +1,4 @@
-import {autorunAsync, reaction, observable, action} from 'mobx'
+import {autorun, reaction, observable, action} from 'mobx'
 import {IWocky} from 'wocky-client'
 
 export const DELAY = 1000
@@ -33,8 +33,7 @@ class ConnectivityStore {
       this._handleConnectionInfoChange(reach)
     })
 
-    this.disposer = autorunAsync(
-      'Connectivity: tryReconnect',
+    this.disposer = autorun(
       () => {
         const {netConnected, isActive} = this
         const {username, password, connected, connecting} = this.wocky!
@@ -45,7 +44,7 @@ class ConnectivityStore {
           this.reset()
         }
       },
-      DELAY
+      {delay: DELAY}
     )
 
     this.disposer2 = reaction(

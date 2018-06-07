@@ -109,7 +109,7 @@ const SearchStore = types
       // set initial list to all friends
       when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends))
 
-      handler2 = autorun('SearchStore', () => {
+      handler2 = autorun(() => {
         const {local} = self
         if (wocky.connected) {
           self.localResult.replace(

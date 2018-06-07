@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, Text, Keyboard} from 'react-native'
-import {when, autorun, autorunAsync} from 'mobx'
+import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
 import {colors} from '../constants'
@@ -121,17 +121,17 @@ class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
     const {wocky, locationStore, store} = this.props
 
-    autorunAsync(() => {
+    autorun(() => {
       if (wocky!.connected && !locationStore!.enabled) {
         if (Actions.locationWarning) Actions.locationWarning()
       }
-    }, 1000)
+    }, {delay: 1000})
 
-    autorunAsync(() => {
+    autorun(() => {
       if (Actions.currentScene === '_fullMap' && !locationStore!.alwaysOn && !store.locationPrimed) {
         if (Actions.locationPrimer) Actions.locationPrimer()
       }
-    }, 1000)
+    }, {delay: 1000} )
   }
 
   render() {

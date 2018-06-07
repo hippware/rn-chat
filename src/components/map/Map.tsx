@@ -75,7 +75,7 @@ export default class Map extends React.Component<IProps> {
   @computed
   get botMarkerList(): any[] {
     const {wocky, bot} = this.props
-    const list = (wocky.geoBots && wocky.geoBots.values().filter(b => isAlive(b))) || []
+    const list = (wocky.geoBots && Array.from(wocky.geoBots.values()).filter(b => isAlive(b))) || []
 
     if (bot && list.indexOf(bot) === -1) {
       list.push(bot)
@@ -233,7 +233,7 @@ export default class Map extends React.Component<IProps> {
       return
     }
 
-    const list = this.props.wocky.geoBots.values()
+    const list = Array.from(this.props.wocky.geoBots.values())
 
     const annotation = list.find(b => nativeEvent.id === b.id)
     if (!annotation) {
