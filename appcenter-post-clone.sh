@@ -7,8 +7,8 @@ sudo installer -store -pkg "$HOME/Downloads/node-installer.pkg" -target "/"
 echo "Node version..."
 node --version
 
+yarn
 # these tests run on CircleCI
-# yarn
 # yarn test
 
 echo "Installing applesimutils"
@@ -22,7 +22,7 @@ export PATH=$PATH:./simutils/build/Build/Products/Release
 
 echo "Detecting applesimutils"
 which applesimutils
-npm install detox-cli -g
+npm install -g detox-cli@7.2.0
 echo 'Detox install'
 set -ex
 yarn detox
