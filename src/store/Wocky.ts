@@ -11,7 +11,7 @@ import {
   IModelType,
   IExtendedObservableMap,
 } from 'mobx-state-tree'
-import {reaction, IObservableArray} from 'mobx'
+import {reaction, IObservableArray, ObservableMap} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
@@ -73,12 +73,12 @@ export const Wocky = types
       password: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
-      roster: types.optional(types.map(types.reference(Profile)), {}),
+      roster: types.optional(types.map(types.reference(Profile)), {} as ObservableMap),
       profile: types.maybe(OwnProfile),
       updates: types.optional(types.array(EventEntity), []),
       events: types.optional(EventList, {}),
       geofenceBots: types.optional(BotPaginableList, {}),
-      geoBots: types.optional(types.map(types.reference(Bot)), {}),
+      geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
       version: '',
     })
@@ -130,9 +130,11 @@ export const Wocky = types
           return self.transport.connecting
         },
         get sortedRoster(): IProfile[] {
-          return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
-            return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-          })
+          return (Array.from(self.roster.values()) as IProfile[])
+            .filter(x => x.handle)
+            .sort((a, b) => {
+              return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+            })
         },
         get updatesToAdd(): IEventEntity[] {
           return self.updates.filter((e: IEventEntity) => {
@@ -238,7 +240,7 @@ export const Wocky = types
   }))
   .actions(self => ({
     addRosterItem: (profile: any) => {
-      self.roster.put(self.profiles.get(profile.id, profile))
+      self.roster.set(profile.id, self.profiles.get(profile.id, profile))
     },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
       const profile = self.profiles.get(id, processMap(data))
@@ -597,7 +599,7 @@ export const Wocky = types
     },
     _onGeoBot: (bot: any) => {
       if (!self.geoBots.has(bot.id)) {
-        self.geoBots.put(self.getBot(bot))
+        self.geoBots.set(bot.id, self.getBot(bot))
       }
     },
     enablePush: flow(function*(token: string) {
@@ -657,13 +659,13 @@ export const Wocky = types
   .actions(self => {
     function clearCache() {
       self.geofenceBots.refresh()
-      self.profiles.clear()
       self.roster.clear()
       self.chats.clear()
-      self.bots.clear()
       self.geoBots.clear()
       self.events.refresh()
       self.updates.clear()
+      self.profiles.clear()
+      self.bots.clear()
     }
     return {
       clearCache,
@@ -696,9 +698,9 @@ export const Wocky = types
               }
               self._subscribeToHomestream(self.version)
             } else {
-              self.profiles.storage
-                .values()
-                .forEach((profile: any) => profile.setStatus('unavailable'))
+              Array.from(self.profiles.storage.values()).forEach((profile: any) =>
+                profile.setStatus('unavailable')
+              )
             }
           }
         )

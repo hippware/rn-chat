@@ -203,14 +203,14 @@ describe('BotStore', () => {
 
   it('geosearch', async done => {
     try {
-      expect(user1.geoBots.keys().length).to.be.equal(0)
+      expect(Array.from(user1.geoBots.keys()).length).to.be.equal(0)
       await user1.geosearch({
         latitude: 1.2,
         longitude: 2.2,
         latitudeDelta: 0.5,
         longitudeDelta: 0.5,
       })
-      await waitFor(() => user1.geoBots.keys().length >= 2)
+      await waitFor(() => Array.from(user1.geoBots.keys()).length >= 2)
       done()
     } catch (e) {
       done(e)
