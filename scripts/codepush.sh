@@ -3,15 +3,9 @@
 
 DEPLOYMENT_NAME=$1
 DESCRIPTION=$2
-RELEASE_ID=$3
+RELEASE_ID=`date +"%Y-%m-%d_%H-%M-%S"`
 BUILD_DIR=cpbuild
 BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
-
-# TODO: set BUGSNAG_API_KEY externally
-# if [ -z "$BUGSNAG_API_KEY" ]; then
-#     echo "Please set the BUGSNAG_API_KEY environment variable to continue."
-#     exit 1
-# fi
 
 if [ -z "$DEPLOYMENT_NAME" ]; then
     echo "No deployment name (e.g. StagingPavel) specified"
@@ -25,11 +19,11 @@ if [ -z "$DESCRIPTION" ]; then
     exit 1
 fi
 
-if [ -z "$RELEASE_ID" ]; then
-    echo "No bugsnag unique id specified"
-    echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
-    exit 1
-fi
+# if [ -z "$RELEASE_ID" ]; then
+#     echo "No bugsnag unique id specified"
+#     echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
+#     exit 1
+# fi
 
 # Insert release identifier into the Bugsnag configuration
 # (using macOS-specific sed arguments)
@@ -38,7 +32,7 @@ sed -e "2s/.*/const codeBundleId = \"$RELEASE_ID\"/" -i '' src/utils/bugsnagConf
 # Release iOS App
 ## Release JS bundle via Code Push
 
-./node_modules/.bin/appcenter codepush release-react -a Hippware/tinyrobot -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR
+./node_modules/.bin/appcenter codepush release-react -a hippware/tinyrobot-2 -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR
 
 
 ## Upload source map and sources to Bugsnag
@@ -50,6 +44,8 @@ yarn bugsnag-sourcemaps upload \
     --minified-url main.jsbundle \
     --upload-sources \
     --add-wildcard-prefix
+
+echo 'bugsnag id =' $RELEASE_ID
 
 rm -rf $BUILD_DIR
 
