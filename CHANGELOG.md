@@ -1,6 +1,6 @@
 # Change Log
 
-Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
+Also: [D eployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
