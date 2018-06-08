@@ -4,8 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 2.8.1 - 2018 June 7
+
 * Fix font-weight for react-navigation (PR #2449, related to #1874)
 * New Appcenter app changes (PR #2453, PR #2459)
+* Upgrade mobx, mobx-state-tree and others (PR #2460)
 
 # 2.8.0 - 2018 June 5
 
