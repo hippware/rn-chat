@@ -3,6 +3,7 @@ import {settings} from '../globals'
 import * as log from '../utils/log'
 import codePush, {RemotePackage} from 'react-native-code-push'
 import {IWocky} from 'wocky-client'
+import {when} from 'mobx'
 
 const deployments = require('../constants/codepush-deployments.json')
 
@@ -23,16 +24,22 @@ const CodePushStore = types
     syncing: false,
     refreshing: false,
     isFirstRun: types.maybe(types.boolean),
+    downloadProgress: 0,
   }))
   .views(self => ({
     get flavor(): string {
       return __DEV__ ? 'local' : settings.isStaging ? 'staging' : 'production'
-      // return 'staging'
     },
   }))
   .views(self => ({
     get channels(): Channel[] {
       return deployments[self.flavor]
+    },
+  }))
+  .actions(self => ({
+    allowRestart() {
+      self.syncing = false
+      codePush.allowRestart()
     },
   }))
   .actions(self => ({
@@ -72,10 +79,7 @@ const CodePushStore = types
           codePush.disallowRestart()
           self.syncStatus.push('Update installed.')
           // leave time for LocalStorage serialization
-          setTimeout(() => {
-            self.syncing = false
-            codePush.allowRestart()
-          }, 500)
+          setTimeout(self.allowRestart, 500)
           break
         case UPDATE_IGNORED:
           self.syncStatus.push('Update ignored.')
@@ -91,11 +95,8 @@ const CodePushStore = types
     },
 
     onDownloadDidProgress(progress) {
-      // console.log(
-      //   'CODEPUSH progress:',
-      //   `${progress.receivedBytes} of ${progress.totalBytes} received.`
-      // )
-      self.syncStatus.push(`${progress.receivedBytes} of ${progress.totalBytes} received.`)
+      const {receivedBytes, totalBytes} = progress
+      self.downloadProgress = receivedBytes / totalBytes
     },
 
     addChannelUpdate(channel, update) {
@@ -106,12 +107,12 @@ const CodePushStore = types
     },
   }))
   .actions(self => ({
-    checkLoadedBundle: flow(function*() {
+    checkLoadedBundle: flow(function*(wocky: IWocky) {
       self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
       if (self.metadata && self.metadata.isFirstRun) {
-        const {wocky} = getParent(self)
-        // TODO: prevent initial hydration instead of clearing the cache after this check?
-        ;(wocky as IWocky).clearCache()
+        // TODO: prevent initial hydration instead of clearing the cache?
+        // If we uncomment below it causes mobx observer exceptions
+        // wocky.clearCache()
       }
     }),
 
@@ -165,8 +166,7 @@ const CodePushStore = types
       }
       self.syncing = true
       self.syncStatus.clear()
-      // self._channel = channel
-      codePush.sync(syncOptions, self.onSyncStatusChanged)
+      codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
     },
   }))
   .actions(self => ({
@@ -175,7 +175,13 @@ const CodePushStore = types
       self.metadata = null
       codePush.notifyAppReady()
       self.syncImmediate()
-      self.checkLoadedBundle()
+      const parent = getParent(self)
+      when(
+        () => !!parent.wocky,
+        () => {
+          self.checkLoadedBundle(parent.wocky)
+        }
+      )
     },
   }))
 

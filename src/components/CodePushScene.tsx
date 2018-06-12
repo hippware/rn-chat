@@ -1,5 +1,12 @@
 import React from 'react'
-import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native'
+import {
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ProgressViewIOS,
+} from 'react-native'
 import {colors} from '../constants'
 import {settings} from '../globals'
 import {observer, inject} from 'mobx-react/native'
@@ -17,7 +24,7 @@ class CodePushScene extends React.Component<Props> {
   }
 
   render() {
-    // const displayCPInfo = !!model.codePushChannel;
+    const {downloadProgress} = this.props.codePushStore
     return (
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
@@ -36,6 +43,9 @@ class CodePushScene extends React.Component<Props> {
         </View>
 
         <Channels />
+        {downloadProgress > 0 && (
+          <ProgressViewIOS progress={downloadProgress} style={{marginVertical: 10}} />
+        )}
         <SyncStatus />
       </View>
     )
