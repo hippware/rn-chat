@@ -3,75 +3,15 @@ import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react
 import {colors} from '../constants'
 import {settings} from '../globals'
 import {observer, inject} from 'mobx-react/native'
+import {ICodePushStore} from '../store/CodePushStore'
 
-const Metadata = inject('codePushStore')(
-  observer(({codePushStore}) => {
-    if (codePushStore.refreshing) {
-      return <Text>retrieving CodePush status...</Text>
-    }
-    if (codePushStore.metadata) {
-      const {description, label, isFirstRun, isMandatory, packageSize} = codePushStore.metadata
-      return (
-        <View>
-          <Text>{`Description: ${description}`}</Text>
-          <Text>{`Label: ${label}`}</Text>
-          <Text>{`First run?: ${isFirstRun}`}</Text>
-          <Text>{`Mandatory?: ${isMandatory}`}</Text>
-          <Text>{`Package size: ${packageSize}`}</Text>
-        </View>
-      )
-    } else {
-      return (
-        <Text style={{marginTop: 20}}>
-          No CodePush metadata, you are running the base app from TestFlight
-        </Text>
-      )
-    }
-  })
-)
-
-const Channels = inject('codePushStore')(
-  observer(({codePushStore}) => {
-    let inner
-    if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />
-    else if (!codePushStore.channelUpdates.length)
-      inner = <Text>{`No updates available for ${codePushStore.flavor}`}</Text>
-    else {
-      inner = (
-        <View>
-          <Text>{`Available updates for ${codePushStore.flavor}:`}</Text>
-          {codePushStore.channelUpdates.map(c => (
-            <TouchableOpacity
-              key={c.key}
-              style={[styles.syncButton]}
-              onPress={() => codePushStore.sync(c)}
-            >
-              <Text style={{color: colors.PINK}}>{`${c.displayName} - ${
-                c.updateDescription
-              }`}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )
-    }
-    return <View style={{marginTop: 20}}>{inner}</View>
-  })
-)
-
-const SyncStatus = inject('codePushStore')(
-  observer(({codePushStore}) => {
-    const {syncStatus: status} = codePushStore
-    if (status.length) {
-      return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>
-    } else {
-      return null
-    }
-  })
-)
+type Props = {
+  codePushStore?: ICodePushStore
+}
 
 @inject('codePushStore')
 @observer
-class CodePushScene extends React.Component<any> {
+class CodePushScene extends React.Component<Props> {
   componentWillMount() {
     this.props.codePushStore.getFreshData()
   }
@@ -101,6 +41,71 @@ class CodePushScene extends React.Component<any> {
     )
   }
 }
+
+const Metadata = inject('codePushStore')(
+  observer(({codePushStore}: Props) => {
+    if (codePushStore.refreshing) {
+      return <Text>retrieving CodePush status...</Text>
+    }
+    if (codePushStore.metadata) {
+      const {description, label, isFirstRun, isMandatory, packageSize} = codePushStore.metadata
+      return (
+        <View>
+          <Text>{`Description: ${description}`}</Text>
+          <Text>{`Label: ${label}`}</Text>
+          <Text>{`First run?: ${isFirstRun}`}</Text>
+          <Text>{`Mandatory?: ${isMandatory}`}</Text>
+          <Text>{`Package size: ${packageSize}`}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <Text style={{marginTop: 20}}>
+          No CodePush metadata, you are running the base app from TestFlight
+        </Text>
+      )
+    }
+  })
+)
+
+const Channels = inject('codePushStore')(
+  observer(({codePushStore}: Props) => {
+    let inner
+    if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />
+    else if (!codePushStore.channelUpdates.length)
+      inner = <Text>{`No updates available for ${codePushStore.flavor}`}</Text>
+    else {
+      inner = (
+        <View>
+          <Text>{`Available updates for ${codePushStore.flavor}:`}</Text>
+          {codePushStore.channelUpdates.map(c => (
+            <TouchableOpacity
+              key={c.key}
+              style={[styles.syncButton]}
+              onPress={() => codePushStore.sync(c)}
+            >
+              <Text style={{color: colors.PINK}}>{`${c.displayName} - ${
+                c.updateDescription
+              }`}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )
+    }
+    return <View style={{marginTop: 20}}>{inner}</View>
+  })
+)
+
+const SyncStatus = inject('codePushStore')(
+  observer(({codePushStore}: Props) => {
+    const {syncStatus: status} = codePushStore
+    if (status.length) {
+      return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>
+    } else {
+      return null
+    }
+  })
+)
 
 export default CodePushScene
 

@@ -1,31 +1,40 @@
-import {types, flow} from 'mobx-state-tree'
+import {types, flow, getParent} from 'mobx-state-tree'
 import {settings} from '../globals'
 import * as log from '../utils/log'
 import codePush, {RemotePackage} from 'react-native-code-push'
-// import {IWocky} from 'wocky-client'
+import {IWocky} from 'wocky-client'
 
 const deployments = require('../constants/codepush-deployments.json')
 
-// const Channel = types.model('Codepush Channel', {
-//   name: types.string,
-//   key: types.string,
-//   displayName: types.string,
-//   description: types.string,
-// })
+type Channel = {
+  name: string
+  key: string
+  displayName: string
+  description: string
+}
 
 const CodePushStore = types
   .model('CodePushStore', {
-    flavor: types.optional(
-      types.enumeration('Flavor', ['production', 'staging', 'local']),
-      'staging'
-    ),
     metadata: types.optional(types.frozen, null),
-    syncing: false,
-    refreshing: false,
     syncStatus: types.optional(types.array(types.string), []),
     channelUpdates: types.optional(types.array(types.frozen), []),
-    channels: types.optional(types.array(types.frozen), []),
   })
+  .volatile(() => ({
+    syncing: false,
+    refreshing: false,
+    isFirstRun: types.maybe(types.boolean),
+  }))
+  .views(self => ({
+    get flavor(): string {
+      return __DEV__ ? 'local' : settings.isStaging ? 'staging' : 'production'
+      // return 'staging'
+    },
+  }))
+  .views(self => ({
+    get channels(): Channel[] {
+      return deployments[self.flavor]
+    },
+  }))
   .actions(self => ({
     onSyncStatusChanged(status: codePush.SyncStatus): void {
       const {
@@ -80,14 +89,29 @@ const CodePushStore = types
           self.syncStatus.push(`unhandled status: ${status}`)
       }
     },
+
+    onDownloadDidProgress(progress) {
+      // console.log(
+      //   'CODEPUSH progress:',
+      //   `${progress.receivedBytes} of ${progress.totalBytes} received.`
+      // )
+      self.syncStatus.push(`${progress.receivedBytes} of ${progress.totalBytes} received.`)
+    },
+
+    addChannelUpdate(channel, update) {
+      self.channelUpdates.push({
+        ...channel,
+        updateDescription: update.description,
+      })
+    },
   }))
   .actions(self => ({
     checkLoadedBundle: flow(function*() {
-      const meta = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
-      console.log('& meta', meta)
-      if (meta && meta.isFirstRun) {
-        // const {wocky} = getParent(self)
-        // ;(wocky as IWocky).clearCache()
+      self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
+      if (self.metadata && self.metadata.isFirstRun) {
+        const {wocky} = getParent(self)
+        // TODO: prevent initial hydration instead of clearing the cache after this check?
+        ;(wocky as IWocky).clearCache()
       }
     }),
 
@@ -104,7 +128,7 @@ const CodePushStore = types
               : codePush.InstallMode.ON_NEXT_RESTART,
             deploymentKey: deployKey,
           }
-          codePush.sync(syncOptions, self.onSyncStatusChanged)
+          codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
         }
       } catch (err) {
         log.log('Codepush syncImmediate error', err)
@@ -113,7 +137,7 @@ const CodePushStore = types
     }),
 
     getFreshData: flow(function*() {
-      // self.channelUpdates.clear()
+      self.channelUpdates.clear()
       self.refreshing = true
       self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
 
@@ -122,10 +146,7 @@ const CodePushStore = types
           .map(channel => {
             return codePush.checkForUpdate(channel.key).then(update => {
               if (update) {
-                self.channelUpdates.push({
-                  ...channel,
-                  updateDescription: update.description,
-                })
+                self.addChannelUpdate(channel, update)
               }
             })
           })
@@ -133,13 +154,6 @@ const CodePushStore = types
       )
       self.refreshing = false
     }),
-
-    codePushDownloadDidProgress(/*progress*/) {
-      // console.log(
-      //   'CODEPUSH progress:',
-      //   `${progress.receivedBytes} of ${progress.totalBytes} received.`
-      // )
-    },
 
     sync(channel: any) {
       const syncOptions = {
@@ -156,17 +170,9 @@ const CodePushStore = types
     },
   }))
   .actions(self => ({
-    afterCreate() {
-      if (__DEV__) {
-        self.flavor = 'local'
-      } else if (settings.isStaging) {
-        self.flavor = 'staging'
-      } else {
-        self.flavor = 'production'
-      }
-      self.channels = deployments[self.flavor]
-    },
     afterAttach() {
+      self.syncStatus.clear()
+      self.metadata = null
       codePush.notifyAppReady()
       self.syncImmediate()
       self.checkLoadedBundle()
@@ -174,3 +180,5 @@ const CodePushStore = types
   }))
 
 export default CodePushStore
+
+export type ICodePushStore = typeof CodePushStore.Type
