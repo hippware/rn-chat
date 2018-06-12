@@ -16,7 +16,7 @@ export default class SnapScroller extends React.Component<{}> {
           bottom: 10,
           left: 0,
           right: 0,
-          height: 150,
+          height: 100,
         }}
       >
         <Carousel
