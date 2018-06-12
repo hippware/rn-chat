@@ -8,47 +8,25 @@ import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {width, height} from '../Global'
+// import {width, height} from '../Global'
+import {IHomeStore} from '../../store/HomeStore'
 
-export const DELTA_FULL_MAP = 0.04
-export const DELTA_BOT_PROFILE = 0.2
-export const DELTA_GEOFENCE = 0.01
-
-const DEFAULT_DELTA = 0.00522
-const TRANS_DELTA = DEFAULT_DELTA + 0.005
-const OPACITY_MIN = 0.6
+// export const DELTA_FULL_MAP = 0.04
+// export const DELTA_BOT_PROFILE = 0.2
+// export const DELTA_GEOFENCE = 0.01
 
 interface IProps {
   locationStore?: ILocationStore
   wocky?: IWocky
+  homeStore?: IHomeStore
 }
 
-type RegionProps = {
-  latitude: number
-  longitude: number
-  latitudeDelta: number
-  longitudeDelta: number
-}
-
-type MapType = 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard'
-
-@inject('locationStore', 'wocky')
+@inject('locationStore', 'wocky', 'homeStore')
 @observer
-export default class Map extends React.Component<IProps> {
+export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
-
-  latitude: number = 0
-  longitude: number = 0
-  latitudeDelta: number = 0
-  longitudeDelta: number = 0
-
-  @observable mapType: MapType = 'standard'
-  @observable underMapType: MapType = 'none'
-  // @observable underMapType: MapType = 'satellite'
-  @observable opacity: number = 1
-  @observable region?: RegionProps
 
   _map: any
   mounted: boolean = false
@@ -62,7 +40,7 @@ export default class Map extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore} = this.props
+    const {locationStore, homeStore} = this.props
     const {location} = locationStore
     if (!location) {
       return (
@@ -72,6 +50,7 @@ export default class Map extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
+    const {region, mapType, underMapType, opacity, onRegionChange} = homeStore
     const delta = 0.04
     return (
       <View
@@ -85,57 +64,29 @@ export default class Map extends React.Component<IProps> {
       >
         <MapView
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
-          region={this.region}
+          region={region}
           scrollEnabled={false}
           zoomEnabled={false}
           rotateEnabled={false}
           provider={'google'}
           style={[styles.map, {opacity: 0.4}]}
-          mapType={this.underMapType}
+          mapType={underMapType}
         />
         <MapView
           provider={'google'}
           // ref={this.setMapRef}
           // onPress={this.onPress}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
-          style={[styles.map, {opacity: this.opacity}]}
+          style={[styles.map, {opacity}]}
           customMapStyle={mapStyle}
-          mapType={this.mapType}
-          onRegionChange={this.onRegionChange}
+          mapType={mapType}
+          onRegionChange={onRegionChange}
           // onRegionChangeComplete={this.onRegionDidChange}
           rotateEnabled={false}
           {...this.props}
         />
       </View>
     )
-  }
-
-  @action
-  onRegionChange = (region: RegionProps) => {
-    if (region.latitudeDelta <= DEFAULT_DELTA) {
-      this.underMapType = 'none'
-      this.mapType = 'hybrid'
-      this.opacity = 0.85
-    } else if (region.latitudeDelta <= TRANS_DELTA) {
-      this.underMapType = 'satellite'
-      this.region = region
-      this.opacity = OPACITY_MIN
-    } else {
-      this.mapType = 'standard'
-      this.opacity = 1
-    }
-  }
-
-  onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    // log.log('& onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta)
-    this.latitude = latitude
-    this.longitude = longitude
-    this.latitudeDelta = latitudeDelta
-    this.longitudeDelta = longitudeDelta
-    // InteractionManager.runAfterInteractions(() => {
-    // rough radius calculation - one latitude is 111km
-    this.props.wocky.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
-    // })
   }
 
   setCenterCoordinate = (latitude: number, longitude: number, fit: boolean = false) => {
