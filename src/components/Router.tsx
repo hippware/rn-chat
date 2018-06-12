@@ -28,7 +28,7 @@ import BotCompose from './BotCompose'
 import BotCreate from './map/BotCreate'
 import BotDetails from './BotDetails'
 import BotsScreen from './BotsScreen'
-import ExploreNearBy from './map/ExploreNearBy'
+// import ExploreNearBy from './map/ExploreNearBy'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -171,8 +171,8 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Modal key="modal" hideNavBar>
                   <Tabs key="cube" navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key="main" hideTabBar lazy>
-                      <Scene key="home" component={Home} renderTitle={tinyRobotTitle} />
-                      <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" />
+                      <Scene key="home" component={Home} hideNavBar />
+                      {/* <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" /> */}
                       <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                       <Scene key="friendsMain">
                         <Scene key="friends" component={peopleLists.FriendListScene} title="Friends" />
