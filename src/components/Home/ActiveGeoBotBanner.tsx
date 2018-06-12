@@ -23,7 +23,15 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     const {activeBots} = wocky!
     return (
       <View
-        style={{backgroundColor: 'white', paddingTop: 30 * k}}
+        style={{
+          backgroundColor: 'white',
+          paddingTop: 38 * k,
+          // shadowColor: 'red',
+          shadowColor: colors.GREY,
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 1,
+          shadowRadius: 5,
+        }}
         onStartShouldSetResponder={() => {
           this.props.analytics.track(analyticsGeoWidgetTap)
           return false
