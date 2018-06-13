@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView from 'react-native-maps'
+import MapView, {Marker} from 'react-native-maps'
 import {StyleSheet, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {when} from 'mobx'
@@ -11,15 +11,13 @@ import {ILocationStore} from '../../store/LocationStore'
 // import {width, height} from '../Global'
 import {IHomeStore} from '../../store/HomeStore'
 
-// export const DELTA_FULL_MAP = 0.04
-// export const DELTA_BOT_PROFILE = 0.2
-// export const DELTA_GEOFENCE = 0.01
-
 interface IProps {
   locationStore?: ILocationStore
   wocky?: IWocky
   homeStore?: IHomeStore
 }
+
+const you = require('../../../images/you.png')
 
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
@@ -28,7 +26,7 @@ export default class MapHome extends React.Component<IProps> {
     autoZoom: true,
   }
 
-  _map: any
+  _map?: any
   mounted: boolean = false
 
   componentDidMount() {
@@ -44,7 +42,7 @@ export default class MapHome extends React.Component<IProps> {
     const {location} = locationStore
     if (!location) {
       return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={[styles.container, {alignItems: 'center', justifyContent: 'center'}]}>
           <Spinner />
         </View>
       )
@@ -53,15 +51,7 @@ export default class MapHome extends React.Component<IProps> {
     const {region, mapType, underMapType, opacity, onRegionChange} = homeStore
     const delta = 0.04
     return (
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-        }}
-      >
+      <View style={styles.container}>
         <MapView
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           region={region}
@@ -74,17 +64,18 @@ export default class MapHome extends React.Component<IProps> {
         />
         <MapView
           provider={'google'}
-          // ref={this.setMapRef}
+          ref={this.setMapRef}
           // onPress={this.onPress}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           style={[styles.map, {opacity}]}
           customMapStyle={mapStyle}
           mapType={mapType}
           onRegionChange={onRegionChange}
-          // onRegionChangeComplete={this.onRegionDidChange}
           rotateEnabled={false}
           {...this.props}
-        />
+        >
+          <Marker image={you} coordinate={{latitude, longitude}} onPress={this.youPress} />
+        </MapView>
       </View>
     )
   }
@@ -109,6 +100,10 @@ export default class MapHome extends React.Component<IProps> {
     // }
   }
 
+  youPress = () => {
+    // TODO
+  }
+
   goToUser = async () => {
     const {locationStore} = this.props
     const {location, loading} = locationStore
@@ -128,7 +123,11 @@ export default class MapHome extends React.Component<IProps> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
   },
   map: {
     position: 'absolute',

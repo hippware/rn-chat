@@ -12,8 +12,8 @@ class Home extends React.Component<{}> {
       <View style={{flex: 1}} testID="screenHome">
         <MapHome />
         <ActiveGeoBotBanner />
-        <HorizontalCardList />
         <RightPanel />
+        <HorizontalCardList />
         <Connectivity />
       </View>
     )

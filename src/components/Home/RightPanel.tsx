@@ -16,6 +16,7 @@ export default class RightPanel extends React.Component<{}> {
           onPress={() => {
             /* TODO */
           }}
+          style={styles.button}
         >
           <Image source={settings} />
         </TouchableOpacity>
@@ -34,6 +35,7 @@ export default class RightPanel extends React.Component<{}> {
             onPress={() => {
               /* TODO */
             }}
+            style={styles.button}
           >
             <Image source={create} />
           </TouchableOpacity>
@@ -47,14 +49,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'flex-end',
-    paddingTop: 15 * k,
+    marginBottom: 15 * k,
     paddingRight: 12 * k,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    paddingBottom: 130 * k, // HACK: hardcoded
   },
   button: {
-    marginVertical: 15 * k,
+    marginTop: 15 * k,
   },
   pill: {
     shadowColor: colors.PINK,

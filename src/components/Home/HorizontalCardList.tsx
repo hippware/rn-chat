@@ -1,6 +1,6 @@
 import React from 'react'
-import {View} from 'react-native'
-import {width} from '../Global'
+import {View, StyleSheet} from 'react-native'
+import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 
 const data = ['1', '2', '3']
@@ -10,15 +10,7 @@ export default class SnapScroller extends React.Component<{}> {
 
   render() {
     return (
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 10,
-          left: 0,
-          right: 0,
-          height: 100,
-        }}
-      >
+      <View style={styles.container}>
         <Carousel
           ref={c => (this.list = c)}
           data={data}
@@ -31,7 +23,19 @@ export default class SnapScroller extends React.Component<{}> {
     )
   }
 
-  renderItem = ({item}) => (
-    <View style={{borderColor: 'red', backgroundColor: 'white', borderWidth: 1, flex: 1}} />
-  )
+  renderItem = ({item}) => <View style={styles.card} />
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'flex-end',
+    height: 100,
+    marginBottom: 10 * k,
+  },
+  card: {
+    borderColor: 'red',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flex: 1,
+  },
+})
