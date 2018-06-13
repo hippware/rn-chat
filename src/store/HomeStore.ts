@@ -32,6 +32,9 @@ const HomeStore = types
     // region: types.maybe(Region),
     region: types.optional(types.frozen, null),
   })
+  .volatile(self => ({
+    homeMode: true,
+  }))
   .actions(self => ({
     onRegionChange(region) {
       if (region.latitudeDelta <= DEFAULT_DELTA) {
@@ -48,6 +51,9 @@ const HomeStore = types
         self.mapType = 'standard'
         self.opacity = 1
       }
+    },
+    set(state) {
+      Object.assign(self, state)
     },
   }))
 

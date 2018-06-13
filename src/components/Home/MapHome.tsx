@@ -74,7 +74,12 @@ export default class MapHome extends React.Component<IProps> {
           rotateEnabled={false}
           {...this.props}
         >
-          <Marker image={you} coordinate={{latitude, longitude}} onPress={this.youPress} />
+          <Marker
+            image={you}
+            coordinate={{latitude, longitude}}
+            onPress={this.youPress}
+            tracksViewChanges={false}
+          />
         </MapView>
       </View>
     )

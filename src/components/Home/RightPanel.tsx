@@ -2,14 +2,24 @@ import React from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
+import {inject, observer} from 'mobx-react/native'
+import {IHomeStore} from '../../store/HomeStore'
 
 const settings = require('../../../images/settingsBtn.png')
 const create = require('../../../images/create.png')
 const toggle = require('../../../images/homeToggle.png')
+const toggleOff = require('../../../images/homeToggleOff.png')
+
+type Props = {
+  homeStore?: IHomeStore
+}
 
 // TODO: make RightPanel slide to the right and back
-export default class RightPanel extends React.Component<{}> {
+@inject('homeStore')
+@observer
+export default class RightPanel extends React.Component<Props> {
   render() {
+    const {set, homeMode} = this.props.homeStore!
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -24,11 +34,12 @@ export default class RightPanel extends React.Component<{}> {
         <View>
           <TouchableOpacity
             onPress={() => {
+              set({homeMode: !homeMode})
               /* TODO */
             }}
             style={[styles.button, styles.pill]}
           >
-            <Image source={toggle} />
+            <Image source={homeMode ? toggle : toggleOff} />
           </TouchableOpacity>
 
           <TouchableOpacity
