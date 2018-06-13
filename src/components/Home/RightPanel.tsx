@@ -19,7 +19,7 @@ type Props = {
 @observer
 export default class RightPanel extends React.Component<Props> {
   render() {
-    const {set, homeMode} = this.props.homeStore!
+    const {set, homeMode, zoomToCurrentLocation} = this.props.homeStore!
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -34,8 +34,10 @@ export default class RightPanel extends React.Component<Props> {
         <View>
           <TouchableOpacity
             onPress={() => {
+              if (!homeMode) {
+                zoomToCurrentLocation()
+              }
               set({homeMode: !homeMode})
-              /* TODO */
             }}
             style={[styles.button, styles.pill]}
           >
