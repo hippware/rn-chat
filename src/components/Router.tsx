@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, Text, Keyboard} from 'react-native'
+import {Keyboard} from 'react-native'
 import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
@@ -7,7 +7,7 @@ import {colors} from '../constants'
 
 import {settings} from '../globals'
 
-import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux'
+import {Actions, Router, Scene, Stack, Tabs, Modal, Lightbox} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 
@@ -15,7 +15,7 @@ import {k} from './Global'
 import {CubeNavigator} from 'react-native-cube-transition'
 
 import Camera from './Camera'
-import SideMenu from './SideMenu'
+// import SideMenu from './SideMenu'
 import CreateMessage from './CreateMessage'
 import Launch from './Launch'
 import SignUp from './SignUp'
@@ -28,7 +28,7 @@ import BotCompose from './BotCompose'
 import BotCreate from './map/BotCreate'
 import BotDetails from './BotDetails'
 import BotsScreen from './BotsScreen'
-import ExploreNearBy from './map/ExploreNearBy'
+// import ExploreNearBy from './map/ExploreNearBy'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -89,15 +89,15 @@ const dayNavBar = {
   },
 }
 
-const tinyRobotTitle = () => (
-  <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
-    <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
-  </TouchableOpacity>
-)
+// const tinyRobotTitle = () => (
+//   <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
+//     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
+//   </TouchableOpacity>
+// )
 
 const iconClose = require('../../images/iconClose.png')
-const baseMessagesIcon = require('../../images/iconMessage.png')
-const newMessagesIcon = require('../../images/newMessages.png')
+// const baseMessagesIcon = require('../../images/iconMessage.png')
+// const newMessagesIcon = require('../../images/newMessages.png')
 const sendActive = require('../../images/sendActive.png')
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
@@ -157,7 +157,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="testRegisterScene" component={TestRegister} success="connect" />
               </Stack>
               <Scene key="signUp" component={SignUp} hideNavBar />
-              <Drawer
+              {/* <Drawer
                 key="logged"
                 type="replace"
                 hideNavBar
@@ -167,12 +167,13 @@ class TinyRobotRouter extends React.Component<Props> {
                 onRight={() => Actions.messaging()}
                 rightButtonImage={() => (wocky!.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
                 rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
-              >
-                <Modal key="modal" hideNavBar>
+              > */}
+                {/* <Modal key="modal" hideNavBar> */}
+                <Modal key="logged" hideNavBar>
                   <Tabs key="cube" navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key="main" hideTabBar lazy>
-                      <Scene key="home" component={Home} renderTitle={tinyRobotTitle} />
-                      <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" />
+                      <Scene key="home" component={Home} hideNavBar />
+                      {/* <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" /> */}
                       <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                       <Scene key="friendsMain">
                         <Scene key="friends" component={peopleLists.FriendListScene} title="Friends" />
@@ -191,7 +192,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                   <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                 </Modal>
-              </Drawer>
+              {/* </Drawer> */}
             </Stack>
             <Scene key="botContainer" headerMode="screen">
               <Scene key="createBot" component={BotCreate} title="Post a New Bot" leftButtonImage={iconClose} onLeft={Actions.pop} />

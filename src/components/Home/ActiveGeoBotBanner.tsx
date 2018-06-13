@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, FlatList, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {RText} from '../common'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
@@ -9,10 +8,10 @@ import FirstLoadOverlay from './FirstLoadOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
+import {k} from '../Global'
 
 type Props = {
   wocky?: IWocky
-  onLayout: (nativeEvent: any) => void
   analytics?: any
 }
 
@@ -20,20 +19,24 @@ type Props = {
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   render() {
-    const {wocky, onLayout} = this.props
+    const {wocky} = this.props
     const {activeBots} = wocky!
     return (
       <View
-        style={{backgroundColor: 'white'}}
-        onLayout={onLayout}
+        style={{
+          backgroundColor: 'white',
+          paddingTop: 38 * k,
+          // shadowColor: 'red',
+          shadowColor: colors.GREY,
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 1,
+          shadowRadius: 5,
+        }}
         onStartShouldSetResponder={() => {
           this.props.analytics.track(analyticsGeoWidgetTap)
           return false
         }}
       >
-        <RText size={13} weight="Bold" color={colors.PINK} style={{margin: 15, marginBottom: 10}}>
-          {"See Who's Here"}
-        </RText>
         <View>
           <FlatList
             data={activeBots}

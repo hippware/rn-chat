@@ -11,380 +11,569 @@ exports[`Home renders with no data 1`] = `
 >
   <View
     style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+      ]
+    }
+  >
+    <Image
+      resizeMode="contain"
+      source={
+        Object {
+          "testUri": "../../../images/loader_pink.gif",
+        }
+      }
+      style={
+        Array [
+          undefined,
+          Object {
+            "height": 72,
+            "width": 72,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    onStartShouldSetResponder={[Function]}
+    style={
       Object {
-        "backgroundColor": "rgb(242,243,245)",
-        "flex": 1,
+        "backgroundColor": "white",
+        "paddingTop": 76,
+        "shadowColor": "rgb(212,212,212)",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 1,
+        "shadowRadius": 5,
       }
     }
   >
-    <RCTScrollView
-      ListFooterComponent={[Function]}
-      ListHeaderComponent={
-        <HomeStreamHeader
-          onLayout={[Function]}
-        />
-      }
-      data={null}
-      disableVirtualization={false}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      horizontal={false}
-      initialNumToRender={2}
-      keyExtractor={[Function]}
-      maxToRenderPerBatch={10}
-      numColumns={1}
-      onContentSizeChange={[Function]}
-      onEndReached={[Function]}
-      onEndReachedThreshold={0.5}
-      onLayout={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onRefresh={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      refreshControl={
-        <RefreshControlMock
-          onRefresh={[Function]}
-          refreshing={false}
-        />
-      }
-      refreshing={false}
-      renderItem={[Function]}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      updateCellsBatchingPeriod={50}
-      viewabilityConfigCallbackPairs={Array []}
-      windowSize={21}
-    >
-      <RCTRefreshControl />
-      <View>
-        <View
-          onLayout={[Function]}
-          style={null}
-        >
-          <View>
+    <View>
+      <RCTScrollView
+        ListEmptyComponent={<ActiveBannerPlaceholder />}
+        data={Array []}
+        disableVirtualization={false}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={true}
+        initialNumToRender={10}
+        keyExtractor={[Function]}
+        maxToRenderPerBatch={10}
+        numColumns={1}
+        onContentSizeChange={[Function]}
+        onEndReachedThreshold={2}
+        onLayout={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        showsHorizontalScrollIndicator={false}
+        stickyHeaderIndices={Array []}
+        updateCellsBatchingPeriod={50}
+        viewabilityConfigCallbackPairs={Array []}
+        windowSize={21}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+            style={null}
+          >
             <View
-              onLayout={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
+                  "alignSelf": "flex-start",
                   "backgroundColor": "white",
+                  "flex": 0,
+                  "paddingBottom": 30,
+                  "paddingLeft": 50,
                 }
               }
             >
+              <Image
+                resizeMode="contain"
+                source={
+                  Object {
+                    "testUri": "../../../images/geoBotPlaceholder.png",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 158,
+                    "width": 144,
+                  }
+                }
+              />
               <Text
                 accessible={true}
                 allowFontScaling={true}
                 ellipsizeMode="tail"
+                numberOfLines={2}
                 style={
                   Array [
                     Object {
-                      "color": "rgb(253,95,108)",
-                      "fontFamily": "Roboto-Bold",
+                      "color": "rgb(155,155,155)",
+                      "fontFamily": "Roboto-Regular",
                       "fontSize": 13,
                     },
                     Object {
-                      "margin": 15,
-                      "marginBottom": 10,
+                      "left": -10,
+                      "textAlign": "center",
                     },
                   ]
                 }
               >
-                See Who's Here
-              </Text>
-              <View>
-                <RCTScrollView
-                  ListEmptyComponent={<ActiveBannerPlaceholder />}
-                  data={Array []}
-                  disableVirtualization={false}
-                  getItem={[Function]}
-                  getItemCount={[Function]}
-                  horizontal={true}
-                  initialNumToRender={10}
-                  keyExtractor={[Function]}
-                  maxToRenderPerBatch={10}
-                  numColumns={1}
-                  onContentSizeChange={[Function]}
-                  onEndReachedThreshold={2}
-                  onLayout={[Function]}
-                  onMomentumScrollEnd={[Function]}
-                  onScroll={[Function]}
-                  onScrollBeginDrag={[Function]}
-                  onScrollEndDrag={[Function]}
-                  renderItem={[Function]}
-                  scrollEventThrottle={50}
-                  showsHorizontalScrollIndicator={false}
-                  stickyHeaderIndices={Array []}
-                  updateCellsBatchingPeriod={50}
-                  viewabilityConfigCallbackPairs={Array []}
-                  windowSize={21}
-                >
-                  <View>
-                    <View
-                      onLayout={[Function]}
-                      style={null}
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignSelf": "flex-start",
-                            "backgroundColor": "white",
-                            "flex": 0,
-                            "paddingBottom": 30,
-                            "paddingLeft": 50,
-                          }
-                        }
-                      >
-                        <Image
-                          resizeMode="contain"
-                          source={
-                            Object {
-                              "testUri": "../../../images/geoBotPlaceholder.png",
-                            }
-                          }
-                          style={
-                            Object {
-                              "height": 158,
-                              "width": 144,
-                            }
-                          }
-                        />
-                        <Text
-                          accessible={true}
-                          allowFontScaling={true}
-                          ellipsizeMode="tail"
-                          numberOfLines={2}
-                          style={
-                            Array [
-                              Object {
-                                "color": "rgb(155,155,155)",
-                                "fontFamily": "Roboto-Regular",
-                                "fontSize": 13,
-                              },
-                              Object {
-                                "left": -10,
-                                "textAlign": "center",
-                              },
-                            ]
-                          }
-                        >
-                          No Current
+                No Current
 Visitors
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </RCTScrollView>
-              </View>
-              <BlurView
-                blurAmount={10}
-                blurType="xlight"
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    Object {
-                      "alignItems": "center",
-                      "bottom": 0,
-                      "flexDirection": "row",
-                      "left": 0,
-                      "padding": 40,
-                      "paddingHorizontal": 60,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    },
-                  ]
-                }
-              >
-                <Image
-                  resizeMode="contain"
-                  source={
-                    Object {
-                      "testUri": "../../../images/footOpaquePink.png",
-                    }
-                  }
-                  style={
-                    Object {
-                      "height": 89,
-                      "marginRight": 40,
-                      "width": 69,
-                    }
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "flex": 1,
-                      "justifyContent": "center",
-                    }
-                  }
-                >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgb(253,95,108)",
-                          "fontFamily": "Roboto-Bold",
-                          "fontSize": 15,
-                        },
-                        undefined,
-                      ]
-                    }
-                  >
-                    SHARE YOUR VISITS!
-                  </Text>
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgb(155,155,155)",
-                          "fontFamily": "Roboto-Regular",
-                          "fontSize": 13,
-                        },
-                        Object {
-                          "marginTop": 10,
-                        },
-                      ]
-                    }
-                  >
-                    Know when your friends visit your favorite places!
-                  </Text>
-                  <View
-                    accessible={true}
-                    isTVSelectable={true}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Object {
-                        "alignSelf": "flex-start",
-                        "borderColor": "rgb(253,95,108)",
-                        "borderRadius": 2,
-                        "borderWidth": 0.5,
-                        "marginTop": 20,
-                        "opacity": 1,
-                        "padding": 16,
-                      }
-                    }
-                  >
-                    <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
-                      style={
-                        Array [
-                          Object {
-                            "color": "rgb(253,95,108)",
-                            "fontFamily": "Roboto-Medium",
-                            "fontSize": 14,
-                          },
-                          undefined,
-                        ]
-                      }
-                    >
-                      GIVE LOCATION ACCESS
-                    </Text>
-                  </View>
-                </View>
-              </BlurView>
+              </Text>
             </View>
           </View>
         </View>
-        <View
-          onLayout={[Function]}
-          style={null}
+      </RCTScrollView>
+    </View>
+    <BlurView
+      blurAmount={10}
+      blurType="xlight"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "alignItems": "center",
+            "bottom": 0,
+            "flexDirection": "row",
+            "left": 0,
+            "padding": 40,
+            "paddingHorizontal": 60,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+        ]
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../images/footOpaquePink.png",
+          }
+        }
+        style={
+          Object {
+            "height": 89,
+            "marginRight": 40,
+            "width": 69,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(253,95,108)",
+                "fontFamily": "Roboto-Bold",
+                "fontSize": 15,
+              },
+              undefined,
+            ]
+          }
         >
-          <View
+          SHARE YOUR VISITS!
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(155,155,155)",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 13,
+              },
+              Object {
+                "marginTop": 10,
+              },
+            ]
+          }
+        >
+          Know when your friends visit your favorite places!
+        </Text>
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignSelf": "flex-start",
+              "borderColor": "rgb(253,95,108)",
+              "borderRadius": 2,
+              "borderWidth": 0.5,
+              "marginTop": 20,
+              "opacity": 1,
+              "padding": 16,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
             style={
               Array [
-                undefined,
                 Object {
-                  "alignItems": "center",
+                  "color": "rgb(253,95,108)",
+                  "fontFamily": "Roboto-Medium",
+                  "fontSize": 14,
                 },
+                undefined,
               ]
             }
           >
-            <Image
-              resizeMode="contain"
-              source={
-                Object {
-                  "testUri": "../../../images/loader_pink.gif",
-                }
-              }
-              style={
-                Array [
-                  Object {
-                    "marginBottom": 21,
-                    "marginTop": 10,
-                  },
-                  Object {
-                    "height": 72,
-                    "width": 72,
-                  },
-                ]
-              }
-            />
-          </View>
+            GIVE LOCATION ACCESS
+          </Text>
         </View>
       </View>
-    </RCTScrollView>
+    </BlurView>
   </View>
   <View
-    accessible={true}
-    isTVSelectable={true}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "rgb(254,92,108)",
-        "borderRadius": 27,
-        "bottom": 40,
-        "height": 54,
-        "opacity": 1,
-        "position": "absolute",
-        "right": 40,
-        "shadowOffset": Object {
-          "height": 0,
-          "width": 2,
-        },
-        "shadowOpacity": 0.18,
-        "shadowRadius": 4,
-        "width": 54,
+        "alignItems": "flex-end",
+        "alignSelf": "flex-end",
+        "flex": 1,
+        "justifyContent": "space-between",
+        "marginBottom": 30,
+        "paddingRight": 24,
       }
     }
   >
     <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
+          "marginTop": 30,
+          "opacity": 1,
         }
       }
     >
       <Image
         source={
           Object {
-            "testUri": "../../../images/iconCreateBot.png",
+            "testUri": "../../../images/settingsBtn.png",
           }
         }
       />
     </View>
+    <View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginTop": 30,
+            "opacity": 1,
+            "shadowColor": "rgb(253,95,108)",
+            "shadowOffset": Object {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0.5,
+            "shadowRadius": 10,
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/homeToggleOff.png",
+            }
+          }
+        />
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginTop": 30,
+            "opacity": 1,
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/create.png",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "flex-end",
+        "height": 100,
+        "marginBottom": 20,
+      }
+    }
+  >
+    <RCTScrollView
+      activeAnimationOptions={null}
+      activeAnimationType="timing"
+      activeSlideAlignment="center"
+      activeSlideOffset={20}
+      apparitionDelay={0}
+      automaticallyAdjustContentInsets={false}
+      autoplay={false}
+      autoplayDelay={5000}
+      autoplayInterval={3000}
+      callbackOffsetMargin={5}
+      containerCustomStyle={Object {}}
+      contentContainerCustomStyle={Object {}}
+      contentContainerStyle={
+        Array [
+          Object {},
+          Object {
+            "paddingLeft": 10,
+            "paddingRight": 10,
+          },
+        ]
+      }
+      data={
+        Array [
+          "1",
+          "2",
+          "3",
+        ]
+      }
+      decelerationRate="fast"
+      directionalLockEnabled={true}
+      disableVirtualization={false}
+      enableMomentum={false}
+      enableSnap={true}
+      firstItem={0}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      hasParallaxImages={false}
+      horizontal={true}
+      inactiveSlideOpacity={0.7}
+      inactiveSlideScale={0.9}
+      inactiveSlideShift={0}
+      initialNumToRender={7}
+      invertStickyHeaders={false}
+      inverted={false}
+      itemWidth={730}
+      keyExtractor={[Function]}
+      layout="default"
+      lockScrollTimeoutDuration={1000}
+      lockScrollWhileSnapping={false}
+      loop={false}
+      loopClonesPerSide={3}
+      maxToRenderPerBatch={15}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onResponderRelease={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      onTouchStart={[Function]}
+      overScrollMode="never"
+      pinchGestureEnabled={false}
+      removeClippedSubviews={true}
+      renderItem={[Function]}
+      scrollEventThrottle={1}
+      scrollsToTop={false}
+      shouldOptimizeUpdates={true}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      slideStyle={Object {}}
+      sliderWidth={750}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "flexDirection": "row",
+          "opacity": 0,
+          "width": 750,
+        }
+      }
+      swipeThreshold={20}
+      updateCellsBatchingPeriod={50}
+      useScrollView={false}
+      vertical={false}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={15}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "opacity": 1,
+                "transform": Array [
+                  Object {
+                    "scale": 1,
+                  },
+                ],
+                "width": 730,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "white",
+                  "borderColor": "red",
+                  "borderWidth": 1,
+                  "flex": 1,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "opacity": 0.7,
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 730,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "white",
+                  "borderColor": "red",
+                  "borderWidth": 1,
+                  "flex": 1,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "opacity": 0.7,
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 730,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "white",
+                  "borderColor": "red",
+                  "borderWidth": 1,
+                  "flex": 1,
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
   </View>
 </View>
 `;
