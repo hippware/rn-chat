@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent, applySnapshot} from 'mobx-state-tree'
+import {types} from 'mobx-state-tree'
 // import {Location, IWocky} from 'wocky-client'
 
 const DEFAULT_DELTA = 0.00522

@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, Text, Keyboard} from 'react-native'
+import {Keyboard} from 'react-native'
 import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
@@ -7,7 +7,7 @@ import {colors} from '../constants'
 
 import {settings} from '../globals'
 
-import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux'
+import {Actions, Router, Scene, Stack, Tabs, Modal, Lightbox} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 
@@ -15,7 +15,7 @@ import {k} from './Global'
 import {CubeNavigator} from 'react-native-cube-transition'
 
 import Camera from './Camera'
-import SideMenu from './SideMenu'
+// import SideMenu from './SideMenu'
 import CreateMessage from './CreateMessage'
 import Launch from './Launch'
 import SignUp from './SignUp'
@@ -89,15 +89,15 @@ const dayNavBar = {
   },
 }
 
-const tinyRobotTitle = () => (
-  <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
-    <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
-  </TouchableOpacity>
-)
+// const tinyRobotTitle = () => (
+//   <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
+//     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
+//   </TouchableOpacity>
+// )
 
 const iconClose = require('../../images/iconClose.png')
-const baseMessagesIcon = require('../../images/iconMessage.png')
-const newMessagesIcon = require('../../images/newMessages.png')
+// const baseMessagesIcon = require('../../images/iconMessage.png')
+// const newMessagesIcon = require('../../images/newMessages.png')
 const sendActive = require('../../images/sendActive.png')
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
