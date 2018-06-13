@@ -11,11 +11,19 @@ exports[`Home renders with no data 1`] = `
 >
   <View
     style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "justifyContent": "center",
-      }
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+      ]
     }
   >
     <Image
@@ -262,11 +270,103 @@ Visitors
   <View
     style={
       Object {
-        "bottom": 10,
+        "alignItems": "flex-end",
+        "alignSelf": "flex-end",
+        "flex": 1,
+        "justifyContent": "space-between",
+        "marginBottom": 30,
+        "paddingRight": 24,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "marginTop": 30,
+          "opacity": 1,
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../images/settingsBtn.png",
+          }
+        }
+      />
+    </View>
+    <View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginTop": 30,
+            "opacity": 1,
+            "shadowColor": "rgb(253,95,108)",
+            "shadowOffset": Object {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0.5,
+            "shadowRadius": 10,
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/homeToggleOff.png",
+            }
+          }
+        />
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginTop": 30,
+            "opacity": 1,
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/create.png",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "flex-end",
         "height": 100,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
+        "marginBottom": 20,
       }
     }
   >
@@ -474,99 +574,6 @@ Visitors
         </View>
       </View>
     </RCTScrollView>
-  </View>
-  <View
-    style={
-      Object {
-        "alignItems": "flex-end",
-        "alignSelf": "flex-end",
-        "flex": 1,
-        "justifyContent": "space-between",
-        "paddingBottom": 260,
-        "paddingRight": 24,
-        "paddingTop": 30,
-      }
-    }
-  >
-    <View
-      accessible={true}
-      isTVSelectable={true}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "opacity": 1,
-        }
-      }
-    >
-      <Image
-        source={
-          Object {
-            "testUri": "../../../images/settingsBtn.png",
-          }
-        }
-      />
-    </View>
-    <View>
-      <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "marginVertical": 30,
-            "opacity": 1,
-            "shadowColor": "rgb(253,95,108)",
-            "shadowOffset": Object {
-              "height": 0,
-              "width": 0,
-            },
-            "shadowOpacity": 0.5,
-            "shadowRadius": 10,
-          }
-        }
-      >
-        <Image
-          source={
-            Object {
-              "testUri": "../../../images/homeToggle.png",
-            }
-          }
-        />
-      </View>
-      <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <Image
-          source={
-            Object {
-              "testUri": "../../../images/create.png",
-            }
-          }
-        />
-      </View>
-    </View>
   </View>
 </View>
 `;
