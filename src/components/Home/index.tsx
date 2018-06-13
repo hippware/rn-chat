@@ -4,6 +4,7 @@ import Connectivity from '../Connectivity'
 import MapHome from './MapHome'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 import HorizontalCardList from './HorizontalCardList'
+import RightPanel from './RightPanel'
 
 class Home extends React.Component<{}> {
   render() {
@@ -12,6 +13,7 @@ class Home extends React.Component<{}> {
         <MapHome />
         <ActiveGeoBotBanner />
         <HorizontalCardList />
+        <RightPanel />
         <Connectivity />
       </View>
     )
