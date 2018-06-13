@@ -157,7 +157,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="testRegisterScene" component={TestRegister} success="connect" />
               </Stack>
               <Scene key="signUp" component={SignUp} hideNavBar />
-              <Drawer
+              {/* <Drawer
                 key="logged"
                 type="replace"
                 hideNavBar
@@ -167,8 +167,9 @@ class TinyRobotRouter extends React.Component<Props> {
                 onRight={() => Actions.messaging()}
                 rightButtonImage={() => (wocky!.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
                 rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
-              >
-                <Modal key="modal" hideNavBar>
+              > */}
+                {/* <Modal key="modal" hideNavBar> */}
+                <Modal key="logged" hideNavBar>
                   <Tabs key="cube" navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key="main" hideTabBar lazy>
                       <Scene key="home" component={Home} hideNavBar />
@@ -191,7 +192,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                   <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                 </Modal>
-              </Drawer>
+              {/* </Drawer> */}
             </Stack>
             <Scene key="botContainer" headerMode="screen">
               <Scene key="createBot" component={BotCreate} title="Post a New Bot" leftButtonImage={iconClose} onLeft={Actions.pop} />
