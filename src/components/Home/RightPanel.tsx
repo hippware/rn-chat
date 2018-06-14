@@ -27,6 +27,7 @@ export default class RightPanel extends React.Component<Props> {
           onPress={() => {
             /* TODO */
           }}
+          // TODO: remove this when the settings menu is done
           onLongPress={() => Actions.codePush()}
           style={styles.button}
         >

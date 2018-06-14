@@ -1,6 +1,9 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
+import {IWocky} from 'wocky-client'
 // import {Location, IWocky} from 'wocky-client'
+
+const tutorialData = require('./tutorialData.json')
 
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
@@ -36,7 +39,21 @@ const HomeStore = types
   .volatile(self => ({
     homeMode: true,
     scrollIndex: 0,
+    listMode: 'home',
   }))
+  .views(self => {
+    const {wocky}: {wocky: IWocky} = getParent(self)
+    return {
+      get listData() {
+        switch (self.listMode) {
+          case 'home':
+            return wocky.events.length > 0 ? wocky.events.list : []
+          case 'tutorial':
+            return tutorialData
+        }
+      },
+    }
+  })
   .actions(self => {
     let mapRef
     return {

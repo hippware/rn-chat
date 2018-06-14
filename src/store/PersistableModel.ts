@@ -61,7 +61,7 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
     try {
       const data = await loadFromStorage(modelName)
       parsed = JSON.parse(data)
-      // throw new Error('Hydrate minimally');
+      throw new Error('Hydrate minimally')
       applySnapshot(self, parsed)
     } catch (err) {
       logger.log('hydration error', modelName, parsed, err)

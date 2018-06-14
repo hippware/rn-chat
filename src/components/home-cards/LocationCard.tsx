@@ -1,11 +1,12 @@
 import React from 'react'
 import {View, StyleSheet, Image} from 'react-native'
 import {IEventBot} from 'wocky-client'
-import {RText, Avatar} from '../common'
+import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {inject, observer} from 'mobx-react'
 import {IHomeStore} from '../../store/HomeStore'
+import Card from './Card'
 
 type Props = {
   item: IEventBot
@@ -20,10 +21,7 @@ export default class LocationCard extends React.Component<Props> {
     const {item, index, homeStore} = this.props
     const {bot} = item
     return (
-      <View style={styles.card}>
-        {homeStore.scrollIndex === index && (
-          <Avatar profile={bot.owner} size={40} style={styles.avatar} hideDot />
-        )}
+      <Card profile={homeStore.scrollIndex === index && bot.owner}>
         <Image
           style={styles.thumb}
           source={bot.image ? bot.image.thumbnail : null}
@@ -37,22 +35,12 @@ export default class LocationCard extends React.Component<Props> {
             {bot.addressData && bot.addressData.locationShort}
           </RText>
         </View>
-      </View>
+      </Card>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    flex: 1,
-    flexDirection: 'row',
-    marginTop: 20 * k,
-    shadowColor: colors.GREY,
-    shadowOpacity: 1,
-    shadowRadius: 3,
-    shadowOffset: {height: 0, width: 0},
-  },
   thumb: {
     flex: 1,
     height: undefined,
@@ -60,7 +48,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   textContainer: {
-    flex: 2,
+    flex: 3,
     padding: 18 * k,
     justifyContent: 'center',
   },
