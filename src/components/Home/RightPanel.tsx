@@ -4,6 +4,7 @@ import {k} from '../Global'
 import {colors} from '../../constants'
 import {inject, observer} from 'mobx-react/native'
 import {IHomeStore} from '../../store/HomeStore'
+import {Actions} from 'react-native-router-flux'
 
 const settings = require('../../../images/settingsBtn.png')
 const create = require('../../../images/create.png')
@@ -26,6 +27,7 @@ export default class RightPanel extends React.Component<Props> {
           onPress={() => {
             /* TODO */
           }}
+          onLongPress={() => Actions.codePush()}
           style={styles.button}
         >
           <Image source={settings} />
