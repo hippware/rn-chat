@@ -35,6 +35,8 @@ export default class SnapScroller extends React.Component<Props> {
     switch (this.props.homeStore.listMode) {
       case 'home':
         return <LocationCard item={item} index={index} />
+      case 'discover':
+        return <LocationCard item={item} index={index} />
       case 'tutorial':
         return (
           <TutorialCard

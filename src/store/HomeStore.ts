@@ -1,6 +1,7 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
 import {IWocky} from 'wocky-client'
+import {when} from 'mobx'
 // import {Location, IWocky} from 'wocky-client'
 
 const tutorialData = require('./tutorialData.json')
@@ -37,9 +38,8 @@ const HomeStore = types
     region: types.optional(types.frozen, null),
   })
   .volatile(self => ({
-    homeMode: true,
     scrollIndex: 0,
-    listMode: 'home',
+    listMode: 'home', // TODO: enumeration
   }))
   .views(self => {
     const {wocky}: {wocky: IWocky} = getParent(self)
@@ -47,9 +47,16 @@ const HomeStore = types
       get listData() {
         switch (self.listMode) {
           case 'home':
+            return wocky.profile && wocky.profile.subscribedBots.length > 0
+              ? wocky.profile.subscribedBots.list
+              : []
+          case 'discover':
             return wocky.events.length > 0 ? wocky.events.list : []
           case 'tutorial':
             return tutorialData
+
+          default:
+            return []
         }
       },
     }
@@ -91,6 +98,11 @@ const HomeStore = types
       const {locationStore}: {locationStore: ILocationStore} = getParent(self)
       const {latitude, longitude} = locationStore.location
       self.setCenterCoordinate(latitude, longitude)
+    },
+    afterAttach() {
+      // TODO: move this to wocky
+      const wocky: IWocky = getParent(self).wocky
+      when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
     },
   }))
 

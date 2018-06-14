@@ -20,7 +20,7 @@ type Props = {
 @observer
 export default class RightPanel extends React.Component<Props> {
   render() {
-    const {set, homeMode, zoomToCurrentLocation} = this.props.homeStore!
+    const {set, listMode, zoomToCurrentLocation} = this.props.homeStore!
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -37,14 +37,16 @@ export default class RightPanel extends React.Component<Props> {
         <View>
           <TouchableOpacity
             onPress={() => {
-              if (!homeMode) {
+              if (listMode === 'discover') {
                 zoomToCurrentLocation()
+                set({listMode: 'home'})
+              } else {
+                set({listMode: 'discover'})
               }
-              set({homeMode: !homeMode})
             }}
             style={[styles.button, styles.pill]}
           >
-            <Image source={homeMode ? toggle : toggleOff} />
+            <Image source={listMode === 'home' ? toggle : toggleOff} />
           </TouchableOpacity>
 
           <TouchableOpacity
