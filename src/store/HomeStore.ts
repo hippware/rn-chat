@@ -35,6 +35,7 @@ const HomeStore = types
   })
   .volatile(self => ({
     homeMode: true,
+    scrollIndex: 0,
   }))
   .actions(self => {
     let mapRef

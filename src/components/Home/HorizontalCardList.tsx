@@ -5,17 +5,20 @@ import Carousel from 'react-native-snap-carousel'
 import LocationCard from './LocationCard'
 import {inject} from 'mobx-react/native'
 import {IWocky, IEventBot} from 'wocky-client'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
+  homeStore?: IHomeStore
 }
 
-@inject('wocky')
+@inject('wocky', 'homeStore')
 export default class SnapScroller extends React.Component<Props> {
   list?: any
 
   render() {
-    const {events} = this.props.wocky!
+    const {wocky, homeStore} = this.props
+    const {events} = wocky!
     return (
       <View style={styles.container}>
         <Carousel
@@ -25,19 +28,21 @@ export default class SnapScroller extends React.Component<Props> {
           renderItem={this.renderItem}
           sliderWidth={width}
           itemWidth={width - 50 * k}
-          // onSnapToItem={slideIndex => console.log('slideIndex', slideIndex)}
+          onSnapToItem={slideIndex => homeStore.set({scrollIndex: slideIndex})}
         />
       </View>
     )
   }
 
-  renderItem = ({item}: {item: IEventBot}) => <LocationCard item={item} />
+  renderItem = ({item, index}: {item: IEventBot; index: number}) => (
+    <LocationCard item={item} index={index} />
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'flex-end',
-    height: 100,
     marginBottom: 10 * k,
+    alignSelf: 'flex-end',
+    height: 120 * k,
   },
 })
