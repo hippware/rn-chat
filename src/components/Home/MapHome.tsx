@@ -1,15 +1,13 @@
 import React from 'react'
-import MapView, {Marker} from 'react-native-maps'
-import {StyleSheet, View} from 'react-native'
+import MapView from 'react-native-maps'
+import {StyleSheet, View, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
 import {Spinner} from '../common'
-// import {colors} from '../../constants/index'
 import mapStyle from '../map/mapStyle'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-// import {width, height} from '../Global'
 import {IHomeStore} from '../../store/HomeStore'
+import HackMarker from '../map/HackMarker'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -27,12 +25,17 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   mounted: boolean = false
-  @observable markerTrackChanges = true
+  // @observable markerTrackChanges = true
 
   componentDidMount() {
     this.mounted = true
-    // allow "you" pin image to load
-    setTimeout(() => (this.markerTrackChanges = false), 100)
+    // // allow "you" pin image to load
+    // when(
+    //   () => !!this.props.locationStore!.location,
+    //   () => {
+    //     setTimeout(() => (this.markerTrackChanges = false), 100)
+    //   }
+    // )
   }
 
   componentWillUnmount() {
@@ -76,12 +79,15 @@ export default class MapHome extends React.Component<IProps> {
           rotateEnabled={false}
           {...this.props}
         >
-          <Marker
+          {/* <Marker
             image={you}
             coordinate={{latitude, longitude}}
             onPress={this.youPress}
             tracksViewChanges={this.markerTrackChanges}
-          />
+          /> */}
+          <HackMarker coordinate={{latitude, longitude}}>
+            <Image source={you} />
+          </HackMarker>
         </MapView>
       </View>
     )

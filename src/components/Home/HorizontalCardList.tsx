@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native'
 import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import LocationCard from './LocationCard'
-import {inject} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react/native'
 import {IWocky, IEventBot} from 'wocky-client'
 import {IHomeStore} from '../../store/HomeStore'
 
@@ -13,6 +13,7 @@ type Props = {
 }
 
 @inject('wocky', 'homeStore')
+@observer
 export default class SnapScroller extends React.Component<Props> {
   list?: any
 
@@ -24,7 +25,7 @@ export default class SnapScroller extends React.Component<Props> {
         <Carousel
           ref={c => (this.list = c)}
           // data={data}
-          data={events.length > 0 ? events.list : null}
+          data={events.length > 0 ? events.list : []}
           renderItem={this.renderItem}
           sliderWidth={width}
           itemWidth={width - 50 * k}
