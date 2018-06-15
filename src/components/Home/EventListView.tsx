@@ -8,7 +8,7 @@ import {observable} from 'mobx'
 import EventCard from '../event-cards/EventCard'
 import ListFooter from '../ListFooter'
 import {RText} from '../common'
-import HomeStreamHeader from './HomestreamHeader'
+// import HomeStreamHeader from './HomestreamHeader'
 import {IWocky, IEventBot} from 'wocky-client'
 
 type Props = {
@@ -65,7 +65,7 @@ class EventList extends React.Component<Props> {
           onEndReachedThreshold={0.5}
           onEndReached={events.load}
           initialNumToRender={2}
-          ListHeaderComponent={<HomeStreamHeader onLayout={this.measureHeader} />}
+          // ListHeaderComponent={<HomeStreamHeader onLayout={this.measureHeader} />}
           ListFooterComponent={
             connected
               ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)

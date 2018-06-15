@@ -119,6 +119,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-push-notification": "^3.0.1",
     "react-native-router-flux": "4.0.0-beta.32",
+    "react-native-snap-carousel": "^3.7.1",
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-tab-view": "^0.0.73",
