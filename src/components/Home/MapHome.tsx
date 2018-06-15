@@ -76,7 +76,7 @@ export default class MapHome extends React.Component<IProps> {
           <Marker
             image={you}
             coordinate={{latitude, longitude}}
-            onPress={this.youPress}
+            onPress={homeStore.scrollListToYou}
             tracksViewChanges={this.markerTrackChanges}
           />
         </MapView>

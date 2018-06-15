@@ -20,7 +20,7 @@ type Props = {
 @observer
 export default class RightPanel extends React.Component<Props> {
   render() {
-    const {set, listMode, zoomToCurrentLocation} = this.props.homeStore!
+    const {listMode, toggleListMode} = this.props.homeStore!
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -35,17 +35,7 @@ export default class RightPanel extends React.Component<Props> {
         </TouchableOpacity>
 
         <View>
-          <TouchableOpacity
-            onPress={() => {
-              if (listMode === 'discover') {
-                zoomToCurrentLocation()
-                set({listMode: 'home'})
-              } else {
-                set({listMode: 'discover'})
-              }
-            }}
-            style={[styles.button, styles.pill]}
-          >
+          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
             <Image source={listMode === 'home' ? toggle : toggleOff} />
           </TouchableOpacity>
 

@@ -2,9 +2,7 @@ import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
 import {IWocky} from 'wocky-client'
 import {when} from 'mobx'
-// import {Location, IWocky} from 'wocky-client'
-
-const tutorialData = require('./tutorialData.json')
+import tutorialData from './tutorialData'
 
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
@@ -48,10 +46,10 @@ const HomeStore = types
         switch (self.listMode) {
           case 'home':
             return wocky.profile && wocky.profile.subscribedBots.length > 0
-              ? wocky.profile.subscribedBots.list
+              ? ['you', ...tutorialData, ...wocky.profile.subscribedBots.list]
               : []
           case 'discover':
-            return wocky.events.length > 0 ? wocky.events.list : []
+            return wocky.events.length > 0 ? ['you', ...tutorialData, ...wocky.events.list] : []
           case 'tutorial':
             return tutorialData
 
@@ -59,11 +57,46 @@ const HomeStore = types
             return []
         }
       },
+      get listStartIndex() {
+        return 1 + tutorialData.length
+      },
     }
   })
+  .actions(self => ({
+    set(state) {
+      Object.assign(self, state)
+    },
+  }))
   .actions(self => {
-    let mapRef
+    let mapRef, listRef
+
+    function setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
+      if (mapRef) {
+        mapRef.animateToCoordinate({latitude, longitude})
+      }
+    }
+
+    function zoomToCurrentLocation() {
+      const {locationStore}: {locationStore: ILocationStore} = getParent(self)
+      const {latitude, longitude} = locationStore.location
+      setCenterCoordinate(latitude, longitude)
+    }
+
+    function scrollListToYou() {
+      if (listRef) {
+        listRef.snapToItem(0)
+      }
+    }
+
+    function scrollListToFirstLocationCard() {
+      if (listRef) {
+        listRef.snapToItem(self.listStartIndex)
+      }
+    }
+
     return {
+      scrollListToYou,
+      scrollListToFirstLocationCard,
       onRegionChange(region) {
         if (region.latitudeDelta <= DEFAULT_DELTA) {
           self.underMapType = 'none'
@@ -80,31 +113,28 @@ const HomeStore = types
           self.opacity = 1
         }
       },
-      set(state) {
-        Object.assign(self, state)
-      },
       setMapRef(ref) {
         mapRef = ref
       },
-      setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
-        if (mapRef) {
-          mapRef.animateToCoordinate({latitude, longitude})
+      setListRef(ref) {
+        listRef = ref
+      },
+      toggleListMode() {
+        if (self.listMode === 'discover') {
+          zoomToCurrentLocation()
+          self.set({listMode: 'home'})
+        } else {
+          self.set({listMode: 'discover'})
         }
+        setTimeout(scrollListToFirstLocationCard, 200)
+      },
+      afterAttach() {
+        // TODO: move this to wocky
+        const wocky: IWocky = getParent(self).wocky
+        when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
       },
     }
   })
-  .actions(self => ({
-    zoomToCurrentLocation() {
-      const {locationStore}: {locationStore: ILocationStore} = getParent(self)
-      const {latitude, longitude} = locationStore.location
-      self.setCenterCoordinate(latitude, longitude)
-    },
-    afterAttach() {
-      // TODO: move this to wocky
-      const wocky: IWocky = getParent(self).wocky
-      when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
-    },
-  }))
 
 export default HomeStore
 
