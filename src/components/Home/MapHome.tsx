@@ -88,13 +88,14 @@ export default class MapHome extends React.Component<IProps> {
 
   @computed
   get botMarkerList() {
-    return this.props.homeStore!.mapData.map((b: IBot) => {
+    const {mapData, scrollListToBot} = this.props.homeStore
+    return mapData.map((b: IBot) => {
       const {latitude, longitude} = b.location
       return (
         <HackMarker
           // image={you} // TODO: add marker icons
           coordinate={{latitude, longitude}}
-          // onPress={homeStore.scrollListToYou}
+          onPress={() => scrollListToBot(b.id)}
           key={b.id}
         />
       )

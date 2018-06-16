@@ -1,6 +1,6 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
-import {IWocky} from 'wocky-client'
+import {IWocky, IBot} from 'wocky-client'
 import {when} from 'mobx'
 import tutorialData from './tutorialData'
 
@@ -42,7 +42,7 @@ const HomeStore = types
   .views(self => {
     const {wocky}: {wocky: IWocky} = getParent(self)
     return {
-      get mapData() {
+      get mapData(): IBot[] {
         if (self.listMode === 'home') {
           return wocky.profile && wocky.profile.subscribedBots.length > 0
             ? wocky.profile.subscribedBots.list
@@ -81,6 +81,12 @@ const HomeStore = types
       setCenterCoordinate(latitude, longitude)
     }
 
+    function zoomToBot(bot: IBot) {
+      if (bot.location) {
+        setCenterCoordinate(bot.location.latitude, bot.location.longitude)
+      }
+    }
+
     function scrollListToYou() {
       if (listRef) {
         listRef.snapToItem(0)
@@ -93,9 +99,26 @@ const HomeStore = types
       }
     }
 
+    function scrollListToBot(botId: string) {
+      if (listRef) {
+        const index = self.listData.findIndex((b: any) => b.id === botId)
+        if (index >= 0) listRef.snapToItem(index)
+      }
+    }
+
     return {
       scrollListToYou,
       scrollListToFirstLocationCard,
+      scrollListToBot,
+      setScrollIndex(index) {
+        self.set({scrollIndex: index})
+        if (index === 0) zoomToCurrentLocation()
+        else {
+          if (typeof self.listData[index] === 'object') {
+            zoomToBot(self.listData[index] as IBot)
+          }
+        }
+      },
       onRegionChange(region) {
         if (region.latitudeDelta <= DEFAULT_DELTA) {
           self.underMapType = 'none'
@@ -122,10 +145,11 @@ const HomeStore = types
         if (self.listMode === 'discover') {
           zoomToCurrentLocation()
           self.set({listMode: 'home'})
+          setTimeout(scrollListToYou, 200)
         } else {
           self.set({listMode: 'discover'})
+          setTimeout(scrollListToFirstLocationCard, 200)
         }
-        setTimeout(scrollListToFirstLocationCard, 200)
       },
       afterAttach() {
         // TODO: move this to wocky
