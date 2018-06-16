@@ -14,6 +14,7 @@ const injects = {
   analytics: {
     track: () => {},
   },
-};
+  homeStore: {},
+}
 
-export default injects;
+export default injects
