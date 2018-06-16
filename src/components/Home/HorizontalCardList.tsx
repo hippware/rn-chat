@@ -28,9 +28,8 @@ export default class SnapScroller extends React.Component<Props> {
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={width - 50 * k}
-            onSnapToItem={slideIndex => homeStore.set({scrollIndex: slideIndex})}
+            onSnapToItem={slideIndex => homeStore.setScrollIndex(slideIndex)}
             inactiveSlideOpacity={1}
-            firstItem={homeStore.listStartIndex}
           />
         )}
       </View>
