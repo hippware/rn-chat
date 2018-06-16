@@ -4,10 +4,11 @@ import {StyleSheet, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
-import {IWocky} from 'wocky-client'
+import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
-import {observable, when} from 'mobx'
+import {observable, when, computed} from 'mobx'
+import HackMarker from '../map/HackMarker'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -73,6 +74,7 @@ export default class MapHome extends React.Component<IProps> {
           onMapReady={this.onMapReady}
           {...this.props}
         >
+          {this.botMarkerList}
           <Marker
             image={you}
             coordinate={{latitude, longitude}}
@@ -82,6 +84,21 @@ export default class MapHome extends React.Component<IProps> {
         </MapView>
       </View>
     )
+  }
+
+  @computed
+  get botMarkerList() {
+    return this.props.homeStore!.mapData.map((b: IBot) => {
+      const {latitude, longitude} = b.location
+      return (
+        <HackMarker
+          // image={you} // TODO: add marker icons
+          coordinate={{latitude, longitude}}
+          // onPress={homeStore.scrollListToYou}
+          key={b.id}
+        />
+      )
+    })
   }
 
   youPress = () => {

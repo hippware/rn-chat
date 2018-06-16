@@ -42,19 +42,13 @@ const HomeStore = types
   .views(self => {
     const {wocky}: {wocky: IWocky} = getParent(self)
     return {
-      get listData() {
-        switch (self.listMode) {
-          case 'home':
-            return wocky.profile && wocky.profile.subscribedBots.length > 0
-              ? ['you', ...tutorialData, ...wocky.profile.subscribedBots.list]
-              : []
-          case 'discover':
-            return wocky.events.length > 0 ? ['you', ...tutorialData, ...wocky.events.list] : []
-          case 'tutorial':
-            return tutorialData
-
-          default:
-            return []
+      get mapData() {
+        if (self.listMode === 'home') {
+          return wocky.profile && wocky.profile.subscribedBots.length > 0
+            ? wocky.profile.subscribedBots.list
+            : []
+        } else {
+          return wocky.events.length > 0 ? wocky.events.list.map(e => e.bot) : []
         }
       },
       get listStartIndex() {
@@ -62,6 +56,11 @@ const HomeStore = types
       },
     }
   })
+  .views(self => ({
+    get listData() {
+      return self.mapData.length ? ['you', ...tutorialData, ...self.mapData] : []
+    },
+  }))
   .actions(self => ({
     set(state) {
       Object.assign(self, state)
