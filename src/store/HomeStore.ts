@@ -61,6 +61,13 @@ const HomeStore = types
       return self.mapData.length ? ['you', ...tutorialData, ...self.mapData] : []
     },
   }))
+  .views(self => ({
+    get selectedBotId(): string | null {
+      if (!self.listData.length) return null
+      const selectedItem = self.listData[self.scrollIndex]
+      if (typeof selectedItem === 'object') return (selectedItem as IBot).id
+    },
+  }))
   .actions(self => ({
     set(state) {
       Object.assign(self, state)

@@ -9,6 +9,7 @@ import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {observable, when, computed} from 'mobx'
 import HackMarker from '../map/HackMarker'
+import BubbleIcon from '../map/BubbleIcon'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -88,16 +89,17 @@ export default class MapHome extends React.Component<IProps> {
 
   @computed
   get botMarkerList() {
-    const {mapData, scrollListToBot} = this.props.homeStore
+    const {mapData, scrollListToBot, selectedBotId} = this.props.homeStore
     return mapData.map((b: IBot) => {
       const {latitude, longitude} = b.location
       return (
         <HackMarker
-          // image={you} // TODO: add marker icons
           coordinate={{latitude, longitude}}
           onPress={() => scrollListToBot(b.id)}
           key={b.id}
-        />
+        >
+          <BubbleIcon large={selectedBotId === b.id} />
+        </HackMarker>
       )
     })
   }
