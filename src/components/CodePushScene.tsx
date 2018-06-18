@@ -1,13 +1,59 @@
-// @flow
-
 import React from 'react'
-import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native'
+import {
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ProgressViewIOS,
+} from 'react-native'
 import {colors} from '../constants'
 import {settings} from '../globals'
 import {observer, inject} from 'mobx-react/native'
+import {ICodePushStore} from '../store/CodePushStore'
+
+type Props = {
+  codePushStore?: ICodePushStore
+}
+
+@inject('codePushStore')
+@observer
+class CodePushScene extends React.Component<Props> {
+  componentWillMount() {
+    this.props.codePushStore.getFreshData()
+  }
+
+  render() {
+    const {downloadProgress} = this.props.codePushStore
+    return (
+      <View style={{flex: 1, padding: 20}}>
+        <View style={styles.statusSection}>
+          <Text style={{marginTop: 20}}>
+            <Text style={styles.bold}>Version: </Text>
+            <Text>{settings.version}</Text>
+          </Text>
+
+          {/* TODO {displayCPInfo && (
+            <Text style={{marginTop: 20}}>
+              <Text style={styles.bold}>Current Channel: </Text>
+              <Text>{model.codePushChannel || 'none'}</Text>
+            </Text>
+          )} */}
+          <Metadata />
+        </View>
+
+        <Channels />
+        {downloadProgress > 0 && (
+          <ProgressViewIOS progress={downloadProgress} style={{marginVertical: 10}} />
+        )}
+        <SyncStatus />
+      </View>
+    )
+  }
+}
 
 const Metadata = inject('codePushStore')(
-  observer(({codePushStore}) => {
+  observer(({codePushStore}: Props) => {
     if (codePushStore.refreshing) {
       return <Text>retrieving CodePush status...</Text>
     }
@@ -33,7 +79,7 @@ const Metadata = inject('codePushStore')(
 )
 
 const Channels = inject('codePushStore')(
-  observer(({codePushStore}) => {
+  observer(({codePushStore}: Props) => {
     let inner
     if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />
     else if (!codePushStore.channelUpdates.length)
@@ -61,7 +107,7 @@ const Channels = inject('codePushStore')(
 )
 
 const SyncStatus = inject('codePushStore')(
-  observer(({codePushStore}) => {
+  observer(({codePushStore}: Props) => {
     const {syncStatus: status} = codePushStore
     if (status.length) {
       return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>
@@ -70,39 +116,6 @@ const SyncStatus = inject('codePushStore')(
     }
   })
 )
-
-@inject('codePushStore')
-@observer
-class CodePushScene extends React.Component<any> {
-  componentWillMount() {
-    this.props.codePushStore.getFreshData()
-  }
-
-  render() {
-    // const displayCPInfo = !!model.codePushChannel;
-    return (
-      <View style={{flex: 1, padding: 20}}>
-        <View style={styles.statusSection}>
-          <Text style={{marginTop: 20}}>
-            <Text style={styles.bold}>Version: </Text>
-            <Text>{settings.version}</Text>
-          </Text>
-
-          {/* TODO {displayCPInfo && (
-            <Text style={{marginTop: 20}}>
-              <Text style={styles.bold}>Current Channel: </Text>
-              <Text>{model.codePushChannel || 'none'}</Text>
-            </Text>
-          )} */}
-          <Metadata />
-        </View>
-
-        <Channels />
-        <SyncStatus />
-      </View>
-    )
-  }
-}
 
 export default CodePushScene
 
