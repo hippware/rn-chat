@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, StyleSheet} from 'react-native'
+import {View, FlatList, StyleSheet, Animated} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
@@ -9,28 +9,48 @@ import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k} from '../Global'
+import {IHomeStore} from '../../store/HomeStore'
+import {autorun} from 'mobx'
 
 type Props = {
   wocky?: IWocky
   analytics?: any
+  homeStore?: IHomeStore
 }
 
-@inject('wocky', 'locationStore', 'analytics')
+type State = {
+  marginTop: Animated.Value
+}
+
+@inject('wocky', 'analytics', 'homeStore')
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
+  state: State = {
+    marginTop: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    autorun(() =>
+      Animated.spring(this.state.marginTop, {
+        toValue: this.props.homeStore.fullScreenMode ? -250 : 0,
+        // speed: 6,
+      }).start()
+    )
+  }
+
   render() {
     const {wocky} = this.props
     const {activeBots} = wocky!
     return (
-      <View
+      <Animated.View
         style={{
           backgroundColor: 'white',
           paddingTop: 38 * k,
-          // shadowColor: 'red',
           shadowColor: colors.GREY,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 1,
           shadowRadius: 5,
+          marginTop: this.state.marginTop,
         }}
         onStartShouldSetResponder={() => {
           this.props.analytics.track(analyticsGeoWidgetTap)
@@ -50,7 +70,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <FirstLoadOverlay />
-      </View>
+      </Animated.View>
     )
   }
 

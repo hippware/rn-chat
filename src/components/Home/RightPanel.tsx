@@ -22,7 +22,7 @@ export default class RightPanel extends React.Component<Props> {
   render() {
     const {listMode, toggleListMode} = this.props.homeStore!
     return (
-      <View style={styles.container}>
+      <View style={styles.container} pointerEvents="box-none">
         <TouchableOpacity
           onPress={() => {
             /* TODO */
