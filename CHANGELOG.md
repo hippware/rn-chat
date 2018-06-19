@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 ** Redesign **
 
+* Redesign part 1 (PR #2474) / HS Redesign - Map focused HS. (#2464)
+
 # 2.8.1 - 2018 June 7
 
 * Fix font-weight for react-navigation (PR #2449, related to #1874)
