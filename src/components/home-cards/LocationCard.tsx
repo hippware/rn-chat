@@ -1,16 +1,15 @@
 import React from 'react'
 import {View, StyleSheet, Image} from 'react-native'
-import {IEventBot, IBot} from 'wocky-client'
+import {IBot} from 'wocky-client'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {inject, observer} from 'mobx-react'
 import {IHomeStore} from '../../store/HomeStore'
 import Card from './Card'
-import {getType} from 'mobx-state-tree'
 
 type Props = {
-  item: IEventBot | IBot
+  item: IBot
   index: number
   homeStore?: IHomeStore
 }
@@ -20,10 +19,7 @@ type Props = {
 export default class LocationCard extends React.Component<Props> {
   render() {
     const {item, index, homeStore} = this.props
-    let bot
-    const t = getType(item)
-    if (t && t.name === 'Bot') bot = item
-    else bot = (item as IEventBot).bot
+    const bot = item
     return (
       <Card profile={homeStore.scrollIndex === index && bot.owner}>
         <Image

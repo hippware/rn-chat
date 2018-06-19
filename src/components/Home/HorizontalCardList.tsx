@@ -6,7 +6,7 @@ import LocationCard from '../home-cards/LocationCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {inject, observer} from 'mobx-react/native'
-import {IWocky, IEventBot} from 'wocky-client'
+import {IWocky, IBot} from 'wocky-client'
 import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
@@ -28,28 +28,23 @@ export default class SnapScroller extends React.Component<Props> {
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={width - 50 * k}
-            onSnapToItem={slideIndex => homeStore.set({scrollIndex: slideIndex})}
+            onSnapToItem={slideIndex => homeStore.setScrollIndex(slideIndex)}
             inactiveSlideOpacity={1}
-            firstItem={homeStore.listStartIndex}
           />
         )}
       </View>
     )
   }
 
-  renderItem = ({item, index}: {item: IEventBot | string | any; index: number}) => {
+  renderItem = ({item, index}: {item: IBot | string | any; index: number}) => {
     if (item === 'you') {
       return <YouCard />
     } else if (item.type === 'tutorial') {
       return <TutorialCard {...item} />
-    }
-    // return null
-    switch (this.props.homeStore.listMode) {
-      case 'home':
-        return <LocationCard item={item as IEventBot} index={index} />
-      case 'discover':
-        return <LocationCard item={item as IEventBot} index={index} />
-      case 'tutorial':
+    } else if (this.props.homeStore.listMode === 'home') {
+      return <LocationCard item={item as IBot} index={index} />
+    } else {
+      return <LocationCard item={item as IBot} index={index} />
     }
   }
 }
