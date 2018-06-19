@@ -65,7 +65,7 @@ export default class MapHome extends React.Component<IProps> {
         <MapView
           provider={'google'}
           ref={setMapRef}
-          // onPress={this.onPress}
+          onPress={homeStore.toggleFullscreen}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           style={[styles.map, {opacity}]}
           customMapStyle={mapStyle}
@@ -79,8 +79,9 @@ export default class MapHome extends React.Component<IProps> {
           <Marker
             image={you}
             coordinate={{latitude, longitude}}
-            onPress={homeStore.scrollListToYou}
+            onPress={homeStore.selectYou}
             tracksViewChanges={this.markerTrackChanges}
+            stopPropagation
           />
         </MapView>
       </View>
@@ -89,23 +90,21 @@ export default class MapHome extends React.Component<IProps> {
 
   @computed
   get botMarkerList() {
-    const {mapData, scrollListToBot, selectedBotId} = this.props.homeStore
-    return mapData.map((b: IBot) => {
-      const {latitude, longitude} = b.location
+    const {mapData, selectBot, selectedBotId} = this.props.homeStore
+    return mapData.map((bot: IBot) => {
+      const {latitude, longitude} = bot.location
       return (
         <HackMarker
           coordinate={{latitude, longitude}}
-          onPress={() => scrollListToBot(b.id)}
-          key={b.id}
+          // onPress={() => scrollListToBot(b.id)}
+          onPress={() => selectBot(bot)}
+          key={bot.id}
+          stopPropagation
         >
-          <BubbleIcon large={selectedBotId === b.id} />
+          <BubbleIcon large={selectedBotId === bot.id} />
         </HackMarker>
       )
     })
-  }
-
-  youPress = () => {
-    // TODO
   }
 
   onMapReady = () => {

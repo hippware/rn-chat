@@ -8,16 +8,6 @@ const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 const OPACITY_MIN = 0.6
 
-// const Region = types
-//   .model('Region', {
-//     latitude: types.number,
-//     longitude: types.number,
-//     latitudeDelta: types.number,
-//     longitudeDelta: types.number,
-//   })
-
-// type RegionType = typeof Region.Type
-
 const mapTypeEnum = types.enumeration([
   'standard',
   'satellite',
@@ -32,12 +22,13 @@ const HomeStore = types
     mapType: types.optional(mapTypeEnum, 'standard'),
     underMapType: types.optional(mapTypeEnum, 'none'),
     opacity: 1,
-    // region: types.maybe(Region),
     region: types.optional(types.frozen, null),
+    // selectedBotId: types.maybe(types.string),
   })
   .volatile(self => ({
     scrollIndex: 0,
     listMode: 'home', // TODO: enumeration
+    fullScreenMode: false,
   }))
   .views(self => {
     const {wocky}: {wocky: IWocky} = getParent(self)
@@ -58,6 +49,7 @@ const HomeStore = types
   })
   .views(self => ({
     get listData() {
+      if (self.fullScreenMode === true) return []
       return self.mapData.length ? ['you', ...tutorialData, ...self.mapData] : []
     },
   }))
@@ -75,6 +67,8 @@ const HomeStore = types
   }))
   .actions(self => {
     let mapRef, listRef
+    let ignoreZoom: boolean = false
+    let pendingBotSelection: IBot | null = null
 
     function setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
       if (mapRef) {
@@ -106,23 +100,48 @@ const HomeStore = types
       }
     }
 
-    function scrollListToBot(botId: string) {
+    function selectBot(bot: IBot) {
+      // self.selectedBotId = bot.id
+      if (self.fullScreenMode) {
+        self.fullScreenMode = false
+        // HACK: need to store bot selection until after horizontal list re-mounts.
+        pendingBotSelection = bot
+      }
+
       if (listRef) {
-        const index = self.listData.findIndex((b: any) => b.id === botId)
+        const index = self.listData.findIndex((b: any) => b.id === bot.id)
+        // ignoreZoom = self.fullScreenMode === false
+        ignoreZoom = true
         if (index >= 0) listRef.snapToItem(index)
       }
     }
 
+    function scrollListToIndex(index: number) {
+      if (listRef) {
+        listRef.snapToItem(index)
+      }
+    }
+
     return {
-      scrollListToYou,
       scrollListToFirstLocationCard,
-      scrollListToBot,
+      selectBot,
+      scrollListToIndex,
       setScrollIndex(index) {
         self.set({scrollIndex: index})
-        if (index === 0) zoomToCurrentLocation()
-        else {
+        if (ignoreZoom) {
+          ignoreZoom = false
+          return
+        }
+        if (index === 0) {
+          zoomToCurrentLocation()
+          // self.selectedBotId = null
+        } else {
           if (typeof self.listData[index] === 'object') {
-            zoomToBot(self.listData[index] as IBot)
+            const bot: IBot = self.listData[index] as IBot
+            zoomToBot(bot)
+            // self.selectedBotId = bot.id
+          } else {
+            // self.selectedBotId = null
           }
         }
       },
@@ -151,15 +170,33 @@ const HomeStore = types
       toggleListMode() {
         if (self.listMode === 'discover') {
           zoomToCurrentLocation()
-          self.set({listMode: 'home'})
+          self.set({listMode: 'home', fullScreenMode: false})
           setTimeout(scrollListToYou, 200)
         } else {
-          self.set({listMode: 'discover'})
+          self.set({listMode: 'discover', fullScreenMode: false})
           setTimeout(scrollListToFirstLocationCard, 200)
+        }
+      },
+      toggleFullscreen() {
+        self.set({fullScreenMode: !self.fullScreenMode})
+      },
+      selectYou() {
+        self.fullScreenMode = false
+        scrollListToYou()
+      },
+      syncList() {
+        if (!self.fullScreenMode) {
+          if (pendingBotSelection) {
+            selectBot(pendingBotSelection)
+            pendingBotSelection = null
+          } else {
+            scrollListToIndex(self.scrollIndex)
+          }
         }
       },
       afterAttach() {
         // TODO: move this to wocky
+        // self.selectedBotId = null
         const wocky: IWocky = getParent(self).wocky
         when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
       },
