@@ -1,16 +1,7 @@
 import React from 'react'
-import {
-  View,
-  Animated,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-} from 'react-native'
+import {View, Animated, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
-import {width, height} from './Global'
+import {height} from './Global'
 
 type Props = {
   onClose: () => void
