@@ -45,43 +45,69 @@ exports[`EventBotPostCard renders 1`] = `
           ]
         }
       >
-        <View
-          style={
+        <BVLinearGradient
+          colors={
             Array [
-              Object {
-                "borderRadius": 72,
-                "borderWidth": 4,
-                "height": 144,
-                "width": 144,
-              },
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "rgb(228,228,228)",
-                "borderColor": "rgb(255,255,255)",
-                "justifyContent": "center",
-              },
+              "rgb(242,68,191)",
+              "rgb(254,110,98)",
+              "rgb(254,92,108)",
             ]
           }
+          end={
+            Object {
+              "x": 1,
+              "y": 0,
+            }
+          }
+          start={
+            Object {
+              "x": 0,
+              "y": 1,
+            }
+          }
+          style={
+            Object {
+              "borderRadius": 72,
+            }
+          }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
               Array [
                 Object {
-                  "color": "rgb(63,50,77)",
-                  "fontFamily": "Roboto-Regular",
+                  "borderRadius": 72,
+                  "borderWidth": 4,
+                  "height": 144,
+                  "width": 144,
                 },
                 Object {
-                  "fontSize": 36,
+                  "alignItems": "center",
+                  "borderColor": "rgb(253,95,108)",
+                  "justifyContent": "center",
                 },
               ]
             }
           >
-            T
-          </Text>
-        </View>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(255,255,255)",
+                    "fontFamily": "Roboto-Regular",
+                  },
+                  Object {
+                    "fontSize": 50,
+                  },
+                ]
+              }
+            >
+              T
+            </Text>
+          </View>
+        </BVLinearGradient>
         <View
           style={
             Array [
