@@ -1,8 +1,9 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
 import {IWocky, IBot} from 'wocky-client'
-import {when} from 'mobx'
+import {when, autorun} from 'mobx'
 import tutorialData from './tutorialData'
+import {Actions} from 'react-native-router-flux'
 
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
@@ -23,7 +24,6 @@ const HomeStore = types
     underMapType: types.optional(mapTypeEnum, 'none'),
     opacity: 1,
     region: types.optional(types.frozen, null),
-    // selectedBotId: types.maybe(types.string),
   })
   .volatile(self => ({
     scrollIndex: 0,
@@ -101,7 +101,6 @@ const HomeStore = types
     }
 
     function selectBot(bot: IBot) {
-      // self.selectedBotId = bot.id
       if (self.fullScreenMode) {
         self.fullScreenMode = false
         // HACK: need to store bot selection until after horizontal list re-mounts.
@@ -134,14 +133,10 @@ const HomeStore = types
         }
         if (index === 0) {
           zoomToCurrentLocation()
-          // self.selectedBotId = null
         } else {
           if (typeof self.listData[index] === 'object') {
             const bot: IBot = self.listData[index] as IBot
             zoomToBot(bot)
-            // self.selectedBotId = bot.id
-          } else {
-            // self.selectedBotId = null
           }
         }
       },
@@ -196,9 +191,11 @@ const HomeStore = types
       },
       afterAttach() {
         // TODO: move this to wocky
-        // self.selectedBotId = null
         const wocky: IWocky = getParent(self).wocky
         when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
+        autorun(() => {
+          self.set({fullScreenMode: !(Actions.currentScene === 'home')})
+        })
       },
     }
   })
