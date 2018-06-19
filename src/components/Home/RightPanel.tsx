@@ -4,6 +4,7 @@ import {k} from '../Global'
 import {colors} from '../../constants'
 import {inject, observer} from 'mobx-react/native'
 import {IHomeStore} from '../../store/HomeStore'
+import {Actions} from 'react-native-router-flux'
 
 const settings = require('../../../images/settingsBtn.png')
 const create = require('../../../images/create.png')
@@ -19,29 +20,23 @@ type Props = {
 @observer
 export default class RightPanel extends React.Component<Props> {
   render() {
-    const {set, homeMode, zoomToCurrentLocation} = this.props.homeStore!
+    const {listMode, toggleListMode} = this.props.homeStore!
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
             /* TODO */
           }}
+          // TODO: remove this when the settings menu is done
+          onLongPress={() => Actions.codePush()}
           style={styles.button}
         >
           <Image source={settings} />
         </TouchableOpacity>
 
         <View>
-          <TouchableOpacity
-            onPress={() => {
-              if (!homeMode) {
-                zoomToCurrentLocation()
-              }
-              set({homeMode: !homeMode})
-            }}
-            style={[styles.button, styles.pill]}
-          >
-            <Image source={homeMode ? toggle : toggleOff} />
+          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
+            <Image source={listMode === 'home' ? toggle : toggleOff} />
           </TouchableOpacity>
 
           <TouchableOpacity
