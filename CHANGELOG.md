@@ -5,6 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Cleanup (PR #2462)
+* [dev] codepush - ability to revert to "default" bundle on Staging (#2337)
 
 # 2.8.1 - 2018 June 7
 
