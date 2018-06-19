@@ -22,7 +22,7 @@ import ProfileValidationStore from './ProfileValidationStore'
 import GeocodingStore from './GeocodingStore'
 import NewBotStore from './NewBotStore'
 import NotificationStore from './NotificationStore'
-import cp from './CodePushStore'
+import CodepushStore from './CodePushStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
 import HomeStore from './HomeStore'
@@ -71,8 +71,8 @@ const Store = types
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
     homeStore: HomeStore,
+    codePushStore: CodepushStore,
     version: types.string,
-    // codePushChannel: types.string,
     locationPrimed: false,
     sharePresencePrimed: false,
     guestOnce: false,
@@ -112,12 +112,12 @@ const theStore = PersistableStore.create(
     geocodingStore: {},
     newBotStore: {},
     homeStore: {},
+    codePushStore: {},
     version: settings.version,
   },
   env
 )
 
-export const codePushStore = cp
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
