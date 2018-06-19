@@ -12,7 +12,6 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 
 import {k} from './Global'
-import {CubeNavigator} from 'react-native-cube-transition'
 
 import Camera from './Camera'
 // import SideMenu from './SideMenu'
@@ -40,6 +39,7 @@ import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import * as modals from './modals'
 import LocationDebug from './LocationDebug'
+import BottomMenu from './BottomMenu'
 
 const STAGING_COLOR = 'rgb(28,247,39)'
 
@@ -156,43 +156,21 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="verifyCode" component={VerifyCode} />
                 <Scene key="testRegisterScene" component={TestRegister} success="connect" />
               </Stack>
-              <Scene key="signUp" component={SignUp} hideNavBar />
-              {/* <Drawer
-                key="logged"
-                type="replace"
-                hideNavBar
-                drawerWidth={300}
-                contentComponent={SideMenu}
-                drawerImage={require('../../images/iconMenu.png')}
-                onRight={() => Actions.messaging()}
-                rightButtonImage={() => (wocky!.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
-                rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
-              > */}
-                {/* <Modal key="modal" hideNavBar> */}
-                <Modal key="logged" hideNavBar>
-                  <Tabs key="cube" navigator={CubeNavigator} hideTabBar lazy>
-                    <Tabs key="main" hideTabBar lazy>
-                      <Scene key="home" component={Home} hideNavBar />
-                      {/* <Scene key="fullMap" component={ExploreNearBy} title="Explore Nearby" /> */}
-                      <Scene key="botsScene" component={BotsScreen} title="Favorites" />
-                      <Scene key="friendsMain">
-                        <Scene key="friends" component={peopleLists.FriendListScene} title="Friends" />
-                        <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" back />
-                      </Scene>
-                    </Tabs>
-
-                    <Stack key="messaging" rightButtonImage={iconClose} onRight={() => Actions.main()}>
-                      <Scene key="chats" component={ChatListScreen} title="Messages" />
-                      <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} back rightButtonImage={null} />
-                    </Stack>
-                  </Tabs>
-
-                  <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
-                  <Scene key="searchUsers" component={peopleLists.SearchUsers} leftButtonImage={iconClose} onLeft={this.resetSearchStore} title="Search Users" rightButtonImage={null} wrap />
-                  <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                  <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                </Modal>
-              {/* </Drawer> */}
+              <Scene key="signUp" component={SignUp} hideNavBar/>
+              <Modal key="logged" hideNavBar headerMode="screen">
+                <Stack>
+                  <Scene key="home" component={Home} />
+                  <Scene key="botsScene" component={BotsScreen} title="Favorites" />
+                  <Scene key="friendsMain" component={peopleLists.FriendListScene} title="Friends" />
+                  <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" />
+                  <Scene key="chats" component={ChatListScreen} title="Messages" />
+                  <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
+                </Stack>
+              <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
+                <Scene key="searchUsers" component={peopleLists.SearchUsers} leftButtonImage={iconClose} onLeft={this.resetSearchStore} title="Search Users" rightButtonImage={null} wrap />
+                <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+              </Modal>
             </Stack>
             <Scene key="botContainer" headerMode="screen">
               <Scene key="createBot" component={BotCreate} title="Post a New Bot" leftButtonImage={iconClose} onLeft={Actions.pop} />
@@ -220,6 +198,7 @@ class TinyRobotRouter extends React.Component<Props> {
           <Scene key="locationPrimer" component={modals.LocationPrimer} />
           <Scene key="sharePresencePrimer" component={modals.SharePresencePrimer} />
           <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
+          <Scene key="bottomMenu" component={BottomMenu} />
         </Lightbox>
       </Router>
     )

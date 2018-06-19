@@ -9,6 +9,7 @@ import {
   ViewStyle,
 } from 'react-native'
 import {k} from '../Global'
+import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
@@ -75,11 +76,18 @@ export default class Avatar extends React.Component<Props> {
               style={sharedStyle}
             />
           ) : (
-            <View style={[sharedStyle, styles.avatarContainer]}>
-              <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>
-                {title.toUpperCase()}
-              </Text>
-            </View>
+            <LinearGradient
+              start={{x: 0, y: 1}}
+              end={{x: 1, y: 0}}
+              colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
+              style={{borderRadius: size * k / 2}}
+            >
+              <View style={[sharedStyle, styles.avatarContainer]}>
+                <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 25 * k}]}>
+                  {title.toUpperCase()}
+                </Text>
+              </View>
+            </LinearGradient>
           )}
           {showFrame && (
             <View style={styles.frameOuter}>
@@ -139,7 +147,7 @@ const AvatarImage = ({
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.DARK_PURPLE,
+    color: colors.WHITE,
     fontFamily: 'Roboto-Regular',
   },
   dot: {
@@ -149,8 +157,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: colors.WHITE,
-    backgroundColor: 'rgb(228,228,228)',
+    borderColor: colors.PINK,
   },
   frameOuter: {
     position: 'absolute',
