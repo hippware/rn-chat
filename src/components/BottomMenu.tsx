@@ -1,22 +1,12 @@
 import React from 'react'
-import {
-  View,
-  Animated,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native'
+import {View, Text, Image, StyleSheet, TouchableHighlight} from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
-import {settings} from '../globals'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 
-const {version} = require('../../package.json')
 const MenuImage = ({image}: {image: object}) => (
   <Image source={image} resizeMode="contain" style={styles.menuImage} />
 )
@@ -81,22 +71,6 @@ const MenuItem = ({
       </View>
     </View>
   </MenuItemWrapper>
-)
-
-const showCodePushOptions = () => {
-  if (!(__DEV__ || settings.isStaging)) return
-  Actions.drawerClose()
-  Actions.codePush()
-}
-
-const VersionFooter = () => (
-  <View style={{flex: 1, justifyContent: 'flex-end'}}>
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-      <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-        <Text style={{color: colors.WHITE}}>{version}</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
 )
 
 type Props = {

@@ -7,7 +7,7 @@ import {colors} from '../constants'
 
 import {settings} from '../globals'
 
-import {Actions, Router, Scene, Stack, Tabs, Modal, Lightbox} from 'react-native-router-flux'
+import {Actions, Router, Scene, Stack, Modal, Lightbox} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 
