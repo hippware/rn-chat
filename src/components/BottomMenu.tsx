@@ -1,5 +1,12 @@
 import React from 'react'
-import {View, Text, Image, StyleSheet, TouchableHighlight} from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacityProps,
+} from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
@@ -11,10 +18,7 @@ const MenuImage = ({image}: {image: object}) => (
   <Image source={image} resizeMode="contain" style={styles.menuImage} />
 )
 
-type MenuItemProps = {
-  onPress?: () => void
-  testID?: string
-  style?: any
+interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
   image?: object
   innerStyle?: any
@@ -22,22 +26,19 @@ type MenuItemProps = {
   stayOpen?: boolean
 }
 
-type MenuItemWrapperProps = {
-  onPress?: () => void
-  testID?: string
-  style?: any
+interface IMenuItemWrapperProps extends TouchableOpacityProps {
   children?: any
   stayOpen?: boolean
 }
 
-const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: MenuItemWrapperProps) => (
+const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: IMenuItemWrapperProps) => (
   <TouchableHighlight
     underlayColor={'rgba(255,255,255,0.23)'}
     style={style}
-    onPress={() => {
+    onPress={e => {
       if (onPress) {
         if (!stayOpen) Actions.pop()
-        onPress()
+        onPress(e)
       }
     }}
     testID={testID}
@@ -55,7 +56,7 @@ const MenuItem = ({
   innerStyle,
   children,
   stayOpen,
-}: MenuItemProps) => (
+}: IMenuItemProps) => (
   <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
       <View style={styles.menuImageContainer}>
