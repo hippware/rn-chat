@@ -24,9 +24,7 @@ export default class RightPanel extends React.Component<Props> {
     return (
       <View style={styles.container} pointerEvents="box-none">
         <TouchableOpacity
-          onPress={() => {
-            /* TODO */
-          }}
+          onPress={() => Actions.bottomMenu()}
           // TODO: remove this when the settings menu is done
           onLongPress={() => Actions.codePush()}
           style={styles.button}
