@@ -15,7 +15,13 @@ const YouCard = inject('wocky')(
   observer(({wocky}: Props) => (
     <Card>
       <View style={styles.imageContainer}>
-        <Avatar profile={wocky.profile} size={47} hideDot />
+        <Avatar
+          profile={wocky.profile}
+          size={47}
+          hideDot
+          borderColor={colors.PINK}
+          fontSize="large"
+        />
       </View>
       <View style={styles.textContainer}>
         <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>

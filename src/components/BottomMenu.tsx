@@ -94,7 +94,12 @@ export default class BottomMenu extends React.Component<Props> {
           testID="myAccountMenuItem"
         >
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Avatar size={74} profile={profile} style={{borderWidth: 0}} />
+            <Avatar
+              size={74}
+              profile={profile}
+              style={{borderWidth: 0}}
+              borderColor={colors.PINK}
+            />
             <Text style={styles.displayName}>@{profile.handle}</Text>
           </View>
         </MenuItemWrapper>
