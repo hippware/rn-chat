@@ -31,21 +31,24 @@ interface IMenuItemWrapperProps extends TouchableOpacityProps {
   stayOpen?: boolean
 }
 
-const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: IMenuItemWrapperProps) => (
-  <TouchableHighlight
-    underlayColor={'rgba(255,255,255,0.23)'}
-    style={style}
-    onPress={e => {
-      if (onPress) {
-        if (!stayOpen) Actions.pop()
-        onPress(e)
-      }
-    }}
-    testID={testID}
-  >
-    {children}
-  </TouchableHighlight>
-)
+const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: IMenuItemWrapperProps) => {
+  const Wrapper = onPress ? TouchableHighlight : View
+  return (
+    <Wrapper
+      underlayColor={'rgba(255,255,255,0.23)'}
+      style={style}
+      onPress={e => {
+        if (onPress) {
+          if (!stayOpen) Actions.pop()
+          onPress(e)
+        }
+      }}
+      testID={testID}
+    >
+      {children}
+    </Wrapper>
+  )
+}
 
 const MenuItem = ({
   onPress,
@@ -89,17 +92,14 @@ export default class BottomMenu extends React.Component<Props> {
     }
     return (
       <BottomPopup onClose={Actions.pop}>
-        <MenuItemWrapper
-          onPress={() => Actions.profileDetails({item: wocky.username})}
-          style={{height: 129}}
-          testID="myAccountMenuItem"
-        >
+        <MenuItemWrapper style={{height: 129}} testID="myAccountMenuItem">
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Avatar
               size={74}
               profile={profile}
               style={{borderWidth: 0}}
               borderColor={colors.PINK}
+              tappable
             />
             <Text style={styles.displayName}>@{profile.handle}</Text>
           </View>
