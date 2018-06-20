@@ -12,7 +12,9 @@ type Props = {
 
 const Card = ({profile, children}: Props) => (
   <View style={styles.card}>
-    {profile && <Avatar profile={profile} size={40} style={styles.avatar} hideDot />}
+    {profile && (
+      <Avatar profile={profile} size={40} style={styles.avatar} hideDot fontSize="large" />
+    )}
     {children}
   </View>
 )

@@ -82,8 +82,10 @@ exports[`EventBotShareCard renders 1`] = `
                 },
                 Object {
                   "alignItems": "center",
-                  "borderColor": "rgb(253,95,108)",
                   "justifyContent": "center",
+                },
+                Object {
+                  "borderColor": "rgb(255,255,255)",
                 },
               ]
             }
@@ -99,7 +101,7 @@ exports[`EventBotShareCard renders 1`] = `
                     "fontFamily": "Roboto-Regular",
                   },
                   Object {
-                    "fontSize": 50,
+                    "fontSize": 36,
                   },
                 ]
               }

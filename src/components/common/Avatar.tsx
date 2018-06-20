@@ -28,8 +28,9 @@ type Props = {
   borderWidth?: number
   showFrame?: boolean
   tappable?: boolean
-  smallFont?: boolean
+  fontSize?: 'small' | 'large'
   hideDot?: boolean
+  borderColor?: string
 }
 
 @observer
@@ -49,8 +50,9 @@ export default class Avatar extends React.Component<Props> {
       showFrame,
       profile,
       tappable,
-      smallFont,
+      fontSize,
       hideDot,
+      borderColor,
     } = this.props
     if (!profile || !isAlive(profile)) {
       return null
@@ -82,8 +84,22 @@ export default class Avatar extends React.Component<Props> {
               colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
               style={{borderRadius: size * k / 2}}
             >
-              <View style={[sharedStyle, styles.avatarContainer]}>
-                <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 25 * k}]}>
+              <View
+                style={[
+                  sharedStyle,
+                  styles.avatarContainer,
+                  {borderColor: borderColor || colors.WHITE},
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      fontSize:
+                        fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
+                    },
+                  ]}
+                >
                   {title.toUpperCase()}
                 </Text>
               </View>
@@ -133,15 +149,20 @@ const AvatarImage = ({
   source,
   style,
   showLoader,
+  borderColor,
 }: {
   source: ImageRequireSource
   style?: any
   showLoader: any
+  borderColor?: string
 }) => {
   return showLoader ? (
-    <View style={[style, styles.avatarContainer]} />
+    <View style={[style, styles.avatarContainer, {borderColor: borderColor || colors.WHITE}]} />
   ) : (
-    <Image source={source} style={[style, styles.avatarContainer]} />
+    <Image
+      source={source}
+      style={[style, styles.avatarContainer, {borderColor: borderColor || colors.WHITE}]}
+    />
   )
 }
 
@@ -157,7 +178,6 @@ const styles = StyleSheet.create({
   avatarContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: colors.PINK,
   },
   frameOuter: {
     position: 'absolute',

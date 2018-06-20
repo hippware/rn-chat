@@ -1,5 +1,12 @@
 import React from 'react'
-import {View, Text, Image, StyleSheet, TouchableHighlight} from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacityProps,
+} from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
@@ -11,10 +18,7 @@ const MenuImage = ({image}: {image: object}) => (
   <Image source={image} resizeMode="contain" style={styles.menuImage} />
 )
 
-type MenuItemProps = {
-  onPress?: () => void
-  testID?: string
-  style?: any
+interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
   image?: object
   innerStyle?: any
@@ -22,29 +26,29 @@ type MenuItemProps = {
   stayOpen?: boolean
 }
 
-type MenuItemWrapperProps = {
-  onPress?: () => void
-  testID?: string
-  style?: any
+interface IMenuItemWrapperProps extends TouchableOpacityProps {
   children?: any
   stayOpen?: boolean
 }
 
-const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: MenuItemWrapperProps) => (
-  <TouchableHighlight
-    underlayColor={'rgba(255,255,255,0.23)'}
-    style={style}
-    onPress={() => {
-      if (onPress) {
-        if (!stayOpen) Actions.pop()
-        onPress()
-      }
-    }}
-    testID={testID}
-  >
-    {children}
-  </TouchableHighlight>
-)
+const MenuItemWrapper = ({testID, onPress, stayOpen, style, children}: IMenuItemWrapperProps) => {
+  const Wrapper = onPress ? TouchableHighlight : View
+  return (
+    <Wrapper
+      underlayColor={'rgba(255,255,255,0.23)'}
+      style={style}
+      onPress={e => {
+        if (onPress) {
+          if (!stayOpen) Actions.pop()
+          onPress(e)
+        }
+      }}
+      testID={testID}
+    >
+      {children}
+    </Wrapper>
+  )
+}
 
 const MenuItem = ({
   onPress,
@@ -55,7 +59,7 @@ const MenuItem = ({
   innerStyle,
   children,
   stayOpen,
-}: MenuItemProps) => (
+}: IMenuItemProps) => (
   <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
       <View style={styles.menuImageContainer}>
@@ -88,13 +92,15 @@ export default class BottomMenu extends React.Component<Props> {
     }
     return (
       <BottomPopup onClose={Actions.pop}>
-        <MenuItemWrapper
-          onPress={() => Actions.profileDetails({item: wocky.username})}
-          style={{height: 129}}
-          testID="myAccountMenuItem"
-        >
+        <MenuItemWrapper style={{height: 129}} testID="myAccountMenuItem">
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Avatar size={74} profile={profile} style={{borderWidth: 0}} />
+            <Avatar
+              size={74}
+              profile={profile}
+              style={{borderWidth: 0}}
+              borderColor={colors.PINK}
+              tappable
+            />
             <Text style={styles.displayName}>@{profile.handle}</Text>
           </View>
         </MenuItemWrapper>
