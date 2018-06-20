@@ -5,6 +5,7 @@ import {when, autorun} from 'mobx'
 import tutorialData from './tutorialData'
 import {Actions} from 'react-native-router-flux'
 
+export const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 const OPACITY_MIN = 0.6
@@ -60,11 +61,6 @@ const HomeStore = types
       if (typeof selectedItem === 'object') return (selectedItem as IBot).id
     },
   }))
-  .actions(self => ({
-    set(state) {
-      Object.assign(self, state)
-    },
-  }))
   .actions(self => {
     let mapRef, listRef
     let ignoreZoom: boolean = false
@@ -78,8 +74,27 @@ const HomeStore = types
 
     function zoomToCurrentLocation() {
       const {locationStore}: {locationStore: ILocationStore} = getParent(self)
+      if (locationStore.location) {
+        const {latitude, longitude} = locationStore.location
+        setCenterCoordinate(latitude, longitude)
+      }
+    }
+
+    function recenterMapForMenu() {
+      const {locationStore}: {locationStore: ILocationStore} = getParent(self)
       const {latitude, longitude} = locationStore.location
-      setCenterCoordinate(latitude, longitude)
+      if (mapRef) {
+        let delta = INIT_DELTA
+        if (self.region) {
+          delta = self.region.longitudeDelta
+        }
+        mapRef.animateToRegion({
+          latitude: latitude - delta / 3,
+          longitude,
+          latitudeDelta: delta,
+          longitudeDelta: delta,
+        })
+      }
     }
 
     function zoomToBot(bot: IBot) {
@@ -122,11 +137,13 @@ const HomeStore = types
     }
 
     return {
+      recenterMapForMenu,
       scrollListToFirstLocationCard,
       selectBot,
       scrollListToIndex,
+      zoomToCurrentLocation,
       setScrollIndex(index) {
-        self.set({scrollIndex: index})
+        self.scrollIndex = index
         if (ignoreZoom) {
           ignoreZoom = false
           return
@@ -149,12 +166,14 @@ const HomeStore = types
           self.underMapType = 'satellite'
           // TODO: figure out why MST error if using Region instead of 'frozen' here
           // Object.assign(self, {region})
-          self.region = region
           self.opacity = OPACITY_MIN
         } else {
+          self.underMapType = 'none'
           self.mapType = 'standard'
           self.opacity = 1
         }
+        self.region = region
+        console.log('UNDER:', self.underMapType, region.latitudeDelta, DEFAULT_DELTA, TRANS_DELTA)
       },
       setMapRef(ref) {
         mapRef = ref
@@ -165,15 +184,20 @@ const HomeStore = types
       toggleListMode() {
         if (self.listMode === 'discover') {
           zoomToCurrentLocation()
-          self.set({listMode: 'home', fullScreenMode: false})
+          self.listMode = 'home'
+          self.fullScreenMode = false
           setTimeout(scrollListToYou, 200)
         } else {
-          self.set({listMode: 'discover', fullScreenMode: false})
+          self.listMode = 'discover'
+          self.fullScreenMode = false
           setTimeout(scrollListToFirstLocationCard, 200)
         }
       },
       toggleFullscreen() {
-        self.set({fullScreenMode: !self.fullScreenMode})
+        self.fullScreenMode = !self.fullScreenMode
+      },
+      setFullscreen(value) {
+        self.fullScreenMode = value
       },
       selectYou() {
         self.fullScreenMode = false
@@ -189,12 +213,26 @@ const HomeStore = types
           }
         }
       },
+    }
+  })
+  .actions(self => {
+    return {
+      postProcessSnapshot(snapshot: any) {
+        // No need to persist this store
+        return {}
+      },
       afterAttach() {
         // TODO: move this to wocky
         const wocky: IWocky = getParent(self).wocky
         when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
         autorun(() => {
-          self.set({fullScreenMode: !(Actions.currentScene === 'home')})
+          if (Actions.currentScene === 'bottomMenu') {
+            self.setFullscreen(true)
+            self.recenterMapForMenu()
+          } else if (Actions.currentScene === 'home') {
+            self.zoomToCurrentLocation()
+            self.setFullscreen(false)
+          }
         })
       },
     }
