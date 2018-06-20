@@ -1,14 +1,13 @@
 import React from 'react'
-import MapView, {Marker} from 'react-native-maps'
+import MapView, {UrlTile, Marker} from 'react-native-maps'
 import {StyleSheet, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore} from '../../store/HomeStore'
+import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
 import {observable, when, computed} from 'mobx'
-import HackMarker from '../map/HackMarker'
 import BubbleIcon from '../map/BubbleIcon'
 
 interface IProps {
@@ -48,26 +47,16 @@ export default class MapHome extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {region, mapType, underMapType, opacity, onRegionChange, setMapRef} = homeStore
-    const delta = 0.04
+    const {mapType, opacity, onRegionChange, setMapRef} = homeStore
+    const delta = INIT_DELTA
     return (
       <View style={styles.container}>
-        <MapView
-          initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
-          region={region}
-          scrollEnabled={false}
-          zoomEnabled={false}
-          rotateEnabled={false}
-          provider={'google'}
-          style={[styles.map, {opacity: 0.4}]}
-          mapType={underMapType}
-        />
         <MapView
           provider={'google'}
           ref={setMapRef}
           onPress={homeStore.toggleFullscreen}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
-          style={[styles.map, {opacity}]}
+          style={styles.map}
           customMapStyle={mapStyle}
           mapType={mapType}
           onRegionChange={onRegionChange}
@@ -75,9 +64,14 @@ export default class MapHome extends React.Component<IProps> {
           onMapReady={this.onMapReady}
           {...this.props}
         >
+          <View style={{flex: 1, opacity}} pointerEvents="none" />
+          {homeStore.underMapType === 'satellite' && (
+            <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
+          )}
           {this.botMarkerList}
           <Marker
             image={you}
+            zIndex={1000}
             coordinate={{latitude, longitude}}
             onPress={homeStore.selectYou}
             tracksViewChanges={this.markerTrackChanges}
@@ -94,7 +88,7 @@ export default class MapHome extends React.Component<IProps> {
     return mapData.map((bot: IBot) => {
       const {latitude, longitude} = bot.location
       return (
-        <HackMarker
+        <Marker
           coordinate={{latitude, longitude}}
           // onPress={() => scrollListToBot(b.id)}
           onPress={() => selectBot(bot)}
@@ -102,7 +96,7 @@ export default class MapHome extends React.Component<IProps> {
           stopPropagation
         >
           <BubbleIcon large={selectedBotId === bot.id} />
-        </HackMarker>
+        </Marker>
       )
     })
   }
