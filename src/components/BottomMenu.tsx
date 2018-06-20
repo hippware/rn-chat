@@ -13,6 +13,7 @@ import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
+import {IHomeStore} from '../store/HomeStore'
 
 const MenuImage = ({image}: {image: object}) => (
   <Image source={image} resizeMode="contain" style={styles.menuImage} />
@@ -79,9 +80,10 @@ const MenuItem = ({
 
 type Props = {
   wocky?: any
+  homeStore?: IHomeStore
 }
 
-@inject('wocky')
+@inject('wocky', 'homeStore')
 @observer
 export default class BottomMenu extends React.Component<Props> {
   render() {
@@ -91,7 +93,7 @@ export default class BottomMenu extends React.Component<Props> {
       return null
     }
     return (
-      <BottomPopup onClose={Actions.pop}>
+      <BottomPopup show={this.props.homeStore.showBottomMenu}>
         <MenuItemWrapper style={{height: 129}} testID="myAccountMenuItem">
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Avatar

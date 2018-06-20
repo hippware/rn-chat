@@ -15,7 +15,6 @@ type Props = {
   homeStore?: IHomeStore
 }
 
-// TODO: make RightPanel slide to the right and back
 @inject('homeStore')
 @observer
 export default class RightPanel extends React.Component<Props> {
@@ -24,7 +23,7 @@ export default class RightPanel extends React.Component<Props> {
     return (
       <View style={styles.container} pointerEvents="box-none">
         <TouchableOpacity
-          onPress={() => Actions.bottomMenu()}
+          onPress={this.props.homeStore.toggleBottomMenu}
           // TODO: remove this when the settings menu is done
           onLongPress={() => Actions.codePush()}
           style={styles.button}

@@ -1,49 +1,48 @@
 import React from 'react'
 import {View, Animated, Image, StyleSheet, TouchableOpacity} from 'react-native'
-
 import {height} from './Global'
+import {BOTTOM_MENU_HEIGHT, IHomeStore} from '../store/HomeStore'
+import {inject, observer} from 'mobx-react'
 
 type Props = {
-  onClose: () => void
+  // onClose: () => void
   children: any
+  show: boolean
+  homeStore?: IHomeStore
 }
 
+@inject('homeStore')
+@observer
 export default class BottomPopup extends React.Component<Props> {
   state = {offset: new Animated.Value(height)}
-  componentDidMount() {
-    Animated.timing(this.state.offset, {
-      duration: 100,
-      toValue: 0,
+
+  componentWillReceiveProps(newProps) {
+    Animated.spring(this.state.offset, {
+      toValue: newProps.show ? 0 : height,
+      // overshootClamping: true,
     }).start()
   }
-  closeModal = () => {
-    Animated.timing(this.state.offset, {
-      duration: 100,
-      toValue: height,
-    }).start(this.props.onClose)
-  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={{flex: 1}} onPress={this.props.onClose} />
-        <Animated.View
-          style={[styles.modal, styles.flexCenter, {transform: [{translateY: this.state.offset}]}]}
-        >
-          <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
-          <View style={styles.container}>
-            <TouchableOpacity style={styles.close} onPress={this.closeModal}>
-              <Image source={require('../../images/popupClose.png')} />
-            </TouchableOpacity>
-            <View style={{flex: 1}}>{this.props.children}</View>
-          </View>
-        </Animated.View>
-      </View>
+      <Animated.View
+        style={[styles.modal, styles.flexCenter, {transform: [{translateY: this.state.offset}]}]}
+      >
+        <TouchableOpacity style={{flex: 1}} onPress={this.props.homeStore.toggleBottomMenu} />
+        <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
+        <View style={styles.absolute}>
+          <TouchableOpacity style={styles.close} onPress={this.props.homeStore.toggleBottomMenu}>
+            <Image source={require('../../images/popupClose.png')} />
+          </TouchableOpacity>
+          <View style={{flex: 1}}>{this.props.children}</View>
+        </View>
+      </Animated.View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  absolute: {
     position: 'absolute',
     top: 0,
     right: 0,
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: height - 394,
+    top: BOTTOM_MENU_HEIGHT,
     right: 0,
     bottom: 0,
     left: 0,
