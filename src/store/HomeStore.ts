@@ -173,7 +173,6 @@ const HomeStore = types
           self.opacity = 1
         }
         self.region = region
-        console.log('UNDER:', self.underMapType, region.latitudeDelta, DEFAULT_DELTA, TRANS_DELTA)
       },
       setMapRef(ref) {
         mapRef = ref
