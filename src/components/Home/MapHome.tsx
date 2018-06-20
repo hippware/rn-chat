@@ -9,6 +9,7 @@ import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
 import {observable, when, computed} from 'mobx'
 import BubbleIcon from '../map/BubbleIcon'
+import HackMarker from '../map/HackMarker'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -69,7 +70,7 @@ export default class MapHome extends React.Component<IProps> {
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           )}
           {this.botMarkerList}
-          <Marker
+          <HackMarker
             image={you}
             zIndex={1000}
             coordinate={{latitude, longitude}}
@@ -88,7 +89,7 @@ export default class MapHome extends React.Component<IProps> {
     return mapData.map((bot: IBot) => {
       const {latitude, longitude} = bot.location
       return (
-        <Marker
+        <HackMarker
           coordinate={{latitude, longitude}}
           // onPress={() => scrollListToBot(b.id)}
           onPress={() => selectBot(bot)}
@@ -96,7 +97,7 @@ export default class MapHome extends React.Component<IProps> {
           stopPropagation
         >
           <BubbleIcon large={selectedBotId === bot.id} />
-        </Marker>
+        </HackMarker>
       )
     })
   }
