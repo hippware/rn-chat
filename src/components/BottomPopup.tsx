@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Animated, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
-import {height} from './Global'
+import {height, width} from './Global'
 
 type Props = {
   onClose: () => void
@@ -24,20 +24,15 @@ export default class BottomPopup extends React.Component<Props> {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={{flex: 1}} onPress={this.props.onClose} />
-        <Animated.View
-          style={[styles.modal, styles.flexCenter, {transform: [{translateY: this.state.offset}]}]}
-        >
-          <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
-          <View style={styles.container}>
-            <TouchableOpacity style={styles.close} onPress={this.closeModal}>
-              <Image source={require('../../images/popupClose.png')} />
-            </TouchableOpacity>
-            <View style={{flex: 1}}>{this.props.children}</View>
-          </View>
-        </Animated.View>
-      </View>
+      <Animated.View style={[styles.modal, {transform: [{translateY: this.state.offset}]}]}>
+        <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.close} onPress={this.closeModal}>
+            <Image source={require('../../images/popupClose.png')} />
+          </TouchableOpacity>
+          <View style={{flex: 1}}>{this.props.children}</View>
+        </View>
+      </Animated.View>
     )
   }
 }
@@ -57,17 +52,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  flexCenter: {
-    flex: 1,
+  modal: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  modal: {
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    top: height - 394,
-    right: 0,
-    bottom: 0,
-    left: 0,
+    marginTop: -30,
+    height: 394,
+    width,
   },
 })

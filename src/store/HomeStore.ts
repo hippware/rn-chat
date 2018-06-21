@@ -227,9 +227,7 @@ const HomeStore = types
         autorun(() => {
           if (Actions.currentScene === 'bottomMenu') {
             self.setFullscreen(true)
-            self.recenterMapForMenu()
           } else if (Actions.currentScene === 'home') {
-            self.zoomToCurrentLocation()
             self.setFullscreen(false)
           }
         })

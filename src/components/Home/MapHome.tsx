@@ -1,6 +1,6 @@
 import React from 'react'
-import MapView, {UrlTile, Marker} from 'react-native-maps'
-import {StyleSheet, View} from 'react-native'
+import MapView, {UrlTile} from 'react-native-maps'
+import {StyleSheet, View, Animated} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
@@ -10,6 +10,8 @@ import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
 import {observable, when, computed} from 'mobx'
 import BubbleIcon from '../map/BubbleIcon'
 import HackMarker from '../map/HackMarker'
+import HorizontalCardList from './HorizontalCardList'
+import RightPanel from './RightPanel'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -51,7 +53,7 @@ export default class MapHome extends React.Component<IProps> {
     const {mapType, opacity, onRegionChange, setMapRef} = homeStore
     const delta = INIT_DELTA
     return (
-      <View style={styles.container}>
+      <Animated.View style={styles.container}>
         <MapView
           provider={'google'}
           ref={setMapRef}
@@ -79,7 +81,9 @@ export default class MapHome extends React.Component<IProps> {
             stopPropagation
           />
         </MapView>
-      </View>
+        <RightPanel />
+        <HorizontalCardList />
+      </Animated.View>
     )
   }
 
@@ -115,11 +119,7 @@ export default class MapHome extends React.Component<IProps> {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
+    flex: 1,
   },
   map: {
     position: 'absolute',
