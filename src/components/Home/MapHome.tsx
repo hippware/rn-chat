@@ -1,13 +1,13 @@
 import React from 'react'
-import MapView, {UrlTile, Marker} from 'react-native-maps'
-import {StyleSheet, View} from 'react-native'
+import MapView, {UrlTile} from 'react-native-maps'
+import {StyleSheet, View, Animated} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore, INIT_DELTA} from '../../store/HomeStore'
-import {observable, when, computed} from 'mobx'
+import {IHomeStore, INIT_DELTA, BOTTOM_MENU_HEIGHT} from '../../store/HomeStore'
+import {observable, when, computed, autorun} from 'mobx'
 import BubbleIcon from '../map/BubbleIcon'
 import HackMarker from '../map/HackMarker'
 
@@ -22,15 +22,21 @@ const you = require('../../../images/you.png')
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
 export default class MapHome extends React.Component<IProps> {
-  static defaultProps = {
-    autoZoom: true,
-  }
-
   mounted: boolean = false
   @observable markerTrackChanges = true
 
+  state = {
+    bottom: new Animated.Value(0),
+  }
+
   componentDidMount() {
     this.mounted = true
+    autorun(() => {
+      Animated.spring(this.state.bottom, {
+        toValue: this.props.homeStore.showBottomMenu ? -BOTTOM_MENU_HEIGHT : 0,
+        // overshootClamping: true,
+      }).start()
+    })
   }
 
   componentWillUnmount() {
@@ -51,7 +57,7 @@ export default class MapHome extends React.Component<IProps> {
     const {mapType, opacity, onRegionChange, setMapRef} = homeStore
     const delta = INIT_DELTA
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, {transform: [{translateY: this.state.bottom}]}]}>
         <MapView
           provider={'google'}
           ref={setMapRef}
@@ -79,7 +85,7 @@ export default class MapHome extends React.Component<IProps> {
             stopPropagation
           />
         </MapView>
-      </View>
+      </Animated.View>
     )
   }
 

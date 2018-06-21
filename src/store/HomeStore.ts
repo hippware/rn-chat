@@ -1,14 +1,16 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
 import {IWocky, IBot} from 'wocky-client'
-import {when, autorun} from 'mobx'
+import {when} from 'mobx'
 import tutorialData from './tutorialData'
-import {Actions} from 'react-native-router-flux'
+import {height} from '../components/Global'
 
 export const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 const OPACITY_MIN = 0.6
+
+export const BOTTOM_MENU_HEIGHT = height - 394
 
 const mapTypeEnum = types.enumeration([
   'standard',
@@ -30,6 +32,7 @@ const HomeStore = types
     scrollIndex: 0,
     listMode: 'home', // TODO: enumeration
     fullScreenMode: false,
+    showBottomMenu: false,
   }))
   .views(self => {
     const {wocky}: {wocky: IWocky} = getParent(self)
@@ -80,23 +83,6 @@ const HomeStore = types
       }
     }
 
-    function recenterMapForMenu() {
-      const {locationStore}: {locationStore: ILocationStore} = getParent(self)
-      const {latitude, longitude} = locationStore.location
-      if (mapRef) {
-        let delta = INIT_DELTA
-        if (self.region) {
-          delta = self.region.longitudeDelta
-        }
-        mapRef.animateToRegion({
-          latitude: latitude - delta / 3,
-          longitude,
-          latitudeDelta: delta,
-          longitudeDelta: delta,
-        })
-      }
-    }
-
     function zoomToBot(bot: IBot) {
       if (bot.location) {
         setCenterCoordinate(bot.location.latitude, bot.location.longitude)
@@ -137,7 +123,6 @@ const HomeStore = types
     }
 
     return {
-      recenterMapForMenu,
       scrollListToFirstLocationCard,
       selectBot,
       scrollListToIndex,
@@ -194,6 +179,7 @@ const HomeStore = types
       },
       toggleFullscreen() {
         self.fullScreenMode = !self.fullScreenMode
+        self.showBottomMenu = false
       },
       setFullscreen(value) {
         self.fullScreenMode = value
@@ -212,6 +198,10 @@ const HomeStore = types
           }
         }
       },
+      toggleBottomMenu() {
+        self.fullScreenMode = !self.showBottomMenu
+        self.showBottomMenu = !self.showBottomMenu
+      },
     }
   })
   .actions(self => {
@@ -224,15 +214,6 @@ const HomeStore = types
         // TODO: move this to wocky
         const wocky: IWocky = getParent(self).wocky
         when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
-        autorun(() => {
-          if (Actions.currentScene === 'bottomMenu') {
-            self.setFullscreen(true)
-            self.recenterMapForMenu()
-          } else if (Actions.currentScene === 'home') {
-            self.zoomToCurrentLocation()
-            self.setFullscreen(false)
-          }
-        })
       },
     }
   })

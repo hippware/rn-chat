@@ -39,7 +39,7 @@ import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import * as modals from './modals'
 import LocationDebug from './LocationDebug'
-import BottomMenu from './BottomMenu'
+// import BottomMenu from './BottomMenu'
 
 const STAGING_COLOR = 'rgb(28,247,39)'
 
@@ -198,7 +198,7 @@ class TinyRobotRouter extends React.Component<Props> {
           <Scene key="locationPrimer" component={modals.LocationPrimer} />
           <Scene key="sharePresencePrimer" component={modals.SharePresencePrimer} />
           <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
-          <Scene key="bottomMenu" component={BottomMenu} />
+          {/* <Scene key="bottomMenu" component={BottomMenu} /> */}
         </Lightbox>
       </Router>
     )

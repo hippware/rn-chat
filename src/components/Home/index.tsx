@@ -5,6 +5,7 @@ import MapHome from './MapHome'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 import HorizontalCardList from './HorizontalCardList'
 import RightPanel from './RightPanel'
+import BottomMenu from '../BottomMenu'
 
 class Home extends React.Component<{}> {
   render() {
@@ -15,6 +16,7 @@ class Home extends React.Component<{}> {
         <RightPanel />
         <HorizontalCardList />
         <Connectivity />
+        <BottomMenu />
       </View>
     )
   }
