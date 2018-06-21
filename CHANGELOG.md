@@ -10,7 +10,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 ** Redesign **
 
 * Redesign part 1 (PR #2474) / HS Redesign - Map focused HS. (#2464)
+  * Map fine tuning (#2487)
 * Redesign Part 2: Bot cards (PR #2480) / Location card design (#2479)
+* Map/cards interaction (PR #2485)
+  * HS Redesign - How map pins & location cards interact (#2466)
+  * HomeScreen pins (#2477)
+* HS Redesign - Full screen mode. (#2467)
+* HS Redesign - accessing the menu. (#2472)
+  * Bottom menu with new avatar (PR #2488, PR #2491)
+  * Map tuning (PR #2493) / Map <-> menu interaction (#2490)
 
 # 2.8.1 - 2018 June 7
 
