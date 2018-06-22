@@ -6,30 +6,45 @@ import {height, width} from './Global'
 type Props = {
   onClose: () => void
   children: any
+  animated?: boolean
 }
 
 export default class BottomPopup extends React.Component<Props> {
+  static defaultProps = {
+    animated: false,
+  }
   state = {offset: new Animated.Value(height)}
   componentDidMount() {
-    Animated.timing(this.state.offset, {
-      duration: 100,
-      toValue: 0,
-    }).start()
+    if (this.props.animated) {
+      Animated.timing(this.state.offset, {
+        duration: 1500,
+        toValue: 0,
+      }).start()
+    }
   }
   closeModal = () => {
-    Animated.timing(this.state.offset, {
-      duration: 100,
-      toValue: height,
-    }).start(this.props.onClose)
+    if (this.props.animated) {
+      Animated.timing(this.state.offset, {
+        duration: 1500,
+        toValue: height,
+      }).start(this.props.onClose)
+    } else {
+      this.props.onClose()
+    }
   }
   render() {
     return (
-      <Animated.View style={[styles.modal, {transform: [{translateY: this.state.offset}]}]}>
+      <Animated.View
+        style={[
+          styles.modal,
+          this.props.animated && {transform: [{translateY: this.state.offset}]},
+        ]}
+      >
         <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
         <View style={styles.container}>
           <TouchableOpacity style={styles.close} onPress={this.closeModal}>
             <Image source={require('../../images/popupClose.png')} />
-          </TouchableOpacity>
+          </TouchableOpacity>x
           <View style={{flex: 1}}>{this.props.children}</View>
         </View>
       </Animated.View>
