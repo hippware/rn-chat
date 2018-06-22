@@ -25,7 +25,7 @@ import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 import BotCompose from './BotCompose'
 import BotCreate from './map/BotCreate'
-import BotDetails from './BotDetails'
+import LocationDetails from './LocationDetails'
 import BotsScreen from './BotsScreen'
 // import ExploreNearBy from './map/ExploreNearBy'
 import TestRegister from './TestRegister'
@@ -194,6 +194,7 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="followed" component={peopleLists.FollowedList} clone title="Following" back />
               <Scene key="blocked" component={peopleLists.BlockedList} clone title="Blocked Users" back right={() => null} />
               <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />
+              <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} clone back right={() => null} />
             </Stack>
             <Scene key="locationWarning" component={modals.LocationWarning} />
             <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />

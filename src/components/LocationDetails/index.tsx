@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native'
+import {View, FlatList, Text, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
@@ -8,14 +8,14 @@ import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
 import AddBotPost from './AddBotPost'
-import BotDetailsHeader from './BotDetailsHeader'
+import LocationDetailsHeader from './LocationDetailsHeader'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 
 const SEPARATOR_HEIGHT = 20 * k
 
 type Props = {
-  item: string
+  botId: string
   server?: string
   isNew: boolean
   scale: number
@@ -24,20 +24,20 @@ type Props = {
   analytics?: any
 }
 
-const Title = inject('wocky')(({wocky, item, server, scale}) => {
-  const bot: IBot = wocky.getBot({id: item, server})
-  return <Header bot={bot} scale={scale} />
-})
+// const Title = inject('wocky')(({wocky, botId, server, scale}) => {
+//   const bot: IBot = wocky.getBot({id: botId, server})
+//   return <Header bot={bot} scale={scale} />
+// })
 
-const Right = inject('wocky')(({wocky, item, server}) => {
-  const bot = wocky.getBot({id: item, server})
+const Right = inject('wocky')(({wocky, botId, server}) => {
+  const bot = wocky.getBot({id: botId, server})
   return <ShareButton bot={bot} />
 })
 
 @inject('wocky', 'analytics')
 @observer
-class BotDetails extends React.Component<Props> {
-  static renderTitle = props => <Title {...props} />
+export default class LocationDetails extends React.Component<Props> {
+  // static renderTitle = props => <Title {...props} />
   static rightButton = props => <Right {...props} />
 
   @observable bot?: IBot
@@ -61,7 +61,7 @@ class BotDetails extends React.Component<Props> {
   componentDidMount() {
     this.loadBot()
     if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
-      Actions.visitors({item: this.props.item})
+      Actions.visitors({item: this.props.botId})
     }
   }
 
@@ -73,8 +73,8 @@ class BotDetails extends React.Component<Props> {
 
   loadBot = async () => {
     const {wocky, analytics} = this.props
-    runInAction(() => (this.bot = wocky!.getBot({id: this.props.item})))
-    await wocky!.loadBot(this.props.item, undefined)
+    runInAction(() => (this.bot = wocky!.getBot({id: this.props.botId})))
+    await wocky!.loadBot(this.props.botId, undefined)
     await this.bot!.posts.load({force: true})
 
     this.viewTimeout = setTimeout(() => {
@@ -84,7 +84,7 @@ class BotDetails extends React.Component<Props> {
   }
 
   _headerComponent = () => (
-    <BotDetailsHeader bot={this.bot!} scale={this.props.scale} {...this.props} />
+    <LocationDetailsHeader bot={this.bot!} scale={this.props.scale} {...this.props} />
   )
 
   scrollToEnd = () => {
@@ -148,50 +148,50 @@ class BotDetails extends React.Component<Props> {
   }
 }
 
-const Header = inject('notificationStore')(
-  observer(({bot, scale, notificationStore}) => {
-    const map = scale === 0
-    if (!bot || !isAlive(bot)) {
-      return null
-    }
-    return (
-      <TouchableOpacity
-        onLongPress={() => {
-          Clipboard.setString(bot.address)
-          notificationStore.flash('Address copied to clipboard 👍')
-        }}
-        // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
-        onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
-      >
-        <RText
-          numberOfLines={map ? 1 : 2}
-          // must wait for solution to https://github.com/facebook/react-native/issues/14981
-          // adjustsFontSizeToFit
-          minimumFontScale={0.8}
-          size={18}
-          color={colors.DARK_PURPLE}
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          {bot.error ? 'Bot Unavailable' : bot.title}
-        </RText>
-        {map && (
-          <RText
-            minimumFontScale={0.6}
-            numberOfLines={1}
-            weight="Light"
-            size={14}
-            color={colors.DARK_PURPLE}
-            style={{textAlign: 'center'}}
-          >
-            {bot.address}
-          </RText>
-        )}
-      </TouchableOpacity>
-    )
-  })
-)
+// const Header = inject('notificationStore')(
+//   observer(({bot, scale, notificationStore}) => {
+//     const map = scale === 0
+//     if (!bot || !isAlive(bot)) {
+//       return null
+//     }
+//     return (
+//       <TouchableOpacity
+//         onLongPress={() => {
+//           Clipboard.setString(bot.address)
+//           notificationStore.flash('Address copied to clipboard 👍')
+//         }}
+//         // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
+//         onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
+//       >
+//         <RText
+//           numberOfLines={map ? 1 : 2}
+//           // must wait for solution to https://github.com/facebook/react-native/issues/14981
+//           // adjustsFontSizeToFit
+//           minimumFontScale={0.8}
+//           size={18}
+//           color={colors.DARK_PURPLE}
+//           style={{
+//             textAlign: 'center',
+//           }}
+//         >
+//           {bot.error ? 'Bot Unavailable' : bot.title}
+//         </RText>
+//         {map && (
+//           <RText
+//             minimumFontScale={0.6}
+//             numberOfLines={1}
+//             weight="Light"
+//             size={14}
+//             color={colors.DARK_PURPLE}
+//             style={{textAlign: 'center'}}
+//           >
+//             {bot.address}
+//           </RText>
+//         )}
+//       </TouchableOpacity>
+//     )
+//   })
+// )
 
 const ShareButton = observer(({bot}) => {
   if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
@@ -230,8 +230,6 @@ const Loader = () => (
     <Spinner />
   </View>
 )
-
-export default BotDetails
 
 const styles = StyleSheet.create({
   container: {
