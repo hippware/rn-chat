@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Animated, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
-import {height, width} from './Global'
+import {height} from './Global'
 
 type Props = {
   onClose: () => void
@@ -68,10 +68,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modal: {
+    position: 'absolute',
+    bottom: 30,
+    left: 0,
+    right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -30,
     height: 394,
-    width,
   },
 })

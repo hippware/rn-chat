@@ -91,7 +91,7 @@ export default class MapHome extends React.Component<IProps> {
             />
           </MapView>
           {Actions.currentScene !== 'bottomMenu' && <RightPanel />}
-          <HorizontalCardList />
+          {Actions.currentScene !== 'bottomMenu' && <HorizontalCardList />}
           <Connectivity />
         </View>
       </View>
