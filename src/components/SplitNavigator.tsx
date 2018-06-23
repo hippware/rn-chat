@@ -15,12 +15,12 @@ type AnimatedScreenProps = {
   splitHeight: number
 }
 class AnimatedScreen extends React.Component<AnimatedScreenProps> {
-  state = {offset: new Animated.Value(0), splitHeight: 0}
+  state = {offset: new Animated.Value(0), show: false}
 
   componentWillReceiveProps(newProps) {
-    Animated.timing(this.state.offset, {
-      duration: 250,
+    Animated.spring(this.state.offset, {
       toValue: newProps.show ? this.props.splitHeight : 0,
+      useNativeDriver: true,
     }).start()
   }
   render() {
@@ -29,7 +29,7 @@ class AnimatedScreen extends React.Component<AnimatedScreenProps> {
       <View style={{flex: 1}}>
         <Animated.View
           style={[
-            {position: 'absolute', right: 0, left: 0, top: 0, bottom: -30},
+            {position: 'absolute', right: 0, left: 0, top: 0, bottom: 0},
             {
               transform: [
                 {
@@ -55,7 +55,7 @@ class AnimatedScreen extends React.Component<AnimatedScreenProps> {
                 {
                   translateY: Animated.multiply(
                     -1,
-                    Animated.add(new Animated.Value(-splitHeight - 30), this.state.offset)
+                    Animated.add(new Animated.Value(-splitHeight), this.state.offset)
                   ),
                 },
               ],

@@ -17,7 +17,7 @@ export default class BottomPopup extends React.Component<Props> {
   componentDidMount() {
     if (this.props.animated) {
       Animated.timing(this.state.offset, {
-        duration: 1500,
+        duration: 250,
         toValue: 0,
       }).start()
     }
@@ -25,7 +25,7 @@ export default class BottomPopup extends React.Component<Props> {
   closeModal = () => {
     if (this.props.animated) {
       Animated.timing(this.state.offset, {
-        duration: 1500,
+        duration: 250,
         toValue: height,
       }).start(this.props.onClose)
     } else {
