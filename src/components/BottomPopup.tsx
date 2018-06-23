@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 0,
     left: 0,
     right: 0,
     justifyContent: 'center',
