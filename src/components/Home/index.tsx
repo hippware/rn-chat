@@ -63,37 +63,35 @@ export default class MapHome extends React.Component<IProps> {
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
+        <MapView
+          provider={'google'}
+          ref={setMapRef}
+          onPress={homeStore.toggleFullscreen}
+          initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
+          style={styles.map}
+          customMapStyle={mapStyle}
+          mapType={mapType}
+          onRegionChange={onRegionChange}
+          rotateEnabled={false}
+          {...this.props}
+        >
+          <View style={{flex: 1, opacity}} pointerEvents="none" />
+          {homeStore.underMapType === 'satellite' && (
+            <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
+          )}
+          {this.botMarkerList}
+          <HackMarker
+            image={you}
+            zIndex={1000}
+            coordinate={{latitude, longitude}}
+            onPress={homeStore.selectYou}
+            stopPropagation
+          />
+        </MapView>
         <ActiveGeoBotBanner />
-        <View style={{flex: 1}}>
-          <MapView
-            provider={'google'}
-            ref={setMapRef}
-            onPress={homeStore.toggleFullscreen}
-            initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
-            style={styles.map}
-            customMapStyle={mapStyle}
-            mapType={mapType}
-            onRegionChange={onRegionChange}
-            rotateEnabled={false}
-            {...this.props}
-          >
-            <View style={{flex: 1, opacity}} pointerEvents="none" />
-            {homeStore.underMapType === 'satellite' && (
-              <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
-            )}
-            {this.botMarkerList}
-            <HackMarker
-              image={you}
-              zIndex={1000}
-              coordinate={{latitude, longitude}}
-              onPress={homeStore.selectYou}
-              stopPropagation
-            />
-          </MapView>
-          {Actions.currentScene !== 'bottomMenu' && <RightPanel />}
-          {Actions.currentScene !== 'bottomMenu' && <HorizontalCardList />}
-          <Connectivity />
-        </View>
+        {Actions.currentScene !== 'bottomMenu' && <RightPanel />}
+        {Actions.currentScene !== 'bottomMenu' && <HorizontalCardList />}
+        <Connectivity />
       </View>
     )
   }
