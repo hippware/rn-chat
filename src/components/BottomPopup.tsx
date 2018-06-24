@@ -16,16 +16,14 @@ export default class BottomPopup extends React.Component<Props> {
   state = {offset: new Animated.Value(height)}
   componentDidMount() {
     if (this.props.animated) {
-      Animated.timing(this.state.offset, {
-        duration: 250,
+      Animated.spring(this.state.offset, {
         toValue: 0,
       }).start()
     }
   }
   closeModal = () => {
     if (this.props.animated) {
-      Animated.timing(this.state.offset, {
-        duration: 250,
+      Animated.spring(this.state.offset, {
         toValue: height,
       }).start(this.props.onClose)
     } else {
