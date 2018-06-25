@@ -1,51 +1,23 @@
 import React from 'react'
-import {View, Animated, Image, StyleSheet, TouchableOpacity} from 'react-native'
-
-import {height} from './Global'
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
 type Props = {
   onClose: () => void
   children: any
-  animated?: boolean
 }
 
 export default class BottomPopup extends React.Component<Props> {
-  static defaultProps = {
-    animated: false,
-  }
-  state = {offset: new Animated.Value(height)}
-  componentDidMount() {
-    if (this.props.animated) {
-      Animated.spring(this.state.offset, {
-        toValue: 0,
-      }).start()
-    }
-  }
-  closeModal = () => {
-    if (this.props.animated) {
-      Animated.spring(this.state.offset, {
-        toValue: height,
-      }).start(this.props.onClose)
-    } else {
-      this.props.onClose()
-    }
-  }
   render() {
     return (
-      <Animated.View
-        style={[
-          styles.modal,
-          this.props.animated && {transform: [{translateY: this.state.offset}]},
-        ]}
-      >
+      <View style={{flex: 1}}>
         <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
         <View style={styles.container}>
-          <TouchableOpacity style={styles.close} onPress={this.closeModal}>
+          <TouchableOpacity style={styles.close} onPress={this.props.onClose}>
             <Image source={require('../../images/popupClose.png')} />
-          </TouchableOpacity>x
-          <View style={{flex: 1}}>{this.props.children}</View>
+          </TouchableOpacity>
+          {this.props.children}
         </View>
-      </Animated.View>
+      </View>
     )
   }
 }
