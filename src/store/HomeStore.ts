@@ -1,9 +1,8 @@
 import {types, getParent} from 'mobx-state-tree'
 import {ILocationStore} from './LocationStore'
 import {IWocky, IBot} from 'wocky-client'
-import {when, autorun} from 'mobx'
+import {when} from 'mobx'
 import tutorialData from './tutorialData'
-import {Actions} from 'react-native-router-flux'
 
 export const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -224,15 +223,15 @@ const HomeStore = types
         // TODO: move this to wocky
         const wocky: IWocky = getParent(self).wocky
         when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
-        autorun(() => {
-          if (Actions.currentScene === 'bottomMenu') {
-            self.setFullscreen(true)
-            self.recenterMapForMenu()
-          } else if (Actions.currentScene === 'home') {
-            self.zoomToCurrentLocation()
-            self.setFullscreen(false)
-          }
-        })
+
+        // Following (full screen mode animation) slows down bottom menu animation significantly
+        // autorun(() => {
+        //   if (Actions.currentScene === 'bottomMenu') {
+        //     self.setFullscreen(true)
+        //   } else if (Actions.currentScene === 'home') {
+        //     self.setFullscreen(false)
+        //   }
+        // })
       },
     }
   })
