@@ -1,10 +1,11 @@
 import React from 'react'
-import {View, Animated, StyleSheet, TouchableWithoutFeedback, PanResponder} from 'react-native'
+import {View, Animated, StyleSheet, PanResponder} from 'react-native'
+import {height} from '../Global'
 
 type Props = {
   base: any
-  show: boolean
   menu: any
+  show: boolean
   splitHeight: number
 }
 
@@ -15,6 +16,7 @@ type State = {
 class AnimatedScreen extends React.Component<Props, State> {
   state = {
     bottom: new Animated.Value(0),
+    scrollDistance: new Animated.Value(0),
   }
 
   // Pan responder to handle gestures
@@ -57,7 +59,8 @@ class AnimatedScreen extends React.Component<Props, State> {
   }
 
   render() {
-    const {base, menu, splitHeight, show} = this.props
+    const {base, menu, show} = this.props
+    const {bottom, scrollDistance} = this.state
     const theTransform = {transform: [{translateY: this.state.bottom}]}
 
     return (
@@ -69,19 +72,14 @@ class AnimatedScreen extends React.Component<Props, State> {
           style={[
             styles.absolute,
             {
-              bottom: -splitHeight,
-              height: splitHeight + (show ? 30 : 0),
+              top: height,
             },
-            theTransform,
-            {borderWidth: 1, borderColor: 'red'},
+            {marginTop: show ? -30 : 0},
+            {transform: [{translateY: Animated.add(bottom, scrollDistance)}]},
           ]}
           {...this._panResponder.panHandlers}
         >
-          {/* <TouchableWithoutFeedback
-            onPress={() => console.log('& touch')}
-          > */}
           {menu}
-          {/* </TouchableWithoutFeedback> */}
         </Animated.View>
       </View>
     )
@@ -89,7 +87,7 @@ class AnimatedScreen extends React.Component<Props, State> {
 
   // Either allow or deny gesture handler
   _grantPanResponder = (evt, gestureState) => {
-    console.log('& gpr', evt, gestureState)
+    // console.log('& gpr', evt, gestureState)
     // // Allow if is not open
     // if (!this.state.open) {
     //   return true;
@@ -109,7 +107,7 @@ class AnimatedScreen extends React.Component<Props, State> {
 
   // Called when granted
   _handlePanResponderGrant = (evt, gestureState) => {
-    console.log('& hprg', evt, gestureState)
+    // console.log('& hprg', evt, gestureState)
     // // Update the state so we know we're in the middle of pulling it
     // this.setState({ pulling: true });
     // // Set offset and initialize with 0 so we update it
@@ -120,7 +118,10 @@ class AnimatedScreen extends React.Component<Props, State> {
 
   // Called when being pulled
   _handlePanResponderMove = (evt, gestureState) => {
-    console.log('& hprm', evt, gestureState)
+    console.log('& hprm', gestureState.dy)
+    // this.setState({scrollDistance: -gestureState.dy})
+    this.state.scrollDistance.setValue(gestureState.dy)
+
     // // Update position unless we go outside of allowed range
     // if (this.insideAllowedRange()) {
     //   this._animatedPosition.setValue(gestureState.dy);
@@ -129,7 +130,7 @@ class AnimatedScreen extends React.Component<Props, State> {
 
   // Called when gesture ended
   _handlePanResponderEnd = (evt, gestureState) => {
-    console.log('& hpre', evt, gestureState)
+    // console.log('& hpre', evt, gestureState)
     // // Reset offset
     // this._animatedPosition.flattenOffset();
     // // Reset pulling state
