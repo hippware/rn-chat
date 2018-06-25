@@ -80,10 +80,11 @@ const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
     ({navigation}) => {
       const {state, dispatch} = navigation
       const {routes, index} = state
+      const routeState = routes[index > 0 ? index : 1]
 
       // Figure out what to render based on the navigation state and the router:
       const Component = routeConfigs[routes[0].routeName].screen
-      const Popup = routeConfigs[routes[1].routeName].screen
+      const Popup = routeConfigs[routeState.routeName].screen
 
       return (
         <AnimatedScreen
@@ -102,7 +103,7 @@ const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
             <Popup
               navigation={addNavigationHelpers({
                 dispatch,
-                state: routes[1],
+                state: routeState,
                 addListener: Actions.addListener,
               })}
             />

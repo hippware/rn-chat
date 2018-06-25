@@ -181,7 +181,6 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="camera" component={Camera} clone hideNavBar />
               <Scene key="botEdit" component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key="codePush" component={CodePushScene} title="CodePush" clone back />
-              <Scene key="botDetails" path="bot/:server/:item/:params*" component={BotDetails} scale={0.5} clone back right={() => null} />
               <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" clone back right={() => null} />
               <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" clone left={() => null} />
               <Scene key="subscribers" component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title="Favorites" />
@@ -194,7 +193,6 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="followed" component={peopleLists.FollowedList} clone title="Following" back />
               <Scene key="blocked" component={peopleLists.BlockedList} clone title="Blocked Users" back right={() => null} />
               <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />
-              <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} clone back right={() => null} />
             </Stack>
             <Scene key="locationWarning" component={modals.LocationWarning} />
             <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />
@@ -203,6 +201,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
           </Lightbox>
           <Scene key="bottomMenu" component={BottomMenu} />
+          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} />
         </Stack>
       </Router>
     )
