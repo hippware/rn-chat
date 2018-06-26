@@ -18,7 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HS Redesign - Full screen mode. (#2467)
 * HS Redesign - accessing the menu. (#2472)
   * Bottom menu with new avatar (PR #2488, PR #2491)
-  * Map tuning (PR #2493) / Map <-> menu interaction (#2490)
+  * Map <-> menu interaction (#2490)
+    * Map tuning (PR #2493), Bottom menu (PR #2496)
 
 # 2.8.1 - 2018 June 7
 
