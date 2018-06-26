@@ -11,13 +11,17 @@ type Props = {
 
 type State = {
   bottom: Animated.Value
+  // menuTop: Animated.Value
+  panY
 }
 
 class AnimatedScreen extends React.Component<Props, State> {
   state = {
     bottom: new Animated.Value(0),
-    scrollDistance: new Animated.Value(0),
+    // menuTop: new Animated.Value(0),
+    panY: new Animated.Value(0),
   }
+  _panPlaceholder: number = 0
 
   // Pan responder to handle gestures
   _panResponder: any = {}
@@ -37,6 +41,8 @@ class AnimatedScreen extends React.Component<Props, State> {
     // // Reset value once listener is registered to update depending animations
     // this._animatedPosition.setValue(this._animatedPosition._value);
 
+    this.state.panY.addListener(value => (this._panPlaceholder = value.value))
+
     // Initialize PanResponder to handle gestures
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: this._grantPanResponder,
@@ -53,19 +59,31 @@ class AnimatedScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps({show}) {
+    // Animated.parallel([
+    //   Animated.spring(this.state.bottom, {
+    //     toValue: show ? -this.props.splitHeight : 0,
+    //     useNativeDriver: true,
+    //   }),
+    //   Animated.spring(this.state.menuTop, {
+    //     toValue: show ? -this.props.splitHeight : 0,
+    //     useNativeDriver: true,
+    //   }),
+    // ])
     Animated.spring(this.state.bottom, {
       toValue: show ? -this.props.splitHeight : 0,
+      useNativeDriver: true,
     }).start()
   }
 
   render() {
     const {base, menu, show} = this.props
-    const {bottom, scrollDistance} = this.state
-    const theTransform = {transform: [{translateY: this.state.bottom}]}
+    const {bottom, panY} = this.state
 
     return (
       <View style={{flex: 1}}>
-        <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, theTransform]}>
+        <Animated.View
+          style={[styles.absolute, {top: 0, bottom: 0}, {transform: [{translateY: bottom}]}]}
+        >
           {base}
         </Animated.View>
         <Animated.View
@@ -75,7 +93,8 @@ class AnimatedScreen extends React.Component<Props, State> {
               top: height,
             },
             {marginTop: show ? -30 : 0},
-            {transform: [{translateY: Animated.add(bottom, scrollDistance)}]},
+            {transform: [{translateY: Animated.add(bottom, panY)}]},
+            // {transform: [{translateY: menuTop}]},
           ]}
           {...this._panResponder.panHandlers}
         >
@@ -108,6 +127,8 @@ class AnimatedScreen extends React.Component<Props, State> {
   // Called when granted
   _handlePanResponderGrant = (evt, gestureState) => {
     // console.log('& hprg', evt, gestureState)
+    this.state.panY.setOffset(this._panPlaceholder)
+    this.state.panY.setValue(0)
     // // Update the state so we know we're in the middle of pulling it
     // this.setState({ pulling: true });
     // // Set offset and initialize with 0 so we update it
@@ -116,17 +137,27 @@ class AnimatedScreen extends React.Component<Props, State> {
     // this._animatedPosition.setValue(0);
   }
 
-  // Called when being pulled
-  _handlePanResponderMove = (evt, gestureState) => {
-    console.log('& hprm', gestureState.dy)
-    // this.setState({scrollDistance: -gestureState.dy})
-    this.state.scrollDistance.setValue(gestureState.dy)
+  // // Called when being pulled
+  // _handlePanResponderMove = (evt, gestureState) => {
+  //   console.log('& hprm', gestureState.dy)
+  //   const {menuTop, bottom} = this.state
 
-    // // Update position unless we go outside of allowed range
-    // if (this.insideAllowedRange()) {
-    //   this._animatedPosition.setValue(gestureState.dy);
-    // }
-  }
+  //   menuTop.setValue(menuTop._value + gestureState.dy)
+
+  //   // const testValue = bottom.set
+  //   // panY.setValue()
+
+  //   // // Update position unless we go outside of allowed range
+  //   // if (this.insideAllowedRange()) {
+  //   //   this._animatedPosition.setValue(gestureState.dy);
+  //   // }
+  // }
+
+  _handlePanResponderMove = Animated.event([null, {dy: this.state.panY}])
+
+  // _handlePanResponderMove = Animated.event([
+  //   null, { dx: this.state.pan.x, dy: this.state.pan.y }
+  // ])
 
   // Called when gesture ended
   _handlePanResponderEnd = (evt, gestureState) => {
