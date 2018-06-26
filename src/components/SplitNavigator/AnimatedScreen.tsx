@@ -113,11 +113,13 @@ class AnimatedScreen extends React.Component<Props, State> {
   _handlePanResponderMove = Animated.event([null, {dy: this.state.panY}])
 
   // Called when gesture ended
-  _handlePanResponderEnd = (evt, gestureState) => {
-    this.state.panY.flattenOffset()
+  _handlePanResponderEnd = (evt, {vy}) => {
+    // console.log('& hpr end', vy)
+    // this.state.panY.flattenOffset()
+    Animated.decay(this.state.panY, {velocity: vy, deceleration: 0.993}).start()
+
     // TODO: Animated.decay to simulate "momentum" instead of just stopping the gesture?
     // TODO: "bounce" back to bottom-most position?
-    // console.log('& hpr end', this._panPlaceholder)
     // this.state.panY.setOffset(this._panPlaceholder)
     // this.state.panY.setValue(0)
   }
