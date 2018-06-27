@@ -9,8 +9,8 @@ type Props = {
 export default class BottomPopup extends React.Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Image style={styles.container} source={require('../../images/bottomPopup.png')} />
+      <View style={{flex: 1}}>
+        <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
         <View style={{flex: 1}}>
           <TouchableOpacity style={styles.close} onPress={this.props.onClose}>
             <Image source={require('../../images/popupClose.png')} />
@@ -23,7 +23,7 @@ export default class BottomPopup extends React.Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  absolute: {
     position: 'absolute',
     top: 0,
     right: 0,

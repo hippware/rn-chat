@@ -1,12 +1,13 @@
 import React from 'react'
-import {View, Animated, StyleSheet, PanResponder} from 'react-native'
+import {View, Animated, StyleSheet, PanResponder, Text} from 'react-native'
 import {height} from '../Global'
 
 type Props = {
   base: any
-  menu: any
+  popup: any
   show: boolean
   splitHeight: number
+  draggable: boolean
 }
 
 type State = {
@@ -29,27 +30,12 @@ class AnimatedScreen extends React.Component<Props, State> {
   componentWillMount() {
     this.state.panY.addListener(value => {
       // console.log('& panY: ', value.value)
-      // console.log('& bottom + panY: ', value.value + this.state.bottom._value)
-
-      // TODO: set this so that _panPlaceholder doesn't put the total position below
       this._panPlaceholder = value.value
-    })
-
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this._grantPanResponder,
-      onStartShouldSetPanResponderCapture: this._grantPanResponder,
-      onMoveShouldSetPanResponder: this._grantPanResponder,
-      onMoveShouldSetPanResponderCapture: this._grantPanResponder,
-      onPanResponderGrant: this._handlePanResponderGrant,
-      onPanResponderMove: this._handlePanResponderMove,
-      onPanResponderTerminationRequest: (evt, gestureState) => true,
-      onPanResponderRelease: this._handlePanResponderEnd,
-      onPanResponderTerminate: this._handlePanResponderEnd,
-      onShouldBlockNativeResponder: (evt, gestureState) => true,
     })
   }
 
-  componentWillReceiveProps({show}) {
+  componentWillReceiveProps({show, draggable}) {
+    // console.log('& animatedScreen props', this.props)
     if (show !== this.props.show) {
       if (!show) this.setState({opened: false})
       Animated.spring(this.state.bottom, {
@@ -60,35 +46,69 @@ class AnimatedScreen extends React.Component<Props, State> {
         if (show) this.setState({opened: true})
       })
     }
+
+    this._panResponder = draggable
+      ? PanResponder.create({
+          onStartShouldSetPanResponder: this._grantPanResponder,
+          onStartShouldSetPanResponderCapture: this._grantPanResponder,
+          onMoveShouldSetPanResponder: this._grantPanResponder,
+          onMoveShouldSetPanResponderCapture: this._grantPanResponder,
+          onPanResponderGrant: this._handlePanResponderGrant,
+          onPanResponderMove: this._handlePanResponderMove,
+          onPanResponderTerminationRequest: (evt, gestureState) => true,
+          onPanResponderRelease: this._handlePanResponderEnd,
+          onPanResponderTerminate: this._handlePanResponderEnd,
+          onShouldBlockNativeResponder: (evt, gestureState) => true,
+        })
+      : {}
   }
 
   render() {
-    const {base, menu, show, splitHeight} = this.props
+    const {base, popup, show, splitHeight, draggable} = this.props
     const {bottom, panY, opened} = this.state
-    const translateYPan = Animated.add(bottom, panY).interpolate({
+    const y = Animated.add(bottom, panY)
+    const translateYPan = y.interpolate({
       inputRange: [-height, -splitHeight],
       outputRange: [-height, -splitHeight],
       extrapolateRight: 'clamp',
+    })
+    const headerOpacity = y.interpolate({
+      inputRange: [-height, -height + 50, -splitHeight],
+      outputRange: [1, 0, 0],
     })
     const openCloseTransform = {transform: [{translateY: bottom}]}
     const panTransform = {transform: [{translateY: translateYPan}]}
     return (
       <View style={{flex: 1}}>
+        <Animated.View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            backgroundColor: 'white',
+            height: 75,
+            justifyContent: 'center',
+            alignItems: 'center',
+            opacity: headerOpacity,
+          }}
+        >
+          <Text style={{fontSize: 20}}>TODO: Header Placeholder</Text>
+        </Animated.View>
         <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
           {base}
         </Animated.View>
         <Animated.View
           style={[
             styles.absolute,
-            {
-              top: height,
-            },
+            {top: height},
             {marginTop: show ? -30 : 0},
             opened ? panTransform : openCloseTransform,
           ]}
           {...this._panResponder.panHandlers}
         >
-          {menu}
+          {popup}
         </Animated.View>
       </View>
     )
@@ -115,10 +135,7 @@ class AnimatedScreen extends React.Component<Props, State> {
   // Called when gesture ended
   _handlePanResponderEnd = (evt, {vy}) => {
     // console.log('& hpr end', vy)
-    // this.state.panY.flattenOffset()
-    Animated.decay(this.state.panY, {velocity: vy, deceleration: 0.993}).start()
-
-    // TODO: Animated.decay to simulate "momentum" instead of just stopping the gesture?
+    Animated.decay(this.state.panY, {velocity: vy, deceleration: 0.997}).start()
     // TODO: "bounce" back to bottom-most position?
     // this.state.panY.setOffset(this._panPlaceholder)
     // this.state.panY.setValue(0)

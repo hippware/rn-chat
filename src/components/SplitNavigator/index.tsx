@@ -8,7 +8,7 @@ import {
 import {Actions} from 'react-native-router-flux'
 import AnimatedScreen from './AnimatedScreen'
 
-const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
+const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
   const router = TabRouter(routeConfigs, tabsConfig)
 
   const navigator = createNavigator(router, routeConfigs, tabsConfig, 'react-navigation/STACK')(
@@ -20,10 +20,12 @@ const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
       // Figure out what to render based on the navigation state and the router:
       const Component = routeConfigs[routes[0].routeName].screen
       const Popup = routeConfigs[routeState.routeName].screen
+      // console.log('& popup', routeState)
 
       return (
         <AnimatedScreen
           splitHeight={tabsConfig.splitHeight}
+          draggable={routeState && routeState.params && routeState.params.draggable}
           base={
             <Component
               navigation={addNavigationHelpers({
@@ -34,7 +36,7 @@ const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
             />
           }
           show={index !== 0}
-          menu={
+          popup={
             <Popup
               navigation={addNavigationHelpers({
                 dispatch,
@@ -51,4 +53,4 @@ const BottomMenuNavigator = (routeConfigs, tabsConfig: any = {}) => {
   return createNavigationContainer(navigator, tabsConfig.containerOptions)
 }
 
-export default BottomMenuNavigator
+export default BottomPopupNavigator

@@ -11,6 +11,7 @@ import AddBotPost from './AddBotPost'
 import LocationDetailsHeader from './LocationDetailsHeader'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
+import BottomPopup from '../BottomPopup'
 
 const SEPARATOR_HEIGHT = 20 * k
 
@@ -29,16 +30,16 @@ type Props = {
 //   return <Header bot={bot} scale={scale} />
 // })
 
-const Right = inject('wocky')(({wocky, botId, server}) => {
-  const bot = wocky.getBot({id: botId, server})
-  return <ShareButton bot={bot} />
-})
+// const Right = inject('wocky')(({wocky, botId, server}) => {
+//   const bot = wocky.getBot({id: botId, server})
+//   return <ShareButton bot={bot} />
+// })
 
 @inject('wocky', 'analytics')
 @observer
 export default class LocationDetails extends React.Component<Props> {
   // static renderTitle = props => <Title {...props} />
-  static rightButton = props => <Right {...props} />
+  // static rightButton = props => <Right {...props} />
 
   @observable bot?: IBot
   @observable owner?: IProfile
@@ -113,20 +114,21 @@ export default class LocationDetails extends React.Component<Props> {
     const {bot} = this
     if (!bot) {
       return (
-        <View style={{flex: 1}}>
+        <BottomPopup onClose={Actions.pop}>
           <Loader />
-        </View>
+        </BottomPopup>
       )
     }
     if (!isAlive(bot)) {
-      return null
+      return <BottomPopup onClose={Actions.pop}>{null}</BottomPopup>
     }
     if (bot.error) {
       return <BotUnavailable />
     }
     return (
-      <View style={styles.container}>
+      <BottomPopup onClose={Actions.pop}>
         <FlatList
+          style={{flex: 1}}
           data={this.bot && this.props.scale > 0 ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
@@ -139,11 +141,14 @@ export default class LocationDetails extends React.Component<Props> {
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
+          // must disable scroll because this is wrapped by ScrollView in BottomPopup
+          scrollEnabled={false}
         />
         {this.props.scale > 0 && (
           <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={() => this.scrollToEnd()} />
         )}
-      </View>
+        {/* <View style={{flex: 1, backgroundColor: 'green', height: 1000}} /> */}
+      </BottomPopup>
     )
   }
 }
@@ -193,21 +198,21 @@ export default class LocationDetails extends React.Component<Props> {
 //   })
 // )
 
-const ShareButton = observer(({bot}) => {
-  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
-  const isOwn = !bot.owner || bot.owner.isOwn
-  return isOwn || bot.isPublic ? (
-    <TouchableOpacity
-      onPress={() => Actions.botShareSelectFriends({botId: bot.id})}
-      style={{marginRight: 20 * k}}
-    >
-      <Image source={require('../../../images/shareIcon.png')} />
-    </TouchableOpacity>
-  ) : null
-})
+// const ShareButton = observer(({bot}) => {
+//   if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
+//   const isOwn = !bot.owner || bot.owner.isOwn
+//   return isOwn || bot.isPublic ? (
+//     <TouchableOpacity
+//       onPress={() => Actions.botShareSelectFriends({botId: bot.id})}
+//       style={{marginRight: 20 * k}}
+//     >
+//       <Image source={require('../../../images/shareIcon.png')} />
+//     </TouchableOpacity>
+//   ) : null
+// })
 
 const BotUnavailable = () => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+  <BottomPopup onClose={Actions.pop}>
     <View style={{alignItems: 'center'}}>
       <RText size={17} style={{textAlign: 'center'}}>
         <Text style={{color: 'red'}}>Oops. </Text>
@@ -215,7 +220,7 @@ const BotUnavailable = () => (
       </RText>
       <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
     </View>
-  </View>
+  </BottomPopup>
 )
 
 const Loader = () => (

@@ -201,7 +201,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
           </Lightbox>
           <Scene key="bottomMenu" component={BottomMenu} />
-          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} />
+          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} draggable />
         </Stack>
       </Router>
     )
