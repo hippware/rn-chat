@@ -1,10 +1,10 @@
 import React from 'react'
-import {TouchableOpacity, StyleSheet, View, Image} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
-import {RText, ProfileHandle} from '../common'
+import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
 import {ILocationStore} from '../../store/LocationStore'
 import {IBot} from 'wocky-client'
@@ -15,9 +15,9 @@ type Props = {
   locationStore?: ILocationStore
 }
 
-const Separator = () => (
-  <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />
-)
+// const Separator = () => (
+//   <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />
+// )
 
 @inject('locationStore')
 @observer
@@ -25,12 +25,12 @@ class UserInfoRow extends React.Component<Props> {
   button: any
 
   render() {
-    const {bot, locationStore} = this.props
+    const {bot /*, locationStore*/} = this.props
     if (!bot || !bot.owner) return null
-    const {distanceToString, distance, location} = locationStore!
+    // const {distanceToString, distance, location} = locationStore!
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
           {!bot.isPublic && (
             <Image
@@ -39,7 +39,7 @@ class UserInfoRow extends React.Component<Props> {
               resizeMode="contain"
             />
           )}
-        </View>
+        </View> */}
 
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={bot.owner} size={40 * k} />
@@ -49,7 +49,10 @@ class UserInfoRow extends React.Component<Props> {
             size={15}
             profile={bot.owner}
           />
-          <View style={{flex: 1}} />
+
+          {/* TODO: add bot.createdAt when ready on the backend */}
+
+          {/* <View style={{flex: 1}} />
           <SavesCount botId={bot.id} isOwn={bot.owner.isOwn} />
           <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
             {bot.followersSize}
@@ -83,42 +86,46 @@ class UserInfoRow extends React.Component<Props> {
                   </RText>
                 </TouchableOpacity>
               </View>
-            )}
+            )} */}
         </View>
       </View>
     )
   }
 }
 
-const SavesCount = ({botId, isOwn}) => {
-  const inner = (
-    <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />
-  )
-  return isOwn ? (
-    <TouchableOpacity
-      onPress={() => Actions.subscribers({item: botId})}
-      hitSlop={{top: 5, right: 5, bottom: 5, left: 5}}
-    >
-      {inner}
-    </TouchableOpacity>
-  ) : (
-    inner
-  )
-}
+// const SavesCount = ({botId, isOwn}) => {
+//   const inner = (
+//     <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />
+//   )
+//   return isOwn ? (
+//     <TouchableOpacity
+//       onPress={() => Actions.subscribers({item: botId})}
+//       hitSlop={{top: 5, right: 5, bottom: 5, left: 5}}
+//     >
+//       {inner}
+//     </TouchableOpacity>
+//   ) : (
+//     inner
+//   )
+// }
 
 export default UserInfoRow
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingTop: 10 * k,
     paddingBottom: 15 * k,
+    // borderColor: 'blue',
+    // borderWidth: 1,
   },
   userInfoRow: {
-    marginTop: 10 * k,
+    // marginTop: 10 * k,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.WHITE,
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   botLocationButton: {
     justifyContent: 'center',
