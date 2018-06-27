@@ -56,6 +56,7 @@ class BotButtons extends React.Component<Props> {
           alignItems: 'center',
           flexDirection: 'row',
           paddingBottom: 5 * k,
+          marginVertical: 20 * k,
         }}
       >
         {bot.geofence && <GeofenceButton style={styles.button} bot={bot} />}
