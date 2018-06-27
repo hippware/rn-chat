@@ -30,6 +30,7 @@ export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
+
   @computed
   get botMarkerList() {
     const {mapData, selectBot, selectedBotId} = this.props.homeStore
@@ -55,6 +56,7 @@ export default class MapHome extends React.Component<IProps> {
       return (
         <View style={[styles.container, {alignItems: 'center', justifyContent: 'center'}]}>
           <Spinner />
+          <Connectivity />
         </View>
       )
     }
