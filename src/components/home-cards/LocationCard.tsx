@@ -23,7 +23,7 @@ export default class LocationCard extends React.Component<Props> {
     const bot = item
     return (
       <Card profile={homeStore.scrollIndex === index && bot.owner}>
-        <TouchableWithoutFeedback onPress={() => Actions.botDetails({item: bot.id})}>
+        <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
           <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
             <Image
               style={styles.thumb}
