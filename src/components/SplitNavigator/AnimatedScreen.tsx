@@ -64,7 +64,7 @@ class AnimatedScreen extends React.Component<Props, State> {
   }
 
   render() {
-    const {base, popup, show, splitHeight, draggable} = this.props
+    const {base, popup, show, splitHeight} = this.props
     const {bottom, panY, opened} = this.state
     const y = Animated.add(bottom, panY)
     const translateYPan = y.interpolate({

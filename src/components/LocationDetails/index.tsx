@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, TouchableOpacity, Image, StyleSheet} from 'react-native'
+import {View, FlatList, Text, Image} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
@@ -236,9 +236,9 @@ const Loader = () => (
   </View>
 )
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.LIGHT_GREY,
-  },
-})
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: colors.LIGHT_GREY,
+//   },
+// })
