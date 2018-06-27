@@ -39,7 +39,7 @@ export default class RightPanel extends React.Component<Props> {
 
           <TouchableOpacity
             onPress={() => {
-              /* TODO */
+              Actions.botContainer()
             }}
             style={styles.button}
           >
