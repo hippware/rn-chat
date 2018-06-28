@@ -4,10 +4,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.0.2 - 2018 June 27
+
+* HOTFIX: nav for bot create and view
+
+# 3.0.1 - 2018 June 27
+
+* HOTFIX: prevent infinite spinner on initial login
+
+# 3.0.0 - 2018 June 27
+
 * Cleanup (PR #2462)
 * [dev] codepush - ability to revert to "default" bundle on Staging (#2337)
 
-** Redesign **
+New redesign
 
 * Redesign part 1 (PR #2474) / HS Redesign - Map focused HS. (#2464)
   * Map fine tuning (#2487)
