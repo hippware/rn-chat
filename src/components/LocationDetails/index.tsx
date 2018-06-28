@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, Image} from 'react-native'
+import {View, FlatList, Text, Image, TouchableOpacity, Clipboard, StyleSheet} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
@@ -25,11 +25,6 @@ type Props = {
   analytics?: any
 }
 
-// const Title = inject('wocky')(({wocky, botId, server, scale}) => {
-//   const bot: IBot = wocky.getBot({id: botId, server})
-//   return <Header bot={bot} scale={scale} />
-// })
-
 // const Right = inject('wocky')(({wocky, botId, server}) => {
 //   const bot = wocky.getBot({id: botId, server})
 //   return <ShareButton bot={bot} />
@@ -38,12 +33,6 @@ type Props = {
 @inject('wocky', 'analytics')
 @observer
 export default class LocationDetails extends React.Component<Props> {
-  // static renderTitle = props => <Title {...props} />
-  // static rightButton = props => <Right {...props} />
-
-  // TODO Change to real header text here
-  static renderTitle = props => <Text>BOT TITLE</Text>
-
   @observable bot?: IBot
   @observable owner?: IProfile
   @observable numToRender: number = 8
@@ -64,9 +53,9 @@ export default class LocationDetails extends React.Component<Props> {
 
   componentDidMount() {
     this.loadBot()
-    if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
-      Actions.visitors({item: this.props.botId})
-    }
+    // if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
+    //   Actions.visitors({item: this.props.botId})
+    // }
   }
 
   componentWillUnmount() {
@@ -156,63 +145,76 @@ export default class LocationDetails extends React.Component<Props> {
   }
 }
 
-// const Header = inject('notificationStore')(
-//   observer(({bot, scale, notificationStore}) => {
-//     const map = scale === 0
-//     if (!bot || !isAlive(bot)) {
-//       return null
-//     }
-//     return (
-//       <TouchableOpacity
-//         onLongPress={() => {
-//           Clipboard.setString(bot.address)
-//           notificationStore.flash('Address copied to clipboard 👍')
-//         }}
-//         // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
-//         onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
-//       >
-//         <RText
-//           numberOfLines={map ? 1 : 2}
-//           // must wait for solution to https://github.com/facebook/react-native/issues/14981
-//           // adjustsFontSizeToFit
-//           minimumFontScale={0.8}
-//           size={18}
-//           color={colors.DARK_PURPLE}
-//           style={{
-//             textAlign: 'center',
-//           }}
-//         >
-//           {bot.error ? 'Bot Unavailable' : bot.title}
-//         </RText>
-//         {map && (
-//           <RText
-//             minimumFontScale={0.6}
-//             numberOfLines={1}
-//             weight="Light"
-//             size={14}
-//             color={colors.DARK_PURPLE}
-//             style={{textAlign: 'center'}}
-//           >
-//             {bot.address}
-//           </RText>
-//         )}
-//       </TouchableOpacity>
-//     )
-//   })
-// )
+export const Title = inject('wocky')(({wocky, botId, server, scale}: Props) => {
+  // console.log('& title', botId)
+  const bot: IBot = wocky.getBot({id: botId, server})
+  return <Header bot={bot} scale={scale} />
+})
 
-// const ShareButton = observer(({bot}) => {
-//   if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
-//   const isOwn = !bot.owner || bot.owner.isOwn
-//   return isOwn || bot.isPublic ? (
-//     <TouchableOpacity
-//       onPress={() => Actions.botShareSelectFriends({botId: bot.id})}
-//       style={{marginRight: 20 * k}}
-//     >
-//       <Image source={require('../../../images/shareIcon.png')} />
-//     </TouchableOpacity>
-//   ) : null
-// })
+const backButtonImage = require('../../../images/iconBackGrayNew.png')
+// const buttonColor = settings.isStaging ? STAGING_COLOR : 'rgb(117,117,117)'
+
+const Header = inject('notificationStore')(
+  observer(({bot, scale, notificationStore}) => {
+    const map = scale === 0
+    if (!bot || !isAlive(bot)) {
+      return null
+    }
+    return (
+      <View style={styles.title}>
+        <Image source={backButtonImage} />
+        <TouchableOpacity
+          onLongPress={() => {
+            Clipboard.setString(bot.address)
+            notificationStore.flash('Address copied to clipboard 👍')
+          }}
+          // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
+          onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
+        >
+          <RText
+            numberOfLines={map ? 1 : 2}
+            // must wait for solution to https://github.com/facebook/react-native/issues/14981
+            // adjustsFontSizeToFit
+            minimumFontScale={0.8}
+            size={18}
+            color={colors.DARK_PURPLE}
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            {bot.error ? 'Bot Unavailable' : bot.title}
+          </RText>
+          {map && (
+            <RText
+              minimumFontScale={0.6}
+              numberOfLines={1}
+              weight="Light"
+              size={14}
+              color={colors.DARK_PURPLE}
+              style={{textAlign: 'center'}}
+            >
+              {bot.address}
+            </RText>
+          )}
+        </TouchableOpacity>
+        <ShareButton />
+      </View>
+    )
+  })
+)
+
+const ShareButton = observer(({bot}) => {
+  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
+  const isOwn = !bot.owner || bot.owner.isOwn
+  return isOwn || bot.isPublic ? (
+    <TouchableOpacity
+      onPress={() => Actions.botShareSelectFriends({botId: bot.id})}
+      style={{marginRight: 20 * k}}
+    >
+      <Image source={require('../../../images/shareIcon.png')} />
+    </TouchableOpacity>
+  ) : null
+})
 
 const BotUnavailable = () => (
   <BottomPopup onClose={Actions.pop}>
@@ -239,9 +241,17 @@ const Loader = () => (
   </View>
 )
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: colors.LIGHT_GREY,
-//   },
-// })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.LIGHT_GREY,
+  },
+  title: {
+    height: 64,
+    flex: 1,
+    elevation: 1,
+    paddingTop: 20,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+})

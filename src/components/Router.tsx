@@ -25,7 +25,7 @@ import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 import BotCompose from './BotCompose'
 import BotCreate from './map/BotCreate'
-import LocationDetails from './LocationDetails'
+import LocationDetails, {Title} from './LocationDetails'
 import BotsScreen from './BotsScreen'
 // import ExploreNearBy from './map/ExploreNearBy'
 import TestRegister from './TestRegister'
@@ -201,7 +201,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
           </Lightbox>
           <Scene key="bottomMenu" component={BottomMenu} />
-          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} draggable />
+          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} draggable header={Title} />
         </Stack>
       </Router>
     )

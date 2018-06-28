@@ -1,19 +1,19 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {
   addNavigationHelpers,
   createNavigationContainer,
   createNavigator,
   TabRouter,
 } from 'react-navigation'
-import {View, Animated, StyleSheet, Text} from 'react-native'
+import {View, Animated, StyleSheet} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {height} from './Global'
 
 type Props = {
-  base: any // main component
+  base: ReactElement<any> // main element
   show: boolean
-  header: any
-  popup: any // the React element that slides up from the bottom of the screen
+  header?: ReactElement<any> // element that appears at the top of the screen when popup is dragged up
+  popup: ReactElement<any> // element that slides up from the bottom of the screen
   splitHeight: number
   draggable: boolean
 }
@@ -58,11 +58,11 @@ class AnimatedScreen extends React.Component<Props, State> {
     const theMargin = height - splitHeight - 30
     return (
       <View style={{flex: 1}} onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}>
-        {show && (
-          <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
-            <Text style={{fontSize: 20}}>{header}</Text>
-          </Animated.View>
-        )}
+        {show &&
+          header && (
+            // <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
+            <Animated.View style={[styles.header, {opacity: 1}]}>{header}</Animated.View>
+          )}
         <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
           {base}
         </Animated.View>
@@ -108,8 +108,7 @@ const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
       // Figure out what to render based on the navigation state and the router:
       const Component = routeConfigs[routes[0].routeName].screen
       const Popup = routeConfigs[routeState.routeName].screen
-
-      // const Popup = routeConfigs[routes[1].routeName].screen
+      const Header = routeState.params && routeState.params.header
 
       return (
         <AnimatedScreen
@@ -125,17 +124,15 @@ const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
             />
           }
           show={index !== 0}
-          header={
-            routeConfigs[routeState.routeName].navigationOptions({navigation, ...props}).headerTitle
-          }
+          header={Header && <Header {...routeState.params} />}
           popup={
             <Popup
               navigation={addNavigationHelpers({
                 dispatch,
-                // state: routes[1],
                 state: routeState,
                 addListener: Actions.addListener,
               })}
+              {...routeState.params}
             />
           }
         />
@@ -154,15 +151,12 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
   },
-  todoHeader: {
+  header: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     zIndex: 1000,
     backgroundColor: 'white',
-    height: 75,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 })
