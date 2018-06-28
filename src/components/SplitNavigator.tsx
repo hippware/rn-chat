@@ -12,6 +12,7 @@ import {height} from './Global'
 type Props = {
   base: any // main component
   show: boolean
+  header: any
   popup: any // the React element that slides up from the bottom of the screen
   splitHeight: number
   draggable: boolean
@@ -43,7 +44,7 @@ class AnimatedScreen extends React.Component<Props, State> {
   }
 
   render() {
-    const {base, popup, show, splitHeight, draggable} = this.props
+    const {base, popup, show, header, splitHeight, draggable} = this.props
     const {bottom, scrollY} = this.state
     const scrollTop = bottom.interpolate({
       inputRange: [-splitHeight, 0],
@@ -59,7 +60,7 @@ class AnimatedScreen extends React.Component<Props, State> {
       <View style={{flex: 1}} onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}>
         {show && (
           <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
-            <Text style={{fontSize: 20}}>TODO: Header Placeholder</Text>
+            <Text style={{fontSize: 20}}>{header}</Text>
           </Animated.View>
         )}
         <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
@@ -99,7 +100,7 @@ const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
   const router = TabRouter(routeConfigs, tabsConfig)
 
   const navigator = createNavigator(router, routeConfigs, tabsConfig, 'react-navigation/STACK')(
-    ({navigation}) => {
+    ({navigation, ...props}) => {
       const {state, dispatch} = navigation
       const {routes, index} = state
       const routeState = routes[index > 0 ? index : 1]
@@ -107,6 +108,7 @@ const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
       // Figure out what to render based on the navigation state and the router:
       const Component = routeConfigs[routes[0].routeName].screen
       const Popup = routeConfigs[routeState.routeName].screen
+
       // const Popup = routeConfigs[routes[1].routeName].screen
 
       return (
@@ -123,6 +125,9 @@ const BottomPopupNavigator = (routeConfigs, tabsConfig: any = {}) => {
             />
           }
           show={index !== 0}
+          header={
+            routeConfigs[routeState.routeName].navigationOptions({navigation, ...props}).headerTitle
+          }
           popup={
             <Popup
               navigation={addNavigationHelpers({
