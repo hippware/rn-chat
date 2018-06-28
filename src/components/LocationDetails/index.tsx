@@ -41,6 +41,9 @@ export default class LocationDetails extends React.Component<Props> {
   // static renderTitle = props => <Title {...props} />
   // static rightButton = props => <Right {...props} />
 
+  // TODO Change to real header text here
+  static renderTitle = props => <Text>BOT TITLE</Text>
+
   @observable bot?: IBot
   @observable owner?: IProfile
   @observable numToRender: number = 8
