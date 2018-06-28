@@ -1,5 +1,6 @@
 import {ILocationSnapshot} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
+import {IBot} from '../model/Bot'
 
 export interface IPagingList {
   list: any[]
@@ -88,4 +89,10 @@ export interface IWockyTransport {
   loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>
   loadBotPosts(id: string, lastId?: string): Promise<IPagingList>
   loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
+  loadLocalBots(props: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<[IBot]>
 }
