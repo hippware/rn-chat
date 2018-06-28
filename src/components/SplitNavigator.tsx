@@ -57,9 +57,11 @@ class AnimatedScreen extends React.Component<Props, State> {
     const theMargin = height - splitHeight - 30
     return (
       <View style={{flex: 1}} onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}>
-        <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
-          <Text style={{fontSize: 20}}>TODO: Header Placeholder</Text>
-        </Animated.View>
+        {show && (
+          <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
+            <Text style={{fontSize: 20}}>TODO: Header Placeholder</Text>
+          </Animated.View>
+        )}
         <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
           {base}
         </Animated.View>
