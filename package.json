@@ -17,7 +17,7 @@
     "codepush": "bash ./scripts/codepush.sh",
     "version:bump": "babel-node ./scripts/version-increment.js",
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
-    "detox": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
     "precommit": "pretty-quick --staged"
   },
   "jest": {
