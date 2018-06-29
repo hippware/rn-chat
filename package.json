@@ -23,7 +23,10 @@
   "jest": {
     "preset": "react-native",
     "setupFiles": [
-      "./__tests__/utils/testSetup.js"
+      "./__tests__/utils/testSetup.js",
+      "./node_modules/appcenter/test/AppCenterMock.js",
+      "./node_modules/appcenter-analytics/test/AppCenterAnalyticsMock.js",
+      "./node_modules/appcenter-crashes/test/AppCenterCrashesMock.js"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
@@ -75,9 +78,9 @@
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",
     "apollo-link": "^1.2.1",
-    "appcenter": "^1.5.1",
-    "appcenter-analytics": "^1.5.1",
-    "appcenter-crashes": "^1.5.1",
+    "appcenter": "^1.6.0",
+    "appcenter-analytics": "^1.6.0",
+    "appcenter-crashes": "^1.6.0",
     "apsl-react-native-button": "^3.1.0",
     "assert": "^1.3.0",
     "autobind-decorator": "^1.3.4",
@@ -95,7 +98,7 @@
     "phoneformat.js": "github:hippware/phoneformat.js",
     "prop-types": "^15.6.0",
     "react": "16.3.1",
-    "react-native": "^0.55.4",
+    "react-native": "0.55.4",
     "react-native-actionsheet": "^2.2.2",
     "react-native-background-geolocation": "^2.12.0-beta.2",
     "react-native-blur": "^3.2.2",
@@ -103,7 +106,6 @@
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",
     "react-native-code-push": "^5.3.4",
     "react-native-country-picker-modal": "github:hippware/react-native-country-picker-modal",
-    "react-native-cube-transition": "github:hippware/react-native-cube-transition#3c7e5c6",
     "react-native-device-info": "^0.12.1",
     "react-native-firebase": "^4.2.0",
     "react-native-fs": "^2.8.5",

@@ -1,16 +1,19 @@
 PODS:
-  - AppCenter/Analytics (1.6.1):
+  - AppCenter/Analytics (1.7.1):
     - AppCenter/Core
-  - AppCenter/Core (1.6.1)
-  - AppCenter/Crashes (1.6.1):
+  - AppCenter/Core (1.7.1)
+  - AppCenter/Crashes (1.7.1):
     - AppCenter/Core
-  - AppCenterReactNativeShared (1.5.1):
-    - AppCenter/Core (= 1.6.1)
+  - AppCenterReactNativeShared (1.6.0):
+    - AppCenter/Core (= 1.7.1)
   - Base64 (1.1.2)
-  - BugsnagReactNative (2.9.1):
-    - BugsnagReactNative/Core (= 2.9.1)
+  - boost-for-react-native (1.63.0)
+  - BugsnagReactNative (2.9.5):
+    - BugsnagReactNative/Core (= 2.9.5)
     - React
-  - BugsnagReactNative/Core (2.9.1):
+  - BugsnagReactNative/Core (2.9.5):
+    - React
+  - BVLinearGradient (2.4.0):
     - React
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
@@ -21,31 +24,37 @@ PODS:
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - CodePush (5.3.4):
+  - CodePush (5.3.5):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
     - SSZipArchive (~> 2.1)
-  - Firebase/Auth (5.0.1):
+  - DoubleConversion (1.1.5)
+  - Firebase/Auth (5.2.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (= 5.0.0)
-  - Firebase/Core (5.0.1):
+    - FirebaseAuth (= 5.0.1)
+  - Firebase/Core (5.2.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.0.0)
-  - Firebase/CoreOnly (5.0.1):
-    - FirebaseCore (= 5.0.1)
-  - FirebaseAnalytics (5.0.0):
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.2.0):
+    - FirebaseCore (= 5.0.3)
+  - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (5.0.0):
+  - FirebaseAuth (5.0.1):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (5.0.1):
+  - FirebaseCore (5.0.3):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseInstanceID (3.0.0):
+  - FirebaseInstanceID (3.1.0):
     - FirebaseCore (~> 5.0)
+  - Folly (2016.09.26.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - glog
+  - glog (0.3.4)
   - Google-Maps-iOS-Utils (2.1.0):
     - Google-Maps-iOS-Utils/Clustering (= 2.1.0)
     - Google-Maps-iOS-Utils/Geometry (= 2.1.0)
@@ -76,7 +85,7 @@ PODS:
   - KissXML (5.1.4):
     - KissXML/Core (= 5.1.4)
   - KissXML/Core (5.1.4)
-  - Mixpanel (3.3.2)
+  - Mixpanel (3.3.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -98,7 +107,24 @@ PODS:
     - React
   - React/Core (0.55.4):
     - yoga (= 0.55.4.React)
+  - React/CxxBridge (0.55.4):
+    - Folly (= 2016.09.26.00)
+    - React/Core
+    - React/cxxreact
+  - React/cxxreact (0.55.4):
+    - boost-for-react-native (= 1.63.0)
+    - Folly (= 2016.09.26.00)
+    - React/jschelpers
+    - React/jsinspector
+  - React/DevSupport (0.55.4):
+    - React/Core
+    - React/RCTWebSocket
   - React/fishhook (0.55.4)
+  - React/jschelpers (0.55.4):
+    - Folly (= 2016.09.26.00)
+    - React/PrivateDatabase
+  - React/jsinspector (0.55.4)
+  - React/PrivateDatabase (0.55.4)
   - React/RCTActionSheet (0.55.4):
     - React/Core
   - React/RCTAnimation (0.55.4):
@@ -114,6 +140,8 @@ PODS:
     - React/Core
   - React/RCTNetwork (0.55.4):
     - React/Core
+  - React/RCTPushNotification (0.55.4):
+    - React/Core
   - React/RCTSettings (0.55.4):
     - React/Core
   - React/RCTText (0.55.4):
@@ -126,19 +154,23 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.4.1):
+  - RNBackgroundFetch (2.4.3):
     - React
-  - RNBackgroundGeolocation (2.12.0-beta.2):
+  - RNBackgroundGeolocation (2.12.2):
     - CocoaLumberjack (~> 3.0)
+    - React
+  - RNDeviceInfo (0.9.3):
     - React
   - RNFirebase (4.2.0):
     - Firebase/Core
     - React
+  - RNFS (2.10.14):
+    - React
   - RNXMPP (1.1.2):
     - React
     - XMPPFramework
-  - RSKImageCropper (2.0.1)
-  - SSZipArchive (2.1.2)
+  - RSKImageCropper (2.1.0)
+  - SSZipArchive (2.1.3)
   - XMPPFramework (3.7.6):
     - XMPPFramework/All (= 3.7.6)
   - XMPPFramework/All (3.7.6):
@@ -303,10 +335,11 @@ PODS:
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
-  - AppCenter/Analytics (~> 1.6.1)
-  - AppCenter/Crashes (~> 1.6.1)
-  - AppCenterReactNativeShared (~> 1.5.1)
+  - AppCenter/Analytics (~> 1.7.1)
+  - AppCenter/Crashes (~> 1.7.1)
+  - AppCenterReactNativeShared (~> 1.6.0)
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - Firebase/Auth
   - Firebase/Core
@@ -318,12 +351,15 @@ DEPENDENCIES:
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/Core (from `../node_modules/react-native`)
+  - React/CxxBridge (from `../node_modules/react-native`)
+  - React/DevSupport (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTGeolocation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTLinkingIOS (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTPushNotification (from `../node_modules/react-native`)
   - React/RCTSettings (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
@@ -331,7 +367,9 @@ DEPENDENCIES:
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - RSKImageCropper
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.6`)
@@ -342,13 +380,17 @@ SPEC REPOS:
     - AppCenter
     - AppCenterReactNativeShared
     - Base64
+    - boost-for-react-native
     - CocoaAsyncSocket
     - CocoaLumberjack
+    - DoubleConversion
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseInstanceID
+    - Folly
+    - glog
     - Google-Maps-iOS-Utils
     - GoogleMaps
     - GoogleToolboxForMac
@@ -363,6 +405,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BugsnagReactNative:
     :path: "../node_modules/bugsnag-react-native/"
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   CodePush:
     :path: "../node_modules/react-native-code-push"
   KissXML:
@@ -384,8 +428,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
     :path: "../node_modules/react-native-background-geolocation"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFirebase:
     :path: "../node_modules/react-native-firebase/ios"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNXMPP:
     :path: "../node_modules/react-native-xmpp"
   XMPPFramework:
@@ -403,25 +451,30 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
-  AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
-  AppCenterReactNativeShared: 5b40dc5bbaf891697d1982e0ae0e9b1120dd4274
+  AppCenter: 53349f138e596f2514f7559bb50a7e6e55219f17
+  AppCenterReactNativeShared: 9174f9a976f5d4b1949dccfac7f3a38399478c87
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
+  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
+  BVLinearGradient: 4b3f3bdf1ac1a52a5ef5e65c9585d793a7c3f825
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
-  Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
-  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
-  FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
-  FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
-  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
+  DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
+  Firebase: 25ed0412036d7d008568d1fb4d2e9d81ea8a0a2c
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
+  FirebaseCore: a3c87242451633fff8490183898075ce77d168d2
+  FirebaseInstanceID: 05d779cbb97bd5bd5c51a38a903fc9cfe1b2454a
+  Folly: 211775e49d8da0ca658aebc8eab89d642935755c
+  glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   JWT: 6e7ec473b6febcb7498affc84f0e75d393914411
   KissXML: f0cb6444b28b650f569a5d5deea964cc6f81ec9e
-  Mixpanel: be4de218d0ffaaae59b498078b2ecf2db1f8072c
+  Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: aa2040dbb6f317b95314968021bd2888816e03d5
@@ -432,13 +485,15 @@ SPEC CHECKSUMS:
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
   RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
+  RNDeviceInfo: b375b3374cda3203d6d48cea8c07e46ba1169e26
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
+  RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
-  RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
-  SSZipArchive: d4009d2ce5520a421f231fd97028cc0e2667eed8
+  RSKImageCropper: 0d0c6d8525a2381f03fde32a47c6703817a2feed
+  SSZipArchive: 51a800ebb77f95a8329b6ced1faaff394b47f509
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: 094983dd749bb5ffdc5f509a6eefe0ef862708b2
+PODFILE CHECKSUM: 43d88732255408fa8ec4b4e2780d69e594818495
 
 COCOAPODS: 1.5.3

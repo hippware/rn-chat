@@ -39,6 +39,7 @@
     // we should probably re-enable this at some point
     "jsx-no-lambda": false,
     "no-empty-interface": false,
-    "one-variable-per-declaration": false
+    "one-variable-per-declaration": false,
+    "member-ordering": false
   }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "0620"
-   version = "1.7">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "NO"
       buildImplicitDependencies = "YES">
@@ -31,7 +31,21 @@
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "tinyrobot.app"
                BlueprintName = "tinyrobot"
-               ReferencedContainer = "container:TinyRobot.xcodeproj">
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "tinyrobotTests.xctest"
+               BlueprintName = "tinyrobotTests"
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,15 +60,11 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "87A381751E3BB88E00E68472"
-               BuildableName = "tinyrobotTestingUITests.xctest"
-               BlueprintName = "tinyrobotTestingUITests"
-               ReferencedContainer = "container:TinyRobot.xcodeproj">
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "tinyrobotTests.xctest"
+               BlueprintName = "tinyrobotTests"
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
             </BuildableReference>
-            <LocationScenarioReference
-               identifier = "London, England"
-               referenceType = "1">
-            </LocationScenarioReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
@@ -63,7 +73,7 @@
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "tinyrobot.app"
             BlueprintName = "tinyrobot"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -86,7 +96,7 @@
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "tinyrobot.app"
             BlueprintName = "tinyrobot"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -112,7 +122,7 @@
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "tinyrobot.app"
             BlueprintName = "tinyrobot"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
