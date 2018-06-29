@@ -15,7 +15,7 @@ export default class BottomPopup extends React.Component<Props> {
           <TouchableOpacity style={styles.close} onPress={this.props.onClose}>
             <Image source={require('../../images/popupClose.png')} />
           </TouchableOpacity>
-          {this.props.children}
+          <View style={{backgroundColor: 'white'}}>{this.props.children}</View>
         </View>
       </View>
     )
