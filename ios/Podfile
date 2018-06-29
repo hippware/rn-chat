@@ -53,13 +53,9 @@ target 'tinyrobot' do
 
 end
 
-#target 'tinyrobotStaging' do
-#    testing_pods
-#end
-
-#target 'tinyrobotTesting' do
-#    testing_pods
-#end
+target 'tinyrobotStaging' do
+    testing_pods
+end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

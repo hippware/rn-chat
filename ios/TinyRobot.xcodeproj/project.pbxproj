@@ -14,6 +14,7 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* tinyrobotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tinyrobotTests.m */; };
 		0792A2D62FD9401C976B99EC /* libAppCenterReactNativeAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9412533CE8FD46349179B9D4 /* libAppCenterReactNativeAnalytics.a */; };
+		090CD41B58918D0575B60DE8 /* libPods-tinyrobotStaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C10843CA3950CA635082CA7 /* libPods-tinyrobotStaging.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -456,11 +457,14 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tinyrobot/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tinyrobot/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		1FB0332FC6C534BDB08928B6 /* Pods-tinyrobotStaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobotStaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging.release.xcconfig"; sourceTree = "<group>"; };
+		2C10843CA3950CA635082CA7 /* libPods-tinyrobotStaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobotStaging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* tinyrobot-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tinyrobot-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* tinyrobot-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tinyrobot-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ECBFBCC4C5C4B819CF4ADA8 /* libLRDRCTNativeEnv.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTNativeEnv.a; sourceTree = "<group>"; };
 		4CC1C22C005F453995429491 /* LRDRCTNativeEnv.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTNativeEnv.xcodeproj; path = "../node_modules/react-native-native-env/ios/LRDRCTNativeEnv.xcodeproj"; sourceTree = "<group>"; };
+		5949BA95BE6B30D8B2DC8F6F /* Pods-tinyrobotStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobotStaging.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		662EAF33842E4332A7AC6BF0 /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNativeAnalytics.xcodeproj; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -587,6 +591,7 @@
 				87C4148F20E669F90044AF0A /* libAppCenterReactNative.a in Frameworks */,
 				87C4149020E669F90044AF0A /* libAppCenterReactNativeCrashes.a in Frameworks */,
 				87C4149120E669F90044AF0A /* libAppCenterReactNativeAnalytics.a in Frameworks */,
+				090CD41B58918D0575B60DE8 /* libPods-tinyrobotStaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +719,7 @@
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */,
+				2C10843CA3950CA635082CA7 /* libPods-tinyrobotStaging.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -911,6 +917,8 @@
 			children = (
 				D566D496818469DD8AB46D55 /* Pods-tinyrobot.debug.xcconfig */,
 				FE6B73DD6B4FDA33A05100F1 /* Pods-tinyrobot.release.xcconfig */,
+				5949BA95BE6B30D8B2DC8F6F /* Pods-tinyrobotStaging.debug.xcconfig */,
+				1FB0332FC6C534BDB08928B6 /* Pods-tinyrobotStaging.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1663,7 +1671,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-tinyrobot-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-tinyrobotStaging-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1690,7 +1698,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
@@ -1761,7 +1769,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E6EE2FD58E8E2BE37D447290 /* [CP] Check Pods Manifest.lock */ = {
@@ -2214,7 +2222,7 @@
 		};
 		87C414AD20E669F90044AF0A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D566D496818469DD8AB46D55 /* Pods-tinyrobot.debug.xcconfig */;
+			baseConfigurationReference = 5949BA95BE6B30D8B2DC8F6F /* Pods-tinyrobotStaging.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2243,7 +2251,7 @@
 		};
 		87C414AE20E669F90044AF0A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE6B73DD6B4FDA33A05100F1 /* Pods-tinyrobot.release.xcconfig */;
+			baseConfigurationReference = 1FB0332FC6C534BDB08928B6 /* Pods-tinyrobotStaging.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
