@@ -1,34 +1,27 @@
 import React from 'react'
-import {View, FlatList, Text, Image, TouchableOpacity, Clipboard, StyleSheet} from 'react-native'
+import {View, FlatList, Text, Image} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-import {k, width} from '../Global'
+import {k} from '../Global'
 import {colors} from '../../constants'
 import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
-import AddBotPost from './AddBotPost'
+// import AddBotPost from './AddBotPost'
 import LocationDetailsHeader from './LocationDetailsHeader'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
 
-const SEPARATOR_HEIGHT = 20 * k
-
 type Props = {
   botId: string
   server?: string
   isNew: boolean
-  scale: number
   params?: any
   wocky?: IWocky
   analytics?: any
+  scrollable: boolean
 }
-
-// const Right = inject('wocky')(({wocky, botId, server}) => {
-//   const bot = wocky.getBot({id: botId, server})
-//   return <ShareButton bot={bot} />
-// })
 
 @inject('wocky', 'analytics')
 @observer
@@ -76,9 +69,7 @@ export default class LocationDetails extends React.Component<Props> {
     }, 7000)
   }
 
-  _headerComponent = () => (
-    <LocationDetailsHeader bot={this.bot!} scale={this.props.scale} {...this.props} />
-  )
+  _headerComponent = () => <LocationDetailsHeader bot={this.bot!} {...this.props} />
 
   scrollToEnd = () => {
     when(
@@ -90,16 +81,23 @@ export default class LocationDetails extends React.Component<Props> {
     )
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (props.scale !== this.props.scale && this.list) {
-      this.list.scrollToOffset({x: 0, y: 0, animated: false})
-    }
-  }
+  // componentWillReceiveProps(props: Props) {
+  //   if (props.scale !== this.props.scale && this.list) {
+  //     this.list.scrollToOffset({x: 0, y: 0, animated: false})
+  //   }
+  // }
 
   renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
 
   renderSeparator = () => (
-    <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />
+    <View
+      style={{
+        height: 2,
+        marginHorizontal: 25 * k,
+        marginVertical: 20 * k,
+        backgroundColor: 'rgb(222,222,222)',
+      }}
+    />
   )
 
   render() {
@@ -118,103 +116,33 @@ export default class LocationDetails extends React.Component<Props> {
       return <BotUnavailable />
     }
     return (
-      <BottomPopup onClose={Actions.pop}>
-        <FlatList
-          style={{flex: 1}}
-          data={this.bot && this.props.scale > 0 ? this.bot.posts.list.slice() : []}
-          ref={r => (this.list = r)}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: this.post ? this.post.imgContainerHeight : 0,
-          }}
-          ListFooterComponent={this._footerComponent}
-          initialNumToRender={this.numToRender}
-          ListHeaderComponent={this._headerComponent}
-          ItemSeparatorComponent={this.renderSeparator}
-          renderItem={this.renderItem}
-          keyExtractor={item => item.id}
-          // must disable scroll because this is wrapped by ScrollView in BottomPopup
-          scrollEnabled={false}
-        />
-        {this.props.scale > 0 && (
-          <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={() => this.scrollToEnd()} />
-        )}
-        {/* <View style={{flex: 1, backgroundColor: 'green', height: 1000}} /> */}
-      </BottomPopup>
+      <FlatList
+        style={{flex: 1}}
+        data={this.bot ? this.bot.posts.list.slice() : []}
+        // data={this.bot ? [...this.bot.posts.list.slice(), ...this.bot.posts.list.slice()] : []}
+        ref={r => (this.list = r)}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: this.post ? this.post.imgContainerHeight : 0,
+        }}
+        ListFooterComponent={this._footerComponent}
+        initialNumToRender={this.numToRender}
+        ListHeaderComponent={this._headerComponent}
+        ItemSeparatorComponent={this.renderSeparator}
+        renderItem={this.renderItem}
+        keyExtractor={item => item.id}
+        // keyExtractor={(item, index) => `${item.id} ${index}`}
+        scrollEnabled={this.props.scrollable}
+      />
     )
   }
 }
 
-export const Title = inject('wocky')(({wocky, botId, server, scale}: Props) => {
-  // console.log('& title', botId)
-  const bot: IBot = wocky.getBot({id: botId, server})
-  return <Header bot={bot} scale={scale} />
-})
-
-const backButtonImage = require('../../../images/iconBackGrayNew.png')
-// const buttonColor = settings.isStaging ? STAGING_COLOR : 'rgb(117,117,117)'
-
-const Header = inject('notificationStore')(
-  observer(({bot, scale, notificationStore}) => {
-    const map = scale === 0
-    if (!bot || !isAlive(bot)) {
-      return null
-    }
-    return (
-      <View style={styles.title}>
-        <Image source={backButtonImage} />
-        <TouchableOpacity
-          onLongPress={() => {
-            Clipboard.setString(bot.address)
-            notificationStore.flash('Address copied to clipboard 👍')
-          }}
-          // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
-          onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
-        >
-          <RText
-            numberOfLines={map ? 1 : 2}
-            // must wait for solution to https://github.com/facebook/react-native/issues/14981
-            // adjustsFontSizeToFit
-            minimumFontScale={0.8}
-            size={18}
-            color={colors.DARK_PURPLE}
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            {bot.error ? 'Bot Unavailable' : bot.title}
-          </RText>
-          {map && (
-            <RText
-              minimumFontScale={0.6}
-              numberOfLines={1}
-              weight="Light"
-              size={14}
-              color={colors.DARK_PURPLE}
-              style={{textAlign: 'center'}}
-            >
-              {bot.address}
-            </RText>
-          )}
-        </TouchableOpacity>
-        <ShareButton />
-      </View>
-    )
-  })
+export const LocationDetailsBottomPopup = (props: Props) => (
+  <BottomPopup onClose={Actions.pop}>
+    <LocationDetails {...props} scrollable={false} />
+  </BottomPopup>
 )
-
-const ShareButton = observer(({bot}) => {
-  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
-  const isOwn = !bot.owner || bot.owner.isOwn
-  return isOwn || bot.isPublic ? (
-    <TouchableOpacity
-      onPress={() => Actions.botShareSelectFriends({botId: bot.id})}
-      style={{marginRight: 20 * k}}
-    >
-      <Image source={require('../../../images/shareIcon.png')} />
-    </TouchableOpacity>
-  ) : null
-})
 
 const BotUnavailable = () => (
   <BottomPopup onClose={Actions.pop}>
@@ -240,18 +168,3 @@ const Loader = () => (
     <Spinner />
   </View>
 )
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.LIGHT_GREY,
-  },
-  title: {
-    height: 64,
-    flex: 1,
-    elevation: 1,
-    paddingTop: 20,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-})

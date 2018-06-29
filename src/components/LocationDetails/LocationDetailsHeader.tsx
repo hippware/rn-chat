@@ -15,7 +15,6 @@ type Props = {
   locationStore?: ILocationStore
   notificationStore?: any // TODO proper type
   analytics?: any // TODO proper type
-  scale: number
 }
 
 type State = {

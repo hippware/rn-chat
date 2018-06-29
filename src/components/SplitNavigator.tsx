@@ -57,33 +57,39 @@ class AnimatedScreen extends React.Component<Props, State> {
     const openCloseTransform = {transform: [{translateY: bottom}]}
     const theMargin = height - splitHeight - 30
     return (
-      <View style={{flex: 1}} onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}>
+      <View style={{flex: 1}}>
         {show &&
           header && (
-            // <Animated.View style={[styles.todoHeader, {opacity: headerOpacity}]}>
-            <Animated.View style={[styles.header, {opacity: 1}]}>{header}</Animated.View>
+            <Animated.View style={[styles.header, {opacity: headerOpacity}]}>
+              {header}
+            </Animated.View>
           )}
-        <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
-          {base}
-        </Animated.View>
-        {show && (
-          <Animated.ScrollView
-            style={[
-              styles.absolute,
-              {top: height, paddingTop: theMargin, height},
-              {transform: [{translateY: scrollTop}]},
-            ]}
-            scrollEventThrottle={16}
-            onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.state.scrollY}}}])}
-            contentContainerStyle={{paddingBottom: theMargin}}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={!!draggable}
-            bounces={!!draggable}
-            decelerationRate="fast"
-          >
-            {popup}
-          </Animated.ScrollView>
-        )}
+        <View
+          style={{flex: 1}}
+          onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
+        >
+          <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
+            {base}
+          </Animated.View>
+          {show && (
+            <Animated.ScrollView
+              style={[
+                styles.absolute,
+                {top: height, paddingTop: theMargin, height},
+                {transform: [{translateY: scrollTop}]},
+              ]}
+              scrollEventThrottle={16}
+              onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.state.scrollY}}}])}
+              contentContainerStyle={{paddingBottom: theMargin}}
+              showsVerticalScrollIndicator={false}
+              scrollEnabled={!!draggable}
+              bounces={!!draggable}
+              decelerationRate="fast"
+            >
+              {popup}
+            </Animated.ScrollView>
+          )}
+        </View>
       </View>
     )
   }
