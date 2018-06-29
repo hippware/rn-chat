@@ -49,6 +49,7 @@ export default class MapHome extends React.Component<IProps> {
       )
     })
   }
+
   render() {
     const {locationStore, homeStore} = this.props
     const {location} = locationStore
@@ -61,14 +62,14 @@ export default class MapHome extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {mapType, opacity, onRegionChange, setMapRef} = homeStore
+    const {mapType, opacity, onRegionChange, setMapRef, toggleFullscreen, selectYou} = homeStore
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
         <MapView
           provider={'google'}
           ref={setMapRef}
-          onPress={homeStore.toggleFullscreen}
+          onPress={toggleFullscreen}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           style={styles.map}
           customMapStyle={mapStyle}
@@ -86,16 +87,22 @@ export default class MapHome extends React.Component<IProps> {
             image={you}
             zIndex={1000}
             coordinate={{latitude, longitude}}
-            onPress={homeStore.selectYou}
+            onPress={selectYou}
             stopPropagation
           />
         </MapView>
         <ActiveGeoBotBanner />
-        {Actions.currentScene !== 'bottomMenu' && <RightPanel />}
-        {Actions.currentScene !== 'bottomMenu' && <HorizontalCardList />}
+        {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
+        {!this.showingBottomPopup && <RightPanel />}
+        {!this.showingBottomPopup && <HorizontalCardList />}
         <Connectivity />
       </View>
     )
+  }
+
+  @computed
+  get showingBottomPopup() {
+    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
   }
 }
 
