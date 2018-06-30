@@ -1,39 +1,38 @@
+
 [![Build Status](https://travis-ci.org/ZipArchive/ZipArchive.svg?branch=master)](https://travis-ci.org/ZipArchive/ZipArchive)
 
 # SSZipArchive
 
 ZipArchive is a simple utility class for zipping and unzipping files on iOS, macOS and tvOS.
 
-* Unzip zip files;
-* Unzip password protected zip files;
-* Unzip AES encrypted zip files;
-* Create zip files;
-* Create password protected zip files;
-* Create AES encrypted zip files;
-* Choose compression level;
-* Append to existing zip files;
-* Zip-up NSData instances. (with a filename)
+- Unzip zip files;
+- Unzip password protected zip files;
+- Unzip AES encrypted zip files;
+- Create zip files;
+- Create password protected zip files;
+- Create AES encrypted zip files;
+- Choose compression level;
+- Append to existing zip files;
+- Zip-up NSData instances. (with a filename)
 
 ## Installation and Setup
 
-_The main release branch is configured to support Objective C and Swift 3+._
+*The main release branch is configured to support Objective C and Swift 3+.*
 
 SSZipArchive works on Xcode 7-9 and above, iOS 8-11 and above.
 
 ### CocoaPods
-
 In your Podfile:  
 `pod 'SSZipArchive'`
 
 ### Carthage
-
 In your Cartfile:  
 `github "ZipArchive/ZipArchive"`
 
 ### Manual
 
-1.  Add the `SSZipArchive` and `minizip` folders to your project.
-2.  Add the `libz` library to your target
+1. Add the `SSZipArchive` and `minizip` folders to your project.
+2. Add the `libz` library to your target
 
 SSZipArchive requires ARC.
 
