@@ -9,6 +9,7 @@ import BotPostOptions from './BotPostOptions'
 import {RText, ProgressiveImage} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {IBotPost, IBot} from 'wocky-client'
+import UserInfoRow from './UserInfoRow'
 
 type Props = {
   item: IBotPost
@@ -21,37 +22,10 @@ const BotPostCard = (props: Props) => {
   if (!isAlive(bot)) {
     return null
   }
-  const timestamp = post.relativeDateAsString
+  // const timestamp = post.relativeDateAsString
   return (
-    <View style={{backgroundColor: 'white'}}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
-          <View style={{paddingLeft: 15 * k, paddingRight: 5 * k, marginTop: -14 * k}}>
-            <Avatar size={40 * k} profile={post.profile!} />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              paddingRight: 8 * k,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile!.id})}>
-              <RText color={colors.COOL_BLUE} weight="Medium" size={15} style={styles.hyperlink}>
-                @{post.profile!.handle}
-              </RText>
-            </TouchableOpacity>
-            <View style={{flexDirection: 'row'}}>
-              <RText size={12} weight="Light" color={colors.DARK_GREY}>
-                {timestamp}
-              </RText>
-              <BotPostOptions bot={bot} item={post} />
-            </View>
-          </View>
-        </View>
-      </View>
+    <View>
+      <UserInfoRow profile={post.profile} style={{paddingHorizontal: 20 * k}} />
       {!!post.content && (
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
           <RText size={14} color={colors.DARK_PURPLE}>

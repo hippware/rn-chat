@@ -12,6 +12,7 @@ import LocationDetailsHeader from './LocationDetailsHeader'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
+import Separator from './Separator'
 
 type Props = {
   botId: string
@@ -89,16 +90,7 @@ export default class LocationDetails extends React.Component<Props> {
 
   renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
 
-  renderSeparator = () => (
-    <View
-      style={{
-        height: 2,
-        marginHorizontal: 25 * k,
-        marginVertical: 20 * k,
-        backgroundColor: 'rgb(222,222,222)',
-      }}
-    />
-  )
+  renderSeparator = () => <Separator />
 
   render() {
     const {bot} = this
