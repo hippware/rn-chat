@@ -1,5 +1,4 @@
-Folly: Facebook Open-source Library
------------------------------------
+## Folly: Facebook Open-source Library
 
 ### What is `folly`?
 
@@ -28,9 +27,8 @@ dependencies, meaning that a given folly module may use any other
 folly components.
 
 All symbols are defined in the top-level namespace `folly`, except of
-course macros. Macro names are ALL_UPPERCASE and should be prefixed
-with `FOLLY_`. Namespace `folly` defines other internal namespaces
-such as `internal` or `detail`. User code should not depend on symbols
+course macros. Macro names are ALL*UPPERCASE and should be prefixed
+with `FOLLY*`. Namespace`folly`defines other internal namespaces such as`internal`or`detail`. User code should not depend on symbols
 in those namespaces.
 
 Folly has an `experimental` directory as well. This designation connotes
@@ -130,6 +128,7 @@ sudo apt-get install \
 The above packages are sufficient for Ubuntu 13.10 and Ubuntu 14.04.
 
 In the folly directory, run
+
 ```
   autoreconf -ivf
   ./configure
@@ -195,7 +194,7 @@ Download and install folly with the parameters listed below:
 
 #### Other Linux distributions
 
-- double-conversion (https://github.com/google/double-conversion)
+* double-conversion (https://github.com/google/double-conversion)
 
   Download and build double-conversion.
   You may need to tell configure where to find it.
@@ -206,28 +205,30 @@ Download and install folly with the parameters listed below:
 
   [folly/] `LD_LIBRARY_PATH=$DOUBLE_CONVERSION_HOME/ make`
 
-- additional platform specific dependencies:
+* additional platform specific dependencies:
 
   Fedora 21 64-bit
-    - gcc
-    - gcc-c++
-    - autoconf
-    - autoconf-archive
-    - automake
-    - boost-devel
-    - libtool
-    - lz4-devel
-    - lzma-devel
-    - snappy-devel
-    - zlib-devel
-    - glog-devel
-    - gflags-devel
-    - scons
-    - double-conversion-devel
-    - openssl-devel
-    - libevent-devel
+
+  * gcc
+  * gcc-c++
+  * autoconf
+  * autoconf-archive
+  * automake
+  * boost-devel
+  * libtool
+  * lz4-devel
+  * lzma-devel
+  * snappy-devel
+  * zlib-devel
+  * glog-devel
+  * gflags-devel
+  * scons
+  * double-conversion-devel
+  * openssl-devel
+  * libevent-devel
 
   Optional
-    - libdwarf-dev
-    - libelf-dev
-    - libunwind8-dev
+
+  * libdwarf-dev
+  * libelf-dev
+  * libunwind8-dev

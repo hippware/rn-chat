@@ -4,13 +4,15 @@
 [![Pod Version](http://img.shields.io/cocoapods/v/JWT.svg?style=flat)](http://cocoadocs.org/docsets/JWT)
 [![Pod Platform](http://img.shields.io/cocoapods/p/JWT.svg?style=flat)](http://cocoadocs.org/docsets/JWT)
 [![Reference Status](https://www.versioneye.com/objective-c/jwt/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/jwt/references)
+
 # JWT
 
 A [JSON Web Token][] implementation in Objective-C.
 
-[JSON Web Token]: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
+[json web token]: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
 
 # What's new in master and bleeding edge.
+
 Nothing here.
 
 # What's new in Version 3.0
@@ -22,6 +24,7 @@ Nothing here.
 * Keys loaded from Pem files.
 
 ## Introduction to Algorithms data holders and chain.
+
 You have algorithm, secret data and unknown jwt token.
 Let's try to decode it.
 
@@ -134,6 +137,7 @@ else {
 
 You have a key in pem file. And you want to use it directly for sign/verify.
 Suppose, that "public_rsa.pem" and "private_rsa.pem" are public and private keys in pem format.
+
 ```objective-c
 // Load keys
 - (NSString *)pemKeyStringFromFileWithName:(NSString *)string inBundle:(NSBundle *)bundle {
@@ -190,11 +194,15 @@ Suppose, that "public_rsa.pem" and "private_rsa.pem" are public and private keys
 ```
 
 # Experiments in Version 2.0
+
 ## Whitelists possible algorithms.
+
 When you need to decode jwt by several algorithms you could specify their names in whitelist.
 Later this feature possible will migrate to options.
 For example, someone returns result or error.
+
 ### Limitations
+
 Restricted to pair (algorithm or none) due to limitations of unique `secret`.
 
 ```objective-c
@@ -234,7 +242,7 @@ Add the following to your [CocoaPods][] Podfile:
 
     pod "JWT"
 
-[CocoaPods]: http://cocoapods.org
+[cocoapods]: http://cocoapods.org
 
 Install via Cartfile:
 
@@ -243,6 +251,7 @@ Install via Cartfile:
 and `import JWT`
 
 # Documentation
+
 # Usage
 
 ## JWTBuilder
@@ -407,6 +416,7 @@ else {
 ```
 
 #### NSData
+
 You can also encode/decode using a secret that is represented as an NSData object
 
 ```objective-c
@@ -437,6 +447,7 @@ The following algorithms are supported:
 * None
 
 ## RS256 usage.
+
 For example, you have your file with privateKey: `file.p12`.
 And you have a secret passphrase for that file: `secret`.
 
@@ -479,7 +490,6 @@ else {
     // error occurred.
 }
 ```
-
 
 Additional algorithms can be added by implementing the `JWTAlgorithm` protocol.
 

@@ -17,8 +17,6 @@
   "source_files": "*.{h,m}",
   "preserve_paths": "**/*.js",
   "dependencies": {
-    "React": [
-
-    ]
+    "React": []
   }
 }

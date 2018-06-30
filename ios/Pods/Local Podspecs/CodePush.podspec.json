@@ -16,21 +16,11 @@
   "preserve_paths": "*.js",
   "libraries": "z",
   "source_files": "ios/CodePush/*.{h,m}",
-  "public_header_files": [
-    "ios/CodePush/CodePush.h"
-  ],
+  "public_header_files": ["ios/CodePush/CodePush.h"],
   "dependencies": {
-    "React": [
-
-    ],
-    "SSZipArchive": [
-      "~> 2.1"
-    ],
-    "JWT": [
-      "~> 3.0.0-beta.7"
-    ],
-    "Base64": [
-      "~> 1.1"
-    ]
+    "React": [],
+    "SSZipArchive": ["~> 2.1"],
+    "JWT": ["~> 3.0.0-beta.7"],
+    "Base64": ["~> 1.1"]
   }
 }

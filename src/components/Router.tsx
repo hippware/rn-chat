@@ -25,7 +25,8 @@ import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 import BotCompose from './BotCompose'
 import BotCreate from './map/BotCreate'
-import BotDetails from './BotDetails'
+import {LocationDetailsBottomPopup} from './LocationDetails'
+import LocationDetailsNavBar from './LocationDetails/LocationDetailsNavBar'
 import BotsScreen from './BotsScreen'
 // import ExploreNearBy from './map/ExploreNearBy'
 import TestRegister from './TestRegister'
@@ -44,7 +45,7 @@ import BottomMenu from './BottomMenu'
 
 const STAGING_COLOR = 'rgb(28,247,39)'
 
-const dayNavBar = {
+export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
   navBarRightButtonColor: 'rgb(254,92,108)',
   navBarLeftButtonColor: colors.DARK_GREY,
@@ -139,7 +140,7 @@ class TinyRobotRouter extends React.Component<Props> {
     const {store, wocky, firebaseStore} = this.props
 
     return (
-      <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Stack navigator={SplitNavigator} splitHeight={394}>
           <Lightbox>
             <Stack key="rootStack" initial hideNavBar>
@@ -181,7 +182,6 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="camera" component={Camera} clone hideNavBar />
               <Scene key="botEdit" component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key="codePush" component={CodePushScene} title="CodePush" clone back />
-              <Scene key="botDetails" path="bot/:server/:item/:params*" component={BotDetails} scale={0.5} clone back right={() => null} />
               <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" clone back right={() => null} />
               <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" clone left={() => null} />
               <Scene key="subscribers" component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title="Favorites" />
@@ -202,6 +202,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
           </Lightbox>
           <Scene key="bottomMenu" component={BottomMenu} />
+          <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable header={LocationDetailsNavBar} />
         </Stack>
       </Router>
     )

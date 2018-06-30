@@ -9,13 +9,13 @@ import UserInfoRow from './UserInfoRow'
 import {RText} from '../common'
 import {IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
+import Separator from './Separator'
 
 type Props = {
   bot: IBot
   locationStore?: ILocationStore
   notificationStore?: any // TODO proper type
   analytics?: any // TODO proper type
-  scale: number
 }
 
 type State = {
@@ -83,7 +83,13 @@ class BotDetailsHeader extends React.Component<Props, State> {
     const {bot, locationStore} = this.props
     if (!bot || !isAlive(bot)) return null
     return (
-      <View style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white'}}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 20 * k,
+          backgroundColor: 'white',
+        }}
+      >
         <RText size={18} color={colors.DARK_PURPLE}>
           {bot.title}
         </RText>
@@ -98,7 +104,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           isSubscribed={bot.isSubscribed}
           copyAddress={this.copyAddress}
         />
-        <UserInfoRow bot={bot} copyAddress={this.copyAddress} />
+        <UserInfoRow profile={bot.owner} copyAddress={this.copyAddress} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
@@ -112,6 +118,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           resizeMode="contain"
         />
         {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
+        <Separator style={{marginHorizontal: 5}} />
       </View>
     )
   }

@@ -15,20 +15,13 @@
     "ios": "8.0"
   },
   "preserve_paths": "*.js",
-  "libraries": [
-    "z",
-    "c++"
-  ],
-  "frameworks": [
-    "MessageUI",
-    "SystemConfiguration"
-  ],
+  "libraries": ["z", "c++"],
+  "frameworks": ["MessageUI", "SystemConfiguration"],
   "dependencies": {
-    "React": [
-
-    ]
+    "React": []
   },
-  "public_header_files": "cocoa/**/{Bugsnag,BugsnagReactNative,BugsnagMetaData,BugsnagConfiguration,BugsnagBreadcrumb,BugsnagCrashReport,BSG_KSCrashReportWriter}.h",
+  "public_header_files":
+    "cocoa/**/{Bugsnag,BugsnagReactNative,BugsnagMetaData,BugsnagConfiguration,BugsnagBreadcrumb,BugsnagCrashReport,BSG_KSCrashReportWriter}.h",
   "source_files": [
     "cocoa/BugsnagReactNative.{h,m}",
     "cocoa/vendor/bugsnag-cocoa/Source/**/*.{h,m,mm,cpp,c}",
@@ -38,9 +31,7 @@
     {
       "name": "Core",
       "source_files": "cocoa/BugsnagReactNative.{h,m}",
-      "public_header_files": [
-        "cocoa/BugsnagReactNative.h"
-      ]
+      "public_header_files": ["cocoa/BugsnagReactNative.h"]
     }
   ]
 }
