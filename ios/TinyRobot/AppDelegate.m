@@ -12,9 +12,6 @@
 
 #import <React/RCTRootView.h>
 #import <React/RCTAssert.h>
-#import "UIImage+SplashImage.h"
-#import "FLAnimatedImage.h"
-#import "FLAnimatedImageView.h"
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>

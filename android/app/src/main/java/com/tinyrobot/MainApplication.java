@@ -1,26 +1,16 @@
 package com.tinyrobot;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
-import io.invertase.firebase.RNFirebasePackage;
-import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
-import io.invertase.firebase.auth.RNFirebaseAuthPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import rnxmpp.RNXMPPPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.cmcewen.blurview.BlurViewPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.rnfs.RNFSPackage;
-import com.bugsnag.BugsnagReactNative;
 import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -44,25 +34,17 @@ public class MainApplication extends Application implements ReactApplication {
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
             new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
             new AppCenterReactNativePackage(MainApplication.this),
-            new RNFirebasePackage(),
-            new RNFirebaseAnalyticsPackage(),
-            new RNFirebaseAuthPackage(),
-            new MapsPackage(),
-            new ReactNativePushNotificationPackage(),
-            new RNXMPPPackage(),
-            new PickerPackage(),
-            new BlurViewPackage(),
-            new LinearGradientPackage(),
             new RNDeviceInfo(),
+            new LinearGradientPackage(),
+            new ReactNativePushNotificationPackage(),
             new RNFSPackage(),
-            BugsnagReactNative.getPackage(),
-            new RCTNativeEnvPackage(BuildConfig.class)
+            new RCTNativeEnvPackage()
       );
     }
 
     @Override
     protected String getJSMainModuleName() {
-      return "index.android";
+      return "index";
     }
   };
 

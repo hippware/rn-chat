@@ -1,6 +1,6 @@
 {
   "name": "BugsnagReactNative",
-  "version": "2.9.1",
+  "version": "2.9.5",
   "license": "MIT",
   "summary": "Bugsnag crash and error reporting for React Native apps",
   "authors": {
@@ -9,26 +9,19 @@
   "homepage": "https://docs.bugsnag.com/platforms/react-native",
   "source": {
     "git": "https://github.com/bugsnag/bugsnag-react-native.git",
-    "tag": "v2.9.1"
+    "tag": "v2.9.5"
   },
   "platforms": {
     "ios": "8.0"
   },
   "preserve_paths": "*.js",
-  "libraries": [
-    "z",
-    "c++"
-  ],
-  "frameworks": [
-    "MessageUI",
-    "SystemConfiguration"
-  ],
+  "libraries": ["z", "c++"],
+  "frameworks": ["MessageUI", "SystemConfiguration"],
   "dependencies": {
-    "React": [
-
-    ]
+    "React": []
   },
-  "public_header_files": "cocoa/**/{Bugsnag,BugsnagReactNative,BugsnagMetaData,BugsnagConfiguration,BugsnagBreadcrumb,BugsnagCrashReport,BSG_KSCrashReportWriter}.h",
+  "public_header_files":
+    "cocoa/**/{Bugsnag,BugsnagReactNative,BugsnagMetaData,BugsnagConfiguration,BugsnagBreadcrumb,BugsnagCrashReport,BSG_KSCrashReportWriter}.h",
   "source_files": [
     "cocoa/BugsnagReactNative.{h,m}",
     "cocoa/vendor/bugsnag-cocoa/Source/**/*.{h,m,mm,cpp,c}",
@@ -38,9 +31,7 @@
     {
       "name": "Core",
       "source_files": "cocoa/BugsnagReactNative.{h,m}",
-      "public_header_files": [
-        "cocoa/BugsnagReactNative.h"
-      ]
+      "public_header_files": ["cocoa/BugsnagReactNative.h"]
     }
   ]
 }
