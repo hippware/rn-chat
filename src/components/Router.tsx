@@ -163,7 +163,6 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Modal key="logged" hideNavBar headerMode="screen">
                   <Stack>
                     <Scene key="home" component={Home} />
-                    {/* <Scene key="DEV_locationDetails" path="bot/:server/:botId/:params*" component={LocationDetails} /> */}
                     <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                     <Scene key="friendsMain" component={peopleLists.FriendListScene} title="Friends" />
                     <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" />

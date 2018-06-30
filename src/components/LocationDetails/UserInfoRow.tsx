@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, View, ViewStyle} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {k} from '../Global'
@@ -7,11 +7,13 @@ import {Actions} from 'react-native-router-flux'
 import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
 import {ILocationStore} from '../../store/LocationStore'
-import {IBot} from 'wocky-client'
+import {IBot, IProfile} from 'wocky-client'
 
 type Props = {
-  bot: IBot
-  copyAddress: () => void
+  // bot: IBot
+  profile: IProfile
+  style?: ViewStyle
+  copyAddress?: () => void
   locationStore?: ILocationStore
 }
 
@@ -25,11 +27,11 @@ class UserInfoRow extends React.Component<Props> {
   button: any
 
   render() {
-    const {bot /*, locationStore*/} = this.props
-    if (!bot || !bot.owner) return null
+    const {profile, style /*, locationStore*/} = this.props
+    if (!profile) return null
     // const {distanceToString, distance, location} = locationStore!
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
           {!bot.isPublic && (
@@ -42,12 +44,12 @@ class UserInfoRow extends React.Component<Props> {
         </View> */}
 
         <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={bot.owner} size={40 * k} />
+          <ProfileAvatar profile={profile} size={40 * k} />
           <ProfileHandle
             style={{marginLeft: 10 * k, flex: 1}}
-            onPress={() => Actions.profileDetails({item: bot.owner!.id})}
+            onPress={() => Actions.profileDetails({item: profile.id})}
             size={15}
-            profile={bot.owner}
+            profile={profile}
           />
 
           {/* TODO: add bot.createdAt when ready on the backend */}
@@ -114,7 +116,7 @@ export default UserInfoRow
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    paddingTop: 10 * k,
+    // paddingTop: 10 * k,
     paddingBottom: 15 * k,
     // borderColor: 'blue',
     // borderWidth: 1,
