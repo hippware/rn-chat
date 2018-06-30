@@ -1,11 +1,11 @@
 import React from 'react'
-import {View, TouchableOpacity, StyleSheet} from 'react-native'
-import Avatar from '../common/Avatar'
+import {View} from 'react-native'
+// import Avatar from '../common/Avatar'
 import {k, width} from '../Global'
-import {Actions} from 'react-native-router-flux'
+// import {Actions} from 'react-native-router-flux'
 import * as colors from '../../constants/colors'
 import {observer} from 'mobx-react/native'
-import BotPostOptions from './BotPostOptions'
+// import BotPostOptions from './BotPostOptions'
 import {RText, ProgressiveImage} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {IBotPost, IBot} from 'wocky-client'
@@ -41,29 +41,3 @@ const BotPostCard = (props: Props) => {
 }
 
 export default observer(BotPostCard)
-
-const styles = StyleSheet.create({
-  hyperlink: {
-    letterSpacing: -0.1,
-  },
-  action: {
-    color: colors.PURPLISH_GREY,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 13 * k,
-    letterSpacing: -0.1,
-  },
-  title: {
-    flex: 1,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 15 * k,
-  },
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

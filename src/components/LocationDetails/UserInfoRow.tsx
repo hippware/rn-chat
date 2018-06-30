@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
 import {ILocationStore} from '../../store/LocationStore'
-import {IBot, IProfile} from 'wocky-client'
+import {IProfile} from 'wocky-client'
 
 type Props = {
   // bot: IBot
