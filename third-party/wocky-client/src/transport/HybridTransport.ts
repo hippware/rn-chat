@@ -1,5 +1,6 @@
 import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
 import {IProfilePartial} from '../model/Profile'
+import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
 
 export class HybridTransport implements IWockyTransport {
@@ -215,6 +216,15 @@ export class HybridTransport implements IWockyTransport {
     longitudeDelta: number
   }): Promise<void> {
     return this._xmpp.geosearch(props)
+  }
+
+  loadLocalBots(props: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<[IBot]> {
+    return this._gql.loadLocalBots(props)
   }
 
   sendMessage(msg: any): void {
