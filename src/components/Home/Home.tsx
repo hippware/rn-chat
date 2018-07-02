@@ -34,11 +34,11 @@ export default class Home extends React.Component<IProps> {
   }
 
   @observable mapType: MapTypes = 'standard'
-  @observable underMapType: MapTypes = 'none'
+  @observable showSatelliteOverlay: boolean = false
   @observable opacity: number = 0
   @observable region?: MapViewRegion = undefined
   @observable fullScreenMode: boolean = false
-  @observable listMode: string = 'home' // TODO: enumeration
+  @observable listMode: 'discover' | 'home' = 'home'
   @observable scrollIndex: number = 0
 
   mapRef: any
@@ -81,7 +81,7 @@ export default class Home extends React.Component<IProps> {
           {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
           <View style={{flex: 1, opacity}} pointerEvents="none" />
 
-          {this.underMapType === 'satellite' && (
+          {this.showSatelliteOverlay && (
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           )}
           {this.botMarkers}
@@ -172,14 +172,14 @@ export default class Home extends React.Component<IProps> {
   @action
   onRegionChange = (region: MapViewRegion) => {
     if (region.latitudeDelta <= DEFAULT_DELTA) {
-      this.underMapType = 'none'
-      // this.mapType = 'hybrid'
+      this.showSatelliteOverlay = false
+      this.mapType = 'hybrid'
       this.opacity = 0.85
     } else if (region.latitudeDelta <= TRANS_DELTA) {
-      this.underMapType = 'satellite'
+      this.showSatelliteOverlay = true
       this.opacity = OPACITY_MIN
     } else {
-      this.underMapType = 'none'
+      this.showSatelliteOverlay = false
       this.mapType = 'standard'
       this.opacity = 1
     }
@@ -235,6 +235,7 @@ export default class Home extends React.Component<IProps> {
     }
   }
 
+  @action
   selectBot = (bot: IBot) => {
     if (this.fullScreenMode) {
       this.fullScreenMode = false
@@ -256,6 +257,7 @@ export default class Home extends React.Component<IProps> {
     }
   }
 
+  @action
   toggleListMode = () => {
     if (this.listMode === 'discover') {
       this.zoomToCurrentLocation()
