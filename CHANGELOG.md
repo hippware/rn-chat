@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Re-create ios app project to make HMR working (#2520)
+* Location card expand on tap (#2482)
+
 # 3.0.2 - 2018 June 27
 
 * HOTFIX: nav for bot create and view
