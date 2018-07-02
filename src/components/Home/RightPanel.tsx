@@ -16,39 +16,35 @@ type Props = {
 }
 
 // TODO: make RightPanel slide to the right and back
-@observer
-export default class RightPanel extends React.Component<Props> {
-  render() {
-    const {listMode, toggleListMode} = this.props
-    return (
-      <View style={styles.container} pointerEvents="box-none">
-        <TouchableOpacity
-          onPress={() => Actions.bottomMenu()}
-          // TODO: remove this when the settings menu is done
-          onLongPress={() => Actions.codePush()}
-          style={styles.button}
-        >
-          <Image source={settings} />
-        </TouchableOpacity>
+const RightPanel = ({listMode, toggleListMode}: Props) => (
+  <View style={styles.container} pointerEvents="box-none">
+    <TouchableOpacity
+      onPress={() => Actions.bottomMenu()}
+      // TODO: remove this when the settings menu is done
+      onLongPress={() => Actions.codePush()}
+      style={styles.button}
+    >
+      <Image source={settings} />
+    </TouchableOpacity>
 
-        <View>
-          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
-            <Image source={listMode === 'home' ? toggle : toggleOff} />
-          </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
+        <Image source={listMode === 'home' ? toggle : toggleOff} />
+      </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              Actions.botContainer()
-            }}
-            style={styles.button}
-          >
-            <Image source={create} />
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-  }
-}
+      <TouchableOpacity
+        onPress={() => {
+          Actions.botContainer()
+        }}
+        style={styles.button}
+      >
+        <Image source={create} />
+      </TouchableOpacity>
+    </View>
+  </View>
+)
+
+export default observer(RightPanel)
 
 const styles = StyleSheet.create({
   container: {
