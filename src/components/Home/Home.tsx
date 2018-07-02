@@ -40,6 +40,7 @@ export default class Home extends React.Component<IProps> {
   @observable fullScreenMode: boolean = false
   @observable listMode: 'discover' | 'home' = 'home'
   @observable scrollIndex: number = 0
+  readonly localBots = observable.map<string, IBot>({})
 
   mapRef: any
   listRef: any
@@ -62,7 +63,14 @@ export default class Home extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {mapType, opacity, toggleFullscreen, selectYou, onRegionChange} = this
+    const {
+      mapType,
+      opacity,
+      toggleFullscreen,
+      selectYou,
+      onRegionChange,
+      onRegionChangeComplete,
+    } = this
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
@@ -75,6 +83,7 @@ export default class Home extends React.Component<IProps> {
           customMapStyle={mapStyle}
           mapType={mapType}
           onRegionChange={onRegionChange}
+          onRegionChangeComplete={onRegionChangeComplete}
           rotateEnabled={false}
           {...this.props}
         >
@@ -137,9 +146,7 @@ export default class Home extends React.Component<IProps> {
     // TODO: move to wocky
     const {wocky} = this.props
     if (this.listMode === 'home') {
-      return wocky.profile && wocky.profile.subscribedBots.length > 0
-        ? wocky.profile.subscribedBots.list
-        : []
+      return Array.from(this.localBots.values())
     } else {
       return wocky.events.length > 0 ? wocky.events.list.map(e => e.bot) : []
     }
@@ -184,6 +191,14 @@ export default class Home extends React.Component<IProps> {
       this.opacity = 1
     }
     this.region = region
+  }
+
+  onRegionChangeComplete = async (region: MapViewRegion) => {
+    if (this.listMode === 'home') {
+      const bots = await this.props.wocky.loadLocalBots(region)
+      const botsMap = new Map(bots.map((b: IBot) => [b.id, b]) as any)
+      this.localBots.merge(botsMap)
+    }
   }
 
   setCenterCoordinate = (latitude: number, longitude: number, fit: boolean = false) => {

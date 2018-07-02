@@ -462,7 +462,7 @@ export const Wocky = types
         longitudeDelta,
       })
       return arr.map(self.getBot)
-    }),
+    }) as (a) => Promise<IBot[]>,
     _loadRelations: flow(function*(
       userId: string,
       relation: string = 'following',
