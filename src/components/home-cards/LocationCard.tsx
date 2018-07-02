@@ -14,34 +14,29 @@ type Props = {
   scrollIndex: number
 }
 
-@observer
-export default class LocationCard extends React.Component<Props> {
-  render() {
-    const {item, index, scrollIndex} = this.props
-    const bot = item
-    return (
-      <Card profile={scrollIndex === index && bot.owner}>
-        <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
-          <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
-            <Image
-              style={styles.thumb}
-              source={bot.image ? bot.image.thumbnail : null}
-              resizeMode="cover"
-            />
-            <View style={styles.textContainer}>
-              <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
-                {bot.title}
-              </RText>
-              <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-                {bot.addressData && bot.addressData.locationShort}
-              </RText>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Card>
-    )
-  }
-}
+const LocationCard = ({item: bot, index, scrollIndex}: Props) => (
+  <Card profile={scrollIndex === index && bot.owner}>
+    <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
+      <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
+        <Image
+          style={styles.thumb}
+          source={bot.image ? bot.image.thumbnail : null}
+          resizeMode="cover"
+        />
+        <View style={styles.textContainer}>
+          <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
+            {bot.title}
+          </RText>
+          <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
+            {bot.addressData && bot.addressData.locationShort}
+          </RText>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  </Card>
+)
+
+export default observer(LocationCard)
 
 const styles = StyleSheet.create({
   thumb: {
