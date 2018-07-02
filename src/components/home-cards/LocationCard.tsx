@@ -4,25 +4,23 @@ import {IBot} from 'wocky-client'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
-import {inject, observer} from 'mobx-react'
-import {IHomeStore} from '../../store/HomeStore'
+import {observer} from 'mobx-react'
 import Card from './Card'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
   item: IBot
   index: number
-  homeStore?: IHomeStore
+  scrollIndex: number
 }
 
-@inject('homeStore')
 @observer
 export default class LocationCard extends React.Component<Props> {
   render() {
-    const {item, index, homeStore} = this.props
+    const {item, index, scrollIndex} = this.props
     const bot = item
     return (
-      <Card profile={homeStore.scrollIndex === index && bot.owner}>
+      <Card profile={scrollIndex === index && bot.owner}>
         <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
           <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
             <Image

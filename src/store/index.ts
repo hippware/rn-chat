@@ -25,7 +25,6 @@ import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
-import HomeStore from './HomeStore'
 // import bugsnag from '../utils/errorReporting';
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
@@ -70,7 +69,6 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
-    homeStore: HomeStore,
     codePushStore: CodepushStore,
     version: types.string,
     locationPrimed: false,
@@ -111,7 +109,6 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
-    homeStore: {},
     codePushStore: {},
     version: settings.version,
   },

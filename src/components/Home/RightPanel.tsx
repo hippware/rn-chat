@@ -2,8 +2,7 @@ import React from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {inject, observer} from 'mobx-react/native'
-import {IHomeStore} from '../../store/HomeStore'
+import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 
 const settings = require('../../../images/settingsBtn.png')
@@ -12,15 +11,15 @@ const toggle = require('../../../images/homeToggle.png')
 const toggleOff = require('../../../images/homeToggleOff.png')
 
 type Props = {
-  homeStore?: IHomeStore
+  listMode: string
+  toggleListMode: () => void
 }
 
 // TODO: make RightPanel slide to the right and back
-@inject('homeStore')
 @observer
 export default class RightPanel extends React.Component<Props> {
   render() {
-    const {listMode, toggleListMode} = this.props.homeStore!
+    const {listMode, toggleListMode} = this.props
     return (
       <View style={styles.container} pointerEvents="box-none">
         <TouchableOpacity
