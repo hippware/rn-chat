@@ -78,6 +78,9 @@ export default class Home extends React.Component<IProps> {
           rotateEnabled={false}
           {...this.props}
         >
+          {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
+          <View style={{flex: 1, opacity}} pointerEvents="none" />
+
           {this.underMapType === 'satellite' && (
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           )}
@@ -90,7 +93,6 @@ export default class Home extends React.Component<IProps> {
             stopPropagation
           />
         </MapView>
-        <View style={[styles.map, {opacity}]} pointerEvents="none" />
         <ActiveGeoBotBanner fullScreenMode={this.fullScreenMode} />
         {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
         {!this.showingBottomPopup && (
