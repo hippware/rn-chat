@@ -12,7 +12,6 @@ import BubbleIcon from '../map/BubbleIcon'
 import HackMarker from '../map/HackMarker'
 import HorizontalCardList from './HorizontalCardList'
 import RightPanel from './RightPanel'
-import Connectivity from '../Connectivity'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 import tutorialData from '../../store/tutorialData'
 
@@ -59,7 +58,6 @@ export default class Home extends React.Component<IProps> {
       return (
         <View style={[styles.container, {alignItems: 'center', justifyContent: 'center'}]}>
           <Spinner />
-          <Connectivity />
         </View>
       )
     }
@@ -83,7 +81,7 @@ export default class Home extends React.Component<IProps> {
           {this.underMapType === 'satellite' && (
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           )}
-          {this.botMarkerList}
+          {this.botMarkers}
           <HackMarker
             image={you}
             zIndex={1000}
@@ -109,13 +107,12 @@ export default class Home extends React.Component<IProps> {
             scrollIndex={this.scrollIndex}
           />
         )}
-        <Connectivity />
       </View>
     )
   }
 
   @computed
-  get botMarkerList() {
+  get botMarkers() {
     const {mapData, selectBot, selectedBotId} = this
     return mapData.map((bot: IBot) => {
       const {latitude, longitude} = bot.location
@@ -133,19 +130,6 @@ export default class Home extends React.Component<IProps> {
     })
   }
 
-  // TODO: strategy pattern
-  @computed
-  get selectedBotId(): string | null {
-    if (!this.listData.length) return null
-    const selectedItem = this.listData[this.scrollIndex]
-    if (typeof selectedItem === 'object') return (selectedItem as IBot).id
-  }
-
-  @computed
-  get showingBottomPopup() {
-    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
-  }
-
   @computed
   get mapData(): IBot[] {
     // TODO: move to wocky
@@ -157,6 +141,19 @@ export default class Home extends React.Component<IProps> {
     } else {
       return wocky.events.length > 0 ? wocky.events.list.map(e => e.bot) : []
     }
+  }
+
+  // TODO: strategy pattern
+  @computed
+  get selectedBotId(): string | null {
+    if (!this.listData.length) return null
+    const selectedItem = this.listData[this.scrollIndex]
+    if (typeof selectedItem === 'object') return (selectedItem as IBot).id
+  }
+
+  @computed
+  get showingBottomPopup() {
+    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
   }
 
   @computed
