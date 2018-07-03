@@ -5,18 +5,20 @@ import Carousel from 'react-native-snap-carousel'
 import LocationCard from '../home-cards/LocationCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
-import {observer} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react/native'
 import {IWocky, IBot} from 'wocky-client'
 import {reaction} from 'mobx'
+import {IHomeStore, ICard} from '../../store/HomeStore'
+import {getType} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
-  fullScreenMode: boolean
+  homeStore?: IHomeStore
   syncList: () => void
-  listData: any[]
+  // listData: any[]
   setScrollIndex: (index: number) => void
   setListRef: (ref: any) => void
-  listMode: string
+  // listMode: string
   scrollIndex: number
 }
 
@@ -24,6 +26,13 @@ type State = {
   marginBottom: Animated.Value
 }
 
+const CardDataRenderMap = {
+  LocationCardData: LocationCard,
+  YouCardData: YouCard,
+  TutorialCardData: TutorialCard,
+}
+
+@inject('homeStore')
 @observer
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
@@ -32,7 +41,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   componentDidMount() {
     reaction(
-      () => this.props.fullScreenMode,
+      () => this.props.homeStore.fullScreenMode,
       (mode: boolean) => {
         Animated.spring(this.state.marginBottom, {
           toValue: mode ? -155 : 10 * k,
@@ -42,14 +51,15 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 
   render() {
-    const {listData, fullScreenMode, setListRef, setScrollIndex} = this.props
+    const {setListRef, setScrollIndex, homeStore} = this.props
+    const {fullScreenMode, list} = homeStore
     return (
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
-        {listData.length && (
+        {list.length && (
           <Carousel
             key={fullScreenMode ? 1 : 0}
             ref={setListRef}
-            data={listData}
+            data={list}
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={width - 50 * k}
@@ -62,17 +72,11 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     )
   }
 
-  renderItem = ({item, index}: {item: IBot | string | any; index: number}) => {
-    // TODO: strategy pattern
-    if (item === 'you') {
-      return <YouCard />
-    } else if (item.type === 'tutorial') {
-      return <TutorialCard {...item} />
-    } else if (this.props.listMode === 'home') {
-      return <LocationCard item={item as IBot} index={index} scrollIndex={this.props.scrollIndex} />
-    } else {
-      return <LocationCard item={item as IBot} index={index} scrollIndex={this.props.scrollIndex} />
-    }
+  renderItem = ({item, index}: {item: ICard; index: number}) => {
+    const RenderClass = CardDataRenderMap[getType(item).name]
+    // console.log('& render item', {...item}, RenderClass)
+    return <RenderClass {...item} isFocused />
+    // return null
   }
 }
 

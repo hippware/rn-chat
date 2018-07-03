@@ -4,6 +4,8 @@ import {k} from '../Global'
 import {colors} from '../../constants'
 import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
+import {IHomeStore} from '../../store/HomeStore'
+import {inject} from 'mobx-react'
 
 const settings = require('../../../images/settingsBtn.png')
 const create = require('../../../images/create.png')
@@ -11,40 +13,41 @@ const toggle = require('../../../images/homeToggle.png')
 const toggleOff = require('../../../images/homeToggleOff.png')
 
 type Props = {
-  listMode: string
-  toggleListMode: () => void
+  homeStore?: IHomeStore
 }
 
-// TODO: make RightPanel slide to the right and back
-const RightPanel = ({listMode, toggleListMode}: Props) => (
-  <View style={styles.container} pointerEvents="box-none">
-    <TouchableOpacity
-      onPress={() => Actions.bottomMenu()}
-      // TODO: remove this when the settings menu is done
-      onLongPress={() => Actions.codePush()}
-      style={styles.button}
-    >
-      <Image source={settings} />
-    </TouchableOpacity>
-
-    <View>
-      <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
-        <Image source={listMode === 'home' ? toggle : toggleOff} />
-      </TouchableOpacity>
-
+// TODO: make RightPanel slide to the right and back'
+const RightPanel = inject('homeStore')(
+  observer(({homeStore: {listMode, toggleListMode}}: Props) => (
+    <View style={styles.container} pointerEvents="box-none">
       <TouchableOpacity
-        onPress={() => {
-          Actions.botContainer()
-        }}
+        onPress={() => Actions.bottomMenu()}
+        // TODO: remove this when the settings menu is done
+        onLongPress={() => Actions.codePush()}
         style={styles.button}
       >
-        <Image source={create} />
+        <Image source={settings} />
       </TouchableOpacity>
+
+      <View>
+        <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
+          <Image source={listMode === 'home' ? toggle : toggleOff} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            Actions.botContainer()
+          }}
+          style={styles.button}
+        >
+          <Image source={create} />
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
+  ))
 )
 
-export default observer(RightPanel)
+export default RightPanel
 
 const styles = StyleSheet.create({
   container: {

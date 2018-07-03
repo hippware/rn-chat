@@ -1,51 +1,68 @@
 import {types} from 'mobx-state-tree'
-import {Bot} from 'wocky-client'
+import {Bot, IBot} from 'wocky-client'
 
-const LocationCard = types
-  .model('LocationCard', {
-    type: types.string,
-    bot: types.maybe(Bot),
-  })
-  .volatile(self => ({
-    onPress: null,
-    renderClass: null,
-  }))
-  .actions(self => ({
-    // these actions should be called by Home.tsx during mount
-    setOnPress(handler) {
-      self.onPress = handler
-    },
-    setRenderClass(clazz) {
-      self.renderClass = clazz
-    }, // OR alternatively we can just have something like setMapper(dict) action where dict is type<->{onPress, renderClass} map
-  }))
+export const LocationCardData = types.model('LocationCardData', {
+  bot: types.reference(Bot),
+})
+type LocationCardDataType = typeof LocationCardData.Type
+export interface ILocationCardData extends LocationCardDataType {}
+
+const YouCardData = types.model('YouCardData', {})
+
+const TutorialCardData = types.model('TutorialCardData', {
+  title: types.string,
+  text: types.string,
+  icon: types.string,
+})
+
+const CardType = types.union(LocationCardData, YouCardData, TutorialCardData)
+export type ICard = typeof CardType.Type
 
 const HomeStore = types
   .model('HomeStore', {
     listMode: 'home',
     fullScreenMode: false,
     ignoreZoom: false,
-    discoverList: types.optional(types.array(LocationCard), []), // maintain separate list for each mode
-    homeList: types.optional(types.array(LocationCard), []),
+    discoverList: types.optional(types.array(CardType), []), // maintain separate list for each mode
+    homeList: types.optional(types.map(CardType), {
+      you: YouCardData.create({}),
+      tutorial1: TutorialCardData.create({
+        title: 'Map Your Favorite Spots',
+        text: 'Show friends the places you love!',
+        icon: 'create',
+      }),
+    }),
     index: 0, // if we need to maintain separate index, add discoverIndex and homeIndex
   })
   .views(self => ({
     // return the list for current mode
-    get list() {
-      return self.listMode === 'home' ? self.discoverList : self.homeList
+    get list(): any[] {
+      // ICard[]
+      return self.listMode === 'home' ? Array.from(self.homeList.values()) : self.discoverList
+    },
+  }))
+  .views(self => ({
+    get mapData(): IBot[] {
+      return self.list.filter((d: any) => d.bot).map((d: ILocationCardData) => d.bot)
     },
   }))
   .actions(self => ({
     // list here is array of LocationCard, should be set by Home.tsx that will call appropriate wocky methods
-    setDiscoverList(list) {
+    setDiscoverList(list): void {
       self.discoverList = list
       self.index = 0
     },
-    setHomeList(list) {
-      self.homeList = list
+    // setHomeList(cardMap: Map<string, ILocationCardData>) {
+    setHomeList(bots: IBot[]): void {
+      const cardMap: Map<string, ILocationCardData> = new Map(bots.map(bot => {
+        return [bot.id, LocationCardData.create({bot})]
+      }) as any)
+      // console.log('& cardMap', cardMap)
+      self.homeList.merge(cardMap)
       self.index = 0
+      // console.log('& home list now', self.homeList.toJSON())
     },
-    toggleListMode: () => {
+    toggleListMode: (): void => {
       if (self.listMode === 'discover') {
         self.listMode = 'home'
       } else {

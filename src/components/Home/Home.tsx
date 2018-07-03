@@ -6,7 +6,8 @@ import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore} from '../../store/HomeStore'
+import {IHomeStore, ILocationCardData, LocationCardData} from '../../store/HomeStore'
+// import LocationCard from '../home-cards/LocationCard'
 import {computed, observable, action, when} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import BubbleIcon from '../map/BubbleIcon'
@@ -45,10 +46,12 @@ export default class Home extends React.Component<IProps> {
   listRef: any
   pendingBotSelection?: IBot
 
-  componentDidMount() {
-    const {wocky} = this.props
-    when(() => !!wocky.profile, () => wocky.profile.subscribedBots.load())
-  }
+  // componentDidMount() {
+  //   const {wocky} = this.props
+  //   when(() => !!wocky.profile, () => {
+  //     this.onRegionChangeComplete
+  //   })
+  // }
 
   render() {
     const {locationStore, homeStore} = this.props
@@ -61,7 +64,7 @@ export default class Home extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {toggleFullscreen, fullScreenMode, listMode, index} = homeStore
+    const {toggleFullscreen, index} = homeStore
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
@@ -89,33 +92,29 @@ export default class Home extends React.Component<IProps> {
             image={you}
             zIndex={1000}
             coordinate={{latitude, longitude}}
-            onPress={this.selectYou}
+            // onPress={this.selectYou}
             stopPropagation
           />
         </MapView>
-        <ActiveGeoBotBanner fullScreenMode={fullScreenMode} />
+        <ActiveGeoBotBanner />
         {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
-        {!this.showingBottomPopup && (
-          <RightPanel toggleListMode={this.toggleListMode} listMode={listMode} />
-        )}
-        {!this.showingBottomPopup && (
-          <HorizontalCardList
-            listData={this.listData}
-            fullScreenMode={fullScreenMode}
-            syncList={this.syncList}
-            setScrollIndex={this.setScrollIndex}
-            setListRef={r => (this.listRef = r)}
-            listMode={listMode}
-            scrollIndex={index}
-          />
-        )}
+        {!this.showingBottomPopup && <RightPanel />}
+
+        <HorizontalCardList
+          // listData={this.listData}
+          syncList={this.syncList}
+          setScrollIndex={this.setScrollIndex}
+          setListRef={r => (this.listRef = r)}
+          scrollIndex={index}
+        />
       </View>
     )
   }
 
   @computed
   get botMarkers() {
-    const {mapData, selectBot, selectedBotId} = this
+    const {selectBot, selectedBotId} = this
+    const {mapData} = this.props.homeStore
     return mapData.map((bot: IBot) => {
       const {latitude, longitude} = bot.location
       return (
@@ -132,23 +131,12 @@ export default class Home extends React.Component<IProps> {
     })
   }
 
-  @computed
-  get mapData(): IBot[] {
-    // TODO: move to wocky
-    const {wocky, homeStore} = this.props
-    if (homeStore.listMode === 'home') {
-      return Array.from(this.localBots.values())
-    } else {
-      return wocky.events.length > 0 ? wocky.events.list.map(e => e.bot) : []
-    }
-  }
-
   // TODO: strategy pattern
   @computed
   get selectedBotId(): string | null {
-    if (!this.listData.length) return null
-    const selectedItem = this.listData[this.props.homeStore.index]
-    if (typeof selectedItem === 'object') return (selectedItem as IBot).id
+    if (!this.props.homeStore.list.length) return null
+    // const selectedItem = this.listData[this.props.homeStore.index]
+    // if (typeof selectedItem === 'object') return (selectedItem as IBot).id
   }
 
   @computed
@@ -156,16 +144,10 @@ export default class Home extends React.Component<IProps> {
     return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
   }
 
-  @computed
-  get listData() {
-    if (this.props.homeStore.fullScreenMode === true) return []
-    return this.mapData.length ? ['you', ...tutorialData, ...this.mapData] : []
-  }
-
-  @computed
-  get listStartIndex() {
-    return 1 + tutorialData.length
-  }
+  // @computed
+  // get listStartIndex() {
+  //   return 1 + tutorialData.length
+  // }
 
   @action
   onRegionChange = (region: MapViewRegion) => {
@@ -187,8 +169,7 @@ export default class Home extends React.Component<IProps> {
   onRegionChangeComplete = async (region: MapViewRegion) => {
     if (this.props.homeStore.listMode === 'home') {
       const bots = await this.props.wocky.loadLocalBots(region)
-      const botsMap = new Map(bots.map((b: IBot) => [b.id, b]) as any)
-      this.localBots.merge(botsMap)
+      this.props.homeStore.setHomeList(bots)
     }
   }
 
@@ -235,11 +216,11 @@ export default class Home extends React.Component<IProps> {
     }
   }
 
-  scrollListToFirstLocationCard = () => {
-    if (this.listRef) {
-      this.listRef.snapToItem(this.listStartIndex)
-    }
-  }
+  // scrollListToFirstLocationCard = () => {
+  //   if (this.listRef) {
+  //     this.listRef.snapToItem(this.listStartIndex)
+  //   }
+  // }
 
   @action
   selectBot = (bot: IBot) => {
@@ -257,34 +238,34 @@ export default class Home extends React.Component<IProps> {
     }
   }
 
-  scrollListToIndex = (index: number) => {
-    if (this.listRef) {
-      this.listRef.snapToItem(index)
-    }
-  }
+  // scrollListToIndex = (index: number) => {
+  //   if (this.listRef) {
+  //     this.listRef.snapToItem(index)
+  //   }
+  // }
 
-  @action
-  toggleListMode = () => {
-    if (this.listMode === 'discover') {
-      this.zoomToCurrentLocation()
-      this.listMode = 'home'
-      this.fullScreenMode = false
-      setTimeout(this.scrollListToYou, 200)
-    } else {
-      this.listMode = 'discover'
-      this.fullScreenMode = false
-      setTimeout(this.scrollListToFirstLocationCard, 200)
-    }
-  }
+  // @action
+  // toggleListMode = () => {
+  //   if (this.listMode === 'discover') {
+  //     this.zoomToCurrentLocation()
+  //     this.listMode = 'home'
+  //     this.fullScreenMode = false
+  //     setTimeout(this.scrollListToYou, 200)
+  //   } else {
+  //     this.listMode = 'discover'
+  //     this.fullScreenMode = false
+  //     setTimeout(this.scrollListToFirstLocationCard, 200)
+  //   }
+  // }
 
-  @action
-  selectYou() {
-    this.fullScreenMode = false
-    this.scrollListToYou()
-  }
+  // @action
+  // selectYou() {
+  //   this.fullScreenMode = false
+  //   this.scrollListToYou()
+  // }
 
   syncList = () => {
-    if (!this.fullScreenMode) {
+    if (!this.props.homeStore.fullScreenMode) {
       if (this.pendingBotSelection) {
         this.selectBot(this.pendingBotSelection)
         this.pendingBotSelection = null

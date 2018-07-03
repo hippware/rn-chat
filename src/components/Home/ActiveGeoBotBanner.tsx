@@ -10,18 +10,19 @@ import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k} from '../Global'
 import {autorun} from 'mobx'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
   analytics?: any
-  fullScreenMode: boolean
+  homeStore?: IHomeStore
 }
 
 type State = {
   marginTop: Animated.Value
 }
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'homeStore')
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   state: State = {
@@ -31,7 +32,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   componentDidMount() {
     autorun(() =>
       Animated.spring(this.state.marginTop, {
-        toValue: this.props.fullScreenMode ? -250 : 0,
+        toValue: this.props.homeStore.fullScreenMode ? -250 : 0,
         // speed: 6,
       }).start()
     )

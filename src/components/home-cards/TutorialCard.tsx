@@ -1,14 +1,19 @@
 import React from 'react'
-import {View, StyleSheet, Image, ImageRequireSource} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import Card from './Card'
 
+const IconMap = {
+  create: require('../../../images/create.png'),
+}
+
 type Props = {
   title: string
   text: string
-  icon: ImageRequireSource
+  // icon: ImageRequireSource
+  icon: string
 }
 
 const TutorialCard = ({title, text, icon}: Props) => (
@@ -22,7 +27,7 @@ const TutorialCard = ({title, text, icon}: Props) => (
       </RText>
     </View>
     <View style={styles.imageContainer}>
-      <Image style={styles.icon} source={icon} />
+      <Image style={styles.icon} source={IconMap[icon]} />
     </View>
   </Card>
 )
