@@ -217,6 +217,34 @@ describe('BotStore', () => {
     }
   })
 
+  it('get local bots 1', async done => {
+    try {
+      const res = await user1.loadLocalBots({
+        latitude: 1.2,
+        longitude: 2.2,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5,
+      })
+      expect(res.length).to.be.equal(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('get local bots 2', async done => {
+    try {
+      const res = await user1.loadLocalBots({
+        latitude: 3.2,
+        longitude: 4.2,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5,
+      })
+      expect(res.length).to.be.equal(0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   it('list own bots', async done => {
     try {
       await user1.profile!.ownBots.load()

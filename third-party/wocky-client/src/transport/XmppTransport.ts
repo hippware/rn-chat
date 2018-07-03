@@ -6,6 +6,7 @@ import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {IProfilePartial} from '../model/Profile'
+import {IBot} from '../model/Bot'
 const TIMEOUT = 30000
 const BOT_NS = 'hippware.com/hxep/bot'
 const EXPLORE_NEARBY = 'explore-nearby-result'
@@ -948,6 +949,14 @@ export class XmppTransport implements IWockyTransport {
         this.isGeoSearching = false
       }
     }
+  }
+  async loadLocalBots(props: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<[IBot]> {
+    throw new Error('Not supported')
   }
 }
 export function processMessage(stanza: any, ownUserId: string) {

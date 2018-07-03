@@ -11,6 +11,7 @@ import {Socket as PhoenixSocket} from 'phoenix'
 import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
+import {IBot} from '../model/Bot'
 
 const PROFILE_PROPS = `id firstName lastName handle
   avatar { thumbnailUrl fullUrl trosUrl }
@@ -566,6 +567,34 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {tros},
     })
   }
+  async loadLocalBots({
+    latitude,
+    longitude,
+    latitudeDelta,
+    longitudeDelta,
+  }: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<[IBot]> {
+    const res = await this.client.query<any>({
+      query: gql`
+        query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
+          localBots(pointA: $pointA, pointB: $pointB) {
+            ${BOT_PROPS}
+          }
+        }
+      `,
+      variables: {
+        pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
+        pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
+        ownUsername: this.username,
+      },
+    })
+    return res.data.localBots.map(convertBot)
+  }
+
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
     includeCurrentUser: boolean,

@@ -356,12 +356,12 @@ export const Wocky = types
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
-      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
+      return {list: list.map(self.getBot), count, cursor}
     }),
     _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
-      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
+      return {list: list.map(self.getBot), count, cursor}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
@@ -452,6 +452,16 @@ export const Wocky = types
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield waitFor(() => self.connected)
       yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
+    }),
+    loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+      yield waitFor(() => self.connected)
+      const arr = yield self.transport.loadLocalBots({
+        latitude,
+        longitude,
+        latitudeDelta,
+        longitudeDelta,
+      })
+      return arr.map(self.getBot)
     }),
     _loadRelations: flow(function*(
       userId: string,
