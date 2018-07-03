@@ -23,6 +23,7 @@ import GeocodingStore from './GeocodingStore'
 import NewBotStore from './NewBotStore'
 import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
+import HomeStore from './HomeStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
 // import bugsnag from '../utils/errorReporting';
@@ -63,6 +64,7 @@ const env = {
 const Store = types
   .model('Store', {
     wocky: Wocky,
+    homeStore: HomeStore,
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
@@ -109,6 +111,7 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
+    homeStore: {},
     codePushStore: {},
     version: settings.version,
   },

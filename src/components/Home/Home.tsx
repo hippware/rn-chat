@@ -6,6 +6,7 @@ import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
+import {IHomeStore} from '../../store/HomeStore'
 import {computed, observable, action, when} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import BubbleIcon from '../map/BubbleIcon'
@@ -18,6 +19,7 @@ import tutorialData from '../../store/tutorialData'
 interface IProps {
   locationStore?: ILocationStore
   wocky?: IWocky
+  homeStore?: IHomeStore
 }
 
 const you = require('../../../images/you.png')
@@ -26,7 +28,7 @@ const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 const OPACITY_MIN = 0.6
 
-@inject('locationStore', 'wocky')
+@inject('locationStore', 'wocky', 'homeStore')
 @observer
 export default class Home extends React.Component<IProps> {
   static defaultProps = {
@@ -37,15 +39,11 @@ export default class Home extends React.Component<IProps> {
   @observable showSatelliteOverlay: boolean = false
   @observable opacity: number = 0
   @observable region?: MapViewRegion = undefined
-  @observable fullScreenMode: boolean = false
-  @observable listMode: 'discover' | 'home' = 'home'
-  @observable scrollIndex: number = 0
   readonly localBots = observable.map<string, IBot>({})
 
   mapRef: any
   listRef: any
   pendingBotSelection?: IBot
-  ignoreZoom: boolean = false
 
   componentDidMount() {
     const {wocky} = this.props
@@ -53,7 +51,7 @@ export default class Home extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore} = this.props
+    const {locationStore, homeStore} = this.props
     const {location} = locationStore
     if (!location) {
       return (
@@ -63,13 +61,14 @@ export default class Home extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
+    const {toggleFullscreen, fullScreenMode, listMode, index} = homeStore
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}
-          onPress={this.toggleFullscreen}
+          onPress={toggleFullscreen}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           style={styles.map}
           customMapStyle={mapStyle}
@@ -94,20 +93,20 @@ export default class Home extends React.Component<IProps> {
             stopPropagation
           />
         </MapView>
-        <ActiveGeoBotBanner fullScreenMode={this.fullScreenMode} />
+        <ActiveGeoBotBanner fullScreenMode={fullScreenMode} />
         {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
         {!this.showingBottomPopup && (
-          <RightPanel toggleListMode={this.toggleListMode} listMode={this.listMode} />
+          <RightPanel toggleListMode={this.toggleListMode} listMode={listMode} />
         )}
         {!this.showingBottomPopup && (
           <HorizontalCardList
             listData={this.listData}
-            fullScreenMode={this.fullScreenMode}
+            fullScreenMode={fullScreenMode}
             syncList={this.syncList}
             setScrollIndex={this.setScrollIndex}
             setListRef={r => (this.listRef = r)}
-            listMode={this.listMode}
-            scrollIndex={this.scrollIndex}
+            listMode={listMode}
+            scrollIndex={index}
           />
         )}
       </View>
@@ -136,8 +135,8 @@ export default class Home extends React.Component<IProps> {
   @computed
   get mapData(): IBot[] {
     // TODO: move to wocky
-    const {wocky} = this.props
-    if (this.listMode === 'home') {
+    const {wocky, homeStore} = this.props
+    if (homeStore.listMode === 'home') {
       return Array.from(this.localBots.values())
     } else {
       return wocky.events.length > 0 ? wocky.events.list.map(e => e.bot) : []
@@ -148,7 +147,7 @@ export default class Home extends React.Component<IProps> {
   @computed
   get selectedBotId(): string | null {
     if (!this.listData.length) return null
-    const selectedItem = this.listData[this.scrollIndex]
+    const selectedItem = this.listData[this.props.homeStore.index]
     if (typeof selectedItem === 'object') return (selectedItem as IBot).id
   }
 
@@ -159,7 +158,7 @@ export default class Home extends React.Component<IProps> {
 
   @computed
   get listData() {
-    if (this.fullScreenMode === true) return []
+    if (this.props.homeStore.fullScreenMode === true) return []
     return this.mapData.length ? ['you', ...tutorialData, ...this.mapData] : []
   }
 
@@ -186,7 +185,7 @@ export default class Home extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    if (this.listMode === 'home') {
+    if (this.props.homeStore.listMode === 'home') {
       const bots = await this.props.wocky.loadLocalBots(region)
       const botsMap = new Map(bots.map((b: IBot) => [b.id, b]) as any)
       this.localBots.merge(botsMap)
@@ -276,16 +275,6 @@ export default class Home extends React.Component<IProps> {
       this.fullScreenMode = false
       setTimeout(this.scrollListToFirstLocationCard, 200)
     }
-  }
-
-  @action
-  toggleFullscreen = () => {
-    this.fullScreenMode = !this.fullScreenMode
-  }
-
-  @action
-  setFullscreen = value => {
-    this.fullScreenMode = value
   }
 
   @action
