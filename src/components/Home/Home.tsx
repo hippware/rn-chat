@@ -63,32 +63,24 @@ export default class Home extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {
-      mapType,
-      opacity,
-      toggleFullscreen,
-      selectYou,
-      onRegionChange,
-      onRegionChangeComplete,
-    } = this
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}
-          onPress={toggleFullscreen}
+          onPress={this.toggleFullscreen}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           style={styles.map}
           customMapStyle={mapStyle}
-          mapType={mapType}
-          onRegionChange={onRegionChange}
-          onRegionChangeComplete={onRegionChangeComplete}
+          mapType={this.mapType}
+          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
           rotateEnabled={false}
           {...this.props}
         >
           {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
-          <View style={{flex: 1, opacity}} pointerEvents="none" />
+          <View style={{flex: 1, opacity: this.opacity}} pointerEvents="none" />
 
           {this.showSatelliteOverlay && (
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
@@ -98,7 +90,7 @@ export default class Home extends React.Component<IProps> {
             image={you}
             zIndex={1000}
             coordinate={{latitude, longitude}}
-            onPress={selectYou}
+            onPress={this.selectYou}
             stopPropagation
           />
         </MapView>
