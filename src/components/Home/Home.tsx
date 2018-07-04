@@ -42,7 +42,9 @@ export default class Home extends React.Component<IProps> {
   pendingBotSelectedId?: string // HACK: need to prevent zooming to bots selected by tapping on the map
 
   componentDidMount() {
-    const {homeStore} = this.props
+    const {homeStore, wocky} = this.props
+    // TODO more advanced logic to implement paging?
+    homeStore.setDiscoverList(wocky.events.list.map(event => event.bot))
 
     reaction(
       () => homeStore.selectedBot,

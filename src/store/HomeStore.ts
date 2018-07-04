@@ -40,14 +40,12 @@ const HomeStore = types
     // return the list for current mode
     get list(): any[] {
       // ICard[]
-      // console.log('& list,', self.homeBotList.toJSON())
       if (self.listMode === 'home') {
         const botArray = Array.from(self.homeBotList.values())
         return [self.you, self.tutorial, ...botArray]
       } else {
-        return self.discoverList
+        return Array.from(self.discoverList.values())
       }
-      // return self.listMode === 'home' ? Array.from(self.homeBotList.values()) : self.discoverList
     },
   }))
   .views(self => ({
@@ -66,16 +64,15 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
-    // list here is array of LocationCard, should be set by Home.tsx that will call appropriate wocky methods
-    setDiscoverList(list): void {
-      self.discoverList = list
-      self.index = 0
-    },
     setHomeList(bots: IBot[]): void {
       const cardMap: Map<string, ILocationCardData> = new Map(bots.map(bot => {
         return [bot.id, LocationCardData.create({bot})]
       }) as any)
       self.homeBotList.merge(cardMap)
+    },
+    setDiscoverList(bots: IBot[]): void {
+      self.discoverList.clear()
+      bots.forEach(bot => self.discoverList.push(LocationCardData.create({bot})))
     },
     toggleListMode: (): void => {
       if (self.listMode === 'discover') {
