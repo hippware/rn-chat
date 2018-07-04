@@ -6,7 +6,7 @@ import LocationCard from '../home-cards/LocationCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {observer, inject} from 'mobx-react/native'
-import {IWocky, IBot} from 'wocky-client'
+import {IWocky} from 'wocky-client'
 import {reaction} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
 import {getType} from 'mobx-state-tree'
@@ -14,12 +14,6 @@ import {getType} from 'mobx-state-tree'
 type Props = {
   wocky?: IWocky
   homeStore?: IHomeStore
-  syncList: () => void
-  // listData: any[]
-  setScrollIndex: (index: number) => void
-  setListRef: (ref: any) => void
-  // listMode: string
-  scrollIndex: number
 }
 
 type State = {
@@ -39,33 +33,54 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     marginBottom: new Animated.Value(10 * k),
   }
 
+  list: any
+  pendingScrollIndex?: number
+
   componentDidMount() {
+    const {homeStore} = this.props
+
+    // show/hide the list depending on fullscreenMode
     reaction(
-      () => this.props.homeStore.fullScreenMode,
+      () => homeStore.fullScreenMode,
       (mode: boolean) => {
         Animated.spring(this.state.marginBottom, {
           toValue: mode ? -155 : 10 * k,
-        }).start(this.props.syncList)
+        }).start(homeStore.onListShown)
+      }
+    )
+
+    // auto-scroll the list to the selected index (but only when a bot marker is selected)
+    reaction(
+      () => homeStore.index,
+      (index: number) => {
+        // NOTE: extra params on `snapToItem` prevent it from firing event listeners after scroll
+        // https://github.com/archriss/react-native-snap-carousel/blob/master/doc/PROPS_METHODS_AND_GETTERS.md#available-methods
+        if (index !== this.pendingScrollIndex) {
+          this.list.snapToItem(index, true, false)
+        }
+        this.pendingScrollIndex = undefined
       }
     )
   }
 
   render() {
-    const {setListRef, setScrollIndex, homeStore} = this.props
-    const {fullScreenMode, list} = homeStore
+    const {homeStore} = this.props
+    const {fullScreenMode, list, setScrollIndex} = homeStore
     return (
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
         {list.length && (
           <Carousel
             key={fullScreenMode ? 1 : 0}
-            ref={setListRef}
+            ref={r => (this.list = r)}
             data={list}
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={width - 50 * k}
-            onSnapToItem={slideIndex => setScrollIndex(slideIndex)}
+            onSnapToItem={slideIndex => {
+              this.pendingScrollIndex = slideIndex
+              setScrollIndex(slideIndex)
+            }}
             inactiveSlideOpacity={1}
-            // onLayout={ev => {}}
           />
         )}
       </Animated.View>
@@ -74,9 +89,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   renderItem = ({item, index}: {item: ICard; index: number}) => {
     const RenderClass = CardDataRenderMap[getType(item).name]
-    // console.log('& render item', {...item}, RenderClass)
     return <RenderClass {...item} isFocused />
-    // return null
   }
 }
 

@@ -6,16 +6,14 @@ import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore, ILocationCardData, LocationCardData} from '../../store/HomeStore'
-// import LocationCard from '../home-cards/LocationCard'
-import {computed, observable, action, when} from 'mobx'
+import {IHomeStore} from '../../store/HomeStore'
+import {computed, observable, action, reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import BubbleIcon from '../map/BubbleIcon'
 import HackMarker from '../map/HackMarker'
 import HorizontalCardList from './HorizontalCardList'
 import RightPanel from './RightPanel'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
-import tutorialData from '../../store/tutorialData'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -39,19 +37,23 @@ export default class Home extends React.Component<IProps> {
   @observable mapType: MapTypes = 'standard'
   @observable showSatelliteOverlay: boolean = false
   @observable opacity: number = 0
-  @observable region?: MapViewRegion = undefined
-  readonly localBots = observable.map<string, IBot>({})
 
   mapRef: any
-  listRef: any
-  pendingBotSelection?: IBot
+  pendingBotSelectedId?: string // HACK: need to prevent zooming to bots selected by tapping on the map
 
-  // componentDidMount() {
-  //   const {wocky} = this.props
-  //   when(() => !!wocky.profile, () => {
-  //     this.onRegionChangeComplete
-  //   })
-  // }
+  componentDidMount() {
+    const {homeStore} = this.props
+
+    reaction(
+      () => homeStore.selectedBot,
+      (bot: IBot) => {
+        if (bot && bot.id !== this.pendingBotSelectedId) {
+          this.zoomToBot(bot)
+        }
+        this.pendingBotSelectedId = undefined
+      }
+    )
+  }
 
   render() {
     const {locationStore, homeStore} = this.props
@@ -64,7 +66,7 @@ export default class Home extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {toggleFullscreen, index} = homeStore
+    const {toggleFullscreen} = homeStore
     const delta = INIT_DELTA
     return (
       <View style={{flex: 1}} testID="screenHome">
@@ -100,62 +102,42 @@ export default class Home extends React.Component<IProps> {
         {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
         {!this.showingBottomPopup && <RightPanel />}
 
-        <HorizontalCardList
-          // listData={this.listData}
-          syncList={this.syncList}
-          setScrollIndex={this.setScrollIndex}
-          setListRef={r => (this.listRef = r)}
-          scrollIndex={index}
-        />
+        <HorizontalCardList />
       </View>
     )
   }
 
   @computed
   get botMarkers() {
-    const {selectBot, selectedBotId} = this
-    const {mapData} = this.props.homeStore
-    return mapData.map((bot: IBot) => {
+    const {mapData, selectPin} = this.props.homeStore
+    return mapData.map(data => {
+      const {bot, isSelected} = data
       const {latitude, longitude} = bot.location
       return (
         <HackMarker
           coordinate={{latitude, longitude}}
           // onPress={() => scrollListToBot(b.id)}
-          onPress={() => selectBot(bot)}
+          onPress={() => {
+            this.pendingBotSelectedId = bot.id
+            selectPin(data)
+          }}
           key={bot.id}
           stopPropagation
         >
-          <BubbleIcon large={selectedBotId === bot.id} />
+          <BubbleIcon large={isSelected} />
         </HackMarker>
       )
     })
   }
 
-  // TODO: strategy pattern
-  @computed
-  get selectedBotId(): string | null {
-    if (!this.props.homeStore.list.length) return null
-    // const selectedItem = this.listData[this.props.homeStore.index]
-    // if (typeof selectedItem === 'object') return (selectedItem as IBot).id
-  }
-
   @computed
   get showingBottomPopup() {
+    // TODO: move this logic to rnrf
     return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
   }
 
-  // @computed
-  // get listStartIndex() {
-  //   return 1 + tutorialData.length
-  // }
-
   @action
   onRegionChange = (region: MapViewRegion) => {
-    // if (region.latitudeDelta <= DEFAULT_DELTA) {
-    //   this.showSatelliteOverlay = false
-    //   this.mapType = 'hybrid'
-    //   this.opacity = 0.85
-    // } else
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
       this.opacity = OPACITY_MIN
@@ -164,7 +146,6 @@ export default class Home extends React.Component<IProps> {
       this.mapType = 'standard'
       this.opacity = 1
     }
-    this.region = region
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
@@ -188,108 +169,9 @@ export default class Home extends React.Component<IProps> {
     }
   }
 
-  recenterMapForMenu = () => {
-    const {locationStore} = this.props
-    const {latitude, longitude} = locationStore.location
-    if (this.mapRef) {
-      let delta = INIT_DELTA
-      if (this.region) {
-        delta = this.region.longitudeDelta
-      }
-      this.mapRef.animateToRegion({
-        latitude: latitude - delta / 3,
-        longitude,
-        latitudeDelta: delta,
-        longitudeDelta: delta,
-      })
-    }
-  }
-
   zoomToBot = (bot: IBot) => {
     if (bot.location) {
       this.setCenterCoordinate(bot.location.latitude, bot.location.longitude)
-    }
-  }
-
-  scrollListToYou = () => {
-    if (this.listRef) {
-      this.listRef.snapToItem(0)
-    }
-  }
-
-  // scrollListToFirstLocationCard = () => {
-  //   if (this.listRef) {
-  //     this.listRef.snapToItem(this.listStartIndex)
-  //   }
-  // }
-
-  @action
-  selectBot = (bot: IBot) => {
-    if (this.fullScreenMode) {
-      this.fullScreenMode = false
-      // HACK: need to store bot selection until after horizontal list re-mounts.
-      this.pendingBotSelection = bot
-    }
-
-    if (this.listRef) {
-      const index = this.listData.findIndex((b: any) => b.id === bot.id)
-      // ignoreZoom = this.fullScreenMode === false
-      this.ignoreZoom = true
-      if (index >= 0) this.listRef.snapToItem(index)
-    }
-  }
-
-  // scrollListToIndex = (index: number) => {
-  //   if (this.listRef) {
-  //     this.listRef.snapToItem(index)
-  //   }
-  // }
-
-  // @action
-  // toggleListMode = () => {
-  //   if (this.listMode === 'discover') {
-  //     this.zoomToCurrentLocation()
-  //     this.listMode = 'home'
-  //     this.fullScreenMode = false
-  //     setTimeout(this.scrollListToYou, 200)
-  //   } else {
-  //     this.listMode = 'discover'
-  //     this.fullScreenMode = false
-  //     setTimeout(this.scrollListToFirstLocationCard, 200)
-  //   }
-  // }
-
-  // @action
-  // selectYou() {
-  //   this.fullScreenMode = false
-  //   this.scrollListToYou()
-  // }
-
-  syncList = () => {
-    if (!this.props.homeStore.fullScreenMode) {
-      if (this.pendingBotSelection) {
-        this.selectBot(this.pendingBotSelection)
-        this.pendingBotSelection = null
-      } else {
-        this.scrollListToIndex(this.scrollIndex)
-      }
-    }
-  }
-
-  @action
-  setScrollIndex = index => {
-    this.scrollIndex = index
-    if (this.ignoreZoom) {
-      this.ignoreZoom = false
-      return
-    }
-    if (index === 0) {
-      this.zoomToCurrentLocation()
-    } else {
-      if (typeof this.listData[index] === 'object') {
-        const bot: IBot = this.listData[index] as IBot
-        this.zoomToBot(bot)
-      }
     }
   }
 }
