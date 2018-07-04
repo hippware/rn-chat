@@ -151,11 +151,12 @@ export default class Home extends React.Component<IProps> {
 
   @action
   onRegionChange = (region: MapViewRegion) => {
-    if (region.latitudeDelta <= DEFAULT_DELTA) {
-      this.showSatelliteOverlay = false
-      this.mapType = 'hybrid'
-      this.opacity = 0.85
-    } else if (region.latitudeDelta <= TRANS_DELTA) {
+    // if (region.latitudeDelta <= DEFAULT_DELTA) {
+    //   this.showSatelliteOverlay = false
+    //   this.mapType = 'hybrid'
+    //   this.opacity = 0.85
+    // } else
+    if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
       this.opacity = OPACITY_MIN
     } else {
