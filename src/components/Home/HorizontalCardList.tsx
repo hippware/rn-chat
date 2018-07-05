@@ -5,7 +5,7 @@ import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject, Observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
 import {reaction} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
@@ -81,7 +81,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   renderItem = ({item, index}: {item: ICard; index: number}) => {
     const RenderClass = cardMap[getType(item).name]
-    return <RenderClass {...item} isFocused />
+    return <Observer>{() => <RenderClass {...item} />}</Observer>
   }
 }
 
