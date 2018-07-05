@@ -41,9 +41,9 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     // show/hide the list depending on fullscreenMode
     reaction(
       () => homeStore.fullScreenMode,
-      (mode: boolean) => {
+      (isFullScreen: boolean) => {
         Animated.spring(this.state.marginBottom, {
-          toValue: mode ? -155 : 10 * k,
+          toValue: isFullScreen ? -155 : 10 * k,
         }).start()
       }
     )
@@ -59,13 +59,13 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {fullScreenMode, list, setIndex} = homeStore
+    const {list, setIndex} = homeStore
     return (
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
         {list.length && (
           <Carousel
             ref={r => (this.list = r)}
-            data={Array.from(list)}
+            data={list.slice()}
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={width - 50 * k}
