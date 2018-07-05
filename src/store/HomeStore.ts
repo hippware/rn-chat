@@ -117,8 +117,8 @@ const HomeStore = types
       })
     },
     setDiscoverList(bots: IBot[]): void {
-      self.discoverList.clear()
-      bots.forEach(bot => self.discoverList.push(BotCard.create({bot})))
+      // use mobx replace instead of clear + push all. https://mobx.js.org/refguide/array.html
+      self.discoverList.replace(bots.map(bot => BotCard.create({bot})))
       self.discoverIndex = 0
     },
     toggleListMode: (): void => {
