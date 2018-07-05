@@ -82,9 +82,23 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore, wocky} = this.props
-    // TODO more advanced logic to implement paging?
-    homeStore.setDiscoverList(wocky.events.list.map(event => event.bot))
+    if (!wocky.events.length) this.loadMoreDiscoverList()
+
+    // re-center map on focused card
     reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location))
+
+    // paging on discover list
+    reaction(
+      () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
+      (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList()
+    )
+  }
+
+  loadMoreDiscoverList = async () => {
+    const {wocky, homeStore} = this.props
+    await wocky.events.load()
+    // TODO: solve for the case where no new events have bots? (Until we have new backend query ready?)
+    homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
   }
 
   @action
@@ -104,7 +118,7 @@ export default class MapHome extends React.Component<IProps> {
   onRegionChangeComplete = async (region: MapViewRegion) => {
     if (this.props.homeStore.listMode === 'home') {
       const bots = await this.props.wocky.loadLocalBots(region)
-      this.props.homeStore.addBotsToHomeList(bots)
+      this.props.homeStore.addBotsToList('home', bots)
     }
   }
 
