@@ -469,6 +469,8 @@
 		2D02E47B1E0B4A5D006451C7 /* tinyrobot-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tinyrobot-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* tinyrobot-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tinyrobot-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		39EF672420EEA9B5001C7D08 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
+		39EF672520EEA9CF001C7D08 /* tinyrobot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tinyrobot.entitlements; path = tinyrobot/tinyrobot.entitlements; sourceTree = "<group>"; };
 		3ECBFBCC4C5C4B819CF4ADA8 /* libLRDRCTNativeEnv.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTNativeEnv.a; sourceTree = "<group>"; };
 		4CC1C22C005F453995429491 /* LRDRCTNativeEnv.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTNativeEnv.xcodeproj; path = "../node_modules/react-native-native-env/ios/LRDRCTNativeEnv.xcodeproj"; sourceTree = "<group>"; };
 		5949BA95BE6B30D8B2DC8F6F /* Pods-tinyrobotStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobotStaging.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging.debug.xcconfig"; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 		13B07FAE1A68108700A75B9A /* tinyrobot */ = {
 			isa = PBXGroup;
 			children = (
+				39EF672520EEA9CF001C7D08 /* tinyrobot.entitlements */,
 				87C412C120E637870044AF0A /* Images.xcassets */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -786,6 +789,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				39EF672420EEA9B5001C7D08 /* tinyrobotStaging.entitlements */,
 				87C414B120E66A190044AF0A /* Staging */,
 				87C412BC20E6366E0044AF0A /* Production */,
 				87C4129520E636620044AF0A /* Resources */,
@@ -1052,6 +1056,11 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = W6M2PMRSBT;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1064,6 +1073,11 @@
 					};
 					87C4147A20E669F90044AF0A = {
 						DevelopmentTeam = W6M2PMRSBT;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1948,6 +1962,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = tinyrobot/tinyrobot.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = W6M2PMRSBT;
@@ -1977,6 +1992,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = tinyrobot/tinyrobot.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W6M2PMRSBT;
 				HEADER_SEARCH_PATHS = (
@@ -2239,6 +2255,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = tinyrobotStaging.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = W6M2PMRSBT;
@@ -2268,6 +2285,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = tinyrobotStaging.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W6M2PMRSBT;
 				HEADER_SEARCH_PATHS = (
