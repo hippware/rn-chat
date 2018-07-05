@@ -64,7 +64,6 @@ export default class HorizontalCardList extends React.Component<Props, State> {
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
         {list.length && (
           <Carousel
-            key={fullScreenMode ? 1 : 0}
             ref={r => (this.list = r)}
             data={Array.from(list)}
             renderItem={this.renderItem}
