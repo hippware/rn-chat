@@ -82,7 +82,11 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore, wocky} = this.props
-    if (!wocky.events.length) this.loadMoreDiscoverList()
+    if (!wocky.events.length) {
+      this.loadMoreDiscoverList()
+    } else {
+      homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
+    }
 
     // re-center map on focused card
     reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location))
