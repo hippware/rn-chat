@@ -59,14 +59,16 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {list, setIndex} = homeStore
+    const {list, setIndex, fullScreenMode, index} = homeStore
     return (
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
         {list.length && (
           <Carousel
+            key={fullScreenMode ? 1 : 0}
             ref={r => (this.list = r)}
             data={list.slice()}
             renderItem={this.renderItem}
+            firstItem={index}
             sliderWidth={width}
             itemWidth={width - 50 * k}
             // onSnapToItem={index => list[index].select()} // enable if you don't need to unselect current bot for you/tutorial
