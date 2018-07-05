@@ -1,28 +1,22 @@
 import React from 'react'
-import {View, StyleSheet, Image, ImageRequireSource} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import Card from './Card'
 
-type Props = {
-  title: string
-  text: string
-  icon: ImageRequireSource
-}
-
-const TutorialCard = ({title, text, icon}: Props) => (
+const TutorialCard = () => (
   <Card>
     <View style={styles.textContainer}>
       <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
-        {title}
+        Map Your Favorite Spots
       </RText>
       <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-        {text}
+        Show friends the places you love!
       </RText>
     </View>
     <View style={styles.imageContainer}>
-      <Image style={styles.icon} source={icon} />
+      <Image style={styles.icon} source={require('../../../images/create.png')} />
     </View>
   </Card>
 )

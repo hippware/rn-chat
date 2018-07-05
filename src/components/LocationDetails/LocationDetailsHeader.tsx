@@ -113,7 +113,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           </View>
         )}
         <Image
-          source={bot.image.thumbnail}
+          source={bot.image ? bot.image.thumbnail : null}
           style={{width, height: width, marginHorizontal: -20 * k}}
           resizeMode="contain"
         />

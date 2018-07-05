@@ -94,5 +94,5 @@ export interface IWockyTransport {
     longitude: number
     latitudeDelta: number
     longitudeDelta: number
-  }): Promise<[IBot]>
+  }): Promise<IBot[]>
 }
