@@ -63,7 +63,7 @@ interface IProps {
 
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
-export default class Map extends React.Component<IProps> {
+export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
