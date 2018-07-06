@@ -30,8 +30,9 @@ export async function createXmpp(num: number): Promise<IWocky> {
     const transport = new HybridTransport(xmppTransport, gql)
     // const provider = new XmppStropheV2(console.log)
     const phoneNumber = `000000${num.toString()}`
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
     const service = Wocky.create(
-      {host: 'testing.dev.tinyrobot.com'},
+      {host},
       {
         transport,
         fileService,
