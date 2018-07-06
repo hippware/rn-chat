@@ -7,7 +7,8 @@
     "build": "tsc",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "npm run build && npm run lint && npm run mocha --recursive ./test/*",
-    "mocha": "mocha -r ts-node/register --require ./test/support/setup.js --timeout 30000"
+    "mocha": "mocha -r ts-node/register --require ./test/support/setup.js --timeout 30000",
+    "mochaLocal": "WOCKY_LOCAL=true mocha -r ts-node/register --require ./test/support/setup.js --timeout 5000"
   },
   "devDependencies": {
     "@types/chai": "4.0.4",
