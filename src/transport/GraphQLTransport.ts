@@ -76,11 +76,11 @@ export class GraphQLTransport implements IWockyTransport {
     this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
-      logger: (kind, msg, data) => {
-        if (msg !== 'close') {
-          console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-        }
-      },
+      // logger: (kind, msg, data) => {
+      //   if (msg !== 'close') {
+      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   }
+      // },
     })
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
