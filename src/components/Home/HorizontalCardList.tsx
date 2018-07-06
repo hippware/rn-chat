@@ -5,7 +5,7 @@ import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject, Observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
 import {reaction} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
@@ -41,9 +41,9 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     // show/hide the list depending on fullscreenMode
     reaction(
       () => homeStore.fullScreenMode,
-      (mode: boolean) => {
+      (isFullScreen: boolean) => {
         Animated.spring(this.state.marginBottom, {
-          toValue: mode ? -155 : 10 * k,
+          toValue: isFullScreen ? -155 : 10 * k,
         }).start()
       }
     )
@@ -59,15 +59,16 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {fullScreenMode, list, setIndex} = homeStore
+    const {list, setIndex, fullScreenMode, index} = homeStore
     return (
       <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
         {list.length && (
           <Carousel
             key={fullScreenMode ? 1 : 0}
             ref={r => (this.list = r)}
-            data={Array.from(list)}
+            data={list.slice()}
             renderItem={this.renderItem}
+            firstItem={index}
             sliderWidth={width}
             itemWidth={width - 50 * k}
             // onSnapToItem={index => list[index].select()} // enable if you don't need to unselect current bot for you/tutorial
@@ -81,7 +82,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   renderItem = ({item, index}: {item: ICard; index: number}) => {
     const RenderClass = cardMap[getType(item).name]
-    return <RenderClass {...item} isFocused />
+    return <Observer>{() => <RenderClass {...item} />}</Observer>
   }
 }
 

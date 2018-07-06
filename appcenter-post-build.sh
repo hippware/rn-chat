@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "Checking for deploy-stage..."
+echo $APPCENTER_BRANCH
+
 if [$APPCENTER_BRANCH -eq "deploy-stage"]
 then
   echo "Codepush StagingRollback bundle"

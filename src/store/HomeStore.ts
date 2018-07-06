@@ -108,18 +108,14 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
-    addBotsToHomeList(bots: IBot[]): void {
+    addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
+      const list = listName === 'home' ? self.homeBotList : self.discoverList
       bots.forEach(bot => {
         // it is probably less effective than merge but order is always preserved and no need to do 'map to array' conversion every time
-        if (!self.homeBotList.find((item: any) => item.bot && item.bot.id === bot.id)) {
-          self.homeBotList.push(BotCard.create({bot}))
+        if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
+          list.push(BotCard.create({bot}))
         }
       })
-    },
-    setDiscoverList(bots: IBot[]): void {
-      self.discoverList.clear()
-      bots.forEach(bot => self.discoverList.push(BotCard.create({bot})))
-      self.discoverIndex = 0
     },
     toggleListMode: (): void => {
       if (self.listMode === 'discover') {
