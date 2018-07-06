@@ -44,6 +44,8 @@ describe('GraphQL', () => {
       expect(profile.email).to.equal('a@aa.com')
       expect(profile.phoneNumber).to.equal('+155500000035')
       expect(profile.__typename).to.equal('CurrentUser')
+      expect(profile.hidden.enabled).to.equal(false)
+      expect(profile.hidden.expires).to.equal(null)
       done()
     } catch (e) {
       done(e)
