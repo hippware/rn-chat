@@ -52,103 +52,122 @@ describe('GraphQL', () => {
     }
   })
 
-  it('loads other profile', async done => {
+  it('hide user', async done => {
     try {
-      const profile = await gql.loadProfile(user2.username!)
-      // console.log('PROFILE:', JSON.stringify(profile))
-      expect(profile.id).to.equal(user2.username)
-      expect(profile.email).to.be.undefined
-      expect(profile.phoneNumber).to.be.undefined
-      expect(profile.__typename).to.equal('OtherUser')
+      await gql.hideUser(true, new Date(Date.now() + 1000))
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('loads profile again ', async done => {
+    try {
+      const profile = await gql.loadProfile(user.username!)
+      expect(profile.hidden.expires).to.equal(null)
+      expect(profile.hidden.enabled).to.equal(true)
       done()
     } catch (e) {
       done(e)
     }
   })
 
-  it('gets some bots', async done => {
-    try {
-      bot = await user.createBot()
-      await bot.update({
-        location: {latitude: 1.1, longitude: 2.1},
-        title: 'Test bot',
-        geofence: true,
-        addressData: {city: 'Koper', country: 'Slovenia'},
-      })
-      bot2 = await user.createBot()
-      await bot2.update({
-        location: {latitude: 1.2, longitude: 2.2},
-        title: 'Test bot2',
-        geofence: false,
-        addressData: {city: 'New York', country: 'US'},
-      })
-      const bots = await gql.loadOwnBots(user.username!, null, 1)
-      // console.log('bots', bots)
-      expect(bots.count).to.equal(2)
-      expect(bots.list.length).to.equal(1)
-      expect(bots.list[0].title).to.equal('Test bot2')
-      const bots2 = await gql.loadOwnBots(user.username!, bots.cursor, 1)
-      // console.log('bots', bots2)
-      expect(bots2.count).to.equal(2)
-      expect(bots2.list.length).to.equal(1)
-      expect(bots2.list[0].title).to.equal('Test bot')
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
+  // it('loads other profile', async done => {
+  //   try {
+  //     const profile = await gql.loadProfile(user2.username!)
+  //     // console.log('PROFILE:', JSON.stringify(profile))
+  //     expect(profile.id).to.equal(user2.username)
+  //     expect(profile.email).to.be.undefined
+  //     expect(profile.phoneNumber).to.be.undefined
+  //     expect(profile.__typename).to.equal('OtherUser')
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
 
-  it('check subscription arrive', async done => {
-    try {
-      await gql.subscribeBotVisitors()
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      when(
-        () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
-        () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.action).to.equal('ARRIVE')
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('check subscription exit', async done => {
-    try {
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      when(
-        () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
-        () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.action).to.equal('DEPART')
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('load bot', async done => {
-    try {
-      const loaded = await gql.loadBot(bot.id, bot.server)
-      expect(loaded.title).to.equal(bot.title)
-      expect(loaded.geofence).to.equal(bot.geofence)
-      expect(loaded.guest).to.equal(true)
-      expect(loaded.id).to.equal(bot.id)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
+  // it('gets some bots', async done => {
+  //   try {
+  //     bot = await user.createBot()
+  //     await bot.update({
+  //       location: {latitude: 1.1, longitude: 2.1},
+  //       title: 'Test bot',
+  //       geofence: true,
+  //       addressData: {city: 'Koper', country: 'Slovenia'},
+  //     })
+  //     bot2 = await user.createBot()
+  //     await bot2.update({
+  //       location: {latitude: 1.2, longitude: 2.2},
+  //       title: 'Test bot2',
+  //       geofence: false,
+  //       addressData: {city: 'New York', country: 'US'},
+  //     })
+  //     const bots = await gql.loadOwnBots(user.username!, null, 1)
+  //     // console.log('bots', bots)
+  //     expect(bots.count).to.equal(2)
+  //     expect(bots.list.length).to.equal(1)
+  //     expect(bots.list[0].title).to.equal('Test bot2')
+  //     const bots2 = await gql.loadOwnBots(user.username!, bots.cursor, 1)
+  //     // console.log('bots', bots2)
+  //     expect(bots2.count).to.equal(2)
+  //     expect(bots2.list.length).to.equal(1)
+  //     expect(bots2.list[0].title).to.equal('Test bot')
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+
+  // it('check subscription arrive', async done => {
+  //   try {
+  //     await gql.subscribeBotVisitors()
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
+  //       () => {
+  //         expect(gql.botVisitor.bot.id).to.equal(bot.id)
+  //         expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
+  //         expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
+  //         expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
+  //         expect(gql.botVisitor.action).to.equal('ARRIVE')
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('check subscription exit', async done => {
+  //   try {
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
+  //       () => {
+  //         expect(gql.botVisitor.bot.id).to.equal(bot.id)
+  //         expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.action).to.equal('DEPART')
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('load bot', async done => {
+  //   try {
+  //     const loaded = await gql.loadBot(bot.id, bot.server)
+  //     expect(loaded.title).to.equal(bot.title)
+  //     expect(loaded.geofence).to.equal(bot.geofence)
+  //     expect(loaded.guest).to.equal(true)
+  //     expect(loaded.id).to.equal(bot.id)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
 
   after('remove', async done => {
     try {

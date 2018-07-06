@@ -95,4 +95,5 @@ export interface IWockyTransport {
     latitudeDelta: number
     longitudeDelta: number
   }): Promise<IBot[]>
+  hideUser(enable: boolean, expire?: Date): Promise<void>
 }
