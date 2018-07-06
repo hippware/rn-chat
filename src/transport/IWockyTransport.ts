@@ -39,9 +39,6 @@ export interface IWockyTransport {
   lookup(handle: string): Promise<any>
   remove(): Promise<void>
   downloadURL(tros: string): Promise<any>
-  downloadFile(tros: string, name: string, sourceUrl: string): Promise<any>
-  downloadThumbnail(url: string, tros: string): Promise<any>
-  downloadTROS(tros: string): Promise<any>
   requestUpload(params: {
     file: any
     size: number
@@ -49,6 +46,7 @@ export interface IWockyTransport {
     height: number
     access: string
   }): Promise<string>
+  removeUpload(tros: string): Promise<void>
   follow(username: string): Promise<void>
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>

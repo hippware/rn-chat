@@ -2,7 +2,6 @@ declare var Strophe, $iq, $pres, $msg: any
 
 import {observable, when, action, runInAction} from 'mobx'
 import * as Utils from './utils'
-import {upload, IFileService} from './FileService'
 import './XmppStropheV2'
 import {isArray, processMap} from './utils'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
@@ -28,7 +27,6 @@ const EVENT_NS = 'hippware.com/hxep/publishing'
 export class XmppTransport implements IWockyTransport {
   provider: any
   botVisitor: any
-  fileService: IFileService
   resource: string
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -43,10 +41,9 @@ export class XmppTransport implements IWockyTransport {
   @observable notification: any
   isGeoSearching: boolean = false
 
-  constructor(provider: any, fileService: IFileService, resource: string) {
+  constructor(provider: any, resource: string) {
     this.provider = provider
     this.resource = resource
-    this.fileService = fileService
     provider.onConnected = action(() => (this.connected = true))
     provider.onDisconnected = action(() => (this.connected = false))
     provider.onIQ = action((iq: any) => {
@@ -235,6 +232,9 @@ export class XmppTransport implements IWockyTransport {
     const stanza = await this.sendIQ(iq)
     return {id, ...processMap(stanza)} as IProfilePartial
   }
+  async removeUpload(tros: string) {
+    throw new Error('Not supported')
+  }
   async requestProfiles(users: string[]): Promise<any> {
     if (!users || !users.length) {
       return []
@@ -352,79 +352,6 @@ export class XmppTransport implements IWockyTransport {
     }
     return {url: data.url, headers}
   }
-  async downloadFile(tros: string, name: string, sourceUrl: string) {
-    const folder = `${this.fileService.tempDir}/${tros.split('/').slice(-1)[0]}`
-    if (!await this.fileService.fileExists(folder)) {
-      await this.fileService.mkdir(folder)
-    }
-    const mainFileName = `${folder}/main.jpeg`
-    const fileName = `${folder}/${name}.jpeg`
-    const res: any = {uri: fileName, contentType: 'image/jpeg'}
-
-    // check main file first
-    if (await this.fileService.fileExists(mainFileName)) {
-      const response = await this.fileService.getImageSize(mainFileName)
-      if (response) {
-        res.uri = mainFileName
-        res.width = response.width
-        res.height = response.height
-        res.cached = true
-        return res
-      }
-    }
-    if (mainFileName !== fileName && (await this.fileService.fileExists(fileName))) {
-      const response = await this.fileService.getImageSize(fileName)
-      if (response) {
-        res.width = response.width
-        res.height = response.height
-        res.cached = true
-        return res
-      }
-    }
-    return new Promise((resolve, reject) => {
-      when(
-        () => this.connected,
-        async () => {
-          try {
-            let url = sourceUrl,
-              headers = null
-            if (!sourceUrl) {
-              const data = await this.downloadURL(tros)
-              url = data.url
-              headers = data.headers
-            }
-            await this.fileService.downloadHttpFile(url, fileName, headers)
-          } catch (e) {
-            try {
-              await this.fileService.removeFile(fileName)
-            } catch (err) {
-              // ignore error
-            }
-            reject(e)
-            return
-          }
-          res.cached = true
-          // need to catch exceptions from getImageSize
-          try {
-            const response = await this.fileService.getImageSize(fileName)
-            if (response) {
-              res.width = response.width
-              res.height = response.height
-            }
-            resolve(res)
-          } catch (e) {
-            reject(e)
-          }
-        }
-      )
-    })
-  }
-  async downloadThumbnail(url: string, tros: string) {
-    return await this.downloadFile(tros, 'thumbnail', url)
-  }
-  async downloadTROS(tros: string) {
-    return await this.downloadFile(tros, 'main', '')
-  }
   async requestUpload({file, size, width, height, access}: any) {
     const iq = $iq({type: 'set'})
       .c('upload-request', {xmlns: FILE_NS})
@@ -448,10 +375,7 @@ export class XmppTransport implements IWockyTransport {
     }
     // pass file to the result
     const stanza = await this.sendIQ(iq)
-    const data = {...stanza.upload, file}
-    // run upload in background
-    await upload(data)
-    return data.reference_url
+    return {...stanza.upload, file}
   }
   sendStanza(stanza: any) {
     this.provider.sendStanza(stanza)

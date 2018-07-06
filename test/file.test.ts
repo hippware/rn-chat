@@ -77,6 +77,15 @@ describe('FileStore', () => {
     }
   })
 
+  it('remove upload', async done => {
+    try {
+      await user1._removeUpload(user1.profile.avatar.id)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
   after('remove', async () => {
     await user1.remove()
   })

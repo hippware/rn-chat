@@ -11,9 +11,10 @@ import {
   IModelType,
   IExtendedObservableMap,
 } from 'mobx-state-tree'
-import {reaction, IObservableArray} from 'mobx'
+import {reaction, IObservableArray, ObservableMap} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
+import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot, BotPaginableList} from '../model/Bot'
@@ -72,12 +73,12 @@ export const Wocky = types
       password: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
-      roster: types.optional(types.map(types.reference(Profile)), {}),
+      roster: types.optional(types.map(types.reference(Profile)), {} as ObservableMap),
       profile: types.maybe(OwnProfile),
       updates: types.optional(types.array(EventEntity), []),
       events: types.optional(EventList, {}),
       geofenceBots: types.optional(BotPaginableList, {}),
-      geoBots: types.optional(types.map(types.reference(Bot)), {}),
+      geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
       version: '',
     })
@@ -114,7 +115,10 @@ export const Wocky = types
         } else {
           self.load(self.profile, data)
         }
+        // add own profile to the storage
+        self.profiles.get(id, data)
         if (self.profile.handle) self.sessionCount = 3
+        return self.profile
       }
       return self.profiles.get(id, data)
     }),
@@ -126,9 +130,11 @@ export const Wocky = types
           return self.transport.connecting
         },
         get sortedRoster(): IProfile[] {
-          return [...self.roster.values()].filter(x => x.handle).sort((a, b) => {
-            return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-          })
+          return (Array.from(self.roster.values()) as IProfile[])
+            .filter(x => x.handle)
+            .sort((a, b) => {
+              return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+            })
         },
         get updatesToAdd(): IEventEntity[] {
           return self.updates.filter((e: IEventEntity) => {
@@ -234,7 +240,7 @@ export const Wocky = types
   }))
   .actions(self => ({
     addRosterItem: (profile: any) => {
-      self.roster.put(self.profiles.get(profile.id, profile))
+      self.roster.set(profile.id, self.profiles.get(profile.id, profile))
     },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
       const profile = self.profiles.get(id, processMap(data))
@@ -397,6 +403,9 @@ export const Wocky = types
     _updateBot: flow(function*(d: any) {
       yield waitFor(() => self.connected)
       yield self.transport.updateBot(d)
+      if (d.geofence) {
+        self.profile!.setHasUsedGeofence(true)
+      }
       // subscribe owner to his bot
       const bot = self.bots.storage.get(d.id)
       self.profile!.ownBots.addToTop(bot)
@@ -425,6 +434,7 @@ export const Wocky = types
     }),
     _subscribeGeofenceBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
+      self.profile!.setHasUsedGeofence(true)
       return yield self.transport.subscribeBot(id, true)
     }),
     _subscribeBot: flow(function*(id: string) {
@@ -471,15 +481,6 @@ export const Wocky = types
     downloadURL: flow(function*(tros: string) {
       return yield self.transport.downloadURL(tros)
     }),
-    downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
-      return yield self.transport.downloadFile(tros, name, sourceUrl)
-    }),
-    downloadThumbnail: flow(function*(url: string, tros: string) {
-      return yield self.transport.downloadThumbnail(url, tros)
-    }),
-    downloadTROS: flow(function*(tros: string) {
-      return yield self.transport.downloadTROS(tros)
-    }),
     setLocation: flow(function*(location: ILocationSnapshot) {
       return yield self.transport.setLocation(location)
     }),
@@ -488,7 +489,18 @@ export const Wocky = types
     },
     _requestUpload: flow(function*({file, size, width, height, access}: any) {
       yield waitFor(() => self.connected)
-      return yield self.transport.requestUpload({file, size, width, height, access})
+      const data = yield self.transport.requestUpload({file, size, width, height, access})
+      try {
+        yield upload(data)
+        return data.reference_url
+      } catch (e) {
+        yield self.transport.removeUpload(data.reference_url)
+        throw e
+      }
+    }),
+    _removeUpload: flow(function*(tros: string) {
+      yield waitFor(() => self.connected)
+      yield self.transport.removeUpload(tros)
     }),
     _loadUpdates: flow(function*() {
       yield waitFor(() => self.connected)
@@ -587,7 +599,7 @@ export const Wocky = types
     },
     _onGeoBot: (bot: any) => {
       if (!self.geoBots.has(bot.id)) {
-        self.geoBots.put(self.getBot(bot))
+        self.geoBots.set(bot.id, self.getBot(bot))
       }
     },
     enablePush: flow(function*(token: string) {
@@ -603,15 +615,57 @@ export const Wocky = types
     },
   }))
   .actions(self => {
+    const fs: IFileService = getEnv(self).fileService
+    return {
+      downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
+        const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
+        if (!(yield fs.fileExists(folder))) {
+          yield fs.mkdir(folder)
+        }
+        // check main cached picture first
+        let fileName = `${folder}/main.jpeg`
+        let cached = yield fs.fileExists(fileName)
+
+        // check thumbnail
+        if (!cached && name !== 'main') {
+          fileName = `${folder}/${name}.jpeg`
+          cached = yield fs.fileExists(fileName)
+        }
+        if (!cached) {
+          yield waitFor(() => self.connected)
+          let url = sourceUrl
+          let headers = {}
+          // request S3 URL if it is not passed
+          if (!url) {
+            const data = yield self.downloadURL(tros)
+            url = data.url
+            headers = data.headers
+          }
+          yield fs.downloadHttpFile(url, fileName, headers)
+        }
+        const {width, height} = yield fs.getImageSize(fileName)
+        return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
+      }),
+    }
+  })
+  .actions(self => ({
+    downloadThumbnail: flow(function*(url: string, tros: string) {
+      return yield self.downloadFile(tros, 'thumbnail', url)
+    }),
+    downloadTROS: flow(function*(tros: string) {
+      return yield self.downloadFile(tros, 'main', '')
+    }),
+  }))
+  .actions(self => {
     function clearCache() {
       self.geofenceBots.refresh()
-      self.profiles.clear()
       self.roster.clear()
       self.chats.clear()
-      self.bots.clear()
       self.geoBots.clear()
       self.events.refresh()
       self.updates.clear()
+      self.profiles.clear()
+      self.bots.clear()
     }
     return {
       clearCache,
@@ -644,9 +698,9 @@ export const Wocky = types
               }
               self._subscribeToHomestream(self.version)
             } else {
-              self.profiles.storage
-                .values()
-                .forEach((profile: any) => profile.setStatus('unavailable'))
+              Array.from(self.profiles.storage.values()).forEach((profile: any) =>
+                profile.setStatus('unavailable')
+              )
             }
           }
         )

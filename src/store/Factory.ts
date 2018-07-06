@@ -1,4 +1,5 @@
 import {types, getEnv, getParent, getType, IType} from 'mobx-state-tree'
+import {ObservableMap} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot, IBot} from '../model/Bot'
@@ -8,13 +9,13 @@ export type __IBot = IBot
 export function createFactory(type: IType<any, any>) {
   return types
     .model({
-      storage: types.optional(types.map(type), {}),
+      storage: types.optional(types.map(type), {} as ObservableMap),
     })
     .named(`Factory${type.name}`)
     .views(self => ({
       get snapshot() {
         const storage: any = {}
-        self.storage.keys().forEach((key: string) => {
+        Array.from(self.storage.keys()).forEach((key: string) => {
           if (self.storage.get(key)!) {
             storage[key] = self.storage.get(key)!.snapshot
           }

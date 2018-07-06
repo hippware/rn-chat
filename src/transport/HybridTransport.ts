@@ -123,18 +123,6 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.downloadURL(tros)
   }
 
-  downloadFile(tros: string, name: string, sourceUrl: string): Promise<any> {
-    return this._xmpp.downloadFile(tros, name, sourceUrl)
-  }
-
-  downloadThumbnail(url: string, tros: string): Promise<any> {
-    return this._xmpp.downloadThumbnail(url, tros)
-  }
-
-  downloadTROS(tros: string): Promise<any> {
-    return this._xmpp.downloadTROS(tros)
-  }
-
   requestUpload(params: {
     file: any
     size: number
@@ -285,5 +273,9 @@ export class HybridTransport implements IWockyTransport {
 
   async loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
     return await this._gql.loadSubscribedBots(userId, lastId, max)
+  }
+
+  async removeUpload(tros: string) {
+    await this._gql.removeUpload(tros)
   }
 }

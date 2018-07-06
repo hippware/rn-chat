@@ -146,7 +146,11 @@ export class GraphQLTransport implements IWockyTransport {
           query LoadProfile {
             user(id: "${user}") {
               ${PROFILE_PROPS}
-              ${user === this.username ? '... on CurrentUser { email phoneNumber }' : ''}
+              ${
+                user === this.username
+                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence }'
+                  : ''
+              }
             }
           }
         `,
@@ -549,6 +553,18 @@ export class GraphQLTransport implements IWockyTransport {
   async loadHomestream(): Promise<IPagingList> {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
+  }
+  async removeUpload(tros: string) {
+    await this.client.mutate({
+      mutation: gql`
+        mutation mediaDelete($tros: String!) {
+          mediaDelete(input: {url: $tros}) {
+            successful
+          }
+        }
+      `,
+      variables: {tros},
+    })
   }
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
