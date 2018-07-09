@@ -17,8 +17,8 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
   function loadMinimal(parsed: any) {
     logger.log('loadMinimal')
     try {
-      const {username, password} = parsed.wocky
-      applySnapshot(self.wocky, {...self.wocky, username, password})
+      const {username, password, host} = parsed.wocky
+      applySnapshot(self.wocky, {username, password, host})
     } catch (err) {
       logger.warn('Minimal hydration error', err)
       analytics.track('loadMinimal_fail', parsed)
@@ -61,7 +61,7 @@ export default types.model({id: 'Persistable', wocky: Wocky}).actions(self => {
     try {
       const data = await loadFromStorage(modelName)
       parsed = JSON.parse(data)
-      // throw new Error('Hydrate minimally')
+      throw new Error('Hydrate minimally')
       applySnapshot(self, parsed)
     } catch (err) {
       logger.log('hydration error', modelName, parsed, err)
