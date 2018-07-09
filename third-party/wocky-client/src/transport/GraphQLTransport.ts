@@ -73,7 +73,11 @@ export class GraphQLTransport implements IWockyTransport {
       this.host = host
     }
 
-    this.socket = new PhoenixSocket(`wss://${this.host}/graphql`, {
+    const socketEndpoint = process.env.WOCKY_LOCAL
+      ? 'ws://localhost:8080/graphql'
+      : `wss://${this.host}/graphql`
+
+    this.socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
       // logger: (kind, msg, data) => {
