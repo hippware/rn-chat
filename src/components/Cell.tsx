@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Image, View, TouchableOpacity} from 'react-native'
 import {k} from './Global'

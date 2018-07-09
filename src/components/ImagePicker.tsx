@@ -1,5 +1,3 @@
-// @flow
-
 import {Alert, ActionSheetIOS} from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 import {log, levels} from '../utils/log'

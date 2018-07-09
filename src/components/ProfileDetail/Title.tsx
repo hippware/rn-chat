@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'

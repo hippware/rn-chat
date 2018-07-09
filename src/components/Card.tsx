@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native'
 import {k} from './Global'

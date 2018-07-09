@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Image, View, Text, TouchableOpacity} from 'react-native'
 import Screen from '../Screen'

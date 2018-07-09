@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native'
 import {colors} from '../../constants'

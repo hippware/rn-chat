@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, Image, TouchableOpacity, Alert} from 'react-native'
 import {observer, inject} from 'mobx-react/native'

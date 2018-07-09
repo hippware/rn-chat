@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {observer} from 'mobx-react/native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
