@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Horizontal list improvements (PR #2529)
+  * Implement paging on Home horizontal list (#2524)
+  * Maintain horizontal list state (#2526)
+  * Horizontal list: Only show Avatar for focused bot (#2527)
+
 # 3.1.0 - 2018 July 5
 
 * Re-enabled push notification (entitlements)
