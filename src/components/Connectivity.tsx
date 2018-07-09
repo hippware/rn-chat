@@ -14,6 +14,7 @@ type Props = {
   locationStore?: any
   log?: any
   analytics?: any
+  onForegrounded: () => void
 }
 
 @inject('wocky', 'notificationStore', 'locationStore', 'log', 'analytics')
@@ -47,7 +48,7 @@ export default class Connectivity extends React.Component<Props> {
       () => !this.props.wocky!.connected,
       () => (this.lastDisconnected = Date.now())
     )
-    setTimeout(() => this._handleAppStateChange('active'))
+    setTimeout(() => this._handleAppStateChange(AppState.currentState))
   }
 
   componentWillUnmount() {
@@ -105,6 +106,7 @@ export default class Connectivity extends React.Component<Props> {
       this.isActive = true
       this.props.notificationStore.start()
       this.props.locationStore.start()
+      this.props.onForegrounded()
       await this.tryReconnect()
     }
     if (currentAppState === 'background') {
