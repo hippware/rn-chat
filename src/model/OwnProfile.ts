@@ -1,4 +1,4 @@
-import {types, getSnapshot} from 'mobx-state-tree'
+import {types, getSnapshot, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
@@ -18,12 +18,18 @@ export const OwnProfile = types
       email: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
       hasUsedGeofence: false,
+      // should we just store this directly or calculate it based on expiration?
+      isHidden: false,
     })
   )
   .actions(self => ({
     setHasUsedGeofence: value => {
       self.hasUsedGeofence = value
     },
+    hide: flow(function*(value: boolean) {
+      yield self.service._hideUser(value)
+      self.isHidden = value
+    }),
   }))
   .named('OwnProfile')
 
