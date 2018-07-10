@@ -958,6 +958,9 @@ export class XmppTransport implements IWockyTransport {
   }): Promise<[IBot]> {
     throw new Error('Not supported')
   }
+  async hideUser(enable: boolean, expire?: Date): Promise<void> {
+    throw new Error('Not supported')
+  }
 }
 export function processMessage(stanza: any, ownUserId: string) {
   let id = stanza.id

@@ -153,7 +153,7 @@ export class GraphQLTransport implements IWockyTransport {
               ${PROFILE_PROPS}
               ${
                 user === this.username
-                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence }'
+                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }'
                   : ''
               }
             }
@@ -599,6 +599,19 @@ export class GraphQLTransport implements IWockyTransport {
     return res.data.localBots.map(convertBot)
   }
 
+  async hideUser(enable: boolean, expire?: Date): Promise<void> {
+    await this.client.mutate({
+      mutation: gql`
+        mutation userHide($enable: Boolean!, $expire: DateTime) {
+          userHide(input: {enable: $enable, expire: $expire}) {
+            successful
+          }
+        }
+      `,
+      variables: {enable, expire},
+    })
+  }
+
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
     includeCurrentUser: boolean,
@@ -652,9 +665,12 @@ export class GraphQLTransport implements IWockyTransport {
 function convertImage(image) {
   return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
-function convertProfile({avatar, bots, followers, followed, ...data}): IProfilePartial {
+function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
+    hidden: hidden
+      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
+      : null,
     avatar: convertImage(avatar),
     botsSize: bots.totalCount,
     followersSize: followers.totalCount,

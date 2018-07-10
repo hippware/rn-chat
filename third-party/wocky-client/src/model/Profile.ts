@@ -160,6 +160,10 @@ export interface IProfilePartial {
   botsSize: number
   followersSize: number
   followedSize: number
+  hidden: {
+    enabled: boolean
+    expires: Date
+  } | null
   avatar: {
     id: string
     url: string

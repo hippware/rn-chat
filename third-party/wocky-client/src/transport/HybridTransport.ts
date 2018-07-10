@@ -288,4 +288,7 @@ export class HybridTransport implements IWockyTransport {
   async removeUpload(tros: string) {
     await this._gql.removeUpload(tros)
   }
+  async hideUser(enable: boolean, expire?: Date): Promise<void> {
+    await this._gql.hideUser(enable, expire)
+  }
 }

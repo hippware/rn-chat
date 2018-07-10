@@ -11,6 +11,7 @@ import {when} from 'mobx'
 const host = 'testing.dev.tinyrobot.com'
 let gql: GraphQLTransport, user, user2: IWocky
 let bot, bot2: IBot
+let date: Date
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
@@ -44,6 +45,28 @@ describe('GraphQL', () => {
       expect(profile.email).to.equal('a@aa.com')
       expect(profile.phoneNumber).to.equal('+155500000035')
       expect(profile.__typename).to.equal('CurrentUser')
+      expect(profile.hidden.enabled).to.equal(false)
+      expect(profile.hidden.expires).to.equal(null)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('hide user', async done => {
+    try {
+      date = new Date(Date.now() + 1000)
+      await gql.hideUser(true, date)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('loads profile again ', async done => {
+    try {
+      const profile = await gql.loadProfile(user.username!)
+      expect(profile.hidden.expires.getTime()).to.equal(date.getTime())
+      expect(profile.hidden.enabled).to.equal(true)
       done()
     } catch (e) {
       done(e)

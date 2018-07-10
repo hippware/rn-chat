@@ -6,6 +6,9 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "env": {
+        "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"commonjs\"}"
+      },
       "args": [
         "-r",
         "./third-party/wocky-client/test/support/setup.js",
