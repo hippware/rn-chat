@@ -1,4 +1,4 @@
-import {types, getType, flow, getSnapshot, applySnapshot, getEnv, destroy} from 'mobx-state-tree'
+import {types, getType, flow, getSnapshot, applySnapshot, getEnv} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import {Wocky} from 'wocky-client'
 import {getCleanState, STORE_NAME} from '.'
@@ -68,7 +68,12 @@ const PersistableModel = types
         const data = await loadFromStorage(modelName)
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
-        applySnapshot(self, parsed)
+        if (parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate) {
+          parsed.codePushStore.pendingUpdate = false
+          loadMinimal(parsed)
+        } else {
+          applySnapshot(self, parsed)
+        }
       } catch (err) {
         logger.log('hydration error', modelName, parsed, err)
         if (modelName === STORE_NAME && parsed && parsed.wocky) {
@@ -84,10 +89,10 @@ const PersistableModel = types
     function startPersistenceReaction() {
       disposePersistenceReaction = reaction(
         () => getSnapshot(self),
-        json => {
+        state => {
           // console.log('persist state:', JSON.stringify(json));
           if (!self.reloading) {
-            storage.setItem(getType(self).name, JSON.stringify(json))
+            storage.setItem(getType(self).name, JSON.stringify(state))
           }
         },
         {fireImmediately: false, delay: 1000}
