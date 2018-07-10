@@ -661,9 +661,12 @@ export class GraphQLTransport implements IWockyTransport {
 function convertImage(image) {
   return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
-function convertProfile({avatar, bots, followers, followed, ...data}): IProfilePartial {
+function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
+    hidden: hidden
+      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
+      : null,
     avatar: convertImage(avatar),
     botsSize: bots.totalCount,
     followersSize: followers.totalCount,
