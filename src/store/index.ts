@@ -1,5 +1,4 @@
 import {types, getEnv, addMiddleware} from 'mobx-state-tree'
-// import {useStrict} from 'mobx'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase from 'react-native-firebase'
@@ -26,7 +25,6 @@ import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
-// import bugsnag from '../utils/errorReporting';
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')
@@ -36,10 +34,6 @@ const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
 const transport = new HybridTransport(xmppTransport, graphqlTransport)
 
 const {geolocation} = navigator
-
-// if (__DEV__) {
-//   useStrict(true)
-// }
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
@@ -86,10 +80,6 @@ const Store = types
     afterCreate() {
       analytics.identify(self.wocky)
     },
-    reload: () => {
-      self.wocky.clearCache()
-      self.firebaseStore.reset()
-    },
     dismissLocationPrimer: () => {
       self.locationPrimed = true
     },
@@ -101,9 +91,22 @@ const Store = types
     },
   }))
 
-const PersistableStore = types.compose(PersistableModel, Store).named('MainStore')
-const theStore = PersistableStore.create(
-  {
+export const STORE_NAME = 'MainStore'
+const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
+
+export const defaultStore = {
+  firebaseStore: {},
+  locationStore: {},
+  searchStore: {},
+  profileValidationStore: {},
+  geocodingStore: {},
+  newBotStore: {},
+  homeStore: {},
+  codePushStore: {},
+}
+
+export function getCleanState() {
+  return {
     wocky: {host: settings.getDomain()},
     firebaseStore: {},
     locationStore: {},
@@ -114,14 +117,14 @@ const theStore = PersistableStore.create(
     homeStore: {},
     codePushStore: {},
     version: settings.version,
-  },
-  env
-)
+  }
+}
+
+const theStore = PersistableStore.create(getCleanState(), env)
 
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
-// bugsnag(theStore.wocky);
 
 // simple logging
 addMiddleware(theStore, simpleActionLogger)

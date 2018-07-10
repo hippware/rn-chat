@@ -682,23 +682,9 @@ export const Wocky = types
       self.profiles.clear()
       self.bots.clear()
     }
-    return {
-      clearCache,
-      logout: flow(function* logout() {
-        if (self.connected) {
-          yield self.disablePush()
-          yield self.disconnect()
-        }
-        self.profile = null
-        clearCache()
-        self.sessionCount = 0
-        self.version = ''
-        self.username = null
-        self.password = null
-      }),
-      afterCreate: () => {
-        self.events.setRequest(self._loadHomestream)
-        self.geofenceBots.setRequest(self._loadGeofenceBots)
+    let reactions = []
+    function startReactions() {
+      reactions = [
         reaction(
           () => self.profile && self.connected,
           async (connected: boolean) => {
@@ -718,8 +704,8 @@ export const Wocky = types
               )
             }
           }
-        )
-        reaction(() => self.transport.geoBot, self._onGeoBot)
+        ),
+        reaction(() => self.transport.geoBot, self._onGeoBot),
         reaction(
           () => self.transport.presence,
           ({id, status}) => {
@@ -729,11 +715,36 @@ export const Wocky = types
               self.profile!.setStatus(status)
             }
           }
-        )
-        reaction(() => self.transport.rosterItem, self.addRosterItem)
-        reaction(() => self.transport.message, self._addMessage)
-        reaction(() => self.transport.notification, self._onNotification)
-        reaction(() => self.transport.botVisitor, self._onBotVisitor)
+        ),
+        reaction(() => self.transport.rosterItem, self.addRosterItem),
+        reaction(() => self.transport.message, self._addMessage),
+        reaction(() => self.transport.notification, self._onNotification),
+        reaction(() => self.transport.botVisitor, self._onBotVisitor),
+      ]
+    }
+    return {
+      clearCache,
+      logout: flow(function* logout() {
+        if (self.connected) {
+          yield self.disablePush()
+          yield self.disconnect()
+        }
+        self.profile = null
+        clearCache()
+        self.sessionCount = 0
+        self.version = ''
+        self.username = null
+        self.password = null
+      }),
+      afterCreate: () => {
+        self.events.setRequest(self._loadHomestream)
+        self.geofenceBots.setRequest(self._loadGeofenceBots)
+        startReactions()
+      },
+      startReactions,
+      disposeReactions: () => {
+        reactions.forEach(disposer => disposer())
+        reactions = []
       },
     }
   })
