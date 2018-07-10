@@ -34,27 +34,35 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 
   list: any
+  reactions: any[] = []
 
   componentDidMount() {
     const {homeStore} = this.props
 
-    // show/hide the list depending on fullscreenMode
-    reaction(
-      () => homeStore.fullScreenMode,
-      (isFullScreen: boolean) => {
-        Animated.spring(this.state.marginBottom, {
-          toValue: isFullScreen ? -155 : 10 * k,
-        }).start()
-      }
-    )
+    this.reactions = [
+      // show/hide the list depending on fullscreenMode
+      reaction(
+        () => homeStore.fullScreenMode,
+        (isFullScreen: boolean) => {
+          Animated.spring(this.state.marginBottom, {
+            toValue: isFullScreen ? -155 : 10 * k,
+          }).start()
+        }
+      ),
 
-    // auto-scroll the list to the selected index (but only when a bot marker is selected)
-    reaction(
-      () => homeStore.index,
-      (index: number) => {
-        this.list.snapToItem(index, true, false)
-      }
-    )
+      // auto-scroll the list to the selected index (but only when a bot marker is selected)
+      reaction(
+        () => homeStore.index,
+        (index: number) => {
+          this.list.snapToItem(index, true, false)
+        }
+      ),
+    ]
+  }
+
+  componentWillUnmount() {
+    this.reactions.forEach(disposer => disposer())
+    this.reactions = []
   }
 
   render() {
