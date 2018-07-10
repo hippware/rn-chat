@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   TouchableOpacityProps,
+  Switch,
 } from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
@@ -13,10 +14,8 @@ import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
-
-const MenuImage = ({image}: {image: object}) => (
-  <Image source={image} resizeMode="contain" style={styles.menuImage} />
-)
+import {k} from './Global'
+import {IWocky} from 'wocky-client'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -63,22 +62,18 @@ const MenuItem = ({
   <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
       <View style={styles.menuImageContainer}>
-        {icon || (image && <MenuImage image={image} />)}
+        {icon || (image && <Image source={image} resizeMode="contain" style={styles.menuImage} />)}
       </View>
-      <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>
+      <View style={[{flex: 1, flexDirection: 'row', alignItems: 'center'}, innerStyle]}>
         {children}
-        {!!onPress && (
-          <View style={{paddingRight: 50}}>
-            <Image source={require('../../images/menuArrow.png')} />
-          </View>
-        )}
+        {!!onPress && <Image source={require('../../images/menuArrow.png')} />}
       </View>
     </View>
   </MenuItemWrapper>
 )
 
 type Props = {
-  wocky?: any
+  wocky?: IWocky
 }
 
 @inject('wocky')
@@ -121,6 +116,11 @@ export default class BottomMenu extends React.Component<Props> {
         </MenuItem>
         <MenuItem image={require('../../images/menuInvisible.png')}>
           <Text style={styles.text}>Invisible</Text>
+          <Switch
+            onTintColor={colors.PINK}
+            value={profile.isHidden}
+            // onValueChange={wocky.hideUser}
+          />
         </MenuItem>
       </BottomPopup>
     )
@@ -135,13 +135,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   menuItem: {
-    height: 50,
-    paddingLeft: 39,
+    height: 50 * k,
+    marginHorizontal: 50 * k,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  menuImageContainer: {width: 60, alignItems: 'center'},
+  menuImageContainer: {width: 50 * k},
   menuImage: {width: 28, height: 23},
   viewAccount: {
     color: colors.addAlpha(colors.WHITE, 0.57),

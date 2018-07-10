@@ -4,8 +4,24 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Horizontal list improvements (PR #2529)
+  * Implement paging on Home horizontal list (#2524)
+  * Maintain horizontal list state (#2526)
+  * Horizontal list: Only show Avatar for focused bot (#2527)
+
+# 3.1.0 - 2018 July 5
+
+* Re-enabled push notification (entitlements)
+
+# 3.0.3 - 2018 July 5
+
 * Re-create ios app project to make HMR working (#2520)
 * Location card expand on tap (#2482)
+* Use new localBots graphql query to retrieve own and subscribed bots 
+  * ... for given region (#2515, PR #2517)
+* Refactoring: 
+  * Remove Homestore and refactor (PR #2521)
+  * Home.tsx with localBots query (PR #2522)
 
 # 3.0.2 - 2018 June 27
 

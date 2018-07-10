@@ -10,15 +10,15 @@ import {Actions} from 'react-native-router-flux'
 
 type Props = {
   bot: IBot
-  isFocused: boolean
+  isSelected: boolean
   // index: number
   // scrollIndex: number
 }
 
-const LocationCard = ({bot, isFocused}: Props) => (
+const LocationCard = ({bot, isSelected}: Props) => (
   // TODO: show profile only if focused
   // <Card profile={scrollIndex === index && bot.owner}>
-  <Card profile={isFocused && bot.owner}>
+  <Card profile={isSelected && bot.owner}>
     <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
       <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
         <Image
