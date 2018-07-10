@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native'
 import {when} from 'mobx'

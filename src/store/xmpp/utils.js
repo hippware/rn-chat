@@ -1,37 +1,35 @@
-// @flow
-
 // pad given number with given width and symbol z, like (1, 4, '0') -> '0001'
 function pad(n, width, z) {
-  z = z || '0';
-  n += '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  z = z || '0'
+  n += ''
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n
 }
 
 function process(result) {
   if (typeof result === 'object') {
     if (Array.isArray(result)) {
-      return result.map(el => process(el));
+      return result.map(el => process(el))
     } else {
       if (result['#text'] && Object.keys(result).length === 1) {
-        return result['#text'];
+        return result['#text']
       }
-      const res = {};
-      let changed = false;
+      const res = {}
+      let changed = false
       // eslint-disable-next-line
       for (const key in result) {
         // eslint-disable-next-line
         if (result.hasOwnProperty(key)) {
-          changed = true;
-          res[key] = process(result[key]);
+          changed = true
+          res[key] = process(result[key])
         }
       }
       if (!changed) {
-        return undefined;
+        return undefined
       }
-      return res;
+      return res
     }
   } else {
-    return result;
+    return result
   }
 }
 
@@ -39,81 +37,81 @@ function camelize(str) {
   return str
     .replace(/\W|_|\d/g, ' ')
     .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
-      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+      return index === 0 ? letter.toLowerCase() : letter.toUpperCase()
     })
-    .replace(/\s+/g, '');
+    .replace(/\s+/g, '')
 }
 
 export default {
   fromCamelCase(data: ?Object): Object {
-    const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data || {};
+    const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data || {}
     if (phoneNumber) {
-      result.phone_number = phoneNumber;
-      result.phoneNumber = phoneNumber;
+      result.phone_number = phoneNumber
+      result.phoneNumber = phoneNumber
     }
     if (userID) {
-      result.auth_user = userID;
+      result.auth_user = userID
     }
     if (firstName) {
-      result.first_name = firstName;
+      result.first_name = firstName
     }
     if (lastName) {
-      result.last_name = lastName;
+      result.last_name = lastName
     }
     if (sessionID) {
-      result.token = sessionID;
+      result.token = sessionID
     }
     if (uuid) {
-      result.user = uuid;
+      result.user = uuid
     }
-    return result;
+    return result
   },
   processFields(fields: Object[]) {
-    const result = {};
+    const result = {}
     // TODO: handle empty or null `fields`?
     fields &&
-    fields.forEach((item) => {
-      if (item.var === 'roles') {
-        result.roles = item.roles && item.roles.role ? item.roles.role : [];
-      } else {
-        result[camelize(item.var)] = item.value;
-      }
-    });
-    return result;
+      fields.forEach(item => {
+        if (item.var === 'roles') {
+          result.roles = item.roles && item.roles.role ? item.roles.role : []
+        } else {
+          result[camelize(item.var)] = item.value
+        }
+      })
+    return result
   },
   clone(obj) {
     if (Array.isArray(obj)) {
-      return obj.map(x => clone(x)); // eslint-disable-line
+      return obj.map(x => clone(x)) // eslint-disable-line
     }
     if (obj == null || typeof obj !== 'object') {
-      return obj;
+      return obj
     }
-    const temp = new obj.constructor();
+    const temp = new obj.constructor()
 
     // eslint-disable-next-line
     for (var key in obj) {
       // eslint-disable-next-line
       if (obj.hasOwnProperty(key)) {
         if (key !== 'state') {
-          temp[key] = clone(obj[key]); // eslint-disable-line
+          temp[key] = clone(obj[key]) // eslint-disable-line
         }
       }
     }
 
-    return temp;
+    return temp
   },
   getJid(username, host, resource) {
-    let jid = `${username}@${host}`;
+    let jid = `${username}@${host}`
     if (resource) {
-      jid = `${jid}/${resource}`;
+      jid = `${jid}/${resource}`
     }
-    return jid;
+    return jid
   },
   getNodeJid(jid: string) {
     if (jid.indexOf('@') < 0) {
-      return null;
+      return null
     }
-    return jid.split('@')[0];
+    return jid.split('@')[0]
   },
 
   /** Function: getUniqueId
@@ -139,76 +137,76 @@ export default {
    *    A unique string to be used for the id attribute.
    */
   getUniqueId(suffix) {
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
       var r = (Math.random() * 16) | 0, // eslint-disable-line
-        v = c == 'x' ? r : (r & 0x3) | 0x8; // eslint-disable-line
-      return v.toString(16);
-    });
+        v = c == 'x' ? r : (r & 0x3) | 0x8 // eslint-disable-line
+      return v.toString(16)
+    })
     if (typeof suffix === 'string' || typeof suffix === 'number') {
-      return `${uuid}:${suffix}`;
+      return `${uuid}:${suffix}`
     } else {
-      return `${uuid}`;
+      return `${uuid}`
     }
   },
 
   parseXml(xml, arrayTags) {
     function isArray(o) {
-      return Object.prototype.toString.apply(o) === '[object Array]';
+      return Object.prototype.toString.apply(o) === '[object Array]'
     }
 
     function parseNode(xmlNode, result) {
       if (!xmlNode) {
-        return;
+        return
       }
       if (xmlNode.nodeName === '#text') {
         /* if you want the object to have a properyty "#text" even if it is "",
                  remove that if-else and use code that is currently in else block
                  */
         if (xmlNode.nodeValue.trim() === '') {
-          return;
+          return
         } else {
-          result[xmlNode.nodeName] = xmlNode.nodeValue;
-          return;
+          result[xmlNode.nodeName] = xmlNode.nodeValue
+          return
         }
       }
 
-      const jsonNode = {};
-      const existing = result[xmlNode.nodeName];
+      const jsonNode = {}
+      const existing = result[xmlNode.nodeName]
       if (existing) {
         if (!isArray(existing)) {
-          result[xmlNode.nodeName] = [existing, jsonNode];
+          result[xmlNode.nodeName] = [existing, jsonNode]
         } else {
-          result[xmlNode.nodeName].push(jsonNode);
+          result[xmlNode.nodeName].push(jsonNode)
         }
       } else if (arrayTags && arrayTags.indexOf(xmlNode.nodeName) !== -1) {
-        result[xmlNode.nodeName] = [jsonNode];
+        result[xmlNode.nodeName] = [jsonNode]
       } else {
-        result[xmlNode.nodeName] = jsonNode;
+        result[xmlNode.nodeName] = jsonNode
       }
 
       if (xmlNode.attributes) {
-        const length = xmlNode.attributes.length;
+        const length = xmlNode.attributes.length
         for (let i = 0; i < length; i++) {
-          const attribute = xmlNode.attributes[i];
-          jsonNode[attribute.nodeName] = attribute.nodeValue;
+          const attribute = xmlNode.attributes[i]
+          jsonNode[attribute.nodeName] = attribute.nodeValue
         }
       }
 
-      const length = xmlNode.childNodes.length;
+      const length = xmlNode.childNodes.length
       for (let i = 0; i < length; i++) {
-        parseNode(xmlNode.childNodes[i], jsonNode);
+        parseNode(xmlNode.childNodes[i], jsonNode)
       }
     }
 
-    const result = {};
-    parseNode(xml, result);
-    return process(result);
+    const result = {}
+    parseNode(xml, result)
+    return process(result)
   },
 
   // generate ID for all xml stanzas
   generateID() {
-    const time = Date.now();
-    return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`;
+    const time = Date.now()
+    return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`
   },
 
   // return hashcode for given string
@@ -216,36 +214,46 @@ export default {
     var hash = 0,
       i,
       chr,
-      len;
-    if (s.length === 0) return hash;
+      len
+    if (s.length === 0) return hash
     for (i = 0, len = s.length; i < len; i++) {
-      chr = s.charCodeAt(i);
-      hash = (hash << 5) - hash + chr; // eslint-disable-line
+      chr = s.charCodeAt(i)
+      hash = (hash << 5) - hash + chr // eslint-disable-line
       // Convert to 32bit integer.
-      hash = Math.abs(hash & hash); // eslint-disable-line
+      hash = Math.abs(hash & hash) // eslint-disable-line
     }
-    return hash;
+    return hash
   },
 
   iso8601toDate(date) {
     var timestamp = Date.parse(date),
-      minutesOffset = 0;
+      minutesOffset = 0
     if (isNaN(timestamp)) {
       // eslint-disable-next-line
-      var struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(date);
+      var struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(
+        date
+      )
       if (struct) {
         if (struct[8] !== 'Z') {
-          minutesOffset = +struct[10] * 60 + +struct[11];
+          minutesOffset = +struct[10] * 60 + +struct[11]
           if (struct[9] === '+') {
-            minutesOffset = -minutesOffset;
+            minutesOffset = -minutesOffset
           }
         }
-        return new Date(+struct[1], +struct[2] - 1, +struct[3], +struct[4], +struct[5] + minutesOffset, +struct[6], struct[7] ? +struct[7].substr(0, 3) : 0);
+        return new Date(
+          +struct[1],
+          +struct[2] - 1,
+          +struct[3],
+          +struct[4],
+          +struct[5] + minutesOffset,
+          +struct[6],
+          struct[7] ? +struct[7].substr(0, 3) : 0
+        )
       } else {
         // XEP-0091 dateAsString
-        timestamp = Date.parse(`${date.replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')}Z`);
+        timestamp = Date.parse(`${date.replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')}Z`)
       }
     }
-    return new Date(timestamp);
+    return new Date(timestamp)
   },
-};
+}

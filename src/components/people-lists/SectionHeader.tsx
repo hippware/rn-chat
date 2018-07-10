@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {StyleSheet, View} from 'react-native'
 import {k} from '../Global'

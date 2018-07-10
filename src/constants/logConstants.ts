@@ -1,5 +1,3 @@
-// @flow
-
 export const logCategories = {
   MAP: 'MAP',
   HOME: 'HOME',

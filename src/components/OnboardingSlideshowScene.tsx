@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'

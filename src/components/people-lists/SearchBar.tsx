@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import {Image, StyleSheet, View, TextInput} from 'react-native'
 import {k} from '../Global'

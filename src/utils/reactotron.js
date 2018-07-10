@@ -1,10 +1,14 @@
-// @flow
-
-import store from '../store';
+import store from '../store'
 // import TinyRobotRouter from './components/RouterTest';
 
-import Reactotron, {trackGlobalErrors, openInEditor, overlay, asyncStorage, networking} from 'reactotron-react-native';
-import {mst} from 'reactotron-mst';
+import Reactotron, {
+  trackGlobalErrors,
+  openInEditor,
+  overlay,
+  asyncStorage,
+  networking,
+} from 'reactotron-react-native'
+import {mst} from 'reactotron-mst'
 
 Reactotron.configure({
   name: 'Tinyrobot',
@@ -15,6 +19,6 @@ Reactotron.configure({
   .use(asyncStorage())
   .use(networking())
   .use(mst())
-  .connect();
+  .connect()
 
-Reactotron.trackMstNode(store);
+Reactotron.trackMstNode(store)

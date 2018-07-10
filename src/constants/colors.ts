@@ -1,5 +1,3 @@
-// @flow
-
 // Link to the official rn-chat UI Kit can be found here:
 // https://github.com/hippware/rn-chat/wiki/Hippware-Resources-(tinyrobot)
 

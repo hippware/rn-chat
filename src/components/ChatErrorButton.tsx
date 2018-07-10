@@ -1,5 +1,3 @@
-// @flow
-
 import PropTypes from 'prop-types'
 import React from 'react'
 import {View, Text, StyleSheet, TouchableHighlight, ActivityIndicator} from 'react-native'

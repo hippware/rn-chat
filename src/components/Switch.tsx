@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 
 import {PanResponder, View, TouchableHighlight, Animated} from 'react-native'
