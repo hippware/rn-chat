@@ -107,6 +107,7 @@ export const Wocky = types
         if (!self.profile) {
           const profile = self.create(OwnProfile, {
             id,
+            ...data,
             ...self._registerReferences(Profile, data),
             loaded: true,
             status: 'available',

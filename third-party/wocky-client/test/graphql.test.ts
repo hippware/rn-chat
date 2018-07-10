@@ -12,16 +12,18 @@ const host = 'testing.dev.tinyrobot.com'
 let gql: GraphQLTransport, user, user2: IWocky
 let bot, bot2: IBot
 let date: Date
+let user1phone: string
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
   it('get credentials via XMPP', async done => {
     try {
-      user = await createXmpp(35)
-      user2 = await createXmpp(36)
-      await waitFor(() => user.profile !== null)
+      user = await createXmpp()
+      user2 = await createXmpp()
+      await waitFor(() => user.profile !== null && user.profile.phoneNumber !== null)
+      user1phone = user.profile.phoneNumber
       await user.profile!.update({
-        handle: 'abc13456789',
+        handle: 'a' + user1phone.replace('+', ''),
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
@@ -43,7 +45,7 @@ describe('GraphQL', () => {
       // console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user.username)
       expect(profile.email).to.equal('a@aa.com')
-      expect(profile.phoneNumber).to.equal('+155500000035')
+      expect(profile.phoneNumber).to.equal(user1phone)
       expect(profile.__typename).to.equal('CurrentUser')
       expect(profile.hidden.enabled).to.equal(false)
       expect(profile.hidden.expires).to.equal(null)

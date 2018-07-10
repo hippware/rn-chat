@@ -22,14 +22,20 @@ export function expectedImage() {
   const expectedBuf = fs.readFileSync(fileNameThumbnail)
   return expectedBuf.toString()
 }
-export async function createXmpp(num: number): Promise<IWocky> {
+export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()
     const xmppTransport = new XmppTransport(provider, 'testing')
     const gql = new GraphQLTransport('testing')
     const transport = new HybridTransport(xmppTransport, gql)
     // const provider = new XmppStropheV2(console.log)
-    const phoneNumber = `000000${num.toString()}`
+    const phoneNumber =
+      phoneNum ||
+      (num
+        ? `+1555000000${num.toString()}`
+        : `+1555${Math.trunc(Math.random() * 10000000)
+            .toString()
+            .padStart(7, '0')}`)
     const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
     const service = Wocky.create(
       {host},
@@ -42,8 +48,8 @@ export async function createXmpp(num: number): Promise<IWocky> {
     addMiddleware(service, simpleActionLogger)
     await service.register(
       {
-        userID: `000000${phoneNumber}`,
-        phoneNumber: `+1555${phoneNumber}`,
+        userID: `000000${phoneNumber.replace('+1555', '')}`,
+        phoneNumber,
         authTokenSecret: '',
         authToken: '',
         emailAddressIsVerified: false,
