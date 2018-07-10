@@ -118,8 +118,8 @@ export default class BottomMenu extends React.Component<Props> {
           <Text style={styles.text}>Invisible</Text>
           <Switch
             onTintColor={colors.PINK}
-            value={profile.isHidden}
-            // onValueChange={wocky.hideUser}
+            value={profile.hidden.enabled}
+            onValueChange={profile.hide}
           />
         </MenuItem>
       </BottomPopup>
