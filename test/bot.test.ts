@@ -6,23 +6,27 @@ const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
+let user1phone: string, user2phone: string
+
 describe('BotStore', () => {
   before(async done => {
     try {
-      user1 = await createXmpp(26)
-      user2 = await createXmpp(27)
-      await waitFor(() => user1.profile !== null)
-      await waitFor(() => user2.profile !== null)
+      user1 = await createXmpp()
+      user2 = await createXmpp()
+      await waitFor(() => user1.profile !== null && user1.profile.phoneNumber !== null)
+      await waitFor(() => user2.profile !== null && user2.profile.phoneNumber !== null)
+      user1phone = user1.profile.phoneNumber
+      user2phone = user2.profile.phoneNumber
       const profile1 = await user2.loadProfile(user1.username!)
       await profile1.follow()
       await user1.profile!.update({
-        handle: 'abcc1',
+        handle: 'a' + user1phone.replace('+', ''),
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
       })
       await user2.profile!.update({
-        handle: 'abcc2',
+        handle: 'a' + user2phone.replace('+', ''),
         firstName: 'name2',
         lastName: 'lname2',
         email: 'a2@aa.com',
@@ -159,7 +163,7 @@ describe('BotStore', () => {
   it('load subscribed bot with newly logged user2', async done => {
     try {
       await user2.logout()
-      user2 = await createXmpp(27)
+      user2 = await createXmpp(null, user2phone)
       await user2._subscribeBot(bot.id)
       const loaded = await user2.loadBot(bot.id, bot.server)
       await waitFor(() => !loaded.loading)
@@ -176,7 +180,7 @@ describe('BotStore', () => {
       expect(loaded.error).to.be.empty
       await user2._unsubscribeBot(bot.id)
       await user2.logout()
-      user2 = await createXmpp(27)
+      user2 = await createXmpp(null, user2phone)
       done()
     } catch (e) {
       done(e)
@@ -315,7 +319,7 @@ describe('BotStore', () => {
   })
   it('change first bot description and expect new item update', async done => {
     try {
-      expect(user2.updates.length).to.be.equal(1)
+      await waitFor(() => user2.updates.length === 1)
       expect(user2bot.description).to.be.equal('New description')
       await bot.update({description: 'New description2'})
       await waitFor(() => user2.updates.length === 2)
@@ -350,7 +354,7 @@ describe('BotStore', () => {
       await user2.logout()
       expect(user2.events.list.length).to.be.equal(0)
       expect(user2.updates.length).to.be.equal(0)
-      user2 = await createXmpp(27)
+      user2 = await createXmpp(null, user2phone)
       await waitFor(() => user2.events.list.length === 3)
       expect(user2.events.list[0].bot.title).to.be.equal('Test bot!!')
       expect(user2.updates.length).to.be.equal(0)
