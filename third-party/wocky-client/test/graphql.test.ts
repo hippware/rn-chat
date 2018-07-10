@@ -72,7 +72,24 @@ describe('GraphQL', () => {
       done(e)
     }
   })
-
+  it('unhide user', async done => {
+    try {
+      await gql.hideUser(false)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('loads profile again ', async done => {
+    try {
+      const profile = await gql.loadProfile(user.username!)
+      expect(profile.hidden.expires).to.be.null
+      expect(profile.hidden.enabled).to.equal(false)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   it('loads other profile', async done => {
     try {
       const profile = await gql.loadProfile(user2.username!)

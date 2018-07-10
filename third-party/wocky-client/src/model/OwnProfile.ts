@@ -7,6 +7,10 @@ import {IBot} from './Bot'
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
 export type __IBot = IBot
 
+const Hidden = types.model('HiddenType', {
+  enabled: false,
+  expires: types.maybe(types.Date),
+})
 export const OwnProfile = types
   .compose(
     types.compose(
@@ -18,8 +22,7 @@ export const OwnProfile = types
       email: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
       hasUsedGeofence: false,
-      // should we just store this directly or calculate it based on expiration?
-      isHidden: false,
+      hidden: types.optional(Hidden, {enabled: true}),
     })
   )
   .actions(self => ({
@@ -28,7 +31,7 @@ export const OwnProfile = types
     },
     hide: flow(function*(value: boolean) {
       yield self.service._hideUser(value)
-      self.isHidden = value
+      self.hidden = Hidden.create({enabled: value})
     }),
   }))
   .named('OwnProfile')
