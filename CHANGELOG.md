@@ -4,10 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Horizontal list improvements (PR #2529)
-  * Implement paging on Home horizontal list (#2524)
-  * Maintain horizontal list state (#2526)
-  * Horizontal list: Only show Avatar for focused bot (#2527)
+* Option to run wocky-client tests against local wocky instance (PR #2532)
+* Invisible mode and toggle (#2514, #2542)
+* Prevent flow warnings on react native bundle (PR #2546)
+* improve bot tests (PR #2552)
+
+wocky-client
+
+* Add Dockerfile for running tests in a container (PR #51)
 
 # 3.1.0 - 2018 July 5
 
