@@ -41,11 +41,13 @@ class ErrorHandler extends React.Component<Props> {
     })
   }
 
-  reload = () => {
+  reload = async () => {
     this.props.analytics.track('reload', getSnapshot(this.props.store))
-    this.props.store.reload()
     this.error = null
     this.errorInfo = null
+    // reset nav to 'reload' screen while resetting cache (prevent errors from screens/components listening to MST observables)
+    Actions.reset('reload')
+    await this.props.store.resetCache()
     Actions.reset('root')
   }
 

@@ -12,27 +12,31 @@ type Props = {
 }
 
 const YouCard = inject('wocky')(
-  observer(({wocky}: Props) => (
-    <Card>
-      <View style={styles.imageContainer}>
-        <Avatar
-          profile={wocky.profile}
-          size={47}
-          hideDot
-          borderColor={colors.PINK}
-          fontSize="large"
-        />
-      </View>
-      <View style={styles.textContainer}>
-        <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
-          {`@${wocky.profile.handle}`}
-        </RText>
-        <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-          {`${wocky.profile.ownBots.length} spots • ${wocky.profile.followersSize} followers`}
-        </RText>
-      </View>
-    </Card>
-  ))
+  observer(
+    ({wocky}: Props) =>
+      wocky.profile &&
+      wocky.profile.handle && (
+        <Card>
+          <View style={styles.imageContainer}>
+            <Avatar
+              profile={wocky.profile}
+              size={47}
+              hideDot
+              borderColor={colors.PINK}
+              fontSize="large"
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
+              {`@${wocky.profile.handle}`}
+            </RText>
+            <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
+              {`${wocky.profile.ownBots.length} spots • ${wocky.profile.followersSize} followers`}
+            </RText>
+          </View>
+        </Card>
+      )
+  )
 )
 
 export default YouCard

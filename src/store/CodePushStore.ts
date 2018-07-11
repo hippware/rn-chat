@@ -1,9 +1,7 @@
-import {types, flow, getParent} from 'mobx-state-tree'
+import {types, flow} from 'mobx-state-tree'
 import {settings} from '../globals'
 import * as log from '../utils/log'
-import codePush, {RemotePackage} from 'react-native-code-push'
-import {IWocky} from 'wocky-client'
-import {when} from 'mobx'
+import codePush, {RemotePackage, LocalPackage} from 'react-native-code-push'
 
 const deployments = require('../constants/codepush-deployments.json')
 
@@ -19,11 +17,11 @@ const CodePushStore = types
     metadata: types.optional(types.frozen, null),
     syncStatus: types.optional(types.array(types.string), []),
     channelUpdates: types.optional(types.array(types.frozen), []),
+    pendingUpdate: false,
   })
   .volatile(() => ({
     syncing: false,
     refreshing: false,
-    isFirstRun: types.maybe(types.boolean),
     downloadProgress: 0,
   }))
   .views(self => ({
@@ -107,27 +105,31 @@ const CodePushStore = types
     },
   }))
   .actions(self => ({
-    checkLoadedBundle: flow(function*(wocky: IWocky) {
-      self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
-      if (self.metadata && self.metadata.isFirstRun) {
-        // TODO: prevent initial hydration instead of clearing the cache?
-        // If we uncomment below it causes mobx observer exceptions
-        // wocky.clearCache()
-      }
-    }),
-
-    // If there are any new Codepush bundles on "Staging" (or "Production" in the case of the prod app) then apply the update immediately (i.e. without user selection)
-    syncImmediate: flow(function*() {
+    checkCurrentStatus: flow(function*() {
       try {
-        const deployKey = self.channels[0].key
-        const update: RemotePackage = yield codePush.checkForUpdate(deployKey)
-        if (update) {
-          const {isMandatory} = update
+        const autoDeployKey = self.channels[0].key
+        self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
+        // check for update that exists but hasn't been downloaded yet (but will be downloaded automatically in the background)
+        const metadataPending: RemotePackage = yield codePush.checkForUpdate(autoDeployKey)
+        // check for update that has been downloaded but not installed yet (will be installed on next app start)
+        const metadataDownloaded: LocalPackage = yield codePush.getUpdateMetadata(
+          codePush.UpdateState.PENDING
+        )
+
+        if (metadataPending || metadataDownloaded) {
+          // signal that we need to start with a clean cache on next app load
+          self.pendingUpdate = true
+        }
+
+        // If there are any new Codepush bundles on this deployment then download the update (i.e. without user interaction).
+        // If `isMandatory` apply the update as soon as it is ready (hard reload the app)
+        if (metadataPending) {
+          const {isMandatory} = metadataPending
           const syncOptions = {
             installMode: isMandatory
               ? codePush.InstallMode.IMMEDIATE
               : codePush.InstallMode.ON_NEXT_RESTART,
-            deploymentKey: deployKey,
+            deploymentKey: autoDeployKey,
           }
           codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
         }
@@ -166,6 +168,7 @@ const CodePushStore = types
       }
       self.syncing = true
       self.syncStatus.clear()
+      self.pendingUpdate = true
       codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
     },
   }))
@@ -173,15 +176,9 @@ const CodePushStore = types
     afterAttach() {
       self.syncStatus.clear()
       self.metadata = null
+      self.channelUpdates.clear()
       codePush.notifyAppReady()
-      self.syncImmediate()
-      const parent = getParent(self)
-      when(
-        () => !!parent.wocky,
-        () => {
-          self.checkLoadedBundle(parent.wocky)
-        }
-      )
+      self.checkCurrentStatus()
     },
   }))
 

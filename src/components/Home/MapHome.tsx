@@ -73,6 +73,7 @@ export default class MapHome extends React.Component<IProps> {
   @observable opacity: number = 0
 
   mapRef: any
+  reactions: any[] = []
 
   setCenterCoordinate = (location: Location) => {
     if (this.mapRef && location) {
@@ -88,14 +89,21 @@ export default class MapHome extends React.Component<IProps> {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
 
-    // re-center map on focused card
-    reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location))
+    this.reactions = [
+      reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
+        name: 'MapHome: re-center map on focused card',
+      }),
+      reaction(
+        () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
+        (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList(),
+        {name: 'MapHome: paging on discover list'}
+      ),
+    ]
+  }
 
-    // paging on discover list
-    reaction(
-      () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
-      (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList()
-    )
+  componentWillUnmount() {
+    this.reactions.forEach(disposer => disposer())
+    this.reactions = []
   }
 
   loadMoreDiscoverList = async () => {
