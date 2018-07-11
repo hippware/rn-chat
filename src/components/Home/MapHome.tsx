@@ -82,23 +82,21 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   componentDidMount() {
-    const {homeStore, wocky, locationStore} = this.props
+    const {homeStore, wocky} = this.props
     if (!wocky.events.length) {
       this.loadMoreDiscoverList()
     } else {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
 
-    if (!locationStore.location) locationStore.getCurrentPosition()
-
     this.reactions = [
-      // re-center map on focused card
-      reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location)),
-
-      // paging on discover list
+      reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
+        name: 'MapHome: re-center map on focused card',
+      }),
       reaction(
         () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
-        (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList()
+        (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList(),
+        {name: 'MapHome: paging on discover list'}
       ),
     ]
   }

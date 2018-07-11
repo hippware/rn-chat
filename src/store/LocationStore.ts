@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, reaction, autorun} from 'mobx'
+import {when, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -424,9 +424,13 @@ const LocationStore = types
             self.startBackground().then(() => {
               self.getCurrentPosition()
             })
-          }
+          },
+          {name: 'LocationStore: Start background after connected'}
         ),
-        autorun(() => !self.location && self.getCurrentPosition(), {delay: 500}),
+        autorun(() => !self.location && self.getCurrentPosition(), {
+          delay: 500,
+          name: 'LocationStore: Get current location after cache reset',
+        }),
       ]
     })
 
