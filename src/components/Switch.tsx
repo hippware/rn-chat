@@ -10,7 +10,7 @@ type Props = {
   inactiveButtonPressedColor: string
   activeButtonColor: string
   activeButtonPressedColor: string
-  buttonShadow: {
+  buttonShadow?: {
     shadowColor: string
     shadowOpacity: number
     shadowRadius: number
@@ -19,6 +19,7 @@ type Props = {
       width: number
     }
   }
+  swipeDisabled?: boolean
   activeBackgroundColor: string
   inactiveBackgroundColor: string
   buttonRadius?: number
@@ -30,9 +31,12 @@ type Props = {
   onActivate?: any
   onDeactivate?: any
   onChangeState?: any
+  onPress?: any
   toggleWidth?: number
   toggleHeight?: number
   style?: any
+  top?: number
+  left?: number
 }
 
 type State = {
@@ -48,6 +52,7 @@ const padding = 2
 class MaterialSwitch extends React.Component<any, any> {
   static defaultProps = {
     active: false,
+    swipeDisabled: false,
     styles: {},
     inactiveButtonColor: '#2196F3',
     inactiveButtonPressedColor: '#42A5F5',
@@ -94,80 +99,82 @@ class MaterialSwitch extends React.Component<any, any> {
   }
 
   componentWillMount() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onStartShouldSetPanResponderCapture: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
+    if (!this.props.swipeDisabled) {
+      this._panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onStartShouldSetPanResponderCapture: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponderCapture: () => true,
 
-      onPanResponderGrant: (evt, gestureState) => {
-        this.setState({pressed: true})
-        this.start.x0 = gestureState.x0
-        this.start.pos = this.state.position._value
-        this.start.moved = false
-        this.start.state = this.state.state
-        this.start.stateChanged = false
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        if (!this.props.enableSlide) return
+        onPanResponderGrant: (evt, gestureState) => {
+          this.setState({pressed: true})
+          this.start.x0 = gestureState.x0
+          this.start.pos = this.state.position._value
+          this.start.moved = false
+          this.start.state = this.state.state
+          this.start.stateChanged = false
+        },
+        onPanResponderMove: (evt, gestureState) => {
+          if (!this.props.enableSlide) return
 
-        this.start.moved = true
-        if (this.start.pos === 0) {
-          if (gestureState.dx <= this.state.width && gestureState.dx >= 0) {
-            this.state.position.setValue(gestureState.dx)
+          this.start.moved = true
+          if (this.start.pos === 0) {
+            if (gestureState.dx <= this.state.width && gestureState.dx >= 0) {
+              this.state.position.setValue(gestureState.dx)
+            }
+            if (gestureState.dx > this.state.width) {
+              this.state.position.setValue(this.state.width)
+            }
+            if (gestureState.dx < 0) {
+              this.state.position.setValue(0)
+            }
           }
-          if (gestureState.dx > this.state.width) {
-            this.state.position.setValue(this.state.width)
+          if (this.start.pos === this.state.width) {
+            if (gestureState.dx >= -this.state.width && gestureState.dx <= 0) {
+              this.state.position.setValue(this.state.width + gestureState.dx)
+            }
+            if (gestureState.dx > 0) {
+              this.state.position.setValue(this.state.width)
+            }
+            if (gestureState.dx < -this.state.width) {
+              this.state.position.setValue(0)
+            }
           }
-          if (gestureState.dx < 0) {
-            this.state.position.setValue(0)
+          const currentPos = this.state.position._value
+          this.onSwipe(
+            currentPos,
+            this.start.pos,
+            () => {
+              if (!this.start.state) this.start.stateChanged = true
+              this.setState({state: true})
+            },
+            () => {
+              if (this.start.state) this.start.stateChanged = true
+              this.setState({state: false})
+            }
+          )
+        },
+        onPanResponderTerminationRequest: () => true,
+        onPanResponderRelease: () => {
+          this.setState({pressed: false})
+          const currentPos = this.state.position._value
+          if (
+            !this.start.moved ||
+            (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)
+          ) {
+            this.toggle()
+            return
           }
-        }
-        if (this.start.pos === this.state.width) {
-          if (gestureState.dx >= -this.state.width && gestureState.dx <= 0) {
-            this.state.position.setValue(this.state.width + gestureState.dx)
-          }
-          if (gestureState.dx > 0) {
-            this.state.position.setValue(this.state.width)
-          }
-          if (gestureState.dx < -this.state.width) {
-            this.state.position.setValue(0)
-          }
-        }
-        const currentPos = this.state.position._value
-        this.onSwipe(
-          currentPos,
-          this.start.pos,
-          () => {
-            if (!this.start.state) this.start.stateChanged = true
-            this.setState({state: true})
-          },
-          () => {
-            if (this.start.state) this.start.stateChanged = true
-            this.setState({state: false})
-          }
-        )
-      },
-      onPanResponderTerminationRequest: () => true,
-      onPanResponderRelease: () => {
-        this.setState({pressed: false})
-        const currentPos = this.state.position._value
-        if (
-          !this.start.moved ||
-          (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)
-        ) {
-          this.toggle()
-          return
-        }
-        this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate)
-      },
-      onPanResponderTerminate: () => {
-        const currentPos = this.state.position._value
-        this.setState({pressed: false})
-        this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate)
-      },
-      onShouldBlockNativeResponder: () => true,
-    })
+          this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate)
+        },
+        onPanResponderTerminate: () => {
+          const currentPos = this.state.position._value
+          this.setState({pressed: false})
+          this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate)
+        },
+        onShouldBlockNativeResponder: () => true,
+      })
+    }
   }
 
   onSwipe(currentPosition, startingPosition, onChange, onTerminate) {
@@ -247,9 +254,12 @@ class MaterialSwitch extends React.Component<any, any> {
         <TouchableHighlight
           underlayColor="transparent"
           activeOpacity={1}
-          onPress={() => {
-            this.toggle()
-          }}
+          onPress={
+            this.props.onPress ||
+            (() => {
+              this.toggle()
+            })
+          }
           style={{
             height: Math.max(
               this.props.buttonRadius * 2 + doublePadding,
@@ -257,8 +267,8 @@ class MaterialSwitch extends React.Component<any, any> {
             ),
             width: this.props.switchWidth + doublePadding,
             position: 'absolute',
-            top: 0,
-            left: 4,
+            top: this.props.top || 0,
+            left: this.props.left || 4,
             // borderWidth: 1,
             // borderColor: 'red',
           }}
@@ -289,7 +299,7 @@ class MaterialSwitch extends React.Component<any, any> {
               },
               this.props.buttonShadow,
             ]}
-            {...this._panResponder.panHandlers}
+            {...(this.props.swipeDisabled ? {} : this._panResponder.panHandlers)}
           >
             {this.props.buttonContent}
           </Animated.View>
