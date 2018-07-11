@@ -105,3 +105,5 @@ export const backgroundColorCardDay = 'rgba(255,255,255,1)'
 export const backgroundColorCardNight = PURPLE
 
 export const SILVER = 'rgb(206,215,219)'
+
+export const STAGING_COLOR = 'rgb(28,247,39)'

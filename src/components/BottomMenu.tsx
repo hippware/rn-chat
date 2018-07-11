@@ -16,6 +16,7 @@ import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {k} from './Global'
 import {IWocky} from 'wocky-client'
+import {settings} from '../globals'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -122,6 +123,11 @@ export default class BottomMenu extends React.Component<Props> {
             onValueChange={profile.hide}
           />
         </MenuItem>
+        {settings.isStaging && (
+          <MenuItem onPress={() => Actions.debugScreen()}>
+            <Text style={[styles.text, {color: colors.STAGING_COLOR}]}>DEBUG SCREEN</Text>
+          </MenuItem>
+        )}
       </BottomPopup>
     )
   }

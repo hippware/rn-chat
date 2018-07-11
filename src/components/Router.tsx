@@ -43,15 +43,14 @@ import LocationDebug from './LocationDebug'
 import SplitNavigator from './SplitNavigator'
 import ErrorNavigator from './ErrorNavigator'
 import BottomMenu from './BottomMenu'
-
-const STAGING_COLOR = 'rgb(28,247,39)'
+import DebugScreen from './DebugScreen';
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
   navBarRightButtonColor: 'rgb(254,92,108)',
   navBarLeftButtonColor: colors.DARK_GREY,
   navBarCancelColor: colors.DARK_GREY,
-  navBarButtonColor: settings.isStaging ? STAGING_COLOR : 'rgb(117,117,117)',
+  navBarButtonColor: settings.isStaging ? colors.STAGING_COLOR : 'rgb(117,117,117)',
   navBarBackgroundColor: 'white',
   navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',
@@ -195,7 +194,10 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="followers" path="followers" component={peopleLists.FollowersList} clone title="Followers" back />
                 <Scene key="followed" component={peopleLists.FollowedList} clone title="Following" back />
                 <Scene key="blocked" component={peopleLists.BlockedList} clone title="Blocked Users" back right={() => null} />
-                <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />
+                {settings.isStaging && [
+                  <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />,
+                  <Scene key="debugScreen" component={DebugScreen} clone title="Debug" back />
+                ]}
                 <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
               </Stack>
               <Scene key="locationWarning" component={modals.LocationWarning} />
