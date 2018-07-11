@@ -1186,7 +1186,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                     "handle": null,
                     "hasUsedGeofence": false,
                     "hidden": Object {
-                      "enabled": true,
+                      "enabled": false,
                       "expires": null,
                     },
                     "id": "user",

@@ -1,4 +1,4 @@
-import {types, getSnapshot, flow, isAlive} from 'mobx-state-tree'
+import {types, getSnapshot, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
@@ -44,7 +44,7 @@ export const OwnProfile = types
       email: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
       hasUsedGeofence: false,
-      hidden: types.optional(Hidden, {enabled: false}),
+      hidden: types.optional(Hidden, {}),
     })
   )
   .actions(self => ({
