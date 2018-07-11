@@ -2,7 +2,6 @@ import React from 'react'
 import Switch from './Switch'
 import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
-import {reaction} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 
@@ -14,26 +13,6 @@ type Props = {
 @observer
 export default class InvisibleSwitch extends React.Component<Props> {
   switch: any
-  reaction: any
-
-  componentDidMount() {
-    const {profile} = this.props.wocky
-    // we have to add this reaction because Switch component is not 'reactive'
-    this.reaction = reaction(
-      () => profile.hidden.enabled,
-      () => {
-        if (profile.hidden.enabled) {
-          this.switch.activate()
-        } else {
-          this.switch.deactivate()
-        }
-      }
-    )
-  }
-
-  componentWillUnmount() {
-    this.reaction()
-  }
 
   render() {
     const {profile} = this.props.wocky

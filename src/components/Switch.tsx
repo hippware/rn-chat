@@ -98,6 +98,15 @@ class MaterialSwitch extends React.Component<any, any> {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.active && !this.props.active) {
+      this.activate()
+    }
+    if (!nextProps.active && this.props.active) {
+      this.deactivate()
+    }
+  }
+
   componentWillMount() {
     if (!this.props.swipeDisabled) {
       this._panResponder = PanResponder.create({
