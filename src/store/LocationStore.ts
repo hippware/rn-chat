@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when} from 'mobx'
+import {when, reaction, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -396,7 +396,7 @@ const LocationStore = types
   })
   .actions(self => {
     let wocky
-    let handler
+    let reactions = []
 
     function afterAttach() {
       self.initialize()
@@ -417,25 +417,33 @@ const LocationStore = types
       if (!self.alwaysOn) {
         self.stopBackground()
       }
-      handler = when(
-        () => wocky.connected,
-        () => {
-          self.startBackground().then(() => {
-            self.getCurrentPosition()
-          })
-        }
-      )
+      reactions = [
+        when(
+          () => wocky.connected,
+          () => {
+            self.startBackground().then(() => {
+              self.getCurrentPosition()
+            })
+          }
+        ),
+        autorun(() => !self.location && self.getCurrentPosition(), {delay: 500}),
+      ]
     })
 
     function finish() {
-      if (handler) handler()
+      reactions.forEach(disposer => disposer())
+      reactions = []
       if (navigator && self.watch !== null) {
         navigator.geolocation.clearWatch(self.watch)
         self.watch = null
       }
     }
 
-    return {afterAttach, start, finish}
+    return {
+      afterAttach,
+      start,
+      finish,
+    }
   })
 
 export default LocationStore
