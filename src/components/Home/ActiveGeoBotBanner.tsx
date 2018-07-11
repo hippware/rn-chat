@@ -8,9 +8,12 @@ import FirstLoadOverlay from './FirstLoadOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k} from '../Global'
+import {k, width} from '../Global'
 import {autorun} from 'mobx'
 import {IHomeStore} from '../../store/HomeStore'
+import {RText} from '../common'
+import Bubble from '../map/Bubble'
+import {addAlpha} from '../../constants/colors'
 
 type Props = {
   wocky?: IWocky
@@ -40,7 +43,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
 
   render() {
     const {wocky} = this.props
-    const {activeBots} = wocky!
+    const {activeBots, profile} = wocky!
     return (
       <Animated.View
         style={{
@@ -59,10 +62,12 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
       >
         <View>
           <FlatList
-            data={activeBots}
+            data={profile && profile.hasUsedGeofence ? activeBots : placeholderItems}
             horizontal
             keyExtractor={this.keyExtractor}
-            renderItem={this.renderActiveBot}
+            renderItem={
+              profile && profile.hasUsedGeofence ? this.renderActiveBot : this.renderPlaceholder
+            }
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
           />
@@ -74,10 +79,52 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     )
   }
 
-  keyExtractor = (item: IBot) => item.id
+  keyExtractor = item => item.id
 
-  renderActiveBot = ({item}: {item: IBot}) => <ActiveGeofenceBot bot={item} />
+  renderActiveBot = ({item}: {item: IBot}) => (
+    <ActiveGeofenceBot bot={item} outerStyle={styles.outer} innerStyle={styles.inner} />
+  )
+
+  renderPlaceholder = ({item}: {item: any}) => {
+    const Comp = item.render || Placeholder
+    return <Comp />
+  }
 }
+
+const placeholderItems = [
+  {
+    id: '0',
+    render: () => <PlaceholderNew />,
+  },
+  {id: '1'},
+  {id: '2'},
+  {id: '3'},
+]
+
+const foot = require('../../../images/footIconWhite.png')
+const lightPink = addAlpha(colors.PINK, 0.15)
+
+const PlaceholderNew = () => (
+  <View style={styles.outer}>
+    <Bubble image={foot} imageStyle={{width: 20, height: 24}} size={50} />
+    <View style={styles.newDot} />
+    <RText color={colors.PINK} size={13} style={{textAlign: 'center'}}>
+      New!
+    </RText>
+  </View>
+)
+
+const Placeholder = () => (
+  <View style={styles.outer}>
+    <Bubble
+      size={50}
+      style={{backgroundColor: 'white', borderColor: lightPink}}
+      triangleColor={lightPink}
+    />
+  </View>
+)
+
+const dotWidth = 12
 
 const styles = StyleSheet.create({
   overlay: {
@@ -87,5 +134,25 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     backgroundColor: colors.addAlpha(colors.WHITE, 0.7),
+  },
+  outer: {
+    padding: 15,
+    width: width / 4,
+    alignItems: 'center',
+  },
+  inner: {
+    width: 75,
+  },
+  newDot: {
+    position: 'absolute',
+    top: 11,
+    right: 17 * k, // TODO: adjust this value for different view sizes
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: dotWidth / 2,
+    width: 10,
+    height: 10,
+    backgroundColor: colors.GOLD,
+    zIndex: 1000,
   },
 })

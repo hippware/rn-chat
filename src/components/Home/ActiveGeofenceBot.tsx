@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
 
 import {observer, inject} from 'mobx-react/native'
 
@@ -8,7 +8,6 @@ import VisitorHeads from './VisitorHeads'
 import {IBot, IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {RText} from '../common'
-import {width} from '../Global'
 import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 
@@ -16,6 +15,8 @@ type Props = {
   wocky?: IWocky
   bot: IBot
   analytics?: any
+  outerStyle: ViewStyle
+  innerStyle: ViewStyle
 }
 
 @inject('wocky', 'analytics')
@@ -28,24 +29,13 @@ class ActiveBot extends React.Component<Props> {
   }
 
   render() {
-    const {bot} = this.props
+    const {bot, outerStyle, innerStyle} = this.props
     return bot && isAlive(bot) ? (
-      <View style={styles.outer}>
-        <View style={styles.inner}>
+      <View style={outerStyle}>
+        <View style={innerStyle}>
           <BotBubble bot={bot} scale={0} onImagePress={this.goToBot}>
             {bot.visitor ? (
-              <View
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  left: 0,
-                  bottom: 0,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <View style={styles.youreHere}>
                 <RText
                   size={13}
                   color="white"
@@ -69,12 +59,14 @@ class ActiveBot extends React.Component<Props> {
 export default ActiveBot
 
 const styles = StyleSheet.create({
-  outer: {
-    padding: 15,
-    width: width / 3.5,
+  youreHere: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
     alignItems: 'center',
-  },
-  inner: {
-    width: 75,
+    justifyContent: 'center',
   },
 })

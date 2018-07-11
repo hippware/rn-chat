@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, ViewStyle, ImageStyle} from 'react-native'
+import {View, Image, StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native'
 import Triangle from './Triangle'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -7,12 +7,13 @@ import {observer} from 'mobx-react/native'
 
 type Props = {
   text?: string
-  image: any
+  image?: ImageSourcePropType
   showLoader?: boolean
   children?: any
   style?: ViewStyle
   imageStyle?: ImageStyle
   size?: number
+  triangleColor?: string
 }
 
 const defaultSize = 58
@@ -20,7 +21,7 @@ const defaultSize = 58
 @observer
 export default class Bubble extends React.Component<Props> {
   render() {
-    const {image, text, showLoader, children, style, imageStyle, size} = this.props
+    const {image, text, showLoader, children, style, imageStyle, size, triangleColor} = this.props
     const theSize = size || defaultSize
 
     return (
@@ -37,13 +38,13 @@ export default class Bubble extends React.Component<Props> {
         >
           {showLoader ? (
             <View style={{width: theSize, height: theSize, backgroundColor: colors.GREY}} />
-          ) : (
+          ) : image ? (
             <Image
               style={[{width: theSize, height: theSize}, imageStyle]}
               resizeMode="contain"
               source={image}
             />
-          )}
+          ) : null}
 
           {text && (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -60,7 +61,7 @@ export default class Bubble extends React.Component<Props> {
           )}
           {children}
         </View>
-        <Triangle width={14} height={8} color={colors.PINK} direction="down" />
+        <Triangle width={14} height={8} color={triangleColor || colors.PINK} direction="down" />
       </View>
     )
   }
