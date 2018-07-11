@@ -25,6 +25,7 @@ import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
+import {cleanState, STORE_NAME} from './PersistableModel'
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')
@@ -91,36 +92,16 @@ const Store = types
     },
   }))
 
-export const STORE_NAME = 'MainStore'
 const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
 
-export const defaultStore = {
-  firebaseStore: {},
-  locationStore: {},
-  searchStore: {},
-  profileValidationStore: {},
-  geocodingStore: {},
-  newBotStore: {},
-  homeStore: {},
-  codePushStore: {},
-}
-
-export function getCleanState() {
-  return {
-    wocky: {host: settings.getDomain()},
-    firebaseStore: {},
-    locationStore: {},
-    searchStore: {},
-    profileValidationStore: {},
-    geocodingStore: {},
-    newBotStore: {},
-    homeStore: {},
-    codePushStore: {},
+const theStore = PersistableStore.create(
+  {
+    ...cleanState,
     version: settings.version,
-  }
-}
-
-const theStore = PersistableStore.create(getCleanState(), env)
+    wocky: {host: settings.getDomain()},
+  },
+  env
+)
 
 export const reportStore = rs
 export const pushStore = new PushStore(theStore.wocky, analytics)

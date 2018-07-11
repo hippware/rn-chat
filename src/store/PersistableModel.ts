@@ -1,7 +1,20 @@
 import {types, getType, flow, getSnapshot, applySnapshot, getEnv} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import {Wocky} from 'wocky-client'
-import {getCleanState, STORE_NAME} from '.'
+import {settings} from '../globals'
+
+export const cleanState = {
+  firebaseStore: {},
+  locationStore: {},
+  searchStore: {},
+  profileValidationStore: {},
+  geocodingStore: {},
+  newBotStore: {},
+  homeStore: {},
+  codePushStore: {},
+}
+
+export const STORE_NAME = 'MainStore'
 
 const PersistableModel = types
   .model({id: 'Persistable', wocky: Wocky})
@@ -68,7 +81,9 @@ const PersistableModel = types
         const data = await loadFromStorage(modelName)
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
-        if (parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate) {
+        const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
+        const newBinaryVersion = parsed && parsed.version && parsed.version !== settings.version
+        if (pendingCodepush || newBinaryVersion) {
           parsed.codePushStore.pendingUpdate = false
           loadMinimal(parsed)
         } else {
@@ -120,13 +135,16 @@ const PersistableModel = types
         self.wocky.clearCache()
         self.wocky.disposeReactions()
         // wipe out old state and apply clean
-        applySnapshot(self, getCleanState())
+        applySnapshot(self, {
+          ...cleanState,
+          version: settings.version,
+          wocky: {host: settings.getDomain()},
+        })
         self.wocky.startReactions()
         // load minimal state to re-login
         const data = yield loadFromStorage(STORE_NAME)
         const parsed = JSON.parse(data)
         loadMinimal(parsed)
-        // yield storage.setItem(STORE_NAME, JSON.stringify(getSnapshot(self)))
         self.reloading = false
         startPersistenceReaction()
       }),
