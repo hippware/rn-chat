@@ -38,12 +38,17 @@ import ReportUser from './report-modals/ReportUser'
 import ReportBot from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
-import * as modals from './modals'
 import LocationDebug from './LocationDebug'
 import SplitNavigator from './SplitNavigator'
 import ErrorNavigator from './ErrorNavigator'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen';
+import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
+import LocationPrimer from './modals/LocationPrimer'
+import LocationWarning from './modals/LocationWarning'
+import SharePresencePrimer from './modals/SharePresencePrimer'
+import FirstTimeGuestPrimer from './modals/FirstTimeGuestPrimer'
+import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -142,8 +147,8 @@ class TinyRobotRouter extends React.Component<Props> {
     return (
       <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Stack navigator={ErrorNavigator}>
+         <Lightbox>
           <Stack navigator={SplitNavigator} splitHeight={394}>
-            <Lightbox>
               <Stack key="rootStack" initial hideNavBar>
                 <Stack key="root" tabs hideTabBar hideNavBar>
                   <Stack key="launch" hideNavBar lightbox type="replace">
@@ -200,15 +205,16 @@ class TinyRobotRouter extends React.Component<Props> {
                 ]}
                 <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
               </Stack>
-              <Scene key="locationWarning" component={modals.LocationWarning} />
-              <Scene key="geofenceWarning" component={modals.LocationGeofenceWarning} />
-              <Scene key="locationPrimer" component={modals.LocationPrimer} />
-              <Scene key="sharePresencePrimer" component={modals.SharePresencePrimer} />
-              <Scene key="firstTimeGuest" component={modals.FirstTimeGuestPrimer} />
-            </Lightbox>
             <Scene key="bottomMenu" component={BottomMenu} />
             <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable header={LocationDetailsNavBar} />
           </Stack>
+          <Scene key="locationWarning" component={LocationWarning} />
+          <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
+          <Scene key="locationPrimer" component={LocationPrimer} />
+          <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
+          <Scene key="firstTimeGuest" component={FirstTimeGuestPrimer} />
+          <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
+         </Lightbox>
         </Stack>
       </Router>
     )

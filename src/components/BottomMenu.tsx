@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableHighlight,
   TouchableOpacityProps,
-  Switch,
 } from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
@@ -17,6 +16,7 @@ import Avatar from './common/Avatar'
 import {k} from './Global'
 import {IWocky} from 'wocky-client'
 import {settings} from '../globals'
+import InvisibleSwitch from './InvisibleSwitch'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -117,11 +117,7 @@ export default class BottomMenu extends React.Component<Props> {
         </MenuItem>
         <MenuItem image={require('../../images/menuInvisible.png')}>
           <Text style={styles.text}>Invisible</Text>
-          <Switch
-            onTintColor={colors.PINK}
-            value={profile.hidden.enabled}
-            onValueChange={profile.hide}
-          />
+          <InvisibleSwitch />
         </MenuItem>
         {settings.isStaging && (
           <MenuItem onPress={() => Actions.debugScreen()}>

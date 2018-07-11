@@ -306,9 +306,9 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.unblock(username)
     }),
-    _hideUser: flow(function*(value: boolean) {
+    _hideUser: flow(function*(value: boolean, expire: Date | null = null) {
       yield waitFor(() => self.connected)
-      yield self.transport.hideUser(value)
+      yield self.transport.hideUser(value, expire)
     }),
     requestRoster: flow(function*() {
       yield waitFor(() => self.connected)

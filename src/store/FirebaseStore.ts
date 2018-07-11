@@ -39,7 +39,7 @@ const FirebaseStore = types
 
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
-      wocky = getParent(self).wocky
+      wocky = getParent(self).wocky // wocky could be null for HMR (?)
     }
 
     // NOTE: this is not a MST action
@@ -54,11 +54,11 @@ const FirebaseStore = types
         } catch (err) {
           logger.warn('Firebase onAuthStateChanged error:', err)
           analytics.track('auth_error_firebase', {error: err})
-          if (wocky.profile && wocky.connected) {
+          if (wocky && wocky.profile && wocky.connected) {
             wocky.logout()
           }
         }
-      } else if (wocky.profile && wocky.connected) {
+      } else if (wocky && wocky.profile && wocky.connected) {
         wocky.logout()
       }
     }
