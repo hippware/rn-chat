@@ -119,11 +119,6 @@ export default class BottomMenu extends React.Component<Props> {
           <Text style={styles.text}>Invisible</Text>
           <InvisibleSwitch />
         </MenuItem>
-        {settings.isStaging && (
-          <MenuItem onPress={() => Actions.debugScreen()}>
-            <Text style={[styles.text, {color: colors.STAGING_COLOR}]}>DEBUG SCREEN</Text>
-          </MenuItem>
-        )}
       </BottomPopup>
     )
   }

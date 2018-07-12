@@ -188,7 +188,6 @@ class TinyRobotRouter extends React.Component<Props> {
                 </Scene>
                 <Scene key="camera" component={Camera} clone hideNavBar />
                 <Scene key="botEdit" component={BotCompose} clone edit navTransparent right={() => null} />
-                <Scene key="codePush" component={CodePushScene} title="CodePush" clone back />
                 <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" clone back right={() => null} />
                 <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" clone left={() => null} />
                 <Scene key="subscribers" component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title="Favorites" />
@@ -202,7 +201,8 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="blocked" component={peopleLists.BlockedList} clone title="Blocked Users" back right={() => null} />
                 {settings.isStaging && [
                   <Scene key="locationDebug" component={LocationDebug} clone title="Location Debug" back />,
-                  <Scene key="debugScreen" component={DebugScreen} clone title="Debug" back />
+                  <Scene key="debugScreen" component={DebugScreen} clone title="Debug" back />,
+                  <Scene key="codePush" component={CodePushScene} title="CodePush" clone back />
                 ]}
                 <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
               </Stack>
