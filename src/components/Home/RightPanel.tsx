@@ -21,7 +21,7 @@ const RightPanel = inject('homeStore')(
   observer(({homeStore: {listMode, toggleListMode}}: Props) => (
     <View style={styles.container} pointerEvents="box-none">
       <TouchableOpacity
-        onPress={() => Actions.geoHeaderPrimer()}
+        onPress={() => Actions.bottomMenu()}
         // TODO: remove this when the settings menu is done
         onLongPress={() => Actions.codePush()}
         style={styles.button}
