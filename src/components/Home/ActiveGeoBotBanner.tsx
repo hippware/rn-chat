@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, StyleSheet, Animated} from 'react-native'
+import {View, FlatList, StyleSheet, Animated, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
@@ -14,6 +14,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
+import {Actions} from '../../../node_modules/react-native-router-flux'
 
 type Props = {
   wocky?: IWocky
@@ -105,13 +106,13 @@ const foot = require('../../../images/footIconWhite.png')
 const lightPink = addAlpha(colors.PINK, 0.15)
 
 const PlaceholderNew = () => (
-  <View style={styles.outer}>
+  <TouchableOpacity style={styles.outer} onPress={() => Actions.geoHeaderPrimer()}>
     <Bubble image={foot} imageStyle={{width: 20, height: 24}} size={50} />
     <View style={styles.newDot} />
     <RText color={colors.PINK} size={13} style={{textAlign: 'center'}}>
       New!
     </RText>
-  </View>
+  </TouchableOpacity>
 )
 
 const Placeholder = () => (

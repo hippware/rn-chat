@@ -49,6 +49,7 @@ import LocationWarning from './modals/LocationWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
 import FirstTimeGuestPrimer from './modals/FirstTimeGuestPrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
+import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -148,7 +149,7 @@ class TinyRobotRouter extends React.Component<Props> {
       <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Stack navigator={ErrorNavigator}>
          <Lightbox>
-          <Stack navigator={SplitNavigator} splitHeight={394}>
+            <Stack navigator={SplitNavigator} splitHeight={394}>
               <Stack key="rootStack" initial hideNavBar>
                 <Stack key="root" tabs hideTabBar hideNavBar>
                   <Stack key="launch" hideNavBar lightbox type="replace">
@@ -214,6 +215,7 @@ class TinyRobotRouter extends React.Component<Props> {
           <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
           <Scene key="firstTimeGuest" component={FirstTimeGuestPrimer} />
           <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
+          <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
          </Lightbox>
         </Stack>
       </Router>
