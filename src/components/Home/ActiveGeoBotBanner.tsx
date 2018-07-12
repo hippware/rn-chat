@@ -15,6 +15,7 @@ import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
 import {Actions} from '../../../node_modules/react-native-router-flux'
+import InvisibleModeOverlay from './InvisibleModeOverlay'
 
 type Props = {
   wocky?: IWocky
@@ -49,7 +50,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
       <Animated.View
         style={{
           backgroundColor: 'white',
-          paddingTop: 38 * k,
+          paddingTop: 23 * k,
           shadowColor: colors.GREY,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 1,
@@ -76,6 +77,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <FirstLoadOverlay />
+        <InvisibleModeOverlay />
       </Animated.View>
     )
   }
