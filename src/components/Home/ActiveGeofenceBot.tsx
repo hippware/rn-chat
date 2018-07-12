@@ -23,7 +23,7 @@ type Props = {
 @observer
 class ActiveBot extends React.Component<Props> {
   goToBot = (): void => {
-    Actions.botDetails({item: this.props.bot.id})
+    Actions.locationDetails({botId: this.props.bot.id})
     setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
   }
@@ -45,7 +45,7 @@ class ActiveBot extends React.Component<Props> {
             ) : null}
           </BotBubble>
           <TouchableOpacity onPress={this.goToBot}>
-            <RText size={13} style={{textAlign: 'center'}} numberOfLines={2} ellipsizeMode="tail">
+            <RText size={13} style={{textAlign: 'center'}} numberOfLines={1} ellipsizeMode="tail">
               {bot.title}
             </RText>
           </TouchableOpacity>

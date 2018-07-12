@@ -23,7 +23,7 @@ const HeaderLocationOverlay = inject('wocky')(
             <RText color={colors.PINK} size={15} weight="Bold">
               See visits to your favorite locations!
             </RText>
-            <TouchableOpacity style={styles.button} onPress={() => wocky.profile.hide(false)}>
+            <TouchableOpacity style={styles.button} onPress={() => wocky.profile.hide(false, null)}>
               <RText size={14} weight="Medium" color={colors.PINK}>
                 Turn Off Invisible Mode
               </RText>
