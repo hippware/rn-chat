@@ -32,6 +32,12 @@
       "key": "cMTcB3NU9aAs28OyvCYov8vWFN4SHy73_2rlX",
       "displayName": "Staging-Eric",
       "description": "Eric's channel"
+    },
+    {
+      "name": "StagingBeng",
+      "key": "3otAS0kRJnLvsHaUC9PGJCLSfYRFBkZTXAmmX",
+      "displayName": "Staging-Beng",
+      "description": "Beng's channel"
     }
   ],
   "local": [
