@@ -33,77 +33,50 @@ type Props = {
   borderColor?: string
 }
 
-@observer
-export default class Avatar extends React.Component<Props> {
-  static defaultProps = {
-    tappable: true,
-  }
-
-  goToProfile = () => Actions.profileDetails({item: this.props.profile.id})
-
-  render() {
-    const {
-      size = 50,
-      disableStatus,
-      style,
-      borderWidth,
-      showFrame,
-      profile,
-      tappable,
-      fontSize,
-      hideDot,
-      borderColor,
-    } = this.props
+const Avatar = observer(
+  ({
+    size = 50,
+    disableStatus,
+    style,
+    borderWidth,
+    showFrame,
+    profile,
+    tappable = true,
+    hideDot,
+    borderColor,
+    fontSize,
+  }: Props) => {
     if (!profile || !isAlive(profile)) {
       return null
     }
-    let title = profile.displayName || ' '
-    const showLoader = !(profile.avatar && profile.avatar.loaded)
-    title = title.length > 1 ? title[0] : title
+    const title = profile.displayName || ' '
     const Clazz = tappable ? TouchableOpacity : View
     const sharedStyle = {
       width: size * k,
       height: size * k,
       borderRadius: size * k / 2,
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+      borderColor: borderColor || colors.WHITE,
     }
     return (
-      <Clazz style={{justifyContent: 'flex-end'}} onPress={this.goToProfile}>
+      <Clazz
+        style={{justifyContent: 'flex-end'}}
+        onPress={() => Actions.profileDetails({item: this.props.profile.id})}
+      >
         <View style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar ? (
             <AvatarImage
-              {...this.props}
               source={profile.avatar.thumbnail}
-              showLoader={showLoader}
+              showLoader={!(profile.avatar && profile.avatar.loaded)}
               style={sharedStyle}
             />
           ) : (
-            <LinearGradient
-              start={{x: 0, y: 1}}
-              end={{x: 1, y: 0}}
-              colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
-              style={{borderRadius: size * k / 2}}
-            >
-              <View
-                style={[
-                  sharedStyle,
-                  styles.avatarContainer,
-                  {borderColor: borderColor || colors.WHITE},
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.title,
-                    {
-                      fontSize:
-                        fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
-                    },
-                  ]}
-                >
-                  {title.toUpperCase()}
-                </Text>
-              </View>
-            </LinearGradient>
+            <AvatarLetterPlaceholder
+              fontSize={fontSize}
+              size={size}
+              style={sharedStyle}
+              letter={title.length > 1 ? title[0] : title}
+            />
           )}
           {showFrame && (
             <View style={styles.frameOuter}>
@@ -118,7 +91,7 @@ export default class Avatar extends React.Component<Props> {
       </Clazz>
     )
   }
-}
+)
 
 const PresenceDot = observer(({profile, size, disableStatus}) => {
   const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor
@@ -145,26 +118,62 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
   }
 })
 
-const AvatarImage = ({
-  source,
-  style,
-  showLoader,
-  borderColor,
-}: {
+type AvatarImageProps = {
   source: ImageRequireSource
   style?: any
   showLoader: any
-  borderColor?: string
-}) => {
+}
+
+const AvatarImage = ({source, style, showLoader}: AvatarImageProps) => {
   return showLoader ? (
-    <View style={[style, styles.avatarContainer, {borderColor: borderColor || colors.WHITE}]} />
+    <View style={[style, styles.avatarContainer]} />
   ) : (
-    <Image
-      source={source}
-      style={[style, styles.avatarContainer, {borderColor: borderColor || colors.WHITE}]}
-    />
+    <View style={[style, {overflow: 'hidden', borderWidth: 0}]}>
+      <Image source={source} style={[style, styles.avatarContainer]} />
+      {/* <View
+        style={{
+          backgroundColor: 'rgba(1,1,1,0.5)',
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+        }}
+      /> */}
+    </View>
   )
 }
+
+type AvatarLetterPlaceholderProps = {
+  size: number
+  style: ViewStyle
+  fontSize?: string
+  letter: string
+}
+
+const AvatarLetterPlaceholder = ({size, style, fontSize, letter}: AvatarLetterPlaceholderProps) => (
+  <LinearGradient
+    start={{x: 0, y: 1}}
+    end={{x: 1, y: 0}}
+    colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
+    style={{borderRadius: size * k / 2}}
+  >
+    <View style={[style, styles.avatarContainer]}>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontSize: fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
+          },
+        ]}
+      >
+        {letter.toUpperCase()}
+      </Text>
+    </View>
+  </LinearGradient>
+)
+
+export default Avatar
 
 const styles = StyleSheet.create({
   title: {
