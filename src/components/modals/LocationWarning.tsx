@@ -4,8 +4,8 @@ import {when} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {k} from '../Global'
-import PopupBlur from './PopupBlur'
 import {observer, inject} from 'mobx-react/native'
+import ModalContainer from './ModalContainer'
 
 const botIcon = require('../../../images/iconBot.png')
 
@@ -18,7 +18,7 @@ class LocationWarning extends React.Component<any> {
 
   render() {
     return (
-      <PopupBlur>
+      <ModalContainer style={{backgroundColor: 'white'}}>
         <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
         <Image
           source={botIcon}
@@ -40,7 +40,7 @@ class LocationWarning extends React.Component<any> {
             <Text style={styles.btnText}>Change Settings</Text>
           </TouchableOpacity>
         </View>
-      </PopupBlur>
+      </ModalContainer>
     )
   }
 }

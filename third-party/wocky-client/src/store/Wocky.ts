@@ -366,6 +366,9 @@ export const Wocky = types
     _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
+      if (list.length) {
+        self.profile!.setHasUsedGeofence(true)
+      }
       return {list: list.map(self.getBot), count, cursor}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {

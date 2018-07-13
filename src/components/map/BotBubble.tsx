@@ -1,6 +1,7 @@
 import React from 'react'
 import {TouchableOpacity, ImageRequireSource} from 'react-native'
 import {defaultCover} from '../Global'
+// import Bubble from './BubbleAnimated'
 import Bubble from './Bubble'
 import {observer} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'

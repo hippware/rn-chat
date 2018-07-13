@@ -9,9 +9,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Maintain horizontal list state (#2526)
   * Horizontal list: Only show Avatar for focused bot (#2527)
 * Option to run wocky-client tests against local wocky instance (PR #2532)
-* Invisible mode and toggle (#2514, #2542)
 * Prevent flow warnings on react native bundle (PR #2546)
 * improve bot tests (PR #2552)
+* [dev] Improved cache management (#2071)
+* HS Redesign - Invisible Mode (#2473, PR #2558)
+  * Invisible mode and toggle (#2514, #2542)
+* [dev] create Codepush channel for Beng (#2556)
 
 wocky-client
 

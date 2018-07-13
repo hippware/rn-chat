@@ -8,6 +8,7 @@ import {RText} from './common'
 const DebugScreen = inject('store')(
   observer(({store}) => (
     <View style={{flex: 1, padding: 40}}>
+      <ScreenLink onPress={Actions.codePush}>GO TO CODEPUSH</ScreenLink>
       <ScreenLink onPress={Actions.locationDebug}>GO TO LOCATION DEBUG</ScreenLink>
       <ScreenLink
         onPress={async () => {
