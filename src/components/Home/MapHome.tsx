@@ -4,7 +4,7 @@ import {StyleSheet, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import HackMarker from '../map/HackMarker'
-import BubbleIcon from '../map/BubbleIcon'
+import Bubble from '../map/Bubble'
 import {observable, action, reaction} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
@@ -34,6 +34,10 @@ const YouMarker = observer(({locationStore, homeStore, card}) => {
   )
 })
 
+// TODO: add in icons after bot creation flow is done
+// const iconImg = require('../../../images/mapIcons/restaurant.png')
+const defaultIcon = require('../../../images/mapIcons/question.png')
+
 const BotMarker = observer(({card}) => {
   const {bot, isSelected} = card
   const {latitude, longitude} = bot.location
@@ -45,7 +49,12 @@ const BotMarker = observer(({card}) => {
       key={card.bot.id}
       stopPropagation
     >
-      <BubbleIcon large={isSelected} />
+      <Bubble
+        image={defaultIcon}
+        style={{backgroundColor: 'white'}}
+        imageStyle={{width: 20, height: 20}}
+        size={isSelected ? 60 : 48}
+      />
     </HackMarker>
   )
 })

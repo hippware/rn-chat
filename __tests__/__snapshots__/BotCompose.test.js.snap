@@ -1284,15 +1284,22 @@ exports[`BotCompose renders with owned bot 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "backgroundColor": "rgb(253,95,108)",
-                          "borderColor": "rgb(253,95,108)",
-                          "borderRadius": 7.2,
-                          "borderWidth": 1.2,
-                          "height": 203,
-                          "overflow": "hidden",
-                          "width": 175,
-                        }
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "rgb(253,95,108)",
+                            "borderColor": "rgb(253,95,108)",
+                            "borderRadius": 9.6,
+                            "borderWidth": 1.2,
+                            "justifyContent": "center",
+                            "overflow": "hidden",
+                          },
+                          Object {
+                            "height": 58,
+                            "width": 58,
+                          },
+                          undefined,
+                        ]
                       }
                     >
                       <Image
@@ -1303,10 +1310,13 @@ exports[`BotCompose renders with owned bot 1`] = `
                           }
                         }
                         style={
-                          Object {
-                            "height": 175,
-                            "width": 175,
-                          }
+                          Array [
+                            Object {
+                              "height": 58,
+                              "width": 58,
+                            },
+                            undefined,
+                          ]
                         }
                       />
                       <View
@@ -1353,11 +1363,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                             "borderBottomColor": "transparent",
                             "borderBottomWidth": 0,
                             "borderLeftColor": "transparent",
-                            "borderLeftWidth": 5.5,
+                            "borderLeftWidth": 7,
                             "borderRightColor": "transparent",
-                            "borderRightWidth": 5.5,
+                            "borderRightWidth": 7,
                             "borderTopColor": "rgb(253,95,108)",
-                            "borderTopWidth": 11,
+                            "borderTopWidth": 8,
                           },
                           undefined,
                         ]

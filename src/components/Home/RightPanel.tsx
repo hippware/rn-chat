@@ -6,8 +6,9 @@ import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {IHomeStore} from '../../store/HomeStore'
 import {inject} from 'mobx-react'
+import {settings} from '../../globals'
 
-const settings = require('../../../images/settingsBtn.png')
+const settingsImg = require('../../../images/settingsBtn.png')
 const create = require('../../../images/create.png')
 const toggle = require('../../../images/homeToggle.png')
 const toggleOff = require('../../../images/homeToggleOff.png')
@@ -23,10 +24,10 @@ const RightPanel = inject('homeStore')(
       <TouchableOpacity
         onPress={() => Actions.bottomMenu()}
         // TODO: remove this when the settings menu is done
-        onLongPress={() => Actions.codePush()}
+        onLongPress={() => settings.isStaging && Actions.debugScreen()}
         style={styles.button}
       >
-        <Image source={settings} />
+        <Image source={settingsImg} />
       </TouchableOpacity>
 
       <View>
