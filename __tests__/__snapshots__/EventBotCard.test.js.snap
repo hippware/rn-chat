@@ -75,17 +75,16 @@ exports[`EventBotCard renders 1`] = `
             style={
               Array [
                 Object {
+                  "borderColor": "rgb(255,255,255)",
                   "borderRadius": 72,
                   "borderWidth": 4,
                   "height": 144,
+                  "overflow": "hidden",
                   "width": 144,
                 },
                 Object {
                   "alignItems": "center",
                   "justifyContent": "center",
-                },
-                Object {
-                  "borderColor": "rgb(255,255,255)",
                 },
               ]
             }
