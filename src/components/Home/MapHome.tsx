@@ -49,8 +49,8 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         <View style={{alignItems: 'center'}}>
           <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
           <Triangle
-            width={8}
-            height={6}
+            width={10}
+            height={4}
             color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
             direction="down"
           />
@@ -79,7 +79,7 @@ const BotMarker = observer(({card}) => {
         image={defaultIcon}
         style={{backgroundColor: 'white'}}
         imageStyle={{width: 20, height: 20}}
-        size={isSelected ? 60 : 48}
+        size={isSelected ? 48 : 35}
       />
     </HackMarker>
   )
