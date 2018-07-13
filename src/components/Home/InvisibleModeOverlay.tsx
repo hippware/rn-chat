@@ -16,7 +16,9 @@ const foot = require('../../../images/footOpaquePink.png')
 const HeaderLocationOverlay = inject('wocky')(
   observer(({wocky}: Props) => {
     return (
-      wocky!.profile.hidden.enabled && (
+      wocky!.profile &&
+      wocky.profile.hidden &&
+      wocky.profile.hidden.enabled && (
         <HeaderOverlay>
           <Image source={foot} style={styles.image} resizeMode="contain" />
           <View style={{flex: 1, justifyContent: 'center'}}>
