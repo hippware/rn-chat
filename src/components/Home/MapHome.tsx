@@ -1,6 +1,6 @@
 import React from 'react'
 import MapView, {UrlTile, MapTypes} from 'react-native-maps'
-import {StyleSheet, View, MapViewRegion} from 'react-native'
+import {StyleSheet, View, MapViewRegion, Image} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import HackMarker from '../map/HackMarker'
@@ -8,21 +8,33 @@ import Bubble from '../map/Bubble'
 import {observable, action, reaction} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore} from '../../store/HomeStore'
-import {Spinner} from '../common'
+import {IHomeStore, ISelectableCard} from '../../store/HomeStore'
+import {Spinner, Avatar} from '../common'
 import mapStyle from '../map/mapStyle'
+import {colors} from '../../constants'
+import Triangle from '../map/Triangle'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 const OPACITY_MIN = 0.6
 
-const YouMarker = observer(({locationStore, homeStore, card}) => {
+interface IProps {
+  locationStore?: ILocationStore
+  wocky?: IWocky
+  homeStore?: IHomeStore
+}
+
+interface ICardProps extends IProps {
+  card: ISelectableCard
+}
+
+const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps) => {
   const {location} = locationStore
   const {latitude, longitude} = location
+  const {profile} = wocky
   return (
     <HackMarker
-      image={require('../../../images/you.png')}
       zIndex={1000}
       coordinate={{latitude, longitude}}
       onPress={() => {
@@ -30,7 +42,21 @@ const YouMarker = observer(({locationStore, homeStore, card}) => {
         homeStore.setCenter(location)
       }}
       stopPropagation
-    />
+    >
+      {!profile.avatar && !profile.hidden.enabled ? (
+        <Image source={require('../../../images/you.png')} />
+      ) : (
+        <View style={{alignItems: 'center'}}>
+          <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
+          <Triangle
+            width={8}
+            height={6}
+            color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
+            direction="down"
+          />
+        </View>
+      )}
+    </HackMarker>
   )
 })
 
@@ -62,12 +88,6 @@ const BotMarker = observer(({card}) => {
 const markerMap: {[key: string]: any} = {
   YouCard: YouMarker,
   BotCard: BotMarker,
-}
-
-interface IProps {
-  locationStore?: ILocationStore
-  wocky?: IWocky
-  homeStore?: IHomeStore
 }
 
 @inject('locationStore', 'wocky', 'homeStore')

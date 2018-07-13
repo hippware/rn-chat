@@ -51,7 +51,7 @@ const Avatar = observer(
       height: size * k,
       borderRadius: size * k / 2,
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-      borderColor: showMask ? colors.GREY : borderColor || colors.WHITE,
+      borderColor: showMask ? colors.DARK_GREY : borderColor || colors.WHITE,
       overflow: 'hidden',
     }
     return (
@@ -65,6 +65,7 @@ const Avatar = observer(
               source={profile.avatar.thumbnail}
               showLoader={!(profile.avatar && profile.avatar.loaded)}
               style={sharedStyle}
+              size={size}
               showMask={showMask}
             />
           ) : (
@@ -116,13 +117,13 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
   }
 })
 
-const AvatarImage = ({source, style, showLoader, showMask}) =>
+const AvatarImage = ({source, style, size, showLoader, showMask}) =>
   showLoader ? (
     <View style={[style, styles.avatarContainer]} />
   ) : (
     <View style={[style, {borderWidth: 0}]}>
       <Image source={source} style={[style, styles.avatarContainer]} />
-      {showMask && <Mask />}
+      {showMask && <Mask size={size * 0.65} />}
     </View>
   )
 
@@ -136,7 +137,7 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
     <LinearGradient start={start} end={end} colors={theColors} style={{borderRadius: size * k / 2}}>
       <View style={[style, styles.avatarContainer]}>
         {showMask ? (
-          <Mask />
+          <Mask size={size * 0.65} />
         ) : (
           <Text
             style={[
@@ -154,21 +155,14 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
   )
 }
 
-const maskPad = 7
-
-const Mask = () => (
+const Mask = ({size}) => (
   <View style={[styles.mask, styles.absolute]}>
     <Image
       source={require('../../../images/invisibleIconWhite.png')}
       style={[
         {
-          position: 'absolute',
-          top: maskPad,
-          right: maskPad,
-          bottom: maskPad,
-          left: maskPad,
-          width: undefined,
-          height: undefined,
+          width: size,
+          height: size,
         },
       ]}
       resizeMode="contain"

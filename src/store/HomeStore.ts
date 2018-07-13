@@ -20,6 +20,8 @@ export const SelectableCard = types
     },
   }))
 
+type SelectableCardType = typeof SelectableCard.Type
+export interface ISelectableCard extends SelectableCardType {}
 export const BotCard = types
   .compose(
     SelectableCard,
