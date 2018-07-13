@@ -16,7 +16,7 @@ const TutorialCard = () => (
       </RText>
     </View>
     <View style={styles.imageContainer}>
-      <Image style={styles.icon} source={require('../../../images/create.png')} />
+      <Image style={styles.icon} source={require('../../../images/createTutorial.png')} />
     </View>
   </Card>
 )
@@ -30,12 +30,14 @@ const styles = StyleSheet.create({
     width: 44 * k,
   },
   textContainer: {
-    flex: 2,
-    padding: 18 * k,
+    flex: 1,
+    paddingVertical: 18 * k,
+    paddingLeft: 25 * k,
     justifyContent: 'center',
   },
   imageContainer: {
-    flex: 1,
+    padding: 22 * k,
+    paddingLeft: 10 * k,
     alignItems: 'center',
     justifyContent: 'center',
   },

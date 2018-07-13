@@ -26,11 +26,13 @@ const cardMap = {
   TutorialCard,
 }
 
+const marginBottomDefault = 13 * k
+
 @inject('homeStore')
 @observer
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
-    marginBottom: new Animated.Value(10 * k),
+    marginBottom: new Animated.Value(marginBottomDefault),
   }
 
   list: any
@@ -45,7 +47,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         () => homeStore.fullScreenMode,
         (isFullScreen: boolean) => {
           Animated.spring(this.state.marginBottom, {
-            toValue: isFullScreen ? -155 : 10 * k,
+            toValue: isFullScreen ? -155 * k : marginBottomDefault,
           }).start()
         }
       ),
@@ -96,8 +98,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 10 * k,
     alignSelf: 'flex-end',
-    height: 100,
+    height: 115 * k,
   },
 })

@@ -56,7 +56,8 @@ const HomeStore = types
     listMode: 'home',
     fullScreenMode: false,
     discoverList: types.optional(types.array(Card), []),
-    homeBotList: types.optional(types.array(Card), [{you: true}, {tutorial: true}]), // pre-populate with 'you', tutorial card
+    // homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
+    homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     discoverIndex: 0,
     homeBotIndex: 0,
     center: types.maybe(Location),

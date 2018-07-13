@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
-    marginTop: 20 * k,
+    marginTop: 20 * k, // leave room for avatar to poke above
     shadowColor: colors.GREY,
     shadowOpacity: 1,
     shadowRadius: 3,
