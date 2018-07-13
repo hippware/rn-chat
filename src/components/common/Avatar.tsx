@@ -57,7 +57,7 @@ const Avatar = observer(
     return (
       <Clazz
         style={{justifyContent: 'flex-end'}}
-        onPress={() => Actions.profileDetails({item: this.props.profile.id})}
+        onPress={() => Actions.profileDetails({item: profile.id})}
       >
         <View style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar ? (
