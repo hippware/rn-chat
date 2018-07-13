@@ -15,7 +15,6 @@ import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {k} from './Global'
 import {IWocky} from 'wocky-client'
-import {settings} from '../globals'
 import InvisibleSwitch from './InvisibleSwitch'
 
 interface IMenuItemProps extends TouchableOpacityProps {
