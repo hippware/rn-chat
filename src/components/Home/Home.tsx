@@ -17,9 +17,7 @@ export default class Home extends React.Component<IProps> {
       <View style={{flex: 1}} testID="screenHome">
         <MapHome />
         <ActiveGeoBotBanner />
-        {/* todo: fix these to allow for fullScreenMode and to slide out of view */}
         {!this.showingBottomPopup && <RightPanel />}
-
         <HorizontalCardList />
       </View>
     )

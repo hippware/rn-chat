@@ -27,7 +27,7 @@ const CurrentLocationIndicator = inject('locationStore')(
           width: 50 * k,
         }}
       >
-        <Image source={require('../../../images/iconCurrentLocation.png')} />
+        <Image source={require('../../../images/currentLocationGrey.png')} />
       </TouchableOpacity>
     )
   })

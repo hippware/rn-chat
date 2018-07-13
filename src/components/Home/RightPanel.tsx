@@ -17,13 +17,11 @@ type Props = {
   homeStore?: IHomeStore
 }
 
-// TODO: make RightPanel slide to the right and back'
 const RightPanel = inject('homeStore')(
   observer(({homeStore: {listMode, toggleListMode}}: Props) => (
     <View style={styles.container} pointerEvents="box-none">
       <TouchableOpacity
         onPress={() => Actions.bottomMenu()}
-        // TODO: remove this when the settings menu is done
         onLongPress={() => settings.isStaging && Actions.debugScreen()}
         style={styles.button}
       >
@@ -54,7 +52,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: 'flex-end',
-    marginBottom: 15 * k,
     paddingRight: 12 * k,
     alignItems: 'flex-end',
     justifyContent: 'space-between',
