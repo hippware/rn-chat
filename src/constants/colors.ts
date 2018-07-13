@@ -47,6 +47,8 @@ export const PURPLISH_GREY = 'rgb(114,100,109)'
 
 export const PINKISH_GREY = 'rgb(196,196,196)'
 
+export const GOLD = 'rgb(255,197,54)'
+
 // #FFFFFF
 export const WHITE = 'rgb(255,255,255)'
 

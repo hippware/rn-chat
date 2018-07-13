@@ -1,91 +1,80 @@
 import React from 'react'
-import {View, Animated} from 'react-native'
+import {View, Image, StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native'
 import Triangle from './Triangle'
-import {width as w} from '../Global'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {observer} from 'mobx-react/native'
 
-// scale here - 1 is full image, 0.5 is bot details UI (half-screen), 0 is full map mode
 type Props = {
-  text: string
-  image: any
-  scale: number
-  showLoader: boolean
+  text?: string
+  image?: ImageSourcePropType
+  showLoader?: boolean
   children?: any
+  style?: ViewStyle
+  imageStyle?: ImageStyle
+  size?: number
+  triangleColor?: string
 }
+
+const defaultSize = 58
 
 @observer
 export default class Bubble extends React.Component<Props> {
-  animatedValue: any
-
-  constructor(props: Props) {
-    super(props)
-    this.animatedValue = new Animated.Value(this.props.scale)
-  }
-
-  componentWillReceiveProps(props: Props) {
-    Animated.timing(this.animatedValue, {toValue: props.scale, duration: 250}).start()
-  }
-
   render() {
-    const {scale, image, text, showLoader, children} = this.props
-    const fullMap = scale === 0
-    const fullImage = scale === 1
-    const width = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [58, 175, w],
-    })
+    const {image, text, showLoader, children, style, imageStyle, size, triangleColor} = this.props
+    const theSize = size || defaultSize
 
-    const height = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [58, 203, w],
-    })
-    const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2
-    // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
-        <Animated.View
-          style={{
-            backgroundColor: colors.PINK,
-            borderRadius,
-            width,
-            height,
-            overflow: 'hidden',
-            borderWidth: fullImage ? 0 : 1.2,
-            borderColor: colors.PINK,
-          }}
+        <View
+          style={[
+            styles.bubble,
+            {
+              width: theSize,
+              height: theSize,
+            },
+            style,
+          ]}
         >
           {showLoader ? (
-            <Animated.View style={{width, height: width, backgroundColor: colors.GREY}} />
-          ) : (
-            <Animated.Image style={{width, height: width}} resizeMode="contain" source={image} />
+            <View style={{width: theSize, height: theSize, backgroundColor: colors.GREY}} />
+          ) : image ? (
+            <Image
+              style={[{width: theSize, height: theSize}, imageStyle]}
+              resizeMode="contain"
+              source={image}
+            />
+          ) : null}
+
+          {text && (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <RText
+                color={colors.WHITE}
+                size={13}
+                style={{padding: 2}}
+                numberOfLines={1}
+                ellipsizeMode="middle"
+              >
+                {text}
+              </RText>
+            </View>
           )}
-          {!fullImage &&
-            !fullMap && (
-              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <RText
-                  color={colors.WHITE}
-                  size={13}
-                  style={{padding: 2}}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                >
-                  {text}
-                </RText>
-              </View>
-            )}
           {children}
-        </Animated.View>
-        {!fullImage && (
-          <Triangle
-            width={fullMap ? 14 : 11}
-            height={fullMap ? 8 : 11}
-            color={colors.PINK}
-            direction="down"
-          />
-        )}
+        </View>
+        <Triangle width={14} height={8} color={triangleColor || colors.PINK} direction="down" />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  bubble: {
+    backgroundColor: colors.PINK,
+    overflow: 'hidden',
+    borderWidth: 1.2,
+    borderColor: colors.PINK,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 9.6,
+  },
+})

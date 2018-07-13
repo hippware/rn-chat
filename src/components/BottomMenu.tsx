@@ -15,7 +15,6 @@ import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {k} from './Global'
 import {IWocky} from 'wocky-client'
-import {settings} from '../globals'
 import InvisibleSwitch from './InvisibleSwitch'
 
 interface IMenuItemProps extends TouchableOpacityProps {
@@ -119,11 +118,6 @@ export default class BottomMenu extends React.Component<Props> {
           <Text style={styles.text}>Invisible</Text>
           <InvisibleSwitch />
         </MenuItem>
-        {settings.isStaging && (
-          <MenuItem onPress={() => Actions.debugScreen()}>
-            <Text style={[styles.text, {color: colors.STAGING_COLOR}]}>DEBUG SCREEN</Text>
-          </MenuItem>
-        )}
       </BottomPopup>
     )
   }

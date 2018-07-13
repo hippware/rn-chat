@@ -11,7 +11,7 @@ import {
   IModelType,
   IExtendedObservableMap,
 } from 'mobx-state-tree'
-import {reaction, IObservableArray, ObservableMap} from 'mobx'
+import {reaction, IObservableArray, ObservableMap, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
@@ -306,7 +306,7 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.unblock(username)
     }),
-    _hideUser: flow(function*(value: boolean, expire: Date | null = null) {
+    _hideUser: flow(function*(value: boolean, expire?: Date) {
       yield waitFor(() => self.connected)
       yield self.transport.hideUser(value, expire)
     }),
@@ -366,6 +366,9 @@ export const Wocky = types
     _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
+      if (list.length) {
+        self.profile!.setHasUsedGeofence(true)
+      }
       return {list: list.map(self.getBot), count, cursor}
     }),
     _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
@@ -682,7 +685,7 @@ export const Wocky = types
       self.profiles.clear()
       self.bots.clear()
     }
-    let reactions = []
+    let reactions: IReactionDisposer[] = []
     function startReactions() {
       reactions = [
         reaction(
