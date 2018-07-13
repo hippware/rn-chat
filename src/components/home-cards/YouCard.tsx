@@ -6,6 +6,7 @@ import {k} from '../Global'
 import Card from './Card'
 import {inject, observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   wocky?: IWocky
@@ -16,7 +17,7 @@ const YouCard = inject('wocky')(
     ({wocky}: Props) =>
       wocky.profile &&
       wocky.profile.handle && (
-        <Card>
+        <Card onPress={() => Actions.profileDetails({item: wocky.profile.id})}>
           <View style={styles.imageContainer}>
             <Avatar
               profile={wocky.profile}
@@ -24,6 +25,7 @@ const YouCard = inject('wocky')(
               hideDot
               borderColor={colors.PINK}
               fontSize="large"
+              tappable={false}
             />
           </View>
           <View style={styles.textContainer}>
@@ -38,7 +40,6 @@ const YouCard = inject('wocky')(
       )
   )
 )
-
 export default YouCard
 
 const styles = StyleSheet.create({

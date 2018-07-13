@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TouchableWithoutFeedback} from 'react-native'
 import {IProfile} from 'wocky-client'
 import {Avatar} from '../common'
 import {colors} from '../../constants'
@@ -8,15 +8,18 @@ import {k} from '../Global'
 type Props = {
   profile?: IProfile
   children: any
+  onPress?: () => void
 }
 
-const Card = ({profile, children}: Props) => (
-  <View style={styles.card}>
-    {profile && (
-      <Avatar profile={profile} size={40} style={styles.avatar} hideDot fontSize="large" />
-    )}
-    {children}
-  </View>
+const Card = ({profile, children, onPress}: Props) => (
+  <TouchableWithoutFeedback onPress={onPress}>
+    <View style={styles.card}>
+      {profile && (
+        <Avatar profile={profile} size={40} style={styles.avatar} hideDot fontSize="large" />
+      )}
+      {children}
+    </View>
+  </TouchableWithoutFeedback>
 )
 
 export default Card
