@@ -77,7 +77,14 @@ const BotMarker = observer(({card}) => {
     >
       <Bubble
         image={defaultIcon}
-        style={{backgroundColor: 'white'}}
+        style={{
+          backgroundColor: 'white',
+        }}
+        outerStyle={{
+          shadowOffset: {height: 2, width: 0},
+          shadowRadius: 3,
+          shadowOpacity: 0.12,
+        }}
         imageStyle={{width: 20, height: 20}}
         size={isSelected ? 48 : 35}
       />
