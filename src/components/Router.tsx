@@ -148,7 +148,7 @@ class TinyRobotRouter extends React.Component<Props> {
     return (
       <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Stack navigator={ErrorNavigator}>
-         <Lightbox>
+         <Lightbox key="rootLightbox">
             <Stack navigator={SplitNavigator} splitHeight={394}>
               <Stack key="rootStack" initial hideNavBar>
                 <Stack key="root" tabs hideTabBar hideNavBar>
@@ -168,7 +168,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   </Stack>
                   <Scene key="signUp" component={SignUp} hideNavBar/>
                   <Modal key="logged" hideNavBar headerMode="screen">
-                    <Stack>
+                    <Stack key="loggedHome">
                       <Scene key="home" component={Home} />
                       <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                       <Scene key="friendsMain" component={peopleLists.FriendListScene} title="Friends" />
@@ -176,7 +176,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="chats" component={ChatListScreen} title="Messages" />
                       <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
                     </Stack>
-                  <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
+                    <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
                     <Scene key="searchUsers" component={peopleLists.SearchUsers} leftButtonImage={iconClose} onLeft={this.resetSearchStore} title="Search Users" rightButtonImage={null} wrap />
                     <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                     <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
