@@ -1,20 +1,12 @@
 import React from 'react'
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ImageRequireSource,
-  ViewStyle,
-} from 'react-native'
+import {View, Image, Text, TouchableOpacity, StyleSheet, ViewStyle} from 'react-native'
 import {k} from '../Global'
 import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
-import {IProfile} from 'wocky-client'
+import {IProfile, IOwnProfile} from 'wocky-client'
 
 const onlineColor = colors.LIGHT_BLUE
 const offlineColor = 'rgb(211,211,211)'
@@ -49,6 +41,9 @@ const Avatar = observer(
     if (!profile || !isAlive(profile)) {
       return null
     }
+    const showMask =
+      profile.isOwn && (profile as IOwnProfile).hidden && (profile as IOwnProfile).hidden.enabled
+    // const showMask = true
     const title = profile.displayName || ' '
     const Clazz = tappable ? TouchableOpacity : View
     const sharedStyle = {
@@ -56,7 +51,8 @@ const Avatar = observer(
       height: size * k,
       borderRadius: size * k / 2,
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-      borderColor: borderColor || colors.WHITE,
+      borderColor: showMask ? colors.GREY : borderColor || colors.WHITE,
+      overflow: 'hidden',
     }
     return (
       <Clazz
@@ -69,6 +65,7 @@ const Avatar = observer(
               source={profile.avatar.thumbnail}
               showLoader={!(profile.avatar && profile.avatar.loaded)}
               style={sharedStyle}
+              showMask={showMask}
             />
           ) : (
             <AvatarLetterPlaceholder
@@ -76,10 +73,11 @@ const Avatar = observer(
               size={size}
               style={sharedStyle}
               letter={title.length > 1 ? title[0] : title}
+              showMask={showMask}
             />
           )}
           {showFrame && (
-            <View style={styles.frameOuter}>
+            <View style={[styles.absolute, styles.frameOuter]}>
               <Image
                 source={require('../../../images/avatarFrame.png')}
                 style={{width: size * k, height: size * k}}
@@ -118,59 +116,64 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
   }
 })
 
-type AvatarImageProps = {
-  source: ImageRequireSource
-  style?: any
-  showLoader: any
-}
-
-const AvatarImage = ({source, style, showLoader}: AvatarImageProps) => {
-  return showLoader ? (
+const AvatarImage = ({source, style, showLoader, showMask}) =>
+  showLoader ? (
     <View style={[style, styles.avatarContainer]} />
   ) : (
-    <View style={[style, {overflow: 'hidden', borderWidth: 0}]}>
+    <View style={[style, {borderWidth: 0}]}>
       <Image source={source} style={[style, styles.avatarContainer]} />
-      {/* <View
-        style={{
-          backgroundColor: 'rgba(1,1,1,0.5)',
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-        }}
-      /> */}
+      {showMask && <Mask />}
     </View>
+  )
+
+const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
+  const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}
+  const end = showMask ? {x: 0.5, y: 1} : {x: 1, y: 0}
+  const theColors = showMask
+    ? ['rgb(166,166,166)', 'rgb(74,74,74)']
+    : ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
+  return (
+    <LinearGradient start={start} end={end} colors={theColors} style={{borderRadius: size * k / 2}}>
+      <View style={[style, styles.avatarContainer]}>
+        {showMask ? (
+          <Mask />
+        ) : (
+          <Text
+            style={[
+              styles.title,
+              {
+                fontSize: fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
+              },
+            ]}
+          >
+            {letter.toUpperCase()}
+          </Text>
+        )}
+      </View>
+    </LinearGradient>
   )
 }
 
-type AvatarLetterPlaceholderProps = {
-  size: number
-  style: ViewStyle
-  fontSize?: string
-  letter: string
-}
+const maskPad = 7
 
-const AvatarLetterPlaceholder = ({size, style, fontSize, letter}: AvatarLetterPlaceholderProps) => (
-  <LinearGradient
-    start={{x: 0, y: 1}}
-    end={{x: 1, y: 0}}
-    colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
-    style={{borderRadius: size * k / 2}}
-  >
-    <View style={[style, styles.avatarContainer]}>
-      <Text
-        style={[
-          styles.title,
-          {
-            fontSize: fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
-          },
-        ]}
-      >
-        {letter.toUpperCase()}
-      </Text>
-    </View>
-  </LinearGradient>
+const Mask = () => (
+  <View style={[styles.mask, styles.absolute]}>
+    <Image
+      source={require('../../../images/invisibleIconWhite.png')}
+      style={[
+        {
+          position: 'absolute',
+          top: maskPad,
+          right: maskPad,
+          bottom: maskPad,
+          left: maskPad,
+          width: undefined,
+          height: undefined,
+        },
+      ]}
+      resizeMode="contain"
+    />
+  </View>
 )
 
 export default Avatar
@@ -189,11 +192,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   frameOuter: {
+    justifyContent: 'center',
+  },
+  absolute: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  mask: {
+    backgroundColor: 'rgba(93,93,93,0.5)',
+    alignItems: 'center',
     justifyContent: 'center',
+    padding: 10,
   },
 })
