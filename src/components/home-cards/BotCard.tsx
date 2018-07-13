@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native'
 import {IBot} from 'wocky-client'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -18,24 +18,22 @@ type Props = {
 const LocationCard = ({bot, isSelected}: Props) => (
   // TODO: show profile only if focused
   // <Card profile={scrollIndex === index && bot.owner}>
-  <Card profile={isSelected && bot.owner}>
-    <TouchableWithoutFeedback onPress={() => Actions.locationDetails({botId: bot.id})}>
-      <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
-        <Image
-          style={styles.thumb}
-          source={bot.image ? bot.image.thumbnail : null}
-          resizeMode="cover"
-        />
-        <View style={styles.textContainer}>
-          <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
-            {bot.title}
-          </RText>
-          <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-            {bot.addressData && bot.addressData.locationShort}
-          </RText>
-        </View>
+  <Card profile={isSelected && bot.owner} onPress={() => Actions.locationDetails({botId: bot.id})}>
+    <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
+      <Image
+        style={styles.thumb}
+        source={bot.image ? bot.image.thumbnail : null}
+        resizeMode="cover"
+      />
+      <View style={styles.textContainer}>
+        <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
+          {bot.title}
+        </RText>
+        <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
+          {bot.addressData && bot.addressData.locationShort}
+        </RText>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   </Card>
 )
 
