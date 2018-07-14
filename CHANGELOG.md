@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.1.1 - 2018 July 13
+
 * Horizontal list improvements (PR #2529)
   * Implement paging on Home horizontal list (#2524)
   * Maintain horizontal list state (#2526)
@@ -15,10 +17,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HS Redesign - Invisible Mode (#2473, PR #2558)
   * Invisible mode and toggle (#2514, #2542)
 * [dev] create Codepush channel for Beng (#2556)
+* HS Redesign - Presence Widget (#2468)
+* HS Redesign - The YOU pin. (#2476)
 
 wocky-client
 
 * Add Dockerfile for running tests in a container (PR #51)
+* Fix compilation errors
 
 # 3.1.0 - 2018 July 5
 
