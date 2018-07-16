@@ -7,9 +7,10 @@ import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {observer, inject, Observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
-import {reaction} from 'mobx'
+import {reaction, computed} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
 import {getType} from 'mobx-state-tree'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   wocky?: IWocky
@@ -17,7 +18,7 @@ type Props = {
 }
 
 type State = {
-  marginBottom: Animated.Value
+  translateY: Animated.Value
 }
 
 const cardMap = {
@@ -26,11 +27,13 @@ const cardMap = {
   TutorialCard,
 }
 
+const translateYDefault = -13 * k
+
 @inject('homeStore')
 @observer
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
-    marginBottom: new Animated.Value(10 * k),
+    translateY: new Animated.Value(translateYDefault),
   }
 
   list: any
@@ -42,10 +45,10 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     this.reactions = [
       // show/hide the list depending on fullscreenMode
       reaction(
-        () => homeStore.fullScreenMode,
+        () => homeStore.fullScreenMode || this.showingBottomPopup,
         (isFullScreen: boolean) => {
-          Animated.spring(this.state.marginBottom, {
-            toValue: isFullScreen ? -155 : 10 * k,
+          Animated.spring(this.state.translateY, {
+            toValue: isFullScreen ? 400 * k : translateYDefault,
           }).start()
         }
       ),
@@ -68,8 +71,9 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   render() {
     const {homeStore} = this.props
     const {list, setIndex, fullScreenMode, index} = homeStore
+    const {translateY} = this.state
     return (
-      <Animated.View style={[styles.container, {marginBottom: this.state.marginBottom}]}>
+      <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
         {list.length && (
           <Carousel
             key={fullScreenMode ? 1 : 0}
@@ -92,12 +96,17 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     const RenderClass = cardMap[getType(item).name]
     return <Observer>{() => <RenderClass {...item} />}</Observer>
   }
+
+  @computed
+  get showingBottomPopup() {
+    // TODO: move this logic to rnrf
+    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 10 * k,
     alignSelf: 'flex-end',
-    height: 100,
+    height: 115 * k,
   },
 })

@@ -11,20 +11,12 @@ import {Actions} from 'react-native-router-flux'
 type Props = {
   bot: IBot
   isSelected: boolean
-  // index: number
-  // scrollIndex: number
 }
 
-const LocationCard = ({bot, isSelected}: Props) => (
-  // TODO: show profile only if focused
-  // <Card profile={scrollIndex === index && bot.owner}>
+const BotCard = observer(({bot, isSelected}: Props) => (
   <Card profile={isSelected && bot.owner} onPress={() => Actions.locationDetails({botId: bot.id})}>
     <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
-      <Image
-        style={styles.thumb}
-        source={bot.image ? bot.image.thumbnail : null}
-        resizeMode="cover"
-      />
+      <Image style={styles.thumb} source={bot.image ? bot.image.thumbnail : null} />
       <View style={styles.textContainer}>
         <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
           {bot.title}
@@ -35,19 +27,20 @@ const LocationCard = ({bot, isSelected}: Props) => (
       </View>
     </View>
   </Card>
-)
+))
 
-export default observer(LocationCard)
+export default BotCard
 
 const styles = StyleSheet.create({
   thumb: {
-    flex: 1,
+    aspectRatio: 1,
+    resizeMode: 'contain',
     height: undefined,
     width: undefined,
     zIndex: -1,
   },
   textContainer: {
-    flex: 3,
+    flex: 1,
     padding: 18 * k,
     justifyContent: 'center',
   },

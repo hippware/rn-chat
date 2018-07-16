@@ -13,6 +13,8 @@ import {Spinner, Avatar} from '../common'
 import mapStyle from '../map/mapStyle'
 import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
+import commonStyles from '../styles'
+import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -49,8 +51,8 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         <View style={{alignItems: 'center'}}>
           <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
           <Triangle
-            width={8}
-            height={6}
+            width={10}
+            height={4}
             color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
             direction="down"
           />
@@ -77,9 +79,16 @@ const BotMarker = observer(({card}) => {
     >
       <Bubble
         image={defaultIcon}
-        style={{backgroundColor: 'white'}}
+        style={{
+          backgroundColor: 'white',
+        }}
+        outerStyle={{
+          shadowOffset: {height: 2, width: 0},
+          shadowRadius: 3,
+          shadowOpacity: 0.12,
+        }}
         imageStyle={{width: 20, height: 20}}
-        size={isSelected ? 60 : 48}
+        size={isSelected ? 48 : 35}
       />
     </HackMarker>
   )
@@ -168,7 +177,7 @@ export default class MapHome extends React.Component<IProps> {
     const {location} = locationStore
     if (!location) {
       return (
-        <View style={[styles.container, {alignItems: 'center', justifyContent: 'center'}]}>
+        <View style={styles.container}>
           <Spinner />
         </View>
       )
@@ -176,30 +185,39 @@ export default class MapHome extends React.Component<IProps> {
     const {latitude, longitude} = location
     const {toggleFullscreen} = homeStore
     return (
-      <MapView
-        provider={'google'}
-        ref={r => (this.mapRef = r)}
-        onPress={toggleFullscreen}
-        initialRegion={{latitude, longitude, latitudeDelta: INIT_DELTA, longitudeDelta: INIT_DELTA}}
-        style={styles.map}
-        customMapStyle={mapStyle}
-        mapType={this.mapType}
-        onRegionChange={this.onRegionChange}
-        onRegionChangeComplete={this.onRegionChangeComplete}
-        rotateEnabled={false}
-        {...this.props}
-      >
-        {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
-        <View style={{flex: 1, opacity: this.opacity}} pointerEvents="none" />
+      <View style={commonStyles.absolute}>
+        <MapView
+          provider={'google'}
+          ref={r => (this.mapRef = r)}
+          onPress={toggleFullscreen}
+          initialRegion={{
+            latitude,
+            longitude,
+            latitudeDelta: INIT_DELTA,
+            longitudeDelta: INIT_DELTA,
+          }}
+          style={commonStyles.absolute}
+          customMapStyle={mapStyle}
+          mapType={this.mapType}
+          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          rotateEnabled={false}
+          {...this.props}
+        >
+          {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
+          <View style={{flex: 1, opacity: this.opacity}} pointerEvents="none" />
 
-        {this.showSatelliteOverlay && (
-          <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
-        )}
-        {homeStore.list.map((card, i) => {
-          const Card = markerMap[getType(card).name]
-          return Card && <Card {...this.props} key={`card${i}`} card={card} />
-        })}
-      </MapView>
+          {this.showSatelliteOverlay && (
+            <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
+          )}
+
+          {homeStore.list.map((card, i) => {
+            const Card = markerMap[getType(card).name]
+            return Card && <Card {...this.props} key={`card${i}`} card={card} />
+          })}
+        </MapView>
+        <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
+      </View>
     )
   }
 }
@@ -207,12 +225,7 @@ export default class MapHome extends React.Component<IProps> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

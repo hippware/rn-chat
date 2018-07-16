@@ -7,7 +7,7 @@ import {
 } from 'react-navigation'
 import {View, Animated, StyleSheet} from 'react-native'
 import {Actions} from 'react-native-router-flux'
-import {height} from './Global'
+import {height, k} from './Global'
 
 type Props = {
   base: ReactElement<any> // main element
@@ -54,7 +54,11 @@ class AnimatedScreen extends React.Component<Props, State> {
       inputRange: [0, height - splitHeight - 80, height - splitHeight - 30],
       outputRange: [0, 0, 1],
     })
-    const openCloseTransform = {transform: [{translateY: bottom}]}
+    const mainViewBottom = bottom.interpolate({
+      inputRange: [-this.props.splitHeight, 0],
+      outputRange: [-this.props.splitHeight + 215 * k, 0],
+    })
+    const openCloseTransform = {transform: [{translateY: mainViewBottom}]}
     const theMargin = height - splitHeight - 30
     return (
       <View style={{flex: 1}}>

@@ -11,6 +11,7 @@ type Props = {
   showLoader?: boolean
   children?: any
   style?: ViewStyle
+  outerStyle?: ViewStyle
   imageStyle?: ImageStyle
   size?: number
   triangleColor?: string
@@ -21,11 +22,21 @@ const defaultSize = 58
 @observer
 export default class Bubble extends React.Component<Props> {
   render() {
-    const {image, text, showLoader, children, style, imageStyle, size, triangleColor} = this.props
+    const {
+      image,
+      text,
+      showLoader,
+      children,
+      style,
+      imageStyle,
+      size,
+      triangleColor,
+      outerStyle,
+    } = this.props
     const theSize = size || defaultSize
 
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={[{alignItems: 'center'}, outerStyle]}>
         <View
           style={[
             styles.bubble,
@@ -61,7 +72,7 @@ export default class Bubble extends React.Component<Props> {
           )}
           {children}
         </View>
-        <Triangle width={14} height={8} color={triangleColor || colors.PINK} direction="down" />
+        <Triangle width={10} height={4} color={triangleColor || colors.PINK} direction="down" />
       </View>
     )
   }
@@ -71,10 +82,10 @@ const styles = StyleSheet.create({
   bubble: {
     backgroundColor: colors.PINK,
     overflow: 'hidden',
-    borderWidth: 1.2,
+    borderWidth: 1.5,
     borderColor: colors.PINK,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 9.6,
+    borderRadius: 6,
   },
 })

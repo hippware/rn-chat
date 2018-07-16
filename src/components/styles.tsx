@@ -19,6 +19,13 @@ export default StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
   center: {
     flex: 1,
     alignItems: 'center',

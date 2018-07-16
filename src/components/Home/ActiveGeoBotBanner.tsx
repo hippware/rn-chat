@@ -4,7 +4,6 @@ import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'
-import FirstLoadOverlay from './FirstLoadOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
@@ -76,7 +75,6 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           {!wocky!.connected && <View style={styles.overlay} />}
         </View>
         <HeaderLocationOverlay />
-        <FirstLoadOverlay />
         <InvisibleModeOverlay />
       </Animated.View>
     )

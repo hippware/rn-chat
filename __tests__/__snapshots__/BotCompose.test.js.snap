@@ -1277,9 +1277,12 @@ exports[`BotCompose renders with owned bot 1`] = `
                 >
                   <View
                     style={
-                      Object {
-                        "alignItems": "center",
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     <View
@@ -1289,8 +1292,8 @@ exports[`BotCompose renders with owned bot 1`] = `
                             "alignItems": "center",
                             "backgroundColor": "rgb(253,95,108)",
                             "borderColor": "rgb(253,95,108)",
-                            "borderRadius": 9.6,
-                            "borderWidth": 1.2,
+                            "borderRadius": 6,
+                            "borderWidth": 1.5,
                             "justifyContent": "center",
                             "overflow": "hidden",
                           },
@@ -1363,11 +1366,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                             "borderBottomColor": "transparent",
                             "borderBottomWidth": 0,
                             "borderLeftColor": "transparent",
-                            "borderLeftWidth": 7,
+                            "borderLeftWidth": 5,
                             "borderRightColor": "transparent",
-                            "borderRightWidth": 7,
+                            "borderRightWidth": 5,
                             "borderTopColor": "rgb(253,95,108)",
-                            "borderTopWidth": 8,
+                            "borderTopWidth": 4,
                           },
                           undefined,
                         ]

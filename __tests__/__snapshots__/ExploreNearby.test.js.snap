@@ -251,7 +251,7 @@ exports[`Explore Nearby renders with no data 1`] = `
       <Image
         source={
           Object {
-            "testUri": "../../../images/iconCurrentLocation.png",
+            "testUri": "../../../images/currentLocationGrey.png",
           }
         }
       />

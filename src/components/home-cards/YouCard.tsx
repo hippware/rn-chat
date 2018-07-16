@@ -26,6 +26,7 @@ const YouCard = inject('wocky')(
               borderColor={colors.PINK}
               fontSize="large"
               tappable={false}
+              style={styles.avatar}
             />
           </View>
           <View style={styles.textContainer}>
@@ -43,18 +44,16 @@ const YouCard = inject('wocky')(
 export default YouCard
 
 const styles = StyleSheet.create({
-  icon: {
-    // flex: 1,
-    height: 44 * k,
-    width: 44 * k,
-  },
   textContainer: {
-    flex: 2,
-    padding: 18 * k,
+    flex: 1,
+    paddingVertical: 18 * k,
     justifyContent: 'center',
   },
+  avatar: {
+    marginLeft: 22 * k,
+    marginRight: 15 * k,
+  },
   imageContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
