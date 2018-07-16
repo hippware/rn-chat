@@ -38,6 +38,7 @@ wocky-client
 * Refactoring: 
   * Remove Homestore and refactor (PR #2521)
   * Home.tsx with localBots query (PR #2522)
+* Home map: maintain 'standard' view + overlay on zoom (#2525)
 
 # 3.0.2 - 2018 June 27
 
