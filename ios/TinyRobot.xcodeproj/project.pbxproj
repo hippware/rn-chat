@@ -107,6 +107,8 @@
 		87C414B720E66A1A0044AF0A /* tinyrobotStaging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */; };
 		87C414BE20E66C8E0044AF0A /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */; };
 		87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */; };
+		87DF37C420FDF899003E8578 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87DF379820FDF899003E8578 /* fontello.ttf */; };
+		87DF37C520FDF899003E8578 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87DF379820FDF899003E8578 /* fontello.ttf */; };
 		A209EBAE998C0817ADCE8325 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		DCCE537ACD6643A3B03C5DC6 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DC75F7B4824C3DBAA06A5F /* libAppCenterReactNativeCrashes.a */; };
@@ -507,6 +509,7 @@
 		87C414B320E66A190044AF0A /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
 		87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
+		87DF379820FDF899003E8578 /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontello.ttf; sourceTree = "<group>"; };
 		9412533CE8FD46349179B9D4 /* libAppCenterReactNativeAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeAnalytics.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -850,6 +853,7 @@
 		87C4129520E636620044AF0A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87DF379820FDF899003E8578 /* fontello.ttf */,
 				87C4129620E636620044AF0A /* Roboto-Medium.ttf */,
 				87C4129720E636620044AF0A /* Roboto-Light.ttf */,
 				87C4129820E636620044AF0A /* RobotoCondensed-Bold.ttf */,
@@ -1503,6 +1507,7 @@
 				87C412B020E636620044AF0A /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				87C412C220E637870044AF0A /* Images.xcassets in Resources */,
 				87C412B920E636620044AF0A /* Roboto-Bold.ttf in Resources */,
+				87DF37C420FDF899003E8578 /* fontello.ttf in Resources */,
 				87C412B220E636620044AF0A /* icon.gif in Resources */,
 				87C412B620E636620044AF0A /* Roboto-LightItalic.ttf in Resources */,
 				87C412B420E636620044AF0A /* RobotoCondensed-Regular.ttf in Resources */,
@@ -1544,6 +1549,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87DF37C520FDF899003E8578 /* fontello.ttf in Resources */,
 				87C4149320E669F90044AF0A /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				87C4149420E669F90044AF0A /* Images.xcassets in Resources */,
 				87C4149520E669F90044AF0A /* Roboto-Bold.ttf in Resources */,

@@ -110,6 +110,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>fontello.ttf</string>
 		<string>Roboto-Bold.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Light.ttf</string>
