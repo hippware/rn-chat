@@ -11,6 +11,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * "You" card should be tappable on entire card (#2550)
 * Current Location Button (#2540)
 * Center the map (#2545)
+* What to do with overscroll on Map + bottom popup (#2523)
 
 # 3.1.1 - 2018 July 13
 
