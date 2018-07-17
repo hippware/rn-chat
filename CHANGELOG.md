@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* No more FirstLoadOverlay (Rework #2468)
+* Bot Pin Changes (#2536)
+* Drop Shadow missing on Pins (#2535)
+* Card Changes (#2539)
+* Current Location Button (#2540)
+* Center the map (#2545)
+
 # 3.1.1 - 2018 July 13
 
 * Horizontal list improvements (PR #2529)
