@@ -1,5 +1,5 @@
 import React from 'react'
-import {Animated, StyleSheet} from 'react-native'
+import {Animated, StyleSheet, View, TouchableOpacity, Image} from 'react-native'
 import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
@@ -11,6 +11,7 @@ import {reaction, computed} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
 import {getType} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
+import {colors} from '../../constants'
 
 type Props = {
   wocky?: IWocky
@@ -28,6 +29,9 @@ const cardMap = {
 }
 
 const translateYDefault = -13 * k
+const toggle = require('../../../images/homeToggle.png')
+const toggleOff = require('../../../images/homeToggleOff.png')
+const create = require('../../../images/create.png')
 
 @inject('homeStore')
 @observer
@@ -48,7 +52,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         () => homeStore.fullScreenMode || this.showingBottomPopup,
         (isFullScreen: boolean) => {
           Animated.spring(this.state.translateY, {
-            toValue: isFullScreen ? 400 * k : translateYDefault,
+            toValue: isFullScreen ? 160 * k : translateYDefault,
           }).start()
         }
       ),
@@ -70,10 +74,30 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {list, setIndex, fullScreenMode, index} = homeStore
+    const {list, setIndex, fullScreenMode, index, toggleListMode, listMode} = homeStore
     const {translateY} = this.state
     return (
       <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
+        <View
+          style={{
+            position: 'absolute',
+            top: -150,
+            right: 10,
+          }}
+        >
+          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
+            <Image source={listMode === 'home' ? toggle : toggleOff} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              Actions.botContainer()
+            }}
+            style={styles.button}
+          >
+            <Image source={create} />
+          </TouchableOpacity>
+        </View>
         {list.length && (
           <Carousel
             key={fullScreenMode ? 1 : 0}
@@ -108,5 +132,14 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'flex-end',
     height: 115 * k,
+  },
+  button: {
+    marginTop: 15 * k,
+  },
+  pill: {
+    shadowColor: colors.PINK,
+    shadowRadius: 5 * k,
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 0},
   },
 })

@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, StyleSheet, Animated, TouchableOpacity} from 'react-native'
+import {View, FlatList, StyleSheet, Animated, TouchableOpacity, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
@@ -15,6 +15,7 @@ import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
 import {Actions} from '../../../node_modules/react-native-router-flux'
 import InvisibleModeOverlay from './InvisibleModeOverlay'
+import {settings} from '../../globals'
 
 type Props = {
   wocky?: IWocky
@@ -36,7 +37,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   componentDidMount() {
     autorun(() =>
       Animated.spring(this.state.yOffset, {
-        toValue: this.props.homeStore.fullScreenMode ? -250 : 0,
+        toValue: this.props.homeStore.fullScreenMode ? -180 : 0,
         // speed: 6,
       }).start()
     )
@@ -76,6 +77,17 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <InvisibleModeOverlay />
+        <TouchableOpacity
+          onPress={() => Actions.bottomMenu()}
+          onLongPress={() => settings.isStaging && Actions.debugScreen()}
+          style={{
+            position: 'absolute',
+            bottom: -45 * k,
+            right: 10 * k,
+          }}
+        >
+          <Image source={settingsImg} />
+        </TouchableOpacity>
       </Animated.View>
     )
   }
@@ -91,6 +103,8 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     return <Comp />
   }
 }
+
+const settingsImg = require('../../../images/settingsBtn.png')
 
 const placeholderItems = [
   {
