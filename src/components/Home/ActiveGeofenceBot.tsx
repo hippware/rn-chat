@@ -10,6 +10,7 @@ import {Actions} from 'react-native-router-flux'
 import {RText} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
+import {colors} from '../../constants'
 
 type Props = {
   wocky?: IWocky
@@ -45,7 +46,13 @@ class ActiveBot extends React.Component<Props> {
             ) : null}
           </BotBubble>
           <TouchableOpacity onPress={this.goToBot}>
-            <RText size={13} style={{textAlign: 'center'}} numberOfLines={1} ellipsizeMode="tail">
+            <RText
+              size={12}
+              style={{textAlign: 'center'}}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              color={colors.DARK_GREY}
+            >
               {bot.title}
             </RText>
           </TouchableOpacity>
