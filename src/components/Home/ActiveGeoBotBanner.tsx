@@ -23,19 +23,19 @@ type Props = {
 }
 
 type State = {
-  marginTop: Animated.Value
+  yOffset: Animated.Value
 }
 
 @inject('wocky', 'analytics', 'homeStore')
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   state: State = {
-    marginTop: new Animated.Value(0),
+    yOffset: new Animated.Value(0),
   }
 
   componentDidMount() {
     autorun(() =>
-      Animated.spring(this.state.marginTop, {
+      Animated.spring(this.state.yOffset, {
         toValue: this.props.homeStore.fullScreenMode ? -250 : 0,
         // speed: 6,
       }).start()
@@ -54,7 +54,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 1,
           shadowRadius: 5,
-          marginTop: this.state.marginTop,
+          transform: [{translateY: this.state.yOffset}],
         }}
         onStartShouldSetResponder={() => {
           this.props.analytics.track(analyticsGeoWidgetTap)
