@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bot Pin Changes (#2536)
 * Drop Shadow missing on Pins (#2535)
 * Card Changes (#2539)
+* "You" card should be tappable on entire card (#2550)
 * Current Location Button (#2540)
 * Center the map (#2545)
 
@@ -26,6 +27,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] create Codepush channel for Beng (#2556)
 * HS Redesign - Presence Widget (#2468)
 * HS Redesign - The YOU pin. (#2476)
+  * "You" pin should change to avatar image (#2541)
 
 wocky-client
 
