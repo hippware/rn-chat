@@ -8,6 +8,7 @@ import Spinner from './Spinner'
 import ProgressiveImage from './ProgressiveImage'
 import Separator from './Separator'
 import BottomButton from './BottomButton'
+import CloseButton from './CloseButton'
 
 export {
   RText,
@@ -20,4 +21,5 @@ export {
   ProgressiveImage,
   Separator,
   BottomButton,
+  CloseButton,
 }
