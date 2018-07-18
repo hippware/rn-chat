@@ -7,11 +7,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * No more FirstLoadOverlay (Rework #2468)
 * Bot Pin Changes (#2536)
 * Drop Shadow missing on Pins (#2535)
+* Header Changes (#2538)
 * Card Changes (#2539)
 * "You" card should be tappable on entire card (#2550)
 * Current Location Button (#2540)
 * Center the map (#2545)
 * What to do with overscroll on Map + bottom popup (#2523)
+* Pin in focus is too far up (#2543)
 
 # 3.1.1 - 2018 July 13
 
