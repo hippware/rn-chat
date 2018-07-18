@@ -7,7 +7,7 @@ type Props = {
   style?: ViewStyle
 }
 
-const closeImg = require('../../../images/iconClose.png')
+const closeImg = require('../../../images/iconCloseSmall.png')
 
 const CloseButton = ({onPress, style}: Props) => (
   <TouchableOpacity onPress={() => (onPress ? onPress() : Actions.pop())} style={style}>
