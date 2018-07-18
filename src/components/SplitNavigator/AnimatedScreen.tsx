@@ -14,26 +14,20 @@ interface IProps {
 }
 
 type State = {
-  bottom: Animated.Value
-  top: Animated.Value
+  y: Animated.Value
   scrollY: Animated.Value
 }
 
 class AnimatedScreen extends React.Component<IProps, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      bottom: new Animated.Value(0), // determines the y offset of bottom-up sliders
-      top: new Animated.Value(props.topHeight ? -props.topHeight : 0),
-      scrollY: new Animated.Value(0),
-    }
+  state = {
+    y: new Animated.Value(0), // determines the y offset of sliders
+    scrollY: new Animated.Value(0),
   }
 
   componentWillReceiveProps({show, fromTop, topHeight, splitHeight}: IProps) {
     if (show !== this.props.show) {
-      const valToAnimate = fromTop ? this.state.top : this.state.bottom
-      const toValue = fromTop ? (show ? 0 : -splitHeight) : show ? -topHeight : 0
-      Animated.spring(valToAnimate, {
+      const toValue = show ? (fromTop ? topHeight : -splitHeight) : 0
+      Animated.spring(this.state.y, {
         toValue,
         // useNativeDriver: true,
       }).start()
@@ -41,9 +35,9 @@ class AnimatedScreen extends React.Component<IProps, State> {
   }
 
   render() {
-    const {base} = this.props
-    const {bottom, top, scrollY} = this.state
-    const mainViewBottom = bottom.interpolate({
+    const {base, show, fromTop} = this.props
+    const {y, scrollY} = this.state
+    const mainViewBottom = y.interpolate({
       inputRange: [-this.props.splitHeight, 0],
       outputRange: [-this.props.splitHeight + 215 * k, 0],
     })
@@ -52,7 +46,7 @@ class AnimatedScreen extends React.Component<IProps, State> {
     return (
       <View style={{flex: 1}}>
         <OpacityHeader {...this.props} scrollY={scrollY} />
-        <TopDownSlider {...this.props} top={top} />
+        <TopDownSlider {...this.props} y={y} show={show && fromTop} />
         <View
           style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
@@ -60,7 +54,7 @@ class AnimatedScreen extends React.Component<IProps, State> {
           <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
             {base}
           </Animated.View>
-          <BottomUpSlider {...this.props} bottom={bottom} scrollY={scrollY} />
+          <BottomUpSlider {...this.props} bottom={y} scrollY={scrollY} />
         </View>
       </View>
     )
@@ -75,29 +69,29 @@ class AnimatedScreen extends React.Component<IProps, State> {
 }
 
 interface ITopProps extends IProps {
-  top: Animated.Value
+  y: Animated.Value
 }
 
-const TopDownSlider = ({top, topHeight, popup, show, fromTop}: ITopProps) => {
-  return (
-    show &&
-    fromTop && (
-      <Animated.View
-        style={[
-          styles.absolute,
-          {
-            zIndex: 1000,
-            top: 0,
-            height: topHeight,
-            backgroundColor: 'red',
-          },
-          {transform: [{translateY: top}]},
-        ]}
-      >
-        {popup}
-      </Animated.View>
-    )
-  )
+const TopDownSlider = ({y, topHeight, popup, fromTop}: ITopProps) => {
+  const topOffset = y.interpolate({
+    inputRange: [0, topHeight],
+    outputRange: [-topHeight, 0],
+  })
+  return fromTop ? (
+    <Animated.View
+      style={[
+        styles.absolute,
+        {
+          zIndex: 1000,
+          top: 0,
+          height: topHeight,
+        },
+        {transform: [{translateY: topOffset}]},
+      ]}
+    >
+      {popup}
+    </Animated.View>
+  ) : null
 }
 
 interface IOpacityHeaderProps extends IProps {
