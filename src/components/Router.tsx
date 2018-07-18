@@ -150,7 +150,7 @@ class TinyRobotRouter extends React.Component<Props> {
       <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Stack navigator={ErrorNavigator}>
           <Lightbox key="rootLightbox">
-            <Stack navigator={SplitNavigator} splitHeight={394}>
+            <Stack navigator={SplitNavigator} splitHeight={394} topHeight={100}>
               <Stack key="rootStack" initial hideNavBar>
                 <Stack key="root" tabs hideTabBar hideNavBar>
                   <Stack key="launch" hideNavBar lightbox type="replace">

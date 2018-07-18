@@ -20,13 +20,14 @@ const SplitNavigator = (routeConfigs, tabsConfig: any = {}) => {
       // Figure out what to render based on the navigation state and the router:
       const ScreenComponent = routeConfigs[routes[0].routeName].screen
       const Popup = routeConfigs[routeState.routeName].screen
-      const OpacityHeader = routeState.params && routeState.params.opacityHeader
+      const params = routeState && routeState.params ? routeState.params : {}
+      const {opacityHeader: OpacityHeader, ...rest} = params
 
       return (
         <AnimatedScreen
           splitHeight={tabsConfig.splitHeight}
-          draggable={routeState && routeState.params && routeState.params.draggable} // TODO: DRY
-          fromTop={routeState && routeState.params && routeState.params.fromTop} // TODO: DRY
+          topHeight={tabsConfig.topHeight}
+          {...rest}
           base={
             <ScreenComponent
               navigation={addNavigationHelpers({
@@ -37,7 +38,7 @@ const SplitNavigator = (routeConfigs, tabsConfig: any = {}) => {
             />
           }
           show={index !== 0}
-          opacityHeader={OpacityHeader && <OpacityHeader {...routeState.params} />}
+          opacityHeader={OpacityHeader && <OpacityHeader {...rest} />}
           popup={
             <Popup
               navigation={addNavigationHelpers({
@@ -45,7 +46,7 @@ const SplitNavigator = (routeConfigs, tabsConfig: any = {}) => {
                 state: routeState,
                 addListener: Actions.addListener,
               })}
-              {...routeState.params}
+              {...rest}
             />
           }
         />

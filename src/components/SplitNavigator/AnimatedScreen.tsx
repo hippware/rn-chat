@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react'
 import {View, Animated, StyleSheet} from 'react-native'
 import {height, k} from '../Global'
 
-type Props = {
+interface IProps {
   base: ReactElement<any> // main element
   show: boolean
   opacityHeader?: ReactElement<any> // element that appears at the top of the screen when popup is dragged up
@@ -10,59 +10,49 @@ type Props = {
   splitHeight: number
   draggable: boolean
   fromTop?: boolean // Popup should slide down from the top rather than up from the bottom
+  topHeight?: number
 }
 
 type State = {
   bottom: Animated.Value
+  top: Animated.Value
   scrollY: Animated.Value
-  opened: boolean
 }
 
-class AnimatedScreen extends React.Component<Props, State> {
-  state = {
-    bottom: new Animated.Value(0),
-    scrollY: new Animated.Value(0),
-    opened: false,
+class AnimatedScreen extends React.Component<IProps, State> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      bottom: new Animated.Value(0), // determines the y offset of bottom-up sliders
+      top: new Animated.Value(props.topHeight ? -props.topHeight : 0),
+      scrollY: new Animated.Value(0),
+    }
   }
 
-  componentWillReceiveProps({show}) {
+  componentWillReceiveProps({show, fromTop, topHeight, splitHeight}: IProps) {
     if (show !== this.props.show) {
-      if (!show) this.setState({opened: false})
-      Animated.spring(this.state.bottom, {
-        toValue: show ? -this.props.splitHeight : 0,
+      const valToAnimate = fromTop ? this.state.top : this.state.bottom
+      const toValue = fromTop ? (show ? 0 : -splitHeight) : show ? -topHeight : 0
+      Animated.spring(valToAnimate, {
+        toValue,
         // useNativeDriver: true,
-      }).start(() => {
-        if (show) this.setState({opened: true})
-      })
+      }).start()
     }
   }
 
   render() {
-    const {base, popup, show, opacityHeader, splitHeight, draggable, fromTop} = this.props
-    const {bottom, scrollY} = this.state
-    const scrollTop = bottom.interpolate({
-      inputRange: [-splitHeight, 0],
-      outputRange: [-height, 0],
-    })
-    const headerOpacity = scrollY.interpolate({
-      inputRange: [0, height - splitHeight - 80, height - splitHeight - 30],
-      outputRange: [0, 0, 1],
-    })
+    const {base} = this.props
+    const {bottom, top, scrollY} = this.state
     const mainViewBottom = bottom.interpolate({
       inputRange: [-this.props.splitHeight, 0],
       outputRange: [-this.props.splitHeight + 215 * k, 0],
     })
     const openCloseTransform = {transform: [{translateY: mainViewBottom}]}
-    const theMargin = height - splitHeight - 30
+
     return (
       <View style={{flex: 1}}>
-        {show &&
-          opacityHeader && (
-            <Animated.View style={[styles.header, {opacity: headerOpacity}]}>
-              {opacityHeader}
-            </Animated.View>
-          )}
-        {/* TODO: render slide-down header component if fromTop===true */}
+        <OpacityHeader {...this.props} scrollY={scrollY} />
+        <TopDownSlider {...this.props} top={top} />
         <View
           style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
@@ -70,25 +60,7 @@ class AnimatedScreen extends React.Component<Props, State> {
           <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
             {base}
           </Animated.View>
-          {show &&
-            !fromTop && (
-              <Animated.ScrollView
-                style={[
-                  styles.absolute,
-                  {top: height, paddingTop: theMargin, height},
-                  {transform: [{translateY: scrollTop}]},
-                ]}
-                scrollEventThrottle={16}
-                onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.state.scrollY}}}])}
-                contentContainerStyle={{paddingBottom: theMargin}}
-                showsVerticalScrollIndicator={false}
-                scrollEnabled={!!draggable}
-                bounces={!!draggable}
-                decelerationRate="fast"
-              >
-                {popup}
-              </Animated.ScrollView>
-            )}
+          <BottomUpSlider {...this.props} bottom={bottom} scrollY={scrollY} />
         </View>
       </View>
     )
@@ -100,6 +72,88 @@ class AnimatedScreen extends React.Component<Props, State> {
     const theTest = pageY < height - (splitHeight + 30) - (this.state.scrollY as any)._value
     return show && theTest
   }
+}
+
+interface ITopProps extends IProps {
+  top: Animated.Value
+}
+
+const TopDownSlider = ({top, topHeight, popup, show, fromTop}: ITopProps) => {
+  return (
+    show &&
+    fromTop && (
+      <Animated.View
+        style={[
+          styles.absolute,
+          {
+            zIndex: 1000,
+            top: 0,
+            height: topHeight,
+            backgroundColor: 'red',
+          },
+          {transform: [{translateY: top}]},
+        ]}
+      >
+        {popup}
+      </Animated.View>
+    )
+  )
+}
+
+interface IOpacityHeaderProps extends IProps {
+  scrollY: Animated.Value
+}
+
+const OpacityHeader = ({show, opacityHeader, scrollY, splitHeight}: IOpacityHeaderProps) => {
+  const opacity = scrollY.interpolate({
+    inputRange: [0, height - splitHeight - 80, height - splitHeight - 30],
+    outputRange: [0, 0, 1],
+  })
+  return show && opacityHeader ? (
+    <Animated.View style={[styles.header, {opacity}]}>{opacityHeader}</Animated.View>
+  ) : null
+}
+
+interface IBottomProps extends IProps {
+  scrollY: Animated.Value
+  bottom: Animated.Value
+}
+
+const BottomUpSlider = ({
+  show,
+  fromTop,
+  splitHeight,
+  bottom,
+  draggable,
+  popup,
+  scrollY,
+}: IBottomProps) => {
+  const theMargin = height - splitHeight - 30
+  const scrollTop = bottom.interpolate({
+    inputRange: [-splitHeight, 0],
+    outputRange: [-height, 0],
+  })
+  return (
+    show &&
+    !fromTop && (
+      <Animated.ScrollView
+        style={[
+          styles.absolute,
+          {top: height, paddingTop: theMargin, height},
+          {transform: [{translateY: scrollTop}]},
+        ]}
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollY}}}])}
+        contentContainerStyle={{paddingBottom: theMargin}}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={!!draggable}
+        bounces={!!draggable}
+        decelerationRate="fast"
+      >
+        {popup}
+      </Animated.ScrollView>
+    )
+  )
 }
 
 export default AnimatedScreen

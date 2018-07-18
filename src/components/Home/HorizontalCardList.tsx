@@ -102,7 +102,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   @computed
   get showingBottomPopup() {
     // TODO: move this logic to rnrf
-    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
+    return ['bottomMenu', 'locationDetails', 'createBot'].includes(Actions.currentScene)
   }
 }
 
@@ -121,7 +121,7 @@ const ButtonColumn = inject('homeStore')(
 
       <TouchableOpacity
         onPress={() => {
-          Actions.botContainer()
+          Actions.createBot()
         }}
         style={styles.button}
       >
