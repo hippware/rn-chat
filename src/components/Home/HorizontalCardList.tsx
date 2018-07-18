@@ -74,30 +74,11 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {list, setIndex, index, toggleListMode, listMode} = homeStore
+    const {list, setIndex, index} = homeStore
     const {translateY} = this.state
     return (
       <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
-        <View
-          style={{
-            position: 'absolute',
-            top: -150,
-            right: 10,
-          }}
-        >
-          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
-            <Image source={listMode === 'home' ? toggle : toggleOff} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              Actions.botContainer()
-            }}
-            style={styles.button}
-          >
-            <Image source={create} />
-          </TouchableOpacity>
-        </View>
+        <ButtonColumn />
         <Carousel
           ref={r => (this.list = r)}
           data={list.slice()}
@@ -124,6 +105,31 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
   }
 }
+
+const ButtonColumn = inject('homeStore')(
+  observer(({homeStore}) => (
+    <View
+      style={{
+        position: 'absolute',
+        top: -150,
+        right: 10,
+      }}
+    >
+      <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
+        <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          Actions.botContainer()
+        }}
+        style={styles.button}
+      >
+        <Image source={create} />
+      </TouchableOpacity>
+    </View>
+  ))
+)
 
 const styles = StyleSheet.create({
   container: {
