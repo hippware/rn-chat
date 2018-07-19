@@ -14,6 +14,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Center the map (#2545)
 * What to do with overscroll on Map + bottom popup (#2523)
 * Pin in focus is too far up (#2543)
+* Widget title changes (#2533)
+* Cards Disappear (#2544)
+* Broken Pin Image on Widget (#2554)
 
 # 3.1.1 - 2018 July 13
 
