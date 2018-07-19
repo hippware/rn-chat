@@ -96,9 +96,9 @@ export default class Connectivity extends React.Component<Props> {
       setTimeout(
         () =>
           this.tryReconnect(
-            `Connectivity: old=(${oldInfo.type},${oldInfo.effectiveType}), new=(${
-              connectionInfo.type
-            },${connectionInfo.effectiveType})`
+            `Connectivity: ` +
+              `old=(${oldInfo.type},${oldInfo.effectiveType}), ` +
+              `new=(${connectionInfo.type},${connectionInfo.effectiveType})`
           ),
         500
       )
