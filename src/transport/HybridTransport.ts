@@ -2,6 +2,7 @@ import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocation
 import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
+import {ILocation} from '../model/Location'
 
 export class HybridTransport implements IWockyTransport {
   @computed
@@ -179,11 +180,11 @@ export class HybridTransport implements IWockyTransport {
   }
 
   generateId(): Promise<string> {
-    return this._xmpp.generateId()
+    return this._gql.generateId()
   }
 
-  updateBot(bot: any): Promise<void> {
-    return this._xmpp.updateBot(bot)
+  updateBot(bot: any, userLocation?: ILocation): Promise<void> {
+    return this._gql.updateBot(bot, userLocation)
   }
 
   shareBot(

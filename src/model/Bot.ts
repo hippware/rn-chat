@@ -19,7 +19,10 @@ export const Bot = types
     types.compose(
       createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
       createUpdatable((self, data) =>
-        self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data})
+        self.service._updateBot(
+          {...getSnapshot(self), isNew: self.isNew, ...data},
+          self.userLocation
+        )
       )
     ),
     types.model('Bot', {
@@ -27,13 +30,14 @@ export const Bot = types
       isSubscribed: false,
       guest: false,
       visitor: false,
+      icon: '',
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 100,
       geofence: false,
       owner: types.maybe(types.reference(Profile)),
       image: FileRef,
-      description: types.maybe(types.string),
+      description: '',
       visibility: VISIBILITY_PUBLIC,
       location: types.maybe(Location),
       address: '',
@@ -52,9 +56,13 @@ export const Bot = types
   .volatile(() => ({
     isNew: false,
     loading: false,
+    userLocation: types.maybe(Location),
   }))
   .named('Bot')
   .actions(self => ({
+    setUserLocation: (location: ILocation) => {
+      self.userLocation = Location.create(location)
+    },
     setError: (value: string) => {
       self.error = value
       self.loading = false

@@ -12,6 +12,7 @@ import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
+import {ILocation} from '../model/Location'
 
 const PROFILE_PROPS = `id firstName lastName handle
   avatar { thumbnailUrl fullUrl trosUrl }
@@ -19,7 +20,7 @@ const PROFILE_PROPS = `id firstName lastName handle
   followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
   followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 `
-const BOT_PROPS = `id title address isPublic: public addressData description geofence public radius server shortname 
+const BOT_PROPS = `id icon title address isPublic: public addressData description geofence public radius server shortname 
   image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
@@ -80,11 +81,11 @@ export class GraphQLTransport implements IWockyTransport {
     this.socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
-      // logger: (kind, msg, data) => {
-      //   if (msg !== 'close') {
-      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-      //   }
-      // },
+      logger: (kind, msg, data) => {
+        if (msg !== 'close') {
+          console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+        }
+      },
     })
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
@@ -171,7 +172,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    throw new Error('Not supported')
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation botCreate {
+          botCreate {
+            messages {
+              field
+              message
+            }
+            successful
+            result {
+              id
+            }
+          }
+        }
+      `,
+    })
+    return res.data!.botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
     const res = await this.client.query<any>({
@@ -513,9 +530,68 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async updateBot(): Promise<void> {
-    // Avaialble via the BotUpdate mutation
-    throw new Error('Not supported')
+  async updateBot(
+    {
+      id,
+      address,
+      addressData,
+      description,
+      geofence,
+      icon,
+      image,
+      lat,
+      lon,
+      radius,
+      server,
+      shortname,
+      title,
+      type,
+      ...bot
+    }: any,
+    userLocation?: ILocation
+  ): Promise<void> {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation botUpdate(
+          $id: String!
+          $userLocation: UserLocationUpdateInput
+          $values: BotParams
+        ) {
+          botUpdate(input: {id: $id, userLocation: $userLocation, values: $values}) {
+            successful
+          }
+        }
+      `,
+      variables: {
+        id,
+        values: {
+          address,
+          addressData: JSON.stringify(addressData),
+          description,
+          geofence,
+          icon,
+          image,
+          lat: bot.location.latitude,
+          lon: bot.location.longitude,
+          public: bot.public,
+          radius: Math.round(radius),
+          server,
+          shortname,
+          title,
+          type,
+        },
+        ...(userLocation
+          ? {
+              lon: userLocation.longitude,
+              lat: userLocation.latitude,
+              accuracy: userLocation.accuracy,
+            }
+          : {}),
+      },
+    })
+    if (!res.data!.botUpdate.successful) {
+      throw new Error('Error during bot save!')
+    }
   }
 
   async loadRelations(): Promise<IPagingList> {

@@ -408,9 +408,9 @@ export const Wocky = types
       const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
-    _updateBot: flow(function*(d: any) {
+    _updateBot: flow(function*(d: any, userLocation: ILocation) {
       yield waitFor(() => self.connected)
-      yield self.transport.updateBot(d)
+      yield self.transport.updateBot(d, userLocation)
       if (d.geofence) {
         self.profile!.setHasUsedGeofence(true)
       }
