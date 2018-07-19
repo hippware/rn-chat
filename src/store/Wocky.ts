@@ -30,7 +30,7 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
-import {IWockyTransport, ILocationSnapshot} from '..'
+import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 export const EventEntity = types.union(
   EventBotPost,
   EventBotNote,

@@ -1,7 +1,7 @@
 import {types, flow, getSnapshot, isAlive} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList} from './Profile'
 import {FileRef} from './File'
-import {Location} from './Location'
+import {Location, ILocationSnapshot} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
 import * as utils from '../transport/utils'
@@ -56,12 +56,12 @@ export const Bot = types
   .volatile(() => ({
     isNew: false,
     loading: false,
-    userLocation: types.maybe(Location),
+    userLocation: null,
   }))
   .named('Bot')
   .actions(self => ({
-    setUserLocation: (location: ILocation) => {
-      self.userLocation = Location.create(location)
+    setUserLocation: (location: ILocationSnapshot) => {
+      self.userLocation = location
     },
     setError: (value: string) => {
       self.error = value
