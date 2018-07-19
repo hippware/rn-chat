@@ -57,6 +57,10 @@ export default class CreationHeader extends React.Component<Props> {
     this.bot.load({addressData: data.meta, address: data.address})
   }
 
+  next = () => {
+    // TODO
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -68,7 +72,7 @@ export default class CreationHeader extends React.Component<Props> {
             Pin Location
           </RText>
           <View style={{width: 100}}>
-            <TouchableOpacity onPress={() => console.log('Next')} style={{alignSelf: 'flex-end'}}>
+            <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
               <RText size={17} color={colors.PINK}>
                 Next
               </RText>

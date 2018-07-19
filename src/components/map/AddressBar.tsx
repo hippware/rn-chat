@@ -75,8 +75,9 @@ class AddressBar extends React.Component<Props> {
   }
 
   onSuggestionSelect = async placeId => {
-    const data = await this.props.geocodingStore.details(placeId)
-    this.onLocationSelect({...data, isCurrent: false})
+    // const data = await this.props.geocodingStore.details(placeId)
+    // this.onLocationSelect({...data, isCurrent: false})
+    // TODO
   }
 
   onLocationSelect = async data => {

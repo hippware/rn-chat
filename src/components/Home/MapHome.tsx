@@ -184,6 +184,11 @@ export default class MapHome extends React.Component<IProps> {
     }
   }
 
+  createFromLongPress = ({nativeEvent: {coordinate}}) => {
+    // console.log('create from press', coordinate)
+    // TODO: https://github.com/hippware/rn-chat/issues/2578
+  }
+
   render() {
     const {locationStore, homeStore} = this.props
     const {location} = locationStore
@@ -202,6 +207,7 @@ export default class MapHome extends React.Component<IProps> {
           provider={'google'}
           ref={r => (this.mapRef = r)}
           onPress={toggleFullscreen}
+          onLongPress={this.createFromLongPress}
           initialRegion={{
             latitude,
             longitude,
