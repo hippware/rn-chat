@@ -35,20 +35,15 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   }
 
   componentDidMount() {
+    const {homeStore} = this.props
     reaction(
-      () => this.props.homeStore.fullScreenMode || this.showingPopup,
+      () => homeStore.fullScreenMode || homeStore.showingPopup,
       hide =>
         Animated.spring(this.state.yOffset, {
           toValue: hide ? -180 : 0,
           // speed: 6,
         }).start()
     )
-  }
-
-  @computed
-  get showingPopup() {
-    // TODO: move this logic to rnrf
-    return ['bottomMenu', 'locationDetails', 'createBot'].includes(Actions.currentScene)
   }
 
   render() {

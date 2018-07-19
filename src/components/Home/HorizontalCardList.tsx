@@ -49,7 +49,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     this.reactions = [
       // show/hide the list depending on fullscreenMode
       reaction(
-        () => homeStore.fullScreenMode || this.showingBottomPopup,
+        () => homeStore.fullScreenMode || homeStore.showingPopup,
         (isFullScreen: boolean) => {
           Animated.spring(this.state.translateY, {
             toValue: isFullScreen ? 160 * k : translateYDefault,
@@ -97,12 +97,6 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   renderItem = ({item, index}: {item: ICard; index: number}) => {
     const RenderClass = cardMap[getType(item).name]
     return <Observer>{() => <RenderClass {...item} />}</Observer>
-  }
-
-  @computed
-  get showingBottomPopup() {
-    // TODO: move this logic to rnrf
-    return ['bottomMenu', 'locationDetails', 'createBot'].includes(Actions.currentScene)
   }
 }
 

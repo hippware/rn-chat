@@ -121,6 +121,7 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore, wocky} = this.props
+    homeStore.setNavRef(Actions)
     if (!wocky.events.length) {
       this.loadMoreDiscoverList()
     } else {
