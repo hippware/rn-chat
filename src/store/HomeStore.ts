@@ -68,17 +68,13 @@ const HomeStore = types
     return {
       views: {
         // return the list for current mode
-        get list(): ICard[] {
-          return self.listMode === 'home' ? self.homeBotList : self.discoverList
-        },
-        // return index for the current mode
-        get index(): number {
-          return self.listMode === 'home' ? self.homeBotIndex : self.discoverIndex
-        },
         get showingPopup() {
           return (
             navRef && ['bottomMenu', 'locationDetails', 'createBot'].includes(navRef.currentScene)
           )
+        },
+        get creationMode() {
+          return navRef && navRef.currentScene === 'createBot'
         },
       },
       actions: {
@@ -86,6 +82,17 @@ const HomeStore = types
       },
     }
   })
+  .views(self => ({
+    get list(): ICard[] {
+      return self.creationMode
+        ? []
+        : self.listMode === 'home' ? self.homeBotList : self.discoverList
+    },
+    // return index for the current mode
+    get index(): number {
+      return self.listMode === 'home' ? self.homeBotIndex : self.discoverIndex
+    },
+  }))
   .actions(self => ({
     setCenter(center) {
       if (!center) {
