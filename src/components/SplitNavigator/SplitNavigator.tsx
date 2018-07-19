@@ -35,6 +35,7 @@ const SplitNavigator = (routeConfigs, tabsConfig: any = {}) => {
                 state: routes[0],
                 addListener: Actions.addListener,
               })}
+              // {...rest}
             />
           }
           show={index !== 0}

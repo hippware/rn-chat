@@ -9,7 +9,16 @@ interface IProps {}
 export default class CreationHeader extends React.Component<IProps> {
   render() {
     return (
-      <View style={{height: 100, backgroundColor: 'white', flexDirection: 'row', padding: 10}}>
+      <View
+        style={{
+          // height: 100,
+          flex: 1,
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          padding: 10,
+          borderWidth: 1,
+        }}
+      >
         <CloseButton />
       </View>
     )

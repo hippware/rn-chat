@@ -46,7 +46,6 @@ class AnimatedScreen extends React.Component<IProps, State> {
     return (
       <View style={{flex: 1}}>
         <OpacityHeader {...this.props} scrollY={scrollY} />
-        <TopDownSlider {...this.props} y={y} show={show && fromTop} />
         <View
           style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
@@ -66,32 +65,6 @@ class AnimatedScreen extends React.Component<IProps, State> {
     const theTest = pageY < height - (splitHeight + 30) - (this.state.scrollY as any)._value
     return show && theTest
   }
-}
-
-interface ITopProps extends IProps {
-  y: Animated.Value
-}
-
-const TopDownSlider = ({y, topHeight, popup, fromTop}: ITopProps) => {
-  const topOffset = y.interpolate({
-    inputRange: [0, topHeight],
-    outputRange: [-topHeight, 0],
-  })
-  return fromTop ? (
-    <Animated.View
-      style={[
-        styles.absolute,
-        {
-          zIndex: 1000,
-          top: 0,
-          height: topHeight,
-        },
-        {transform: [{translateY: topOffset}]},
-      ]}
-    >
-      {popup}
-    </Animated.View>
-  ) : null
 }
 
 interface IOpacityHeaderProps extends IProps {
