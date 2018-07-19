@@ -35,7 +35,7 @@ class AnimatedScreen extends React.Component<IProps, State> {
   }
 
   render() {
-    const {base, show, fromTop} = this.props
+    const {base} = this.props
     const {y, scrollY} = this.state
     const mainViewBottom = y.interpolate({
       inputRange: [-this.props.splitHeight, 0],
