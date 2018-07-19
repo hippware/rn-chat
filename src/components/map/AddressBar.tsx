@@ -193,7 +193,8 @@ class AddressBar extends React.Component<Props> {
   render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+        {/* <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} /> */}
+        <CurrentLocation enabled onPress={this.onLocationSelect} />
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}

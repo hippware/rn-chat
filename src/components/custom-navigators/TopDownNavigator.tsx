@@ -63,20 +63,25 @@ interface IProps {
 
 type State = {
   y: Animated.Value
+  keepMounted: boolean
 }
 
 class TopSlider extends React.Component<IProps, State> {
   state = {
     y: new Animated.Value(0), // determines the y offset of sliders
+    keepMounted: false,
   }
 
   componentWillReceiveProps({show, topHeight}: IProps) {
     if (show !== this.props.show) {
       const toValue = show ? topHeight : 0
+      if (show) this.setState({keepMounted: true})
       Animated.spring(this.state.y, {
         toValue,
         // useNativeDriver: true,
-      }).start()
+      }).start(() => {
+        if (!show) this.setState({keepMounted: false})
+      })
     }
   }
 
@@ -97,12 +102,13 @@ class TopSlider extends React.Component<IProps, State> {
             {
               zIndex: 1000,
               top: 0,
-              height: topHeight,
+              // height: topHeight,
+              flex: 1,
             },
             openCloseTransform,
           ]}
         >
-          {popup}
+          {this.state.keepMounted && popup}
         </Animated.View>
         {base}
       </View>

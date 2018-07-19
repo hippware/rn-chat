@@ -33,7 +33,7 @@ class CurrentLocation extends React.Component<Props, State> {
 
   componentDidMount() {
     const {locationStore, geocodingStore, enabled} = this.props
-    this.toggle(enabled)
+    // this.toggle(enabled)
     setTimeout(async () => {
       const data = await geocodingStore.reverse(locationStore!.location)
       if (data) {
