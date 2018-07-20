@@ -60,19 +60,20 @@ export default class Connectivity extends React.Component<Props> {
   // reason: A string indicating why tryReconnect() was called.
   //         Useful for logging/debugging
   tryReconnect = async reason => {
+    let info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
     if (!model.connected && !model.connecting && model.username && model.password && model.host) {
       try {
         this.props.analytics.track('reconnect_try', {
+          ...info,
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
-          reason,
         })
         await model.login()
-        this.props.analytics.track('reconnect_success', {reason})
+        this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
-        this.props.analytics.track('reconnect_fail', {reason, error: e})
+        this.props.analytics.track('reconnect_fail', {...info, error: e})
         if (e.toString().indexOf('not-authorized') !== -1) {
           this.retryDelay = 1e9
           Actions.logout()
