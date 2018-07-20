@@ -37,29 +37,31 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
   const {latitude, longitude} = location
   const {profile} = wocky
   return (
-    <HackMarker
-      zIndex={1000}
-      coordinate={{latitude, longitude}}
-      onPress={() => {
-        card.select()
-        homeStore.setCenter(location)
-      }}
-      stopPropagation
-    >
-      {!profile.avatar && !profile.hidden.enabled ? (
-        <Image source={require('../../../images/you.png')} />
-      ) : (
-        <View style={{alignItems: 'center'}}>
-          <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
-          <Triangle
-            width={10}
-            height={4}
-            color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
-            direction="down"
-          />
-        </View>
-      )}
-    </HackMarker>
+    profile && (
+      <HackMarker
+        zIndex={1000}
+        coordinate={{latitude, longitude}}
+        onPress={() => {
+          card.select()
+          homeStore.setCenter(location)
+        }}
+        stopPropagation
+      >
+        {!profile.avatar && !profile.hidden.enabled ? (
+          <Image source={require('../../../images/you.png')} />
+        ) : (
+          <View style={{alignItems: 'center'}}>
+            <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
+            <Triangle
+              width={10}
+              height={4}
+              color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
+              direction="down"
+            />
+          </View>
+        )}
+      </HackMarker>
+    )
   )
 })
 
