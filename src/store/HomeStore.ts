@@ -63,10 +63,30 @@ const HomeStore = types
     center: types.maybe(Location),
     scrolledToBot: types.maybe(types.reference(Bot)),
   })
+  .extend(self => {
+    let navRef
+    return {
+      views: {
+        // return the list for current mode
+        get showingPopup() {
+          return (
+            navRef && ['bottomMenu', 'locationDetails', 'createBot'].includes(navRef.currentScene)
+          )
+        },
+        get creationMode() {
+          return navRef && navRef.currentScene === 'createBot'
+        },
+      },
+      actions: {
+        setNavRef: ref => (navRef = ref),
+      },
+    }
+  })
   .views(self => ({
-    // return the list for current mode
     get list(): ICard[] {
-      return self.listMode === 'home' ? self.homeBotList : self.discoverList
+      return self.creationMode
+        ? []
+        : self.listMode === 'home' ? self.homeBotList : self.discoverList
     },
     // return index for the current mode
     get index(): number {

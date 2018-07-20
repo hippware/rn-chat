@@ -8,9 +8,9 @@ import CurrentLocation from './CurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {Actions} from 'react-native-router-flux'
+// import {Actions} from 'react-native-router-flux'
 import {IBot} from 'wocky-client'
-import {getSnapshot} from 'mobx-state-tree'
+// import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   bot: IBot
@@ -75,32 +75,33 @@ class AddressBar extends React.Component<Props> {
   }
 
   onSuggestionSelect = async placeId => {
-    const data = await this.props.geocodingStore.details(placeId)
-    this.onLocationSelect({...data, isCurrent: false})
+    // const data = await this.props.geocodingStore.details(placeId)
+    // this.onLocationSelect({...data, isCurrent: false})
+    // TODO
   }
 
   onLocationSelect = async data => {
-    const {location, address, isCurrent, isPlace, meta, placeName} = data
-    const {bot, analytics, edit} = this.props
-    this.searchEnabled = false
-    this.text = data.address
-    const title = isPlace ? placeName : bot.title ? bot.title : address
-    await bot.load({
-      location: {
-        ...location,
-      },
-      address,
-      addressData: meta,
-      title,
-    })
-    bot.location!.load({isCurrent})
-    if (edit) {
-      bot.save()
-      Actions.pop()
-    } else {
-      Actions.botCompose({botId: bot.id})
-    }
-    analytics.track('botcreate_chooselocation', getSnapshot(bot))
+    // const {location, address, isCurrent, isPlace, meta, placeName} = data
+    // const {bot, analytics, edit} = this.props
+    // this.searchEnabled = false
+    // this.text = data.address
+    // const title = isPlace ? placeName : bot.title ? bot.title : address
+    // await bot.load({
+    //   location: {
+    //     ...location,
+    //   },
+    //   address,
+    //   addressData: meta,
+    //   title,
+    // })
+    // bot.location!.load({isCurrent})
+    // if (edit) {
+    //   bot.save()
+    //   Actions.pop()
+    // } else {
+    //   Actions.botCompose({botId: bot.id})
+    // }
+    // analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 
   onChangeText = text => {
@@ -193,7 +194,8 @@ class AddressBar extends React.Component<Props> {
   render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+        {/* <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} /> */}
+        <CurrentLocation enabled onPress={this.onLocationSelect} />
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}

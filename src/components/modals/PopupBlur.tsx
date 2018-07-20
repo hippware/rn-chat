@@ -1,8 +1,8 @@
 import React from 'react'
-import {StyleSheet, View, ViewStyle, TouchableOpacity, Image} from 'react-native'
+import {StyleSheet, View, ViewStyle} from 'react-native'
 import {BlurView} from 'react-native-blur'
-import {Actions} from 'react-native-router-flux'
 import {k} from '../Global'
+import {CloseButton} from '../common'
 
 type Props = {
   containerStyle?: ViewStyle
@@ -10,16 +10,10 @@ type Props = {
   showCloseButton?: boolean
 }
 
-const closeImg = require('../../../images/iconClose.png')
-
 const PopupBlur = ({children, containerStyle, showCloseButton}: Props) => (
   <BlurView blurType="light" blurAmount={25} style={styles.absolute}>
     <View style={[styles.container, containerStyle]}>{children}</View>
-    {showCloseButton && (
-      <TouchableOpacity onPress={() => Actions.pop()} style={styles.closeButton}>
-        <Image source={closeImg} />
-      </TouchableOpacity>
-    )}
+    {showCloseButton && <CloseButton style={styles.closeButton} />}
   </BlurView>
 )
 

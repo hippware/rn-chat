@@ -7,7 +7,7 @@ import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {observer, inject, Observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
-import {reaction, computed} from 'mobx'
+import {reaction} from 'mobx'
 import {IHomeStore, ICard} from '../../store/HomeStore'
 import {getType} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
@@ -49,7 +49,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     this.reactions = [
       // show/hide the list depending on fullscreenMode
       reaction(
-        () => homeStore.fullScreenMode || this.showingBottomPopup,
+        () => homeStore.fullScreenMode || homeStore.showingPopup,
         (isFullScreen: boolean) => {
           Animated.spring(this.state.translateY, {
             toValue: isFullScreen ? 160 * k : translateYDefault,
@@ -74,30 +74,11 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   render() {
     const {homeStore} = this.props
-    const {list, setIndex, index, toggleListMode, listMode} = homeStore
+    const {list, setIndex, index} = homeStore
     const {translateY} = this.state
     return (
       <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
-        <View
-          style={{
-            position: 'absolute',
-            top: -150,
-            right: 10,
-          }}
-        >
-          <TouchableOpacity onPress={toggleListMode} style={[styles.button, styles.pill]}>
-            <Image source={listMode === 'home' ? toggle : toggleOff} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              Actions.botContainer()
-            }}
-            style={styles.button}
-          >
-            <Image source={create} />
-          </TouchableOpacity>
-        </View>
+        <ButtonColumn />
         <Carousel
           ref={r => (this.list = r)}
           data={list.slice()}
@@ -117,13 +98,32 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     const RenderClass = cardMap[getType(item).name]
     return <Observer>{() => <RenderClass {...item} />}</Observer>
   }
-
-  @computed
-  get showingBottomPopup() {
-    // TODO: move this logic to rnrf
-    return ['bottomMenu', 'locationDetails'].includes(Actions.currentScene)
-  }
 }
+
+const ButtonColumn = inject('homeStore')(
+  observer(({homeStore}) => (
+    <View
+      style={{
+        position: 'absolute',
+        top: -150,
+        right: 10,
+      }}
+    >
+      <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
+        <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          Actions.createBot()
+        }}
+        style={styles.button}
+      >
+        <Image source={create} />
+      </TouchableOpacity>
+    </View>
+  ))
+)
 
 const styles = StyleSheet.create({
   container: {
