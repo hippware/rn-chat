@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView, {UrlTile, MapTypes, Marker} from 'react-native-maps'
+import MapView, {UrlTile, MapTypes} from 'react-native-maps'
 import {StyleSheet, View, MapViewRegion, Image} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
@@ -15,7 +15,7 @@ import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
-import {Actions} from '../../../node_modules/react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -131,7 +131,6 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore, wocky} = this.props
-    // homeStore.setNavRef(Actions)
     if (!wocky.events.length) {
       this.loadMoreDiscoverList()
     } else {
@@ -237,7 +236,7 @@ export default class MapHome extends React.Component<IProps> {
           })}
 
           {homeStore.creationMode && (
-            <Marker coordinate={this.region || location} image={createPin} />
+            <HackMarker coordinate={this.region || location} image={createPin} />
           )}
         </MapView>
         <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />

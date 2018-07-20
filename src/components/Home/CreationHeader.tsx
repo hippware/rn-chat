@@ -37,7 +37,7 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   createBot = async () => {
-    const {wocky, locationStore} = this.props
+    const {wocky} = this.props
     const bot = await wocky!.createBot()
     // const {location} = locationStore!
     // if (location) {
