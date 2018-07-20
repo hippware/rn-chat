@@ -8,9 +8,9 @@ import CurrentLocation from './CurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {Actions} from 'react-native-router-flux'
+// import {Actions} from 'react-native-router-flux'
 import {IBot} from 'wocky-client'
-import {getSnapshot} from 'mobx-state-tree'
+// import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   bot: IBot
