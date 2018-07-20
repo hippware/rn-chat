@@ -78,7 +78,7 @@ class TopSlider extends React.Component<IProps, State> {
       if (show) this.setState({keepMounted: true})
       Animated.spring(this.state.y, {
         toValue,
-        // useNativeDriver: true,
+        useNativeDriver: true,
       }).start(() => {
         if (!show) this.setState({keepMounted: false})
       })
