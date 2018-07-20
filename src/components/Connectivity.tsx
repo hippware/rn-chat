@@ -62,7 +62,14 @@ export default class Connectivity extends React.Component<Props> {
   tryReconnect = async reason => {
     let info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
-    if (!model.connected && !model.connecting && model.username && model.password && model.host) {
+    if (
+      AppState.currentState === 'active' &&
+      !model.connected &&
+      !model.connecting &&
+      model.username &&
+      model.password &&
+      model.host
+    ) {
       try {
         this.props.analytics.track('reconnect_try', {
           ...info,
