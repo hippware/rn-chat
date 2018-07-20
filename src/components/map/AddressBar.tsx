@@ -81,27 +81,27 @@ class AddressBar extends React.Component<Props> {
   }
 
   onLocationSelect = async data => {
-    const {location, address, isCurrent, isPlace, meta, placeName} = data
-    const {bot, analytics, edit} = this.props
-    this.searchEnabled = false
-    this.text = data.address
-    const title = isPlace ? placeName : bot.title ? bot.title : address
-    await bot.load({
-      location: {
-        ...location,
-      },
-      address,
-      addressData: meta,
-      title,
-    })
-    bot.location!.load({isCurrent})
-    if (edit) {
-      bot.save()
-      Actions.pop()
-    } else {
-      Actions.botCompose({botId: bot.id})
-    }
-    analytics.track('botcreate_chooselocation', getSnapshot(bot))
+    // const {location, address, isCurrent, isPlace, meta, placeName} = data
+    // const {bot, analytics, edit} = this.props
+    // this.searchEnabled = false
+    // this.text = data.address
+    // const title = isPlace ? placeName : bot.title ? bot.title : address
+    // await bot.load({
+    //   location: {
+    //     ...location,
+    //   },
+    //   address,
+    //   addressData: meta,
+    //   title,
+    // })
+    // bot.location!.load({isCurrent})
+    // if (edit) {
+    //   bot.save()
+    //   Actions.pop()
+    // } else {
+    //   Actions.botCompose({botId: bot.id})
+    // }
+    // analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 
   onChangeText = text => {
