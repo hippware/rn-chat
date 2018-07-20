@@ -30,7 +30,6 @@ describe('BotCompose', () => {
     const location = {latitude: 5, longitude: 5, accuracy: 5}
     const profile = await wocky.profiles.get(wocky.profile.id)
     bot.load({public: true, location, title: 'title', address: '123 address', owner: profile})
-    console.log('BOT PUBLIC:', bot.isPublic)
     bot.location.load({isCurrent: false})
 
     // bot.load({addressData: data.meta, address: data.address});
