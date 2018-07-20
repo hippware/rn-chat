@@ -10,9 +10,6 @@ import {createUpdatable} from './Updatable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
 
-export const VISIBILITY_OWNER = 0
-export const VISIBILITY_PUBLIC = 100
-
 export const Bot = types
   .compose(
     Base,
@@ -38,7 +35,7 @@ export const Bot = types
       owner: types.maybe(types.reference(Profile)),
       image: FileRef,
       description: '',
-      visibility: VISIBILITY_PUBLIC,
+      public: true,
       location: types.maybe(Location),
       address: '',
       followersSize: 0,
@@ -77,7 +74,7 @@ export const Bot = types
       self.geofence = value
     },
     setPublic: (value: boolean) => {
-      self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
+      self.public = value
     },
     afterAttach: () => {
       self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
@@ -161,7 +158,7 @@ export const Bot = types
   }))
   .views(self => ({
     get isPublic(): boolean {
-      return self.visibility === VISIBILITY_PUBLIC
+      return self.public
     },
     get coverColor(): number {
       return utils.hashCode(self.id)

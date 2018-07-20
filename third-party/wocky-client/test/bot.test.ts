@@ -54,7 +54,7 @@ describe('BotStore', () => {
     bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     bot.update({
       icon,
-      visibility: 0,
+      public: false,
       location: {latitude: 1.1, longitude: 2.1},
       title: 'Test bot',
       addressData: {city: 'Koper', country: 'Slovenia'},
@@ -75,7 +75,7 @@ describe('BotStore', () => {
 
   it('update bot location', async done => {
     try {
-      bot.update({visibility: 100, location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
+      bot.update({public: true, location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
       await waitFor(() => bot.updated)
       expect(bot.isNew).to.be.false
       expect(bot.isPublic).to.be.true
@@ -360,7 +360,7 @@ describe('BotStore', () => {
       expect(user2.events.list.length).to.be.equal(0)
       expect(user2.updates.length).to.be.equal(0)
       user2 = await createXmpp(null, user2phone)
-      await waitFor(() => user2.events.list.length === 2)
+      await waitFor(() => user2.events.list.length === 3)
       expect(user2.events.list[0].bot.title).to.be.equal('Test bot!!')
       expect(user2.updates.length).to.be.equal(0)
       done()
@@ -373,24 +373,23 @@ describe('BotStore', () => {
       await user2.disconnect()
       await user1.removeBot(bot.id)
       await user2.login()
-      expect(user2.events.list.length).to.be.equal(2)
+      expect(user2.events.list.length).to.be.equal(3)
       await waitFor(() => user2.updates.length === 1)
       done()
     } catch (e) {
       done(e)
     }
   })
-  // TODO uncomment when server-side will be fixed
-  // it('create bot3', async done => {
-  //   try {
-  //     bot3 = await user1.createBot()
-  //     await bot3.update({title: 'Test bot3', location: {latitude: 1.1, longitude: 2.1}})
-  //     await waitFor(() => user2.updates.length === 2)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('create bot3', async done => {
+    try {
+      bot3 = await user1.createBot()
+      await bot3.update({title: 'Test bot3', location: {latitude: 1.1, longitude: 2.1}})
+      await waitFor(() => user2.updates.length === 2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   // it('check HS live notifications', async done => {
   //   try {
   //     const user2bot3 = (user2.updates[0] as any).bot

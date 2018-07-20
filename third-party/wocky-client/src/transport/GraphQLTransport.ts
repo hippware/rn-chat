@@ -8,7 +8,6 @@ import {observable, action, when} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
-import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
@@ -546,6 +545,7 @@ export class GraphQLTransport implements IWockyTransport {
       shortname,
       title,
       type,
+      visibility,
       ...bot
     }: any,
     userLocation?: ILocation
@@ -783,7 +783,7 @@ function convertBot({
       visitorsSize: visitorCount.totalCount,
       guestsSize: guestCount.totalCount,
       location: {latitude: lat, longitude: lon},
-      visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
+      public: isPublic,
       guest: contains('GUEST'),
       visitor: contains('VISITOR'),
       isSubscribed: contains('SUBSCRIBED'),

@@ -1,18 +1,18 @@
 // @flow
 
-import 'react-native';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import EventCard from '../src/components/event-cards/EventBotCard';
-import {Provider} from 'mobx-react/native';
-import {EventBotCreate, Bot} from 'wocky-client';
-import wocky from './utils/mockWocky';
-import mockLocationStore from './utils/mockLocationStore';
+import 'react-native'
+import React from 'react'
+import renderer from 'react-test-renderer'
+import EventCard from '../src/components/event-cards/EventBotCard'
+import {Provider} from 'mobx-react/native'
+import {EventBotCreate, Bot} from 'wocky-client'
+import wocky from './utils/mockWocky'
+import mockLocationStore from './utils/mockLocationStore'
 
 describe('EventBotCard', () => {
   it('renders', async () => {
-    await wocky.login('user', 'password', 'host');
-    const owner = wocky.profiles.get('user', {handle: 'test', avatar: null});
+    await wocky.login('user', 'password', 'host')
+    const owner = wocky.profiles.get('user', {handle: 'test', avatar: null})
     const bot = Bot.create({
       id: '1234',
       isSubscribed: false,
@@ -22,7 +22,7 @@ describe('EventBotCard', () => {
       owner,
       // image: FileRef,
       description: 'description',
-      visibility: 100,
+      public: true,
       location: {latitude: 1, longitude: 1},
       address: 'address',
       followersSize: 0,
@@ -31,17 +31,17 @@ describe('EventBotCard', () => {
       // subscribers: types.optional(ProfilePaginableList, {}),
       // posts: types.optional(BotPostPaginableList, {}),
       error: '',
-    });
+    })
 
-    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2});
+    mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2})
 
-    const botCreate = EventBotCreate.create({id: '123', time: 123, bot, created: true});
+    const botCreate = EventBotCreate.create({id: '123', time: 123, bot, created: true})
     const toRender = (
       <Provider locationStore={mockLocationStore}>
         <EventCard item={botCreate} />
       </Provider>
-    );
-    const tree = renderer.create(toRender).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-});
+    )
+    const tree = renderer.create(toRender).toJSON()
+    expect(tree).toMatchSnapshot()
+  })
+})
