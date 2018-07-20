@@ -40,7 +40,7 @@ export default class Connectivity extends React.Component<Props> {
         !model.connecting &&
         Date.now() - this.lastDisconnected >= this.retryDelay
       ) {
-        await this.tryReconnect()
+        await this.tryReconnect(`retry: ${this.retryDelay}`)
       }
     }, 1000)
     this.handler = reaction(
@@ -57,19 +57,30 @@ export default class Connectivity extends React.Component<Props> {
     NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange)
   }
 
-  tryReconnect = async () => {
+  // reason: A string indicating why tryReconnect() was called.
+  //         Useful for logging/debugging
+  tryReconnect = async reason => {
+    const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
-    if (!model.connected && !model.connecting && model.username && model.password && model.host) {
+    if (
+      AppState.currentState === 'active' &&
+      !model.connected &&
+      !model.connecting &&
+      model.username &&
+      model.password &&
+      model.host
+    ) {
       try {
         this.props.analytics.track('reconnect_try', {
+          ...info,
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
         await model.login()
-        this.props.analytics.track('reconnect_success')
+        this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
-        this.props.analytics.track('reconnect_fail', {error: e})
+        this.props.analytics.track('reconnect_fail', {...info, error: e})
         if (e.toString().indexOf('not-authorized') !== -1) {
           this.retryDelay = 1e9
           Actions.logout()
@@ -81,7 +92,10 @@ export default class Connectivity extends React.Component<Props> {
     }
   }
 
+  // Warning: This NetInfo handler can get called when the app is in
+  //   the background on a switch from wifi to cellular (and vice versa)
   _handleConnectionInfoChange = connectionInfo => {
+    const oldInfo = this.connectionInfo
     this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
     this.connectionInfo = connectionInfo
     if (connectionInfo.type === 'unknown') {
@@ -89,7 +103,15 @@ export default class Connectivity extends React.Component<Props> {
       return
     }
     if (connectionInfo.type !== 'none') {
-      setTimeout(() => this.tryReconnect(), 500)
+      setTimeout(
+        () =>
+          this.tryReconnect(
+            `Connectivity: ` +
+              `old=(${oldInfo.type},${oldInfo.effectiveType}), ` +
+              `new=(${connectionInfo.type},${connectionInfo.effectiveType})`
+          ),
+        500
+      )
     } else if (this.props.wocky!.connected && !this.props.wocky!.connecting) {
       this.props.wocky!.disconnect()
     }
@@ -105,7 +127,7 @@ export default class Connectivity extends React.Component<Props> {
       this.isActive = true
       this.props.notificationStore.start()
       this.props.locationStore.start()
-      await this.tryReconnect()
+      await this.tryReconnect('currentAppState: active')
     }
     if (currentAppState === 'background') {
       this.isActive = false
