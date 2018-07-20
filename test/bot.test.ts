@@ -43,7 +43,7 @@ describe('BotStore', () => {
       bot = await user1.createBot()
       expect(bot.icon).to.be.empty
       expect(bot.isNew).to.be.true
-      expect(bot.isPublic).to.be.true
+      expect(bot.isPublic).to.be.false
       done()
     } catch (e) {
       done(e)
@@ -200,7 +200,7 @@ describe('BotStore', () => {
 
   it('update bot2', async done => {
     try {
-      bot2.update({location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2'})
+      bot2.update({public: true, location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2'})
       await waitFor(() => bot2.updated)
       expect(bot2.title).to.be.equal('Test bot2')
       expect(bot2.location!.latitude).to.be.equal(1.2)
@@ -383,7 +383,11 @@ describe('BotStore', () => {
   it('create bot3', async done => {
     try {
       bot3 = await user1.createBot()
-      await bot3.update({title: 'Test bot3', location: {latitude: 1.1, longitude: 2.1}})
+      await bot3.update({
+        public: true,
+        title: 'Test bot3',
+        location: {latitude: 1.1, longitude: 2.1},
+      })
       await waitFor(() => user2.updates.length === 2)
       done()
     } catch (e) {
