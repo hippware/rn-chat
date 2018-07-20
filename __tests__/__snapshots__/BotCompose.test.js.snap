@@ -448,7 +448,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "fontSize": 15,
                       },
                       Object {
-                        "opacity": 0.3,
+                        "opacity": 1,
                       },
                     ]
                   }
@@ -526,7 +526,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "top": 5,
                         "transform": Array [
                           Object {
-                            "translateX": 61.5,
+                            "translateX": 0,
                           },
                         ],
                         "width": 67.5,
@@ -536,7 +536,7 @@ exports[`BotCompose renders with no data 1`] = `
                     <Image
                       source={
                         Object {
-                          "testUri": "../../../images/iconPublic.png",
+                          "testUri": "../../../images/iconPrivate.png",
                         }
                       }
                     />
@@ -572,7 +572,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "fontSize": 15,
                       },
                       Object {
-                        "opacity": 1,
+                        "opacity": 0.3,
                       },
                     ]
                   }
@@ -1112,7 +1112,7 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "isSubscribed": false,
                         "location": null,
                         "owner": null,
-                        "public": true,
+                        "public": false,
                         "radius": 100,
                         "server": null,
                         "title": null,
