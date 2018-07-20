@@ -390,48 +390,48 @@ describe('BotStore', () => {
       done(e)
     }
   })
-  // it('check HS live notifications', async done => {
-  //   try {
-  //     const user2bot3 = (user2.updates[0] as any).bot
-  //     expect(user2bot3.owner.id).to.be.equal(user1.username)
-  //     bot3.setPublic(false)
-  //     await bot3.save()
-  //     // await delete notification that will delete previously created HS bot creation notifcation
-  //     await waitFor(() => user2.updates.length === 1)
-  //     bot3.shareToFollowers('hello followers2!')
-  //     await waitFor(() => user2.updates.length === 2)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('check HS live notifications', async done => {
+    try {
+      const user2bot3 = (user2.updates[0] as any).bot
+      expect(user2bot3.owner.id).to.be.equal(user1.username)
+      bot3.setPublic(false)
+      await bot3.save()
+      // await delete notification that will delete previously created HS bot creation notifcation
+      await waitFor(() => user2.updates.length === 1)
+      bot3.shareToFollowers('hello followers2!')
+      await waitFor(() => user2.updates.length === 2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
-  // it('incorporate updates and check bot loading', async done => {
-  //   try {
-  //     expect(user2.events.list.length).to.be.equal(3)
-  //     await user2.incorporateUpdates()
-  //     expect(user2.updates.length).to.be.equal(0)
-  //     expect(user2.events.list.length).to.be.equal(2)
-  //     const user2bot3 = user2.events.list[0].bot
-  //     expect(user2bot3.owner.id).to.be.equal(user1.username)
-  //     expect(user2bot3.location.latitude).to.be.equal(1.1)
-  //     expect(user2bot3.location.longitude).to.be.equal(2.1)
-  //     expect(user2bot3.title).to.be.equal('Test bot3')
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('incorporate updates and check bot loading', async done => {
+    try {
+      expect(user2.events.list.length).to.be.equal(3)
+      await user2.incorporateUpdates()
+      expect(user2.updates.length).to.be.equal(0)
+      expect(user2.events.list.length).to.be.equal(2)
+      const user2bot3 = user2.events.list[0].bot
+      expect(user2bot3.owner.id).to.be.equal(user1.username)
+      expect(user2bot3.location.latitude).to.be.equal(1.1)
+      expect(user2bot3.location.longitude).to.be.equal(2.1)
+      expect(user2bot3.title).to.be.equal('Test bot3')
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
-  // it('delete bot and check updated HS', async done => {
-  //   try {
-  //     user2.deleteBot(user2.events.list[0].bot.id)
-  //     expect(user2.events.list.length).to.be.equal(1)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('delete bot and check updated HS', async done => {
+    try {
+      user2.deleteBot(user2.events.list[0].bot.id)
+      expect(user2.events.list.length).to.be.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   after('remove', async done => {
     try {
       await user1.removeBot(bot2.id)
