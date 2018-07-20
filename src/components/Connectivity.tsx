@@ -92,6 +92,8 @@ export default class Connectivity extends React.Component<Props> {
     }
   }
 
+  // Warning: This NetInfo handler can get called when the app is in
+  //   the background on a switch from wifi to cellular (and vice versa)
   _handleConnectionInfoChange = connectionInfo => {
     let oldInfo = this.connectionInfo
     this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
