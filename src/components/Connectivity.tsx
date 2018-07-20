@@ -60,7 +60,7 @@ export default class Connectivity extends React.Component<Props> {
   // reason: A string indicating why tryReconnect() was called.
   //         Useful for logging/debugging
   tryReconnect = async reason => {
-    let info = {reason, currentState: AppState.currentState}
+    const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
     if (
       AppState.currentState === 'active' &&
@@ -95,7 +95,7 @@ export default class Connectivity extends React.Component<Props> {
   // Warning: This NetInfo handler can get called when the app is in
   //   the background on a switch from wifi to cellular (and vice versa)
   _handleConnectionInfoChange = connectionInfo => {
-    let oldInfo = this.connectionInfo
+    const oldInfo = this.connectionInfo
     this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
     this.connectionInfo = connectionInfo
     if (connectionInfo.type === 'unknown') {
