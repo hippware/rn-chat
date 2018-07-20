@@ -1,4 +1,4 @@
-import {ILocationSnapshot} from '../model/Location'
+import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 
@@ -60,7 +60,7 @@ export interface IWockyTransport {
   removeBot(id: string): Promise<void>
   removeBotPost(id: string, postId: string): Promise<void>
   generateId(): Promise<string>
-  updateBot(bot: any): Promise<void>
+  updateBot(bot: any, userLocation?: ILocation): Promise<void>
   shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
   loadRelations(
     userId: string,

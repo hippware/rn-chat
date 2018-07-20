@@ -30,7 +30,7 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
-import {IWockyTransport, ILocationSnapshot} from '..'
+import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 export const EventEntity = types.union(
   EventBotPost,
   EventBotNote,
@@ -408,9 +408,9 @@ export const Wocky = types
       const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
       return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
     }),
-    _updateBot: flow(function*(d: any) {
+    _updateBot: flow(function*(d: any, userLocation: ILocation) {
       yield waitFor(() => self.connected)
-      yield self.transport.updateBot(d)
+      yield self.transport.updateBot(d, userLocation)
       if (d.geofence) {
         self.profile!.setHasUsedGeofence(true)
       }

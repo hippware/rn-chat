@@ -448,7 +448,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "fontSize": 15,
                       },
                       Object {
-                        "opacity": 0.3,
+                        "opacity": 1,
                       },
                     ]
                   }
@@ -526,7 +526,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "top": 5,
                         "transform": Array [
                           Object {
-                            "translateX": 61.5,
+                            "translateX": 0,
                           },
                         ],
                         "width": 67.5,
@@ -536,7 +536,7 @@ exports[`BotCompose renders with no data 1`] = `
                     <Image
                       source={
                         Object {
-                          "testUri": "../../../images/iconPublic.png",
+                          "testUri": "../../../images/iconPrivate.png",
                         }
                       }
                     />
@@ -572,7 +572,7 @@ exports[`BotCompose renders with no data 1`] = `
                         "fontSize": 15,
                       },
                       Object {
-                        "opacity": 1,
+                        "opacity": 0.3,
                       },
                     ]
                   }
@@ -1027,11 +1027,12 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "county": "",
                         "state": "",
                       },
-                      "description": null,
+                      "description": "",
                       "followersSize": 0,
                       "geofence": false,
                       "guest": false,
                       "guestsSize": 0,
+                      "icon": "",
                       "id": "4321",
                       "image": null,
                       "isSubscribed": false,
@@ -1041,11 +1042,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                         "longitude": 5,
                       },
                       "owner": "user",
+                      "public": true,
                       "radius": 100,
                       "server": null,
                       "title": "title",
                       "totalItems": 0,
-                      "visibility": 100,
                       "visitor": false,
                       "visitors": Object {
                         "count": null,
@@ -1100,21 +1101,22 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "county": "",
                           "state": "",
                         },
-                        "description": null,
+                        "description": "",
                         "followersSize": 0,
                         "geofence": false,
                         "guest": false,
                         "guestsSize": 0,
+                        "icon": "",
                         "id": "123",
                         "image": null,
                         "isSubscribed": false,
                         "location": null,
                         "owner": null,
+                        "public": false,
                         "radius": 100,
                         "server": null,
                         "title": null,
                         "totalItems": 0,
-                        "visibility": 100,
                         "visitor": false,
                         "visitors": Object {
                           "count": null,
@@ -1131,11 +1133,12 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "county": "",
                           "state": "",
                         },
-                        "description": null,
+                        "description": "",
                         "followersSize": 0,
                         "geofence": false,
                         "guest": false,
                         "guestsSize": 0,
+                        "icon": "",
                         "id": "4321",
                         "image": null,
                         "isSubscribed": false,
@@ -1145,11 +1148,11 @@ exports[`BotCompose renders with owned bot 1`] = `
                           "longitude": 5,
                         },
                         "owner": "user",
+                        "public": true,
                         "radius": 100,
                         "server": null,
                         "title": "title",
                         "totalItems": 0,
-                        "visibility": 100,
                         "visitor": false,
                         "visitors": Object {
                           "count": null,

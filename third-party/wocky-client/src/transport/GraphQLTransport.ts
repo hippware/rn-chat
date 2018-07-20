@@ -8,10 +8,10 @@ import {observable, action, when} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
-import {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
+import {ILocation} from '../model/Location'
 
 const PROFILE_PROPS = `id firstName lastName handle
   avatar { thumbnailUrl fullUrl trosUrl }
@@ -19,7 +19,7 @@ const PROFILE_PROPS = `id firstName lastName handle
   followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
   followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 `
-const BOT_PROPS = `id title address isPublic: public addressData description geofence public radius server shortname 
+const BOT_PROPS = `id icon title address isPublic: public addressData description geofence public radius server shortname 
   image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
@@ -171,7 +171,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    throw new Error('Not supported')
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation botCreate {
+          botCreate {
+            messages {
+              field
+              message
+            }
+            successful
+            result {
+              id
+            }
+          }
+        }
+      `,
+    })
+    return res.data!.botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
     const res = await this.client.query<any>({
@@ -513,9 +529,69 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async updateBot(): Promise<void> {
-    // Avaialble via the BotUpdate mutation
-    throw new Error('Not supported')
+  async updateBot(
+    {
+      id,
+      address,
+      addressData,
+      description,
+      geofence,
+      icon,
+      image,
+      lat,
+      lon,
+      radius,
+      server,
+      shortname,
+      title,
+      type,
+      visibility,
+      ...bot
+    }: any,
+    userLocation?: ILocation
+  ): Promise<void> {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation botUpdate(
+          $id: String!
+          $userLocation: UserLocationUpdateInput
+          $values: BotParams
+        ) {
+          botUpdate(input: {id: $id, userLocation: $userLocation, values: $values}) {
+            successful
+          }
+        }
+      `,
+      variables: {
+        id,
+        values: {
+          address,
+          addressData: JSON.stringify(addressData),
+          description,
+          geofence,
+          icon,
+          image,
+          lat: bot.location.latitude,
+          lon: bot.location.longitude,
+          public: bot.public,
+          radius: Math.round(radius),
+          server,
+          shortname,
+          title,
+          type,
+        },
+        ...(userLocation
+          ? {
+              lon: userLocation.longitude,
+              lat: userLocation.latitude,
+              accuracy: userLocation.accuracy,
+            }
+          : {}),
+      },
+    })
+    if (!res.data!.botUpdate.successful) {
+      throw new Error('Error during bot save!')
+    }
   }
 
   async loadRelations(): Promise<IPagingList> {
@@ -707,7 +783,7 @@ function convertBot({
       visitorsSize: visitorCount.totalCount,
       guestsSize: guestCount.totalCount,
       location: {latitude: lat, longitude: lon},
-      visibility: isPublic ? VISIBILITY_PUBLIC : VISIBILITY_OWNER,
+      public: isPublic,
       guest: contains('GUEST'),
       visitor: contains('VISITOR'),
       isSubscribed: contains('SUBSCRIBED'),

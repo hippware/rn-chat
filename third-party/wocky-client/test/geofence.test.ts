@@ -61,6 +61,7 @@ describe('Geofence', () => {
       expect(user1.profile.hasUsedGeofence).to.be.false
       bot = await user1.createBot()
       await bot.update({
+        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         geofence: true,
@@ -89,6 +90,7 @@ describe('Geofence', () => {
     try {
       bot2 = await user1.createBot()
       await bot2.update({
+        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot2',
         geofence: true,

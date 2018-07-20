@@ -110,6 +110,7 @@ describe('GraphQL', () => {
     try {
       bot = await user.createBot()
       await bot.update({
+        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         geofence: true,
@@ -117,6 +118,7 @@ describe('GraphQL', () => {
       })
       bot2 = await user.createBot()
       await bot2.update({
+        public: true,
         location: {latitude: 1.2, longitude: 2.2},
         title: 'Test bot2',
         geofence: false,

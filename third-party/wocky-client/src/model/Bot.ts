@@ -10,16 +10,16 @@ import {createUpdatable} from './Updatable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
 
-export const VISIBILITY_OWNER = 0
-export const VISIBILITY_PUBLIC = 100
-
 export const Bot = types
   .compose(
     Base,
     types.compose(
       createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
       createUpdatable((self, data) =>
-        self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data})
+        self.service._updateBot(
+          {...getSnapshot(self), isNew: self.isNew, ...data},
+          self.userLocation
+        )
       )
     ),
     types.model('Bot', {
@@ -27,14 +27,15 @@ export const Bot = types
       isSubscribed: false,
       guest: false,
       visitor: false,
+      icon: '',
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 100,
       geofence: false,
       owner: types.maybe(types.reference(Profile)),
       image: FileRef,
-      description: types.maybe(types.string),
-      visibility: VISIBILITY_PUBLIC,
+      description: '',
+      public: false,
       location: types.maybe(Location),
       address: '',
       followersSize: 0,
@@ -52,9 +53,13 @@ export const Bot = types
   .volatile(() => ({
     isNew: false,
     loading: false,
+    userLocation: Location,
   }))
   .named('Bot')
   .actions(self => ({
+    setUserLocation: (location: any) => {
+      self.userLocation = location
+    },
     setError: (value: string) => {
       self.error = value
       self.loading = false
@@ -69,7 +74,7 @@ export const Bot = types
       self.geofence = value
     },
     setPublic: (value: boolean) => {
-      self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
+      self.public = value
     },
     afterAttach: () => {
       self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
@@ -153,7 +158,7 @@ export const Bot = types
   }))
   .views(self => ({
     get isPublic(): boolean {
-      return self.visibility === VISIBILITY_PUBLIC
+      return self.public
     },
     get coverColor(): number {
       return utils.hashCode(self.id)

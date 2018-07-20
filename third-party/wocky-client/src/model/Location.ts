@@ -15,4 +15,5 @@ export const Location = types
     },
   }))
 
+export type ILocation = typeof Location.Type
 export type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>
