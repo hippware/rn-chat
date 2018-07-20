@@ -35,7 +35,7 @@ export const Bot = types
       owner: types.maybe(types.reference(Profile)),
       image: FileRef,
       description: '',
-      public: true,
+      public: false,
       location: types.maybe(Location),
       address: '',
       followersSize: 0,
