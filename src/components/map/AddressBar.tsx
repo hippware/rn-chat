@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
 import {colors} from '../../constants/index'
 import * as log from '../../utils/log'
-import CurrentLocation from './CurrentLocation'
+import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -104,10 +104,6 @@ class AddressBar extends React.Component<Props> {
     // analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 
-  onChangeText = text => {
-    this.text = text
-  }
-
   suggestion = ({item}) => {
     const {geocodingStore} = this.props
     const wrapBold = (text: string, key: string) => (
@@ -194,8 +190,7 @@ class AddressBar extends React.Component<Props> {
   render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        {/* <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} /> */}
-        <CurrentLocation enabled onPress={this.onLocationSelect} />
+        <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
@@ -206,7 +201,7 @@ class AddressBar extends React.Component<Props> {
               autoCorrect={false}
               clearButtonMode="while-editing"
               placeholder="Enter a place or address"
-              onChangeText={this.onChangeText}
+              onChangeText={text => (this.text = text)}
               value={this.text}
               onFocus={() => (this.searchEnabled = true)}
               returnKeyType="search"

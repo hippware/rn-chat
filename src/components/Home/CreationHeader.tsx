@@ -37,23 +37,23 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   createBot = async () => {
-    const {wocky} = this.props
+    const {wocky, locationStore} = this.props
     const bot = await wocky!.createBot()
-    // const {location} = locationStore!
-    // if (location) {
-    //   bot.load({
-    //     location: {
-    //       latitude: location.latitude,
-    //       longitude: location.longitude,
-    //       accuracy: location.accuracy,
-    //     },
-    //   })
-    //   bot.location!.load({isCurrent: true})
-    // }
+    const {location} = locationStore!
+    if (location) {
+      bot.load({
+        location: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          accuracy: location.accuracy,
+        },
+      })
+      bot.location!.load({isCurrent: true})
+    }
     this.bot = bot
     this.props.newBotStore.setId(this.bot.id)
-    // const data = await this.props.geocodingStore.reverse(location)
-    // this.bot.load({addressData: data.meta, address: data.address})
+    const data = await this.props.geocodingStore.reverse(location)
+    this.bot.load({addressData: data.meta, address: data.address})
   }
 
   next = () => {
