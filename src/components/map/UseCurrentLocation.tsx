@@ -19,8 +19,8 @@ type State = {
   marginTop: any
 }
 
-const HIDDEN = -20 * k
-const SHOWN = 44 * k
+const HIDDEN = -64 * k
+const SHOWN = 0 * k
 
 @inject('locationStore', 'geocodingStore')
 @observer
@@ -62,37 +62,44 @@ class CurrentLocation extends React.Component<Props, State> {
 
   render() {
     return (
-      <Animated.View
+      <View
         style={{
           position: 'absolute',
           width,
-          marginTop: this.state.marginTop,
-          paddingHorizontal: 20 * k,
-          borderColor: colors.LIGHT_GREY,
-          borderBottomWidth: 1,
-          paddingVertical: 10 * k,
-          backgroundColor: colors.WHITE,
-          // backgroundColor: 'red',
+          marginTop: 44 * k,
+          overflow: 'hidden',
         }}
       >
-        <TouchableOpacity
-          style={{flexDirection: 'row', alignItems: 'center'}}
-          onPress={this.onPress}
+        <Animated.View
+          style={{
+            flex: 1,
+            marginTop: this.state.marginTop,
+            paddingHorizontal: 20 * k,
+            borderColor: colors.LIGHT_GREY,
+            borderBottomWidth: 1,
+            paddingVertical: 10 * k,
+            backgroundColor: colors.WHITE,
+          }}
         >
-          <Image
-            source={require('../../../images/currentLocation.png')}
-            style={{marginRight: 20 * k}}
-          />
-          <View style={{flex: 1}}>
-            <RText weight="Bold" size={15}>
-              Use Current Location
-            </RText>
-            <RText size={15} numberOfLines={1}>
-              {this.state.address}
-            </RText>
-          </View>
-        </TouchableOpacity>
-      </Animated.View>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center'}}
+            onPress={this.onPress}
+          >
+            <Image
+              source={require('../../../images/currentLocation.png')}
+              style={{marginRight: 20 * k}}
+            />
+            <View style={{flex: 1}}>
+              <RText weight="Bold" size={15}>
+                Use Current Location
+              </RText>
+              <RText size={15} numberOfLines={1}>
+                {this.state.address}
+              </RText>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     )
   }
 }
