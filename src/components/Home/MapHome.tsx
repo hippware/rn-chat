@@ -137,7 +137,7 @@ export default class MapHome extends React.Component<IProps> {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
 
-    // setTimeout(() => Actions.createBot(), 1000)
+    // setTimeout(() => Actions.createBot(), 2000)
 
     this.reactions = [
       reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
@@ -235,15 +235,28 @@ export default class MapHome extends React.Component<IProps> {
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
 
-          {homeStore.creationMode && (
-            <HackMarker coordinate={this.region || location} image={createPin} />
-          )}
+          {homeStore.creationMode && <UberMarker />}
         </MapView>
         <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
       </View>
     )
   }
 }
+
+const UberMarker = () => (
+  <View
+    pointerEvents="none"
+    style={[
+      commonStyles.absolute,
+      {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    ]}
+  >
+    <Image source={createPin} />
+  </View>
+)
 
 const styles = StyleSheet.create({
   container: {
