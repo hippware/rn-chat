@@ -3,7 +3,6 @@ import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 're
 import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
 import {colors} from '../../constants/index'
-import * as log from '../../utils/log'
 import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
@@ -32,12 +31,20 @@ class AddressBar extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(
-      // TODO: too much mobx magic
-
-      // update address suggestions on search view
       () => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}),
-      this.setSuggestionsFromText,
-      {delay: 500}
+      ({searchEnabled, text, loc}) => {
+        if (searchEnabled) {
+          if (!text) {
+            this.suggestions.clear()
+          } else {
+            // log.log('GQUERY:', text, JSON.stringify(loc))
+            this.props.geocodingStore.query(text, loc).then(data => {
+              this.suggestions.replace(data)
+            })
+          }
+        }
+      },
+      {delay: 500, name: 'update address suggestions on search view'}
     )
     this.handler2 = reaction(
       () => {
@@ -50,7 +57,7 @@ class AddressBar extends React.Component<Props> {
           this.text = address
         }
       },
-      {fireImmediately: true}
+      {fireImmediately: true, name: 'set textbox text on bot address change'}
     )
     if (!this.props.edit) {
       setTimeout(() => (this.searchEnabled = true), 500)
@@ -60,18 +67,6 @@ class AddressBar extends React.Component<Props> {
   componentWillUnmount() {
     if (this.handler) this.handler()
     if (this.handler2) this.handler2()
-  }
-
-  setSuggestionsFromText = async ({searchEnabled, text, loc}) => {
-    if (searchEnabled) {
-      if (!text) {
-        this.suggestions.clear()
-      } else {
-        log.log('GQUERY:', text, JSON.stringify(loc))
-        const data = await this.props.geocodingStore.query(text, loc)
-        this.suggestions.replace(data)
-      }
-    }
   }
 
   onSuggestionSelect = async placeId => {
