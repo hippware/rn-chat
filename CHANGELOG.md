@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.1.2 - 2018 July 20
+
 * No more FirstLoadOverlay (Rework #2468)
 * Bot Pin Changes (#2536)
 * Drop Shadow missing on Pins (#2535)
@@ -17,6 +19,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Widget title changes (#2533)
 * Cards Disappear (#2544)
 * Broken Pin Image on Widget (#2554)
+* Fix online presence glitches (PR #2579)
+  * App indicates online presence when uploading location (#2510)
+* New location create API (PR #2577)
+* Navigation to create new Location (bot) (#2498, PR #2574)
+  * Possibly incomplete
 
 # 3.1.1 - 2018 July 13
 
