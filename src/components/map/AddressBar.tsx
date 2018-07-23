@@ -18,7 +18,7 @@ type Props = {
   analytics?: any
 }
 
-@inject('geocodingStore', 'analytics', 'newBotStore')
+@inject('geocodingStore', 'analytics')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any
