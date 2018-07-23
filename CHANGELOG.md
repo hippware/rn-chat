@@ -4,6 +4,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.1.3 - 2018 July 23
+
+Provisional changelog for 3.1.3
+
+* Small fixes (PR #2581)
+  * Prevent crashes on Connectivity null references
+  * Prevent location red screen
+  * Prevent cpu spike on map marker (#2580)
+  * "uber"-style create pin
+  * Correct hiding on "Use Current Location" bar
+  * Re-enable bot create from CreationHeader
+  * Clean up reactions on AddressBar
+
 # 3.1.2 - 2018 July 20
 
 * No more FirstLoadOverlay (Rework #2468)
