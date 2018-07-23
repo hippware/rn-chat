@@ -201,7 +201,7 @@ export default class MapHome extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {toggleFullscreen} = homeStore
+    const {toggleFullscreen, creationMode} = homeStore
     return (
       <View style={commonStyles.absolute}>
         <MapView
@@ -234,9 +234,8 @@ export default class MapHome extends React.Component<IProps> {
             const Card = markerMap[getType(card).name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
-
-          {homeStore.creationMode && <UberMarker />}
         </MapView>
+        {creationMode && <UberMarker />}
         <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
       </View>
     )
