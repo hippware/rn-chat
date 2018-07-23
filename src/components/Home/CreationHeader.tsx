@@ -40,7 +40,6 @@ export default class CreationHeader extends React.Component<Props> {
     const {wocky, locationStore} = this.props
     const bot = await wocky!.createBot()
     const {location} = locationStore!
-
     if (location) {
       bot.load({
         location: {

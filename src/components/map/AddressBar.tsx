@@ -3,8 +3,7 @@ import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 're
 import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
 import {colors} from '../../constants/index'
-import * as log from '../../utils/log'
-import CurrentLocation from './CurrentLocation'
+import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -32,12 +31,20 @@ class AddressBar extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(
-      // TODO: too much mobx magic
-
-      // update address suggestions on search view
       () => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}),
-      this.setSuggestionsFromText,
-      {delay: 500}
+      ({searchEnabled, text, loc}) => {
+        if (searchEnabled) {
+          if (!text) {
+            this.suggestions.clear()
+          } else {
+            // log.log('GQUERY:', text, JSON.stringify(loc))
+            this.props.geocodingStore.query(text, loc).then(data => {
+              this.suggestions.replace(data)
+            })
+          }
+        }
+      },
+      {delay: 500, name: 'update address suggestions on search view'}
     )
     this.handler2 = reaction(
       () => {
@@ -50,7 +57,7 @@ class AddressBar extends React.Component<Props> {
           this.text = address
         }
       },
-      {fireImmediately: true}
+      {fireImmediately: true, name: 'set textbox text on bot address change'}
     )
     if (!this.props.edit) {
       setTimeout(() => (this.searchEnabled = true), 500)
@@ -60,18 +67,6 @@ class AddressBar extends React.Component<Props> {
   componentWillUnmount() {
     if (this.handler) this.handler()
     if (this.handler2) this.handler2()
-  }
-
-  setSuggestionsFromText = async ({searchEnabled, text, loc}) => {
-    if (searchEnabled) {
-      if (!text) {
-        this.suggestions.clear()
-      } else {
-        log.log('GQUERY:', text, JSON.stringify(loc))
-        const data = await this.props.geocodingStore.query(text, loc)
-        this.suggestions.replace(data)
-      }
-    }
   }
 
   onSuggestionSelect = async placeId => {
@@ -102,10 +97,6 @@ class AddressBar extends React.Component<Props> {
     //   Actions.botCompose({botId: bot.id})
     // }
     // analytics.track('botcreate_chooselocation', getSnapshot(bot))
-  }
-
-  onChangeText = text => {
-    this.text = text
   }
 
   suggestion = ({item}) => {
@@ -194,8 +185,7 @@ class AddressBar extends React.Component<Props> {
   render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        {/* <CurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} /> */}
-        <CurrentLocation enabled onPress={this.onLocationSelect} />
+        <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
@@ -206,7 +196,7 @@ class AddressBar extends React.Component<Props> {
               autoCorrect={false}
               clearButtonMode="while-editing"
               placeholder="Enter a place or address"
-              onChangeText={this.onChangeText}
+              onChangeText={text => (this.text = text)}
               value={this.text}
               onFocus={() => (this.searchEnabled = true)}
               returnKeyType="search"

@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView, {UrlTile, MapTypes, Marker} from 'react-native-maps'
+import MapView, {UrlTile, MapTypes} from 'react-native-maps'
 import {StyleSheet, View, MapViewRegion, Image} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
@@ -15,7 +15,7 @@ import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
-import {Actions} from '../../../node_modules/react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -131,14 +131,13 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore, wocky} = this.props
-    // homeStore.setNavRef(Actions)
     if (!wocky.events.length) {
       this.loadMoreDiscoverList()
     } else {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
 
-    // setTimeout(() => Actions.createBot(), 1000)
+    // setTimeout(() => Actions.createBot(), 2000)
 
     this.reactions = [
       reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
@@ -236,15 +235,28 @@ export default class MapHome extends React.Component<IProps> {
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
 
-          {homeStore.creationMode && (
-            <Marker coordinate={this.region || location} image={createPin} />
-          )}
+          {homeStore.creationMode && <UberMarker />}
         </MapView>
         <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
       </View>
     )
   }
 }
+
+const UberMarker = () => (
+  <View
+    pointerEvents="none"
+    style={[
+      commonStyles.absolute,
+      {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    ]}
+  >
+    <Image source={createPin} />
+  </View>
+)
 
 const styles = StyleSheet.create({
   container: {
