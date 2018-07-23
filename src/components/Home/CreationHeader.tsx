@@ -3,11 +3,12 @@ import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
-import {observable} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {colors} from '../../constants'
 import {k} from '../Global'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   wocky?: IWocky
@@ -24,16 +25,19 @@ export default class CreationHeader extends React.Component<Props> {
   trackTimeout: any
 
   componentWillMount() {
-    this.createBot()
-  }
-
-  componentDidMount() {
-    // TODO HACK: prevent this from firing *after* creating a new bot and popping
-    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.trackTimeout)
+    // since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
+    reaction(
+      () => Actions.currentScene === 'createBot',
+      (active: boolean) => {
+        if (active) {
+          this.createBot()
+          this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
+        } else if (!!this.bot) {
+          this.bot = undefined
+          clearTimeout(this.trackTimeout)
+        }
+      }
+    )
   }
 
   createBot = async () => {
