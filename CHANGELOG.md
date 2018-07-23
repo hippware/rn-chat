@@ -22,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix online presence glitches (PR #2579)
   * App indicates online presence when uploading location (#2510)
 * New location create API (PR #2577)
+  * Redesign - Location Create biz logic (#2509)
 * Navigation to create new Location (bot) (#2498, PR #2574)
   * Possibly incomplete
 
