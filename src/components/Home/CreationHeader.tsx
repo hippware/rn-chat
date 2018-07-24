@@ -9,23 +9,23 @@ import {ILocationStore} from '../../store/LocationStore'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
+import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   analytics?: any
   geocodingStore?: any
-  newBotStore?: any
 }
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'newBotStore')
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
   trackTimeout: any
 
   componentWillMount() {
-    // since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
+    // HACK: since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
     reaction(
       () => Actions.currentScene === 'createBot',
       (active: boolean) => {
@@ -55,13 +55,13 @@ export default class CreationHeader extends React.Component<Props> {
       bot.location!.load({isCurrent: true})
     }
     this.bot = bot
-    this.props.newBotStore.setId(this.bot.id)
     const data = await this.props.geocodingStore.reverse(location)
     this.bot.load({addressData: data.meta, address: data.address})
   }
 
   next = () => {
-    // TODO
+    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
+    Actions.locationEdit({botId: this.bot.id})
   }
 
   render() {

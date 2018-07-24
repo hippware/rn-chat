@@ -19,7 +19,7 @@ const TopDownNavigator = (routeConfigs, tabsConfig: any = {}) => {
 
       // Figure out what to render based on the navigation state and the router:
       const ScreenComponent = routeConfigs[routes[0].routeName].screen
-      const Popup = routeConfigs[routeState.routeName].screen
+      const Popup = routeState && routeConfigs[routeState.routeName].screen
       const params = routeState && routeState.params ? routeState.params : {}
 
       return (
@@ -37,14 +37,16 @@ const TopDownNavigator = (routeConfigs, tabsConfig: any = {}) => {
           }
           show={index !== 0}
           popup={
-            <Popup
-              navigation={addNavigationHelpers({
-                dispatch,
-                state: routeState,
-                addListener: Actions.addListener,
-              })}
-              // {...params}
-            />
+            Popup && (
+              <Popup
+                navigation={addNavigationHelpers({
+                  dispatch,
+                  state: routeState,
+                  addListener: Actions.addListener,
+                })}
+                // {...params}
+              />
+            )
           }
         />
       )
@@ -73,6 +75,7 @@ class TopSlider extends React.Component<IProps, State> {
   componentWillReceiveProps({show, topHeight, ...rest}: IProps) {
     if (show !== this.props.show) {
       const toValue = show ? topHeight : 0
+      // TODO: write custom transitioner to handle animation
       Animated.spring(this.state.y, {
         toValue,
         useNativeDriver: true,

@@ -103,6 +103,7 @@ const markerMap: {[key: string]: any} = {
 }
 
 const createPin = require('../../../images/createPin.png')
+const drag = require('../../../images/dragTheMap.png')
 
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
@@ -138,6 +139,7 @@ export default class MapHome extends React.Component<IProps> {
     }
 
     // setTimeout(() => Actions.createBot(), 2000)
+    // Actions.locationEdit()
 
     this.reactions = [
       reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
@@ -254,6 +256,7 @@ const UberMarker = () => (
     ]}
   >
     <Image source={createPin} />
+    <Image source={drag} />
   </View>
 )
 

@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react'
-import {View, Animated, StyleSheet, TouchableOpacity, Image, SafeAreaView} from 'react-native'
+import {View, Animated, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import {height as screenHeight, k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../Router'
