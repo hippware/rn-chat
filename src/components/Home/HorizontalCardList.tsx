@@ -47,22 +47,22 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     const {homeStore} = this.props
 
     this.reactions = [
-      // show/hide the list depending on fullscreenMode
       reaction(
         () => homeStore.fullScreenMode || homeStore.showingPopup,
         (isFullScreen: boolean) => {
           Animated.spring(this.state.translateY, {
             toValue: isFullScreen ? 160 * k : translateYDefault,
           }).start()
-        }
+        },
+        {name: 'HorizontalCardList: show/hide depending on fullscreenMode'}
       ),
 
-      // auto-scroll the list to the selected index (but only when a bot marker is selected)
       reaction(
         () => homeStore.index,
         (index: number) => {
           this.list.snapToItem(index, true, false)
-        }
+        },
+        {name: 'HorizontalCardList: auto-scroll to the selected index'}
       ),
     ]
   }
@@ -101,28 +101,31 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 }
 
 const ButtonColumn = inject('homeStore')(
-  observer(({homeStore}) => (
-    <View
-      style={{
-        position: 'absolute',
-        top: -150,
-        right: 10,
-      }}
-    >
-      <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
-        <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
-      </TouchableOpacity>
+  observer(
+    ({homeStore}) =>
+      Actions.currentScene !== 'locationEdit' && (
+        <View
+          style={{
+            position: 'absolute',
+            top: -150,
+            right: 10,
+          }}
+        >
+          <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
+            <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => {
-          Actions.createBot()
-        }}
-        style={styles.button}
-      >
-        <Image source={create} />
-      </TouchableOpacity>
-    </View>
-  ))
+          <TouchableOpacity
+            onPress={() => {
+              Actions.createBot()
+            }}
+            style={styles.button}
+          >
+            <Image source={create} />
+          </TouchableOpacity>
+        </View>
+      )
+  )
 )
 
 const styles = StyleSheet.create({

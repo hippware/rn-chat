@@ -80,17 +80,19 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <InvisibleModeOverlay />
-        <TouchableOpacity
-          onPress={() => Actions.bottomMenu()}
-          onLongPress={() => settings.isStaging && Actions.debugScreen()}
-          style={{
-            position: 'absolute',
-            bottom: -45 * k,
-            right: 10 * k,
-          }}
-        >
-          <Image source={settingsImg} />
-        </TouchableOpacity>
+        {Actions.currentScene !== 'locationEdit' && (
+          <TouchableOpacity
+            onPress={() => Actions.bottomMenu()}
+            onLongPress={() => settings.isStaging && Actions.debugScreen()}
+            style={{
+              position: 'absolute',
+              bottom: -45 * k,
+              right: 10 * k,
+            }}
+          >
+            <Image source={settingsImg} />
+          </TouchableOpacity>
+        )}
       </Animated.View>
     )
   }
