@@ -6,8 +6,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 3.1.3 - 2018 July 23
 
-Provisional changelog for 3.1.3
-
 * Small fixes (PR #2581)
   * Prevent crashes on Connectivity null references
   * Prevent location red screen
