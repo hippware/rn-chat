@@ -67,14 +67,16 @@ const HomeStore = types
     let navRef
     return {
       views: {
-        // return the list for current mode
         get showingPopup() {
           return (
-            navRef && ['bottomMenu', 'locationDetails', 'createBot'].includes(navRef.currentScene)
+            navRef &&
+            ['bottomMenu', 'locationDetails', 'createBot', 'locationEdit'].includes(
+              navRef.currentScene
+            )
           )
         },
         get creationMode() {
-          return navRef && navRef.currentScene === 'createBot'
+          return navRef && ['createBot', 'locationEdit'].includes(navRef.currentScene)
         },
       },
       actions: {
@@ -83,6 +85,7 @@ const HomeStore = types
     }
   })
   .views(self => ({
+    // return the list for current mode
     get list(): ICard[] {
       return self.creationMode
         ? []
