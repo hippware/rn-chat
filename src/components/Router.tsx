@@ -39,9 +39,9 @@ import ReportBot from './report-modals/ReportBot'
 import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
-import SplitNavigator from './custom-navigators/SplitNavigator'
+import SplitRenderer from './custom-navigators/SplitRenderer'
 import ErrorNavigator from './ErrorNavigator'
-import TopDownNavigator from './custom-navigators/TopDownNavigator'
+import TopDownRenderer from './custom-navigators/TopDownRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen';
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
@@ -86,7 +86,6 @@ export const navBarStyle = {
   sceneStyle: {
     backgroundColor: 'white',
   },
-  // headerMode: 'screen',
   navigationBarStyle: {
     borderBottomWidth: 0,
     elevation: 1,
@@ -97,6 +96,7 @@ export const navBarStyle = {
       height: 0,
     },
   },
+
 }
 
 // const tinyRobotTitle = () => (
@@ -112,10 +112,11 @@ const sendActive = require('../../images/sendActive.png')
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
 
+// TODO: is it still necessary for react-navigation 2.x ?
 // prevent keyboard from persisting across scene transitions
-autorun(() => {
-  if (Actions.currentScene !== '') Keyboard.dismiss()
-})
+// autorun(() => {
+//   if (Actions.currentScene !== '') Keyboard.dismiss()
+// })
 
 type Props = {
   wocky?: IWocky
@@ -129,7 +130,7 @@ type Props = {
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, locationStore, store} = this.props
+    const {wocky, locationStore} = this.props
 
     autorun(() => {
       if (wocky!.connected && !locationStore!.enabled) {
@@ -137,11 +138,13 @@ class TinyRobotRouter extends React.Component<Props> {
       }
     }, {delay: 1000})
 
-    autorun(() => {
-      if (Actions.currentScene === '_fullMap' && !locationStore!.alwaysOn && !store.locationPrimed) {
-        if (Actions.locationPrimer) Actions.locationPrimer()
-      }
-    }, {delay: 1000} )
+    // TODO: run locationPrimer from fullMap ? Actions.currentScene is not reactive anymore
+    // autorun(() => {
+    //   if (Actions.currentScene === '_fullMap' && !locationStore!.alwaysOn && !store.locationPrimed) {
+    //     if (Actions.locationPrimer) Actions.locationPrimer()
+    //   }
+    // }, {delay: 1000} )
+  
   }
 
   render() {
@@ -149,10 +152,9 @@ class TinyRobotRouter extends React.Component<Props> {
 
     return (
       <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
-        <Stack navigator={ErrorNavigator}>
           <Lightbox key="rootLightbox">
-            <Stack navigator={TopDownNavigator} topHeight={800}>
-              <Stack navigator={SplitNavigator} splitHeight={394}>
+            <Stack tabs renderer={TopDownRenderer} topHeight={800}>
+              <Stack key="split" tabs renderer={SplitRenderer} splitHeight={394} >
                 <Stack key="rootStack" initial hideNavBar>
                   <Stack key="root" tabs hideTabBar hideNavBar>
                     <Stack key="launch" hideNavBar lightbox type="replace">
@@ -172,7 +174,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="signUp" component={SignUp} hideNavBar/>
                     <Modal key="logged" hideNavBar headerMode="screen">
                       <Stack key="loggedHome">
-                        <Scene key="home" component={Home} />
+                        <Scene key="home" component={Home} navTransparent/>
                         <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                         <Scene key="friendsMain" component={peopleLists.FriendListScene} title="Friends" />
                         <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" />
@@ -210,8 +212,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
                 </Stack>
               <Scene key="bottomMenu" component={BottomMenu} />
-              <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar} />
-              
+              <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
             </Stack>
             <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
           </Stack>
@@ -223,7 +224,6 @@ class TinyRobotRouter extends React.Component<Props> {
           <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
           <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
          </Lightbox>
-        </Stack>
       </Router>
     )
   }

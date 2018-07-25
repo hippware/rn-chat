@@ -121,7 +121,7 @@
     "react-native-parsed-text": "^0.0.20",
     "react-native-permissions": "^1.1.1",
     "react-native-push-notification": "^3.0.1",
-    "react-native-router-flux": "4.0.0-beta.32",
+    "react-native-router-flux": "github:aksonov/react-native-router-flux#aba39e3ed44184b734908c3d77ae551fc0eedb9f",
     "react-native-snap-carousel": "^3.7.1",
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",

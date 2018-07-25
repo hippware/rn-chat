@@ -1,57 +1,30 @@
 import React, {ReactElement} from 'react'
-import {
-  addNavigationHelpers,
-  createNavigationContainer,
-  createNavigator,
-  TabRouter,
-} from 'react-navigation'
 import {Animated, View, StyleSheet} from 'react-native'
-import {Actions} from 'react-native-router-flux'
 
-const TopDownNavigator = (routeConfigs, tabsConfig: any = {}) => {
-  const router = TabRouter(routeConfigs, tabsConfig)
+export default ({navigation, navigationConfig, descriptors}) => {
+  const {state} = navigation
+  const {routes, index} = state
+  const descriptor = descriptors[state.routes[0].key] // base component to render
+  const ScreenComponent = descriptor.getComponent()
+  const routeState = routes[index > 0 ? index : 1]
+  const popupDescriptor = descriptors[routeState.key]
+  const Popup = popupDescriptor.getComponent()
+  const params = routeState && routeState.params ? routeState.params : {}
 
-  const navigator = createNavigator(router, routeConfigs, tabsConfig, 'react-navigation/STACK')(
-    ({navigation, ...props}) => {
-      const {state, dispatch} = navigation
-      const {routes, index} = state
-      const routeState = routes[index > 0 ? index : 1]
-
-      // Figure out what to render based on the navigation state and the router:
-      const ScreenComponent = routeConfigs[routes[0].routeName].screen
-      const Popup = routeConfigs[routeState.routeName].screen
-      const params = routeState && routeState.params ? routeState.params : {}
-
-      return (
-        <TopSlider
-          topHeight={tabsConfig.topHeight}
-          {...params}
-          base={
-            <ScreenComponent
-              navigation={addNavigationHelpers({
-                dispatch,
-                state: routes[0],
-                addListener: Actions.addListener,
-              })}
-            />
-          }
-          show={index !== 0}
-          popup={
-            <Popup
-              navigation={addNavigationHelpers({
-                dispatch,
-                state: routeState,
-                addListener: Actions.addListener,
-              })}
-              // {...params}
-            />
-          }
+  return (
+    <TopSlider
+      topHeight={navigationConfig.topHeight}
+      {...params}
+      base={<ScreenComponent navigation={descriptor.navigation} />}
+      show={index !== 0}
+      popup={
+        <Popup
+          navigation={popupDescriptor.navigation}
+          // {...params}
         />
-      )
-    }
+      }
+    />
   )
-
-  return createNavigationContainer(navigator, tabsConfig.containerOptions)
 }
 
 interface IProps {
@@ -123,5 +96,3 @@ const styles = StyleSheet.create({
     left: 0,
   },
 })
-
-export default TopDownNavigator

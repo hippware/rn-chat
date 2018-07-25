@@ -22,8 +22,7 @@ class Onboarding extends React.Component<any> {
 
   render() {
     const SwiperAny = Swiper as any // TODO: swiper types broken
-    // HACK: workaround for known issue with swiper + TabNavigator: https://github.com/leecade/react-native-swiper/issues/389
-    return this.props.routeName === 'onboarding' ? (
+    return (
       <View style={{flex: 1}} testID="onboarding">
         <SwiperAny
           paginationStyle={{bottom: 95 * k}}
@@ -48,7 +47,7 @@ class Onboarding extends React.Component<any> {
         <ButtonRow />
         <BypassButton />
       </View>
-    ) : null
+    )
   }
 }
 
