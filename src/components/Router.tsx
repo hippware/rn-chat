@@ -1,5 +1,5 @@
 import React from 'react'
-import {Keyboard} from 'react-native'
+// import {Keyboard} from 'react-native'
 import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
@@ -40,7 +40,7 @@ import SignIn from './SignIn'
 import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
 import SplitRenderer from './custom-navigators/SplitRenderer'
-import ErrorNavigator from './ErrorNavigator'
+// import ErrorNavigator from './ErrorNavigator'
 import TopDownRenderer from './custom-navigators/TopDownRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen';
