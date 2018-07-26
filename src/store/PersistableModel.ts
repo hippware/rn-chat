@@ -10,6 +10,7 @@ export const cleanState = {
   profileValidationStore: {},
   geocodingStore: {},
   homeStore: {},
+  navStore: {},
   codePushStore: {},
 }
 

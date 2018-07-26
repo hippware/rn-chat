@@ -6,16 +6,16 @@ import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {observer, inject, Observer} from 'mobx-react/native'
-import {IWocky} from 'wocky-client'
-import {reaction} from 'mobx'
-import {IHomeStore, ICard} from '../../store/HomeStore'
+import {ICard} from '../../store/HomeStore'
 import {getType} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 
 type Props = {
-  wocky?: IWocky
-  homeStore?: IHomeStore
+  enabled: boolean
+  setIndex: any
+  list: any
+  index: number
 }
 
 type State = {
@@ -33,8 +33,6 @@ const toggle = require('../../../images/homeToggle.png')
 const toggleOff = require('../../../images/homeToggleOff.png')
 const create = require('../../../images/create.png')
 
-@inject('homeStore')
-@observer
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
     translateY: new Animated.Value(translateYDefault),
@@ -43,38 +41,21 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   list: any
   reactions: any[] = []
 
-  componentDidMount() {
-    const {homeStore} = this.props
+  componentWillReceiveProps(newProps) {
+    if (newProps.enabled !== this.props.enabled) {
+      const hide = !newProps.enabled
+      Animated.spring(this.state.translateY, {
+        toValue: hide ? 160 * k : translateYDefault,
+      }).start()
+    }
 
-    this.reactions = [
-      reaction(
-        () => homeStore.fullScreenMode || homeStore.showingPopup,
-        (isFullScreen: boolean) => {
-          Animated.spring(this.state.translateY, {
-            toValue: isFullScreen ? 160 * k : translateYDefault,
-          }).start()
-        },
-        {name: 'HorizontalCardList: show/hide depending on fullscreenMode'}
-      ),
-
-      reaction(
-        () => homeStore.index,
-        (index: number) => {
-          this.list.snapToItem(index, true, false)
-        },
-        {name: 'HorizontalCardList: auto-scroll to the selected index'}
-      ),
-    ]
-  }
-
-  componentWillUnmount() {
-    this.reactions.forEach(disposer => disposer())
-    this.reactions = []
+    if (newProps.index !== this.props.index) {
+      this.list.snapToItem(newProps.index, true, false)
+    }
   }
 
   render() {
-    const {homeStore} = this.props
-    const {list, setIndex, index} = homeStore
+    const {list, setIndex, index} = this.props
     const {translateY} = this.state
     return (
       <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
@@ -100,6 +81,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 }
 
+// TODO: Move ButtonColumn to separate file, make it 'dump' and do animation logic within Home.tscx?
 const ButtonColumn = inject('homeStore')(
   observer(
     ({homeStore}) =>

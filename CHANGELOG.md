@@ -6,8 +6,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 3.1.3 - 2018 July 23
 
-Provisional changelog for 3.1.3
-
 * Small fixes (PR #2581)
   * Prevent crashes on Connectivity null references
   * Prevent location red screen
@@ -69,9 +67,9 @@ wocky-client
 
 * Re-create ios app project to make HMR working (#2520)
 * Location card expand on tap (#2482)
-* Use new localBots graphql query to retrieve own and subscribed bots 
+* Use new localBots graphql query to retrieve own and subscribed bots
   * ... for given region (#2515, PR #2517)
-* Refactoring: 
+* Refactoring:
   * Remove Homestore and refactor (PR #2521)
   * Home.tsx with localBots query (PR #2522)
 * Home map: maintain 'standard' view + overlay on zoom (#2525)
