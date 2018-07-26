@@ -127,6 +127,7 @@
     "react-native-swiper": "1.5.13",
     "react-native-tab-view": "^0.0.73",
     "react-native-xmpp": "github:hippware/react-native-xmpp#73deb74834989ae39a06fcaa0b413370b3f1cd23",
+    "react-navigation": "^2.9.2",
     "remotedev": "^0.2.7",
     "strophejs": "github:hippware/strophejs",
     "tcomb-form-native": "^0.6.11",

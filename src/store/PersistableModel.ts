@@ -11,6 +11,7 @@ export const cleanState = {
   geocodingStore: {},
   newBotStore: {},
   homeStore: {},
+  navStore: {},
   codePushStore: {},
 }
 

@@ -25,7 +25,7 @@ type Props = {
 @inject('wocky', 'profileValidationStore')
 @observer
 class MyAccount extends React.Component<Props> {
-  static title = () => <Title />
+  static renderTitle = () => <Title />
   static rightButton = () => <Right />
 
   static submit = async profileValidationStore => {

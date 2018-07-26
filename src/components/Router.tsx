@@ -10,6 +10,7 @@ import {settings} from '../globals'
 import {Actions, Router, Scene, Stack, Modal, Lightbox} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
+import {INavStore} from '../store/NavStore'
 
 import {k} from './Global'
 
@@ -121,12 +122,13 @@ const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
 type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
+  navStore?: INavStore
   store?: any
   firebaseStore?: any
   analytics?: any
 }
 
-@inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics')
+@inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics', 'navStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -148,10 +150,10 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, wocky, firebaseStore} = this.props
+    const {store, wocky, firebaseStore, navStore} = this.props
 
     return (
-      <Router wrapBy={observer} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router onStateChange={() => navStore.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
           <Lightbox key="rootLightbox">
             <Stack tabs renderer={TopDownRenderer} topHeight={800}>
               <Stack key="split" tabs renderer={SplitRenderer} splitHeight={394} >
@@ -211,9 +213,9 @@ class TinyRobotRouter extends React.Component<Props> {
                   ]}
                   <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
                 </Stack>
-              <Scene key="bottomMenu" component={BottomMenu} />
-              <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
-            </Stack>
+                <Scene key="bottomMenu" component={BottomMenu} />
+                <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
+              </Stack>
             <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
           </Stack>
           <Scene key="locationWarning" component={LocationWarning} />
