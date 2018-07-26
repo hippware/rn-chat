@@ -8,8 +8,6 @@ import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, width} from '../Global'
-import {reaction} from 'mobx'
-import {IHomeStore} from '../../store/HomeStore'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
@@ -20,7 +18,7 @@ import {settings} from '../../globals'
 type Props = {
   wocky?: IWocky
   analytics?: any
-  homeStore?: IHomeStore
+  enabled: boolean
 }
 
 type State = {
@@ -34,16 +32,14 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     yOffset: new Animated.Value(0),
   }
 
-  componentDidMount() {
-    const {homeStore} = this.props
-    reaction(
-      () => homeStore.fullScreenMode || homeStore.showingPopup,
-      hide =>
-        Animated.spring(this.state.yOffset, {
-          toValue: hide ? -180 : 0,
-          // speed: 6,
-        }).start()
-    )
+  componentWillReceiveProps(newProps) {
+    if (newProps.enabled !== this.props.enabled) {
+      const hide = !newProps.enabled
+      Animated.spring(this.state.yOffset, {
+        toValue: hide ? -180 : 0,
+        // speed: 6,
+      }).start()
+    }
   }
 
   render() {

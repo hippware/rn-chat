@@ -55,6 +55,7 @@ const HomeStore = types
   .model('HomeStore', {
     listMode: 'home',
     fullScreenMode: false,
+    creationMode: false,
     discoverList: types.optional(types.array(Card), []),
     // homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
@@ -62,25 +63,6 @@ const HomeStore = types
     homeBotIndex: 0,
     center: types.maybe(Location),
     scrolledToBot: types.maybe(types.reference(Bot)),
-  })
-  .extend(self => {
-    let navRef
-    return {
-      views: {
-        // return the list for current mode
-        get showingPopup() {
-          return (
-            navRef && ['bottomMenu', 'locationDetails', 'createBot'].includes(navRef.currentScene)
-          )
-        },
-        get creationMode() {
-          return navRef && navRef.currentScene === 'createBot'
-        },
-      },
-      actions: {
-        setNavRef: ref => (navRef = ref),
-      },
-    }
   })
   .views(self => ({
     get list(): ICard[] {
@@ -94,6 +76,9 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
+    setCreationMode(value) {
+      self.creationMode = value
+    },
     setCenter(center) {
       if (!center) {
         self.center = null

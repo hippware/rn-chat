@@ -23,6 +23,7 @@ import NewBotStore from './NewBotStore'
 import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
+import NavStore from './NavStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
@@ -67,6 +68,7 @@ const Store = types
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
     codePushStore: CodepushStore,
+    navStore: NavStore,
     version: types.string,
     locationPrimed: false,
     sharePresencePrimed: false,

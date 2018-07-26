@@ -24,6 +24,9 @@ class TestRegister extends React.Component<Props, State> {
   }
 
   onRegister = async () => {
+    if (Actions.currentScene !== this.props.name) {
+      return
+    }
     try {
       await this.props.wocky.testRegister({phoneNumber: this.state.text})
       Actions.connect()
@@ -111,7 +114,6 @@ class TestRegister extends React.Component<Props, State> {
         <TouchableOpacity
           onPress={this.onRegister}
           style={styles.buttonStyle}
-          disabled={Actions.currentScene !== this.props.name}
           testID="bypassRegisterButton"
         >
           <Text style={styles.textStyle}>Next</Text>

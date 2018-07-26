@@ -15,7 +15,6 @@ import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
-import {Actions} from 'react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -125,10 +124,6 @@ export default class MapHome extends React.Component<IProps> {
     }
   }
 
-  componentWillMount() {
-    this.props.homeStore.setNavRef(Actions)
-  }
-
   componentDidMount() {
     const {homeStore, wocky} = this.props
     if (!wocky.events.length) {
@@ -234,10 +229,9 @@ export default class MapHome extends React.Component<IProps> {
             const Card = markerMap[getType(card).name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
-
-          {homeStore.creationMode && <UberMarker />}
         </MapView>
         <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
+        {homeStore.creationMode && <UberMarker />}
       </View>
     )
   }
