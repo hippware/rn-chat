@@ -25,4 +25,5 @@ which applesimutils
 npm install -g detox-cli@7.2.0
 echo 'Detox install'
 set -ex
-yarn detox
+# TODO: re-enable detox
+# yarn detox
