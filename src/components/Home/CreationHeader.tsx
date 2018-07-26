@@ -10,15 +10,17 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
+import {INavStore} from '../../store/NavStore'
 
 type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   analytics?: any
   geocodingStore?: any
+  navStore?: INavStore
 }
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore')
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
@@ -27,7 +29,7 @@ export default class CreationHeader extends React.Component<Props> {
   componentWillMount() {
     // HACK: since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
     reaction(
-      () => Actions.currentScene === 'createBot',
+      () => this.props.navStore.scene === 'createBot',
       (active: boolean) => {
         if (active) {
           this.createBot()
