@@ -1,17 +1,19 @@
 import React from 'react'
-import {View, TextInput, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native'
+import {View, TextInput, StyleSheet, TouchableOpacity, Image, Alert, Text} from 'react-native'
 import {RText} from '../common'
 import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import {IWocky, IBot} from 'wocky-client'
-import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {observer, inject, Observer} from 'mobx-react/native'
+import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 
-const itemSize = 50
+const {drinks, trees, heart, silverware, store, plane} = require('../../constants/botIcons.json')
+
+const itemSize = 53
 const noteIcon = require('../../../images/iconAddnote.png')
 
 type Props = {
@@ -128,29 +130,46 @@ const EditCTA = ({text, icon}: any) => (
 )
 
 class IconSelector extends React.Component<any> {
+  selector?: any
+  @observable index?: number = 0
+
   render() {
     return (
       <View style={this.props.style}>
         <Carousel
-          // ref={r => (this.list = r)}
-          data={['1', '2', '3']}
-          renderItem={this.renderItem}
+          ref={r => (this.selector = r)}
+          data={[silverware, drinks, trees, plane, store, heart]}
+          renderItem={this.renderIcon}
           // firstItem={index}
           sliderWidth={width}
           itemWidth={itemSize}
-          // onSnapToItem={index => list[index].select()} // enable if you don't need to unselect current bot for you/tutorial
+          onBeforeSnapToItem={this.onSnap} // enable if you don't need to unselect current bot for you/tutorial
           // onSnapToItem={setIndex}
           inactiveSlideOpacity={1}
+          // enableMomentum
+          // enableSnap={false}
         />
       </View>
     )
   }
 
-  renderItem = ({item, index}) => (
-    <View style={{height: itemSize, width: itemSize, borderColor: colors.PINK, borderWidth: 2}} />
-  )
+  renderIcon = ({item, index}) => {
+    return (
+      <Observer>
+        {() => (
+          <View style={[styles.iconWrapper]}>
+            <View style={[styles.shadow, this.index === index && styles.selectedIcon]}>
+              <Text style={styles.icon}>{item}</Text>
+            </View>
+          </View>
+        )}
+      </Observer>
+    )
+  }
 
   keyExtractor = item => item
+
+  @action onSnap = (index: number) => (this.index = index)
 }
 
 export default BotCompose
@@ -159,13 +178,39 @@ const styles = StyleSheet.create({
   textStyle: {
     height: 50 * k,
     width: '100%',
-    // borderTopColor: colors.LIGHT_GREY,
     borderBottomColor: colors.LIGHT_GREY,
-    // borderTopWidth: 1,
     borderBottomWidth: 1,
     padding: 10 * k,
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 16 * k,
+  },
+  iconWrapper: {
+    height: itemSize,
+    width: itemSize,
+    padding: 3,
+  },
+  shadow: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    shadowOffset: {height: 0, width: 0},
+    shadowRadius: 4,
+    shadowOpacity: 0.18,
+    shadowColor: colors.PINK,
+    borderRadius: 4.4,
+    flex: 1,
+  },
+  selectedIcon: {
+    shadowOffset: undefined,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+    borderWidth: 2,
+    borderColor: colors.PINK,
+  },
+  icon: {
+    fontFamily: 'fontello',
+    fontSize: 25,
+    color: colors.PINK,
   },
 })
