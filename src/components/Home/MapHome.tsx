@@ -15,6 +15,7 @@ import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
+import {Actions} from '../../../node_modules/react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522

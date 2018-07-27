@@ -14,9 +14,11 @@ import {addAlpha} from '../../constants/colors'
 import {Actions} from '../../../node_modules/react-native-router-flux'
 import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
+import {INavStore} from '../../store/NavStore'
 
 type Props = {
   wocky?: IWocky
+  navStore?: INavStore
   analytics?: any
   enabled: boolean
 }
@@ -25,7 +27,7 @@ type State = {
   yOffset: Animated.Value
 }
 
-@inject('wocky', 'analytics', 'homeStore')
+@inject('wocky', 'analytics', 'homeStore', 'navStore')
 @observer
 export default class ActiveGeoBotBanner extends React.Component<Props> {
   state: State = {
@@ -43,7 +45,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   }
 
   render() {
-    const {wocky} = this.props
+    const {wocky, navStore} = this.props
     const {activeBots, profile} = wocky!
     return (
       <Animated.View
@@ -76,7 +78,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <InvisibleModeOverlay />
-        {Actions.currentScene !== 'botCompose' && (
+        {navStore.scene !== 'botCompose' && (
           <TouchableOpacity
             onPress={() => Actions.bottomMenu()}
             onLongPress={() => settings.isStaging && Actions.debugScreen()}

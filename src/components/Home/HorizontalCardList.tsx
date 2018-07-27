@@ -82,10 +82,10 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 }
 
 // TODO: Move ButtonColumn to separate file, make it 'dump' and do animation logic within Home.tscx?
-const ButtonColumn = inject('homeStore')(
+const ButtonColumn = inject('homeStore', 'navStore')(
   observer(
-    ({homeStore}) =>
-      Actions.currentScene !== 'botCompose' && (
+    ({homeStore, navStore}) =>
+      navStore.scene !== 'botCompose' && (
         <View
           style={{
             position: 'absolute',

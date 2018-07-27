@@ -7,7 +7,7 @@ import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 
 const itemSize = 50
-const noteIcon = require('../../images/iconAddnote.png')
+const noteIcon = require('../../../images/iconAddnote.png')
 
 class BotCompose extends React.Component<{}> {
   render() {
