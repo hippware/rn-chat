@@ -63,7 +63,7 @@ export default class CreationHeader extends React.Component<Props> {
 
   next = () => {
     this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
-    Actions.locationEdit({botId: this.bot.id})
+    Actions.botCompose({botId: this.bot.id})
   }
 
   render() {

@@ -1,15 +1,15 @@
 import React from 'react'
 import {View, TextInput, StyleSheet, TouchableOpacity, Image} from 'react-native'
-import {RText} from './common'
-import BottomPopup from './BottomPopup'
-import {colors} from '../constants'
-import {width, k} from './Global'
+import {RText} from '../common'
+import BottomPopup from '../BottomPopup'
+import {colors} from '../../constants'
+import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 
 const itemSize = 50
 const noteIcon = require('../../images/iconAddnote.png')
 
-class LocationEditBottomPopup extends React.Component<{}> {
+class BotCompose extends React.Component<{}> {
   render() {
     return (
       <BottomPopup noCloseTab back>
@@ -87,7 +87,7 @@ class IconSelector extends React.Component<any> {
   keyExtractor = item => item
 }
 
-export default LocationEditBottomPopup
+export default BotCompose
 
 const styles = StyleSheet.create({
   textStyle: {

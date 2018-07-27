@@ -134,7 +134,7 @@ export default class MapHome extends React.Component<IProps> {
     }
 
     // setTimeout(() => Actions.createBot(), 2000)
-    // Actions.locationEdit()
+    Actions.botCompose()
 
     this.reactions = [
       reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {

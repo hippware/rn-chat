@@ -85,7 +85,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 const ButtonColumn = inject('homeStore')(
   observer(
     ({homeStore}) =>
-      Actions.currentScene !== 'locationEdit' && (
+      Actions.currentScene !== 'botCompose' && (
         <View
           style={{
             position: 'absolute',

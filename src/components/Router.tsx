@@ -53,7 +53,7 @@ import FirstTimeGuestPrimer from './modals/FirstTimeGuestPrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
-import LocationEdit from './LocationEdit'
+import BotCompose from './BotCompose/BotCompose'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -216,7 +216,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 </Stack>
                 <Scene key="bottomMenu" component={BottomMenu} />
                 <Scene key="locationDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
-                <Scene key="locationEdit" component={LocationEdit} back />
+                <Scene key="botCompose" component={BotCompose} back />
               </Stack>
             <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
           </Stack>
