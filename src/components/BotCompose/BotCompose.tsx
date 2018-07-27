@@ -1,15 +1,42 @@
 import React from 'react'
-import {View, TextInput, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import {View, TextInput, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native'
 import {RText} from '../common'
 import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {width, k} from '../Global'
 import Carousel from 'react-native-snap-carousel'
+import {IWocky, IBot} from 'wocky-client'
+import {observer, inject} from 'mobx-react/native'
+import {observable} from 'mobx'
+import {Actions} from 'react-native-router-flux'
+import {getSnapshot} from 'mobx-state-tree'
 
 const itemSize = 50
 const noteIcon = require('../../../images/iconAddnote.png')
 
-class BotCompose extends React.Component<{}> {
+type Props = {
+  botId: string
+  edit?: boolean
+  titleBlurred?: boolean
+  wocky?: IWocky
+  notificationStore?: any
+  locationStore?: any
+  log?: any
+  analytics?: any
+}
+
+@inject('wocky', 'notificationStore', 'analytics', 'log')
+@observer
+class BotCompose extends React.Component<Props> {
+  botTitle: any
+  @observable isLoading: boolean = false
+  controls: any
+  @observable bot?: IBot
+
+  componentWillMount() {
+    // this.bot = this.props.wocky!.getBot({id: this.props.botId})
+  }
+
   render() {
     return (
       <BottomPopup noCloseTab back>
@@ -47,7 +74,46 @@ class BotCompose extends React.Component<{}> {
       </BottomPopup>
     )
   }
+
+  save = async (): Promise<void> => {
+    const bot = this.bot!
+    if (!bot.title) {
+      // TODO: slide-down notification
+      Alert.alert('Title cannot be empty')
+      if (this.botTitle) this.botTitle.focus()
+      return
+    }
+    try {
+      this.isLoading = true
+      const {isNew, geofence} = bot
+      await bot.save()
+      if (isNew) {
+        // Actions.pop({animated: false})
+        Actions.pop()
+        setTimeout(() => {
+          if (geofence) Actions.geofenceShare({botId: bot.id})
+          else Actions.botDetails({item: bot.id, isNew: true})
+        })
+      } else {
+        Actions.pop()
+      }
+      this.props.analytics.track('botcreate_complete', getSnapshot(bot))
+    } catch (e) {
+      this.props.notificationStore.flash('Something went wrong, please try again.')
+      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(bot), error: e})
+      this.props.log('BotCompose save problem', e)
+    } finally {
+      this.isLoading = false
+    }
+  }
+
+  // private setEditRef = (r: any) => (this.controls = r)
 }
+
+// TODO
+// scrollToNote = () => {
+//   if (this.bot!.description === '') this.controls.focus()
+// }
 
 const EditCTA = ({text, icon}: any) => (
   <TouchableOpacity
