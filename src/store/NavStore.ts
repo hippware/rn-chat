@@ -14,7 +14,10 @@ const NavStore = types
       // put all navigational logic here
       // set creation mode depending from current screen(s)
       // TODO add editBot here ?
-      reaction(() => self.scene === 'createBot', getParent(self).homeStore.setCreationMode)
+      reaction(
+        () => ['createBot', 'botCompose'].includes(self.scene),
+        getParent(self).homeStore.setCreationMode
+      )
     },
     postProcessSnapshot(snapshot: any) {
       // No need to persist this store

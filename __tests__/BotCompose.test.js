@@ -1,5 +1,3 @@
-// @flow
-
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
@@ -10,7 +8,7 @@ import injects from './utils/inject-mocks'
 import wocky from './utils/mockWocky'
 import './utils/mockTextInput'
 
-import BotCompose from '../src/components/BotCompose'
+import BotCompose from '../src/components/BotCompose/BotCompose'
 
 describe('BotCompose', () => {
   it('renders with no data', async () => {

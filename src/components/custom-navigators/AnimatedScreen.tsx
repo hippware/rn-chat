@@ -49,7 +49,7 @@ class AnimatedScreen extends React.Component<IProps, State> {
       <View style={{flex: 1}}>
         <OpacityHeader {...this.props} scrollY={scrollY} />
         <View
-          style={{flex: 1, borderWidth: 1}}
+          style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
         >
           <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>

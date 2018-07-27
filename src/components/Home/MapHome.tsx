@@ -15,7 +15,8 @@ import {colors} from '../../constants'
 import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
-import {Actions} from '../../../node_modules/react-native-router-flux'
+import UberMarker from './UberMarker'
+// import {Actions} from '../../../node_modules/react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -65,8 +66,6 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
   )
 })
 
-// TODO: add in icons after bot creation flow is done
-// const iconImg = require('../../../images/mapIcons/restaurant.png')
 const defaultIcon = require('../../../images/mapIcons/question.png')
 
 const BotMarker = observer(({card}) => {
@@ -102,9 +101,6 @@ const markerMap: {[key: string]: any} = {
   BotCard: BotMarker,
 }
 
-const createPin = require('../../../images/createPin.png')
-const drag = require('../../../images/dragTheMap.png')
-
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
 export default class MapHome extends React.Component<IProps> {
@@ -135,7 +131,7 @@ export default class MapHome extends React.Component<IProps> {
     }
 
     // setTimeout(() => Actions.createBot(), 2000)
-    Actions.botCompose()
+    // Actions.botCompose()
 
     this.reactions = [
       reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
@@ -233,29 +229,15 @@ export default class MapHome extends React.Component<IProps> {
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
         </MapView>
-        {creationMode && <UberMarker />}
-        <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
-        {homeStore.creationMode && <UberMarker />}
+        {creationMode ? (
+          <UberMarker />
+        ) : (
+          <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
+        )}
       </View>
     )
   }
 }
-
-const UberMarker = () => (
-  <View
-    pointerEvents="none"
-    style={[
-      commonStyles.absolute,
-      {
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    ]}
-  >
-    <Image source={createPin} />
-    <Image source={drag} />
-  </View>
-)
 
 const styles = StyleSheet.create({
   container: {
