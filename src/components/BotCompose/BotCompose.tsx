@@ -16,7 +16,7 @@ class LocationEditBottomPopup extends React.Component<{}> {
         <View
           style={{
             backgroundColor: 'transparent',
-            marginTop: 180, // TODO: magic number...use exported constants
+            marginTop: 182, // TODO: magic number...use exported constants
           }}
         >
           <IconSelector style={{marginBottom: 10}} />
