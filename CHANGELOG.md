@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [dev] Upgrade RNRF to React Navigation v2 (#2448)
+
 # 3.1.3 - 2018 July 23
 
 * Small fixes (PR #2581)
