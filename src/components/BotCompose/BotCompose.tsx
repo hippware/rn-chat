@@ -11,6 +11,7 @@ import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
 const noteIcon = require('../../../images/iconAddnote.png')
+const photoIcon = require('../../../images/attachPhotoPlus.png')
 
 type Props = {
   botId: string
@@ -41,14 +42,14 @@ class BotCompose extends React.Component<Props> {
         <View
           style={{
             backgroundColor: 'transparent',
-            marginTop: 182, // TODO: magic number...use exported constants
+            marginTop: 172, // TODO: magic number...use exported constants
           }}
         >
           <IconSelector style={{marginBottom: 10}} />
           <TextInput style={styles.textStyle} placeholder="Name this place" />
           <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
             <EditCTA text="Note" icon={noteIcon} />
-            <EditCTA text="Photo" icon={noteIcon} />
+            <EditCTA text="Photo" icon={photoIcon} />
           </View>
           {/* TODO
            * How do we lock the button to the bottom of the screen?
@@ -58,7 +59,7 @@ class BotCompose extends React.Component<Props> {
             style={{
               width: '100%',
               backgroundColor: colors.PINK, // TODO: gradient background
-              paddingVertical: 10 * k,
+              paddingVertical: 15 * k,
               alignItems: 'center',
             }}
             // onPress={() => console.log('TODO: Pin Location press')}
@@ -131,8 +132,11 @@ const styles = StyleSheet.create({
   textStyle: {
     height: 50 * k,
     width: '100%',
-    borderBottomColor: colors.LIGHT_GREY,
+    borderBottomColor: colors.GREY,
     borderBottomWidth: 1,
+    borderTopColor: colors.GREY,
+    borderTopWidth: 1,
+    backgroundColor: 'white',
     padding: 10 * k,
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',

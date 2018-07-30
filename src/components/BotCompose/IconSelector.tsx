@@ -8,7 +8,7 @@ import {observable, action} from 'mobx'
 import {IHomeStore} from '../../store/HomeStore'
 
 const {drinks, trees, heart, silverware, store, plane} = require('../../constants/botIcons.json')
-const icons = [silverware, drinks, trees, plane, store, heart]
+const icons = [undefined, silverware, drinks, trees, plane, store, heart]
 
 const itemSize = 53
 
@@ -49,8 +49,14 @@ class IconSelector extends React.Component<Props> {
       <Observer>
         {() => (
           <View style={[styles.iconWrapper]}>
-            <View style={[styles.shadow, this.index === index && styles.selectedIcon]}>
-              <Text style={styles.icon}>{item}</Text>
+            <View
+              style={[
+                styles.shadow,
+                {backgroundColor: item ? 'white' : 'transparent'},
+                this.index === index && styles.selectedIcon,
+              ]}
+            >
+              {item && <Text style={styles.icon}>{item}</Text>}
             </View>
           </View>
         )}
@@ -72,7 +78,6 @@ const styles = StyleSheet.create({
   shadow: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
     shadowOffset: {height: 0, width: 0},
     shadowRadius: 4,
     shadowOpacity: 0.18,

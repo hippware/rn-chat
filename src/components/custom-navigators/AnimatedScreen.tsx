@@ -52,9 +52,7 @@ class AnimatedScreen extends React.Component<IProps, State> {
           style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
         >
-          <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
-            {base}
-          </Animated.View>
+          <Animated.View style={[{flex: 1}, openCloseTransform]}>{base}</Animated.View>
           <BottomUpSlider {...this.props} bottom={y} scrollY={scrollY} />
         </View>
         <BackButton {...this.props} />
