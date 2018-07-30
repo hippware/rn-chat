@@ -46,7 +46,7 @@ class AddressBar extends React.Component<Props> {
           }
         }
       },
-      {delay: 500, name: 'update address suggestions on search view'}
+      {delay: 500, name: 'AddressBar: update address suggestions on search view'}
     )
     this.handler2 = reaction(
       () => {
@@ -54,16 +54,16 @@ class AddressBar extends React.Component<Props> {
         return {address, isCurrent: location && location.isCurrent}
       },
       ({address, isCurrent}) => {
-        if (this.props.edit || !isCurrent) {
+        this.text = address
+        if (!isCurrent || (this.input && !this.input.isFocused())) {
           this.searchEnabled = false
-          this.text = address
         }
       },
-      {fireImmediately: true, name: 'set textbox text on bot address change'}
+      {fireImmediately: true, name: 'AddressBar: set textbox text on bot address change'}
     )
-    if (!this.props.edit) {
-      setTimeout(() => (this.searchEnabled = true), 500)
-    }
+    // if (!this.props.edit) {
+    //   setTimeout(() => (this.searchEnabled = true), 500)
+    // }
   }
 
   componentWillUnmount() {
@@ -81,14 +81,14 @@ class AddressBar extends React.Component<Props> {
     const {bot, analytics, edit} = this.props
     this.searchEnabled = false
     this.text = data.address
-    const title = isPlace ? placeName : bot.title ? bot.title : address
+    // const title = isPlace ? placeName : bot.title ? bot.title : address
     await bot.load({
       location: {
         ...location,
       },
       address,
       addressData: meta,
-      title,
+      // title,
     })
     bot.location!.load({isCurrent})
     if (edit) {
@@ -192,7 +192,7 @@ class AddressBar extends React.Component<Props> {
             {this.searchToggleBtn()}
             <TextInput
               key={`searchBar${this.searchEnabled}`}
-              autoFocus={this.searchEnabled}
+              // autoFocus={this.searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
               clearButtonMode="while-editing"
