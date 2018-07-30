@@ -6,6 +6,7 @@ import Carousel from 'react-native-snap-carousel'
 import {Observer, inject} from 'mobx-react/native'
 import {observable, action} from 'mobx'
 import {IHomeStore} from '../../store/HomeStore'
+import {IBot} from 'wocky-client'
 
 const {drinks, trees, heart, silverware, store, plane} = require('../../constants/botIcons.json')
 const icons = [undefined, silverware, drinks, trees, plane, store, heart]
@@ -15,6 +16,7 @@ const itemSize = 53
 type Props = {
   homeStore?: IHomeStore
   style?: ViewStyle
+  bot: IBot
 }
 
 @inject('homeStore')
@@ -26,6 +28,7 @@ class IconSelector extends React.Component<Props> {
   onSnap = (index: number) => {
     this.index = index
     this.props.homeStore.setEditIcon(icons[index])
+    this.props.bot.load({icon: icons[index]})
   }
 
   render() {
