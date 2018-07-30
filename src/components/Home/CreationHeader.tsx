@@ -11,6 +11,7 @@ import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {INavStore} from '../../store/NavStore'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
@@ -18,9 +19,10 @@ type Props = {
   analytics?: any
   geocodingStore?: any
   navStore?: INavStore
+  homeStore?: IHomeStore
 }
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore')
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
@@ -38,21 +40,48 @@ export default class CreationHeader extends React.Component<Props> {
           this.bot = undefined
           clearTimeout(this.trackTimeout)
         }
+      },
+      {name: 'CreationHeader: HACK to mimic compomentWillMount'}
+    )
+
+    reaction(
+      () => {
+        if (this.props.homeStore.mapCenterLocation && this.bot) {
+          return this.props.homeStore.mapCenterLocation
+        }
+      },
+      loc => {
+        if (loc) {
+          this.bot.load({
+            location: {
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+              accuracy: loc.accuracy,
+            },
+          })
+          this.props.geocodingStore.reverse(loc).then(data => {
+            this.bot.load({addressData: data.meta, address: data.address})
+          })
+        }
+      },
+      {
+        name: 'CreationHeader: load bot location based on map center',
       }
     )
   }
 
   createBot = async () => {
-    const {wocky, locationStore} = this.props
+    const {wocky, homeStore: {mapCenterLocation}, locationStore: {location}} = this.props
     const bot = await wocky!.createBot()
-    const {location} = locationStore!
-    if (location) {
+    if (location || mapCenterLocation) {
+      const l = mapCenterLocation || location
       bot.load({
         location: {
-          latitude: location.latitude,
-          longitude: location.longitude,
-          accuracy: location.accuracy,
+          latitude: l.latitude,
+          longitude: l.longitude,
+          accuracy: l.accuracy,
         },
+        geofence: true,
       })
       bot.location!.load({isCurrent: true})
     }
