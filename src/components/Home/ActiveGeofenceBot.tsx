@@ -24,7 +24,7 @@ type Props = {
 @observer
 class ActiveBot extends React.Component<Props> {
   goToBot = (): void => {
-    Actions.locationDetails({botId: this.props.bot.id})
+    Actions.botDetails({botId: this.props.bot.id})
     setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
   }

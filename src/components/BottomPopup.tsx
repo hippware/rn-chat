@@ -3,24 +3,26 @@ import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
 type Props = {
   onClose: () => void
+  noCloseTab: boolean
   children: any
 }
 
-export default class BottomPopup extends React.Component<Props> {
-  render() {
-    return (
+const BottomPopup = ({onClose, noCloseTab, children}: Props) =>
+  noCloseTab ? (
+    children
+  ) : (
+    <View style={{flex: 1}}>
+      <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
       <View style={{flex: 1}}>
-        <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
-        <View style={{flex: 1}}>
-          <TouchableOpacity style={styles.close} onPress={this.props.onClose}>
-            <Image source={require('../../images/popupClose.png')} />
-          </TouchableOpacity>
-          <View style={{backgroundColor: 'white'}}>{this.props.children}</View>
-        </View>
+        <TouchableOpacity style={styles.close} onPress={onClose}>
+          <Image source={require('../../images/popupClose.png')} />
+        </TouchableOpacity>
+        <View style={{backgroundColor: 'white', borderColor: 'green'}}>{children}</View>
       </View>
-    )
-  }
-}
+    </View>
+  )
+
+export default BottomPopup
 
 const styles = StyleSheet.create({
   absolute: {

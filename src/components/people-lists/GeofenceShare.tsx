@@ -30,12 +30,14 @@ class GeofenceShare extends React.Component<Props> {
   @observable bot?: IBot
 
   componentDidMount() {
-    // console.log('cdm', this.selection)
     this.selection.clear()
     const {friends, getBot} = this.props.wocky
     this.bot = getBot({id: this.props.botId})
     this.selection.setList(friends.map(f => ({profile: f})))
-    if (!this.props.store.sharePresencePrimed) Actions.sharePresencePrimer()
+    if (!this.props.store.sharePresencePrimed) {
+      // NOTE: had to add a delay to prevent immediately closing
+      setTimeout(() => Actions.sharePresencePrimer(), 2000)
+    }
   }
 
   share = () => {
@@ -47,7 +49,7 @@ class GeofenceShare extends React.Component<Props> {
         `Presence shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`
       )
       Actions.pop({animated: false})
-      Actions.botDetails({item: this.props.botId, isNew: true})
+      Actions.botDetails({botId: this.props.botId, isNew: true})
       this.props.analytics.track('bot_share_geo')
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.')

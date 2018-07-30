@@ -3,61 +3,96 @@ import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
-import {observable} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {colors} from '../../constants'
 import {k} from '../Global'
+import {Actions} from 'react-native-router-flux'
+import {getSnapshot} from 'mobx-state-tree'
+import {INavStore} from '../../store/NavStore'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   analytics?: any
   geocodingStore?: any
-  newBotStore?: any
+  navStore?: INavStore
+  homeStore?: IHomeStore
 }
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'newBotStore')
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
   trackTimeout: any
 
   componentWillMount() {
-    this.createBot()
-  }
+    // HACK: since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
+    reaction(
+      () => this.props.navStore.scene === 'createBot',
+      (active: boolean) => {
+        if (active) {
+          this.createBot()
+          this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
+        } else if (!!this.bot) {
+          this.bot = undefined
+          clearTimeout(this.trackTimeout)
+        }
+      },
+      {name: 'CreationHeader: HACK to mimic compomentWillMount'}
+    )
 
-  componentDidMount() {
-    // TODO HACK: prevent this from firing *after* creating a new bot and popping
-    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.trackTimeout)
+    reaction(
+      () => {
+        if (this.props.homeStore.mapCenterLocation && this.bot) {
+          return this.props.homeStore.mapCenterLocation
+        }
+      },
+      loc => {
+        if (loc) {
+          this.bot.load({
+            location: {
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+              accuracy: loc.accuracy,
+            },
+          })
+          this.props.geocodingStore.reverse(loc).then(data => {
+            this.bot.load({addressData: data.meta, address: data.address})
+          })
+        }
+      },
+      {
+        name: 'CreationHeader: load bot location based on map center',
+      }
+    )
   }
 
   createBot = async () => {
-    const {wocky, locationStore} = this.props
+    const {wocky, homeStore: {mapCenterLocation}, locationStore: {location}} = this.props
     const bot = await wocky!.createBot()
-    const {location} = locationStore!
-    if (location) {
+    if (location || mapCenterLocation) {
+      const l = mapCenterLocation || location
       bot.load({
         location: {
-          latitude: location.latitude,
-          longitude: location.longitude,
-          accuracy: location.accuracy,
+          latitude: l.latitude,
+          longitude: l.longitude,
+          accuracy: l.accuracy,
         },
+        geofence: true,
       })
       bot.location!.load({isCurrent: true})
     }
     this.bot = bot
-    this.props.newBotStore.setId(this.bot.id)
     const data = await this.props.geocodingStore.reverse(location)
     this.bot.load({addressData: data.meta, address: data.address})
   }
 
   next = () => {
-    // TODO
+    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
+    Actions.botCompose({botId: this.bot.id})
   }
 
   render() {

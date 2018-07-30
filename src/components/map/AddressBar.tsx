@@ -9,6 +9,8 @@ import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 // import {Actions} from 'react-native-router-flux'
 import {IBot} from 'wocky-client'
+import {Actions} from 'react-native-router-flux'
+import {getSnapshot} from 'mobx-state-tree'
 // import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
@@ -18,7 +20,7 @@ type Props = {
   analytics?: any
 }
 
-@inject('geocodingStore', 'analytics', 'newBotStore')
+@inject('geocodingStore', 'analytics')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any
@@ -44,7 +46,7 @@ class AddressBar extends React.Component<Props> {
           }
         }
       },
-      {delay: 500, name: 'update address suggestions on search view'}
+      {delay: 500, name: 'AddressBar: update address suggestions on search view'}
     )
     this.handler2 = reaction(
       () => {
@@ -52,16 +54,16 @@ class AddressBar extends React.Component<Props> {
         return {address, isCurrent: location && location.isCurrent}
       },
       ({address, isCurrent}) => {
-        if (this.props.edit || !isCurrent) {
+        this.text = address
+        if (!isCurrent || (this.input && !this.input.isFocused())) {
           this.searchEnabled = false
-          this.text = address
         }
       },
-      {fireImmediately: true, name: 'set textbox text on bot address change'}
+      {fireImmediately: true, name: 'AddressBar: set textbox text on bot address change'}
     )
-    if (!this.props.edit) {
-      setTimeout(() => (this.searchEnabled = true), 500)
-    }
+    // if (!this.props.edit) {
+    //   setTimeout(() => (this.searchEnabled = true), 500)
+    // }
   }
 
   componentWillUnmount() {
@@ -70,33 +72,32 @@ class AddressBar extends React.Component<Props> {
   }
 
   onSuggestionSelect = async placeId => {
-    // const data = await this.props.geocodingStore.details(placeId)
-    // this.onLocationSelect({...data, isCurrent: false})
-    // TODO
+    const data = await this.props.geocodingStore.details(placeId)
+    this.onLocationSelect({...data, isCurrent: false})
   }
 
   onLocationSelect = async data => {
-    // const {location, address, isCurrent, isPlace, meta, placeName} = data
-    // const {bot, analytics, edit} = this.props
-    // this.searchEnabled = false
-    // this.text = data.address
+    const {location, address, isCurrent, meta} = data
+    const {bot, analytics, edit} = this.props
+    this.searchEnabled = false
+    this.text = data.address
     // const title = isPlace ? placeName : bot.title ? bot.title : address
-    // await bot.load({
-    //   location: {
-    //     ...location,
-    //   },
-    //   address,
-    //   addressData: meta,
-    //   title,
-    // })
-    // bot.location!.load({isCurrent})
-    // if (edit) {
-    //   bot.save()
-    //   Actions.pop()
-    // } else {
-    //   Actions.botCompose({botId: bot.id})
-    // }
-    // analytics.track('botcreate_chooselocation', getSnapshot(bot))
+    await bot.load({
+      location: {
+        ...location,
+      },
+      address,
+      addressData: meta,
+      // title,
+    })
+    bot.location!.load({isCurrent})
+    if (edit) {
+      bot.save()
+      Actions.pop()
+    } else {
+      Actions.botCompose({botId: bot.id})
+    }
+    analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 
   suggestion = ({item}) => {
@@ -191,7 +192,7 @@ class AddressBar extends React.Component<Props> {
             {this.searchToggleBtn()}
             <TextInput
               key={`searchBar${this.searchEnabled}`}
-              autoFocus={this.searchEnabled}
+              // autoFocus={this.searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
               clearButtonMode="while-editing"

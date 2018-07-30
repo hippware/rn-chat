@@ -4,10 +4,12 @@ import {inject, observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
+import {INavStore} from '../store/NavStore'
 
 type Props = {
   wocky?: any
   analytics?: any
+  navStore?: INavStore
   name: string
   warn?: any
 }
@@ -16,7 +18,7 @@ type State = {
   text: string
 }
 
-@inject('wocky', 'analytics', 'warn')
+@inject('wocky', 'analytics', 'warn', 'navStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -24,7 +26,7 @@ class TestRegister extends React.Component<Props, State> {
   }
 
   onRegister = async () => {
-    if (Actions.currentScene !== this.props.name) {
+    if (this.props.navStore.scene !== this.props.name) {
       return
     }
     try {

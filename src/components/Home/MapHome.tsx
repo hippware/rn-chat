@@ -1,20 +1,20 @@
 import React from 'react'
 import MapView, {UrlTile, MapTypes} from 'react-native-maps'
-import {StyleSheet, View, MapViewRegion, Image} from 'react-native'
+import {StyleSheet, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
-import HackMarker from '../map/HackMarker'
-import Bubble from '../map/Bubble'
 import {observable, action, reaction} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {IHomeStore, ISelectableCard} from '../../store/HomeStore'
-import {Spinner, Avatar} from '../common'
+import {IHomeStore} from '../../store/HomeStore'
+import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
-import {colors} from '../../constants'
-import Triangle from '../map/Triangle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
+import UberMarker from './UberMarker'
+// import {Actions} from 'react-native-router-flux'
+import BotMarker from './map-markers/BotMarker'
+import YouMarker from './map-markers/YouMarker'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -27,81 +27,10 @@ interface IProps {
   homeStore?: IHomeStore
 }
 
-interface ICardProps extends IProps {
-  card: ISelectableCard
-}
-
-const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps) => {
-  const {location} = locationStore
-  const {latitude, longitude} = location
-  const {profile} = wocky
-  return (
-    profile && (
-      <HackMarker
-        zIndex={1000}
-        coordinate={{latitude, longitude}}
-        onPress={() => {
-          card.select()
-          homeStore.setCenter(location)
-        }}
-        stopPropagation
-      >
-        {!profile.avatar && !profile.hidden.enabled ? (
-          <Image source={require('../../../images/you.png')} />
-        ) : (
-          <View style={{alignItems: 'center'}}>
-            <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
-            <Triangle
-              width={10}
-              height={4}
-              color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
-              direction="down"
-            />
-          </View>
-        )}
-      </HackMarker>
-    )
-  )
-})
-
-// TODO: add in icons after bot creation flow is done
-// const iconImg = require('../../../images/mapIcons/restaurant.png')
-const defaultIcon = require('../../../images/mapIcons/question.png')
-
-const BotMarker = observer(({card}) => {
-  const {bot, isSelected} = card
-  const {latitude, longitude} = bot.location
-  return (
-    <HackMarker
-      coordinate={{latitude, longitude}}
-      zIndex={isSelected ? 500 : 1}
-      onPress={card.select}
-      key={card.bot.id}
-      stopPropagation
-    >
-      <Bubble
-        image={defaultIcon}
-        style={{
-          backgroundColor: 'white',
-        }}
-        outerStyle={{
-          shadowOffset: {height: 2, width: 0},
-          shadowRadius: 3,
-          shadowOpacity: 0.12,
-        }}
-        imageStyle={{width: 20, height: 20}}
-        size={isSelected ? 48 : 35}
-      />
-    </HackMarker>
-  )
-})
-
 const markerMap: {[key: string]: any} = {
   YouCard: YouMarker,
   BotCard: BotMarker,
 }
-
-const createPin = require('../../../images/createPin.png')
 
 @inject('locationStore', 'wocky', 'homeStore')
 @observer
@@ -133,11 +62,16 @@ export default class MapHome extends React.Component<IProps> {
     }
 
     // setTimeout(() => Actions.createBot(), 2000)
+    // Actions.botCompose()
 
     this.reactions = [
-      reaction(() => homeStore.center, (location: any) => this.setCenterCoordinate(location), {
-        name: 'MapHome: re-center map on focused card',
-      }),
+      reaction(
+        () => homeStore.focusedBotLocation,
+        (location: any) => this.setCenterCoordinate(location),
+        {
+          name: 'MapHome: re-center map on focused card',
+        }
+      ),
       reaction(
         () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
         (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList(),
@@ -161,7 +95,7 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = (region: MapViewRegion) => {
     const {homeStore} = this.props
-    homeStore.setCenter(undefined)
+    homeStore.setFocusedBotLocation(undefined)
     this.region = region
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
@@ -174,9 +108,11 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    if (this.props.homeStore.listMode === 'home') {
+    const {listMode, addBotsToList, setMapCenter} = this.props.homeStore!
+    setMapCenter(region)
+    if (listMode === 'home') {
       const bots = await this.props.wocky.loadLocalBots(region)
-      this.props.homeStore.addBotsToList('home', bots)
+      addBotsToList('home', bots)
     }
   }
 
@@ -196,7 +132,7 @@ export default class MapHome extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {toggleFullscreen} = homeStore
+    const {toggleFullscreen, creationMode} = homeStore
     return (
       <View style={commonStyles.absolute}>
         <MapView
@@ -230,27 +166,15 @@ export default class MapHome extends React.Component<IProps> {
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
         </MapView>
-        <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
-        {homeStore.creationMode && <UberMarker />}
+        {creationMode ? (
+          <UberMarker />
+        ) : (
+          <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
+        )}
       </View>
     )
   }
 }
-
-const UberMarker = () => (
-  <View
-    pointerEvents="none"
-    style={[
-      commonStyles.absolute,
-      {
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    ]}
-  >
-    <Image source={createPin} />
-  </View>
-)
 
 const styles = StyleSheet.create({
   container: {

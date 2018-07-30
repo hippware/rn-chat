@@ -19,7 +19,6 @@ import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
 import ProfileValidationStore from './ProfileValidationStore'
 import GeocodingStore from './GeocodingStore'
-import NewBotStore from './NewBotStore'
 import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
@@ -66,7 +65,6 @@ const Store = types
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
-    newBotStore: NewBotStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
     version: types.string,

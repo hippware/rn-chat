@@ -1,16 +1,19 @@
 import React, {ReactElement} from 'react'
-import {View, Animated, StyleSheet} from 'react-native'
-import {height, k} from '../Global'
+import {View, Animated, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import {height as screenHeight, k} from '../Global'
+import {Actions} from 'react-native-router-flux'
+import {navBarStyle} from '../Router'
+import BottomUpSlider from './BottomUpSlider'
 
-interface IProps {
+export interface IAnimatedScreenProps {
   base: ReactElement<any> // main element
   show: boolean
   opacityHeader?: ReactElement<any> // element that appears at the top of the screen when popup is dragged up
   popup: ReactElement<any> // element that slides up from the bottom of the screen
   splitHeight: number
   draggable: boolean
-  fromTop?: boolean // Popup should slide down from the top rather than up from the bottom
   topHeight?: number
+  back?: boolean
 }
 
 type State = {
@@ -18,15 +21,15 @@ type State = {
   scrollY: Animated.Value
 }
 
-class AnimatedScreen extends React.Component<IProps, State> {
+class AnimatedScreen extends React.Component<IAnimatedScreenProps, State> {
   state = {
     y: new Animated.Value(0), // determines the y offset of sliders
     scrollY: new Animated.Value(0),
   }
 
-  componentWillReceiveProps({show, fromTop, topHeight, splitHeight}: IProps) {
+  componentWillReceiveProps({show, topHeight, splitHeight}: IAnimatedScreenProps) {
     if (show !== this.props.show) {
-      const toValue = show ? (fromTop ? topHeight : -splitHeight) : 0
+      const toValue = show ? -splitHeight : 0
       Animated.spring(this.state.y, {
         toValue,
         // useNativeDriver: true,
@@ -50,11 +53,10 @@ class AnimatedScreen extends React.Component<IProps, State> {
           style={{flex: 1}}
           onStartShouldSetResponderCapture={this._overlayShouldCaptureTouches}
         >
-          <Animated.View style={[styles.absolute, {top: 0, bottom: 0}, openCloseTransform]}>
-            {base}
-          </Animated.View>
+          <Animated.View style={[{flex: 1}, openCloseTransform]}>{base}</Animated.View>
           <BottomUpSlider {...this.props} bottom={y} scrollY={scrollY} />
         </View>
+        <BackButton {...this.props} />
       </View>
     )
   }
@@ -62,18 +64,18 @@ class AnimatedScreen extends React.Component<IProps, State> {
   // If initial touch is "above" scrollview, don't allow scroll
   _overlayShouldCaptureTouches = ({nativeEvent: {pageY}}) => {
     const {splitHeight, show} = this.props
-    const theTest = pageY < height - (splitHeight + 30) - (this.state.scrollY as any)._value
+    const theTest = pageY < screenHeight - (splitHeight + 30) - (this.state.scrollY as any)._value
     return show && theTest
   }
 }
 
-interface IOpacityHeaderProps extends IProps {
+interface IOpacityHeaderProps extends IAnimatedScreenProps {
   scrollY: Animated.Value
 }
 
 const OpacityHeader = ({show, opacityHeader, scrollY, splitHeight}: IOpacityHeaderProps) => {
   const opacity = scrollY.interpolate({
-    inputRange: [0, height - splitHeight - 80, height - splitHeight - 30],
+    inputRange: [0, screenHeight - splitHeight - 80, screenHeight - splitHeight - 30],
     outputRange: [0, 0, 1],
   })
   return show && opacityHeader ? (
@@ -81,47 +83,15 @@ const OpacityHeader = ({show, opacityHeader, scrollY, splitHeight}: IOpacityHead
   ) : null
 }
 
-interface IBottomProps extends IProps {
-  scrollY: Animated.Value
-  bottom: Animated.Value
-}
-
-const BottomUpSlider = ({
-  show,
-  fromTop,
-  splitHeight,
-  bottom,
-  draggable,
-  popup,
-  scrollY,
-}: IBottomProps) => {
-  const theMargin = height - splitHeight - 30
-  const scrollTop = bottom.interpolate({
-    inputRange: [-splitHeight, 0],
-    outputRange: [-height, 0],
-  })
-  return (
-    show &&
-    !fromTop && (
-      <Animated.ScrollView
-        style={[
-          styles.absolute,
-          {top: height, paddingTop: theMargin, height},
-          {transform: [{translateY: scrollTop}]},
-        ]}
-        scrollEventThrottle={16}
-        onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollY}}}])}
-        contentContainerStyle={{paddingBottom: theMargin}}
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={!!draggable}
-        bounces={!!draggable}
-        decelerationRate="fast"
-      >
-        {popup}
-      </Animated.ScrollView>
-    )
-  )
-}
+const BackButton = ({show, back}: IAnimatedScreenProps) =>
+  show && back ? (
+    <TouchableOpacity
+      onPress={() => Actions.pop()}
+      style={{position: 'absolute', top: 30, left: 10}}
+    >
+      <Image source={navBarStyle.backButtonImage} />
+    </TouchableOpacity>
+  ) : null
 
 export default AnimatedScreen
 

@@ -14,7 +14,7 @@ type Props = {
 }
 
 const BotCard = observer(({bot, isSelected}: Props) => (
-  <Card profile={isSelected && bot.owner} onPress={() => Actions.locationDetails({botId: bot.id})}>
+  <Card profile={isSelected && bot.owner} onPress={() => Actions.botDetails({botId: bot.id})}>
     <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
       <Image style={styles.thumb} source={bot.image ? bot.image.thumbnail : null} />
       <View style={styles.textContainer}>

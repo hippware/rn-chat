@@ -82,29 +82,32 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 }
 
 // TODO: Move ButtonColumn to separate file, make it 'dump' and do animation logic within Home.tscx?
-const ButtonColumn = inject('homeStore')(
-  observer(({homeStore}) => (
-    <View
-      style={{
-        position: 'absolute',
-        top: -150,
-        right: 10,
-      }}
-    >
-      <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
-        <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
-      </TouchableOpacity>
+const ButtonColumn = inject('homeStore', 'navStore')(
+  observer(
+    ({homeStore, navStore}) =>
+      navStore.scene !== 'botCompose' && (
+        <View
+          style={{
+            position: 'absolute',
+            top: -150,
+            right: 10,
+          }}
+        >
+          <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
+            <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => {
-          Actions.createBot()
-        }}
-        style={styles.button}
-      >
-        <Image source={create} />
-      </TouchableOpacity>
-    </View>
-  ))
+          <TouchableOpacity
+            onPress={() => {
+              Actions.createBot()
+            }}
+            style={styles.button}
+          >
+            <Image source={create} />
+          </TouchableOpacity>
+        </View>
+      )
+  )
 )
 
 const styles = StyleSheet.create({

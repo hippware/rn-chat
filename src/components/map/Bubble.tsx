@@ -1,5 +1,13 @@
 import React from 'react'
-import {View, Image, StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native'
+import {
+  View,
+  Image,
+  StyleSheet,
+  ViewStyle,
+  ImageStyle,
+  ImageSourcePropType,
+  Text,
+} from 'react-native'
 import Triangle from './Triangle'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -8,6 +16,7 @@ import {observer} from 'mobx-react/native'
 type Props = {
   text?: string
   image?: ImageSourcePropType
+  fontIcon?: string
   showLoader?: boolean
   children?: any
   style?: ViewStyle
@@ -32,6 +41,7 @@ export default class Bubble extends React.Component<Props> {
       size,
       triangleColor,
       outerStyle,
+      fontIcon,
     } = this.props
     const theSize = size || defaultSize
 
@@ -55,6 +65,10 @@ export default class Bubble extends React.Component<Props> {
               resizeMode="contain"
               source={image}
             />
+          ) : fontIcon ? (
+            <Text style={{fontFamily: 'fontello', fontSize: 25, color: colors.PINK}}>
+              {fontIcon}
+            </Text>
           ) : null}
 
           {text && (

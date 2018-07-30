@@ -61,10 +61,13 @@ const HomeStore = types
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     discoverIndex: 0,
     homeBotIndex: 0,
-    center: types.maybe(Location),
+    focusedBotLocation: types.maybe(Location),
+    mapCenterLocation: types.maybe(Location),
     scrolledToBot: types.maybe(types.reference(Bot)),
+    editIcon: types.maybe(types.string),
   })
   .views(self => ({
+    // return the list for current mode
     get list(): ICard[] {
       return self.creationMode
         ? []
@@ -79,20 +82,23 @@ const HomeStore = types
     setCreationMode(value) {
       self.creationMode = value
     },
-    setCenter(center) {
-      if (!center) {
-        self.center = null
+    setFocusedBotLocation(location) {
+      if (!location) {
+        self.focusedBotLocation = null
       } else {
-        const {latitude, longitude, accuracy} = center
+        const {latitude, longitude, accuracy} = location
         // change center only if location is changed
         if (
-          !self.center ||
-          self.center.longitude !== longitude ||
-          self.center.latitude !== latitude
+          !self.focusedBotLocation ||
+          self.focusedBotLocation.longitude !== longitude ||
+          self.focusedBotLocation.latitude !== latitude
         ) {
-          self.center = Location.create({latitude, longitude, accuracy})
+          self.focusedBotLocation = Location.create({latitude, longitude, accuracy})
         }
       }
+    },
+    setMapCenter({latitude, longitude, accuracy}) {
+      self.mapCenterLocation = Location.create({latitude, longitude, accuracy})
     },
   }))
   .actions(self => ({
@@ -111,10 +117,11 @@ const HomeStore = types
         self.list[self.index].setSelected(true)
         // change map center if bot card is selected
         if (getType(self.list[self.index]) === BotCard) {
-          self.setCenter((self.list[self.index] as IBotCard).bot.location)
+          self.setFocusedBotLocation((self.list[self.index] as IBotCard).bot.location)
         }
       }
     },
+    setEditIcon: (icon: string) => (self.editIcon = icon),
   }))
   .actions(self => ({
     addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
