@@ -77,7 +77,7 @@ class AddressBar extends React.Component<Props> {
   }
 
   onLocationSelect = async data => {
-    const {location, address, isCurrent, isPlace, meta, placeName} = data
+    const {location, address, isCurrent, meta} = data
     const {bot, analytics, edit} = this.props
     this.searchEnabled = false
     this.text = data.address

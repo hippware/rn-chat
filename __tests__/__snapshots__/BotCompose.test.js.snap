@@ -5,7 +5,7 @@ exports[`BotCompose renders with no data 1`] = `
   style={
     Object {
       "backgroundColor": "transparent",
-      "marginTop": 182,
+      "marginTop": 172,
     }
   }
 >
@@ -40,6 +40,7 @@ exports[`BotCompose renders with no data 1`] = `
       }
       data={
         Array [
+          undefined,
           "d",
           "a",
           "b",
@@ -151,7 +152,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -164,12 +164,76 @@ exports[`BotCompose renders with no data 1`] = `
                       "shadowRadius": 4,
                     },
                     Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
                       "borderColor": "rgb(253,95,108)",
                       "borderWidth": 2,
                       "shadowOffset": undefined,
                       "shadowOpacity": 0,
                       "shadowRadius": 0,
                     },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 53,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "height": 53,
+                    "padding": 3,
+                    "width": 53,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 4.4,
+                      "flex": 1,
+                      "justifyContent": "center",
+                      "shadowColor": "rgb(253,95,108)",
+                      "shadowOffset": Object {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.18,
+                      "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
+                    },
+                    false,
                   ]
                 }
               >
@@ -231,7 +295,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -242,6 +305,9 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -305,7 +371,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -316,6 +381,9 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -379,7 +447,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -390,6 +457,9 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -453,7 +523,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -464,6 +533,9 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -527,7 +599,6 @@ exports[`BotCompose renders with no data 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -538,6 +609,9 @@ exports[`BotCompose renders with no data 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -565,11 +639,16 @@ exports[`BotCompose renders with no data 1`] = `
     </RCTScrollView>
   </View>
   <TextInput
+    inputAccessoryViewID="uniqueID"
+    onChangeText={[Function]}
     placeholder="Name this place"
     style={
       Object {
-        "borderBottomColor": "rgb(242,243,245)",
+        "backgroundColor": "white",
+        "borderBottomColor": "rgb(212,212,212)",
         "borderBottomWidth": 1,
+        "borderTopColor": "rgb(212,212,212)",
+        "borderTopWidth": 1,
         "fontFamily": "Roboto-Regular",
         "fontSize": 32,
         "height": 100,
@@ -578,6 +657,7 @@ exports[`BotCompose renders with no data 1`] = `
         "width": "100%",
       }
     }
+    value={null}
   />
   <View
     style={
@@ -655,7 +735,7 @@ exports[`BotCompose renders with no data 1`] = `
       <Image
         source={
           Object {
-            "testUri": "../../../images/iconAddnote.png",
+            "testUri": "../../../images/attachPhotoPlus.png",
           }
         }
       />
@@ -695,7 +775,7 @@ exports[`BotCompose renders with no data 1`] = `
         "alignItems": "center",
         "backgroundColor": "rgb(253,95,108)",
         "opacity": 1,
-        "paddingVertical": 20,
+        "paddingVertical": 30,
         "width": "100%",
       }
     }
@@ -726,7 +806,7 @@ exports[`BotCompose renders with owned bot 1`] = `
   style={
     Object {
       "backgroundColor": "transparent",
-      "marginTop": 182,
+      "marginTop": 172,
     }
   }
 >
@@ -761,6 +841,7 @@ exports[`BotCompose renders with owned bot 1`] = `
       }
       data={
         Array [
+          undefined,
           "d",
           "a",
           "b",
@@ -872,7 +953,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -885,12 +965,76 @@ exports[`BotCompose renders with owned bot 1`] = `
                       "shadowRadius": 4,
                     },
                     Object {
+                      "backgroundColor": "transparent",
+                    },
+                    Object {
                       "borderColor": "rgb(253,95,108)",
                       "borderWidth": 2,
                       "shadowOffset": undefined,
                       "shadowOpacity": 0,
                       "shadowRadius": 0,
                     },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 53,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "height": 53,
+                    "padding": 3,
+                    "width": 53,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 4.4,
+                      "flex": 1,
+                      "justifyContent": "center",
+                      "shadowColor": "rgb(253,95,108)",
+                      "shadowOffset": Object {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.18,
+                      "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
+                    },
+                    false,
                   ]
                 }
               >
@@ -952,7 +1096,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -963,6 +1106,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -1026,7 +1172,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -1037,6 +1182,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -1100,7 +1248,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -1111,6 +1258,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -1174,7 +1324,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -1185,6 +1334,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -1248,7 +1400,6 @@ exports[`BotCompose renders with owned bot 1`] = `
                   Array [
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
                       "borderRadius": 4.4,
                       "flex": 1,
                       "justifyContent": "center",
@@ -1259,6 +1410,9 @@ exports[`BotCompose renders with owned bot 1`] = `
                       },
                       "shadowOpacity": 0.18,
                       "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
                     },
                     false,
                   ]
@@ -1286,11 +1440,16 @@ exports[`BotCompose renders with owned bot 1`] = `
     </RCTScrollView>
   </View>
   <TextInput
+    inputAccessoryViewID="uniqueID"
+    onChangeText={[Function]}
     placeholder="Name this place"
     style={
       Object {
-        "borderBottomColor": "rgb(242,243,245)",
+        "backgroundColor": "white",
+        "borderBottomColor": "rgb(212,212,212)",
         "borderBottomWidth": 1,
+        "borderTopColor": "rgb(212,212,212)",
+        "borderTopWidth": 1,
         "fontFamily": "Roboto-Regular",
         "fontSize": 32,
         "height": 100,
@@ -1299,6 +1458,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         "width": "100%",
       }
     }
+    value="title"
   />
   <View
     style={
@@ -1376,7 +1536,7 @@ exports[`BotCompose renders with owned bot 1`] = `
       <Image
         source={
           Object {
-            "testUri": "../../../images/iconAddnote.png",
+            "testUri": "../../../images/attachPhotoPlus.png",
           }
         }
       />
@@ -1416,7 +1576,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         "alignItems": "center",
         "backgroundColor": "rgb(253,95,108)",
         "opacity": 1,
-        "paddingVertical": 20,
+        "paddingVertical": 30,
         "width": "100%",
       }
     }

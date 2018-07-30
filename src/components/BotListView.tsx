@@ -61,7 +61,7 @@ export default class BotListView extends React.Component<Props> {
             ) : null
           }
           renderItem={({item}) => (
-            <BotCard item={item} onPress={i => Actions.botDetails({item: i.id})} />
+            <BotCard item={item} onPress={i => Actions.botDetails({botId: i.id})} />
           )}
           keyExtractor={(item: IBot) => `${item.id}`}
         />

@@ -68,12 +68,14 @@ class BotCompose extends React.Component<Props> {
             marginTop: 172, // TODO: magic number...use exported constants
           }}
         >
-          <IconSelector style={{marginBottom: 10}} />
+          {this.bot && <IconSelector style={{marginBottom: 10}} bot={this.bot} />}
           <TextInput
             style={styles.textStyle}
             placeholder="Name this place"
             inputAccessoryViewID={inputAccessoryViewID}
             ref={r => (this.botTitle = r)}
+            onChangeText={text => this.bot.load({title: text})}
+            value={this.bot.title}
           />
           {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
             {this.keyboardShowing && (
