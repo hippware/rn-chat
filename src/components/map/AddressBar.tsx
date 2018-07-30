@@ -9,6 +9,8 @@ import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 // import {Actions} from 'react-native-router-flux'
 import {IBot} from 'wocky-client'
+import {Actions} from 'react-native-router-flux'
+import {getSnapshot} from 'mobx-state-tree'
 // import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
@@ -70,33 +72,32 @@ class AddressBar extends React.Component<Props> {
   }
 
   onSuggestionSelect = async placeId => {
-    // const data = await this.props.geocodingStore.details(placeId)
-    // this.onLocationSelect({...data, isCurrent: false})
-    // TODO
+    const data = await this.props.geocodingStore.details(placeId)
+    this.onLocationSelect({...data, isCurrent: false})
   }
 
   onLocationSelect = async data => {
-    // const {location, address, isCurrent, isPlace, meta, placeName} = data
-    // const {bot, analytics, edit} = this.props
-    // this.searchEnabled = false
-    // this.text = data.address
-    // const title = isPlace ? placeName : bot.title ? bot.title : address
-    // await bot.load({
-    //   location: {
-    //     ...location,
-    //   },
-    //   address,
-    //   addressData: meta,
-    //   title,
-    // })
-    // bot.location!.load({isCurrent})
-    // if (edit) {
-    //   bot.save()
-    //   Actions.pop()
-    // } else {
-    //   Actions.botCompose({botId: bot.id})
-    // }
-    // analytics.track('botcreate_chooselocation', getSnapshot(bot))
+    const {location, address, isCurrent, isPlace, meta, placeName} = data
+    const {bot, analytics, edit} = this.props
+    this.searchEnabled = false
+    this.text = data.address
+    const title = isPlace ? placeName : bot.title ? bot.title : address
+    await bot.load({
+      location: {
+        ...location,
+      },
+      address,
+      addressData: meta,
+      title,
+    })
+    bot.location!.load({isCurrent})
+    if (edit) {
+      bot.save()
+      Actions.pop()
+    } else {
+      Actions.botCompose({botId: bot.id})
+    }
+    analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 
   suggestion = ({item}) => {
