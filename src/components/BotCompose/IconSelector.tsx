@@ -49,8 +49,8 @@ class IconSelector extends React.Component<Props> {
   }
 
   @action
-  onEmojiSelected = emoji => {
-    this.icons[this.index] = emoji
+  onEmojiSelected = e => {
+    this.icons[this.index] = e
     this.setIcon(this.icons[this.index])
     this.emojiSelected = false
   }

@@ -47,6 +47,7 @@ exports[`BotCompose renders with no data 1`] = `
           "g",
           "e",
           "c",
+          "😜",
         ]
       }
       decelerationRate="fast"
@@ -630,6 +631,82 @@ exports[`BotCompose renders with no data 1`] = `
                   }
                 >
                   c
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 53,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "height": 53,
+                    "padding": 3,
+                    "width": 53,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 4.4,
+                      "flex": 1,
+                      "justifyContent": "center",
+                      "shadowColor": "rgb(253,95,108)",
+                      "shadowOffset": Object {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.18,
+                      "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Object {
+                      "color": "rgb(253,95,108)",
+                      "fontFamily": "fontello",
+                      "fontSize": 25,
+                    }
+                  }
+                >
+                  😜
                 </Text>
               </View>
             </View>
@@ -848,6 +925,7 @@ exports[`BotCompose renders with owned bot 1`] = `
           "g",
           "e",
           "c",
+          "😜",
         ]
       }
       decelerationRate="fast"
@@ -1431,6 +1509,82 @@ exports[`BotCompose renders with owned bot 1`] = `
                   }
                 >
                   c
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scale": 0.9,
+                  },
+                ],
+                "width": 53,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "height": 53,
+                    "padding": 3,
+                    "width": 53,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 4.4,
+                      "flex": 1,
+                      "justifyContent": "center",
+                      "shadowColor": "rgb(253,95,108)",
+                      "shadowOffset": Object {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 0.18,
+                      "shadowRadius": 4,
+                    },
+                    Object {
+                      "backgroundColor": "white",
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Object {
+                      "color": "rgb(253,95,108)",
+                      "fontFamily": "fontello",
+                      "fontSize": 25,
+                    }
+                  }
+                >
+                  😜
                 </Text>
               </View>
             </View>
