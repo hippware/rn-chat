@@ -108,6 +108,7 @@
     "react-native-code-push": "^5.3.4",
     "react-native-country-picker-modal": "github:hippware/react-native-country-picker-modal",
     "react-native-device-info": "^0.12.1",
+    "react-native-emoji-selector": "^0.1.6",
     "react-native-firebase": "^4.2.0",
     "react-native-fs": "^2.8.5",
     "react-native-image-crop-picker": "^0.18.1",
