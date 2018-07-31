@@ -4,7 +4,7 @@ import {log, levels} from '../utils/log'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 
-const createHandler = (callback: any) => (response: Image) => {
+const createHandler = (callback: any, response: Image) => {
   log('SIZE:', response, response, {level: levels.VERBOSE})
   const source = {
     uri: response.path,
@@ -41,7 +41,7 @@ export const launchImageLibrary = async (
       // compressImageMaxHeight: 480,
       // compressImageQuality: 0.5,
     })
-    createHandler(callback)(image as Image)
+    createHandler(callback, image as Image)
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
     // log('launchImageLibrary error', err, {level: levels.ERROR});
