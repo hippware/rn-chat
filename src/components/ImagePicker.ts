@@ -1,11 +1,11 @@
 import {Alert, ActionSheetIOS} from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
-import {log, levels} from '../utils/log'
+// import {log, levels} from '../utils/log'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 
 const createHandler = (callback: any, response: Image) => {
-  log('SIZE:', response, response, {level: levels.VERBOSE})
+  // log('SIZE:', response, {level: levels.VERBOSE})
   const source = {
     uri: response.path,
     type: response.mime,

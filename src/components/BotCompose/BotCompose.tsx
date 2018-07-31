@@ -20,8 +20,12 @@ import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
+import {showImagePicker} from '../ImagePicker'
+
 const noteIcon = require('../../../images/iconAddnote.png')
+const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
+const photoIconDone = require('../../../images/photoAdded.png')
 
 // https://github.com/facebook/react-native/issues/19465#issuecomment-399111765
 // const InputAccessoryView = require('InputAccessoryView')
@@ -89,8 +93,12 @@ class BotCompose extends React.Component<Props> {
             )}
           </InputAccessoryView> */}
           <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
-            <EditCTA text="Note" icon={noteIcon} />
-            <EditCTA text="Photo" icon={photoIcon} />
+            <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+            <EditCTA
+              text="Photo"
+              icon={this.bot.image ? photoIconDone : photoIcon}
+              onPress={this.addPhoto}
+            />
           </View>
           {/* TODO
            * How do we lock the button to the bottom of the screen?
@@ -112,6 +120,16 @@ class BotCompose extends React.Component<Props> {
         </View>
       </BottomPopup>
     )
+  }
+
+  addPhoto = (): void => {
+    showImagePicker(null, async (source, response) => {
+      try {
+        await this.bot!.upload({file: source, ...response})
+      } catch (e) {
+        this.props.notificationStore.flash(`Upload error: ${e}`)
+      }
+    })
   }
 
   @action
@@ -167,13 +185,13 @@ class BotCompose extends React.Component<Props> {
 //   if (this.bot!.description === '') this.controls.focus()
 // }
 
-const EditCTA = ({text, icon}: any) => (
+const EditCTA = ({text, icon, onPress}: any) => (
   <TouchableOpacity
-    // onPress={() => console.log('TODO: onPress')}
+    onPress={onPress}
     style={{marginRight: 50 * k, alignItems: 'center', justifyContent: 'center'}}
   >
     <Image source={icon} />
-    <RText size={14} color={colors.PINK} style={{marginTop: 8 * k, left: 5 * k}}>
+    <RText size={14} color={colors.PINK} style={{marginTop: 8 * k}}>
       {text}
     </RText>
   </TouchableOpacity>
