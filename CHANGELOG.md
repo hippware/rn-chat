@@ -4,7 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.2.0 - 2018 July 30
+
 * [dev] Upgrade RNRF to React Navigation v2 (#2448)
+* Work-in-progress: Location Create - initial design (#2501, PR #2590)
+* Location Create - custom emoji entry (#2505)
 
 # 3.1.3 - 2018 July 23
 
