@@ -15,6 +15,7 @@ import UberMarker from './UberMarker'
 // import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
+import {Actions} from '../../../node_modules/react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -63,6 +64,7 @@ export default class MapHome extends React.Component<IProps> {
 
     // setTimeout(() => Actions.createBot(), 2000)
     // Actions.botCompose()
+    Actions.botEdit({botId: '3627448a-2e25-11e8-a510-0a580a0205ef'})
 
     this.reactions = [
       reaction(

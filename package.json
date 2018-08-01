@@ -110,7 +110,7 @@
     "react-native-device-info": "^0.12.1",
     "react-native-firebase": "^4.2.0",
     "react-native-fs": "^2.8.5",
-    "react-native-image-crop-picker": "^0.18.1",
+    "react-native-image-crop-picker": "^0.20.3",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-maps": "github:hippware/react-native-maps#73a48a0",

@@ -705,7 +705,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -751,7 +750,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -1506,7 +1504,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -1552,7 +1549,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
