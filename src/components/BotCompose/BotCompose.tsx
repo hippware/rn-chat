@@ -10,7 +10,7 @@ import {
   // InputAccessoryView
 } from 'react-native'
 // import {width} from '../Global'
-import {RText} from '../common'
+import {RText, Spinner} from '../common'
 import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {k} from '../Global'
@@ -47,6 +47,7 @@ class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable keyboardShowing: boolean = false
+  @observable uploadingPhoto: boolean = false
   controls: any
   botTitle: any
   keyboardDidShowListener: any
@@ -98,6 +99,7 @@ class BotCompose extends React.Component<Props> {
               text="Photo"
               icon={this.bot.image ? photoIconDone : photoIcon}
               onPress={this.addPhoto}
+              pending={this.uploadingPhoto}
             />
           </View>
           {/* TODO
@@ -125,9 +127,12 @@ class BotCompose extends React.Component<Props> {
   addPhoto = (): void => {
     showImagePicker(null, async (source, response) => {
       try {
+        this.uploadingPhoto = true
         await this.bot!.upload({file: source, ...response})
       } catch (e) {
         this.props.notificationStore.flash(`Upload error: ${e}`)
+      } finally {
+        this.uploadingPhoto = false
       }
     })
   }
@@ -185,12 +190,19 @@ class BotCompose extends React.Component<Props> {
 //   if (this.bot!.description === '') this.controls.focus()
 // }
 
-const EditCTA = ({text, icon, onPress}: any) => (
+const EditCTA = ({text, icon, onPress, pending}: any) => (
   <TouchableOpacity
     onPress={onPress}
-    style={{marginRight: 50 * k, alignItems: 'center', justifyContent: 'center'}}
+    style={{marginRight: 20 * k, alignItems: 'center', justifyContent: 'center'}}
   >
-    <Image source={icon} />
+    {pending ? (
+      <View style={{width: 58, alignItems: 'center', justifyContent: 'center'}}>
+        <Spinner size={40} />
+      </View>
+    ) : (
+      <Image source={icon} />
+    )}
+
     <RText size={14} color={colors.PINK} style={{marginTop: 8 * k}}>
       {text}
     </RText>
