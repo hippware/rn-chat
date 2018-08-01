@@ -35,6 +35,7 @@ type Props = {
   locationStore?: any
   log?: any
   analytics?: any
+  screenProps: any
 }
 
 @inject('wocky', 'notificationStore', 'analytics', 'log')
@@ -61,23 +62,17 @@ class BotCompose extends React.Component<Props> {
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
-      <BottomPopup noCloseTab back>
-        <View
-          style={{
-            backgroundColor: 'transparent',
-            marginTop: 172, // TODO: magic number...use exported constants
-          }}
-        >
-          {this.bot && <IconSelector style={{marginBottom: 10}} bot={this.bot} />}
-          <TextInput
-            style={styles.textStyle}
-            placeholder="Name this place"
-            inputAccessoryViewID={inputAccessoryViewID}
-            ref={r => (this.botTitle = r)}
-            onChangeText={text => this.bot.load({title: text})}
-            value={this.bot.title}
-          />
-          {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
+      <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
+        {this.bot && <IconSelector bot={this.bot} />}
+        <TextInput
+          style={styles.textStyle}
+          placeholder="Name this place"
+          inputAccessoryViewID={inputAccessoryViewID}
+          ref={r => (this.botTitle = r)}
+          onChangeText={text => this.bot.load({title: text})}
+          value={this.bot.title}
+        />
+        {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
             {this.keyboardShowing && (
               <TextInput
                 style={[styles.textStyle, {width}]}
@@ -88,28 +83,27 @@ class BotCompose extends React.Component<Props> {
               />
             )}
           </InputAccessoryView> */}
-          <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
-            <EditCTA text="Note" icon={noteIcon} />
-            <EditCTA text="Photo" icon={photoIcon} />
-          </View>
-          {/* TODO
+        <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
+          <EditCTA text="Note" icon={noteIcon} />
+          <EditCTA text="Photo" icon={photoIcon} />
+        </View>
+        {/* TODO
            * How do we lock the button to the bottom of the screen?
            * Ideally BottomPopup isn't a fixed height, but instead rises as high as necessary to display all items
            */}
-          <TouchableOpacity
-            style={{
-              width: '100%',
-              backgroundColor: colors.PINK, // TODO: gradient background
-              paddingVertical: 15 * k,
-              alignItems: 'center',
-            }}
-            onPress={this.save}
-          >
-            <RText color="white" size={15}>
-              Pin Location
-            </RText>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            backgroundColor: colors.PINK, // TODO: gradient background
+            paddingVertical: 15 * k,
+            alignItems: 'center',
+          }}
+          onPress={this.save}
+        >
+          <RText color="white" size={15}>
+            Pin Location
+          </RText>
+        </TouchableOpacity>
       </BottomPopup>
     )
   }

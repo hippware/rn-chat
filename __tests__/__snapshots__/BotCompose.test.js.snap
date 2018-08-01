@@ -1,21 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BotCompose renders with no data 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+<View>
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
@@ -802,21 +789,8 @@ exports[`BotCompose renders with no data 1`] = `
 `;
 
 exports[`BotCompose renders with owned bot 1`] = `
-<View
-  style={
-    Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+<View>
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
