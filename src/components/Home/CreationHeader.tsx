@@ -21,6 +21,7 @@ type Props = {
   navStore?: INavStore
   homeStore?: IHomeStore
   screenProps: any
+  navigation: any
 }
 
 @inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
@@ -110,7 +111,7 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} />}
+        {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />}
       </View>
     )
   }

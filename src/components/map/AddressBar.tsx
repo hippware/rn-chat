@@ -18,6 +18,7 @@ type Props = {
   edit?: boolean
   geocodingStore?: any
   analytics?: any
+  isActive: boolean
 }
 
 @inject('geocodingStore', 'analytics')
@@ -186,7 +187,9 @@ class AddressBar extends React.Component<Props> {
   render() {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
-        <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+        {this.props.isActive && (
+          <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+        )}
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
@@ -204,20 +207,21 @@ class AddressBar extends React.Component<Props> {
               ref={r => (this.input = r)}
             />
           </View>
-          {this.searchEnabled && (
-            <KeyboardAwareScrollView
-              style={{flex: 1, backgroundColor: colors.WHITE}}
-              keyboardShouldPersistTaps="always"
-            >
-              <FlatList
+          {this.searchEnabled &&
+            this.props.isActive && (
+              <KeyboardAwareScrollView
+                style={{flex: 1, backgroundColor: colors.WHITE}}
                 keyboardShouldPersistTaps="always"
-                data={this.suggestions.slice()}
-                renderItem={this.suggestion}
-                keyExtractor={item => item.place_id}
-                ItemSeparatorComponent={Separator}
-              />
-            </KeyboardAwareScrollView>
-          )}
+              >
+                <FlatList
+                  keyboardShouldPersistTaps="always"
+                  data={this.suggestions.slice()}
+                  renderItem={this.suggestion}
+                  keyExtractor={item => item.place_id}
+                  ItemSeparatorComponent={Separator}
+                />
+              </KeyboardAwareScrollView>
+            )}
         </View>
       </View>
     )
