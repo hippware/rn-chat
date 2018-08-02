@@ -28,24 +28,12 @@ type Props = {
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
   trackTimeout: any
+  handler: any
 
   componentWillMount() {
-    // HACK: since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
-    reaction(
-      () => this.props.navStore.scene === 'createBot',
-      (active: boolean) => {
-        if (active) {
-          this.createBot()
-          this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
-        } else if (!!this.bot) {
-          this.bot = undefined
-          clearTimeout(this.trackTimeout)
-        }
-      },
-      {name: 'CreationHeader: HACK to mimic compomentWillMount'}
-    )
-
-    reaction(
+    this.createBot()
+    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
+    this.handler = reaction(
       () => {
         if (this.props.homeStore.mapCenterLocation && this.bot) {
           return this.props.homeStore.mapCenterLocation
@@ -69,6 +57,11 @@ export default class CreationHeader extends React.Component<Props> {
         name: 'CreationHeader: load bot location based on map center',
       }
     )
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.trackTimeout)
+    this.handler()
   }
 
   createBot = async () => {
