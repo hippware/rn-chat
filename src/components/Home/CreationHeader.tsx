@@ -91,7 +91,7 @@ export default class CreationHeader extends React.Component<Props> {
 
   render() {
     return (
-      <SafeAreaView
+      <View
         style={styles.container}
         onLayout={this.props.screenProps && this.props.screenProps.onLayout}
       >
@@ -111,7 +111,7 @@ export default class CreationHeader extends React.Component<Props> {
           </View>
         </View>
         {this.bot && <AddressBar bot={this.bot} />}
-      </SafeAreaView>
+      </View>
     )
   }
 }
@@ -119,6 +119,7 @@ export default class CreationHeader extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: 'white',
   },
   nav: {
