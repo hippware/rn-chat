@@ -88,15 +88,22 @@ class BotCompose extends React.Component<Props> {
               />
             )}
           </InputAccessoryView> */}
-          <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
-            <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
-            <EditCTA
-              text="Photo"
-              icon={this.bot.image ? photoIconDone : photoIcon}
-              onPress={this.addPhoto}
-              pending={this.uploadingPhoto}
-            />
-          </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            paddingVertical: 20 * k,
+            paddingHorizontal: 30 * k,
+          }}
+        >
+          <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+          <EditCTA
+            text="Photo"
+            icon={this.bot.image ? photoIconDone : photoIcon}
+            onPress={this.addPhoto}
+            pending={this.uploadingPhoto}
+          />
+        </View>
         <TouchableOpacity
           style={{
             width: '100%',

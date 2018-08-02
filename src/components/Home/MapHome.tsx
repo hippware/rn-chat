@@ -64,7 +64,7 @@ export default class MapHome extends React.Component<IProps> {
 
     // setTimeout(() => Actions.createBot(), 2000)
     // Actions.botCompose()
-    Actions.botEdit({botId: '3627448a-2e25-11e8-a510-0a580a0205ef'})
+    // Actions.botEdit({botId: '3627448a-2e25-11e8-a510-0a580a0205ef'})
 
     this.reactions = [
       reaction(
