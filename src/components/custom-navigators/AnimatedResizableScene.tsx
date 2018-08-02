@@ -1,11 +1,43 @@
 import React from 'react'
 import {Animated} from 'react-native'
 import {height as screenHeight} from '../Global'
+import {observable, when, action, reaction, runInAction} from '../../../node_modules/mobx'
+import {observer} from '../../../node_modules/mobx-react/native'
 
-export default class AnimatedResizableScene extends React.Component<any> {
+@observer
+class AnimatedResizableScene extends React.Component<any> {
+  @observable sceneHeight?: number = 0
   state = {height: new Animated.Value(0)}
+
+  componentWillMount() {
+    reaction(
+      () => this.sceneHeight,
+      height => {
+        // console.log('& start spring')
+        Animated.spring(this.state.height, {
+          toValue: -height,
+          // useNativeDriver: true,
+        }).start()
+      }
+    )
+  }
+
+  componentWillReceiveProps({transitionProps, scene}) {
+    if (scene.index > 0) {
+      if (transitionProps.index < 1) {
+        this.setSceneHeight(0)
+      }
+    }
+  }
+
+  @action
+  setSceneHeight = height => {
+    // console.log('& onlayout', height)
+    this.sceneHeight = height
+  }
+
   render() {
-    const {scene} = this.props
+    const {scene, transitionProps} = this.props
     const {navigation, getComponent} = scene.descriptor
     const Scene = getComponent()
     return (
@@ -18,12 +50,13 @@ export default class AnimatedResizableScene extends React.Component<any> {
       >
         <Scene
           screenProps={{
-            onLayout: ({nativeEvent}) => {
-              Animated.spring(this.state.height, {
-                toValue: -nativeEvent.layout.height,
-                // useNativeDriver: true,
-              }).start()
-            },
+            // onLayout: ({nativeEvent}) => {
+            //   Animated.spring(this.state.height, {
+            //     toValue: -nativeEvent.layout.height,
+            //     // useNativeDriver: true,
+            //   }).start()
+            // },
+            onLayout: ({nativeEvent: {layout: {height}}}) => this.setSceneHeight(height),
           }}
           navigation={navigation}
         />
@@ -31,3 +64,5 @@ export default class AnimatedResizableScene extends React.Component<any> {
     )
   }
 }
+
+export default AnimatedResizableScene
