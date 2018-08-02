@@ -1,8 +1,10 @@
 import React from 'react'
 // import AnimatedScreen from './AnimatedScreen'
 import {Transitioner} from 'react-navigation'
-import {Easing, View} from 'react-native'
+import {Easing, View, TouchableOpacity, Image} from 'react-native'
 import AnimatedResizableScene from './AnimatedResizableScene'
+import {Actions} from 'react-native-router-flux'
+import {navBarStyle} from '../Router'
 
 type Props = {
   navigation: any
@@ -10,6 +12,13 @@ type Props = {
   descriptors: any
   screenProps: any
 }
+
+const BackButton = () => (
+  <TouchableOpacity onPress={() => Actions.pop()} style={{position: 'absolute', top: 30, left: 10}}>
+    <Image source={navBarStyle.backButtonImage} />
+  </TouchableOpacity>
+)
+
 export default class SplitRenderer extends React.Component<Props> {
   _configureTransition(transitionProps, prevTransitionProps) {
     // TEST
@@ -31,7 +40,12 @@ export default class SplitRenderer extends React.Component<Props> {
   }
   _render = (transitionProps, prevTransitionProps) => {
     const scenes = transitionProps.scenes.map(scene => this._renderScene(transitionProps, scene))
-    return <View style={{flex: 1}}>{scenes}</View>
+    return (
+      <View style={{flex: 1}}>
+        {scenes}
+        {transitionProps.navigation.state.index > 1 && <BackButton />}
+      </View>
+    )
   }
   onTransitionStart = () => null
   onTransitionEnd = () => null
