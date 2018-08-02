@@ -1,7 +1,6 @@
 import React from 'react'
 import {Animated} from 'react-native'
 import {height as screenHeight} from '../Global'
-import {observable, action, reaction} from '../../../node_modules/mobx'
 import {observer} from '../../../node_modules/mobx-react/native'
 
 type Props = {
@@ -11,35 +10,34 @@ type Props = {
 
 @observer
 class AnimatedResizableScene extends React.Component<Props> {
-  @observable sceneHeight?: number = 0
-  state = {height: new Animated.Value(0)}
-
-  componentWillMount() {
-    reaction(
-      () => this.sceneHeight,
-      height => {
-        Animated.spring(this.state.height, {
-          toValue: -height,
-          useNativeDriver: true,
-        }).start()
-      }
-    )
-  }
+  height: number = 0
+  isTransitioning: boolean = true
+  state = {slideHeight: new Animated.Value(0)}
 
   componentWillReceiveProps({transitionProps, scene}) {
     // if (scene.index > 0) {
     //   console.log('& scene', scene, transitionProps)
     // }
 
-    if (scene.index > 0 && transitionProps.index !== scene.index) {
-      // if not the "active" slider view, then slide out of view
-      this.setSceneHeight(0)
+    if (scene.index > 0) {
+      if (transitionProps.index === scene.index) {
+        this.showScene()
+      } else {
+        this.hideScene()
+      }
     }
   }
 
-  @action
-  setSceneHeight = height => {
-    this.sceneHeight = height
+  showScene = () => this.slideSceneTo(this.height)
+
+  hideScene = () => this.slideSceneTo(0)
+
+  slideSceneTo = height => {
+    this.isTransitioning = true
+    Animated.spring(this.state.slideHeight, {
+      toValue: -height,
+      useNativeDriver: true,
+    }).start(() => (this.isTransitioning = false))
   }
 
   _getScreenStyle = () => {
@@ -57,8 +55,8 @@ class AnimatedResizableScene extends React.Component<Props> {
         transform: [
           {
             translateY: fromTop
-              ? Animated.multiply(this.state.height, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
-              : this.state.height,
+              ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
+              : this.state.slideHeight,
           },
         ],
       }
@@ -74,7 +72,13 @@ class AnimatedResizableScene extends React.Component<Props> {
       <Animated.View style={style}>
         <Scene
           screenProps={{
-            onLayout: ({nativeEvent: {layout: {height}}}) => this.setSceneHeight(height),
+            onLayout: ({nativeEvent: {layout: {height}}}) => {
+              if (height !== this.height && this.isTransitioning) {
+                console.log('& height', height)
+                this.height = height
+                this.slideSceneTo(height)
+              }
+            },
           }}
           navigation={navigation}
         />
