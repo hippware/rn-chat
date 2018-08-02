@@ -11,6 +11,7 @@ type Props = {
 @observer
 class AnimatedResizableScene extends React.Component<Props> {
   height: number = 0
+  // height: number = 667
   isTransitioning: boolean = true
   state = {slideHeight: new Animated.Value(0)}
 
@@ -36,6 +37,9 @@ class AnimatedResizableScene extends React.Component<Props> {
     this.isTransitioning = true
     Animated.spring(this.state.slideHeight, {
       toValue: -height,
+      // stiffness: 5000,
+      // damping: 600,
+      // mass: 3,
       useNativeDriver: true,
     }).start(() => (this.isTransitioning = false))
   }
@@ -57,6 +61,7 @@ class AnimatedResizableScene extends React.Component<Props> {
             translateY: fromTop
               ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
               : this.state.slideHeight,
+            // TODO: opacity - fade in on show and fade out on hide
           },
         ],
       }
@@ -73,8 +78,7 @@ class AnimatedResizableScene extends React.Component<Props> {
         <Scene
           screenProps={{
             onLayout: ({nativeEvent: {layout: {height}}}) => {
-              if (height !== this.height && this.isTransitioning) {
-                console.log('& height', height)
+              if (height !== this.height) {
                 this.height = height
                 this.slideSceneTo(height)
               }

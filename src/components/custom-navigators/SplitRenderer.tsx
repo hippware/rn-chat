@@ -1,7 +1,7 @@
 import React from 'react'
 // import AnimatedScreen from './AnimatedScreen'
 import {Transitioner} from 'react-navigation'
-import {Easing, View, TouchableOpacity, Image} from 'react-native'
+import {View, TouchableOpacity, Image} from 'react-native'
 import AnimatedResizableScene from './AnimatedResizableScene'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../Router'
@@ -20,16 +20,8 @@ const BackButton = () => (
 )
 
 export default class SplitRenderer extends React.Component<Props> {
-  _configureTransition(transitionProps, prevTransitionProps) {
-    // TEST
-    return {
-      // duration in milliseconds, default: 250
-      duration: 500,
-      // An easing function from `Easing`, default: Easing.inOut(Easing.ease)
-      easing: Easing.bounce,
-    }
-  }
   _renderScene = (transitionProps, scene) => {
+    // console.log('& renderScene', this.props)
     return (
       <AnimatedResizableScene
         transitionProps={transitionProps}
@@ -50,11 +42,13 @@ export default class SplitRenderer extends React.Component<Props> {
   onTransitionStart = () => null
   onTransitionEnd = () => null
   render() {
+    const TransitionerAny = Transitioner as any
     return (
-      <Transitioner
+      <TransitionerAny
         screenProps={this.props.screenProps}
         descriptors={this.props.descriptors}
-        configureTransition={this._configureTransition}
+        // NOTE: our transition animations don't need to be configurable
+        configureTransition={null}
         navigation={this.props.navigation}
         render={this._render}
         onTransitionStart={this.onTransitionStart}
