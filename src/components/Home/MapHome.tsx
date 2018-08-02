@@ -15,7 +15,7 @@ import UberMarker from './UberMarker'
 // import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
-import {Actions} from '../../../node_modules/react-native-router-flux'
+// import {Actions} from '../../../node_modules/react-native-router-flux'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
