@@ -668,7 +668,7 @@ exports[`BotCompose renders with no data 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -692,7 +692,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -714,7 +713,7 @@ exports[`BotCompose renders with no data 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -738,7 +737,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -1456,7 +1454,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -1480,7 +1478,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -1502,7 +1499,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -1526,7 +1523,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]

@@ -6567,9 +6567,9 @@ react-native-fs@^2.8.5:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
-react-native-image-crop-picker@^0.18.1:
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.18.2.tgz#f0cfbe4227449d84f6d5885ef37462edf6920090"
+react-native-image-crop-picker@^0.20.3:
+  version "0.20.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.3"

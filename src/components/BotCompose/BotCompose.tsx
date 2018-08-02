@@ -10,7 +10,7 @@ import {
   // InputAccessoryView
 } from 'react-native'
 // import {width} from '../Global'
-import {RText} from '../common'
+import {RText, Spinner} from '../common'
 import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {k} from '../Global'
@@ -20,8 +20,12 @@ import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
+import {showImagePicker} from '../ImagePicker'
+
 const noteIcon = require('../../../images/iconAddnote.png')
+const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
+const photoIconDone = require('../../../images/photoAdded.png')
 
 // https://github.com/facebook/react-native/issues/19465#issuecomment-399111765
 // const InputAccessoryView = require('InputAccessoryView')
@@ -44,6 +48,7 @@ class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable keyboardShowing: boolean = false
+  @observable uploadingPhoto: boolean = false
   controls: any
   botTitle: any
   keyboardDidShowListener: any
@@ -83,14 +88,15 @@ class BotCompose extends React.Component<Props> {
               />
             )}
           </InputAccessoryView> */}
-        <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
-          <EditCTA text="Note" icon={noteIcon} />
-          <EditCTA text="Photo" icon={photoIcon} />
-        </View>
-        {/* TODO
-           * How do we lock the button to the bottom of the screen?
-           * Ideally BottomPopup isn't a fixed height, but instead rises as high as necessary to display all items
-           */}
+          <View style={{flexDirection: 'row', paddingVertical: 20 * k, paddingHorizontal: 30 * k}}>
+            <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+            <EditCTA
+              text="Photo"
+              icon={this.bot.image ? photoIconDone : photoIcon}
+              onPress={this.addPhoto}
+              pending={this.uploadingPhoto}
+            />
+          </View>
         <TouchableOpacity
           style={{
             width: '100%',
@@ -106,6 +112,19 @@ class BotCompose extends React.Component<Props> {
         </TouchableOpacity>
       </BottomPopup>
     )
+  }
+
+  addPhoto = (): void => {
+    showImagePicker(null, async (source, response) => {
+      try {
+        this.uploadingPhoto = true
+        await this.bot!.upload({file: source, ...response})
+      } catch (e) {
+        this.props.notificationStore.flash(`Upload error: ${e}`)
+      } finally {
+        this.uploadingPhoto = false
+      }
+    })
   }
 
   @action
@@ -161,13 +180,20 @@ class BotCompose extends React.Component<Props> {
 //   if (this.bot!.description === '') this.controls.focus()
 // }
 
-const EditCTA = ({text, icon}: any) => (
+const EditCTA = ({text, icon, onPress, pending}: any) => (
   <TouchableOpacity
-    // onPress={() => console.log('TODO: onPress')}
-    style={{marginRight: 50 * k, alignItems: 'center', justifyContent: 'center'}}
+    onPress={onPress}
+    style={{marginRight: 20 * k, alignItems: 'center', justifyContent: 'center'}}
   >
-    <Image source={icon} />
-    <RText size={14} color={colors.PINK} style={{marginTop: 8 * k, left: 5 * k}}>
+    {pending ? (
+      <View style={{width: 58, alignItems: 'center', justifyContent: 'center'}}>
+        <Spinner size={40} />
+      </View>
+    ) : (
+      <Image source={icon} />
+    )}
+
+    <RText size={14} color={colors.PINK} style={{marginTop: 8 * k}}>
       {text}
     </RText>
   </TouchableOpacity>
