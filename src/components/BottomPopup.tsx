@@ -9,21 +9,16 @@ type Props = {
 }
 
 export default class BottomPopup extends React.Component<Props> {
-  state = {
-    childrenHeight: null,
-  }
   render() {
     const {onClose, children} = this.props
     return !onClose ? (
-      <View onLayout={this.props.onLayout}>{children}</View>
+      <View style={styles.container} onLayout={this.props.onLayout}>
+        {children}
+      </View>
     ) : (
       <View
-        style={{
-          height: this.state.childrenHeight ? this.state.childrenHeight + 50 : 10,
-        }}
-        onLayout={event =>
-          this.state.childrenHeight && this.props.onLayout && this.props.onLayout(event)
-        }
+        style={styles.container} // keep contents "glued" to the bottom
+        onLayout={this.props.onLayout}
       >
         <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
         <View style={{flex: 1}}>
@@ -42,6 +37,9 @@ export default class BottomPopup extends React.Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'flex-end', // keep children "locked" to the bottom
+  },
   absolute: {
     position: 'absolute',
     top: 0,
