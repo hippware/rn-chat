@@ -31,10 +31,9 @@ class AnimatedResizableScene extends React.Component<Props> {
     //   console.log('& scene', scene, transitionProps)
     // }
 
-    if (scene.index > 0) {
-      if (transitionProps.index < 1) {
-        this.setSceneHeight(0)
-      }
+    if (scene.index > 0 && transitionProps.index !== scene.index) {
+      // if not the "active" slider view, then slide out of view
+      this.setSceneHeight(0)
     }
   }
 

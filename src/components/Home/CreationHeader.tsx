@@ -90,11 +90,6 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   render() {
-    // don't display it for second 'Bot Create' UI screen
-    // any better solution?
-    if (this.props.navStore.scene !== 'createBot') {
-      return null
-    }
     return (
       <SafeAreaView
         style={styles.container}
