@@ -20,6 +20,7 @@ type Props = {
   geocodingStore?: any
   navStore?: INavStore
   homeStore?: IHomeStore
+  screenProps: any
 }
 
 @inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
@@ -97,7 +98,10 @@ export default class CreationHeader extends React.Component<Props> {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={styles.container}
+        onLayout={this.props.screenProps && this.props.screenProps.onLayout}
+      >
         <View style={styles.nav}>
           <View style={{width: 100}}>
             <CloseButton style={{left: 0}} />
