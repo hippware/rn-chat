@@ -4,18 +4,11 @@ exports[`BotCompose renders with no data 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
+      "justifyContent": "flex-end",
     }
   }
 >
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
@@ -662,6 +655,7 @@ exports[`BotCompose renders with no data 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "white",
         "flexDirection": "row",
         "paddingHorizontal": 60,
         "paddingVertical": 40,
@@ -803,18 +797,11 @@ exports[`BotCompose renders with owned bot 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
+      "justifyContent": "flex-end",
     }
   }
 >
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
@@ -1461,6 +1448,7 @@ exports[`BotCompose renders with owned bot 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "white",
         "flexDirection": "row",
         "paddingHorizontal": 60,
         "paddingVertical": 40,

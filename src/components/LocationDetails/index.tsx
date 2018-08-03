@@ -22,6 +22,7 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   scrollable: boolean
+  screenProps: any
 }
 
 @inject('wocky', 'analytics')
@@ -95,14 +96,10 @@ export default class LocationDetails extends React.Component<Props> {
   render() {
     const {bot} = this
     if (!bot) {
-      return (
-        <BottomPopup onClose={Actions.pop}>
-          <Loader />
-        </BottomPopup>
-      )
+      return <Loader />
     }
     if (!isAlive(bot)) {
-      return <BottomPopup onClose={Actions.pop}>{null}</BottomPopup>
+      return null
     }
     if (bot.error) {
       return <BotUnavailable />
@@ -130,22 +127,22 @@ export default class LocationDetails extends React.Component<Props> {
   }
 }
 
-export const LocationDetailsBottomPopup = (props: Props) => (
-  <BottomPopup onClose={Actions.pop}>
-    <LocationDetails {...props} scrollable={false} />
-  </BottomPopup>
-)
+export const LocationDetailsBottomPopup = (props: Props) => {
+  return (
+    <BottomPopup onClose={Actions.pop} onLayout={props.screenProps && props.screenProps.onLayout}>
+      <LocationDetails {...props} scrollable={false} />
+    </BottomPopup>
+  )
+}
 
 const BotUnavailable = () => (
-  <BottomPopup onClose={Actions.pop}>
-    <View style={{alignItems: 'center'}}>
-      <RText size={17} style={{textAlign: 'center'}}>
-        <Text style={{color: 'red'}}>Oops. </Text>
-        <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
-      </RText>
-      <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
-    </View>
-  </BottomPopup>
+  <View style={{alignItems: 'center'}}>
+    <RText size={17} style={{textAlign: 'center'}}>
+      <Text style={{color: 'red'}}>Oops. </Text>
+      <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+    </RText>
+    <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
+  </View>
 )
 
 const Loader = () => (
