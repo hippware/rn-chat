@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'

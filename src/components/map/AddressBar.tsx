@@ -18,7 +18,7 @@ type Props = {
   edit?: boolean
   geocodingStore?: any
   analytics?: any
-  isActive: boolean
+  isActive?: boolean
 }
 
 @inject('geocodingStore', 'analytics')
