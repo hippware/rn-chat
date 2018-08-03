@@ -4,20 +4,9 @@ import {colors} from '../../constants'
 import {width} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import {Observer, observer, inject} from 'mobx-react/native'
-import {observable, action} from 'mobx'
 import {IHomeStore} from '../../store/HomeStore'
 import {IBot} from 'wocky-client'
-import EmojiSelector from 'react-native-emoji-selector'
-
-const {
-  drinks,
-  trees,
-  heart,
-  silverware,
-  store,
-  plane,
-  emoji,
-} = require('../../constants/botIcons.json')
+import IconStore from '../../store/IconStore'
 
 const itemSize = 53
 
@@ -25,56 +14,42 @@ type Props = {
   homeStore?: IHomeStore
   style?: ViewStyle
   bot: IBot
+  store: IconStore
 }
 
 @inject('homeStore')
 @observer
 class IconSelector extends React.Component<Props> {
-  @observable icons = [undefined, silverware, drinks, trees, plane, store, heart, emoji]
   selector?: any
-  @observable index?: number = 0
-  @observable emojiSelected = false
+  iconStore: IconStore
 
-  @action
+  constructor(props) {
+    super(props)
+    this.iconStore = props.store
+  }
+
   setIcon = icon => {
     this.props.homeStore.setEditIcon(icon)
     this.props.bot.load({icon})
   }
 
-  @action
   onSnap = (index: number) => {
-    this.index = index
-    this.emojiSelected = index === this.icons.length - 1
-    this.setIcon(this.icons[this.index])
+    this.iconStore.setIndex(index)
+    this.setIcon(this.iconStore.icon)
   }
 
-  @action
-  onEmojiSelected = e => {
-    this.icons[this.index] = e
-    this.setIcon(this.icons[this.index])
-    this.emojiSelected = false
-  }
   render() {
     return (
       <View style={this.props.style}>
         <Carousel
           ref={r => (this.selector = r)}
-          data={this.icons.slice()}
+          data={this.iconStore.iconList.slice()}
           renderItem={this.renderIcon}
           sliderWidth={width}
           itemWidth={itemSize}
           onBeforeSnapToItem={this.onSnap}
           inactiveSlideOpacity={1}
         />
-        {this.emojiSelected && (
-          <View style={{height: 300, backgroundColor: 'white'}}>
-            <EmojiSelector
-              onEmojiSelected={this.onEmojiSelected}
-              showSearchBar={false}
-              columns={8}
-            />
-          </View>
-        )}
       </View>
     )
   }
@@ -88,7 +63,7 @@ class IconSelector extends React.Component<Props> {
               style={[
                 styles.shadow,
                 {backgroundColor: item ? 'white' : 'transparent'},
-                this.index === index && styles.selectedIcon,
+                this.iconStore.index === index && styles.selectedIcon,
               ]}
             >
               {item && <Text style={styles.icon}>{item}</Text>}

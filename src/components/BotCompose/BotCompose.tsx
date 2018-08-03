@@ -20,7 +20,9 @@ import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
+import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
+import EmojiSelector from 'react-native-emoji-selector'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -54,6 +56,7 @@ class BotCompose extends React.Component<Props> {
   keyboardDidShowListener: any
   keyboardDidHideListener: any
   accessoryText?: any
+  iconStore: IconStore = new IconStore()
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
@@ -64,11 +67,25 @@ class BotCompose extends React.Component<Props> {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide)
   }
 
+  onEmojiSelected = e => {
+    this.iconStore.changeEmoji(e)
+    // this.setIcon(this.iconStore.icon)
+  }
+
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
       <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
-        {this.bot && <IconSelector bot={this.bot} />}
+        {this.bot && <IconSelector store={this.iconStore} bot={this.bot} />}
+        {this.iconStore.isEmoji && (
+          <View style={{height: 300, backgroundColor: 'white'}}>
+            <EmojiSelector
+              onEmojiSelected={this.onEmojiSelected}
+              showSearchBar={false}
+              columns={8}
+            />
+          </View>
+        )}
         <TextInput
           style={styles.textStyle}
           placeholder="Name this place"
