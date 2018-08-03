@@ -11,9 +11,8 @@ import {
 } from 'react-native'
 // import {width} from '../Global'
 import {RText, Spinner} from '../common'
-import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
-import {k} from '../Global'
+import {k, width} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action} from 'mobx'
@@ -81,7 +80,7 @@ class BotCompose extends React.Component<Props> {
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
-      <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
+      <View>
         {this.bot && <IconSelector onSnap={this.onSnap} bot={this.bot} />}
         {this.props.iconStore.isEmojiKeyboardShown && (
           <View style={{height: 305, backgroundColor: 'white'}}>
@@ -102,7 +101,6 @@ class BotCompose extends React.Component<Props> {
               onChangeText={text => this.bot.load({title: text})}
               value={this.bot.title}
             />
-            {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
             {this.keyboardShowing && (
               <TextInput
                 style={[styles.textStyle, {width}]}
@@ -112,7 +110,6 @@ class BotCompose extends React.Component<Props> {
                 autoFocus
               />
             )}
-          </InputAccessoryView> */}
             <View
               style={{
                 flexDirection: 'row',
@@ -145,7 +142,7 @@ class BotCompose extends React.Component<Props> {
             <View style={{right: 0, left: 0, bottom: 0, height: this.keyboardHeight}} />
           </View>
         )}
-      </BottomPopup>
+      </View>
     )
   }
 
