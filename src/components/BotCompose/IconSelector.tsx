@@ -67,7 +67,13 @@ class IconSelector extends React.Component<Props> {
           inactiveSlideOpacity={1}
         />
         {this.emojiSelected && (
-          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+          <View style={{height: 300, backgroundColor: 'white'}}>
+            <EmojiSelector
+              onEmojiSelected={this.onEmojiSelected}
+              showSearchBar={false}
+              columns={8}
+            />
+          </View>
         )}
       </View>
     )
