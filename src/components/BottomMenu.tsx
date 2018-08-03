@@ -74,6 +74,7 @@ const MenuItem = ({
 
 type Props = {
   wocky?: IWocky
+  screenProps: any
 }
 
 @inject('wocky')
@@ -86,7 +87,10 @@ export default class BottomMenu extends React.Component<Props> {
       return null
     }
     return (
-      <BottomPopup onClose={Actions.pop}>
+      <BottomPopup
+        onLayout={this.props.screenProps && this.props.screenProps.onLayout}
+        onClose={Actions.pop}
+      >
         <MenuItemWrapper style={{height: 129}} testID="myAccountMenuItem">
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Avatar
@@ -118,6 +122,7 @@ export default class BottomMenu extends React.Component<Props> {
           <Text style={styles.text}>Invisible</Text>
           <InvisibleSwitch />
         </MenuItem>
+        <View style={{height: 30, backgroundColor: 'white'}} />
       </BottomPopup>
     )
   }

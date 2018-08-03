@@ -166,6 +166,10 @@ PODS:
     - React
   - RNFS (2.10.14):
     - React
+  - RNImageCropPicker (0.20.3):
+    - QBImagePickerController
+    - React/Core
+    - RSKImageCropper
   - RNXMPP (1.1.2):
     - React
     - XMPPFramework
@@ -370,6 +374,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNFS (from `../node_modules/react-native-fs`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - RSKImageCropper
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.6`)
@@ -434,6 +439,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-firebase/ios"
   RNFS:
     :path: "../node_modules/react-native-fs"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNXMPP:
     :path: "../node_modules/react-native-xmpp"
   XMPPFramework:
@@ -488,12 +495,13 @@ SPEC CHECKSUMS:
   RNDeviceInfo: b375b3374cda3203d6d48cea8c07e46ba1169e26
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
+  RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
   RSKImageCropper: 0d0c6d8525a2381f03fde32a47c6703817a2feed
   SSZipArchive: 51a800ebb77f95a8329b6ced1faaff394b47f509
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: b41d70da68af62d754686cf8d6f4c540b1f64194
+PODFILE CHECKSUM: 399663f64af6e85a72fd39d2632fb2b76e07a7da
 
 COCOAPODS: 1.5.3

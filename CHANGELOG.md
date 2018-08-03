@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Location Create - add photo (#2503)
+
 # 3.2.0 - 2018 July 30
 
 * [dev] Upgrade RNRF to React Navigation v2 (#2448)

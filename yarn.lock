@@ -533,11 +533,24 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-0.0.4.tgz#6ada6be91dfdc1fa77ed57691f92821920f71d12"
 
+"@types/react-native@*":
+  version "0.56.4"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.56.4.tgz#2643ca2a9a81e30da9fde96cfd8587fca4e3c19d"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native@^0.55.16":
   version "0.55.26"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.55.26.tgz#a7150ca15e0de7e435cc66a1ca44f6b506c99e40"
   dependencies:
     "@types/react" "*"
+
+"@types/react-navigation@^2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-2.0.12.tgz#90aa05d1b952193d62ee936b4cd773f886d4f13a"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
 
 "@types/react@*", "@types/react@^16.3.14":
   version "16.4.5"
@@ -6579,9 +6592,9 @@ react-native-fs@^2.8.5:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
-react-native-image-crop-picker@^0.18.1:
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.18.2.tgz#f0cfbe4227449d84f6d5885ef37462edf6920090"
+react-native-image-crop-picker@^0.20.3:
+  version "0.20.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.3"

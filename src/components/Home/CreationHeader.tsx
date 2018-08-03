@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
@@ -20,6 +20,8 @@ type Props = {
   geocodingStore?: any
   navStore?: INavStore
   homeStore?: IHomeStore
+  screenProps: any
+  navigation: any
 }
 
 @inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
@@ -27,24 +29,12 @@ type Props = {
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
   trackTimeout: any
+  handler: any
 
   componentWillMount() {
-    // HACK: since this component stays mounted, must do cleanup with a reaction rather than componentWillMount/componentWillUnmount
-    reaction(
-      () => this.props.navStore.scene === 'createBot',
-      (active: boolean) => {
-        if (active) {
-          this.createBot()
-          this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
-        } else if (!!this.bot) {
-          this.bot = undefined
-          clearTimeout(this.trackTimeout)
-        }
-      },
-      {name: 'CreationHeader: HACK to mimic compomentWillMount'}
-    )
-
-    reaction(
+    this.createBot()
+    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
+    this.handler = reaction(
       () => {
         if (this.props.homeStore.mapCenterLocation && this.bot) {
           return this.props.homeStore.mapCenterLocation
@@ -68,6 +58,11 @@ export default class CreationHeader extends React.Component<Props> {
         name: 'CreationHeader: load bot location based on map center',
       }
     )
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.trackTimeout)
+    this.handler()
   }
 
   createBot = async () => {
@@ -97,7 +92,10 @@ export default class CreationHeader extends React.Component<Props> {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <View
+        style={styles.container}
+        onLayout={this.props.screenProps && this.props.screenProps.onLayout}
+      >
         <View style={styles.nav}>
           <View style={{width: 100}}>
             <CloseButton style={{left: 0}} />
@@ -113,8 +111,8 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} />}
-      </SafeAreaView>
+        {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />}
+      </View>
     )
   }
 }
@@ -122,6 +120,7 @@ export default class CreationHeader extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: 'white',
   },
   nav: {

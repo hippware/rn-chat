@@ -42,7 +42,7 @@ import VerifyCode from './VerifyCode'
 import LocationDebug from './LocationDebug'
 import SplitRenderer from './custom-navigators/SplitRenderer'
 // import ErrorNavigator from './ErrorNavigator'
-import TopDownRenderer from './custom-navigators/TopDownRenderer'
+// import TopDownRenderer from './custom-navigators/TopDownRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen';
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
@@ -156,8 +156,8 @@ class TinyRobotRouter extends React.Component<Props> {
     return (
       <Router onStateChange={() => navStore.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
           <Lightbox key="rootLightbox">
-            <Stack tabs renderer={TopDownRenderer} topHeight={800}>
-              <Stack key="split" tabs renderer={SplitRenderer} splitHeight={394} >
+            {/* <Stack tabs renderer={TopDownRenderer} topHeight={800}> */}
+              <Stack key="split" renderer={SplitRenderer} >
                 <Stack key="rootStack" initial hideNavBar>
                   <Stack key="root" tabs hideTabBar hideNavBar>
                     <Stack key="launch" hideNavBar lightbox type="replace">
@@ -194,7 +194,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="createBot" component={BotCreate} title="Post a New Bot" leftButtonImage={iconClose} onLeft={Actions.pop} />
                     <Scene key="botCompose" component={BotCompose} navTransparent />
                   </Scene> */}
-                  <Scene key="camera" component={Camera} clone hideNavBar />
                   {/* <Scene key="botEdit" component={BotCompose} clone edit navTransparent right={() => null} /> */}
                   <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" clone back right={() => null} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" clone left={() => null} />
@@ -215,11 +214,13 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
                 </Stack>
                 <Scene key="bottomMenu" component={BottomMenu} />
+                <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
                 <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
                 <Scene key="botCompose" component={BotCompose} back />
+                <Scene key="botEdit" component={BotCompose} edit back />
+                <Scene key="camera" component={Camera} />
               </Stack>
-            <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
-          </Stack>
+          {/* </Stack> */}
           <Scene key="locationWarning" component={LocationWarning} />
           <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
           <Scene key="locationPrimer" component={LocationPrimer} />

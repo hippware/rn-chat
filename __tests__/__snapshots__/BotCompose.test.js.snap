@@ -4,18 +4,11 @@ exports[`BotCompose renders with no data 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
+      "justifyContent": "flex-end",
     }
   }
 >
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
@@ -739,6 +732,7 @@ exports[`BotCompose renders with no data 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "white",
         "flexDirection": "row",
         "paddingHorizontal": 60,
         "paddingVertical": 40,
@@ -758,7 +752,7 @@ exports[`BotCompose renders with no data 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -782,7 +776,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -804,7 +797,7 @@ exports[`BotCompose renders with no data 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -828,7 +821,6 @@ exports[`BotCompose renders with no data 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -882,18 +874,11 @@ exports[`BotCompose renders with owned bot 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "transparent",
-      "marginTop": 172,
+      "justifyContent": "flex-end",
     }
   }
 >
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-      }
-    }
-  >
+  <View>
     <RCTScrollView
       activeAnimationOptions={null}
       activeAnimationType="timing"
@@ -1617,6 +1602,7 @@ exports[`BotCompose renders with owned bot 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "white",
         "flexDirection": "row",
         "paddingHorizontal": 60,
         "paddingVertical": 40,
@@ -1636,7 +1622,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -1660,7 +1646,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
@@ -1682,7 +1667,7 @@ exports[`BotCompose renders with owned bot 1`] = `
         Object {
           "alignItems": "center",
           "justifyContent": "center",
-          "marginRight": 100,
+          "marginRight": 40,
           "opacity": 1,
         }
       }
@@ -1706,7 +1691,6 @@ exports[`BotCompose renders with owned bot 1`] = `
               "fontSize": 14,
             },
             Object {
-              "left": 10,
               "marginTop": 16,
             },
           ]
