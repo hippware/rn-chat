@@ -1,19 +1,24 @@
 import React from 'react'
 import {Animated} from 'react-native'
-import {height as screenHeight} from '../Global'
-import {observer} from 'mobx-react/native'
 
 type Props = {
   scene: any
   transitionProps: any
+  initialHeight: number
 }
 
-@observer
-class AnimatedResizableScene extends React.Component<Props> {
-  height: number = 0
-  state = {slideHeight: new Animated.Value(0)}
+class AnimatedPushScene extends React.Component<Props> {
+  state = {slideHeight: new Animated.Value(this.props.initialHeight)}
+
+  componentDidMount() {
+    this.showScene()
+  }
 
   componentWillReceiveProps({transitionProps, scene}) {
+    // if (scene.index > 0) {
+    //   console.log('& scene', scene, transitionProps)
+    // }
+
     if (scene.index > 0) {
       if (transitionProps.index === scene.index) {
         this.showScene()
@@ -23,36 +28,35 @@ class AnimatedResizableScene extends React.Component<Props> {
     }
   }
 
-  showScene = () => this.slideSceneTo(this.height)
+  showScene = () => this.slideSceneTo(0)
 
-  hideScene = () => this.slideSceneTo(0)
+  hideScene = () => this.slideSceneTo(this.props.initialHeight)
 
   slideSceneTo = height => {
     Animated.spring(this.state.slideHeight, {
-      toValue: -height,
-      // stiffness: 5000,
-      // damping: 600,
-      // mass: 3,
+      toValue: height,
       useNativeDriver: true,
     }).start()
   }
 
   _getScreenStyle = () => {
     const {scene: {index, route: {params: {fromTop}}}} = this.props
+    const absolute = {position: 'absolute', left: 0, right: 0}
     if (index === 0) {
       // the "main" screen
       return {flex: 1}
     } else {
+      // "push" into view from a set height (good for scenes that will change height a lot)
       return {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: fromTop ? undefined : screenHeight,
-        bottom: fromTop ? screenHeight : undefined,
+        ...absolute,
+        borderWidth: 1,
+        borderColor: 'red',
+        top: fromTop ? 0 : undefined,
+        bottom: fromTop ? undefined : 0,
         transform: [
           {
             translateY: fromTop
-              ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
+              ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1))
               : this.state.slideHeight,
             // TODO: opacity - fade in on show and fade out on hide
           },
@@ -68,20 +72,10 @@ class AnimatedResizableScene extends React.Component<Props> {
     const style = this._getScreenStyle()
     return (
       <Animated.View style={style}>
-        <Scene
-          screenProps={{
-            onLayout: ({nativeEvent: {layout: {height}}}) => {
-              if (height !== this.height) {
-                this.height = height
-                this.slideSceneTo(height)
-              }
-            },
-          }}
-          navigation={navigation}
-        />
+        <Scene navigation={navigation} />
       </Animated.View>
     )
   }
 }
 
-export default AnimatedResizableScene
+export default AnimatedPushScene

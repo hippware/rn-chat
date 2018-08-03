@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 // import {width} from '../Global'
 import {RText, Spinner} from '../common'
-import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
@@ -67,7 +66,7 @@ class BotCompose extends React.Component<Props> {
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
-      <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
+      <View>
         {this.bot && <IconSelector bot={this.bot} />}
         <TextInput
           style={styles.textStyle}
@@ -117,7 +116,7 @@ class BotCompose extends React.Component<Props> {
             Pin Location
           </RText>
         </TouchableOpacity>
-      </BottomPopup>
+      </View>
     )
   }
 
