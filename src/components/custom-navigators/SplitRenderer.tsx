@@ -20,22 +20,17 @@ const BackButton = () => (
 )
 
 export default class SplitRenderer extends React.Component<Props> {
-  _renderScene = (transitionProps, scene) => {
-    // console.log('& renderScene', this.props)
-    return (
-      <AnimatedResizableScene
-        transitionProps={transitionProps}
-        key={scene.route.key}
-        scene={scene}
-      />
-    )
-  }
+  _renderScene = (transitionProps, scene) => (
+    <AnimatedResizableScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
+  )
+
   _render = (transitionProps, prevTransitionProps) => {
     const scenes = transitionProps.scenes.map(scene => this._renderScene(transitionProps, scene))
+    const state = transitionProps.navigation.state
     return (
       <View style={{flex: 1}}>
         {scenes}
-        {transitionProps.navigation.state.index > 1 && <BackButton />}
+        {state.index > 1 && state.routes[state.index].params.back && <BackButton />}
       </View>
     )
   }

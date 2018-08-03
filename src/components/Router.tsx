@@ -194,7 +194,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="createBot" component={BotCreate} title="Post a New Bot" leftButtonImage={iconClose} onLeft={Actions.pop} />
                     <Scene key="botCompose" component={BotCompose} navTransparent />
                   </Scene> */}
-                  <Scene key="camera" component={Camera} clone hideNavBar />
                   {/* <Scene key="botEdit" component={BotCompose} clone edit navTransparent right={() => null} /> */}
                   <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" clone back right={() => null} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" clone left={() => null} />
@@ -219,6 +218,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar}/>
                 <Scene key="botCompose" component={BotCompose} back />
                 <Scene key="botEdit" component={BotCompose} edit back />
+                <Scene key="camera" component={Camera} />
               </Stack>
           {/* </Stack> */}
           <Scene key="locationWarning" component={LocationWarning} />

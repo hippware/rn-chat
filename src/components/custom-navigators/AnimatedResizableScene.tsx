@@ -1,7 +1,7 @@
 import React from 'react'
 import {Animated} from 'react-native'
 import {height as screenHeight} from '../Global'
-import {observer} from '../../../node_modules/mobx-react/native'
+import {observer} from 'mobx-react/native'
 
 type Props = {
   scene: any
