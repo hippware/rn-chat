@@ -104,14 +104,19 @@ export default class CreationHeader extends React.Component<Props> {
             Pin Location
           </RText>
           <View style={{width: 100}}>
-            <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
+            <TouchableOpacity
+              onPress={this.next}
+              style={{alignSelf: 'flex-end'}}
+              disabled={!this.bot}
+            >
               <RText size={17} color={colors.PINK}>
                 Next
               </RText>
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />}
+        {/* {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />} */}
+        <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />
       </View>
     )
   }
