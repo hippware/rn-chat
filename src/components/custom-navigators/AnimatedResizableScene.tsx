@@ -1,7 +1,6 @@
 import React from 'react'
 import {Animated} from 'react-native'
 import {height as screenHeight} from '../Global'
-import {observable, action, reaction} from '../../../node_modules/mobx'
 import {observer} from '../../../node_modules/mobx-react/native'
 
 type Props = {
@@ -11,20 +10,10 @@ type Props = {
 
 @observer
 class AnimatedResizableScene extends React.Component<Props> {
-  @observable sceneHeight?: number = 0
-  state = {height: new Animated.Value(0)}
-
-  componentWillMount() {
-    reaction(
-      () => this.sceneHeight,
-      height => {
-        Animated.spring(this.state.height, {
-          toValue: -height,
-          useNativeDriver: true,
-        }).start()
-      }
-    )
-  }
+  height: number = 0
+  // height: number = 667
+  isTransitioning: boolean = true
+  state = {slideHeight: new Animated.Value(0)}
 
   componentWillReceiveProps({transitionProps, scene}) {
     // if (scene.index > 0) {
@@ -32,15 +21,27 @@ class AnimatedResizableScene extends React.Component<Props> {
     // }
 
     if (scene.index > 0) {
-      if (transitionProps.index < 1) {
-        this.setSceneHeight(0)
+      if (transitionProps.index === scene.index) {
+        this.showScene()
+      } else {
+        this.hideScene()
       }
     }
   }
 
-  @action
-  setSceneHeight = height => {
-    this.sceneHeight = height
+  showScene = () => this.slideSceneTo(this.height)
+
+  hideScene = () => this.slideSceneTo(0)
+
+  slideSceneTo = height => {
+    this.isTransitioning = true
+    Animated.spring(this.state.slideHeight, {
+      toValue: -height,
+      // stiffness: 5000,
+      // damping: 600,
+      // mass: 3,
+      useNativeDriver: true,
+    }).start(() => (this.isTransitioning = false))
   }
 
   _getScreenStyle = () => {
@@ -58,8 +59,9 @@ class AnimatedResizableScene extends React.Component<Props> {
         transform: [
           {
             translateY: fromTop
-              ? Animated.multiply(this.state.height, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
-              : this.state.height,
+              ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1)) // TODO: should we do this with interpolation instead?
+              : this.state.slideHeight,
+            // TODO: opacity - fade in on show and fade out on hide
           },
         ],
       }
@@ -75,7 +77,12 @@ class AnimatedResizableScene extends React.Component<Props> {
       <Animated.View style={style}>
         <Scene
           screenProps={{
-            onLayout: ({nativeEvent: {layout: {height}}}) => this.setSceneHeight(height),
+            onLayout: ({nativeEvent: {layout: {height}}}) => {
+              if (height !== this.height) {
+                this.height = height
+                this.slideSceneTo(height)
+              }
+            },
           }}
           navigation={navigation}
         />

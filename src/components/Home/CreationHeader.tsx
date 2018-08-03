@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView, View, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
@@ -21,6 +21,7 @@ type Props = {
   navStore?: INavStore
   homeStore?: IHomeStore
   screenProps: any
+  navigation: any
 }
 
 @inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
@@ -90,13 +91,8 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   render() {
-    // don't display it for second 'Bot Create' UI screen
-    // any better solution?
-    if (this.props.navStore.scene !== 'createBot') {
-      return null
-    }
     return (
-      <SafeAreaView
+      <View
         style={styles.container}
         onLayout={this.props.screenProps && this.props.screenProps.onLayout}
       >
@@ -115,8 +111,8 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} />}
-      </SafeAreaView>
+        {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />}
+      </View>
     )
   }
 }
@@ -124,6 +120,7 @@ export default class CreationHeader extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: 'white',
   },
   nav: {

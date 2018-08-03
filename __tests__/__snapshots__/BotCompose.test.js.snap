@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BotCompose renders with no data 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "justifyContent": "flex-end",
+    }
+  }
+>
   <View>
     <RCTScrollView
       activeAnimationOptions={null}
@@ -788,7 +794,13 @@ exports[`BotCompose renders with no data 1`] = `
 `;
 
 exports[`BotCompose renders with owned bot 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "justifyContent": "flex-end",
+    }
+  }
+>
   <View>
     <RCTScrollView
       activeAnimationOptions={null}
