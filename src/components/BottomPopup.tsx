@@ -3,17 +3,16 @@ import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
 type Props = {
   back?: boolean
-  onClose?: () => void
+  onClose: () => void
   children: any
+  onLayout: ({nativeEvent}) => void
 }
 
 export default class BottomPopup extends React.Component<Props> {
   render() {
     const {onClose, children} = this.props
-    return !onClose ? (
-      <View>{children}</View>
-    ) : (
-      <View>
+    return (
+      <View onLayout={this.props.onLayout}>
         <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
         <View style={{flex: 1}}>
           <TouchableOpacity style={styles.close} onPress={onClose}>
