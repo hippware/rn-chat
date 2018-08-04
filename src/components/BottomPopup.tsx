@@ -5,14 +5,14 @@ type Props = {
   back?: boolean
   onClose: () => void
   children: any
-  onLayout: ({nativeEvent}) => void
+  onLayout?: ({nativeEvent}) => void
 }
 
 export default class BottomPopup extends React.Component<Props> {
   render() {
     const {onClose, children} = this.props
     return (
-      <View onLayout={this.props.onLayout}>
+      <View onLayout={this.props.onLayout} style={{flex: 1}}>
         <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
         <View style={{flex: 1}}>
           <TouchableOpacity style={styles.close} onPress={onClose}>
