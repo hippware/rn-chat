@@ -4,6 +4,7 @@ import {Transitioner} from 'react-navigation'
 import {View, TouchableOpacity, Image} from 'react-native'
 import AnimatedResizableScene from './AnimatedResizableScene'
 import AnimatedPushScene from './AnimatedPushScene'
+import DragUpScene from './DragUpScene'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../Router'
 
@@ -22,7 +23,17 @@ const BackButton = () => (
 
 export default class SplitRenderer extends React.Component<Props> {
   _renderScene = (transitionProps, scene) => {
-    const {route: {params: {initialHeight}}} = scene
+    const {route: {params: {initialHeight, draggable}}} = scene
+    if (draggable) {
+      return (
+        <DragUpScene
+          transitionProps={transitionProps}
+          key={scene.route.key}
+          scene={scene}
+          initialHeight={initialHeight}
+        />
+      )
+    }
     if (initialHeight) {
       return (
         <AnimatedPushScene
