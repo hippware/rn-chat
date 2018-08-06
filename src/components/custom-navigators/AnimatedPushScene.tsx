@@ -60,8 +60,6 @@ class AnimatedPushScene extends React.Component<Props> {
       // "push" into view from a set height (good for scenes that will change height a lot)
       return {
         ...absolute,
-        borderWidth: 1,
-        borderColor: 'red',
         top: fromTop ? 0 : undefined,
         bottom: fromTop ? undefined : 0,
         transform: [

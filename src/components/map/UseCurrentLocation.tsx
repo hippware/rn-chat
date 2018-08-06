@@ -1,6 +1,6 @@
 import React from 'react'
 import {Animated, View, Image, TouchableOpacity} from 'react-native'
-import {k, width} from '../Global'
+import {k} from '../Global'
 import {colors} from '../../constants/index'
 import {RText} from '../common'
 import {observer, inject} from 'mobx-react/native'
@@ -62,44 +62,36 @@ class CurrentLocation extends React.Component<Props, State> {
 
   render() {
     return (
-      <View
+      <Animated.View
         style={{
-          position: 'absolute',
-          width,
-          marginTop: 44 * k,
-          overflow: 'hidden',
+          marginTop: this.state.marginTop,
+          paddingHorizontal: 20 * k,
+          borderColor: colors.LIGHT_GREY,
+          borderBottomWidth: 1,
+          paddingVertical: 10 * k,
+          backgroundColor: colors.WHITE,
+          zIndex: -1,
+          // transform: [{translateY: this.state.marginTop}],
         }}
       >
-        <Animated.View
-          style={{
-            flex: 1,
-            marginTop: this.state.marginTop,
-            paddingHorizontal: 20 * k,
-            borderColor: colors.LIGHT_GREY,
-            borderBottomWidth: 1,
-            paddingVertical: 10 * k,
-            backgroundColor: colors.WHITE,
-          }}
+        <TouchableOpacity
+          style={{flexDirection: 'row', alignItems: 'center'}}
+          onPress={this.onPress}
         >
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}
-            onPress={this.onPress}
-          >
-            <Image
-              source={require('../../../images/currentLocation.png')}
-              style={{marginRight: 20 * k}}
-            />
-            <View style={{flex: 1}}>
-              <RText weight="Bold" size={15}>
-                Use Current Location
-              </RText>
-              <RText size={15} numberOfLines={1}>
-                {this.state.address}
-              </RText>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+          <Image
+            source={require('../../../images/currentLocation.png')}
+            style={{marginRight: 20 * k}}
+          />
+          <View style={{flex: 1}}>
+            <RText weight="Bold" size={15}>
+              Use Current Location
+            </RText>
+            <RText size={15} numberOfLines={1}>
+              {this.state.address}
+            </RText>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     )
   }
 }

@@ -111,7 +111,7 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />}
+        {this.bot && <AddressBar bot={this.bot} />}
       </View>
     )
   }
