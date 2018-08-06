@@ -3,6 +3,8 @@ import React from 'react'
 import {Transitioner} from 'react-navigation'
 import {View, TouchableOpacity, Image} from 'react-native'
 import AnimatedResizableScene from './AnimatedResizableScene'
+import AnimatedPushScene from './AnimatedPushScene'
+import DragUpScene from './DragUpScene'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../Router'
 
@@ -20,9 +22,36 @@ const BackButton = () => (
 )
 
 export default class SplitRenderer extends React.Component<Props> {
-  _renderScene = (transitionProps, scene) => (
-    <AnimatedResizableScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
-  )
+  _renderScene = (transitionProps, scene) => {
+    const {route: {params: {initialHeight, draggable}}} = scene
+    if (draggable) {
+      return (
+        <DragUpScene
+          transitionProps={transitionProps}
+          key={scene.route.key}
+          scene={scene}
+          initialHeight={initialHeight}
+        />
+      )
+    }
+    if (initialHeight) {
+      return (
+        <AnimatedPushScene
+          transitionProps={transitionProps}
+          key={scene.route.key}
+          scene={scene}
+          initialHeight={initialHeight}
+        />
+      )
+    }
+    return (
+      <AnimatedResizableScene
+        transitionProps={transitionProps}
+        key={scene.route.key}
+        scene={scene}
+      />
+    )
+  }
 
   _render = (transitionProps, prevTransitionProps) => {
     const scenes = transitionProps.scenes.map(scene => this._renderScene(transitionProps, scene))
@@ -30,7 +59,7 @@ export default class SplitRenderer extends React.Component<Props> {
     return (
       <View style={{flex: 1}}>
         {scenes}
-        {state.index > 1 && state.routes[state.index].params.back && <BackButton />}
+        {state.index > 0 && state.routes[state.index].params.back && <BackButton />}
       </View>
     )
   }
