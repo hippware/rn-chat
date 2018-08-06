@@ -1,6 +1,10 @@
 // @flow
 
 const injects = {
+  iconStore: {
+    setIndex: () => {},
+    iconList: [],
+  },
   notificationStore: {
     flash: () => {},
     show: () => {},

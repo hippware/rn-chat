@@ -20,7 +20,9 @@ import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
+import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
+import EmojiSelector from 'react-native-emoji-selector'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -35,6 +37,7 @@ type Props = {
   edit?: boolean
   titleBlurred?: boolean
   wocky?: IWocky
+  iconStore?: IconStore
   notificationStore?: any
   locationStore?: any
   log?: any
@@ -42,13 +45,14 @@ type Props = {
   screenProps: any
 }
 
-@inject('wocky', 'notificationStore', 'analytics', 'log')
+@inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
 class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable keyboardShowing: boolean = false
   @observable uploadingPhoto: boolean = false
+  @observable keyboardHeight: number = 0
   controls: any
   botTitle: any
   keyboardDidShowListener: any
@@ -64,20 +68,41 @@ class BotCompose extends React.Component<Props> {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide)
   }
 
+  onEmojiSelected = e => {
+    this.props.iconStore.changeEmoji(e)
+  }
+
+  onSnap = () => {
+    if (this.botTitle) {
+      this.botTitle.blur()
+    }
+  }
+
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
       <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
-        {this.bot && <IconSelector bot={this.bot} />}
-        <TextInput
-          style={styles.textStyle}
-          placeholder="Name this place"
-          inputAccessoryViewID={inputAccessoryViewID}
-          ref={r => (this.botTitle = r)}
-          onChangeText={text => this.bot.load({title: text})}
-          value={this.bot.title}
-        />
-        {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
+        {this.bot && <IconSelector onSnap={this.onSnap} bot={this.bot} />}
+        {this.props.iconStore.isEmojiKeyboardShown && (
+          <View style={{height: 305, backgroundColor: 'white'}}>
+            <EmojiSelector
+              onEmojiSelected={this.onEmojiSelected}
+              showSearchBar={false}
+              columns={8}
+            />
+          </View>
+        )}
+        {!this.props.iconStore.isEmojiKeyboardShown && (
+          <View>
+            <TextInput
+              style={styles.textStyle}
+              placeholder="Name this place"
+              inputAccessoryViewID={inputAccessoryViewID}
+              ref={r => (this.botTitle = r)}
+              onChangeText={text => this.bot.load({title: text})}
+              value={this.bot.title}
+            />
+            {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
             {this.keyboardShowing && (
               <TextInput
                 style={[styles.textStyle, {width}]}
@@ -88,35 +113,38 @@ class BotCompose extends React.Component<Props> {
               />
             )}
           </InputAccessoryView> */}
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            paddingVertical: 20 * k,
-            paddingHorizontal: 30 * k,
-          }}
-        >
-          <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
-          <EditCTA
-            text="Photo"
-            icon={this.bot.image ? photoIconDone : photoIcon}
-            onPress={this.addPhoto}
-            pending={this.uploadingPhoto}
-          />
-        </View>
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            backgroundColor: colors.PINK, // TODO: gradient background
-            paddingVertical: 15 * k,
-            alignItems: 'center',
-          }}
-          onPress={this.save}
-        >
-          <RText color="white" size={15}>
-            Pin Location
-          </RText>
-        </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                paddingVertical: 20 * k,
+                paddingHorizontal: 30 * k,
+              }}
+            >
+              <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+              <EditCTA
+                text="Photo"
+                icon={this.bot.image ? photoIconDone : photoIcon}
+                onPress={this.addPhoto}
+                pending={this.uploadingPhoto}
+              />
+            </View>
+            <TouchableOpacity
+              style={{
+                width: '100%',
+                backgroundColor: colors.PINK, // TODO: gradient background
+                paddingVertical: 15 * k,
+                alignItems: 'center',
+              }}
+              onPress={this.save}
+            >
+              <RText color="white" size={15}>
+                Pin Location
+              </RText>
+            </TouchableOpacity>
+            <View style={{right: 0, left: 0, bottom: 0, height: this.keyboardHeight}} />
+          </View>
+        )}
       </BottomPopup>
     )
   }
@@ -135,9 +163,10 @@ class BotCompose extends React.Component<Props> {
   }
 
   @action
-  _keyboardDidShow = () => {
+  _keyboardDidShow = e => {
     // console.log('show')
     this.keyboardShowing = true
+    this.keyboardHeight = e.endCoordinates.height
     // if (this.accessoryText) this.accessoryText.focus()
   }
 
@@ -145,6 +174,7 @@ class BotCompose extends React.Component<Props> {
   _keyboardWillHide = () => {
     // console.log('will hide')
     this.keyboardShowing = false
+    this.keyboardHeight = 0
     // if (this.accessoryText) this.accessoryText.blur()
   }
 

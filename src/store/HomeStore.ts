@@ -64,7 +64,6 @@ const HomeStore = types
     focusedBotLocation: types.maybe(Location),
     mapCenterLocation: types.maybe(Location),
     scrolledToBot: types.maybe(types.reference(Bot)),
-    editIcon: types.maybe(types.string),
   })
   .views(self => ({
     // return the list for current mode
@@ -121,7 +120,6 @@ const HomeStore = types
         }
       }
     },
-    setEditIcon: (icon: string) => (self.editIcon = icon),
   }))
   .actions(self => ({
     addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
