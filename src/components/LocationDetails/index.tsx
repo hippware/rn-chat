@@ -22,7 +22,6 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   scrollable: boolean
-  screenProps: any
 }
 
 @inject('wocky', 'analytics')

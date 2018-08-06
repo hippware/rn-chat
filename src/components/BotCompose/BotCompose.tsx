@@ -8,12 +8,10 @@ import {
   Alert,
   Keyboard,
   Animated,
-  // InputAccessoryView
 } from 'react-native'
-// import {width} from '../Global'
 import {RText, Spinner} from '../common'
 import {colors} from '../../constants'
-import {k, width} from '../Global'
+import {k} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
@@ -42,7 +40,6 @@ type Props = {
   locationStore?: any
   log?: any
   analytics?: any
-  screenProps: any
 }
 
 type State = {
@@ -114,7 +111,6 @@ class BotCompose extends React.Component<Props, State> {
         }
         {!this.props.iconStore.isEmojiKeyboardShown && (
           <View>
-            {/* <Animated.View> */}
             <TextInput
               style={styles.textStyle}
               placeholder="Name this place"
@@ -123,7 +119,6 @@ class BotCompose extends React.Component<Props, State> {
               onChangeText={text => this.bot.load({title: text})}
               value={this.bot.title}
             />
-            {/* </Animated.View> */}
             <View>
               {!this.keyboardShowing && (
                 <View

@@ -12,7 +12,7 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 
-import {k, height} from './Global'
+import {k} from './Global'
 
 import Camera from './Camera'
 // import SideMenu from './SideMenu'
