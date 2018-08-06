@@ -1,17 +1,28 @@
 import React from 'react'
 import {Animated} from 'react-native'
+import {observable, when} from '../../../node_modules/mobx'
+import {height} from '../Global'
 
 type Props = {
   scene: any
   transitionProps: any
-  initialHeight: number
+  // initialHeight: number
 }
 
 class AnimatedPushScene extends React.Component<Props> {
-  state = {slideHeight: new Animated.Value(this.props.initialHeight)}
+  @observable viewHeight: number = 0
+  state = {
+    slideHeight: new Animated.Value(height), // initialize to full screen height
+  }
 
   componentDidMount() {
-    this.showScene()
+    when(
+      () => !!this.viewHeight,
+      () => {
+        this.state.slideHeight.setValue(this.viewHeight)
+        this.showScene()
+      }
+    )
   }
 
   componentWillReceiveProps({transitionProps, scene}) {
@@ -30,11 +41,11 @@ class AnimatedPushScene extends React.Component<Props> {
 
   showScene = () => this.slideSceneTo(0)
 
-  hideScene = () => this.slideSceneTo(this.props.initialHeight)
+  hideScene = () => this.slideSceneTo(this.viewHeight)
 
-  slideSceneTo = height => {
+  slideSceneTo = toHeight => {
     Animated.spring(this.state.slideHeight, {
-      toValue: height,
+      toValue: toHeight,
       useNativeDriver: true,
     }).start()
   }
@@ -71,7 +82,10 @@ class AnimatedPushScene extends React.Component<Props> {
     const Scene = getComponent()
     const style = this._getScreenStyle()
     return (
-      <Animated.View style={style}>
+      <Animated.View
+        style={style}
+        onLayout={({nativeEvent: {layout: {height: viewHeight}}}) => (this.viewHeight = viewHeight)}
+      >
         <Scene navigation={navigation} />
       </Animated.View>
     )

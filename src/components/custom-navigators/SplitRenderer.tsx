@@ -24,33 +24,33 @@ const BackButton = () => (
 export default class SplitRenderer extends React.Component<Props> {
   _renderScene = (transitionProps, scene) => {
     const {route: {params: {initialHeight, draggable}}} = scene
-    if (draggable) {
-      return (
-        <DragUpScene
-          transitionProps={transitionProps}
-          key={scene.route.key}
-          scene={scene}
-          initialHeight={initialHeight}
-        />
-      )
-    }
-    if (initialHeight) {
-      return (
-        <AnimatedPushScene
-          transitionProps={transitionProps}
-          key={scene.route.key}
-          scene={scene}
-          initialHeight={initialHeight}
-        />
-      )
-    }
+    // if (draggable) {
+    //   return (
+    //     <DragUpScene
+    //       transitionProps={transitionProps}
+    //       key={scene.route.key}
+    //       scene={scene}
+    //       initialHeight={initialHeight}
+    //     />
+    //   )
+    // }
+    // if (initialHeight) {
     return (
-      <AnimatedResizableScene
+      <AnimatedPushScene
         transitionProps={transitionProps}
         key={scene.route.key}
         scene={scene}
+        initialHeight={initialHeight}
       />
     )
+    // }
+    // return (
+    //   <AnimatedResizableScene
+    //     transitionProps={transitionProps}
+    //     key={scene.route.key}
+    //     scene={scene}
+    //   />
+    // )
   }
 
   _render = (transitionProps, prevTransitionProps) => {

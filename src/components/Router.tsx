@@ -213,11 +213,11 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
             </Stack>
             <Scene key="bottomMenu" component={BottomMenu} />
-            <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop initialHeight={300} />
-            <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar} initialHeight={400} />
-            <Scene key="botCompose" component={BotCompose} back initialHeight={400} />
-            <Scene key="botEdit" component={BotCompose} edit back initialHeight={400} />
-            <Scene key="camera" component={Camera} initialHeight={height} />
+            <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
+            <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar} />
+            <Scene key="botCompose" component={BotCompose} back />
+            <Scene key="botEdit" component={BotCompose} edit back />
+            <Scene key="camera" component={Camera} />
           </Stack>
           <Scene key="locationWarning" component={LocationWarning} />
           <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
