@@ -5,6 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Location Create - add photo (#2503)
+* Navigation changes and improvements (PR #2605, work-in-progress #2588)
 
 # 3.2.0 - 2018 July 30
 
