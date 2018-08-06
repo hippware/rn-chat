@@ -16,6 +16,8 @@ export default class IconStore {
   @observable
   iconList: string[] = [undefined, silverware, drinks, trees, plane, store, heart, defaultEmoji]
   @observable index: number = 0
+  @observable isEmojiKeyboardShown: boolean = false
+
   @computed
   get icon() {
     return this.iconList[this.index]
@@ -28,10 +30,12 @@ export default class IconStore {
   @action
   setIndex = (index: number) => {
     this.index = index
+    this.isEmojiKeyboardShown = this.isEmoji
   }
 
   @action
   changeEmoji = (icon: string) => {
     this.iconList[this.iconList.length - 1] = icon
+    this.isEmojiKeyboardShown = false
   }
 }

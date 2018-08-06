@@ -7,8 +7,8 @@ import commonStyles from '../styles'
 const drag = require('../../../images/dragTheMap.png')
 const defaultIcon = require('../../../images/mapIcons/question.png')
 
-const UberMarker = inject('homeStore')(
-  observer(({homeStore: {editIcon}}) => {
+const UberMarker = inject('iconStore')(
+  observer(({iconStore: {icon}}) => {
     return (
       <View
         pointerEvents="none"
@@ -21,8 +21,8 @@ const UberMarker = inject('homeStore')(
         ]}
       >
         <Bubble
-          image={!editIcon && defaultIcon}
-          fontIcon={editIcon}
+          image={!icon && defaultIcon}
+          fontIcon={icon}
           style={{
             backgroundColor: 'white',
           }}

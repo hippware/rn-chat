@@ -26,6 +26,7 @@ import NavStore from './NavStore'
 import rs from './ReportStore'
 import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
+import IconStore from './IconStore'
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')
@@ -104,6 +105,7 @@ const theStore = PersistableStore.create(
 )
 
 export const reportStore = rs
+export const iconStore = new IconStore()
 export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
 

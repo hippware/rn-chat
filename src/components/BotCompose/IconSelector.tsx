@@ -4,38 +4,30 @@ import {colors} from '../../constants'
 import {width} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import {Observer, observer, inject} from 'mobx-react/native'
-import {IHomeStore} from '../../store/HomeStore'
 import {IBot} from 'wocky-client'
 import IconStore from '../../store/IconStore'
 
 const itemSize = 53
 
 type Props = {
-  homeStore?: IHomeStore
   style?: ViewStyle
   bot: IBot
-  store: IconStore
+  iconStore?: IconStore
+  onSnap?: any
 }
 
-@inject('homeStore')
+@inject('iconStore')
 @observer
 class IconSelector extends React.Component<Props> {
   selector?: any
-  iconStore: IconStore
-
-  constructor(props) {
-    super(props)
-    this.iconStore = props.store
-  }
-
-  setIcon = icon => {
-    this.props.homeStore.setEditIcon(icon)
-    this.props.bot.load({icon})
-  }
 
   onSnap = (index: number) => {
-    this.iconStore.setIndex(index)
-    this.setIcon(this.iconStore.icon)
+    const {bot, iconStore, onSnap} = this.props
+    if (onSnap) {
+      onSnap(index)
+    }
+    iconStore.setIndex(index)
+    bot.load({icon: iconStore.icon})
   }
 
   render() {
@@ -43,7 +35,7 @@ class IconSelector extends React.Component<Props> {
       <View style={this.props.style}>
         <Carousel
           ref={r => (this.selector = r)}
-          data={this.iconStore.iconList.slice()}
+          data={this.props.iconStore.iconList.slice()}
           renderItem={this.renderIcon}
           sliderWidth={width}
           itemWidth={itemSize}
@@ -63,7 +55,7 @@ class IconSelector extends React.Component<Props> {
               style={[
                 styles.shadow,
                 {backgroundColor: item ? 'white' : 'transparent'},
-                this.iconStore.index === index && styles.selectedIcon,
+                this.props.iconStore.index === index && styles.selectedIcon,
               ]}
             >
               {item && <Text style={styles.icon}>{item}</Text>}
