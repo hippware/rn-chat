@@ -22,7 +22,6 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   scrollable: boolean
-  screenProps: any
 }
 
 @inject('wocky', 'analytics')
@@ -108,7 +107,6 @@ export default class LocationDetails extends React.Component<Props> {
       <FlatList
         style={{flex: 1}}
         data={this.bot ? this.bot.posts.list.slice() : []}
-        // data={this.bot ? [...this.bot.posts.list.slice(), ...this.bot.posts.list.slice()] : []}
         ref={r => (this.list = r)}
         contentContainerStyle={{
           flexGrow: 1,
@@ -129,7 +127,7 @@ export default class LocationDetails extends React.Component<Props> {
 
 export const LocationDetailsBottomPopup = (props: Props) => {
   return (
-    <BottomPopup onClose={Actions.pop} onLayout={props.screenProps && props.screenProps.onLayout}>
+    <BottomPopup onClose={Actions.pop}>
       <LocationDetails {...props} scrollable={false} />
     </BottomPopup>
   )

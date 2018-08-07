@@ -20,7 +20,6 @@ type Props = {
   geocodingStore?: any
   navStore?: INavStore
   homeStore?: IHomeStore
-  screenProps: any
   navigation: any
 }
 
@@ -97,10 +96,7 @@ export default class CreationHeader extends React.Component<Props> {
 
   render() {
     return (
-      <View
-        style={styles.container}
-        onLayout={this.props.screenProps && this.props.screenProps.onLayout}
-      >
+      <View style={styles.container}>
         <View style={styles.nav}>
           <View style={{width: 100}}>
             <CloseButton style={{left: 0}} />
@@ -116,7 +112,7 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />
+        <AddressBar bot={this.bot} />
       </View>
     )
   }

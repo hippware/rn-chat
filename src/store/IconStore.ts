@@ -24,7 +24,7 @@ export default class IconStore {
   }
   @computed
   get isEmoji() {
-    return this.index == this.iconList.length - 1
+    return this.index === this.iconList.length - 1
   }
 
   @action

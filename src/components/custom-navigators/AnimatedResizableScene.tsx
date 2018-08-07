@@ -11,15 +11,9 @@ type Props = {
 @observer
 class AnimatedResizableScene extends React.Component<Props> {
   height: number = 0
-  // height: number = 667
-  isTransitioning: boolean = true
   state = {slideHeight: new Animated.Value(0)}
 
   componentWillReceiveProps({transitionProps, scene}) {
-    // if (scene.index > 0) {
-    //   console.log('& scene', scene, transitionProps)
-    // }
-
     if (scene.index > 0) {
       if (transitionProps.index === scene.index) {
         this.showScene()
@@ -34,14 +28,13 @@ class AnimatedResizableScene extends React.Component<Props> {
   hideScene = () => this.slideSceneTo(0)
 
   slideSceneTo = height => {
-    this.isTransitioning = true
     Animated.spring(this.state.slideHeight, {
       toValue: -height,
       // stiffness: 5000,
       // damping: 600,
       // mass: 3,
       useNativeDriver: true,
-    }).start(() => (this.isTransitioning = false))
+    }).start()
   }
 
   _getScreenStyle = () => {

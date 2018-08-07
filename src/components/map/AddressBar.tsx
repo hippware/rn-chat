@@ -18,7 +18,6 @@ type Props = {
   edit?: boolean
   geocodingStore?: any
   analytics?: any
-  isActive?: boolean
 }
 
 @inject('geocodingStore', 'analytics')
@@ -191,10 +190,7 @@ class AddressBar extends React.Component<Props> {
 
   render() {
     return (
-      <View pointerEvents="box-none" style={{flex: 1}}>
-        {this.props.isActive && (
-          <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
-        )}
+      <View pointerEvents="box-none" style={{flex: 1, overflow: 'hidden'}}>
         <View style={[this.showList && {flex: 1}]}>
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
@@ -212,21 +208,21 @@ class AddressBar extends React.Component<Props> {
               ref={r => (this.input = r)}
             />
           </View>
-          {this.searchEnabled &&
-            this.props.isActive && (
-              <KeyboardAwareScrollView
-                style={{flex: 1, backgroundColor: colors.WHITE}}
+          <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
+          {this.searchEnabled && (
+            <KeyboardAwareScrollView
+              style={{flex: 1, backgroundColor: colors.WHITE}}
+              keyboardShouldPersistTaps="always"
+            >
+              <FlatList
                 keyboardShouldPersistTaps="always"
-              >
-                <FlatList
-                  keyboardShouldPersistTaps="always"
-                  data={this.suggestions.slice()}
-                  renderItem={this.suggestion}
-                  keyExtractor={item => item.place_id}
-                  ItemSeparatorComponent={Separator}
-                />
-              </KeyboardAwareScrollView>
-            )}
+                data={this.suggestions.slice()}
+                renderItem={this.suggestion}
+                keyExtractor={item => item.place_id}
+                ItemSeparatorComponent={Separator}
+              />
+            </KeyboardAwareScrollView>
+          )}
         </View>
       </View>
     )
@@ -250,6 +246,7 @@ const styles = StyleSheet.create({
     shadowOffset: {height: 1, width: 0},
     shadowRadius: 5 * k,
     shadowOpacity: 0.12,
+    zIndex: 2,
   },
   textInput: {
     flex: 1,

@@ -7,16 +7,14 @@ import {
   Image,
   Alert,
   Keyboard,
-  // InputAccessoryView
+  Animated,
 } from 'react-native'
-// import {width} from '../Global'
 import {RText, Spinner} from '../common'
-import BottomPopup from '../BottomPopup'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
-import {observable, action} from 'mobx'
+import {observable, action, reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
@@ -42,29 +40,48 @@ type Props = {
   locationStore?: any
   log?: any
   analytics?: any
-  screenProps: any
+}
+
+type State = {
+  keyboardHeight: Animated.Value
+  emojiHeight: Animated.Value
 }
 
 @inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
-class BotCompose extends React.Component<Props> {
+class BotCompose extends React.Component<Props, State> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable keyboardShowing: boolean = false
   @observable uploadingPhoto: boolean = false
-  @observable keyboardHeight: number = 0
+  // @observable keyboardHeight: number = 0
   controls: any
   botTitle: any
   keyboardDidShowListener: any
   keyboardDidHideListener: any
   accessoryText?: any
 
+  state: State = {
+    keyboardHeight: new Animated.Value(0),
+    emojiHeight: new Animated.Value(0),
+  }
+
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
+
+    reaction(
+      () => this.props.iconStore.isEmojiKeyboardShown,
+      shown => {
+        Animated.timing(this.state.emojiHeight, {
+          toValue: shown ? 305 : 0,
+          duration: 500,
+        }).start()
+      }
+    )
   }
 
   componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardDidShow)
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide)
   }
 
@@ -81,17 +98,17 @@ class BotCompose extends React.Component<Props> {
   render() {
     const inputAccessoryViewID = 'uniqueID'
     return (
-      <BottomPopup onLayout={this.props.screenProps && this.props.screenProps.onLayout} back>
+      <View>
         {this.bot && <IconSelector onSnap={this.onSnap} bot={this.bot} />}
-        {this.props.iconStore.isEmojiKeyboardShown && (
-          <View style={{height: 305, backgroundColor: 'white'}}>
+        {
+          <Animated.View style={{height: this.state.emojiHeight, backgroundColor: 'white'}}>
             <EmojiSelector
               onEmojiSelected={this.onEmojiSelected}
               showSearchBar={false}
               columns={8}
             />
-          </View>
-        )}
+          </Animated.View>
+        }
         {!this.props.iconStore.isEmojiKeyboardShown && (
           <View>
             <TextInput
@@ -102,50 +119,43 @@ class BotCompose extends React.Component<Props> {
               onChangeText={text => this.bot.load({title: text})}
               value={this.bot.title}
             />
-            {/* <InputAccessoryView nativeID={inputAccessoryViewID}>
-            {this.keyboardShowing && (
-              <TextInput
-                style={[styles.textStyle, {width}]}
-                placeholder="Name this place"
-                // autoFocus
-                ref={r => (this.accessoryText = r)}
-                autoFocus
-              />
-            )}
-          </InputAccessoryView> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                backgroundColor: 'white',
-                paddingVertical: 20 * k,
-                paddingHorizontal: 30 * k,
-              }}
-            >
-              <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
-              <EditCTA
-                text="Photo"
-                icon={this.bot.image ? photoIconDone : photoIcon}
-                onPress={this.addPhoto}
-                pending={this.uploadingPhoto}
-              />
+            <View>
+              {!this.keyboardShowing && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    backgroundColor: 'white',
+                    paddingVertical: 20 * k,
+                    paddingHorizontal: 30 * k,
+                  }}
+                >
+                  <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+                  <EditCTA
+                    text="Photo"
+                    icon={this.bot.image ? photoIconDone : photoIcon}
+                    onPress={this.addPhoto}
+                    pending={this.uploadingPhoto}
+                  />
+                </View>
+              )}
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  backgroundColor: colors.PINK, // TODO: gradient background
+                  paddingVertical: 15 * k,
+                  alignItems: 'center',
+                }}
+                onPress={this.save}
+              >
+                <RText color="white" size={15}>
+                  Pin Location
+                </RText>
+              </TouchableOpacity>,
             </View>
-            <TouchableOpacity
-              style={{
-                width: '100%',
-                backgroundColor: colors.PINK, // TODO: gradient background
-                paddingVertical: 15 * k,
-                alignItems: 'center',
-              }}
-              onPress={this.save}
-            >
-              <RText color="white" size={15}>
-                Pin Location
-              </RText>
-            </TouchableOpacity>
-            <View style={{right: 0, left: 0, bottom: 0, height: this.keyboardHeight}} />
           </View>
         )}
-      </BottomPopup>
+        <Animated.View style={{right: 0, left: 0, bottom: 0, height: this.state.keyboardHeight}} />
+      </View>
     )
   }
 
@@ -163,19 +173,21 @@ class BotCompose extends React.Component<Props> {
   }
 
   @action
-  _keyboardDidShow = e => {
-    // console.log('show')
+  _keyboardWillShow = ({endCoordinates, duration}: any) => {
     this.keyboardShowing = true
-    this.keyboardHeight = e.endCoordinates.height
-    // if (this.accessoryText) this.accessoryText.focus()
+    Animated.timing(this.state.keyboardHeight, {
+      toValue: endCoordinates.height,
+      duration,
+    }).start()
   }
 
   @action
-  _keyboardWillHide = () => {
-    // console.log('will hide')
+  _keyboardWillHide = ({duration}: any) => {
     this.keyboardShowing = false
-    this.keyboardHeight = 0
-    // if (this.accessoryText) this.accessoryText.blur()
+    Animated.timing(this.state.keyboardHeight, {
+      toValue: 0,
+      duration,
+    }).start()
   }
 
   save = async (): Promise<void> => {
