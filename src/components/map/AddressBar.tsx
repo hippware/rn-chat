@@ -33,12 +33,16 @@ class AddressBar extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(
-      () => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}),
+      () => ({
+        searchEnabled: this.searchEnabled,
+        text: this.text,
+        loc: this.props.bot && this.props.bot.location,
+      }),
       ({searchEnabled, text, loc}) => {
         if (searchEnabled) {
           if (!text) {
             this.suggestions.clear()
-          } else {
+          } else if (loc) {
             // log.log('GQUERY:', text, JSON.stringify(loc))
             this.props.geocodingStore.query(text, loc).then(data => {
               this.suggestions.replace(data)
@@ -50,6 +54,7 @@ class AddressBar extends React.Component<Props> {
     )
     this.handler2 = reaction(
       () => {
+        if (!this.props.bot) return {address: undefined, isCurrent: undefined}
         const {address, location} = this.props.bot
         return {address, isCurrent: location && location.isCurrent}
       },

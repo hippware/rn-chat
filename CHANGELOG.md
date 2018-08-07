@@ -6,6 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Location Create - add photo (#2503)
 * Navigation changes and improvements (PR #2605, work-in-progress #2588)
+* Emoji and icon selector with correct keyboard handling (#2505, PR #2601)
 
 # 3.2.0 - 2018 July 30
 

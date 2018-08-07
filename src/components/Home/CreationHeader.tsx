@@ -3,7 +3,7 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
-import {observable, reaction} from 'mobx'
+import {observable, reaction, when} from 'mobx'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {colors} from '../../constants'
@@ -67,6 +67,7 @@ export default class CreationHeader extends React.Component<Props> {
   createBot = async () => {
     const {wocky, homeStore: {mapCenterLocation}, locationStore: {location}} = this.props
     const bot = await wocky!.createBot()
+    this.bot = bot
     if (location || mapCenterLocation) {
       const l = mapCenterLocation || location
       bot.load({
@@ -79,14 +80,18 @@ export default class CreationHeader extends React.Component<Props> {
       })
       bot.location!.load({isCurrent: true})
     }
-    this.bot = bot
     const data = await this.props.geocodingStore.reverse(location)
     this.bot.load({addressData: data.meta, address: data.address})
   }
 
   next = () => {
-    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
-    Actions.botCompose({botId: this.bot.id})
+    when(
+      () => !!this.bot,
+      () => {
+        this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
+        Actions.botCompose({botId: this.bot.id})
+      }
+    )
   }
 
   render() {
@@ -107,7 +112,7 @@ export default class CreationHeader extends React.Component<Props> {
             </TouchableOpacity>
           </View>
         </View>
-        {this.bot && <AddressBar bot={this.bot} />}
+        <AddressBar bot={this.bot} isActive={this.props.navigation.isFocused()} />
       </View>
     )
   }
