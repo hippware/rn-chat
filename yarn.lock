@@ -6730,6 +6730,10 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
+react-native-touch-through-view@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-touch-through-view/-/react-native-touch-through-view-0.1.4.tgz#fe255d4a3144f271f00ef0080179550261af187b"
+
 react-native-typescript-transformer@^1.2.3:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.10.tgz#6f76c1449028cdeafa184b533301ecd547367ed1"
