@@ -60,3 +60,4 @@ android/app/libs
 .tmp/
 .project 
 yarn-error.log
+ios/tinyrobot.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
