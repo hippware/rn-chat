@@ -1,41 +1,38 @@
 import React from 'react'
-import {Animated, StyleSheet, PanResponder} from 'react-native'
-import {height as screenHeight} from '../Global'
+import {Animated, StyleSheet, PanResponder, Easing} from 'react-native'
+import {height as screenHeight, height} from '../Global'
 
 type Props = {
   transitionProps: any
   scene: any
-  initialHeight: number
 }
 
-type State = {
-  panY: Animated.Value
-  slideHeight: Animated.Value
-}
-
-class DragUpScene extends React.Component<Props, State> {
+class DragUpScene extends React.Component<Props> {
   _panResponder: any
+  _panValue: number = 0
 
-  state = {
-    panY: new Animated.Value(0),
-    slideHeight: new Animated.Value(0),
-  }
+  // state = {
+  panY = new Animated.Value(0)
+  slideHeight = new Animated.Value(0)
+  // }
 
   constructor(props: Props) {
     super(props)
 
+    this.panY.addListener(({value}) => (this._panValue = value))
+    // this.slideHeight.addListener(({value}) => console.log('& e', value))
+
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onStartShouldSetPanResponderCapture: () => true,
-      // onMoveShouldSetResponderCapture: () => true,
+      onStartShouldSetPanResponder: () => false,
+      onStartShouldSetPanResponderCapture: () => false,
       onMoveShouldSetPanResponderCapture: () => true,
       onPanResponderGrant: () => {
-        this.state.panY.setValue(0)
+        this.panY.setOffset(this._panValue)
+        this.panY.setValue(0)
       },
-      onPanResponderMove: Animated.event([null, {dy: this.state.panY}]),
-      // onPanResponderMove: thing => console.log('& move', thing),
+      onPanResponderMove: Animated.event([null, {dy: this.panY}]),
       onPanResponderRelease: () => {
-        /**/
+        this.panY.flattenOffset()
       },
     })
   }
@@ -50,31 +47,34 @@ class DragUpScene extends React.Component<Props, State> {
     }
   }
 
-  showScene = () => this.slideSceneTo(this.props.initialHeight)
+  showScene = () => this.slideSceneTo(300) // NOTE: we may need to make this a param later for starting from different heights
 
   hideScene = () => this.slideSceneTo(0)
 
-  slideSceneTo = height => {
-    Animated.spring(this.state.slideHeight, {
-      toValue: -height,
+  slideSceneTo = h => {
+    Animated.spring(this.slideHeight, {
+      toValue: -h,
       // stiffness: 5000,
       // damping: 600,
       // mass: 3,
-      useNativeDriver: true,
+      // useNativeDriver: true,
     }).start()
   }
 
   render() {
-    // const theMargin = screenHeight - splitHeight - 30
-
-    const {scene, initialHeight} = this.props
+    const {scene} = this.props
     const {navigation, getComponent} = scene.descriptor
     const Scene = getComponent()
-    // const style = this._getScreenStyle()
-    // const {add, multiply} = Animated
+    const {add, multiply, Value} = Animated
 
-    // const {panY, slideHeight} = this.state
-    // const top = add(panY, multiply(slideHeight, new Animated.Value(-1)))
+    const {panY, slideHeight} = this
+    const yOffset = add(panY, slideHeight).interpolate({
+      inputRange: [-height - 40, -300, 0],
+      outputRange: [-height - 40, -300, -300],
+      extrapolate: 'clamp',
+      // easing: Easing.elastic,
+      // {clamp: true}
+    })
 
     // .interpolate({
     //   inputRange: [0, screenHeight],
@@ -90,12 +90,10 @@ class DragUpScene extends React.Component<Props, State> {
             // paddingTop: theMargin,
             height: screenHeight,
           },
-          // {transform: [{translateY: top}]},
+          {transform: [{translateY: yOffset}]},
           // {transform: [{translateY: multiply(slideHeight, new Animated.Value(-1))}]},
-          {transform: [{translateY: -initialHeight}]},
+          // {transform: [{translateY: -300}]},
         ]}
-        // scrollEventThrottle={16}
-        // onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollY}}}])}
         {...this._panResponder.panHandlers}
       >
         <Scene navigation={navigation} />
