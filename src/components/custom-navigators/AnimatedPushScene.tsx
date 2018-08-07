@@ -31,9 +31,7 @@ class AnimatedPushScene extends React.Component<Props> {
     // }
 
     if (scene.index > 0) {
-      if (transitionProps.index === scene.index) {
-        this.showScene()
-      } else {
+      if (transitionProps.index !== scene.index) {
         this.hideScene()
       }
     }
