@@ -11,6 +11,7 @@ type Props = {
 
 class AnimatedPushScene extends React.Component<Props> {
   @observable viewHeight: number = 0
+  animating: boolean = false
   state = {
     slideHeight: new Animated.Value(height), // initialize to full screen height
   }
@@ -44,10 +45,12 @@ class AnimatedPushScene extends React.Component<Props> {
   hideScene = () => this.slideSceneTo(this.viewHeight)
 
   slideSceneTo = toHeight => {
+    if (this.animating) return
+    this.animating = true
     Animated.spring(this.state.slideHeight, {
       toValue: toHeight,
       useNativeDriver: true,
-    }).start()
+    }).start(() => (this.animating = false))
   }
 
   _getScreenStyle = () => {
