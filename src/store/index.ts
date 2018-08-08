@@ -1,4 +1,4 @@
-import {types, getEnv, addMiddleware} from 'mobx-state-tree'
+import {types, getEnv, addMiddleware, flow} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase from 'react-native-firebase'
@@ -79,6 +79,10 @@ const Store = types
     },
   }))
   .actions(self => ({
+    logout: flow(function*() {
+      self.homeStore.logout()
+      return yield self.firebaseStore.logout()
+    }),
     afterCreate() {
       analytics.identify(self.wocky)
     },

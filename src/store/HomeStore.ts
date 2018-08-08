@@ -1,4 +1,4 @@
-import {types, getType, getParent} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
 import {Bot, IBot, Location} from 'wocky-client'
 
 export const SelectableCard = types
@@ -122,6 +122,9 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
+    logout() {
+      applySnapshot(self, {})
+    },
     addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
       const list = listName === 'home' ? self.homeBotList : self.discoverList
       bots.forEach(bot => {

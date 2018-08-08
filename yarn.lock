@@ -6671,9 +6671,9 @@ react-native-push-notification@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
 
-"react-native-router-flux@github:aksonov/react-native-router-flux#aba39e3ed44184b734908c3d77ae551fc0eedb9f":
-  version "4.0.0-beta.33"
-  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/aba39e3ed44184b734908c3d77ae551fc0eedb9f"
+react-native-router-flux@4.0.0-beta.40:
+  version "4.0.0-beta.40"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.40.tgz#1bb8cf137836e62666d73948015a5ac656aa545f"
   dependencies:
     lodash.isequal "^4.5.0"
     opencollective "^1.0.3"
