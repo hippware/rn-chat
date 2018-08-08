@@ -20,7 +20,7 @@ type Props = {
   scrollable: boolean
 }
 
-const LocationDetailsNavBar = inject('wocky')(({wocky, botId, server}: Props) => {
+const BotDetailsNavBar = inject('wocky')(({wocky, botId, server}: Props) => {
   const bot: IBot = wocky.getBot({id: botId, server})
   return <Header bot={bot} />
 })
@@ -100,7 +100,7 @@ const ShareButton = observer(({bot}) => {
   ) : null
 })
 
-export default LocationDetailsNavBar
+export default BotDetailsNavBar
 
 const styles = StyleSheet.create({
   title: {

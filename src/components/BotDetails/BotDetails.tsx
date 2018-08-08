@@ -8,7 +8,7 @@ import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
 // import AddBotPost from './AddBotPost'
-import LocationDetailsHeader from './LocationDetailsHeader'
+import Header from './BotDetailsHeader'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'
@@ -26,7 +26,7 @@ type Props = {
 
 @inject('wocky', 'analytics')
 @observer
-export default class LocationDetails extends React.Component<Props> {
+export default class BotDetails extends React.Component<Props> {
   @observable bot?: IBot
   @observable owner?: IProfile
   @observable numToRender: number = 8
@@ -68,7 +68,7 @@ export default class LocationDetails extends React.Component<Props> {
     }, 7000)
   }
 
-  _headerComponent = () => <LocationDetailsHeader bot={this.bot!} {...this.props} />
+  _headerComponent = () => <Header bot={this.bot!} {...this.props} />
 
   scrollToEnd = () => {
     when(
@@ -123,14 +123,6 @@ export default class LocationDetails extends React.Component<Props> {
       </View>
     )
   }
-}
-
-export const LocationDetailsBottomPopup = (props: Props) => {
-  return (
-    <BottomPopup onClose={Actions.pop}>
-      <LocationDetails {...props} scrollable={false} />
-    </BottomPopup>
-  )
 }
 
 const BotUnavailable = () => (
