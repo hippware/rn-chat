@@ -2,7 +2,7 @@ import React from 'react'
 import {View, FlatList, Text, Image} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-import {k} from '../Global'
+import {k, width, height} from '../Global'
 import {colors} from '../../constants'
 import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
@@ -35,13 +35,11 @@ export default class LocationDetails extends React.Component<Props> {
   viewTimeout: any
 
   _footerComponent = observer(() => {
-    return this.props.wocky!.connected &&
+    return (
+      this.props.wocky!.connected &&
       this.bot &&
       isAlive(this.bot) &&
-      this.bot.posts.loading ? (
-      <Loader />
-    ) : (
-      <View style={{height: 60}} />
+      this.bot.posts.loading && <Loader />
     )
   })
 
@@ -104,23 +102,25 @@ export default class LocationDetails extends React.Component<Props> {
       return <BotUnavailable />
     }
     return (
-      <FlatList
-        style={{flex: 1}}
-        data={this.bot ? this.bot.posts.list.slice() : []}
-        ref={r => (this.list = r)}
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingBottom: this.post ? this.post.imgContainerHeight : 0,
-        }}
-        ListFooterComponent={this._footerComponent}
-        initialNumToRender={this.numToRender}
-        ListHeaderComponent={this._headerComponent}
-        ItemSeparatorComponent={this.renderSeparator}
-        renderItem={this.renderItem}
-        keyExtractor={item => item.id}
-        // keyExtractor={(item, index) => `${item.id} ${index}`}
-        scrollEnabled={this.props.scrollable}
-      />
+      <View style={{width, height}}>
+        <FlatList
+          style={{flex: 1}}
+          data={this.bot ? this.bot.posts.list.slice() : []}
+          ref={r => (this.list = r)}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: this.post ? this.post.imgContainerHeight : 0,
+          }}
+          ListFooterComponent={this._footerComponent}
+          initialNumToRender={this.numToRender}
+          ListHeaderComponent={this._headerComponent}
+          ItemSeparatorComponent={this.renderSeparator}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+          // keyExtractor={(item, index) => `${item.id} ${index}`}
+          scrollEnabled={this.props.scrollable}
+        />
+      </View>
     )
   }
 }

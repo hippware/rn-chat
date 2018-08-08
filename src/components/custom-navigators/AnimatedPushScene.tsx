@@ -2,6 +2,7 @@ import React from 'react'
 import {Animated} from 'react-native'
 import {observable, when} from '../../../node_modules/mobx'
 import {height} from '../Global'
+import {TouchThroughWrapper} from 'react-native-touch-through-view'
 
 type Props = {
   scene: any
@@ -78,19 +79,31 @@ class AnimatedPushScene extends React.Component<Props> {
   }
 
   render() {
-    const {scene} = this.props
-    const {navigation, getComponent} = scene.descriptor
+    const {descriptor: {navigation, getComponent}} = this.props.scene
     const Scene = getComponent()
     const style = this._getScreenStyle()
     return (
-      <Animated.View
-        style={style}
-        onLayout={({nativeEvent: {layout: {height: viewHeight}}}) => (this.viewHeight = viewHeight)}
-      >
-        <Scene navigation={navigation} />
-      </Animated.View>
+      <Wrapper {...this.props}>
+        <Animated.View
+          style={style}
+          onLayout={({nativeEvent: {layout: {height: viewHeight}}}) =>
+            (this.viewHeight = viewHeight)
+          }
+        >
+          <Scene navigation={navigation} />
+        </Animated.View>
+      </Wrapper>
     )
   }
 }
+
+const Wrapper = ({children, scene: {route: {params: {draggable}}}}) =>
+  draggable ? (
+    <TouchThroughWrapper style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
+      {children}
+    </TouchThroughWrapper>
+  ) : (
+    children
+  )
 
 export default AnimatedPushScene

@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {k, width} from '../Global'
+import {k, width, height} from '../Global'
 import {colors} from '../../constants'
 import {getSnapshot, isAlive} from 'mobx-state-tree'
 import BotButtons from './BotButtons'
@@ -10,6 +10,9 @@ import {RText} from '../common'
 import {IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
+import {TouchThroughView} from 'react-native-touch-through-view'
+import BottomPopup from '../BottomPopup'
+import {Actions} from '../../../node_modules/react-native-router-flux'
 
 type Props = {
   bot: IBot
@@ -83,42 +86,42 @@ class BotDetailsHeader extends React.Component<Props, State> {
     const {bot, locationStore} = this.props
     if (!bot || !isAlive(bot)) return null
     return (
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 20 * k,
-          backgroundColor: 'white',
-        }}
-      >
-        <RText size={18} color={colors.DARK_PURPLE}>
-          {bot.title}
-        </RText>
-        <View style={{flexDirection: 'row', marginTop: 10 * k}}>
-          <Pill>{bot.addressData.locationShort}</Pill>
-          <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
-        </View>
-        <BotButtons
-          bot={bot}
-          subscribe={this.subscribe}
-          unsubscribe={this.unsubscribe}
-          isSubscribed={bot.isSubscribed}
-          copyAddress={this.copyAddress}
-        />
-        <UserInfoRow profile={bot.owner} copyAddress={this.copyAddress} />
-        {!!bot.description && (
-          <View style={styles.descriptionContainer}>
-            <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
-              {bot.description}
+      <View>
+        <TouchThroughView style={{width, height: height / 2}} />
+        <BottomPopup onClose={Actions.pop}>
+          <View style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white'}}>
+            <RText size={18} color={colors.DARK_PURPLE}>
+              {bot.title}
             </RText>
+
+            <View style={{flexDirection: 'row', marginTop: 10 * k}}>
+              <Pill>{bot.addressData.locationShort}</Pill>
+              <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
+            </View>
+            <BotButtons
+              bot={bot}
+              subscribe={this.subscribe}
+              unsubscribe={this.unsubscribe}
+              isSubscribed={bot.isSubscribed}
+              copyAddress={this.copyAddress}
+            />
+            <UserInfoRow profile={bot.owner} copyAddress={this.copyAddress} />
+            {!!bot.description && (
+              <View style={styles.descriptionContainer}>
+                <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
+                  {bot.description}
+                </RText>
+              </View>
+            )}
+            <Image
+              source={bot.image ? bot.image.thumbnail : null}
+              style={{width, height: width, marginHorizontal: -20 * k}}
+              resizeMode="contain"
+            />
+            {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
+            <Separator style={{marginHorizontal: 5}} />
           </View>
-        )}
-        <Image
-          source={bot.image ? bot.image.thumbnail : null}
-          style={{width, height: width, marginHorizontal: -20 * k}}
-          resizeMode="contain"
-        />
-        {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
-        <Separator style={{marginHorizontal: 5}} />
+        </BottomPopup>
       </View>
     )
   }
