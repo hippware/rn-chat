@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, Image} from 'react-native'
+import {View, FlatList, Text, Image, Animated} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width, height} from '../Global'
@@ -9,10 +9,9 @@ import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
 // import AddBotPost from './AddBotPost'
 import Header from './BotDetailsHeader'
-import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
-import BottomPopup from '../BottomPopup'
 import Separator from './Separator'
+import NavBar from './BotDetailsNavBar'
 
 type Props = {
   botId: string
@@ -33,6 +32,7 @@ export default class BotDetails extends React.Component<Props> {
   list: any
   post: any
   viewTimeout: any
+  scrollY = new Animated.Value(0)
 
   _footerComponent = observer(() => {
     return (
@@ -101,6 +101,12 @@ export default class BotDetails extends React.Component<Props> {
     if (bot.error) {
       return <BotUnavailable />
     }
+
+    const opacity = this.scrollY.interpolate({
+      inputRange: [0, height / 2 - 80, height / 2],
+      outputRange: [0, 0, 1],
+    })
+
     return (
       <View style={{width, height}}>
         <FlatList
@@ -119,7 +125,12 @@ export default class BotDetails extends React.Component<Props> {
           keyExtractor={item => item.id}
           // keyExtractor={(item, index) => `${item.id} ${index}`}
           scrollEnabled={this.props.scrollable}
+          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
+          bounces={false}
         />
+        <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
+          <NavBar bot={bot} />
+        </Animated.View>
       </View>
     )
   }
