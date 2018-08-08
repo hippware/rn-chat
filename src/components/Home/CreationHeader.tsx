@@ -3,7 +3,7 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {CloseButton, RText} from '../common'
 import AddressBar from '../map/AddressBar'
-import {observable, reaction, when} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {IWocky, IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {colors} from '../../constants'
@@ -85,13 +85,8 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   next = () => {
-    when(
-      () => !!this.bot,
-      () => {
-        this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
-        Actions.botCompose({botId: this.bot.id})
-      }
-    )
+    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
+    Actions.botCompose({botId: this.bot.id})
   }
 
   render() {
@@ -105,11 +100,13 @@ export default class CreationHeader extends React.Component<Props> {
             Pin Location
           </RText>
           <View style={{width: 100}}>
-            <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
-              <RText size={17} color={colors.PINK}>
-                Next
-              </RText>
-            </TouchableOpacity>
+            {this.bot && (
+              <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
+                <RText size={17} color={colors.PINK}>
+                  Next
+                </RText>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
         <AddressBar bot={this.bot} />
