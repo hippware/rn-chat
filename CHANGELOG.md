@@ -5,8 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Location Create - add photo (#2503)
-* Navigation changes and improvements (PR #2605, work-in-progress #2588)
+* Many navigation changes and improvements (Work in progress #2588)
+  * (PR #2605, PR #2611)
 * Emoji and icon selector with correct keyboard handling (#2505, PR #2601)
+* Crash after "Next" tap during bot creation (#2600, PR #2610)
 
 # 3.2.0 - 2018 July 30
 
