@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width, height} from '../Global'
 import {colors} from '../../constants'
@@ -88,7 +88,9 @@ class BotDetailsHeader extends React.Component<Props, State> {
     if (!bot || !isAlive(bot)) return null
     return (
       <PopupWrapper>
-        <View style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white'}}>
+        <View
+          style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 20 * k}}
+        >
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <RText size={18} color={colors.DARK_PURPLE}>
               {bot.title}
@@ -103,10 +105,15 @@ class BotDetailsHeader extends React.Component<Props, State> {
             />
           </View>
 
-          <View style={{flexDirection: 'row', marginTop: 10 * k}}>
+          <View style={{flexDirection: 'row', marginTop: 10 * k, justifyContent: 'center'}}>
             <Pill>{bot.addressData.locationShort}</Pill>
             <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
           </View>
+
+          <Separator style={{marginHorizontal: 5}} />
+
+          <VisitorsArea bot={bot} />
+
           <View style={styles.userInfoRow}>
             <ProfileAvatar profile={bot.owner} size={40 * k} />
             <ProfileHandle
@@ -136,6 +143,25 @@ class BotDetailsHeader extends React.Component<Props, State> {
       </PopupWrapper>
     )
   }
+}
+
+const VisitorsArea = ({bot}) => {
+  let avatars = null
+  let text = null
+  if (bot.visitorsSize > 0) {
+    avatars = <View style={{width: 100, height: 100}} />
+    text = 'are currently here!'
+  } else if (bot.guestsSize > 0) {
+    avatars = <View style={{width: 100, height: 100}} />
+    text = 'accepted the invite!'
+  } else return null
+  return (
+    <View style={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+      {avatars}
+      <RText size={14}>{text}</RText>
+      <Separator style={{marginHorizontal: 5}} />
+    </View>
+  )
 }
 
 const PopupWrapper = ({children}) => (
