@@ -26,7 +26,7 @@ import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 // import BotCompose from './BotCompose'
 // import BotCreate from './map/BotCreate'
-import {LocationDetailsBottomPopup} from './LocationDetails'
+import LocationDetails from './LocationDetails'
 import LocationDetailsNavBar from './LocationDetails/LocationDetailsNavBar'
 import BotsScreen from './BotsScreen'
 // import ExploreNearBy from './map/ExploreNearBy'
@@ -214,7 +214,7 @@ class TinyRobotRouter extends React.Component<Props> {
             </Stack>
             <Scene key="bottomMenu" component={BottomMenu} />
             <Scene key="createBot" path="bot/:server/:botId/:params*" component={CreationHeader} fromTop />
-            <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetailsBottomPopup} draggable opacityHeader={LocationDetailsNavBar} />
+            <Scene key="botDetails" path="bot/:server/:botId/:params*" component={LocationDetails} draggable opacityHeader={LocationDetailsNavBar} />
             <Scene key="botCompose" component={BotCompose} back />
             <Scene key="botEdit" component={BotCompose} edit back />
             <Scene key="camera" component={Camera} />
