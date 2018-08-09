@@ -9,6 +9,7 @@ import Connectivity from './components/Connectivity'
 import * as logger from './utils/log'
 // import TinyRobotRouter from './components/RouterTest';
 // require('./utils/reactotron');
+import ErrorHandler from './components/common/ErrorHandler'
 
 const App = () => (
   <Provider
@@ -22,9 +23,11 @@ const App = () => (
     {...logger}
   >
     <View style={{flex: 1}} testID="wrapper">
-      <TinyRobotRouter />
-      <NotificationBanner />
-      <Connectivity />
+      <ErrorHandler>
+        <TinyRobotRouter />
+        <NotificationBanner />
+        <Connectivity />
+      </ErrorHandler>
     </View>
   </Provider>
 )

@@ -1,5 +1,5 @@
 import React from 'react'
-import {ScrollView, View, Image, Text} from 'react-native'
+import {ScrollView, View, Image} from 'react-native'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {settings} from '../../globals'
@@ -64,13 +64,20 @@ const ErrorView = ({error, errorInfo, reload}) => {
   if (settings.isStaging) {
     return (
       <View style={{flex: 1}}>
-        <ScrollView style={{paddingTop: 40}}>
-          <Text>
-            Oops! there was an unexpected error. It has been reported to Bugsnag. Try killing and
-            reloading the app.
-          </Text>
-          <Text style={{marginTop: 20}}>{error.toString()}</Text>
-          <Text style={{marginTop: 20}}>{errorInfo.componentStack}</Text>
+        <ScrollView
+          contentContainerStyle={{paddingTop: 60, marginHorizontal: 20}}
+          style={{flex: 1}}
+        >
+          <RText size={20} style={{marginBottom: 20}}>
+            Oops! there was an unexpected error. It has been reported to Bugsnag.
+          </RText>
+          <TheButton reload={reload} />
+          <RText style={{marginTop: 20}} color={'black'}>
+            {error.toString()}
+          </RText>
+          <RText style={{marginTop: 20}} color={'black'}>
+            {errorInfo.componentStack}
+          </RText>
         </ScrollView>
       </View>
     )
@@ -93,24 +100,28 @@ const ErrorView = ({error, errorInfo, reload}) => {
         <RText size={18} color={colors.DARK_GREY} style={{marginBottom: 50}}>
           Please tap reload.
         </RText>
-        <Button
-          style={{position: 'relative', left: 0, right: 0, marginHorizontal: 30, marginTop: 50}}
-          onPress={reload}
-        >
-          <View style={{alignItems: 'center', flexDirection: 'row'}}>
-            <Image
-              source={require('../../../images/reload.png')}
-              style={{height: 19, marginRight: 5}}
-              resizeMode="contain"
-            />
-            <RText size={17.5} color={colors.WHITE}>
-              Reload
-            </RText>
-          </View>
-        </Button>
+        <TheButton reload={reload} />
       </View>
     )
   }
 }
+
+const TheButton = ({reload}) => (
+  <Button
+    style={{position: 'relative', left: 0, right: 0, marginHorizontal: 30, marginTop: 50}}
+    onPress={reload}
+  >
+    <View style={{alignItems: 'center', flexDirection: 'row'}}>
+      <Image
+        source={require('../../../images/reload.png')}
+        style={{height: 19, marginRight: 5}}
+        resizeMode="contain"
+      />
+      <RText size={17.5} color={colors.WHITE}>
+        Reload
+      </RText>
+    </View>
+  </Button>
+)
 
 export default ErrorHandler
