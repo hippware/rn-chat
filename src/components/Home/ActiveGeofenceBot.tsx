@@ -6,7 +6,7 @@ import {observer, inject} from 'mobx-react/native'
 import BotBubble from '../map/BotBubble'
 import {IBot, IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
-import {RText, VisitorHeads} from '../common'
+import {RText, ProfileStack} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
@@ -22,14 +22,25 @@ type Props = {
 @inject('wocky', 'analytics')
 @observer
 class ActiveBot extends React.Component<Props> {
+  componentDidMount() {
+    const {visitors, visitorsSize} = this.props.bot
+    if (visitorsSize > visitors.list.length) {
+      console.log('& load')
+      visitors.load!().then(() =>
+        console.log('& visitors after load', this.props.bot.visitors.list)
+      )
+    }
+  }
+
   goToBot = (): void => {
     Actions.botDetails({botId: this.props.bot.id})
-    setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
+    // setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
   }
 
   render() {
     const {bot, outerStyle, innerStyle} = this.props
+    console.log('& v size', bot.visitorsSize, bot.visitors.list)
     return bot && isAlive(bot) ? (
       <View style={outerStyle}>
         <View style={innerStyle}>
@@ -55,7 +66,9 @@ class ActiveBot extends React.Component<Props> {
               {bot.title}
             </RText>
           </TouchableOpacity>
-          <VisitorHeads bot={bot} />
+
+          {/* <ProfileStack profiles={bot.visitors.list} /> */}
+          <ProfileStack profiles={this.props.bot.visitors.list} />
         </View>
       </View>
     ) : null

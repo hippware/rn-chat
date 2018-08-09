@@ -1,20 +1,20 @@
 import React from 'react'
 import {View} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IBot} from 'wocky-client'
+import {IProfile} from 'wocky-client'
 
 import {k} from '../Global'
 import {Avatar, RText} from '../common'
 import {colors} from '../../constants'
 
 type Props = {
-  bot: IBot
+  profiles: IProfile[]
 }
 
-const VisitorHeads = observer(({bot}: Props) => {
-  const {visitors: {list}, visitorsSize} = bot
-  const profile = list!.length ? list![0] : null
-  const rest = visitorsSize - 1
+const VisitorHeads = observer(({profiles}: Props) => {
+  console.log('& v heads', profiles)
+  const profile = profiles.length ? profiles[0] : null
+  const rest = profiles.length - 1
   const size = 30
   return profile ? (
     <View style={{position: 'absolute', top: -15, right: -8}}>

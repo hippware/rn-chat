@@ -6,7 +6,7 @@ import {colors} from '../../constants'
 import {getSnapshot, isAlive} from 'mobx-state-tree'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
-import {RText, ProfileHandle} from '../common'
+import {RText, ProfileHandle, ProfileStack} from '../common'
 import {IBot} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
@@ -148,11 +148,20 @@ class BotDetailsHeader extends React.Component<Props, State> {
 const VisitorsArea = ({bot}) => {
   let avatars = null
   let text = null
-  if (bot.visitorsSize > 0) {
-    avatars = <View style={{width: 100, height: 100}} />
+  if (bot.visitors.list.length > 0) {
+    avatars = (
+      <View style={{width: 100, height: 100}}>
+        <ProfileStack profiles={bot.visitors.list} />
+      </View>
+    )
     text = 'are currently here!'
-  } else if (bot.guestsSize > 0) {
-    avatars = <View style={{width: 100, height: 100}} />
+  } else if (bot.guests.list.length > 0) {
+    console.log('& bot', bot.guests.list)
+    avatars = (
+      <View style={{width: 100, height: 100}}>
+        <ProfileStack profiles={bot.guests.list} />
+      </View>
+    )
     text = 'accepted the invite!'
   } else return null
   return (
