@@ -15,7 +15,7 @@ const NavStore = types
       // set creation mode depending from current screen(s)
       // TODO add editBot here ?
       reaction(
-        () => ['createBot', 'botCompose', 'botEdit'].includes(self.scene),
+        () => ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(self.scene),
         getParent(self).homeStore.setCreationMode
       )
     },

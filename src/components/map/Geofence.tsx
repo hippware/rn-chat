@@ -1,6 +1,6 @@
 import React from 'react'
 import {Circle} from 'react-native-maps'
-import {colors} from '../../constants/index'
+import {colors} from '../../constants'
 
 type Props = {
   coords: {

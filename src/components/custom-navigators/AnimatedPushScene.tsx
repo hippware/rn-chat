@@ -1,6 +1,6 @@
 import React from 'react'
 import {Animated} from 'react-native'
-import {observable, when} from '../../../node_modules/mobx'
+import {observable, when} from 'mobx'
 import {height} from '../Global'
 import {TouchThroughWrapper} from 'react-native-touch-through-view'
 

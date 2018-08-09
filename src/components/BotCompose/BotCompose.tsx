@@ -1,20 +1,12 @@
 import React from 'react'
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Alert,
-  Keyboard,
-  Animated,
-} from 'react-native'
+import {StyleSheet, View, TextInput, TouchableOpacity, Image, Alert, Animated} from 'react-native'
 import {RText, Spinner} from '../common'
+import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
-import {observable, action, reaction} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
@@ -27,9 +19,6 @@ const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
 const photoIconDone = require('../../../images/photoAdded.png')
 
-// https://github.com/facebook/react-native/issues/19465#issuecomment-399111765
-// const InputAccessoryView = require('InputAccessoryView')
-
 type Props = {
   botId: string
   edit?: boolean
@@ -40,49 +29,34 @@ type Props = {
   locationStore?: any
   log?: any
   analytics?: any
-}
-
-type State = {
-  keyboardHeight: Animated.Value
-  emojiHeight: Animated.Value
+  keyboardShowing?: boolean
 }
 
 @inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
-class BotCompose extends React.Component<Props, State> {
+export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
-  @observable keyboardShowing: boolean = false
   @observable uploadingPhoto: boolean = false
-  // @observable keyboardHeight: number = 0
   controls: any
   botTitle: any
-  keyboardDidShowListener: any
-  keyboardDidHideListener: any
+  note: any
   accessoryText?: any
-
-  state: State = {
-    keyboardHeight: new Animated.Value(0),
-    emojiHeight: new Animated.Value(0),
-  }
+  emojiHeight = new Animated.Value(0)
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
+    this.props.iconStore.setIcon(this.bot.icon)
 
     reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
       shown => {
-        Animated.timing(this.state.emojiHeight, {
+        Animated.timing(this.emojiHeight, {
           toValue: shown ? 305 : 0,
           duration: 500,
         }).start()
       }
     )
-  }
-
-  componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow)
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide)
   }
 
   onEmojiSelected = e => {
@@ -96,31 +70,23 @@ class BotCompose extends React.Component<Props, State> {
   }
 
   render() {
-    const inputAccessoryViewID = 'uniqueID'
     return (
       <View>
-        {this.bot && <IconSelector onSnap={this.onSnap} bot={this.bot} />}
-        {
-          <Animated.View style={{height: this.state.emojiHeight, backgroundColor: 'white'}}>
-            <EmojiSelector
-              onEmojiSelected={this.onEmojiSelected}
-              showSearchBar={false}
-              columns={8}
-            />
-          </Animated.View>
-        }
+        <IconSelector onSnap={this.onSnap} bot={this.bot} key="1" />,
+        <Animated.View style={{height: this.emojiHeight, backgroundColor: 'white'}} key="2">
+          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+        </Animated.View>
         {!this.props.iconStore.isEmojiKeyboardShown && (
           <View>
             <TextInput
               style={styles.textStyle}
               placeholder="Name this place"
-              inputAccessoryViewID={inputAccessoryViewID}
               ref={r => (this.botTitle = r)}
               onChangeText={text => this.bot.load({title: text})}
               value={this.bot.title}
             />
             <View>
-              {!this.keyboardShowing && (
+              {!this.props.keyboardShowing && (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -129,7 +95,11 @@ class BotCompose extends React.Component<Props, State> {
                     paddingHorizontal: 30 * k,
                   }}
                 >
-                  <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+                  <EditCTA
+                    text="Note"
+                    icon={this.bot.description ? noteIconDone : noteIcon}
+                    onPress={() => Actions.editNote({botId: this.bot.id})}
+                  />
                   <EditCTA
                     text="Photo"
                     icon={this.bot.image ? photoIconDone : photoIcon}
@@ -150,11 +120,10 @@ class BotCompose extends React.Component<Props, State> {
                 <RText color="white" size={15}>
                   Pin Location
                 </RText>
-              </TouchableOpacity>,
+              </TouchableOpacity>
             </View>
           </View>
         )}
-        <Animated.View style={{right: 0, left: 0, bottom: 0, height: this.state.keyboardHeight}} />
       </View>
     )
   }
@@ -170,24 +139,6 @@ class BotCompose extends React.Component<Props, State> {
         this.uploadingPhoto = false
       }
     })
-  }
-
-  @action
-  _keyboardWillShow = ({endCoordinates, duration}: any) => {
-    this.keyboardShowing = true
-    Animated.timing(this.state.keyboardHeight, {
-      toValue: endCoordinates.height,
-      duration,
-    }).start()
-  }
-
-  @action
-  _keyboardWillHide = ({duration}: any) => {
-    this.keyboardShowing = false
-    Animated.timing(this.state.keyboardHeight, {
-      toValue: 0,
-      duration,
-    }).start()
   }
 
   save = async (): Promise<void> => {
@@ -248,12 +199,13 @@ const EditCTA = ({text, icon, onPress, pending}: any) => (
   </TouchableOpacity>
 )
 
-export default BotCompose
+export default withKeyboard(BotCompose)
 
 const styles = StyleSheet.create({
   textStyle: {
     height: 50 * k,
-    width: '100%',
+    left: 0,
+    right: 0,
     borderBottomColor: colors.GREY,
     borderBottomWidth: 1,
     borderTopColor: colors.GREY,

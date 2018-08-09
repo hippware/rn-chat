@@ -34,6 +34,22 @@ export default class IconStore {
   }
 
   @action
+  setIcon = (icon: string) => {
+    if (!icon) {
+      this.setIndex(0)
+    } else {
+      for (let i = 1; i < this.iconList.length - 1; i += 1) {
+        if (icon === this.iconList[i]) {
+          this.setIndex(i)
+          return
+        }
+      }
+      // means that we have emoji
+      this.changeEmoji(icon)
+    }
+  }
+
+  @action
   changeEmoji = (icon: string) => {
     this.iconList[this.iconList.length - 1] = icon
     this.isEmojiKeyboardShown = false

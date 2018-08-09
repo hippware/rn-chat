@@ -12,7 +12,7 @@ import mapStyle from '../map/mapStyle'
 import commonStyles from '../styles'
 import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
 import UberMarker from './UberMarker'
-// import {Actions} from 'react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
 
@@ -60,11 +60,6 @@ export default class MapHome extends React.Component<IProps> {
     } else {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
-
-    // setTimeout(() => Actions.createBot(), 2000)
-    // Actions.botCompose()
-    // Actions.botDetails({botId: '3627448a-2e25-11e8-a510-0a580a0205ef'})
-    // Actions.botDetails({botId: '20358fc8-343e-11e8-8615-0a580a020144'})
 
     this.reactions = [
       reaction(
@@ -119,8 +114,8 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   createFromLongPress = ({nativeEvent: {coordinate}}) => {
-    // console.log('create from press', coordinate)
-    // TODO: https://github.com/hippware/rn-chat/issues/2578
+    this.setCenterCoordinate(coordinate)
+    Actions.createBot()
   }
 
   render() {

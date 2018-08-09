@@ -52,6 +52,7 @@ import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose from './BotCompose/BotCompose'
+import EditNote from './BotCompose/EditNote'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -98,24 +99,12 @@ export const navBarStyle = {
   },
 }
 
-// const tinyRobotTitle = () => (
-//   <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
-//     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
-//   </TouchableOpacity>
-// )
-
 const iconClose = require('../../images/iconClose.png')
 // const baseMessagesIcon = require('../../images/iconMessage.png')
 // const newMessagesIcon = require('../../images/newMessages.png')
 const sendActive = require('../../images/sendActive.png')
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
-
-// TODO: is it still necessary for react-navigation 2.x ?
-// prevent keyboard from persisting across scene transitions
-// autorun(() => {
-//   if (Actions.currentScene !== '') Keyboard.dismiss()
-// })
 
 type Props = {
   wocky?: IWocky
@@ -141,12 +130,12 @@ class TinyRobotRouter extends React.Component<Props> {
       {delay: 1000}
     )
 
-    // TODO: run locationPrimer from fullMap ? Actions.currentScene is not reactive anymore
-    // autorun(() => {
-    //   if (Actions.currentScene === '_fullMap' && !locationStore!.alwaysOn && !store.locationPrimed) {
-    //     if (Actions.locationPrimer) Actions.locationPrimer()
-    //   }
-    // }, {delay: 1000} )
+    autorun(() => {
+      const {navStore: {scene}, store: {locationPrimed}, locationStore: {alwaysOn}} = this.props
+      if (scene === 'home' && !alwaysOn && !locationPrimed) {
+        if (Actions.locationPrimer) Actions.locationPrimer()
+      }
+    }, {delay: 1000} )
   }
 
   render() {
@@ -217,6 +206,7 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} draggable opacityHeader={BotDetailsNavBar} />
               <Scene key="botCompose" component={BotCompose} back />
               <Scene key="botEdit" component={BotCompose} edit back />
+              <Scene key="editNote" component={EditNote} back/>
               <Scene key="camera" component={Camera} />
             </Stack>
             <Scene key="locationWarning" component={LocationWarning} />

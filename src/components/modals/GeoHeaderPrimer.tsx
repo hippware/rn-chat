@@ -4,7 +4,7 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText} from '../common'
 import PopupBlur from './PopupBlur'
-import {Actions} from '../../../node_modules/react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 const image = require('../../../images/geoHeaderPrimer.png')
 
