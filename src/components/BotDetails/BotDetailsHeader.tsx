@@ -92,7 +92,13 @@ class BotDetailsHeader extends React.Component<Props, State> {
           style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 20 * k}}
         >
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <RText size={18} color={colors.DARK_PURPLE}>
+            <RText
+              size={18}
+              color={colors.DARK_PURPLE}
+              style={{width: '75%', textAlign: 'center'}}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+            >
               {bot.title}
             </RText>
             <ActionButton
@@ -171,17 +177,18 @@ const VisitorsArea = ({bot}) => {
     )
     text = 'accepted the invite!'
   } else return null
-  return [
-    <TouchableOpacity
-      onPress={() => Actions.visitors({item: bot.id})}
-      style={{alignItems: 'center', justifyContent: 'center', width: '100%', paddingVertical: 20}}
-      key="1"
-    >
-      {avatars}
-      <RText size={14}>{text}</RText>
-    </TouchableOpacity>,
-    <Separator style={{width: '100%', marginHorizontal: 5}} key="2" />,
-  ]
+  return (
+    <View>
+      <TouchableOpacity
+        onPress={() => Actions.visitors({item: bot.id})}
+        style={{alignItems: 'center', justifyContent: 'center', width: '100%', paddingVertical: 20}}
+      >
+        {avatars}
+        <RText size={14}>{text}</RText>
+      </TouchableOpacity>
+      <Separator style={{width: '100%', marginHorizontal: 5}} />
+    </View>
+  )
 }
 
 const PopupWrapper = ({children}) => (
