@@ -1,11 +1,11 @@
 // @flow
 
-import 'react-native'
-import React from 'react'
-import renderer from 'react-test-renderer'
-import BotDetails from '../src/components/LocationDetails'
-import {Provider} from 'mobx-react/native'
-import injects from './utils/inject-mocks'
+// import 'react-native'
+// import React from 'react'
+// import renderer from 'react-test-renderer'
+// import BotDetails from '../src/components/BotDetails/BotDetails'
+// import {Provider} from 'mobx-react/native'
+// import injects from './utils/inject-mocks'
 
 describe('BotDetails', () => {
   const wocky = {}

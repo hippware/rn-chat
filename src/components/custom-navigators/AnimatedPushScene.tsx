@@ -7,7 +7,6 @@ import {TouchThroughWrapper} from 'react-native-touch-through-view'
 type Props = {
   scene: any
   transitionProps: any
-  // initialHeight: number
 }
 
 class AnimatedPushScene extends React.Component<Props> {
@@ -28,10 +27,6 @@ class AnimatedPushScene extends React.Component<Props> {
   }
 
   componentWillReceiveProps({transitionProps, scene}) {
-    // if (scene.index > 0) {
-    //   console.log('& scene', scene, transitionProps)
-    // }
-
     if (scene.index > 0) {
       if (transitionProps.index === scene.index) {
         this.showScene()

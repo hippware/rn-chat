@@ -61,10 +61,6 @@ export default class MapHome extends React.Component<IProps> {
       homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
     }
 
-    // setTimeout(() => Actions.createBot(), 2000)
-    // Actions.botCompose()
-    // Actions.botEdit({botId: '5c356f34-9b3b-11e8-b2d2-76139780c262'})
-
     this.reactions = [
       reaction(
         () => homeStore.focusedBotLocation,

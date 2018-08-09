@@ -15,7 +15,6 @@ class AnimatedMainScene extends React.Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     const {index, scene: {route: {params: {fromTop}}}} = nextProps.transitionProps
-    // console.log('& trans props', nextProps.transitionProps)
     if (index > 0 && !fromTop && !this.isOffset) {
       this.slideSceneTo(-150)
     } else if ((fromTop || index === 0) && this.isOffset) {
