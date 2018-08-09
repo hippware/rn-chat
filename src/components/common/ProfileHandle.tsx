@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity} from 'react-native'
 import {k} from '../Global'
 import * as colors from '../../constants/colors'
 import {observer} from 'mobx-react/native'
-import {RText} from '../common'
+import {RText} from '.'
 
 type Props = {
   profile: any
