@@ -34,7 +34,7 @@ type Props = {
 
 @inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
-class BotCompose extends React.Component<Props> {
+export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable uploadingPhoto: boolean = false
