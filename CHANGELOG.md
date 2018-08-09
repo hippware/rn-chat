@@ -6,9 +6,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Location Create - add photo (#2503)
 * Many navigation changes and improvements (Work in progress #2588)
-  * (PR #2605, PR #2611)
+  * (PR #2605, PR #2611, PR #2617, PR #2618)
 * Emoji and icon selector with correct keyboard handling (#2505, PR #2601)
-* Crash after "Next" tap during bot creation (#2600, PR #2610)
+* Crash after "Next" tap during bot creation (#2600, PR #2610, PR #2620)
+* Crash after logout and bot creation (#2615)
 
 # 3.2.0 - 2018 July 30
 

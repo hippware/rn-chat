@@ -10,7 +10,7 @@ import injects from './utils/inject-mocks'
 import mockLocationStore from './utils/mockLocationStore'
 import wocky from './utils/mockWocky'
 
-import BotDetailsHeader from '../src/components/LocationDetails/LocationDetailsHeader'
+import BotDetailsHeader from '../src/components/BotDetails/BotDetailsHeader'
 
 describe('BotDetailsHeader', () => {
   it('renders with test bot', async () => {
