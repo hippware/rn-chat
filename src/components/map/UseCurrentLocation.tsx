@@ -1,7 +1,7 @@
 import React from 'react'
 import {Animated, View, Image, TouchableOpacity} from 'react-native'
 import {k} from '../Global'
-import {colors} from '../../constants/index'
+import {colors} from '../../constants'
 import {RText} from '../common'
 import {observer, inject} from 'mobx-react/native'
 import {ILocationStore} from '../../store/LocationStore'

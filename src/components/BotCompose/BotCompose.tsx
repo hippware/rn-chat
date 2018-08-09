@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import {RText, Spinner} from '../common'
 import {colors} from '../../constants'
-import {k} from '../Global'
+import {k, width} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
@@ -27,9 +27,6 @@ const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
 const photoIconDone = require('../../../images/photoAdded.png')
 
-// https://github.com/facebook/react-native/issues/19465#issuecomment-399111765
-// const InputAccessoryView = require('InputAccessoryView')
-
 type Props = {
   botId: string
   edit?: boolean
@@ -42,29 +39,22 @@ type Props = {
   analytics?: any
 }
 
-type State = {
-  keyboardHeight: Animated.Value
-  emojiHeight: Animated.Value
-}
-
 @inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
-class BotCompose extends React.Component<Props, State> {
+class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable keyboardShowing: boolean = false
   @observable uploadingPhoto: boolean = false
-  // @observable keyboardHeight: number = 0
+  @observable showNote: boolean = false
   controls: any
   botTitle: any
+  note: any
   keyboardDidShowListener: any
   keyboardDidHideListener: any
   accessoryText?: any
-
-  state: State = {
-    keyboardHeight: new Animated.Value(0),
-    emojiHeight: new Animated.Value(0),
-  }
+  keyboardHeight = new Animated.Value(0)
+  emojiHeight = new Animated.Value(0)
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
@@ -72,7 +62,7 @@ class BotCompose extends React.Component<Props, State> {
     reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
       shown => {
-        Animated.timing(this.state.emojiHeight, {
+        Animated.timing(this.emojiHeight, {
           toValue: shown ? 305 : 0,
           duration: 500,
         }).start()
@@ -99,17 +89,17 @@ class BotCompose extends React.Component<Props, State> {
     const inputAccessoryViewID = 'uniqueID'
     return (
       <View>
-        {this.bot && <IconSelector onSnap={this.onSnap} bot={this.bot} />}
-        {
-          <Animated.View style={{height: this.state.emojiHeight, backgroundColor: 'white'}}>
+        {!this.showNote && [
+          <IconSelector onSnap={this.onSnap} bot={this.bot} key="1" />,
+          <Animated.View style={{height: this.emojiHeight, backgroundColor: 'white'}} key="2">
             <EmojiSelector
               onEmojiSelected={this.onEmojiSelected}
               showSearchBar={false}
               columns={8}
             />
-          </Animated.View>
-        }
-        {!this.props.iconStore.isEmojiKeyboardShown && (
+          </Animated.View>,
+        ]}
+        {!(this.props.iconStore.isEmojiKeyboardShown || this.showNote) && (
           <View>
             <TextInput
               style={styles.textStyle}
@@ -129,7 +119,11 @@ class BotCompose extends React.Component<Props, State> {
                     paddingHorizontal: 30 * k,
                   }}
                 >
-                  <EditCTA text="Note" icon={this.bot.description ? noteIconDone : noteIcon} />
+                  <EditCTA
+                    text="Note"
+                    icon={this.bot.description ? noteIconDone : noteIcon}
+                    onPress={() => (this.showNote = true)}
+                  />
                   <EditCTA
                     text="Photo"
                     icon={this.bot.image ? photoIconDone : photoIcon}
@@ -150,11 +144,12 @@ class BotCompose extends React.Component<Props, State> {
                 <RText color="white" size={15}>
                   Pin Location
                 </RText>
-              </TouchableOpacity>,
+              </TouchableOpacity>
             </View>
           </View>
         )}
-        <Animated.View style={{right: 0, left: 0, bottom: 0, height: this.state.keyboardHeight}} />
+        {this.showNote && this.renderNoteInput()}
+        <Animated.View style={{right: 0, left: 0, bottom: 0, height: this.keyboardHeight}} />
       </View>
     )
   }
@@ -172,10 +167,40 @@ class BotCompose extends React.Component<Props, State> {
     })
   }
 
+  private renderNoteInput = () => (
+    <View>
+      <TextInput
+        style={[styles.textStyle, {width, height: 120}]}
+        placeholder="Tell us about this place!"
+        ref={r => (this.note = r)}
+        onChangeText={text => this.bot.load({description: text})}
+        value={this.bot.description}
+        autoFocus
+        multiline
+        onBlur={() => (this.showNote = false)}
+      />
+      <TouchableOpacity
+        style={{
+          width,
+          backgroundColor: colors.PINK, // TODO: gradient background
+          paddingVertical: 15 * k,
+          alignItems: 'center',
+        }}
+        onPress={() => {
+          this.showNote = false
+        }}
+      >
+        <RText color="white" size={15}>
+          Add Note
+        </RText>
+      </TouchableOpacity>
+    </View>
+  )
+
   @action
   _keyboardWillShow = ({endCoordinates, duration}: any) => {
     this.keyboardShowing = true
-    Animated.timing(this.state.keyboardHeight, {
+    Animated.timing(this.keyboardHeight, {
       toValue: endCoordinates.height,
       duration,
     }).start()
@@ -184,7 +209,7 @@ class BotCompose extends React.Component<Props, State> {
   @action
   _keyboardWillHide = ({duration}: any) => {
     this.keyboardShowing = false
-    Animated.timing(this.state.keyboardHeight, {
+    Animated.timing(this.keyboardHeight, {
       toValue: 0,
       duration,
     }).start()
@@ -253,7 +278,8 @@ export default BotCompose
 const styles = StyleSheet.create({
   textStyle: {
     height: 50 * k,
-    width: '100%',
+    left: 0,
+    right: 0,
     borderBottomColor: colors.GREY,
     borderBottomWidth: 1,
     borderTopColor: colors.GREY,
