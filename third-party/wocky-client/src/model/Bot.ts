@@ -129,8 +129,18 @@ export const Bot = types
     load: (d: any = {}) => {
       const data = {...d}
       if (data.addressData && typeof data.addressData === 'string') {
-        data.addressData = JSON.parse(data.addressData)
+        try {
+          data.addressData = JSON.parse(data.addressData)
+        } catch (e) {
+          data.addressData = Address.create({})
+        }
       }
+
+      // Something causes addressData to be null (or so could JSON.parse)
+      if (data.addressData === null) {
+        data.addressData = Address.create({})
+      }
+
       // load visitors
       if (data.visitors) {
         self.visitors.refresh()
