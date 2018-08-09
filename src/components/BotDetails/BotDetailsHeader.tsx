@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native'
+import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width, height} from '../Global'
 import {colors} from '../../constants'
@@ -150,27 +150,38 @@ const VisitorsArea = ({bot}) => {
   let text = null
   if (bot.visitors.list.length > 0) {
     avatars = (
-      <View style={{width: 100, height: 100}}>
-        <ProfileStack profiles={bot.visitors.list} />
-      </View>
+      <ProfileStack
+        firstProfile={bot.visitors.list[0]}
+        stackSize={bot.visitorsSize}
+        circleSize={50}
+        textSize={16.5}
+        style={{marginBottom: 10 * k}}
+      />
     )
     text = 'are currently here!'
   } else if (bot.guests.list.length > 0) {
-    console.log('& bot', bot.guests.list)
     avatars = (
-      <View style={{width: 100, height: 100}}>
-        <ProfileStack profiles={bot.guests.list} />
-      </View>
+      <ProfileStack
+        firstProfile={bot.guests.list[0]}
+        stackSize={bot.guestsSize}
+        circleSize={50}
+        textSize={16.5}
+        style={{marginBottom: 10 * k}}
+      />
     )
     text = 'accepted the invite!'
   } else return null
-  return (
-    <View style={{alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+  return [
+    <TouchableOpacity
+      onPress={() => Actions.visitors({item: bot.id})}
+      style={{alignItems: 'center', justifyContent: 'center', width: '100%', paddingVertical: 20}}
+      key="1"
+    >
       {avatars}
       <RText size={14}>{text}</RText>
-      <Separator style={{marginHorizontal: 5}} />
-    </View>
-  )
+    </TouchableOpacity>,
+    <Separator style={{width: '100%', marginHorizontal: 5}} key="2" />,
+  ]
 }
 
 const PopupWrapper = ({children}) => (

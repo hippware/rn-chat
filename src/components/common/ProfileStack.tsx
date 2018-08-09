@@ -1,5 +1,5 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, ViewStyle} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {IProfile} from 'wocky-client'
 
@@ -8,17 +8,18 @@ import {Avatar, RText} from '../common'
 import {colors} from '../../constants'
 
 type Props = {
-  profiles: IProfile[]
+  firstProfile: IProfile
+  stackSize: number
+  circleSize?: number
+  style?: ViewStyle
+  textSize?: number
 }
 
-const VisitorHeads = observer(({profiles}: Props) => {
-  console.log('& v heads', profiles)
-  const profile = profiles.length ? profiles[0] : null
-  const rest = profiles.length - 1
-  const size = 30
-  return profile ? (
-    <View style={{position: 'absolute', top: -15, right: -8}}>
-      {rest > 0 && (
+const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, textSize}: Props) => {
+  const size = circleSize || 30
+  return firstProfile ? (
+    <View style={style}>
+      {stackSize > 1 && (
         <View
           style={{
             height: size * k,
@@ -26,7 +27,6 @@ const VisitorHeads = observer(({profiles}: Props) => {
             borderRadius: size * k / 2,
             backgroundColor: colors.PINK,
             position: 'absolute',
-            top: 0,
             right: 0,
             borderWidth: 2 * k,
             borderColor: colors.WHITE,
@@ -34,20 +34,20 @@ const VisitorHeads = observer(({profiles}: Props) => {
             justifyContent: 'center',
           }}
         >
-          <RText size={12} color={colors.WHITE} weight="Medium">
-            {`+${rest}`}
+          <RText size={textSize || 12} color={colors.WHITE} weight="Medium">
+            {`+${stackSize - 1}`}
           </RText>
         </View>
       )}
       <Avatar
-        profile={profile}
+        profile={firstProfile}
         tappable={false}
         size={size}
         hideDot
-        style={{position: 'absolute', right: rest > 0 ? 22 * k : 0, top: 0}}
+        style={{marginRight: stackSize > 1 ? size * 0.75 : 0}}
       />
     </View>
   ) : null
 })
 
-export default VisitorHeads
+export default ProfileStack
