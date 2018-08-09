@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, FlatList, Text, Image} from 'react-native'
+import {View, FlatList, Text, Image, Animated} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k, width, height} from '../Global'
@@ -8,11 +8,10 @@ import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
 // import AddBotPost from './AddBotPost'
-import LocationDetailsHeader from './LocationDetailsHeader'
-import {Actions} from 'react-native-router-flux'
+import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
-import BottomPopup from '../BottomPopup'
 import Separator from './Separator'
+import NavBar from './BotDetailsNavBar'
 
 type Props = {
   botId: string
@@ -26,13 +25,14 @@ type Props = {
 
 @inject('wocky', 'analytics')
 @observer
-export default class LocationDetails extends React.Component<Props> {
+export default class BotDetails extends React.Component<Props> {
   @observable bot?: IBot
   @observable owner?: IProfile
   @observable numToRender: number = 8
   list: any
   post: any
   viewTimeout: any
+  scrollY = new Animated.Value(0)
 
   _footerComponent = observer(() => {
     return (
@@ -68,7 +68,7 @@ export default class LocationDetails extends React.Component<Props> {
     }, 7000)
   }
 
-  _headerComponent = () => <LocationDetailsHeader bot={this.bot!} {...this.props} />
+  _headerComponent = () => <Header bot={this.bot!} {...this.props} />
 
   scrollToEnd = () => {
     when(
@@ -101,6 +101,12 @@ export default class LocationDetails extends React.Component<Props> {
     if (bot.error) {
       return <BotUnavailable />
     }
+
+    const opacity = this.scrollY.interpolate({
+      inputRange: [0, height / 2 - 80, height / 2],
+      outputRange: [0, 0, 1],
+    })
+
     return (
       <View style={{width, height}}>
         <FlatList
@@ -119,18 +125,15 @@ export default class LocationDetails extends React.Component<Props> {
           keyExtractor={item => item.id}
           // keyExtractor={(item, index) => `${item.id} ${index}`}
           scrollEnabled={this.props.scrollable}
+          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
+          bounces={false}
         />
+        <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
+          <NavBar bot={bot} />
+        </Animated.View>
       </View>
     )
   }
-}
-
-export const LocationDetailsBottomPopup = (props: Props) => {
-  return (
-    <BottomPopup onClose={Actions.pop}>
-      <LocationDetails {...props} scrollable={false} />
-    </BottomPopup>
-  )
 }
 
 const BotUnavailable = () => (
