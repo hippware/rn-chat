@@ -8,7 +8,7 @@ import injects from './utils/inject-mocks'
 import wocky from './utils/mockWocky'
 import './utils/mockTextInput'
 
-import BotCompose from '../src/components/BotCompose/BotCompose'
+import {BotCompose} from '../src/components/BotCompose/BotCompose'
 
 describe('BotCompose', () => {
   it('renders with no data', async () => {

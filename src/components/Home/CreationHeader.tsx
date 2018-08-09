@@ -12,6 +12,7 @@ import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
+import IconStore from '../../store/IconStore'
 
 type Props = {
   wocky?: IWocky
@@ -21,9 +22,18 @@ type Props = {
   navStore?: INavStore
   homeStore?: IHomeStore
   navigation: any
+  iconStore: IconStore
 }
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'navStore', 'homeStore')
+@inject(
+  'wocky',
+  'locationStore',
+  'analytics',
+  'geocodingStore',
+  'navStore',
+  'homeStore',
+  'iconStore'
+)
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
@@ -32,6 +42,7 @@ export default class CreationHeader extends React.Component<Props> {
 
   componentWillMount() {
     this.createBot()
+    this.props.iconStore.setIndex(0)
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
     this.handler = reaction(
       () => {

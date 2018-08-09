@@ -2,6 +2,7 @@
 
 const injects = {
   iconStore: {
+    setIcon: () => {},
     setIndex: () => {},
     iconList: [],
   },
