@@ -86,7 +86,7 @@ const RightButton = inject('analytics')(
         onPress={() => {
           // TODO: fix hacky nav animation
           Actions.pop({animated: false})
-          Actions.botDetails({item: botId, isNew: true})
+          Actions.botDetails({botId, isNew: true})
           analytics.track('bot_share_geo_skip')
         }}
       >
