@@ -6,6 +6,10 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when, reaction} from 'mobx'
 const fs = require('fs')
 
+export function timestamp() {
+  console.log('TIME: ', new Date().toLocaleString())
+}
+
 export function testFile() {
   const fileName = `${__dirname}/../img/test.jpg`
   const file = {

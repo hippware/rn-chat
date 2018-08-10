@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {createXmpp, waitFor} from './support/testuser'
+import {createXmpp, waitFor, timestamp} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
@@ -15,9 +15,6 @@ let date: Date
 let user1phone: string
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
-function timestamp() {
-  console.log('TIME: ', new Date().toLocaleString())
-}
 describe('GraphQL', () => {
   it('get user1 credential via XMPP', async done => {
     try {
@@ -58,6 +55,7 @@ describe('GraphQL', () => {
 
   it('login via graphql and set user location', async done => {
     try {
+      timestamp()
       gql = new GraphQLTransport('testing')
       await gql.login(user.username!, user.password!, host)
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
@@ -70,6 +68,7 @@ describe('GraphQL', () => {
 
   it('loads profile', async done => {
     try {
+      timestamp()
       const profile = await gql.loadProfile(user.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user.username)
@@ -86,6 +85,7 @@ describe('GraphQL', () => {
 
   it('hide user', async done => {
     try {
+      timestamp()
       date = new Date(Date.now() + 1000)
       await gql.hideUser(true, date)
       done()
@@ -95,6 +95,7 @@ describe('GraphQL', () => {
   })
   it('loads profile again ', async done => {
     try {
+      timestamp()
       const profile = await gql.loadProfile(user.username!)
       expect(profile.hidden.expires.getTime()).to.equal(date.getTime())
       expect(profile.hidden.enabled).to.equal(true)
@@ -105,6 +106,7 @@ describe('GraphQL', () => {
   })
   it('unhide user', async done => {
     try {
+      timestamp()
       await gql.hideUser(false)
       done()
     } catch (e) {
@@ -113,6 +115,7 @@ describe('GraphQL', () => {
   })
   it('loads profile again ', async done => {
     try {
+      timestamp()
       const profile = await gql.loadProfile(user.username!)
       expect(profile.hidden.expires).to.be.null
       expect(profile.hidden.enabled).to.equal(false)
@@ -123,6 +126,7 @@ describe('GraphQL', () => {
   })
   it('loads other profile', async done => {
     try {
+      timestamp()
       const profile = await gql.loadProfile(user2.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
       expect(profile.id).to.equal(user2.username)
@@ -137,6 +141,7 @@ describe('GraphQL', () => {
 
   it('gets some bots', async done => {
     try {
+      timestamp()
       bot = await user.createBot()
       await bot.update({
         public: true,
@@ -171,6 +176,7 @@ describe('GraphQL', () => {
 
   it('check subscription arrive', async done => {
     try {
+      timestamp()
       await gql.subscribeBotVisitors()
       await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
       gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
@@ -193,6 +199,7 @@ describe('GraphQL', () => {
   })
   it('check subscription exit', async done => {
     try {
+      timestamp()
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
       when(
@@ -210,6 +217,7 @@ describe('GraphQL', () => {
   })
   it('load bot', async done => {
     try {
+      timestamp()
       const loaded = await gql.loadBot(bot.id, bot.server)
       expect(loaded.title).to.equal(bot.title)
       expect(loaded.geofence).to.equal(bot.geofence)
