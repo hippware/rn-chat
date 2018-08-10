@@ -3,7 +3,7 @@ import {Wocky, XmppTransport, IWocky, HybridTransport, GraphQLTransport} from '.
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
-import {when} from 'mobx'
+import {when, reaction} from 'mobx'
 const fs = require('fs')
 
 export function testFile() {
@@ -28,6 +28,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
     const xmppTransport = new XmppTransport(provider, 'testing')
     const gql = new GraphQLTransport('testing')
     const transport = new HybridTransport(xmppTransport, gql)
+
     // const provider = new XmppStropheV2(console.log)
     const phoneNumber =
       phoneNum ||
@@ -61,6 +62,14 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
     )
     console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()
+    reaction(
+      () => service.transport.notification,
+      async data => {
+        if (service.connected) {
+          console.log('ONNOTIFICATION FOR USER:', service.username, JSON.stringify(data))
+        }
+      }
+    )
     return service
   } catch (e) {
     console.error(e)
