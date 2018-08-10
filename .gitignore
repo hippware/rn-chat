@@ -57,6 +57,9 @@ android/app/libs
 # Bundle artifact
 *.jsbundle
 
+# Visual Studio Code
+.vscode/.react
+
 .tmp/
 .project 
 yarn-error.log
