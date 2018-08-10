@@ -4,12 +4,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.3.0 - 2018 Aug 9
+
 * Location Create - add photo (#2503)
-* Many navigation changes and improvements (Work in progress #2588)
-  * (PR #2605, PR #2611, PR #2617, PR #2618)
+* Many navigation changes and improvements (#2588)
+  * (PR #2605, PR #2611, PR #2617, PR #2618, PR #2622)
+  * [dev] restore LocationPrimer functionality (#2624)
 * Emoji and icon selector with correct keyboard handling (#2505, PR #2601)
 * Crash after "Next" tap during bot creation (#2600, PR #2610, PR #2620)
 * Crash after logout and bot creation (#2615)
+* [dev] re-add ErrorHandler (#2623)
+* Long press to create Location (bot) (#2578)
+* Address processing error for some bots (#2489)
+* Location Create - add note (#2502)
 
 # 3.2.0 - 2018 July 30
 
