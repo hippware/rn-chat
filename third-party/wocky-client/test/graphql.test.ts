@@ -15,9 +15,13 @@ let date: Date
 let user1phone: string
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
+function timestamp() {
+  console.log('TIME: ', new Date().toLocaleString())
+}
 describe('GraphQL', () => {
   it('get user1 credential via XMPP', async done => {
     try {
+      timestamp()
       user = await createXmpp()
       done()
     } catch (e) {
@@ -27,6 +31,7 @@ describe('GraphQL', () => {
 
   it('get user2 credentials via XMPP', async done => {
     try {
+      timestamp()
       user2 = await createXmpp()
       done()
     } catch (e) {
@@ -36,7 +41,7 @@ describe('GraphQL', () => {
 
   it('update profile', async done => {
     try {
-      user2 = await createXmpp()
+      timestamp()
       await waitFor(() => user.profile !== null && user.profile.phoneNumber !== null)
       user1phone = user.profile.phoneNumber
       await user.profile!.update({
