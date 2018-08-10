@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Animated, Keyboard} from 'react-native'
+import {Animated, Keyboard} from 'react-native'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react/native'
 
@@ -31,7 +31,7 @@ export default Component => {
     _keyboardWillShow = ({endCoordinates, duration}: any) => {
       this.keyboardShowing = true
       Animated.timing(this.keyboardHeight, {
-        toValue: endCoordinates.height,
+        toValue: -endCoordinates.height,
         duration,
       }).start()
     }
@@ -47,10 +47,17 @@ export default Component => {
 
     render() {
       return (
-        <View>
+        <Animated.View
+          style={{
+            transform: [
+              {
+                translateY: this.keyboardHeight,
+              },
+            ],
+          }}
+        >
           <Component {...this.props} keyboardShowing={this.keyboardShowing} />
-          <Animated.View style={{right: 0, left: 0, bottom: 0, height: this.keyboardHeight}} />
-        </View>
+        </Animated.View>
       )
     }
   }
