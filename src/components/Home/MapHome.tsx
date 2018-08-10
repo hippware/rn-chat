@@ -10,7 +10,6 @@ import {IHomeStore} from '../../store/HomeStore'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
 import commonStyles from '../styles'
-import CurrentLocationIndicator from '../map/CurrentLocationIndicator'
 import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
@@ -95,7 +94,7 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = (region: MapViewRegion) => {
     const {homeStore} = this.props
-    homeStore.setFocusedBotLocation(undefined)
+    homeStore.setFocusedLocation(undefined)
     this.region = region
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
@@ -108,12 +107,10 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {listMode, addBotsToList, setMapCenter} = this.props.homeStore!
+    const {addBotsToList, setMapCenter} = this.props.homeStore!
     setMapCenter(region)
-    if (listMode === 'home') {
-      const bots = await this.props.wocky.loadLocalBots(region)
-      addBotsToList('home', bots)
-    }
+    const bots = await this.props.wocky.loadLocalBots(region)
+    addBotsToList('home', bots)
   }
 
   createFromLongPress = ({nativeEvent: {coordinate}}) => {
@@ -166,11 +163,7 @@ export default class MapHome extends React.Component<IProps> {
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
         </MapView>
-        {creationMode ? (
-          <UberMarker />
-        ) : (
-          <CurrentLocationIndicator onPress={() => this.setCenterCoordinate(location as any)} />
-        )}
+        {creationMode && <UberMarker />}
       </View>
     )
   }

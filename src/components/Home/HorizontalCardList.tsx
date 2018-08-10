@@ -29,9 +29,10 @@ const cardMap = {
 }
 
 const translateYDefault = -13 * k
-const toggle = require('../../../images/homeToggle.png')
-const toggleOff = require('../../../images/homeToggleOff.png')
+
 const create = require('../../../images/create.png')
+const currentLocation = require('../../../images/currentLocationButton.png')
+const notificationsButton = require('../../../images/notificationsButton.png')
 
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
@@ -81,20 +82,33 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 }
 
-// TODO: Move ButtonColumn to separate file, make it 'dump' and do animation logic within Home.tscx?
-const ButtonColumn = inject('homeStore', 'navStore')(
+const ButtonColumn = inject('homeStore', 'navStore', 'locationStore')(
   observer(
-    ({homeStore, navStore}) =>
+    ({homeStore, navStore, locationStore}) =>
       navStore.scene !== 'botCompose' && (
         <View
           style={{
             position: 'absolute',
-            top: -150,
+            top: -150 * k, // TODO: make this styling more device-specific
             right: 10,
           }}
         >
-          <TouchableOpacity onPress={homeStore.toggleListMode} style={[styles.button, styles.pill]}>
-            <Image source={homeStore.listMode === 'home' ? toggle : toggleOff} />
+          <TouchableOpacity
+            onPress={() => {
+              if (locationStore.location) homeStore.setFocusedLocation(locationStore.location)
+            }}
+            style={[styles.button, styles.shadow]}
+          >
+            <Image source={currentLocation} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              Actions.createBot()
+            }}
+            style={styles.button}
+          >
+            <Image source={notificationsButton} />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -118,7 +132,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 15 * k,
   },
-  pill: {
+  shadow: {
     shadowColor: colors.PINK,
     shadowRadius: 5 * k,
     shadowOpacity: 0.5,
