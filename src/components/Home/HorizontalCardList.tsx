@@ -104,7 +104,7 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore')(
 
           <TouchableOpacity
             onPress={() => {
-              Actions.createBot()
+              Actions.notifications()
             }}
             style={styles.button}
           >
