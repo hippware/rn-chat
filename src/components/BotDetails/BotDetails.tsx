@@ -7,7 +7,7 @@ import {colors} from '../../constants'
 import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
 import {RText, Spinner} from '../common'
-// import AddBotPost from './AddBotPost'
+import AddBotPost from './AddBotPost'
 import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
@@ -80,12 +80,6 @@ export default class BotDetails extends React.Component<Props> {
     )
   }
 
-  // componentWillReceiveProps(props: Props) {
-  //   if (props.scale !== this.props.scale && this.list) {
-  //     this.list.scrollToOffset({x: 0, y: 0, animated: false})
-  //   }
-  // }
-
   renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
 
   renderSeparator = () => (
@@ -127,14 +121,15 @@ export default class BotDetails extends React.Component<Props> {
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
-          // keyExtractor={(item, index) => `${item.id} ${index}`}
           scrollEnabled={this.props.scrollable}
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
           bounces={false}
+          keyboardDismissMode="on-drag"
         />
         <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
           <NavBar bot={bot} />
         </Animated.View>
+        <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
       </View>
     )
   }
