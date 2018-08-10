@@ -16,10 +16,26 @@ let user1phone: string
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
 
 describe('GraphQL', () => {
-  it('get credentials via XMPP', async done => {
+  it('get user1 credential via XMPP', async done => {
     try {
       user = await createXmpp()
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('get user2 credentials via XMPP', async done => {
+    try {
       user2 = await createXmpp()
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('update profile', async done => {
+    try {
       await waitFor(() => user.profile !== null && user.profile.phoneNumber !== null)
       user1phone = user.profile.phoneNumber
       await user.profile!.update({
@@ -28,7 +44,14 @@ describe('GraphQL', () => {
         lastName: 'lname1',
         email: 'a@aa.com',
       })
-      // console.log('credentials', user.username, user.password)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('login via graphql and set user location', async done => {
+    try {
       gql = new GraphQLTransport('testing')
       await gql.login(user.username!, user.password!, host)
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
