@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
 type Props = {
   onClose: () => void
