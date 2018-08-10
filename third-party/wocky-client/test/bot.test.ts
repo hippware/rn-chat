@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {createXmpp, testFile, expectedImage, waitFor} from './support/testuser'
+import {createXmpp, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
 const fs = require('fs')
@@ -9,17 +9,30 @@ let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
 let user1phone: string, user2phone: string
 const icon = '\u00A9\uFE0F\u00A9'
 
-function timestamp() {
-  console.log('TIME: ', new Date().toLocaleString())
-}
 describe('BotStore', () => {
-  before(async done => {
-    timestamp()
+  it('create user1', async done => {
     try {
-      console.log('CREATE USER1')
+      timestamp()
       user1 = await createXmpp()
-      console.log('CREATE USER2')
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('create user2', async done => {
+    try {
+      timestamp()
       user2 = await createXmpp()
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('update profiles', async done => {
+    try {
+      timestamp()
       await waitFor(() => user1.profile !== null && user1.profile.phoneNumber !== null)
       await waitFor(() => user2.profile !== null && user2.profile.phoneNumber !== null)
       user1phone = user1.profile.phoneNumber
@@ -182,12 +195,20 @@ describe('BotStore', () => {
     }
   })
 
-  it('load subscribed bot with newly logged user2', async done => {
+  it('re-login user2', async done => {
     try {
       timestamp()
       await user2.logout()
       user2 = await createXmpp(null, user2phone)
-      await user2._subscribeBot(bot.id)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('load subscribed bot with newly logged user2', async done => {
+    try {
+      timestamp()
       const loaded = await user2.loadBot(bot.id, bot.server)
       await waitFor(() => !loaded.loading)
       expect(loaded.owner).to.be.not.null
