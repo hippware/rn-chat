@@ -209,6 +209,7 @@ describe('BotStore', () => {
   it('load subscribed bot with newly logged user2', async done => {
     try {
       timestamp()
+      await user2._subscribeBot(bot.id)
       const loaded = await user2.loadBot(bot.id, bot.server)
       await waitFor(() => !loaded.loading)
       expect(loaded.owner).to.be.not.null
