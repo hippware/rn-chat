@@ -88,7 +88,11 @@ export default class BotDetails extends React.Component<Props> {
 
   renderItem = ({item}) => <BotPostCard item={item} bot={this.bot!} />
 
-  renderSeparator = () => <Separator />
+  renderSeparator = () => (
+    <View style={{backgroundColor: 'white'}}>
+      <Separator />
+    </View>
+  )
 
   render() {
     const {bot} = this

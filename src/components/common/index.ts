@@ -9,6 +9,7 @@ import ProgressiveImage from './ProgressiveImage'
 import Separator from './Separator'
 import BottomButton from './BottomButton'
 import CloseButton from './CloseButton'
+import ProfileStack from './ProfileStack'
 
 export {
   RText,
@@ -22,4 +23,5 @@ export {
   Separator,
   BottomButton,
   CloseButton,
+  ProfileStack,
 }

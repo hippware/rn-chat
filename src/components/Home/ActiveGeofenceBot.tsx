@@ -4,10 +4,9 @@ import {View, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
 import BotBubble from '../map/BotBubble'
-import VisitorHeads from './VisitorHeads'
 import {IBot, IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
-import {RText} from '../common'
+import {RText, ProfileStack} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
@@ -25,7 +24,7 @@ type Props = {
 class ActiveBot extends React.Component<Props> {
   goToBot = (): void => {
     Actions.botDetails({botId: this.props.bot.id})
-    setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
+    // setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
   }
 
@@ -56,7 +55,13 @@ class ActiveBot extends React.Component<Props> {
               {bot.title}
             </RText>
           </TouchableOpacity>
-          <VisitorHeads bot={bot} />
+
+          {/* <ProfileStack profiles={bot.visitors.list} /> */}
+          <ProfileStack
+            style={{position: 'absolute', top: -15, right: -8}}
+            firstProfile={bot.visitors.list[0]}
+            stackSize={bot.visitorsSize}
+          />
         </View>
       </View>
     ) : null
