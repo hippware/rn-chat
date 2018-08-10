@@ -10,6 +10,7 @@ import Separator from './Separator'
 import BottomButton from './BottomButton'
 import CloseButton from './CloseButton'
 import ProfileStack from './ProfileStack'
+import DraggablePopupList from './DraggablePopupList'
 
 export {
   RText,
@@ -24,4 +25,5 @@ export {
   BottomButton,
   CloseButton,
   ProfileStack,
+  DraggablePopupList,
 }
