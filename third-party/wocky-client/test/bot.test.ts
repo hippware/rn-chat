@@ -9,10 +9,16 @@ let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
 let user1phone: string, user2phone: string
 const icon = '\u00A9\uFE0F\u00A9'
 
+function timestamp() {
+  console.log('TIME: ', new Date().toLocaleString())
+}
 describe('BotStore', () => {
   before(async done => {
+    timestamp()
     try {
+      console.log('CREATE USER1')
       user1 = await createXmpp()
+      console.log('CREATE USER2')
       user2 = await createXmpp()
       await waitFor(() => user1.profile !== null && user1.profile.phoneNumber !== null)
       await waitFor(() => user2.profile !== null && user2.profile.phoneNumber !== null)
@@ -39,6 +45,7 @@ describe('BotStore', () => {
   })
 
   it('create bot', async done => {
+    timestamp()
     try {
       bot = await user1.createBot()
       expect(bot.icon).to.be.empty
@@ -51,32 +58,38 @@ describe('BotStore', () => {
   })
 
   it('update bot', async done => {
+    timestamp()
     bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
-    bot.update({
+    await bot.update({
       icon,
       public: false,
       location: {latitude: 1.1, longitude: 2.1},
       title: 'Test bot',
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
-    await waitFor(() => bot.updated)
     expect(bot.icon).to.be.equal(icon)
     expect(bot.isNew).to.be.false
     expect(bot.isPublic).to.be.false
     expect(bot.title).to.be.equal('Test bot')
     expect(bot.location!.latitude).to.be.equal(1.1)
     expect(bot.location!.longitude).to.be.equal(2.1)
-    done()
+    setTimeout(done, 50)
   })
 
-  it('share bot', () => {
+  it('share bot', async done => {
+    timestamp()
     bot.shareToFollowers('hello followers!')
+    setTimeout(done, 50)
   })
 
   it('update bot location', async done => {
+    timestamp()
     try {
-      bot.update({public: true, location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
-      await waitFor(() => bot.updated)
+      await bot.update({
+        public: true,
+        location: {latitude: 1.3, longitude: 2.3},
+        title: 'Test bot!',
+      })
       expect(bot.isNew).to.be.false
       expect(bot.isPublic).to.be.true
       expect(bot.title).to.be.equal('Test bot!')
@@ -89,12 +102,13 @@ describe('BotStore', () => {
   })
 
   it('update bot description', async done => {
-    bot.update({description: 'New description'})
-    await waitFor(() => bot.updated)
+    timestamp()
+    await bot.update({description: 'New description'})
     expect(bot.description).to.be.equal('New description')
     done()
   })
   it('create bot posts', async done => {
+    timestamp()
     try {
       await bot.posts.load()
       expect(bot.posts.list.length).to.be.equal(0)
@@ -111,6 +125,7 @@ describe('BotStore', () => {
   })
 
   it('list bots', async done => {
+    timestamp()
     try {
       bot.posts.refresh()
       expect(bot.posts.list.length).to.be.equal(0)
@@ -124,13 +139,13 @@ describe('BotStore', () => {
 
   it('upload cover image', async done => {
     try {
+      timestamp()
       expect(bot.image).to.be.null
       await bot.upload(testFile())
       expect(bot.image).to.be.not.null
       expect(bot.uploaded).to.be.true
       expect(bot.uploading).to.be.false
       await bot.save()
-      await waitFor(() => bot.updated)
       await waitFor(() => bot.image!.source !== null)
     } catch (e) {
       done(e)
@@ -149,6 +164,7 @@ describe('BotStore', () => {
 
   it('load bot', async done => {
     try {
+      timestamp()
       const loaded = await user2.loadBot(bot.id, bot.server)
       await waitFor(() => !loaded.loading)
       expect(loaded.icon).to.be.equal(icon)
@@ -168,6 +184,7 @@ describe('BotStore', () => {
 
   it('load subscribed bot with newly logged user2', async done => {
     try {
+      timestamp()
       await user2.logout()
       user2 = await createXmpp(null, user2phone)
       await user2._subscribeBot(bot.id)
@@ -193,19 +210,20 @@ describe('BotStore', () => {
     }
   })
 
-  it('create bot2', async () => {
-    bot2 = await user1.createBot()
-    expect(bot2.isNew).to.be.true
-  })
-
-  it('update bot2', async done => {
+  it('create bot2', async done => {
     try {
-      bot2.update({public: true, location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2'})
-      await waitFor(() => bot2.updated)
+      timestamp()
+      bot2 = await user1.createBot()
+      expect(bot2.isNew).to.be.true
+      await bot2.update({
+        public: true,
+        location: {latitude: 1.2, longitude: 2.2},
+        title: 'Test bot2',
+      })
       expect(bot2.title).to.be.equal('Test bot2')
       expect(bot2.location!.latitude).to.be.equal(1.2)
       expect(bot2.location!.longitude).to.be.equal(2.2)
-      done()
+      setTimeout(done, 50)
     } catch (e) {
       done(e)
     }
@@ -229,6 +247,7 @@ describe('BotStore', () => {
 
   it('get local bots 1', async done => {
     try {
+      timestamp()
       const res = await user1.loadLocalBots({
         latitude: 1.2,
         longitude: 2.2,
@@ -243,6 +262,7 @@ describe('BotStore', () => {
   })
   it('get local bots 2', async done => {
     try {
+      timestamp()
       const res = await user1.loadLocalBots({
         latitude: 3.2,
         longitude: 4.2,
@@ -257,6 +277,7 @@ describe('BotStore', () => {
   })
   it('list own bots', async done => {
     try {
+      timestamp()
       await user1.profile!.ownBots.load()
       expect(user1.profile!.ownBots.list.length).to.be.greaterThan(1)
       expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
@@ -272,13 +293,16 @@ describe('BotStore', () => {
   })
 
   it('list subscribed bots for user2', async done => {
+    timestamp()
     await user2.profile!.subscribedBots.load()
     expect(user2.profile!.subscribedBots.list.length).to.be.equal(0)
     done()
   })
 
   it('subscribe user2 for first bot', async done => {
+    timestamp()
     try {
+      timestamp()
       await user2._subscribeBot(bot.id)
       user2.profile!.subscribedBots.refresh()
       await user2.profile!.subscribedBots.load()
@@ -293,6 +317,7 @@ describe('BotStore', () => {
   })
 
   it('unsubscribe user2 for first bot', async done => {
+    timestamp()
     try {
       await user2.profile!.subscribedBots.list[0].unsubscribe()
       user2.profile!.subscribedBots.refresh()
@@ -304,6 +329,7 @@ describe('BotStore', () => {
     }
   })
   it('subscribe again', async done => {
+    timestamp()
     try {
       await user2._subscribeBot(bot.id)
       done()
@@ -312,11 +338,19 @@ describe('BotStore', () => {
     }
   })
 
-  it('change first bot and verify updating for second user', async done => {
+  it('change first bot', async done => {
+    timestamp()
     try {
       expect(user2bot.title).to.be.equal('Test bot!')
       await bot.update({title: 'Test bot!!'})
-      await waitFor(() => !user2bot.loading)
+      setTimeout(done, 50)
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('verify updating for second user', async done => {
+    timestamp()
+    try {
       await waitFor(() => user2bot.title === 'Test bot!!')
       done()
     } catch (e) {
@@ -324,6 +358,7 @@ describe('BotStore', () => {
     }
   })
   it('change first bot description and expect new item update', async done => {
+    timestamp()
     try {
       expect(user2bot.description).to.be.equal('New description')
       await bot.update({description: 'New description2'})
@@ -354,11 +389,18 @@ describe('BotStore', () => {
     }
   })
 
-  it('logout user2 and login again and verify HS', async done => {
+  it('logout user2', async done => {
     try {
       await user2.logout()
       expect(user2.events.list.length).to.be.equal(0)
       expect(user2.updates.length).to.be.equal(0)
+      setTimeout(done, 50)
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('login user2 again and verify HS', async done => {
+    try {
       user2 = await createXmpp(null, user2phone)
       await waitFor(() => user2.events.list.length === 3)
       expect(user2.events.list[0].bot.title).to.be.equal('Test bot!!')
@@ -382,26 +424,53 @@ describe('BotStore', () => {
   })
   it('create bot3', async done => {
     try {
+      timestamp()
       bot3 = await user1.createBot()
       await bot3.update({
         public: true,
         title: 'Test bot3',
         location: {latitude: 1.1, longitude: 2.1},
       })
+      setTimeout(done, 50)
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('expect updates', async done => {
+    try {
+      timestamp()
       await waitFor(() => user2.updates.length === 2)
       done()
     } catch (e) {
       done(e)
     }
   })
-  it('check HS live notifications', async done => {
+  it('hide bot', async done => {
     try {
+      timestamp()
       const user2bot3 = (user2.updates[0] as any).bot
       expect(user2bot3.owner.id).to.be.equal(user1.username)
       bot3.setPublic(false)
       await bot3.save()
-      // await delete notification that will delete previously created HS bot creation notifcation
+      setTimeout(done, 50)
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('check delete HS notification', async done => {
+    try {
+      timestamp()
       await waitFor(() => user2.updates.length === 1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('check create HS notification', async done => {
+    try {
+      timestamp()
       bot3.shareToFollowers('hello followers2!')
       await waitFor(() => user2.updates.length === 2)
       done()
@@ -412,8 +481,9 @@ describe('BotStore', () => {
 
   it('incorporate updates and check bot loading', async done => {
     try {
-      expect(user2.events.list.length).to.be.equal(3)
-      await user2.incorporateUpdates()
+      timestamp()
+      await waitFor(() => user2.events.list.length === 3)
+      user2.incorporateUpdates()
       expect(user2.updates.length).to.be.equal(0)
       expect(user2.events.list.length).to.be.equal(2)
       const user2bot3 = user2.events.list[0].bot

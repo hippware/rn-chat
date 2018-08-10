@@ -36,6 +36,7 @@ describe('GraphQL', () => {
 
   it('update profile', async done => {
     try {
+      user2 = await createXmpp()
       await waitFor(() => user.profile !== null && user.profile.phoneNumber !== null)
       user1phone = user.profile.phoneNumber
       await user.profile!.update({
