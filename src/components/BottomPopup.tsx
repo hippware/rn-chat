@@ -1,29 +1,26 @@
 import React from 'react'
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Image, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
 
 type Props = {
-  back?: boolean
   onClose: () => void
   children: any
-  onLayout?: ({nativeEvent}) => void
 }
 
-export default class BottomPopup extends React.Component<Props> {
-  render() {
-    const {onClose, children} = this.props
-    return (
-      <View onLayout={this.props.onLayout} style={{flex: 1}}>
-        <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
-        <View style={{flex: 1}}>
-          <TouchableOpacity style={styles.close} onPress={onClose}>
-            <Image source={require('../../images/popupClose.png')} />
-          </TouchableOpacity>
-          {children}
-        </View>
+const BottomPopup = ({onClose, children}: Props) => {
+  return (
+    <View style={{flex: 1}}>
+      <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
+      <View style={{flex: 1}}>
+        <TouchableOpacity style={styles.close} onPress={onClose}>
+          <Image source={require('../../images/popupClose.png')} />
+        </TouchableOpacity>
+        {children}
       </View>
-    )
-  }
+    </View>
+  )
 }
+
+export default BottomPopup
 
 const styles = StyleSheet.create({
   absolute: {

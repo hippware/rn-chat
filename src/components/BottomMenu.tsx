@@ -16,6 +16,7 @@ import Avatar from './common/Avatar'
 import {k} from './Global'
 import {IWocky} from 'wocky-client'
 import InvisibleSwitch from './InvisibleSwitch'
+import {RText} from './common'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -61,12 +62,11 @@ const MenuItem = ({
 }: IMenuItemProps) => (
   <MenuItemWrapper testID={testID} stayOpen={stayOpen} onPress={onPress}>
     <View style={[styles.menuItem, style]}>
-      <View style={styles.menuImageContainer}>
-        {icon || (image && <Image source={image} resizeMode="contain" style={styles.menuImage} />)}
-      </View>
+      {/* <View style={styles.menuImageContainer}> */}
+      {icon || (image && <Image source={image} resizeMode="contain" style={styles.menuImage} />)}
+      {/* </View> */}
       <View style={[{flex: 1, flexDirection: 'row', alignItems: 'center'}, innerStyle]}>
         {children}
-        {!!onPress && <Image source={require('../../images/menuArrow.png')} />}
       </View>
     </View>
   </MenuItemWrapper>
@@ -87,38 +87,45 @@ export default class BottomMenu extends React.Component<Props> {
     }
     return (
       <BottomPopup onClose={Actions.pop}>
-        <MenuItemWrapper style={{height: 129}} testID="myAccountMenuItem">
-          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Avatar
-              size={74}
-              profile={profile}
-              style={{borderWidth: 0}}
-              borderColor={colors.PINK}
-              tappable
-            />
-            <Text style={styles.displayName}>@{profile.handle}</Text>
-          </View>
+        <MenuItemWrapper
+          style={{marginTop: 25 * k, alignItems: 'center', justifyContent: 'center'}}
+          testID="myAccountMenuItem"
+        >
+          <Avatar
+            size={74}
+            profile={profile}
+            style={{borderWidth: 0}}
+            borderColor={colors.PINK}
+            tappable
+          />
+          <RText color={colors.PINK} weight="Bold" size={16} style={styles.displayName}>
+            @{profile.handle}
+          </RText>
         </MenuItemWrapper>
-        <MenuItem
-          onPress={() => Actions.friendsMain({profile})}
-          image={require('../../images/menuFriends.png')}
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 30 * k,
+            marginBottom: 50 * k,
+            justifyContent: 'space-around',
+          }}
         >
-          <Text style={styles.text}>Friends</Text>
-        </MenuItem>
-        <MenuItem onPress={() => Actions.chats()} image={require('../../images/menuMessages.png')}>
-          <Text style={styles.text}>Messages</Text>
-        </MenuItem>
-        <MenuItem
-          onPress={() => Actions.botsScene()}
-          image={require('../../images/menuFavorites.png')}
-        >
-          <Text style={styles.text}>Favorites</Text>
-        </MenuItem>
-        <MenuItem image={require('../../images/menuInvisible.png')}>
-          <Text style={styles.text}>Invisible</Text>
-          <InvisibleSwitch />
-        </MenuItem>
-        <View style={{height: 30, backgroundColor: 'white'}} />
+          <MenuItem
+            onPress={() => Actions.friendsMain({profile})}
+            image={require('../../images/menuFriends.png')}
+          >
+            <RText style={styles.text}>Friends</RText>
+          </MenuItem>
+          <MenuItem
+            onPress={() => Actions.chats()}
+            image={require('../../images/menuMessages.png')}
+          >
+            <RText style={styles.text}>Messages</RText>
+          </MenuItem>
+          <MenuItem image={require('../../images/menuInvisible.png')}>
+            <RText style={styles.text}>Invisible</RText>
+          </MenuItem>
+        </View>
       </BottomPopup>
     )
   }
@@ -126,30 +133,19 @@ export default class BottomMenu extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   text: {
-    flex: 1,
     color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18,
+    fontSize: 14,
+    textAlign: 'center',
   },
   menuItem: {
-    height: 50 * k,
-    marginHorizontal: 50 * k,
-    flexDirection: 'row',
+    width: 75 * k,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  menuImageContainer: {width: 50 * k},
-  menuImage: {width: 28, height: 23},
-  viewAccount: {
-    color: colors.addAlpha(colors.WHITE, 0.57),
-    fontFamily: 'Roboto-Regular',
-    fontSize: 12,
-  },
+  menuImage: {width: 34, height: 34, marginBottom: 8 * k},
   displayName: {
     padding: 10,
-    color: colors.PINK,
-    fontFamily: 'Roboto-Bold',
-    fontSize: 16,
   },
   backgroundImage: {
     position: 'absolute',
