@@ -5,9 +5,14 @@ import {IWocky} from '../src/store/Wocky'
 
 let user1: IWocky, user2: IWocky, user3: IWocky
 
+function timestamp() {
+  console.log('TIME: ', new Date().toLocaleString())
+}
+
 describe('ProfileStore', () => {
   it('create first user', async done => {
     try {
+      timestamp()
       user1 = await createXmpp(31)
       await waitFor(() => user1.profile !== null)
       await user1.profile!.update({
@@ -23,6 +28,7 @@ describe('ProfileStore', () => {
   })
   it('create second user', async done => {
     try {
+      timestamp()
       user2 = await createXmpp(32)
       await waitFor(() => user2.profile !== null)
       await user2.profile!.update({
@@ -38,6 +44,7 @@ describe('ProfileStore', () => {
   })
   it('create third user', async done => {
     try {
+      timestamp()
       user3 = await createXmpp(33)
       await waitFor(() => user3.profile !== null)
       await user3.profile!.update({handle: 'abc3', firstName: 'name3', email: 'a3@aa.com'})
