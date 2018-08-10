@@ -5,7 +5,7 @@ import {observer} from 'mobx-react/native'
 
 export default Component => {
   @observer
-  class KeyboardAwareView extends React.Component {
+  class KeyboardAwareView extends React.Component<any> {
     @observable keyboardShowing: boolean = false
     keyboardHeight = new Animated.Value(0)
     keyboardDidShowListener: any
