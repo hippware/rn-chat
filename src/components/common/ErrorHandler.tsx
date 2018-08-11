@@ -48,7 +48,7 @@ class ErrorHandler extends React.Component<Props> {
     // reset nav to 'reload' screen while resetting cache (prevent errors from screens/components listening to MST observables)
     Actions.reset('reload')
     await this.props.store.resetCache()
-    Actions.reset('root')
+    Actions.logged()
   }
 
   render() {

@@ -15,7 +15,7 @@ const DebugScreen = inject('store')(
           // reset nav to 'reload' screen while resetting cache (prevent errors from screens/components listening to MST observables)
           Actions.reset('reload')
           await store.resetCache()
-          Actions.reset('root')
+          Actions.logged()
         }}
       >
         RESET CACHE

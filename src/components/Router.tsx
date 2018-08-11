@@ -150,7 +150,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="logout" on={store.logout} success="onboarding" />
           </Stack>
           <Lightbox>
-            <Stack initial hideNavBar>
+            <Stack initial hideNavBar key="main">
               <Stack hideNavBar>
                 <Stack key="onboarding" navTransparent type="replace">
                   <Scene key="slideshow" component={OnboardingSlideshow} onSignIn="signIn" onBypass="testRegisterScene" />
@@ -193,7 +193,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                       <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                     ]}
-                    <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone />
+                    {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                   </Stack>
                   <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
                   <Scene
@@ -210,6 +210,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 </Modal>
               </Stack>
             </Stack>
+            <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
             <Scene key="locationPrimer" component={LocationPrimer} />
