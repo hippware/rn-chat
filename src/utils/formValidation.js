@@ -107,7 +107,7 @@ export class ValidatableProfile {
       !!this.handle.isValid &&
       !!this.firstName.isValid &&
       !!this.lastName.isValid &&
-      (!this.email.value || !!this.email.isValid)
+      !!this.email.isValid
     )
   }
 
