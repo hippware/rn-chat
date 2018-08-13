@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Location Profile - tappable "Who's Here" CTA (#2564)
+* Bot/Location Posts (#2630)
+* Upgrade to latest RNRF and react-navigation
+* Changes to unit tests. Add timestamps, split tests, etc.
+* [dev] fix "Visitors" nav (#2638)
+
 # 3.3.0 - 2018 Aug 9
 
 * Location Create - add photo (#2503)
