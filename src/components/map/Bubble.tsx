@@ -28,21 +28,19 @@ type Props = {
 
 const defaultSize = 58
 
-@observer
-export default class Bubble extends React.Component<Props> {
-  render() {
-    const {
-      image,
-      text,
-      showLoader,
-      children,
-      style,
-      imageStyle,
-      size,
-      triangleColor,
-      outerStyle,
-      fontIcon,
-    } = this.props
+const Bubble = observer(
+  ({
+    image,
+    text,
+    showLoader,
+    children,
+    style,
+    imageStyle,
+    size,
+    triangleColor,
+    outerStyle,
+    fontIcon,
+  }: Props) => {
     const theSize = size || defaultSize
 
     return (
@@ -90,7 +88,9 @@ export default class Bubble extends React.Component<Props> {
       </View>
     )
   }
-}
+)
+
+export default Bubble
 
 const styles = StyleSheet.create({
   bubble: {
