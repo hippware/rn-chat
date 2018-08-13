@@ -7,7 +7,7 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k, width} from '../Global'
+import {k, width, isIphoneX} from '../Global'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
@@ -51,7 +51,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
       <Animated.View
         style={{
           backgroundColor: 'white',
-          paddingTop: 23 * k,
+          paddingTop: isIphoneX ? 28 * k : 23 * k,
           shadowColor: colors.GREY,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 1,
