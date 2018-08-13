@@ -7,8 +7,7 @@ import {Observer, observer, inject} from 'mobx-react/native'
 import {IBot} from 'wocky-client'
 import IconStore from '../../store/IconStore'
 
-const itemSize = 53
-
+const itemSize = 63
 type Props = {
   style?: ViewStyle
   bot: IBot
