@@ -33,7 +33,7 @@ export default class DraggablePopupList extends React.Component<IProps<any>> {
   private headerComponent = () => (
     <View>
       <TouchThroughView style={{width, height: height / 2}} />
-      <BottomPopup onClose={Actions.pop}>
+      <BottomPopup onClose={() => Actions.popTo('home')}>
         <View
           style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
         >
