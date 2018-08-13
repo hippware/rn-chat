@@ -54,7 +54,7 @@ const Bubble = observer(
             />
           ) : image ? (
             <Image
-              style={[{width: theSize, height: theSize}, imageStyle]}
+              style={[{width: '100%', height: '100%', borderRadius: 5}, imageStyle]}
               resizeMode="contain"
               source={image}
             />
