@@ -50,7 +50,8 @@ export default class HorizontalCardList extends React.Component<Props, State> {
       }).start()
     }
 
-    if (newProps.index !== this.props.index) {
+    if (newProps.index !== this.props.index && newProps.index !== this.list.currentIndex) {
+      // console.log('& snap', newProps.index, this.list.currentIndex)
       this.list.snapToItem(newProps.index, true, false)
     }
   }
