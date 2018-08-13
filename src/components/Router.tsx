@@ -48,6 +48,7 @@ import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
 import BotCompose from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
+import Notifications from './Notifications'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -177,6 +178,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="botEdit" component={BotCompose} edit back />
                       <Scene key="editNote" component={EditNote} back />
                       <Scene key="camera" component={Camera} />
+                      <Scene key="notifications" component={Notifications} draggables />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />

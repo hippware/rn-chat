@@ -53,7 +53,6 @@ export type ICard = typeof Card.Type
 
 const HomeStore = types
   .model('HomeStore', {
-    listMode: 'home',
     fullScreenMode: false,
     creationMode: false,
     discoverList: types.optional(types.array(Card), []),
@@ -68,20 +67,18 @@ const HomeStore = types
   .views(self => ({
     // return the list for current mode
     get list(): ICard[] {
-      return self.creationMode
-        ? []
-        : self.listMode === 'home' ? self.homeBotList : self.discoverList
+      return self.creationMode ? [] : self.homeBotList
     },
     // return index for the current mode
     get index(): number {
-      return self.listMode === 'home' ? self.homeBotIndex : self.discoverIndex
+      return self.homeBotIndex
     },
   }))
   .actions(self => ({
     setCreationMode(value) {
       self.creationMode = value
     },
-    setFocusedBotLocation(location) {
+    setFocusedLocation(location) {
       if (!location) {
         self.focusedBotLocation = null
       } else {
@@ -104,19 +101,14 @@ const HomeStore = types
     // sets new index for the current mode, deselects previously selected bot and select new one.
     setIndex: (index: number): void => {
       self.fullScreenMode = false
-      if (self.listMode === 'home') {
-        self.homeBotList[self.homeBotIndex].setSelected(false)
-        self.homeBotIndex = index
-      } else {
-        self.discoverList[self.discoverIndex].setSelected(false)
-        self.discoverIndex = index
-      }
+      self.homeBotList[self.homeBotIndex].setSelected(false)
+      self.homeBotIndex = index
       if (self.list.length) {
         // select card
         self.list[self.index].setSelected(true)
         // change map center if bot card is selected
         if (getType(self.list[self.index]) === BotCard) {
-          self.setFocusedBotLocation((self.list[self.index] as IBotCard).bot.location)
+          self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
         }
       }
     },
@@ -135,11 +127,6 @@ const HomeStore = types
       })
     },
     toggleListMode: (): void => {
-      if (self.listMode === 'discover') {
-        self.listMode = 'home'
-      } else {
-        self.listMode = 'discover'
-      }
       self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
       self.fullScreenMode = false
     },

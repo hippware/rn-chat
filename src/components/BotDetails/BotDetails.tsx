@@ -1,8 +1,8 @@
 import React from 'react'
-import {View, FlatList, Text, Image, Animated} from 'react-native'
+import {View, Text, Image, Animated} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-import {k, width, height} from '../Global'
+import {k, height} from '../Global'
 import {colors} from '../../constants'
 import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
@@ -12,6 +12,7 @@ import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
 import NavBar from './BotDetailsNavBar'
+import {DraggablePopupList} from '../common/'
 
 type Props = {
   botId: string
@@ -68,8 +69,6 @@ export default class BotDetails extends React.Component<Props> {
     }, 7000)
   }
 
-  _headerComponent = () => <Header bot={this.bot!} {...this.props} />
-
   scrollToEnd = () => {
     when(
       () => this.bot!.posts.finished,
@@ -106,9 +105,8 @@ export default class BotDetails extends React.Component<Props> {
     })
 
     return (
-      <View style={{width, height}}>
-        <FlatList
-          style={{flex: 1}}
+      <View>
+        <DraggablePopupList
           data={this.bot ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
@@ -117,7 +115,7 @@ export default class BotDetails extends React.Component<Props> {
           }}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}
-          ListHeaderComponent={this._headerComponent}
+          headerInner={<Header bot={this.bot!} {...this.props} />}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
