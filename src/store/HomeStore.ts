@@ -56,7 +56,6 @@ const HomeStore = types
     fullScreenMode: false,
     creationMode: false,
     discoverList: types.optional(types.array(Card), []),
-    // homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     discoverIndex: 0,
     homeBotIndex: 0,
@@ -126,10 +125,10 @@ const HomeStore = types
         }
       })
     },
-    toggleListMode: (): void => {
-      self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
-      self.fullScreenMode = false
-    },
+    // toggleListMode: (): void => {
+    //   self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
+    //   self.fullScreenMode = false
+    // },
     toggleFullscreen: () => {
       self.fullScreenMode = !self.fullScreenMode
     },
