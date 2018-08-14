@@ -9,6 +9,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Upgrade to latest RNRF and react-navigation
 * Changes to unit tests. Add timestamps, split tests, etc.
 * [dev] fix "Visitors" nav (#2638)
+* Changes to menu (#2582)
+* Fix crash on cache reset (PR #2655)
+* Notifications list placeholder (PR #2656)
+  * Notifications Screen - UI only (#2652)
+  * Remove toggle, update to latest mock (#2647)
 
 # 3.3.0 - 2018 Aug 9
 
