@@ -22,13 +22,13 @@ const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, text
       {stackSize > 1 && (
         <View
           style={{
-            height: size * k,
-            width: size * k,
-            borderRadius: size * k / 2,
+            height: size,
+            width: size,
+            borderRadius: size / 2,
             backgroundColor: colors.PINK,
             position: 'absolute',
             right: 0,
-            borderWidth: 2 * k,
+            borderWidth: 2,
             borderColor: colors.WHITE,
             alignItems: 'center',
             justifyContent: 'center',
@@ -42,9 +42,10 @@ const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, text
       <Avatar
         profile={firstProfile}
         tappable={false}
-        size={size}
+        size={size / k}
         hideDot
         style={{marginRight: stackSize > 1 ? size * 0.75 : 0}}
+        fontSize="small"
       />
     </View>
   ) : null

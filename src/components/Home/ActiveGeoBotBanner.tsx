@@ -7,7 +7,7 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k, width} from '../Global'
+import {k, width, isIphoneX} from '../Global'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
@@ -51,7 +51,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
       <Animated.View
         style={{
           backgroundColor: 'white',
-          paddingTop: 23 * k,
+          paddingTop: isIphoneX ? 28 * k : 23 * k,
           shadowColor: colors.GREY,
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 1,
@@ -122,15 +122,18 @@ const placeholderItems = [
 const foot = require('../../../images/footIconWhite.png')
 const lightPink = addAlpha(colors.PINK, 0.15)
 
-const PlaceholderNew = () => (
-  <TouchableOpacity style={styles.outer} onPress={() => Actions.geoHeaderPrimer()}>
-    <Bubble image={foot} imageStyle={{width: 20, height: 24}} size={50} />
-    <View style={styles.newDot} />
-    <RText color={colors.PINK} size={13} style={{textAlign: 'center'}}>
-      New!
-    </RText>
-  </TouchableOpacity>
-)
+const PlaceholderNew = () => {
+  return (
+    <TouchableOpacity style={styles.outer} onPress={() => Actions.geoHeaderPrimer()}>
+      <Bubble image={foot} imageStyle={{width: 20, height: 24}} size={50} gradient>
+        <View style={styles.newDot} />
+      </Bubble>
+      <RText color={colors.PINK} size={13} style={{textAlign: 'center'}}>
+        New!
+      </RText>
+    </TouchableOpacity>
+  )
+}
 
 const Placeholder = () => (
   <View style={styles.outer}>
@@ -163,14 +166,13 @@ const styles = StyleSheet.create({
   },
   newDot: {
     position: 'absolute',
-    top: 11,
-    right: 17 * k, // TODO: adjust this value for different view sizes
+    top: -5,
+    right: -5,
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: dotWidth / 2,
     width: 10,
     height: 10,
     backgroundColor: colors.GOLD,
-    zIndex: 1000,
   },
 })
