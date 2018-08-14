@@ -14,6 +14,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Notifications list placeholder (PR #2656)
   * Notifications Screen - UI only (#2652)
   * Remove toggle, update to latest mock (#2647)
+* HS Redesign - Presence Widget (Rework #2468)
+* Horizontal list fixes (PR #2661)
+  * Card Alignment shifts (#2635), Card view adjustments (#2649)
+  * Disappearing Cards (#2650)
+* User is able to create user profile without an email address (#2634)
+* Deep linking with location/bot share broken (#2637)
+* Pins without cover image should have icon (#2644)
 
 # 3.3.0 - 2018 Aug 9
 
