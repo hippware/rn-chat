@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'row',
     padding: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   textInput: {
     alignSelf: 'center',
@@ -191,7 +190,6 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingTop: 0,
     paddingHorizontal: 11,
-    // borderWidth: 1,
   },
   textInputDay: {
     color: colors.DARK_PURPLE,
