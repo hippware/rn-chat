@@ -215,5 +215,6 @@ const styles = StyleSheet.create({
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 16 * k,
+    marginTop: 8 * k,
   },
 })
