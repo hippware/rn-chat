@@ -13,6 +13,7 @@ import IconSelector from './IconSelector'
 import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
 import EmojiSelector from 'react-native-emoji-selector'
+import LinearGradient from 'react-native-linear-gradient'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -75,6 +76,11 @@ export class BotCompose extends React.Component<Props> {
   }
 
   render() {
+    const start = {x: 0, y: 0.5}
+    const end = {x: 1, y: 0.5}
+    const theColors = this.saveable
+      ? ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
+      : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
         <IconSelector onSnap={this.onSnap} bot={this.bot} key="1" />,
@@ -114,18 +120,15 @@ export class BotCompose extends React.Component<Props> {
                 </View>
               )}
               <TouchableOpacity
-                style={{
-                  width: '100%',
-                  backgroundColor: this.saveable ? colors.PINK : colors.DARK_GREY, // TODO: gradient background
-                  paddingVertical: 15 * k,
-                  alignItems: 'center',
-                }}
+                style={{width: '100%'}}
                 disabled={!this.saveable}
                 onPress={this.save}
               >
-                <RText color="white" size={15}>
-                  Pin Location
-                </RText>
+                <LinearGradient start={start} end={end} colors={theColors} style={styles.gradient}>
+                  <RText color="white" size={15}>
+                    Pin Location
+                  </RText>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
           </View>
@@ -222,5 +225,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16 * k,
     marginTop: 8 * k,
+  },
+  gradient: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    paddingVertical: 15 * k,
+    alignItems: 'center',
   },
 })
