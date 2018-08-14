@@ -39,6 +39,8 @@ export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable uploadingPhoto: boolean = false
+  @observable text: string = ''
+  @observable icon: string
   controls: any
   botTitle: any
   note: any
@@ -47,7 +49,9 @@ export class BotCompose extends React.Component<Props> {
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
+    this.icon = this.bot.icon
     this.props.iconStore.setIcon(this.bot.icon)
+    this.text = this.bot.title
 
     reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
@@ -62,7 +66,7 @@ export class BotCompose extends React.Component<Props> {
 
   @computed
   get saveable() {
-    return this.bot && this.bot.title && this.bot.title !== '' && this.bot.icon
+    return this.text !== '' && this.icon
   }
 
   onEmojiSelected = e => {
@@ -73,6 +77,7 @@ export class BotCompose extends React.Component<Props> {
     if (this.botTitle) {
       this.botTitle.blur()
     }
+    this.icon = this.props.iconStore.icon
   }
 
   render() {
@@ -81,7 +86,7 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} bot={this.bot} key="1" />,
+        <IconSelector onSnap={this.onSnap} key="1" />,
         <Animated.View style={{height: this.emojiHeight, backgroundColor: 'white'}} key="2">
           <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
         </Animated.View>
@@ -91,8 +96,8 @@ export class BotCompose extends React.Component<Props> {
               style={styles.textStyle}
               placeholder="Name this place"
               ref={r => (this.botTitle = r)}
-              onChangeText={text => this.bot.load({title: text})}
-              value={this.bot.title}
+              onChangeText={text => (this.text = text)}
+              value={this.text}
             />
             <View>
               {!this.props.keyboardShowing && (
@@ -154,30 +159,28 @@ export class BotCompose extends React.Component<Props> {
   }
 
   save = async (): Promise<void> => {
-    const bot = this.bot!
-    if (!bot.title) {
+    if (!this.text) {
       Alert.alert('Title cannot be empty')
       if (this.botTitle) this.botTitle.focus()
       return
     }
     try {
       this.isLoading = true
-      const {isNew, geofence} = bot
-      await bot.save()
+      const {isNew, geofence, load, save, id} = this.bot
+      load({title: this.text, icon: this.icon})
+      await save()
       if (isNew) {
-        // Actions.pop({animated: false})
-        Actions.pop()
         setTimeout(() => {
-          if (geofence) Actions.geofenceShare({botId: bot.id})
-          else Actions.botDetails({botId: bot.id, isNew: true})
+          if (geofence) Actions.geofenceShare({botId: id})
+          else Actions.botDetails({botId: id, isNew: true})
         })
       } else {
         Actions.pop()
       }
-      this.props.analytics.track('botcreate_complete', getSnapshot(bot))
+      this.props.analytics.track('botcreate_complete', getSnapshot(this.bot))
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.')
-      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(bot), error: e})
+      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot), error: e})
       this.props.log('BotCompose save problem', e)
     } finally {
       this.isLoading = false

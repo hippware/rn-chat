@@ -24,6 +24,8 @@ type Props = {
 @observer
 class GeofenceShare extends React.Component<Props> {
   static rightButton = (props: Props) => <RightButton {...props} />
+  static leftButton = () => null
+  static left = () => null
 
   selection = SelectableProfileList.create({})
 
