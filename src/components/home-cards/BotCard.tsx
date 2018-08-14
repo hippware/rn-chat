@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image} from 'react-native'
+import {View, StyleSheet, Image, Text} from 'react-native'
 import {IBot} from 'wocky-client'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -13,11 +13,17 @@ type Props = {
   isSelected: boolean
 }
 
+const defaultIcon = require('../../../images/mapIcons/question.png')
+
 const BotCard = observer(({bot, isSelected}: Props) => (
   <Card profile={isSelected && bot.owner} onPress={() => Actions.botDetails({botId: bot.id})}>
     <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
-      <Image style={styles.thumb} source={bot.image ? bot.image.thumbnail : null} />
-      <View style={styles.textContainer}>
+      {bot.image ? (
+        <Image style={styles.thumb} source={bot.image.thumbnail} />
+      ) : (
+        <Icon icon={bot.icon} />
+      )}
+      <View style={[styles.textContainer, bot.image && {marginLeft: 18 * k}]}>
         <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
           {bot.title}
         </RText>
@@ -28,6 +34,16 @@ const BotCard = observer(({bot, isSelected}: Props) => (
     </View>
   </Card>
 ))
+
+const Icon = ({icon}) => (
+  <View style={{height: '100%', width: 70, alignItems: 'center', justifyContent: 'center'}}>
+    {icon ? (
+      <Text style={styles.icon}>{icon}</Text>
+    ) : (
+      <Image source={defaultIcon} style={{height: 30, width: 30, bottom: 3}} resizeMode="contain" />
+    )}
+  </View>
+)
 
 export default BotCard
 
@@ -41,7 +57,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    padding: 18 * k,
+    paddingVertical: 18 * k,
+    paddingRight: 18 * k,
     justifyContent: 'center',
   },
   avatar: {
@@ -49,5 +66,10 @@ const styles = StyleSheet.create({
     top: -20 * k,
     left: -20 * k,
     zIndex: 2,
+  },
+  icon: {
+    fontFamily: 'fontello',
+    fontSize: 45,
+    color: colors.PINK,
   },
 })
