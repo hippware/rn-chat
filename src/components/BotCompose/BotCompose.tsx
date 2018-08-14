@@ -76,8 +76,6 @@ export class BotCompose extends React.Component<Props> {
   }
 
   render() {
-    const start = {x: 0, y: 0.5}
-    const end = {x: 1, y: 0.5}
     const theColors = this.saveable
       ? ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
       : [colors.DARK_GREY, colors.DARK_GREY]
@@ -124,9 +122,14 @@ export class BotCompose extends React.Component<Props> {
                 disabled={!this.saveable}
                 onPress={this.save}
               >
-                <LinearGradient start={start} end={end} colors={theColors} style={styles.gradient}>
+                <LinearGradient
+                  start={{x: 0, y: 0.5}}
+                  end={{x: 1, y: 0.5}}
+                  colors={theColors}
+                  style={styles.gradient}
+                >
                   <RText color="white" size={15}>
-                    Pin Location
+                    {this.props.edit ? 'Save Changes' : 'Pin Location'}
                   </RText>
                 </LinearGradient>
               </TouchableOpacity>
