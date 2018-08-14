@@ -32,6 +32,8 @@ type Props = {
   keyboardShowing?: boolean
 }
 
+const emojiKeyboardHeight = 305
+
 @inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
 export class BotCompose extends React.Component<Props> {
@@ -42,7 +44,7 @@ export class BotCompose extends React.Component<Props> {
   botTitle: any
   note: any
   accessoryText?: any
-  emojiHeight = new Animated.Value(0)
+  emojiOffsetY = new Animated.Value(emojiKeyboardHeight)
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
@@ -51,8 +53,8 @@ export class BotCompose extends React.Component<Props> {
     reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
       shown => {
-        Animated.timing(this.emojiHeight, {
-          toValue: shown ? 305 : 0,
+        Animated.timing(this.emojiOffsetY, {
+          toValue: shown ? 0 : emojiKeyboardHeight,
           duration: 500,
         }).start()
       }
@@ -72,9 +74,28 @@ export class BotCompose extends React.Component<Props> {
   render() {
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} bot={this.bot} key="1" />,
-        <Animated.View style={{height: this.emojiHeight, backgroundColor: 'white'}} key="2">
-          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+        <IconSelector onSnap={this.onSnap} bot={this.bot} />
+        <Animated.View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: emojiKeyboardHeight,
+            backgroundColor: 'white',
+            transform: [
+              {
+                translateY: this.emojiOffsetY,
+              },
+            ],
+          }}
+        >
+          <EmojiSelector
+            key={this.props.iconStore.isEmojiKeyboardShown}
+            onEmojiSelected={this.onEmojiSelected}
+            showSearchBar={false}
+            columns={8}
+          />
         </Animated.View>
         {!this.props.iconStore.isEmojiKeyboardShown && (
           <View>
