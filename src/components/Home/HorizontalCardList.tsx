@@ -14,7 +14,7 @@ import {colors} from '../../constants'
 type Props = {
   enabled: boolean
   setIndex: any
-  list: any
+  list: any[]
   index: number
 }
 
@@ -44,24 +44,24 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 
   componentWillReceiveProps(newProps) {
     if (newProps.enabled !== this.props.enabled) {
-      const hide = !newProps.enabled
       Animated.spring(this.state.translateY, {
-        toValue: hide ? 160 * k : translateYDefault,
+        toValue: newProps.enabled ? translateYDefault : 160 * k,
       }).start()
     }
 
-    if (newProps.index !== this.props.index) {
+    if (newProps.index !== this.props.index && newProps.index !== this.list.currentIndex) {
       this.list.snapToItem(newProps.index, true, false)
     }
   }
 
   render() {
-    const {list, setIndex, index} = this.props
+    const {list, setIndex, index, enabled} = this.props
     const {translateY} = this.state
     return (
       <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
         <ButtonColumn />
         <Carousel
+          key={`carousel${enabled}`}
           ref={r => (this.list = r)}
           data={list.slice()}
           renderItem={this.renderItem}
@@ -71,6 +71,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
           // onSnapToItem={index => list[index].select()} // enable if you don't need to unselect current bot for you/tutorial
           onSnapToItem={setIndex}
           inactiveSlideOpacity={1}
+          initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
         />
       </Animated.View>
     )
