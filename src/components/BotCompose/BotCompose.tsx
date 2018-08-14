@@ -6,7 +6,7 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
-import {observable, reaction} from 'mobx'
+import {observable, reaction, computed} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconSelector from './IconSelector'
@@ -57,6 +57,11 @@ export class BotCompose extends React.Component<Props> {
         }).start()
       }
     )
+  }
+
+  @computed
+  get saveable() {
+    return this.bot && this.bot.title && this.bot.title !== '' && this.bot.icon
   }
 
   onEmojiSelected = e => {
@@ -111,10 +116,11 @@ export class BotCompose extends React.Component<Props> {
               <TouchableOpacity
                 style={{
                   width: '100%',
-                  backgroundColor: colors.PINK, // TODO: gradient background
+                  backgroundColor: this.saveable ? colors.PINK : colors.DARK_GREY, // TODO: gradient background
                   paddingVertical: 15 * k,
                   alignItems: 'center',
                 }}
+                disabled={!this.saveable}
                 onPress={this.save}
               >
                 <RText color="white" size={15}>
