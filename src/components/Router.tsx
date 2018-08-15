@@ -172,13 +172,13 @@ class TinyRobotRouter extends React.Component<Props> {
                       </Stack>
                       <Scene key="bottomMenu" component={BottomMenu} />
                       <Scene key="createBot" component={CreationHeader} fromTop />
-                      <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} draggable opacityHeader={BotDetailsNavBar} />
+                      <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} opacityHeader={BotDetailsNavBar} />
                       <Scene key="botCompose" component={BotCompose} back />
                       <Scene key="botEdit" component={BotCompose} edit back />
                       <Scene key="editNote" component={EditNote} back />
                       <Scene key="camera" component={Camera} />
-                      <Scene key="notifications" component={Notifications} draggables />
-                      <Scene key="friends" component={peopleLists.FriendList} />
+                      <Scene key="notifications" component={Notifications} />
+                      <Scene key="friends" component={peopleLists.FriendList} back />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
 

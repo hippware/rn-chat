@@ -88,7 +88,7 @@ export default class BottomMenu extends React.Component<Props> {
         </MenuItemWrapper>
         <View style={styles.optionsWrapper}>
           <MenuItem
-            onPress={() => Actions.friendsMain({profile})}
+            onPress={() => Actions.friends()}
             image={require('../../images/menuFriends.png')}
           >
             <RText style={styles.text}>Friends</RText>
