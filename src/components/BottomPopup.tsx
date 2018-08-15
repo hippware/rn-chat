@@ -8,14 +8,16 @@ type Props = {
 
 const BottomPopup = ({onClose, children}: Props) => {
   return (
-    <View style={{flex: 1}}>
-      <Image style={styles.absolute} source={require('../../images/bottomPopup.png')} />
-      <View style={{flex: 1}}>
-        <TouchableOpacity style={styles.close} onPress={onClose}>
-          <Image source={require('../../images/popupClose.png')} />
-        </TouchableOpacity>
-        {children}
-      </View>
+    <View>
+      <Image
+        style={styles.absolute}
+        source={require('../../images/bottomPopup.png')}
+        resizeMode="stretch"
+      />
+      <TouchableOpacity style={styles.close} onPress={onClose}>
+        <Image source={require('../../images/popupClose.png')} />
+      </TouchableOpacity>
+      {children}
     </View>
   )
 }
@@ -24,10 +26,8 @@ export default BottomPopup
 
 const styles = StyleSheet.create({
   absolute: {
+    width: '100%',
     position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
   },
   close: {
     width: 75,
