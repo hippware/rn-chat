@@ -4,13 +4,11 @@ import {colors} from '../../constants'
 import {width} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import {Observer, observer, inject} from 'mobx-react/native'
-import {IBot} from 'wocky-client'
 import IconStore from '../../store/IconStore'
 
 const itemSize = 63
 type Props = {
   style?: ViewStyle
-  bot: IBot
   iconStore?: IconStore
   onSnap?: any
 }
@@ -21,12 +19,11 @@ class IconSelector extends React.Component<Props> {
   selector?: any
 
   onSnap = (index: number) => {
-    const {bot, iconStore, onSnap} = this.props
+    const {iconStore, onSnap} = this.props
+    iconStore.setIndex(index)
     if (onSnap) {
       onSnap(index)
     }
-    iconStore.setIndex(index)
-    bot.load({icon: iconStore.icon})
   }
 
   render() {

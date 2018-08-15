@@ -181,7 +181,10 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="notifications" component={Notifications} draggables />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
+
+                    {/* TODO: why doesn't the `left` param disable the back button here? */}
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />
+
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
                     <Scene key="visitors" component={peopleLists.BotVisitorList} back right={() => null} navTransparent={false} title="Who's Here" />
                     <Scene key="botAddress" component={BotAddressScene} back title="Edit Location" />
