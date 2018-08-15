@@ -1,5 +1,5 @@
 import BlockedList from './BlockedList'
-import FriendListScene from './FriendListScene'
+import FriendList from './FriendList'
 import FollowersList from './FollowersList'
 import FollowedList from './FollowedList'
 import BotSubscriberList from './BotSubscriberList'
@@ -15,7 +15,7 @@ export {
   FollowedList,
   SearchUsers,
   BlockedList,
-  FriendListScene,
+  FriendList,
   BotSubscriberList,
   BotShareSelectFriends,
   ProfileList,
