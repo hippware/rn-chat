@@ -21,6 +21,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * User is able to create user profile without an email address (#2634)
 * Deep linking with location/bot share broken (#2637)
 * Pins without cover image should have icon (#2644)
+* Bottom menu doesn't take all width for Plus model #2599
+* "Pin Location" is not disabled when title is blank #2653
+* Bot Edit: Replace "Pin Location" with "Save Changes" #2658
+* User is able to remove Title #2657
+* Map marker icons #2674
 
 # 3.3.0 - 2018 Aug 9
 
