@@ -28,43 +28,15 @@ class InviteFriendsRow extends React.Component<Props> {
       ? `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`
       : `Hey! Check out my favorite places in the world on tinyrobot! Add me as @${handle}.`
     return (
-      <TouchableOpacity
-        style={[
-          {
-            flexDirection: 'row',
-            borderTopWidth: StyleSheet.hairlineWidth,
-            borderColor: colors.DARK_GREY,
-            padding: 13 * k,
-            paddingVertical: 20 * k,
-            alignItems: 'center',
-          },
-          style,
-        ]}
-        onPress={() => this.share(message)}
-      >
-        <Image
-          source={require('../../../images/iconBot.png')}
-          style={{height: 37 * k, width: 37 * k}}
-          resizeMode="contain"
-        />
-        <View style={{flex: 1, marginLeft: 13 * k}}>
+      <TouchableOpacity style={[styles.container, style]} onPress={() => this.share(message)}>
+        <Image source={icon} style={{height: 37 * k, width: 37 * k}} resizeMode="contain" />
+        <View style={{marginLeft: 13 * k}}>
           <RText size={16} weight="Medium" color={colors.PINK}>
             Invite Friends
           </RText>
-          <RText size={14} weight="Light" color={colors.DARK_PURPLE}>
+          <RText size={13} weight="Light" color={colors.DARK_PURPLE}>
             {subtext || 'To discover their favorite places!'}
           </RText>
-        </View>
-        <View
-          style={{
-            padding: 8 * k,
-            paddingHorizontal: 16 * k,
-            borderWidth: 1,
-            borderRadius: 4,
-            borderColor: colors.PINK,
-          }}
-        >
-          <Image source={icon} />
         </View>
       </TouchableOpacity>
     )
@@ -90,3 +62,17 @@ class InviteFriendsRow extends React.Component<Props> {
 }
 
 export default InviteFriendsRow
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    paddingHorizontal: 20 * k,
+    paddingVertical: 10 * k,
+    borderWidth: 1,
+    borderColor: colors.PINK,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
