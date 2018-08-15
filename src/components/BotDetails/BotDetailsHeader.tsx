@@ -7,7 +7,7 @@ import {getSnapshot, isAlive} from 'mobx-state-tree'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
 import {RText, ProfileHandle, ProfileStack} from '../common'
-import {IBot} from 'wocky-client'
+import {IBot, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
 import {Actions} from 'react-native-router-flux'
@@ -25,6 +25,7 @@ type State = {
 }
 
 const DOUBLE_PRESS_DELAY = 300
+const shareIcon = require('../../../images/shareIcon.png')
 
 @inject('notificationStore', 'analytics', 'locationStore')
 @observer
@@ -145,44 +146,53 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 }
 
-const VisitorsArea = ({bot}) => {
-  let avatars = null
-  let text = null
+const VisitorsArea = ({bot}: {bot: IBot}) => {
+  let list: IProfile[], size: number, text: string
   if (bot.visitors.list.length > 0) {
-    avatars = (
-      <ProfileStack
-        firstProfile={bot.visitors.list[0]}
-        stackSize={bot.visitorsSize}
-        circleSize={50}
-        textSize={16.5}
-        style={{marginBottom: 10 * k}}
-      />
-    )
+    list = bot.visitors.list
+    size = bot.visitorsSize
     text = 'are currently here!'
   } else if (bot.guests.list.length > 0) {
-    avatars = (
-      <ProfileStack
-        firstProfile={bot.guests.list[0]}
-        stackSize={bot.guestsSize}
-        circleSize={50}
-        textSize={16.5}
-        style={{marginBottom: 10 * k}}
-      />
-    )
+    list = bot.guests.list
+    size = bot.guestsSize
     text = 'accepted the invite!'
-  } else return null
-  return (
-    <View>
-      <TouchableOpacity
-        onPress={() => Actions.visitors({item: bot.id})}
-        style={{alignItems: 'center', justifyContent: 'center', width: '100%', paddingVertical: 20}}
-      >
-        {avatars}
-        <RText size={14}>{text}</RText>
-      </TouchableOpacity>
+  }
+  return bot.owner.isOwn || list ? (
+    <View style={{alignItems: 'center'}}>
+      {list && (
+        <TouchableOpacity
+          onPress={() => Actions.visitors({item: bot.id})}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            paddingVertical: 20,
+          }}
+        >
+          <ProfileStack
+            firstProfile={list[0]}
+            stackSize={size}
+            circleSize={50}
+            textSize={16.5}
+            style={{marginBottom: 10 * k}}
+          />
+          <RText size={14}>{text}</RText>
+        </TouchableOpacity>
+      )}
+      {bot.owner.isOwn && (
+        <TouchableOpacity
+          style={styles.invite}
+          onPress={() => Actions.geofenceShare({botId: bot.id})}
+        >
+          <Image source={shareIcon} />
+          <RText size={16} pink style={{marginLeft: 12}}>
+            Invite
+          </RText>
+        </TouchableOpacity>
+      )}
       <Separator style={{width: '100%', marginHorizontal: 5}} />
     </View>
-  )
+  ) : null
 }
 
 const Pill = ({children}) => (
@@ -200,32 +210,6 @@ const Pill = ({children}) => (
     </RText>
   </View>
 )
-
-// const GeofenceCTA = inject('analytics')(
-//   observer(({bot, analytics}) => (
-//     <View style={{flexDirection: 'row'}}>
-//       <Image
-//         source={require('../../../images/footOpaquePink.png')}
-//         style={{width: 26, height: 34}}
-//       />
-//       <TouchableOpacity
-//         onPress={() => {
-//           Actions.visitors({item: bot.id})
-//           analytics.track('geofence_visitors_view')
-//         }}
-//       >
-//         <View style={{marginLeft: 10 * k}}>
-//           <RText color={colors.PINK} size={15}>
-//             See Who's Here
-//           </RText>
-//           <RText color={colors.DARK_GREY} size={12}>
-//             {bot.visitorsSize} people
-//           </RText>
-//         </View>
-//       </TouchableOpacity>
-//     </View>
-//   ))
-// )
 
 export default BotDetailsHeader
 
@@ -249,5 +233,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.WHITE,
+  },
+  invite: {
+    height: 40 * k,
+    width: 120 * k,
+    borderRadius: 20 * k,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: colors.PINK,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginBottom: 10 * k,
   },
 })
