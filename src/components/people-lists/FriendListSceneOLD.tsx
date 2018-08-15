@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
-import {RText, DraggablePopupList, DraggablePopupSectionList} from '../common'
+import {RText} from '../common'
 import PeopleList from './PeopleList'
 import {alphaSectionIndex} from '../../utils/friendUtils'
 import PeopleSearchWrapper from './PeopleSearchWrapper'
@@ -26,48 +26,46 @@ class FriendListScene extends React.Component<Props> {
     const {friends} = this.props.wocky
     const onlineFriends = friends.filter(f => f.status === 'available')
     return (
-      // <PeopleSearchWrapper>
-      // <PeopleList
-      <DraggablePopupSectionList
-        headerInner={
-          <View>
-            <InviteFriendsRow />
-            {onlineFriends.length > 0 ? (
-              <View>
-                <FriendCount count={onlineFriends.length} suffix="Online" />
-                <PeopleList
-                  renderItem={this.renderItem}
-                  sections={alphaSectionIndex(this.searchText, onlineFriends)}
-                  loadMore={() => {
-                    /**/
-                  }}
-                />
-              </View>
-            ) : null}
-            <FriendCount
-              count={friends.length}
-              suffix={friends.length === 1 ? 'Friend' : 'Friends'}
-            />
-          </View>
-        }
-        renderItem={this.renderItem}
-        // renderSectionHeader={({section}) => (
-        //   <View
-        //     style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}}
-        //     key={section.key}
-        //   >
-        //     <RText size={12} weight="Regular" style={{color: colors.WARM_GREY_2}}>
-        //       {section.key}
-        //     </RText>
-        //   </View>
-        // )}
-        keyExtractor={item => item.id}
-        sections={alphaSectionIndex(this.searchText, this.props.wocky.friends)}
-        // loadMore={() => {
-        //   /**/
-        // }}
-      />
-      // </PeopleSearchWrapper>
+      <PeopleSearchWrapper>
+        <PeopleList
+          ListHeaderComponent={
+            <View>
+              <InviteFriendsRow />
+              {onlineFriends.length > 0 ? (
+                <View>
+                  <FriendCount count={onlineFriends.length} suffix="Online" />
+                  <PeopleList
+                    renderItem={this.renderItem}
+                    sections={alphaSectionIndex(this.searchText, onlineFriends)}
+                    loadMore={() => {
+                      /**/
+                    }}
+                  />
+                </View>
+              ) : null}
+              <FriendCount
+                count={friends.length}
+                suffix={friends.length === 1 ? 'Friend' : 'Friends'}
+              />
+            </View>
+          }
+          renderItem={this.renderItem}
+          renderSectionHeader={({section}) => (
+            <View
+              style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}}
+              key={section.key}
+            >
+              <RText size={12} weight="Regular" style={{color: colors.WARM_GREY_2}}>
+                {section.key}
+              </RText>
+            </View>
+          )}
+          sections={alphaSectionIndex(this.searchText, this.props.wocky.friends)}
+          loadMore={() => {
+            /**/
+          }}
+        />
+      </PeopleSearchWrapper>
     )
   }
 }
