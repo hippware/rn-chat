@@ -1,7 +1,9 @@
 import React from 'react'
+import {StyleSheet, Text} from 'react-native'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import Bubble from '../../map/Bubble'
+import {colors} from '../../../constants'
 
 // interface ICardProps extends IProps {
 //   card: ISelectableCard
@@ -21,7 +23,7 @@ const BotMarker = observer(({card}) => {
       stopPropagation
     >
       <Bubble
-        image={defaultIcon}
+        image={!bot.icon && defaultIcon}
         style={{
           backgroundColor: 'white',
         }}
@@ -32,9 +34,19 @@ const BotMarker = observer(({card}) => {
         }}
         imageStyle={{width: 20, height: 20}}
         size={isSelected ? 48 : 35}
-      />
+      >
+        {bot.icon && <Text style={styles.icon}>{bot.icon}</Text>}
+      </Bubble>
     </HackMarker>
   )
 })
 
 export default BotMarker
+
+const styles = StyleSheet.create({
+  icon: {
+    fontFamily: 'fontello',
+    fontSize: 20,
+    color: colors.PINK,
+  },
+})
