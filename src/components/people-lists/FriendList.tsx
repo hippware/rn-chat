@@ -16,7 +16,7 @@ type Props = {
   searchStore: any
 }
 
-const KeyboardAwareDraggablePopupList = withKeyboardHOC(DraggablePopupList)
+const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
 
 const searchIcon = require('../../../images/search.png')
 
@@ -33,11 +33,18 @@ class FriendList extends React.Component<Props> {
     const {searchStore: {localResult}} = this.props
     return (
       <KeyboardAwareDraggablePopupList
+        ref={r => (this.list = r)}
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
+        // keyExtractor={(item, index) => item.id + index}
         data={localResult.slice(0, 20)}
-        keyboardDismissMode="none"
+
+        // long list
+        // data={[...localResult, ...localResult, ...localResult, ...localResult]}
+
+        // short list
+        // data={localResult.slice(0, 2)}
       />
     )
   }
@@ -60,7 +67,10 @@ class FriendList extends React.Component<Props> {
               <SearchButton
                 onPress={() => {
                   this.searchMode = true
-                  setTimeout(() => this.input.focus(), 16)
+                  this.list.scrollToOffset({offset: 0, animated: false})
+                  setTimeout(() => {
+                    this.input.focus()
+                  }, 50)
                 }}
                 style={{alignSelf: 'flex-end'}}
               />

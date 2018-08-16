@@ -3,7 +3,7 @@ import {Animated, Keyboard} from 'react-native'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react/native'
 
-export default Component => {
+export default (Component): any => {
   @observer
   class KeyboardAwareView extends React.Component<any> {
     @observable keyboardShowing: boolean = false
@@ -46,6 +46,7 @@ export default Component => {
     }
 
     render() {
+      const {forwardedRef, ...rest} = this.props
       return (
         <Animated.View
           style={{
@@ -56,11 +57,14 @@ export default Component => {
             ],
           }}
         >
-          <Component {...this.props} keyboardShowing={this.keyboardShowing} />
+          <Component ref={forwardedRef} {...rest} keyboardShowing={this.keyboardShowing} />
         </Animated.View>
       )
     }
   }
 
-  return KeyboardAwareView
+  // https://reactjs.org/docs/forwarding-refs.html
+  return React.forwardRef((props, ref) => {
+    return <KeyboardAwareView {...props} forwardedRef={ref} />
+  })
 }
