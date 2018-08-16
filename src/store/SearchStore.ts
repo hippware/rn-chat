@@ -134,3 +134,4 @@ const SearchStore = types
   })
 
 export default SearchStore
+export type ISearchStore = typeof SearchStore.Type

@@ -10,10 +10,11 @@ import InviteFriendsRow from './InviteFriendsRow'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {IWocky} from 'wocky-client'
 import {observable} from 'mobx'
+import {ISearchStore} from '../../store/SearchStore'
 
 type Props = {
   wocky?: IWocky
-  searchStore: any
+  searchStore: ISearchStore
 }
 
 const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
@@ -30,7 +31,7 @@ class FriendList extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    const {searchStore: {localResult}} = this.props
+    const {wocky: {friends}, searchStore: {globalResult}} = this.props
     return (
       <KeyboardAwareDraggablePopupList
         ref={r => (this.list = r)}
@@ -38,13 +39,14 @@ class FriendList extends React.Component<Props> {
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
         // keyExtractor={(item, index) => item.id + index}
-        data={localResult}
-
+        data={this.searchMode ? globalResult.filteredList.map(p => p.profile) : friends}
         // long list
         // data={[...localResult, ...localResult, ...localResult, ...localResult]}
 
         // short list
         // data={localResult.slice(0, 2)}
+        keyboardShouldPersistTaps="handled"
+        // keyboardDismissMode="interactive"
       />
     )
   }
@@ -88,7 +90,7 @@ class FriendList extends React.Component<Props> {
           >
             <SearchButton
               onPress={() => {
-                searchStore.setLocal('')
+                searchStore.setGlobal('')
                 this.searchMode = false
               }}
               style={{marginRight: 10}}
@@ -101,8 +103,10 @@ class FriendList extends React.Component<Props> {
                 color: colors.PURPLE,
               }}
               ref={r => (this.input = r)}
-              onChangeText={searchStore.setLocal}
-              value={searchStore.local}
+              onChangeText={searchStore.setGlobal}
+              value={searchStore.global}
+              returnKeyType="search"
+              clearButtonMode="while-editing"
             />
           </View>
         )}
