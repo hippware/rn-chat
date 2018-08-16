@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent, applySnapshot} from 'mobx-state-tree'
-import {reaction, when, autorun} from 'mobx'
+import {reaction} from 'mobx'
 import validate from 'validate.js'
 import SelectableProfileList from './SelectableProfileList'
 
@@ -16,11 +16,10 @@ const SearchStore = types
     // we need deep observability for observers in afterAttach so we can't use volatile for these
     // https://github.com/mobxjs/mobx-state-tree#modelvolatile
     local: '',
-    localResult: types.optional(SelectableProfileList, {}),
     global: '',
     globalResult: types.optional(SelectableProfileList, {}),
   })
-  .views(() => ({
+  .views(self => ({
     postProcessSnapshot: (snapshot: any) => {
       const res: any = {...snapshot}
       delete res.global
@@ -29,10 +28,22 @@ const SearchStore = types
       delete res.localResult
       return res
     },
+    get localResult() {
+      const {wocky} = getParent(self)
+      const localLower = self.local.toLocaleLowerCase()
+      return wocky.friends.filter(el => {
+        return (
+          !el.isOwn &&
+          (!self.local ||
+            (el.firstName && el.firstName.toLocaleLowerCase().startsWith(localLower)) ||
+            (el.lastName && el.lastName.toLocaleLowerCase().startsWith(localLower)) ||
+            (el.handle && el.handle.toLocaleLowerCase().startsWith(localLower)))
+        )
+      })
+    },
   }))
   .actions(self => ({
     clear: () => {
-      self.localResult.clear()
       self.globalResult.clear()
       self.local = ''
       self.global = ''
@@ -74,6 +85,7 @@ const SearchStore = types
 
     return {
       setGlobal,
+      setLocal: text => (self.local = text),
       _searchGlobal,
       _search,
     }
@@ -97,7 +109,7 @@ const SearchStore = types
     },
   }))
   .actions(self => {
-    let wocky, handler1, handler2
+    let wocky, handler1
     function afterAttach() {
       ;({wocky} = getParent(self))
       self.addUsernameValidator()
@@ -105,37 +117,11 @@ const SearchStore = types
         fireImmediately: false,
         delay: 500,
       })
-
-      // set initial list to all friends
-      when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends))
-
-      handler2 = autorun(() => {
-        const {local} = self
-        if (wocky.connected) {
-          self.localResult.replace(
-            wocky.friends.filter(el => {
-              return (
-                !el.isOwn &&
-                (!local ||
-                  (el.firstName &&
-                    el.firstName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
-                  (el.lastName &&
-                    el.lastName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
-                  (el.handle &&
-                    el.handle.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())))
-              )
-            })
-          )
-        } else {
-          self.clear()
-        }
-      })
     }
 
     // TODO: cleanup on disconnect
     function beforeDestroy() {
       handler1()
-      handler2()
       applySnapshot(self, {
         local: '',
         localResult: {},
@@ -148,3 +134,4 @@ const SearchStore = types
   })
 
 export default SearchStore
+export type ISearchStore = typeof SearchStore.Type

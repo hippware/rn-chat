@@ -22,7 +22,7 @@ export default class DraggablePopupList extends React.Component<IProps<any>> {
           keyboardDismissMode="on-drag"
           {...listProps}
           style={[{flex: 1}, style]}
-          ListHeaderComponent={this.headerComponent}
+          ListHeaderComponent={<DraggablePopupListHeader inner={this.props.headerInner} />}
         />
       </View>
     )
@@ -30,16 +30,18 @@ export default class DraggablePopupList extends React.Component<IProps<any>> {
 
   scrollToEnd = () => this.list.scrollToEnd()
 
-  private headerComponent = () => (
-    <View>
-      <TouchThroughView style={{width, height: height / 2 - 30}} />
-      <BottomPopup onClose={() => Actions.popTo('home')}>
-        <View
-          style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
-        >
-          {this.props.headerInner}
-        </View>
-      </BottomPopup>
-    </View>
-  )
+  scrollToOffset = ({offset, animated}) => this.list.scrollToOffset({offset, animated})
 }
+
+export const DraggablePopupListHeader = ({inner}) => (
+  <View>
+    <TouchThroughView style={{width, height: height / 2 - 30}} />
+    <BottomPopup onClose={() => Actions.popTo('home')}>
+      <View
+        style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
+      >
+        {inner}
+      </View>
+    </BottomPopup>
+  </View>
+)
