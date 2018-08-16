@@ -38,7 +38,7 @@ class FriendList extends React.Component<Props> {
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
         // keyExtractor={(item, index) => item.id + index}
-        data={localResult.slice(0, 20)}
+        data={localResult}
 
         // long list
         // data={[...localResult, ...localResult, ...localResult, ...localResult]}
