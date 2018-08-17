@@ -14,6 +14,7 @@ import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
+import {INavStore} from '../../store/NavStore'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -24,6 +25,7 @@ interface IProps {
   locationStore?: ILocationStore
   wocky?: IWocky
   homeStore?: IHomeStore
+  navStore?: INavStore
 }
 
 const markerMap: {[key: string]: any} = {
@@ -31,7 +33,7 @@ const markerMap: {[key: string]: any} = {
   BotCard: BotMarker,
 }
 
-@inject('locationStore', 'wocky', 'homeStore')
+@inject('locationStore', 'wocky', 'homeStore', 'navStore')
 @observer
 export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
@@ -53,6 +55,7 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   componentDidMount() {
+    const {homeStore} = this.props
     // if (!wocky.events.length) {
     //   this.loadMoreDiscoverList()
     // } else {
@@ -117,9 +120,17 @@ export default class MapHome extends React.Component<IProps> {
     Actions.createBot()
   }
 
+  onMapPress = () => {
+    const {homeStore: {toggleFullscreen}, navStore: {scene}} = this.props
+    if (!['home', 'createBot', 'botCompose'].includes(scene)) {
+      Actions.popTo('home')
+    } else {
+      toggleFullscreen()
+    }
+  }
+
   render() {
-    const {locationStore, homeStore} = this.props
-    const {location} = locationStore
+    const {locationStore: {location}, homeStore: {list, creationMode}} = this.props
     if (!location) {
       return (
         <View style={styles.container}>
@@ -128,13 +139,12 @@ export default class MapHome extends React.Component<IProps> {
       )
     }
     const {latitude, longitude} = location
-    const {toggleFullscreen, creationMode} = homeStore
     return (
       <View style={commonStyles.absolute}>
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}
-          onPress={toggleFullscreen}
+          onPress={this.onMapPress}
           onLongPress={this.createFromLongPress}
           initialRegion={{
             latitude,
@@ -157,7 +167,7 @@ export default class MapHome extends React.Component<IProps> {
             <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           )}
 
-          {homeStore.list.map((card, i) => {
+          {list.map((card, i) => {
             const Card = markerMap[getType(card).name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
