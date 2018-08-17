@@ -12,15 +12,13 @@ type Props = {
 class AnimatedPushScene extends React.Component<Props> {
   @observable viewHeight: number = 0
   animating: boolean = false
-  state = {
-    slideHeight: new Animated.Value(height), // initialize to full screen height
-  }
+  slideHeight = new Animated.Value(height) // initialize to full screen height
 
   componentDidMount() {
     when(
       () => !!this.viewHeight,
       () => {
-        this.state.slideHeight.setValue(this.viewHeight)
+        this.slideHeight.setValue(this.viewHeight)
         this.showScene()
       }
     )
@@ -38,49 +36,37 @@ class AnimatedPushScene extends React.Component<Props> {
 
   showScene = () => this.slideSceneTo(0)
 
-  hideScene = () => this.slideSceneTo(this.viewHeight)
+  hideScene = () =>
+    this.slideSceneTo(this.props.scene.route.params.fromTop ? -this.viewHeight : this.viewHeight)
 
-  slideSceneTo = toHeight => {
+  slideSceneTo = offset => {
     if (this.animating) return
     this.animating = true
-    Animated.spring(this.state.slideHeight, {
-      toValue: toHeight,
+    Animated.spring(this.slideHeight, {
+      toValue: offset,
       useNativeDriver: true,
     }).start(() => (this.animating = false))
   }
 
-  _getScreenStyle = () => {
-    const {scene: {index, route: {params: {fromTop}}}} = this.props
-    const absolute = {position: 'absolute', left: 0, right: 0}
-    if (index === 0) {
-      // the "main" screen
-      return {flex: 1}
-    } else {
-      // "push" into view from a set height (good for scenes that will change height a lot)
-      return {
-        ...absolute,
-        top: fromTop ? 0 : undefined,
-        bottom: fromTop ? undefined : 0,
-        transform: [
-          {
-            translateY: fromTop
-              ? Animated.multiply(this.state.slideHeight, new Animated.Value(-1))
-              : this.state.slideHeight,
-            // TODO: opacity - fade in on show and fade out on hide
-          },
-        ],
-      }
-    }
-  }
-
   render() {
-    const {descriptor: {navigation, getComponent}} = this.props.scene
+    const {descriptor: {navigation, getComponent}, route: {params: {fromTop}}} = this.props.scene
     const Scene = getComponent()
-    const style = this._getScreenStyle()
     return (
       <Wrapper {...this.props}>
         <Animated.View
-          style={style}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: fromTop ? 0 : undefined,
+            bottom: fromTop ? undefined : 0,
+            transform: [
+              {
+                translateY: this.slideHeight,
+                // TODO: opacity - fade in on show and fade out on hide
+              },
+            ],
+          }}
           onLayout={({nativeEvent: {layout: {height: viewHeight}}}) =>
             (this.viewHeight = viewHeight)
           }
