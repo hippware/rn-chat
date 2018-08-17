@@ -69,10 +69,8 @@ class FriendList extends React.Component<Props> {
               <SearchButton
                 onPress={() => {
                   this.searchMode = true
-                  this.list.scrollToOffset({offset: 0, animated: false})
-                  setTimeout(() => {
-                    this.input.focus()
-                  }, 50)
+                  // delay to let this.input become a ref
+                  setTimeout(() => this.input.focus(), 50)
                 }}
                 style={{alignSelf: 'flex-end'}}
               />
@@ -107,6 +105,7 @@ class FriendList extends React.Component<Props> {
               value={searchStore.global}
               returnKeyType="search"
               clearButtonMode="while-editing"
+              onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}
             />
           </View>
         )}
