@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.3.1 - 2018 Aug 16
+
 * Location Profile - tappable "Who's Here" CTA (#2564)
 * Bot/Location Posts (#2630)
 * Upgrade to latest RNRF and react-navigation
@@ -26,6 +28,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bot Edit: Replace "Pin Location" with "Save Changes" (#2658)
 * User is able to remove Title (#2657)
 * Map marker icons (#2674)
+* Updated design: Friends screen (#2665)
 
 # 3.3.0 - 2018 Aug 9
 
