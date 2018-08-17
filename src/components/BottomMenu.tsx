@@ -64,7 +64,7 @@ export default class BottomMenu extends React.Component<Props> {
       return null
     }
     return (
-      <BottomPopup onClose={Actions.pop}>
+      <BottomPopup>
         <MenuItemWrapper
           style={{marginTop: 25 * k, alignItems: 'center', justifyContent: 'center'}}
           testID="myAccountMenuItem"

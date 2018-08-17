@@ -2,11 +2,10 @@ import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 
 type Props = {
-  onClose: () => void
   children: any
 }
 
-const BottomPopup = ({onClose, children}: Props) => {
+const BottomPopup = ({children}: Props) => {
   // TODO: style this with border radius and shadow rather than an image. Allows setting background color to white
   return (
     <View style={{paddingTop: 50}}>

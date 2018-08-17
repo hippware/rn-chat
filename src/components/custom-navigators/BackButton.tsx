@@ -12,9 +12,10 @@ export default class BackButton extends React.Component<Props> {
 
   // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
   UNSAFE_componentWillReceiveProps(nextProps) {
+    // console.log('& cwrp', nextProps)
     const {transitionProps: {navigation: {state: {index}}}} = nextProps
     Animated.spring(this.offsetLeft, {
-      toValue: index > 1 ? 0 : -100,
+      toValue: index > 0 ? 0 : -100,
       useNativeDriver: true,
     }).start()
   }
@@ -27,7 +28,9 @@ export default class BackButton extends React.Component<Props> {
         style={{
           position: 'absolute',
           top: 30,
-          left: 10,
+          left: 0,
+          width: 51,
+          height: 55,
           transform: [
             {
               translateX: this.offsetLeft,
@@ -35,7 +38,14 @@ export default class BackButton extends React.Component<Props> {
           ],
         }}
       >
-        <TouchableOpacity onPress={() => Actions.pop()}>
+        <Image
+          style={{position: 'absolute', top: 0, left: 0}}
+          source={require('../../../images/backButtonContainer.png')}
+        />
+        <TouchableOpacity
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+          onPress={() => Actions.pop()}
+        >
           <Image source={navBarStyle.backButtonImage} />
         </TouchableOpacity>
       </Animated.View>
