@@ -87,6 +87,10 @@ class AddBotPost extends React.Component<Props> {
           backgroundColor: colors.WHITE,
           borderTopWidth: 1,
           borderColor: colors.GREY,
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}
       >
         <View style={[styles.textInputContainer]}>

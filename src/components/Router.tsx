@@ -23,7 +23,6 @@ import ProfileDetail from './ProfileDetail/ProfileDetail'
 import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 import BotDetails from './BotDetails/BotDetails'
-import BotDetailsNavBar from './BotDetails/BotDetailsNavBar'
 import BotsScreen from './BotsScreen'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
@@ -172,7 +171,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       </Stack>
                       <Scene key="bottomMenu" component={BottomMenu} />
                       <Scene key="createBot" component={CreationHeader} fromTop />
-                      <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} opacityHeader={BotDetailsNavBar} draggable />
+                      <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} draggable />
                       <Scene key="botCompose" component={BotCompose} />
                       <Scene key="botEdit" component={BotCompose} edit />
                       <Scene key="editNote" component={EditNote} />

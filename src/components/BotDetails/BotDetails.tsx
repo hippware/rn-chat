@@ -1,8 +1,8 @@
 import React from 'react'
-import {View, Text, Image, Animated} from 'react-native'
+import {View, Text, Image, Clipboard, TouchableOpacity} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-import {k, height} from '../Global'
+import {k} from '../Global'
 import {colors} from '../../constants'
 import {IProfile, IBot, IWocky} from 'wocky-client'
 import BotPostCard from './BotPostCard'
@@ -11,8 +11,9 @@ import AddBotPost from './AddBotPost'
 import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
-import NavBar from './BotDetailsNavBar'
+import {navBarStyle} from '../Router'
 import {DraggablePopupList} from '../common/'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   botId: string
@@ -21,7 +22,7 @@ type Props = {
   params?: any
   wocky?: IWocky
   analytics?: any
-  scrollable: boolean
+  notificationStore?: any
 }
 
 @inject('wocky', 'analytics')
@@ -31,9 +32,7 @@ export default class BotDetails extends React.Component<Props> {
   @observable owner?: IProfile
   @observable numToRender: number = 8
   list: any
-  post: any
   viewTimeout: any
-  scrollY = new Animated.Value(0)
 
   _footerComponent = observer(() => {
     return (
@@ -87,6 +86,11 @@ export default class BotDetails extends React.Component<Props> {
     </View>
   )
 
+  onNavLongPress = () => {
+    Clipboard.setString(this.bot.address)
+    this.props.notificationStore.flash('Address copied to clipboard 👍')
+  }
+
   render() {
     const {bot} = this
     if (!bot) {
@@ -99,39 +103,82 @@ export default class BotDetails extends React.Component<Props> {
       return <BotUnavailable />
     }
 
-    const opacity = this.scrollY.interpolate({
-      inputRange: [0, height / 2 - 80, height / 2],
-      outputRange: [0, 0, 1],
-    })
-
     return (
-      <View>
+      <View style={{flex: 1}}>
         <DraggablePopupList
           data={this.bot ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: this.post ? this.post.imgContainerHeight : 0,
+            paddingBottom: 50, // leave room for absolute positioned comment input
           }}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}
           headerInner={<Header bot={this.bot!} {...this.props} />}
+          fadeNavConfig={{
+            back: true,
+            title: <NavTitle bot={bot} onLongPress={this.onNavLongPress} />,
+            right: <ShareButton bot={bot} />,
+          }}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
-          scrollEnabled={this.props.scrollable}
-          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
-          <NavBar bot={bot} />
-        </Animated.View>
         <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
       </View>
     )
   }
 }
+
+const NavTitle = ({bot, onLongPress}) => {
+  const {titleStyle} = navBarStyle
+  return (
+    <TouchableOpacity
+      onLongPress={onLongPress}
+      onPress={null}
+      style={{marginHorizontal: 16, paddingTop: 10}}
+    >
+      <RText
+        numberOfLines={2}
+        // must wait for solution to https://github.com/facebook/react-native/issues/14981
+        // adjustsFontSizeToFit
+        minimumFontScale={0.8}
+        size={18}
+        color={colors.DARK_PURPLE}
+        style={[
+          titleStyle,
+          {
+            textAlign: 'center',
+          },
+        ]}
+      >
+        {bot.error ? 'Bot Unavailable' : bot.title}
+      </RText>
+      <RText
+        minimumFontScale={0.6}
+        numberOfLines={1}
+        weight="Light"
+        size={14}
+        color={colors.DARK_PURPLE}
+        style={{textAlign: 'center'}}
+      >
+        {bot.address}
+      </RText>
+    </TouchableOpacity>
+  )
+}
+
+const ShareButton = observer(({bot}) => {
+  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
+  const isOwn = !bot.owner || bot.owner.isOwn
+  return isOwn || bot.isPublic ? (
+    <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})}>
+      <Image source={require('../../../images/shareIcon.png')} />
+    </TouchableOpacity>
+  ) : null
+})
 
 const BotUnavailable = () => (
   <View style={{alignItems: 'center'}}>

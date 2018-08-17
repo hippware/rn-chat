@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../Router'
 
 type Props = {
+  scene: any
   transitionProps: any
 }
 
@@ -12,22 +13,19 @@ export default class BackButton extends React.Component<Props> {
 
   // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
   UNSAFE_componentWillReceiveProps(nextProps) {
-    // console.log('& cwrp', nextProps)
-    const {transitionProps: {navigation: {state: {index}}}} = nextProps
+    const {scene: {index, isActive}} = nextProps
     Animated.spring(this.offsetLeft, {
-      toValue: index > 0 ? 0 : -100,
+      toValue: index > 0 && isActive ? 0 : -100,
       useNativeDriver: true,
     }).start()
   }
 
   render() {
-    // transitionProps.navigation.state
-    // state.index > 0 && state.routes[state.index].params.back &&
     return (
       <Animated.View
         style={{
           position: 'absolute',
-          top: 30,
+          top: 50,
           left: 0,
           width: 51,
           height: 55,
@@ -36,6 +34,7 @@ export default class BackButton extends React.Component<Props> {
               translateX: this.offsetLeft,
             },
           ],
+          zIndex: -1,
         }}
       >
         <Image

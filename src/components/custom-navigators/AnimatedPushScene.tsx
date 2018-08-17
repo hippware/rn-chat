@@ -78,8 +78,8 @@ class AnimatedPushScene extends React.Component<Props> {
   }
 }
 
-const Wrapper = ({children, scene: {route: {params: {draggable}}}}) =>
-  draggable ? (
+const Wrapper = ({children, scene: {isActive, route: {params: {draggable}}}}) =>
+  draggable && isActive ? (
     <TouchThroughWrapper style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
       {children}
     </TouchThroughWrapper>

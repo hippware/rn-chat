@@ -22,19 +22,21 @@ export default class SplitRenderer extends React.Component<Props> {
       )
     } else {
       return (
-        <AnimatedPushScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
+        <View
+          style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+          key={scene.route.key}
+          pointerEvents="box-none"
+        >
+          <BackButton transitionProps={transitionProps} scene={scene} />
+          <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
+        </View>
       )
     }
   }
 
   _render = (transitionProps, prevTransitionProps) => {
     const scenes = transitionProps.scenes.map(scene => this._renderScene(transitionProps, scene))
-    return (
-      <View style={{flex: 1}}>
-        {scenes}
-        <BackButton transitionProps={transitionProps} />
-      </View>
-    )
+    return <View style={{flex: 1}}>{scenes}</View>
   }
   onTransitionStart = () => null
   onTransitionEnd = () => null
