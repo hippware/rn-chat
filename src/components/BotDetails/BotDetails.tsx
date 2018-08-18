@@ -12,7 +12,7 @@ import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
 import {navBarStyle} from '../Router'
-import {DraggablePopupList} from '../common/'
+import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 
 type Props = {
