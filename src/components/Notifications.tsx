@@ -4,7 +4,8 @@ import {isAlive} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {k} from './Global'
 import {IWocky, IEventBot} from 'wocky-client'
-import {RText, DraggablePopupList, Separator} from './common'
+import {RText, Separator} from './common'
+import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
 
 type Props = {

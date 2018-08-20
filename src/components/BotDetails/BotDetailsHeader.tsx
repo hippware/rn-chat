@@ -118,12 +118,14 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={bot.owner} size={40 * k} />
-          <ProfileHandle
-            style={{marginLeft: 10 * k, flex: 1}}
-            onPress={() => Actions.profileDetails({item: bot.owner.id})}
-            size={15}
-            profile={bot.owner}
-          />
+          {bot.owner && (
+            <ProfileHandle
+              style={{marginLeft: 10 * k, flex: 1}}
+              onPress={() => Actions.profileDetails({item: bot.owner.id})}
+              size={15}
+              profile={bot.owner}
+            />
+          )}
 
           {/* TODO: add bot.createdAt when ready on the backend */}
         </View>
@@ -148,6 +150,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
 const VisitorsArea = ({bot}: {bot: IBot}) => {
   let list: IProfile[], size: number, text: string
+  if (!bot) return null
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
     size = bot.visitorsSize
@@ -157,7 +160,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
     size = bot.guestsSize
     text = 'accepted the invite!'
   }
-  return bot.owner.isOwn || list ? (
+  return bot.owner && (bot.owner.isOwn || list) ? (
     <View style={{alignItems: 'center'}}>
       {list && (
         <TouchableOpacity

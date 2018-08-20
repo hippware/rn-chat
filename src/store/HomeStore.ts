@@ -57,7 +57,7 @@ const HomeStore = types
     creationMode: false,
     discoverList: types.optional(types.array(Card), []),
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
-    discoverIndex: 0,
+    // discoverIndex: 0,
     homeBotIndex: 0,
     focusedBotLocation: types.maybe(Location),
     mapCenterLocation: types.maybe(Location),
