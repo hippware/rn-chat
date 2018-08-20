@@ -112,8 +112,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
         </View>
 
-        <Separator style={{marginHorizontal: 5}} />
-
         <VisitorsArea bot={bot} />
 
         <View style={styles.userInfoRow}>
@@ -162,14 +160,16 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
   }
   return bot.owner && (bot.owner.isOwn || list) ? (
     <View style={{alignItems: 'center'}}>
-      {list && (
+      {list && [
+        <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 10 * k}} key="1" />,
         <TouchableOpacity
+          key="2"
           onPress={() => Actions.visitors({item: bot.id})}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            paddingVertical: 20,
+            paddingVertical: 10 * k,
           }}
         >
           <ProfileStack
@@ -180,11 +180,11 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
             style={{marginBottom: 10 * k}}
           />
           <RText size={14}>{text}</RText>
-        </TouchableOpacity>
-      )}
+        </TouchableOpacity>,
+      ]}
       {bot.owner.isOwn && (
         <TouchableOpacity
-          style={styles.invite}
+          style={[styles.invite, {marginTop: list ? 5 * k : 20 * k}]}
           onPress={() => Actions.geofenceShare({botId: bot.id})}
         >
           <Image source={shareIcon} />
@@ -193,7 +193,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
           </RText>
         </TouchableOpacity>
       )}
-      <Separator style={{width: '100%', marginHorizontal: 5}} />
+      <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 15 * k}} />
     </View>
   ) : null
 }
