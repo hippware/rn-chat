@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, TouchableHighlight, TouchableOpacityProps} from 'react-native'
+import {View, Image, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
@@ -16,34 +16,19 @@ interface IMenuItemProps extends TouchableOpacityProps {
   image?: object
   innerStyle?: any
   children?: any
-  stayOpen?: boolean
 }
 
 interface IMenuItemWrapperProps extends TouchableOpacityProps {
   children?: any
-  stayOpen?: boolean
 }
 
-const MenuItemWrapper = ({onPress, stayOpen, children, ...rest}: IMenuItemWrapperProps) => {
-  const Wrapper = onPress ? TouchableHighlight : View
-  return (
-    <Wrapper
-      underlayColor={'rgba(255,255,255,0.23)'}
-      onPress={e => {
-        if (onPress) {
-          if (!stayOpen) Actions.pop()
-          onPress(e)
-        }
-      }}
-      {...rest}
-    >
-      {children}
-    </Wrapper>
-  )
+const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
+  const Wrapper = rest.onPress ? TouchableOpacity : View
+  return <Wrapper {...rest}>{children}</Wrapper>
 }
 
-const MenuItem = ({style, image, innerStyle, children, stayOpen, ...rest}: IMenuItemProps) => (
-  <MenuItemWrapper stayOpen={stayOpen} {...rest}>
+const MenuItem = ({style, image, innerStyle, children, ...rest}: IMenuItemProps) => (
+  <MenuItemWrapper {...rest}>
     <View style={[styles.menuItem, style]}>
       {image && <Image source={image} resizeMode="contain" style={styles.menuImage} />}
       <View style={[{flex: 1, alignItems: 'center'}, innerStyle]}>{children}</View>
@@ -94,7 +79,10 @@ export default class BottomMenu extends React.Component<Props> {
             <RText style={styles.text}>Friends</RText>
           </MenuItem>
           <MenuItem
-            onPress={() => Actions.chats()}
+            onPress={() => {
+              Actions.pop()
+              Actions.chats()
+            }}
             image={require('../../images/menuMessages.png')}
           >
             <RText style={styles.text}>Messages</RText>
@@ -102,7 +90,6 @@ export default class BottomMenu extends React.Component<Props> {
           <MenuItem
             image={profile.hidden.enabled ? invisibleOn : invisibleOff}
             onPress={this.toggleInvisible}
-            stayOpen
           >
             <RText style={styles.text}>Invisible</RText>
             {profile.hidden.enabled ? (
