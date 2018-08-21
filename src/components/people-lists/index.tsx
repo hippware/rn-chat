@@ -7,10 +7,8 @@ import SearchUsers from './SearchUsers'
 import BotShareSelectFriends from './BotShareSelectFriends'
 import ProfileList from './ProfileList'
 import GeofenceShare from './GeofenceShare'
-import BotVisitorList from './BotVisitorList'
 
 export {
-  BotVisitorList,
   FollowersList,
   FollowedList,
   SearchUsers,
