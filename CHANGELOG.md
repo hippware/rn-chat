@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Slight improvement on keyboard interactivity (PR #2683)
+* General nav with back button (PR #2684) / Top Left Back Caret (#2676)
+
 # 3.3.1 - 2018 Aug 16
 
 * Location Profile - tappable "Who's Here" CTA (#2564)
