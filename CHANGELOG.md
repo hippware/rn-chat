@@ -6,6 +6,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Slight improvement on keyboard interactivity (PR #2683)
 * General nav with back button (PR #2684) / Top Left Back Caret (#2676)
+* Location Profile - tappable "Who's Here" CTA (Rework #2564)
+* Don't pop by default (PR #2698)
+  * Friends List nav bug (#2690)
+  * Friends screen slides up and then drops down and back up (#2687)
+* Bug: Location Debug not reporting back last uploaded locations (#2701)
 
 # 3.3.1 - 2018 Aug 16
 
