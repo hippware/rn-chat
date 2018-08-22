@@ -164,7 +164,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
         <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 10 * k}} key="1" />,
         <TouchableOpacity
           key="2"
-          onPress={() => Actions.visitors({item: bot.id})}
+          onPress={() => Actions.visitors({botId: bot.id})}
           style={{
             alignItems: 'center',
             justifyContent: 'center',

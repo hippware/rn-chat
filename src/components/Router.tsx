@@ -29,6 +29,7 @@ import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
 import BotAddressScene from './map/BotAddressScene'
 import * as peopleLists from './people-lists'
+import VisitorList from './people-lists/VisitorList'
 import ReportUser from './report-modals/ReportUser'
 import ReportBot from './report-modals/ReportBot'
 import SignIn from './SignIn'
@@ -178,6 +179,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="camera" component={Camera} />
                       <Scene key="notifications" component={Notifications} />
                       <Scene key="friends" component={peopleLists.FriendList} draggable />
+                      <Scene key="visitors" component={VisitorList} draggable />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
 
@@ -185,7 +187,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />
 
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
-                    <Scene key="visitors" component={peopleLists.BotVisitorList} back right={() => null} navTransparent={false} title="Who's Here" />
                     <Scene key="botAddress" component={BotAddressScene} back title="Edit Location" />
                     <Scene key="profileDetails" component={ProfileDetail} back navTransparent={false} />
                     <Scene key="myAccount" component={MyAccount} editMode back />
