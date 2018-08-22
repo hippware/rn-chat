@@ -266,7 +266,7 @@ export class GraphQLTransport implements IWockyTransport {
         query getLocationsVisited($limit: Int!, $ownResource: String!) {
           currentUser {
             id
-            locations(first: $limit, device: $ownResource) {
+            locations(last: $limit, device: $ownResource) {
               totalCount
               edges {
                 node {
