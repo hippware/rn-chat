@@ -83,47 +83,47 @@ describe('GraphQL', () => {
     }
   })
 
-  it('hide user', async done => {
-    try {
-      timestamp()
-      date = new Date(Date.now() + 1000)
-      await gql.hideUser(true, date)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('loads profile again ', async done => {
-    try {
-      timestamp()
-      const profile = await gql.loadProfile(user.username!)
-      expect(profile.hidden.expires.getTime()).to.equal(date.getTime())
-      expect(profile.hidden.enabled).to.equal(true)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('unhide user', async done => {
-    try {
-      timestamp()
-      await gql.hideUser(false)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('loads profile again ', async done => {
-    try {
-      timestamp()
-      const profile = await gql.loadProfile(user.username!)
-      expect(profile.hidden.expires).to.be.null
-      expect(profile.hidden.enabled).to.equal(false)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
+  // it('hide user', async done => {
+  //   try {
+  //     timestamp()
+  //     date = new Date(Date.now() + 1000)
+  //     await gql.hideUser(true, date)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('loads profile again ', async done => {
+  //   try {
+  //     timestamp()
+  //     const profile = await gql.loadProfile(user.username!)
+  //     expect(profile.hidden.expires.getTime()).to.equal(date.getTime())
+  //     expect(profile.hidden.enabled).to.equal(true)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('unhide user', async done => {
+  //   try {
+  //     timestamp()
+  //     await gql.hideUser(false)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('loads profile again ', async done => {
+  //   try {
+  //     timestamp()
+  //     const profile = await gql.loadProfile(user.username!)
+  //     expect(profile.hidden.expires).to.be.null
+  //     expect(profile.hidden.enabled).to.equal(false)
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
   it('loads other profile', async done => {
     try {
       timestamp()
@@ -174,47 +174,48 @@ describe('GraphQL', () => {
     }
   })
 
-  it('check subscription arrive', async done => {
-    try {
-      timestamp()
-      await gql.subscribeBotVisitors()
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      when(
-        () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
-        () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.action).to.equal('ARRIVE')
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('check subscription exit', async done => {
-    try {
-      timestamp()
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      when(
-        () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
-        () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.action).to.equal('DEPART')
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
-  })
+  // it('check subscription arrive', async done => {
+  //   try {
+  //     timestamp()
+  //     await gql.subscribeBotVisitors()
+  //     await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
+  //       () => {
+  //         timestamp()
+  //         expect(gql.botVisitor.bot.id).to.equal(bot.id)
+  //         expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
+  //         expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
+  //         expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
+  //         expect(gql.botVisitor.action).to.equal('ARRIVE')
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  // it('check subscription exit', async done => {
+  //   try {
+  //     timestamp()
+  //     await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+  //     when(
+  //       () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
+  //       () => {
+  //         expect(gql.botVisitor.bot.id).to.equal(bot.id)
+  //         expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
+  //         expect(gql.botVisitor.action).to.equal('DEPART')
+  //         done()
+  //       }
+  //     )
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
   it('load bot', async done => {
     try {
       timestamp()
@@ -224,6 +225,67 @@ describe('GraphQL', () => {
       expect(loaded.guest).to.equal(true)
       expect(loaded.id).to.equal(bot.id)
       done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  /*
+   *  User Follow	@user started following you.
+      Location Invite	@user invited you to follow Location Name
+      Location Accept	@user accepted your invite to Location Name
+      User Comment	@user commented on Location Name
+      Geofence Entry	@user is at Location Name
+      Geofence Exit	@user left Location Name
+   */
+  // it('gets notifications', async done => {
+  //   try {
+  //     timestamp()
+  //     // have user2 follow user1
+  //     const profile2 = await user2.loadProfile(user.username!)
+  //     expect(profile2.isFollowed).to.be.false
+  //     await profile2.follow()
+  //     expect(profile2.isFollowed).to.be.true
+  //     setTimeout(async () => {
+  //       const notifications = await gql.getNotifications()
+  //       // console.log('& got notifications', notifications)
+  //       done()
+  //     }, 1000)
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+  it('check notification subscription', async done => {
+    try {
+      timestamp()
+      await gql.subscribeNotifications()
+
+      // have user2 follow user1
+      const profile2 = await user2.loadProfile(user.username!)
+      expect(profile2.isFollowed).to.be.false
+      await profile2.follow()
+      expect(profile2.isFollowed).to.be.true
+
+      // // user2 shares a new bot with user1
+      // const user2bot = await user2.createBot()
+      // await user2bot.update({
+      //   public: false,
+      //   location: {latitude: 1.1, longitude: 2.1},
+      //   title: 'Test bot',
+      //   geofence: true,
+      //   addressData: {city: 'Los Angeles', country: 'California'},
+      // })
+      // user2bot.share([user.id])
+
+      when(
+        () => !!gql.notification,
+        () => {
+          timestamp()
+          console.log('& got notification from subscription!')
+          console.log(gql.notification)
+          // expect(gql.botVisitor.bot.id).to.equal(bot.id)
+          done()
+        }
+      )
     } catch (e) {
       done(e)
     }
