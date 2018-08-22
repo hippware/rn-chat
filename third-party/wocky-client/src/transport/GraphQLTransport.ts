@@ -34,6 +34,7 @@ export class GraphQLTransport implements IWockyTransport {
   client: ApolloClient<any>
   socket: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
+  notificationsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
   username: string
@@ -335,7 +336,70 @@ export class GraphQLTransport implements IWockyTransport {
         }),
       })
   }
-
+  async getNotifications(limit: number = 10): Promise<object[]> {
+    const res = await this.client.query<any>({
+      // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
+      query: gql`
+        query getNotifications($limit: Int!) {
+          notifications(first: $limit) {
+            edges {
+              cursor
+              node {
+                createdAt
+                id
+                data {
+                  __typename
+                  ... on UserFollowNotification {
+                    user {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            totalCount
+          }
+        }
+      `,
+      variables: {limit},
+    })
+    console.log('& NOTIFICATIONS', res.data.notifications.edges.map(e => e.node.data.user))
+    return res.data
+  }
+  subscribeNotifications() {
+    if (this.notificationsSubscription) {
+      return
+    }
+    this.notificationsSubscription = this.client
+      .subscribe({
+        query: gql`
+          subscription notifications {
+            notifications {
+              createdAt
+            }
+          }
+        `,
+        // variables: {
+        //   ownUsername: this.username,
+        // },
+      })
+      .subscribe({
+        next: action((result: any) => {
+          console.log('& sub hit!', result)
+          const update = result.data.notifications
+          console.log('& SUB UPDATE:', update)
+          this.notification = {
+            data: result.data,
+          }
+        }),
+      })
+  }
+  @action
+  unsubscribeNotifications() {
+    throw new Error('TODO')
+    // if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
+    // this.botGuestVisitorsSubscription = undefined
+  }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this._loadBots('OWNED', id, lastId, max)
   }
