@@ -26,7 +26,7 @@ export default class Home extends React.Component<Props> {
         <ActiveGeoBotBanner enabled={!fullScreenMode && isCurrent} />
         <HorizontalCardList
           setIndex={setIndex}
-          list={list}
+          list={list.slice()}
           index={index}
           enabled={!fullScreenMode && isCurrent}
         />
