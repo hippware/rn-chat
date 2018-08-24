@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Change request for location profile ellipsis submenu (#2677)
+* [dev] re-enable back button on Notifications slider (#2711)
+* Avatar/Icons un-tappable on the presence widget (#2668)
+* Post on location: Keyboard stuck on Take Photo screen (#2678)
+
 # 3.3.2 - 2018 Aug 23
 
 * Slight improvement on keyboard interactivity (PR #2683)
