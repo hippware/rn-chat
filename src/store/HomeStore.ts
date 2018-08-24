@@ -125,6 +125,16 @@ const HomeStore = types
         }
       })
     },
+    removeBot(bot: IBot): void {
+      let index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+      if (index !== -1) {
+        self.homeBotList.splice(index, 1)
+      }
+      index = self.discoverList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+      if (index !== -1) {
+        self.discoverList.splice(index, 1)
+      }
+    },
     // toggleListMode: (): void => {
     //   self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
     //   self.fullScreenMode = false

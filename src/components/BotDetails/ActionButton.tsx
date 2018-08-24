@@ -1,17 +1,19 @@
 import React from 'react'
-import {TouchableOpacity, Image, Alert, Share, Clipboard, ViewStyle} from 'react-native'
+import {TouchableOpacity, Image, Alert, ViewStyle} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import ActionSheet from 'react-native-actionsheet'
 import {autorun} from 'mobx'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
-import {settings} from '../../globals'
+// import {settings} from '../../globals'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   bot: IBot
   wocky?: IWocky
   locationStore?: ILocationStore
+  homeStore?: IHomeStore
   copyAddress: () => void
   subscribe: () => void
   unsubscribe: () => void
@@ -20,7 +22,7 @@ type Props = {
   style?: ViewStyle
 }
 
-@inject('wocky', 'locationStore', 'analytics')
+@inject('wocky', 'locationStore', 'analytics', 'homeStore')
 @observer
 class BotButtons extends React.Component<Props> {
   actionSheet: any
@@ -45,8 +47,8 @@ class BotButtons extends React.Component<Props> {
   render() {
     const {bot, style} = this.props
     if (!bot || !bot.owner) return null
-    const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions
     // const isShareable = bot.isPublic || bot.owner.isOwn
+    const actions = this.getActions()
     const destructiveIndex = actions.findIndex((a: any) => !!a.destructive)
     return [
       <TouchableOpacity onPress={() => this.actionSheet.show()} style={style} key="1">
@@ -68,143 +70,104 @@ class BotButtons extends React.Component<Props> {
   }
 
   onTap = (index: number, actions: any[]) => actions[index].action(this.props)
+
+  getActions = () => {
+    const {wocky, bot} = this.props
+    if (bot.owner.isOwn) {
+      return [
+        // shareVia,
+        // copyLink,
+        copyAddr,
+        {name: 'Edit', action: () => Actions.botEdit({botId: bot ? bot.id : null})},
+        {
+          name: 'Delete',
+          action: () => {
+            Alert.alert('', 'Are you sure you want to delete this bot?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Delete',
+                style: 'destructive',
+                onPress: () => {
+                  wocky.removeBot(bot ? bot.id : null)
+                  Actions.pop()
+                  Actions.pop({animated: false})
+                },
+              },
+            ])
+          },
+          destructive: true,
+        },
+        cancel,
+      ]
+    } else {
+      let arr: any = [
+        // shareVia,
+        // copyLink,
+        copyAddr,
+      ]
+      if (bot.isSubscribed) {
+        arr.push(unfollow)
+      }
+      arr = [
+        ...arr,
+        {
+          name: 'Report',
+          action: () => Actions.reportBot({botId: bot.id}),
+          destructive: true,
+        },
+        cancel,
+      ]
+      return arr
+    }
+  }
 }
 
-// const GeofenceButton = inject('store', 'analytics')(
-//   observer(
-//     ({bot, style, store, analytics}: {bot: IBot; style: any; store?: any; analytics?: any}) => {
-//       let onPress, buttonStyle, image
-//       if (bot.guest) {
-//         onPress = () =>
-//           Alert.alert(
-//             '',
-//             'Are you sure you want to stop sharing your presence? You will no longer see who’s here.',
-//             [
-//               {text: 'Cancel', style: 'cancel'},
-//               {
-//                 text: 'Stop Sharing',
-//                 style: 'destructive',
-//                 onPress: () => {
-//                   bot.unsubscribeGeofence()
-//                   analytics.track('bot_geoshare_off')
-//                 },
-//               },
-//             ]
-//           )
-//         buttonStyle = [style, {marginRight: 10 * k}]
-//         image = require('../../../images/whiteFoot.png')
-//       } else {
-//         onPress = () => {
-//           bot.subscribeGeofence()
-//           if (!store.guestOnce) {
-//             Actions.firstTimeGuest({botId: 'a5cb8b80-21a4-11e8-92d5-0a580a020603'})
-//           }
-//           analytics.track('bot_geoshare_on')
-//         }
-//         buttonStyle = [style, {marginRight: 10 * k, backgroundColor: colors.WHITE}]
-//         image = require('../../../images/footIcon.png')
-//       }
-//       return (
-//         <TouchableOpacity onPress={onPress} style={buttonStyle}>
-//           <Image source={image} resizeMode="contain" />
-//         </TouchableOpacity>
-//       )
-//     }
-//   )
-// )
-
 export default BotButtons
-
-// const styles = StyleSheet.create({
-//   button: {
-//     flex: 1,
-//     height: 40 * k,
-//     flexDirection: 'row',
-//     backgroundColor: colors.PINK,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     borderRadius: 5 * k,
-//     borderColor: colors.PINK,
-//     borderWidth: 1,
-//   },
-//   buttonIcon: {
-//     marginRight: 5 * k,
-//   },
-// })
 
 const copyAddr = {
   name: 'Copy Address',
   action: ({copyAddress}) => copyAddress(),
 }
 
-const linkPrefix = settings.isStaging
-  ? 'http://html.dev.tinyrobot.com/bot/'
-  : 'https://tinyro.bot/bot/'
+// const linkPrefix = settings.isStaging
+//   ? 'http://html.dev.tinyrobot.com/bot/'
+// : 'https://tinyro.bot/bot/'
 
-const shareVia = {
-  name: 'Share via',
-  action: async ({bot, analytics}: {bot: IBot; analytics: any}) => {
-    analytics.track('bot_share_link_choose_activity')
-    const {action, activityType} = await (Share as any).share(
-      {
-        message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
-        // title: 'title',
-        url: `${linkPrefix}${bot.id}`,
-      },
-      {
-        subject: `Hey, take a look at "${bot.title}" on tinyrobot!`,
-        // excludedActivityTypes: [],
-        // tintColor: ''
-      }
-    )
-    analytics.track('bot_share_link_choose_activity_choice', {action, activityType})
-  },
-}
+// const shareVia = {
+//   name: 'Share via',
+//   action: async ({bot, analytics}: {bot: IBot; analytics: any}) => {
+//     analytics.track('bot_share_link_choose_activity')
+//     const {action, activityType} = await (Share as any).share(
+//       {
+//         message: `Hey, take a look at "${bot.title}" on tinyrobot!`,
+//         // title: 'title',
+//         url: `${linkPrefix}${bot.id}`,
+//       },
+//       {
+//         subject: `Hey, take a look at "${bot.title}" on tinyrobot!`,
+//         // excludedActivityTypes: [],
+//         // tintColor: ''
+//       }
+//     )
+//     analytics.track('bot_share_link_choose_activity_choice', {action, activityType})
+//   },
+// }
 
-const copyLink = {
-  name: 'Copy Link',
-  action: ({bot, analytics}) => {
-    Clipboard.setString(`${linkPrefix}${bot.id}`)
-    analytics.track('bot_share_link_copy')
-  },
-}
+// const copyLink = {
+//   name: 'Copy Link',
+//   action: ({bot, analytics}) => {
+//     Clipboard.setString(`${linkPrefix}${bot.id}`)
+//     analytics.track('bot_share_link_copy')
+//   },
+// }
 
 const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
 
-const ownerActions = [
-  shareVia,
-  copyLink,
-  copyAddr,
-  {name: 'Edit', action: ({bot}) => Actions.botEdit({botId: bot ? bot.id : null})},
-  {
-    name: 'Delete',
-    action: ({wocky, bot}) => {
-      Alert.alert('', 'Are you sure you want to delete this bot?', [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            wocky.removeBot(bot ? bot.id : null)
-            Actions.pop()
-            Actions.pop({animated: false})
-          },
-        },
-      ])
-    },
-    destructive: true,
+const unfollow = {
+  name: 'Unfollow Location',
+  action: ({bot, homeStore}: Props) => {
+    Actions.pop()
+    ;(bot as IBot).unsubscribe()
+    homeStore.removeBot(bot)
   },
-  cancel,
-]
-
-const nonOwnerActions = [
-  shareVia,
-  copyLink,
-  copyAddr,
-  {
-    name: 'Report',
-    action: ({bot}) => Actions.reportBot({botId: bot.id}),
-    destructive: true,
-  },
-  cancel,
-]
+}
