@@ -1,4 +1,4 @@
-import {Alert, ActionSheetIOS} from 'react-native'
+import {Alert, ActionSheetIOS, Keyboard} from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
 // import {log, levels} from '../utils/log'
 import {Actions} from 'react-native-router-flux'
@@ -65,6 +65,7 @@ export const launchCamera = async (callback: any /*cropping: boolean = true*/): 
       return
     }
   }
+  Keyboard.dismiss()
   Actions.camera({callback})
   // @TODO
   // try {
