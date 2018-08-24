@@ -164,7 +164,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Stack>
                     <Stack hideNavBar renderer={SplitRenderer}>
                       <Stack key="loggedHome">
-                        <Scene key="home" component={Home} navTransparent />
+                        <Scene key="home" component={Home} hideNavBar />
                         <Scene key="botsScene" component={BotsScreen} title="Favorites" />
                         <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" />
                         <Scene key="chats" component={ChatListScreen} title="Messages" />
