@@ -177,7 +177,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="botEdit" component={BotCompose} edit />
                       <Scene key="editNote" component={EditNote} />
                       <Scene key="camera" component={Camera} />
-                      <Scene key="notifications" component={Notifications} />
+                      <Scene key="notifications" component={Notifications} draggable />
                       <Scene key="friends" component={peopleLists.FriendList} draggable />
                       <Scene key="visitors" component={VisitorList} draggable />
                     </Stack>
