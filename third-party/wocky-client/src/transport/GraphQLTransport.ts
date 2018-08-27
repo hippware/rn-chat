@@ -1,7 +1,7 @@
 // import {observable, when} from 'mobx'
 // import * as Utils from './utils'
 import {ApolloClient} from 'apollo-client'
-import {InMemoryCache} from 'apollo-cache-inmemory'
+import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {observable, action, when} from 'mobx'
@@ -12,6 +12,7 @@ import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
+const introspectionQueryResultData = require('./fragmentTypes.json')
 
 const PROFILE_PROPS = `id firstName lastName handle
   avatar { thumbnailUrl fullUrl trosUrl }
@@ -87,9 +88,12 @@ export class GraphQLTransport implements IWockyTransport {
       //   }
       // },
     })
+    const fragmentMatcher = new IntrospectionFragmentMatcher({
+      introspectionQueryResultData,
+    })
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({fragmentMatcher}),
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'network-only',
@@ -366,6 +370,9 @@ export class GraphQLTransport implements IWockyTransport {
                 id
                 data {
                   __typename
+                  ... on UserFollowNotification {
+                    user {${PROFILE_PROPS}}
+                  }
                 }
               }
             }
