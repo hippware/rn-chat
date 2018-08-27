@@ -43,7 +43,7 @@ export default class BackButton extends React.Component<Props> {
         />
         <TouchableOpacity
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-          onPress={() => Actions.pop()}
+          onPress={this.props.scene.descriptor.options.backAction || Actions.pop}
         >
           <Image source={navBarStyle.backButtonImage} />
         </TouchableOpacity>

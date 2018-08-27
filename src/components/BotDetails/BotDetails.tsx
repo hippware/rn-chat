@@ -23,6 +23,7 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   notificationStore?: any
+  navigation: any
 }
 
 @inject('wocky', 'analytics')
@@ -33,6 +34,12 @@ export default class BotDetails extends React.Component<Props> {
   @observable numToRender: number = 8
   list: any
   viewTimeout: any
+
+  static navigationOptions = ({navigation}) => {
+    return {
+      backAction: navigation.state.params.isNew ? () => Actions.popTo('home') : Actions.pop,
+    }
+  }
 
   _footerComponent = observer(() => {
     return (
@@ -117,6 +124,9 @@ export default class BotDetails extends React.Component<Props> {
           headerInner={<Header bot={this.bot!} {...this.props} />}
           fadeNavConfig={{
             back: true,
+            backAction: this.props.navigation.state.params.isNew
+              ? () => Actions.popTo('home')
+              : Actions.pop,
             title: <NavTitle bot={bot} onLongPress={this.onNavLongPress} />,
             right: <ShareButton bot={bot} />,
           }}

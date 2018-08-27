@@ -8,6 +8,7 @@ import {colors} from '../../constants'
 export type NavConfig = {
   title?: ReactElement<any>
   back?: boolean
+  backAction?: () => void
   right?: ReactElement<any>
   left?: ReactElement<any>
 }
@@ -16,13 +17,13 @@ type Props = {
   config: NavConfig
 }
 
-const NavBarHeader = ({config: {title, back, right, left}}: Props) => {
+const NavBarHeader = ({config: {title, back, backAction, right, left}}: Props) => {
   const {backButtonImage, navBarButtonColor} = navBarStyle
   return (
     <View style={styles.header}>
       <View style={{width: 23}}>
         {back ? (
-          <TouchableOpacity onPress={Actions.pop}>
+          <TouchableOpacity onPress={backAction || Actions.pop}>
             <Image
               source={backButtonImage}
               style={{tintColor: navBarButtonColor, width: 13, height: 21, marginLeft: 10}}
