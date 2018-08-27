@@ -99,7 +99,6 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   render() {
-    console.log('& isNew in render', this.props.isNew)
     const {bot} = this
     if (!bot) {
       return <Loader />
