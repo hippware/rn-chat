@@ -1,5 +1,5 @@
 import {types, flow, getSnapshot, isAlive} from 'mobx-state-tree'
-import {Profile, ProfilePaginableList} from './Profile'
+import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
@@ -183,6 +183,35 @@ export interface IBot extends IBotType {
   visitors: IPaginable
   subscribers: IPaginable
 }
+
+export interface IBotData {
+  id: string
+  isSubscribed: boolean
+  guest: boolean
+  visitor: boolean
+  icon: string
+  title?: string
+  server?: string
+  radius: number
+  geofence: boolean
+  owner?: IProfilePartial
+  image: any
+  description?: string
+  public: boolean
+  location: any // TODO
+  address?: string
+  followersSize: number
+  guestsSize: number
+  visitorsSize: number
+  totalItems: number
+  addressData?: any
+  subscribers?: any
+  guests?: any
+  visitors?: any
+  posts?: any
+  error?: string
+}
+
 export const BotPaginableList = createPaginable(types.reference(Bot))
 export type IBotPaginableList = typeof BotPaginableList.Type
 export const BotRef = types.reference(Bot, {

@@ -1,6 +1,6 @@
 import {types} from 'mobx-state-tree'
-import {EventBot} from './EventBot'
-import {Profile, IProfile} from './Profile'
+import {EventBot, IEventBotData} from './EventBot'
+import {Profile, IProfile, IProfilePartial} from './Profile'
 import {IBot} from './Bot'
 
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
@@ -22,3 +22,8 @@ export const EventBotGeofence = types
   .named('EventBotGeofence')
 
 export type IEventBotGeofence = typeof EventBotGeofence.Type
+
+export interface IEventBotGeofenceData extends IEventBotData {
+  isEnter: boolean
+  profile: IProfilePartial
+}

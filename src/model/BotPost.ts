@@ -1,6 +1,6 @@
 import {types, flow, getParent} from 'mobx-state-tree'
 import {FileRef} from './File'
-import {ProfileRef} from './Profile'
+import {ProfileRef, IProfilePartial} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable, IPaginable} from './PaginableList'
@@ -39,3 +39,11 @@ export const BotPost = types
 export type IBotPost = typeof BotPost.Type
 export const BotPostPaginableList = createPaginable(BotPost)
 // export type IBotPostPaginableList = typeof BotPostPaginableList.Type
+
+export interface IBotPostData {
+  id: string
+  content?: string
+  title?: string
+  image?: any
+  profile: IProfilePartial
+}

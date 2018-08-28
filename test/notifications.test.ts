@@ -5,8 +5,8 @@ import {when} from 'mobx'
 const host = 'testing.dev.tinyrobot.com'
 
 describe('Notifications', () => {
-  it('gets notifications', async done => {
-    let alice, bob, notifications
+  it('gets notifications from GraphQL', async done => {
+    let alice: IWocky, bob: IWocky, notifications
     try {
       timestamp()
       bob = await createXmpp()
@@ -22,10 +22,12 @@ describe('Notifications', () => {
 
       // Expected Notification: User follow notification
       await pause(1000)
-      notifications = await gqlBob.getNotifications()
-      console.log('& got notifications', notifications)
-      expect(notifications.length).to.equal(1)
-      expect(notifications[0].__typename).to.equal('UserFollowNotification')
+      notifications = await gqlBob.loadNotifications()
+      // console.log('& got notifications', notifications)
+      expect(notifications.count).to.equal(1)
+      // console.log('& user follow notification? ', typeof notifications.list[0])
+      // expect(notifications.list[0].__typename).to.equal('UserFollowNotification')
+      expect(notifications.list[0]).to.haveOwnProperty('user')
 
       // // bob follow alice back
       // const bobsAliceProfile = await bob.loadProfile(alice.username!)
@@ -43,29 +45,29 @@ describe('Notifications', () => {
         addressData: {city: 'Los Angeles', country: 'California'},
       })
       await aliceBot.save()
-      console.log('& alice bot id', aliceBot.id)
 
       // bob comments on alice's bot
-      const bobsAliceBot: IBot = await bob.loadBot(aliceBot.id)
+      const bobsAliceBot: IBot = await bob.loadBot(aliceBot.id, null)
       const post = bobsAliceBot.createPost('cool bot!')
       await post.publish()
 
       // Expected Notification: User Comment - @user commented on Location Name
       await pause(1000)
-      notifications = await gqlAlice.getNotifications()
-      console.log('& got botitem notifications for alice', notifications)
-      // expect(notifications.length).to.equal(1)
-      expect(notifications[0].__typename).to.equal('BotItemNotification')
+      notifications = await gqlAlice.loadNotifications()
+      // console.log('& got botitem notifications for alice', notifications)
+      expect(notifications.count).to.equal(1)
+      expect(notifications.list[0]).to.haveOwnProperty('post')
 
       // Location Invite -	@user invited you to follow Location Name
       // alice invites bob to the bot (NOTE: this is different from `share`)
       const inviteId = await gqlAlice.inviteBot(aliceBot.id, bob.username)
-      console.log('& invite id', inviteId)
+      // console.log('& invite id', inviteId)
 
       await pause(1000)
-      notifications = await gqlBob.getNotifications()
-      expect(notifications.length).to.equal(2)
-      expect(notifications[0].__typename).to.equal('InvitationNotification')
+      notifications = await gqlBob.loadNotifications()
+      expect(notifications.count).to.equal(2)
+      expect(notifications.list[0]).to.haveOwnProperty('sender')
+      expect(notifications.list[0].sender.id).to.equal(alice.username)
 
       await gqlBob.inviteBotReply(inviteId, true)
 
@@ -74,31 +76,31 @@ describe('Notifications', () => {
 
       // Expected Notification: Location Accept -	@user accepted your invite to Location Name
       await pause(1000)
-      notifications = await gqlAlice.getNotifications()
-      // expect(notifications.length).to.equal(2)
-      expect(notifications[0].__typename).to.equal('InvitationResponseNotification')
+      notifications = await gqlAlice.loadNotifications()
+      expect(notifications.count).to.equal(2)
+      // expect(notifications[0].__typename).to.equal('InvitationResponseNotification')
+      expect(notifications.list[0]).to.haveOwnProperty('sender')
+      expect(notifications.list[0].sender.id).to.equal(bob.username)
 
       await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
       await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
-      // await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
 
       // Expected Notification: Geofence Entry
       await pause(1000)
-      notifications = await gqlAlice.getNotifications()
-      // expect(notifications.length).to.equal(2)
-      console.log('& notifications', notifications.map(n => n.__typename))
-      expect(notifications[0].__typename).to.equal('GeofenceEventNotification')
+      notifications = await gqlAlice.loadNotifications()
+      expect(notifications.count).to.equal(3)
+      expect(notifications.list[0]).to.haveOwnProperty('isEnter')
+      expect(notifications.list[0].isEnter).to.be.true
 
       await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
       await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
 
       // Expected Notification: Geofence Exit
       await pause(1000)
-      notifications = await gqlAlice.getNotifications()
-      // expect(notifications.length).to.equal(2)
-      console.log('& notifications', notifications.map(n => n.__typename))
-      expect(notifications[0].__typename).to.equal('GeofenceEventNotification')
-      expect(notifications[1].__typename).to.equal('GeofenceEventNotification')
+      notifications = await gqlAlice.loadNotifications()
+      expect(notifications.count).to.equal(4)
+      expect(notifications.list[0]).to.haveOwnProperty('isEnter')
+      expect(notifications.list[0].isEnter).to.be.false
     } catch (e) {
       done(e)
     } finally {

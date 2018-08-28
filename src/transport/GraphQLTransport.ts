@@ -9,9 +9,14 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot} from '..'
+import {ILocationSnapshot, IEvent} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
+import {IEventUserFollowData} from '../model/EventUserFollow'
+import {IEventData} from '../model/Event'
+import {IEventBotPostData} from '../model/EventBotPost'
+import {IEventBotInviteData} from '../model/EventBotInvite'
+import {IEventBotGeofenceData} from '../model/EventBotGeofence'
 const introspectionQueryResultData = require('./fragmentTypes.json')
 
 const PROFILE_PROPS = `id firstName lastName handle
@@ -340,10 +345,8 @@ export class GraphQLTransport implements IWockyTransport {
         }),
       })
   }
-  /*
-  
-  */
-  async getNotifications(limit: number = 10): Promise<object[]> {
+
+  async loadNotifications(lastId?: string, max: number = 10): Promise<object> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
@@ -381,9 +384,7 @@ export class GraphQLTransport implements IWockyTransport {
                     user {${PROFILE_PROPS}}
                   }
                   ... on BotItemNotification {
-                    bot {
-                      id
-                    }
+                    bot {${BOT_PROPS}}
                     botItem {
                       id
                       image
@@ -392,9 +393,7 @@ export class GraphQLTransport implements IWockyTransport {
                         thumbnailUrl
                         trosUrl
                       }
-                      owner {
-                        id
-                      }
+                      owner {${PROFILE_PROPS}}
                       stanza
                     }
                   }
@@ -409,12 +408,21 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {limit, ownUsername: this.username},
+      variables: {limit: max, ownUsername: this.username},
     })
-    // console.log('& NOTIFICATIONS')
-    // console.log(res.data.notifications.edges.map(e => e.node.data))
+    console.log('& NOTIFICATIONS')
+    console.log(JSON.stringify(res.data))
     // return res.data
-    return res.data.notifications.edges.map(e => e.node.data)
+    // return {
+
+    // }
+    // return res.data.notifications.edges.map(e => e.node.data)
+    const {totalCount, edges} = res.data.notifications
+    return {
+      count: totalCount,
+      list: edges.map(convertNotification),
+      cursor: 1,
+    }
   }
   subscribeNotifications() {
     if (this.notificationsSubscription) {
@@ -809,9 +817,6 @@ export class GraphQLTransport implements IWockyTransport {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
-  async loadNotifications(lastId, max): Promise<IPagingList> {
-    // TODO
-  }
   async removeUpload(tros: string) {
     await this.client.mutate({
       mutation: gql`
@@ -918,6 +923,7 @@ export class GraphQLTransport implements IWockyTransport {
 function convertImage(image) {
   return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
+
 function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
@@ -931,6 +937,7 @@ function convertProfile({avatar, bots, followers, followed, hidden, ...data}): I
     ...data,
   } as IProfilePartial
 }
+
 function convertBot({
   lat,
   lon,
@@ -968,6 +975,60 @@ function convertBot({
   } catch (e) {
     // console.error('ERROR CONVERTING:', arguments[0], e)
   }
+}
+
+function convertNotification(notification: any): IEventData | null {
+  console.log('& convert notification', notification)
+  const {__typename, id, ...data} = notification.node.data
+  switch (__typename) {
+    case 'UserFollowNotification':
+      const followNotification: IEventUserFollowData = {
+        id,
+        user: convertProfile(data.user),
+      }
+      // console.log('& user follow:', followNotification)
+      return followNotification
+    case 'BotItemNotification':
+      // console.log('& bot item', data.botItem)
+      const botItemNotification: IEventBotPostData = {
+        id,
+        post: {
+          id: data.id,
+          image: convertImage(data.botItem.image),
+          profile: convertProfile(data.botItem.owner),
+        },
+        bot: convertBot(data.bot),
+      }
+      // console.log('& bot item:', botItemNotification)
+      return botItemNotification
+    case 'InvitationNotification':
+    case 'InvitationResponseNotification':
+      // console.log('& invite response notification', data.invitation)
+      const inviteNotification: IEventBotInviteData = {
+        id,
+        bot: convertBot(data.bot),
+        sender: convertProfile(
+          __typename === 'InvitationNotification' ? data.invitation.user : data.user
+        ),
+        isAccepted: data.accepted,
+      }
+      // console.log('& bot item:', botItemNotification)
+      return inviteNotification
+    case 'GeofenceEventNotification':
+      // console.log('& invite response notification', data.invitation)
+      const geofenceNotification: IEventBotGeofenceData = {
+        id,
+        bot: convertBot(data.bot),
+        profile: convertBot(data.user),
+        isEnter: data.event === 'ENTER',
+      }
+      // console.log('& bot item:', botItemNotification)
+      return geofenceNotification
+    default:
+      console.log('didnt process', notification)
+    // throw new Error(`failed to process notification ${notification}`)
+  }
+  return null
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {
