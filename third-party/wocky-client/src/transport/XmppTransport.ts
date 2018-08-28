@@ -919,6 +919,9 @@ export class XmppTransport implements IWockyTransport {
     const {list, count, version, bots} = processHomestreamResponse(data, this.username)
     return {list, count, version, bots: bots.map((bot: any) => ({id: bot.id, ...processMap(bot)}))}
   }
+  async loadNotifications(lastId, max) {
+    throw new Error('Not supported')
+  }
   subscribeToHomestream(version: string) {
     const iq = $pres({to: `${this.username}@${this.host}/home_stream`}).c('query', {
       xmlns: EVENT_NS,

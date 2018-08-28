@@ -341,28 +341,15 @@ export class GraphQLTransport implements IWockyTransport {
       })
   }
   /*
-  ... on InvitationResponseNotification {
-      accepted
-      bot {${BOT_PROPS}}
-      invitation {
-        bot {${BOT_PROPS}}
-        id
-        invitee {${PROFILE_PROPS}}
-        user {${PROFILE_PROPS}}
-      }
-      user
-    }
-
-    # ... on UserFollowNotification {
-                    # user {${PROFILE_PROPS}}
-                  # }
+  
   */
   async getNotifications(limit: number = 10): Promise<object[]> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
-        query getNotifications($limit: Int!) {
+        query getNotifications($limit: Int!, $ownUsername: String!) {
           notifications(first: $limit) {
+            totalCount
             edges {
               cursor
               node {
@@ -371,16 +358,58 @@ export class GraphQLTransport implements IWockyTransport {
                 data {
                   __typename
                   ... on UserFollowNotification {
+                    user {
+                      ${PROFILE_PROPS}
+                    }
+                  }
+                  ... on InvitationNotification {
+                    bot {${BOT_PROPS}}
+                    invitation {
+                      accepted
+                      id
+                      user {${PROFILE_PROPS}}
+                    }
+                  }
+                  ... on InvitationResponseNotification {
+                    accepted
+                    invitation {
+                      id
+                    }
+                    bot {
+                      ${BOT_PROPS}
+                    }
                     user {${PROFILE_PROPS}}
+                  }
+                  ... on BotItemNotification {
+                    bot {
+                      id
+                    }
+                    botItem {
+                      id
+                      image
+                      media {
+                        fullUrl
+                        thumbnailUrl
+                        trosUrl
+                      }
+                      owner {
+                        id
+                      }
+                      stanza
+                    }
+                  }
+                  ... on GeofenceEventNotification {
+                    bot {${BOT_PROPS}}
+                    user {${PROFILE_PROPS}}
+                    event
                   }
                 }
               }
             }
-            totalCount
           }
         }
       `,
-      variables: {limit},
+      variables: {limit, ownUsername: this.username},
     })
     // console.log('& NOTIFICATIONS')
     // console.log(res.data.notifications.edges.map(e => e.node.data))
@@ -496,13 +525,15 @@ export class GraphQLTransport implements IWockyTransport {
   shareBot() {
     throw new Error('Not supported')
   }
-  async inviteBot(botId: string, userId: string) {
+  async inviteBot(botId: string, userId: string): Promise<string> {
     const data: any = await this.client.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
             successful
-            result
+            result {
+              id
+            }
             messages {
               message
             }
@@ -512,6 +543,7 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {input: {botId, userId}},
     })
     console.log('& invite res', data)
+    return data.data.botInvite.result.id
     // const bots = res.data.currentUser.activeBots
     // const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     // return {
@@ -523,8 +555,8 @@ export class GraphQLTransport implements IWockyTransport {
   async inviteBotReply(invitationId: string, accept: boolean) {
     const data: any = await this.client.mutate({
       mutation: gql`
-        mutation botInviteReply($input: BotInvitationReplyInput!) {
-          botInvitationReply(input: $input) {
+        mutation botInvitationRespond($input: BotInvitationRespondInput!) {
+          botInvitationRespond(input: $input) {
             successful
             result
             messages {
@@ -776,6 +808,9 @@ export class GraphQLTransport implements IWockyTransport {
   async loadHomestream(): Promise<IPagingList> {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
+  }
+  async loadNotifications(lastId, max): Promise<IPagingList> {
+    // TODO
   }
   async removeUpload(tros: string) {
     await this.client.mutate({

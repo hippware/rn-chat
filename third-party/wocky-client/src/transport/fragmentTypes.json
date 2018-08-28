@@ -2,11 +2,6 @@
   "__schema": {
     "types": [
       {
-        "possibleTypes": [{"name": "OtherUser"}, {"name": "CurrentUser"}],
-        "name": "User",
-        "kind": "INTERFACE"
-      },
-      {
         "possibleTypes": [
           {"name": "BotItemNotification"},
           {"name": "GeofenceEventNotification"},
@@ -16,6 +11,11 @@
         ],
         "name": "NotificationData",
         "kind": "UNION"
+      },
+      {
+        "possibleTypes": [{"name": "OtherUser"}, {"name": "CurrentUser"}],
+        "name": "User",
+        "kind": "INTERFACE"
       }
     ]
   }
