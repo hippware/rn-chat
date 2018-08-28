@@ -28,3 +28,6 @@ export const Base = types
 
 export type IBaseType = typeof Base.Type
 export interface IBase extends IBaseType {}
+export interface IBaseData {
+  id: string
+}
