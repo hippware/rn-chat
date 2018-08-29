@@ -10,7 +10,7 @@ const EventBotInvite = types
       isAccepted: types.boolean,
     })
   )
-  .named('EventBotShare')
+  .named('EventBotInvite')
 
 export default EventBotInvite
 

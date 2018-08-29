@@ -9,8 +9,8 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot, IEvent} from '..'
-import {IBot} from '../model/Bot'
+import {ILocationSnapshot} from '..'
+import {IBot, IBotData} from '../model/Bot'
 import {ILocation} from '../model/Location'
 import {IEventUserFollowData} from '../model/EventUserFollow'
 import {IEventData} from '../model/Event'
@@ -346,7 +346,10 @@ export class GraphQLTransport implements IWockyTransport {
       })
   }
 
-  async loadNotifications(lastId?: string, max: number = 10): Promise<object> {
+  async loadNotifications(
+    lastId?: string,
+    max: number = 10
+  ): Promise<{list: any[]; count: number; version: string | null; bots: IBotData[]}> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
@@ -410,18 +413,13 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {limit: max, ownUsername: this.username},
     })
-    console.log('& NOTIFICATIONS')
-    console.log(JSON.stringify(res.data))
-    // return res.data
-    // return {
-
-    // }
-    // return res.data.notifications.edges.map(e => e.node.data)
     const {totalCount, edges} = res.data.notifications
+    const {list, bots} = convertNotifications(edges)!
     return {
       count: totalCount,
-      list: edges.map(convertNotification),
-      cursor: 1,
+      list,
+      version: edges.length ? edges[edges.length - 1].cursor : null,
+      bots,
     }
   }
   subscribeNotifications() {
@@ -977,58 +975,76 @@ function convertBot({
   }
 }
 
-function convertNotification(notification: any): IEventData | null {
-  console.log('& convert notification', notification)
-  const {__typename, id, ...data} = notification.node.data
-  switch (__typename) {
-    case 'UserFollowNotification':
-      const followNotification: IEventUserFollowData = {
-        id,
-        user: convertProfile(data.user),
-      }
-      // console.log('& user follow:', followNotification)
-      return followNotification
-    case 'BotItemNotification':
-      // console.log('& bot item', data.botItem)
-      const botItemNotification: IEventBotPostData = {
-        id,
-        post: {
-          id: data.id,
-          image: convertImage(data.botItem.image),
-          profile: convertProfile(data.botItem.owner),
-        },
-        bot: convertBot(data.bot),
-      }
-      // console.log('& bot item:', botItemNotification)
-      return botItemNotification
-    case 'InvitationNotification':
-    case 'InvitationResponseNotification':
-      // console.log('& invite response notification', data.invitation)
-      const inviteNotification: IEventBotInviteData = {
-        id,
-        bot: convertBot(data.bot),
-        sender: convertProfile(
-          __typename === 'InvitationNotification' ? data.invitation.user : data.user
-        ),
-        isAccepted: data.accepted,
-      }
-      // console.log('& bot item:', botItemNotification)
-      return inviteNotification
-    case 'GeofenceEventNotification':
-      // console.log('& invite response notification', data.invitation)
-      const geofenceNotification: IEventBotGeofenceData = {
-        id,
-        bot: convertBot(data.bot),
-        profile: convertBot(data.user),
-        isEnter: data.event === 'ENTER',
-      }
-      // console.log('& bot item:', botItemNotification)
-      return geofenceNotification
-    default:
-      console.log('didnt process', notification)
-    // throw new Error(`failed to process notification ${notification}`)
-  }
-  return null
+function convertNotifications(notifications: any[]): {list: IEventData[]; bots: IBotData[]} | null {
+  const list: IEventData[] = []
+  const bots: IBotData[] = []
+  notifications.forEach(notification => {
+    let bot: IBotData
+    // console.log('& convert notification', notification)
+    const {data: {__typename, ...data}, id} = notification.node
+    switch (__typename) {
+      case 'UserFollowNotification':
+        const followNotification: IEventUserFollowData = {
+          id,
+          user: convertProfile(data.user),
+        }
+        // console.log('& user follow:', followNotification)
+        // return followNotification
+        list.push(followNotification)
+        break
+      case 'BotItemNotification':
+        // console.log('& bot item', data.botItem)
+        bot = convertBot(data.bot)
+        const botItemNotification: IEventBotPostData = {
+          id,
+          post: {
+            id: data.id,
+            image: convertImage(data.botItem.image),
+            // profile: convertProfile(data.botItem.owner),
+            profile: data.botItem.owner.id,
+          },
+          bot: bot.id,
+        }
+        // console.log('& bot item:', botItemNotification)
+        // return botItemNotification
+        list.push(botItemNotification)
+        bots.push(bot)
+        break
+      case 'InvitationNotification':
+      case 'InvitationResponseNotification':
+        // console.log('& invite response notification', data.invitation)
+        bot = convertBot(data.bot)
+        const inviteNotification: IEventBotInviteData = {
+          id,
+          bot: bot.id,
+          sender: __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
+          isAccepted: data.accepted,
+        }
+        // return inviteNotification
+        list.push(inviteNotification)
+        bots.push(bot)
+        break
+      case 'GeofenceEventNotification':
+        // console.log('& invite response notification', data.invitation)
+        bot = convertBot(data.bot)
+        const geofenceNotification: IEventBotGeofenceData = {
+          id,
+          bot: bot.id,
+          // profile: convertProfile(data.user),
+          profile: data.user.id,
+          isEnter: data.event === 'ENTER',
+        }
+        // console.log('& after:', botItemNotification)
+        // return geofenceNotification
+        list.push(geofenceNotification)
+        bots.push(bot)
+        break
+      default:
+        throw new Error(`failed to process notification ${notification}`)
+    }
+  })
+
+  return {list, bots}
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {

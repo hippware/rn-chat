@@ -1,6 +1,6 @@
 import {types, flow, getParent} from 'mobx-state-tree'
 import {FileRef} from './File'
-import {ProfileRef, IProfilePartial} from './Profile'
+import {ProfileRef} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable, IPaginable} from './PaginableList'
@@ -45,5 +45,5 @@ export interface IBotPostData {
   content?: string
   title?: string
   image?: any
-  profile: IProfilePartial
+  profile: string
 }

@@ -257,7 +257,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   loadNotifications(lastId: any, max?: number): Promise<IPagingList> {
-    return this._gql.loadHomestream()
+    return this._gql.loadNotifications(lastId, max)
   }
 
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
