@@ -450,9 +450,9 @@ export class GraphQLTransport implements IWockyTransport {
       })
       .subscribe({
         next: action((result: any) => {
-          console.log('& sub hit!', result)
+          // console.log('& sub hit!', result)
           const update = result.data.notifications
-          console.log('& SUB UPDATE:', update)
+          // console.log('& SUB UPDATE:', update)
           this.notification = {
             data: result.data,
           }
@@ -548,18 +548,11 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {input: {botId, userId}},
     })
-    console.log('& invite res', data)
     return data.data.botInvite.result.id
-    // const bots = res.data.currentUser.activeBots
-    // const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    // return {
-    //   list,
-    //   cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-    //   count: bots.totalCount,
-    // }
   }
   async inviteBotReply(invitationId: string, accept: boolean) {
-    const data: any = await this.client.mutate({
+    // const data: any = await this.client.mutate({
+    await this.client.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
           botInvitationRespond(input: $input) {
@@ -573,14 +566,7 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {input: {invitationId, accept}},
     })
-    console.log('& invitation reply res', data)
-    // const bots = res.data.currentUser.activeBots
-    // const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    // return {
-    //   list,
-    //   cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-    //   count: bots.totalCount,
-    // }
+    // TODO: handle error?
   }
   async register(): Promise<{username: string; password: string; host: string}> {
     throw new Error('Not supported')
