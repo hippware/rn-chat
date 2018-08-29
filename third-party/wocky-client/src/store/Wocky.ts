@@ -25,19 +25,24 @@ import {EventBotNote} from '../model/EventBotNote'
 import {EventBotShare} from '../model/EventBotShare'
 import {EventBotGeofence} from '../model/EventBotGeofence'
 import {EventDelete} from '../model/EventDelete'
+import EventUserFollow from '../model/EventUserFollow'
+import EventBotInvite from '../model/EventBotInvite'
 import {createPaginable, IPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
+
 export const EventEntity = types.union(
   EventBotPost,
   EventBotNote,
   EventBotShare,
   EventBotCreate,
   EventBotGeofence,
-  EventDelete
+  EventDelete,
+  EventUserFollow,
+  EventBotInvite
 )
 export type IEventEntity = typeof EventEntity.Type
 export type __IModelType = IModelType<any, any>
@@ -77,6 +82,7 @@ export const Wocky = types
       profile: types.maybe(OwnProfile),
       updates: types.optional(types.array(EventEntity), []),
       events: types.optional(EventList, {}),
+      notifications: types.optional(EventList, {}),
       geofenceBots: types.optional(BotPaginableList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
@@ -281,6 +287,11 @@ export const Wocky = types
           self.events.remove(event.id)
         }
       })
+      self.notifications.result.forEach((event: any) => {
+        if (event.bot && event.bot.id === id) {
+          self.notifications.remove(event.id)
+        }
+      })
       self.profile!.subscribedBots.remove(id)
       self.profile!.ownBots.remove(id)
       self.profiles.get(self.username!)!.ownBots.remove(id)
@@ -345,8 +356,8 @@ export const Wocky = types
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
-      // const events = self.events.list.filter(event => event.bot && event.bot === id)
-      // events.forEach(event => self.events.remove(event.id))
+      const events = self.events.list.filter(event => event.bot && event.bot === id)
+      events.forEach(event => self.events.remove(event.id))
       self.deleteBot(id)
     }),
   }))
@@ -534,10 +545,16 @@ export const Wocky = types
       })
     }),
     _loadHomestream: flow(function*(lastId: any, max: number = 3) {
-      // console.log('wocky loadHomestream', lastId, max)
       yield waitFor(() => self.connected)
       const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
-      // console.log('wocky loadHomestream result', list, count)
+      bots.forEach(self.getBot)
+      self.version = version
+      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+    }),
+    _loadNotifications: flow(function*(lastId: any, max: number = 10) {
+      yield waitFor(() => self.connected)
+      const {list, count, bots, version} = yield self.transport.loadNotifications(lastId, max)
+      // console.log('& load notifications', count, version)
       bots.forEach(self.getBot)
       self.version = version
       return {list: list.map((data: any) => self.create(EventEntity, data)), count}
@@ -582,9 +599,11 @@ export const Wocky = types
           return
         }
         if (!self.events.exists(data.id)) return
+        // if (!self.notifications.exists(data.id)) return
         // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
       }
       if (changed && data.bot) {
+        console.log('changed')
         yield self.loadBot(data.bot.id, data.bot.server)
       } else {
         const item: any = self.create(EventEntity, data)
@@ -681,6 +700,7 @@ export const Wocky = types
       self.chats.clear()
       self.geoBots.clear()
       self.events.refresh()
+      self.notifications.refresh()
       self.updates.clear()
       self.profiles.clear()
       self.bots.clear()
@@ -697,6 +717,7 @@ export const Wocky = types
               self.requestRoster()
               if (!self.version) {
                 await self.events.load()
+                // await self.notifications.load()
               } else {
                 await self._loadUpdates()
               }
@@ -741,6 +762,7 @@ export const Wocky = types
       }),
       afterCreate: () => {
         self.events.setRequest(self._loadHomestream)
+        self.notifications.setRequest(self._loadNotifications)
         self.geofenceBots.setRequest(self._loadGeofenceBots)
         startReactions()
       },

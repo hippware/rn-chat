@@ -1,5 +1,5 @@
 import {types} from 'mobx-state-tree'
-import {Bot, IBot, IBotData} from './Bot'
+import {Bot, IBot} from './Bot'
 import {Event, IEventData} from './Event'
 import {IProfile} from './Profile'
 
@@ -24,5 +24,5 @@ export type IEventBotType = typeof EventBot.Type
 export interface IEventBot extends IEventBotType {}
 
 export interface IEventBotData extends IEventData {
-  bot: IBotData
+  bot: string
 }
