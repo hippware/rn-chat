@@ -183,7 +183,6 @@ describe('GraphQL', () => {
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
-          timestamp()
           expect(gql.botVisitor.bot.id).to.equal(bot.id)
           expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
           expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
@@ -222,7 +221,7 @@ describe('GraphQL', () => {
       const loaded = await gql.loadBot(bot.id, bot.server)
       expect(loaded.title).to.equal(bot.title)
       expect(loaded.geofence).to.equal(bot.geofence)
-      expect(loaded.guest).to.equal(true, 'user should be a guest of the bot')
+      expect(loaded.guest).to.equal(true)
       expect(loaded.id).to.equal(bot.id)
       done()
     } catch (e) {
@@ -244,7 +243,3 @@ describe('GraphQL', () => {
     done()
   })
 })
-
-async function pause(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}

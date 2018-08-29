@@ -356,8 +356,8 @@ export const Wocky = types
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
-      const events = self.events.list.filter(event => event.bot && event.bot === id)
-      events.forEach(event => self.events.remove(event.id))
+      // const events = self.events.list.filter(event => event.bot && event.bot === id)
+      // events.forEach(event => self.events.remove(event.id))
       self.deleteBot(id)
     }),
   }))
@@ -603,7 +603,6 @@ export const Wocky = types
         // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
       }
       if (changed && data.bot) {
-        console.log('changed')
         yield self.loadBot(data.bot.id, data.bot.server)
       } else {
         const item: any = self.create(EventEntity, data)
