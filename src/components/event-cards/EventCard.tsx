@@ -10,6 +10,7 @@ import {getType, isAlive} from 'mobx-state-tree'
 import {IEvent} from 'wocky-client'
 import EventBotGeofenceCard from './EventBotGeofenceCard'
 import EventUserFollowCard from './EventUserFollowCard'
+import EventBotInviteCard from './EventBotInviteCard'
 
 type Props = {
   item: IEvent
@@ -23,6 +24,7 @@ const eventCardMap: {[key: string]: any} = {
   // EventBotNote: EventBotNoteCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventUserFollow: EventUserFollowCard,
+  EventBotInvite: EventBotInviteCard,
 }
 
 @inject('log')
