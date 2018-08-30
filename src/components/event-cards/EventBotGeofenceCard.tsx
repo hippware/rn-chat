@@ -21,10 +21,9 @@ export default class EventBotGeofenceCard extends React.Component<Props> {
 
     return (
       <EventCardTemplate
-        profile={bot.owner}
+        profile={profile}
         icon={geoIcon}
         timestamp={relativeDateAsString}
-        userHandle={profile.handle}
         action={isEnter ? 'is at' : 'left'}
         line2={bot.title}
       />
