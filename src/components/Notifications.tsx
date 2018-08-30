@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {isAlive} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {k} from './Global'
-import {IWocky, IEventBot} from 'wocky-client'
+import {IWocky, IEvent} from 'wocky-client'
 import {RText, Separator} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
@@ -15,8 +15,13 @@ type Props = {
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
+  componentDidMount() {
+    // TODO: move this to wocky-client?
+    this.props.wocky.notifications.load({force: true})
+  }
+
   render() {
-    const {profile, events} = this.props.wocky
+    const {profile, notifications} = this.props.wocky
     if (!profile || !isAlive(profile)) {
       return null
     }
@@ -27,7 +32,7 @@ class Notifications extends React.Component<Props> {
             Updates
           </RText>
         }
-        data={events.length > 0 ? events.list : null}
+        data={notifications.length > 0 ? notifications.list : null}
         // ListFooterComponent={
         //   connected
         //     ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
@@ -36,7 +41,7 @@ class Notifications extends React.Component<Props> {
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}
-        onEndReached={events.load}
+        onEndReached={notifications.load}
         initialNumToRender={2}
         ItemSeparatorComponent={() => (
           <View style={{backgroundColor: 'white'}}>
@@ -47,7 +52,11 @@ class Notifications extends React.Component<Props> {
     )
   }
 
-  renderItem = ({item}: {item: IEventBot}) => <EventCard item={item} />
+  renderItem = ({item}: {item: IEvent}) => <EventCard item={item} />
+  // renderItem = ({item}: {item: IEvent}) => {
+  //   console.log('& render', item)
+  //   return null
+  // }
 
   keyExtractor = (item: any) => item.id
 }

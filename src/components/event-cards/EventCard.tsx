@@ -7,10 +7,11 @@ import EventBotShareCard from './EventBotShareCard'
 import EventBotNoteCard from './EventBotNoteCard'
 import EventBotPostCard from './EventBotPostCard'
 import {getType, isAlive} from 'mobx-state-tree'
-import {IEventBot} from 'wocky-client'
+import {IEvent} from 'wocky-client'
+import EventBotGeofenceCard from './EventBotGeofenceCard'
 
 type Props = {
-  item: IEventBot
+  item: IEvent
   log?: any
 }
 
@@ -19,11 +20,18 @@ const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
   EventBotShare: EventBotShareCard,
   EventBotNote: EventBotNoteCard,
+  EventBotGeofence: EventBotGeofenceCard,
 }
 @inject('log')
 @observer
 class EventCard extends React.Component<Props> {
   card: any
+  CardClass: any
+
+  constructor(props: Props) {
+    super(props)
+    this.CardClass = eventCardMap[getType(this.props.item).name]
+  }
 
   onCardPress = () => {
     if (this.card.onPress) this.card.onPress()
@@ -33,11 +41,10 @@ class EventCard extends React.Component<Props> {
 
   render() {
     const row = this.props.item
+    const {CardClass} = this
     let profile
-    let CardClass: any
     try {
       if (!row || !isAlive(row)) return null
-      CardClass = eventCardMap[getType(row).name]
       // TODO: deleted bot throws an error here trying to generate a profile from a bad id
       profile = row.target
       if (!profile || !profile.id) {
@@ -49,20 +56,18 @@ class EventCard extends React.Component<Props> {
     }
 
     return (
-      CardClass && (
-        <Card
-          key={row.id}
-          onPress={this.onCardPress}
-          style={{
-            paddingTop: 10 * k,
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingBottom: 0,
-          }}
-        >
-          <CardClass ref={this.setCardRef} item={row} />
-        </Card>
-      )
+      <Card
+        key={row.id}
+        onPress={this.onCardPress}
+        style={{
+          paddingTop: 10 * k,
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingBottom: 0,
+        }}
+      >
+        <CardClass ref={this.setCardRef} item={row} />
+      </Card>
     )
   }
 }
