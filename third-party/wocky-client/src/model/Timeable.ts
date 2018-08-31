@@ -36,3 +36,7 @@ export const Timeable = types
       return moment(self.time).fromNow(true)
     },
   }))
+
+export interface ITimeableData {
+  time?: number
+}
