@@ -1,23 +1,23 @@
 import {types} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
-import {Profile, IProfilePartial} from './Profile'
+import {Profile} from './Profile'
 
-const EventBotInvite = types
+export const EventBotInvite = types
   .compose(
     EventBot,
     types.model('EventBotInvite', {
-      sender: types.maybe(types.reference(Profile)),
-      isAccepted: types.boolean,
+      sender: types.reference(Profile),
+      isAccepted: types.maybe(types.boolean),
+      isResponse: types.boolean,
     })
   )
   .named('EventBotInvite')
-
-export default EventBotInvite
 
 type EventBotInviteType = typeof EventBotInvite.Type
 export interface IEventBotInvite extends EventBotInviteType {}
 
 export interface IEventBotInviteData extends IEventBotData {
-  sender: IProfilePartial
-  isAccepted: boolean
+  sender: string
+  isAccepted?: boolean
+  isResponse: boolean
 }

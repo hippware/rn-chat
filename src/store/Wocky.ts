@@ -25,8 +25,8 @@ import {EventBotNote} from '../model/EventBotNote'
 import {EventBotShare} from '../model/EventBotShare'
 import {EventBotGeofence} from '../model/EventBotGeofence'
 import {EventDelete} from '../model/EventDelete'
-import EventUserFollow from '../model/EventUserFollow'
-import EventBotInvite from '../model/EventBotInvite'
+import {EventUserFollow} from '../model/EventUserFollow'
+import {EventBotInvite} from '../model/EventBotInvite'
 import {createPaginable, IPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
@@ -444,6 +444,9 @@ export const Wocky = types
     ) => {
       self.transport.shareBot(id, server, recepients, message, action)
     },
+    _inviteBot: flow(function*(botId: string, recepients: string[]) {
+      yield self.transport.inviteBot(botId, recepients)
+    }),
     _publishBotPost: flow(function*(post: IBotPost) {
       yield waitFor(() => self.connected)
       let parent = getParent(post)
@@ -533,9 +536,9 @@ export const Wocky = types
     }),
     _loadUpdates: flow(function*() {
       yield waitFor(() => self.connected)
-      const {list, bots, version} = yield self.transport.loadUpdates(self.version)
+      const {list, bots /*, version*/} = yield self.transport.loadUpdates(self.version)
       bots.forEach(self.getBot)
-      self.version = version
+      // self.version = version
       list.forEach((data: any) => {
         if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
           return
@@ -546,18 +549,18 @@ export const Wocky = types
     }),
     _loadHomestream: flow(function*(lastId: any, max: number = 3) {
       yield waitFor(() => self.connected)
-      const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
+      const {list, count, bots /*, version*/} = yield self.transport.loadHomestream(lastId, max)
       bots.forEach(self.getBot)
-      self.version = version
+      // self.version = version
       return {list: list.map((data: any) => self.create(EventEntity, data)), count}
     }),
     _loadNotifications: flow(function*(lastId: any, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count, bots, version} = yield self.transport.loadNotifications(lastId, max)
+      const {list, count, bots, cursor} = yield self.transport.loadNotifications(lastId, max)
       // console.log('& load notifications', count, version)
       bots.forEach(self.getBot)
-      self.version = version
-      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+      self.version = cursor
+      return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
     }),
     _subscribeToHomestream: (version: string) => {
       self.transport.subscribeToHomestream(version)
@@ -583,7 +586,7 @@ export const Wocky = types
       if (!version) {
         throw new Error('No version for notification:' + JSON.stringify(data))
       }
-      self.version = version
+      // self.version = version
       // ignore /changed and /description delete
       // delete creation event if we have also delete event
       if (data.delete) {
@@ -715,12 +718,12 @@ export const Wocky = types
               await self.loadChats()
               self.requestRoster()
               if (!self.version) {
-                await self.events.load()
+                // await self.events.load()
                 // await self.notifications.load()
               } else {
-                await self._loadUpdates()
+                // await self._loadUpdates()
               }
-              self._subscribeToHomestream(self.version)
+              // self._subscribeToHomestream(self.version)
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
                 profile.setStatus('unavailable')
