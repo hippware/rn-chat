@@ -39,3 +39,11 @@ export const BotPost = types
 export type IBotPost = typeof BotPost.Type
 export const BotPostPaginableList = createPaginable(BotPost)
 // export type IBotPostPaginableList = typeof BotPostPaginableList.Type
+
+export interface IBotPostData {
+  id: string
+  content?: string
+  title?: string
+  image?: any
+  profile: string
+}

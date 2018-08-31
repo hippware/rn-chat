@@ -15,6 +15,7 @@ export const Base = types
       if (wocky) {
         return wocky
       }
+      // can we use `getRoot` here instead? https://github.com/mobxjs/mobx-state-tree/blob/master/API.md#getroot
       while (getParent(target) && getType(getParent(target)).name !== SERVICE_NAME) {
         target = getParent(target)
         if (!hasParent(target)) {
@@ -27,3 +28,6 @@ export const Base = types
 
 export type IBaseType = typeof Base.Type
 export interface IBase extends IBaseType {}
+export interface IBaseData {
+  id: string
+}

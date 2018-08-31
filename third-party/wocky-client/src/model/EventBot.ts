@@ -1,6 +1,6 @@
 import {types} from 'mobx-state-tree'
 import {Bot, IBot} from './Bot'
-import {Event} from './Event'
+import {Event, IEventData} from './Event'
 import {IProfile} from './Profile'
 
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
@@ -22,3 +22,7 @@ export const EventBot = types
 
 export type IEventBotType = typeof EventBot.Type
 export interface IEventBot extends IEventBotType {}
+
+export interface IEventBotData extends IEventData {
+  bot: string
+}

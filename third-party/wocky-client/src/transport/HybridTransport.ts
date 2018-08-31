@@ -256,6 +256,10 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.loadHomestream(lastId, max)
   }
 
+  loadNotifications(lastId: any, max?: number): Promise<IPagingList> {
+    return this._gql.loadNotifications(lastId, max)
+  }
+
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
     return this._gql.loadOwnBots(userId, lastId, max)
   }
