@@ -16,6 +16,11 @@ export const EventBotPost = types
       post: BotPost,
     })
   )
+  // .views(self => ({
+  //   get target(): IProfile | null {
+  //     return self.post.profile
+  //   },
+  // }))
   .named('EventBotPost')
 
 export type IEventBotPost = typeof EventBotPost.Type

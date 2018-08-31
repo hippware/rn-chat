@@ -844,6 +844,10 @@ export class XmppTransport implements IWockyTransport {
     this.sendStanza(msg)
   }
 
+  inviteBot(id: string, recepients: string[]): Promise<string> {
+    throw new Error('Not supported')
+  }
+
   async publishBotPost(botId: string, post: any) {
     const iq = $iq({type: 'set', to: this.host})
       .c('publish', {xmlns: BOT_NS, node: `bot/${botId}`})
@@ -919,7 +923,7 @@ export class XmppTransport implements IWockyTransport {
     const {list, count, version, bots} = processHomestreamResponse(data, this.username)
     return {list, count, version, bots: bots.map((bot: any) => ({id: bot.id, ...processMap(bot)}))}
   }
-  async loadNotifications(lastId, max) {
+  async loadNotifications(lastId, max): Promise<any> {
     throw new Error('Not supported')
   }
   subscribeToHomestream(version: string) {
