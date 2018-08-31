@@ -31,6 +31,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
           style={[{flex: 1}, style]}
           ListHeaderComponent={<DraggablePopupListHeader inner={this.props.headerInner} />}
+          showsVerticalScrollIndicator={false}
         />
         {fadeNavConfig && (
           <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
