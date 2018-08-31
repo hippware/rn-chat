@@ -968,12 +968,14 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
     const bots: IBotData[] = []
     notifications.forEach(notification => {
       let bot: IBotData
-      const {data: {__typename, ...data}, id} = notification.node
-      // console.log('& converting type', __typename)
+      const {data: {__typename, ...data}, id, createdAt} = notification.node
+      const time = new Date(createdAt).getTime()
+      // console.log('& converting type', __typename, createdAt, time)
       switch (__typename) {
         case 'UserFollowNotification':
           const followNotification: IEventUserFollowData = {
             id,
+            time,
             // TODO: should we get the full profile info here instead?
             // In the case of a follow this is (potentially) an uncached user
             user: data.user.id,
@@ -986,6 +988,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           bot = convertBot(data.bot)
           const botItemNotification: IEventBotPostData = {
             id,
+            time,
             post: {
               id: data.botItem.id,
               profile: data.botItem.owner.id,
@@ -1001,6 +1004,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           bot = convertBot(data.bot)
           const inviteNotification: IEventBotInviteData = {
             id,
+            time,
             bot: bot.id,
             sender:
               __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
@@ -1016,6 +1020,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           bot = convertBot(data.bot)
           const geofenceNotification: IEventBotGeofenceData = {
             id,
+            time,
             bot: bot.id,
             // profile: convertProfile(data.user),
             profile: data.user.id,
