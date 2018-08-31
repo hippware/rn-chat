@@ -14,22 +14,17 @@ type Props = {
   item: IEventUserFollow
 }
 
-export default class EventUserFollowCard extends React.Component<Props> {
-  render() {
-    const {relativeDateAsString, user} = this.props.item
-    // console.log('& eventuserfollow', this.props.item, target)
+const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
+  <EventCardTemplate
+    timestamp={relativeDateAsString}
+    action={'started following you'}
+    icon={geoIcon}
+    profile={user}
+    rightColumnElement={<FollowButton profile={user} />}
+  />
+))
 
-    return user ? (
-      <EventCardTemplate
-        timestamp={relativeDateAsString}
-        action={'started following you'}
-        icon={geoIcon}
-        profile={user}
-        rightColumnElement={<FollowButton profile={user} />}
-      />
-    ) : null
-  }
-}
+export default EventUserFollowCard
 
 type FollowProps = {
   profile: IProfile

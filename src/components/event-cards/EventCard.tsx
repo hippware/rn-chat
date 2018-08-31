@@ -1,21 +1,63 @@
 import React from 'react'
-import Card from '../Card'
-import {k} from '../Global'
-import {observer, inject} from 'mobx-react/native'
 // import EventBotCard from './EventBotCard'
 import EventBotShareCard from './EventBotShareCard'
 // import EventBotNoteCard from './EventBotNoteCard'
-import EventBotPostCard from './EventBotPostCard'
 import {getType} from 'mobx-state-tree'
-import {IEvent} from 'wocky-client'
-import EventBotGeofenceCard from './EventBotGeofenceCard'
+import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventUserFollowCard from './EventUserFollowCard'
-import EventBotInviteCard from './EventBotInviteCard'
+import {observer} from 'mobx-react/native'
+import {Actions} from 'react-native-router-flux'
+import EventCardTemplate from './EventCardTemplate'
 
-type Props = {
-  item: IEvent
-  log?: any
-}
+const geoIcon = require('../../../images/notificationGeo.png')
+const notificationIcon = require('../../../images/notificationMessage.png')
+
+const EventBotInviteCard = observer(
+  ({
+    item: {bot, relativeDateAsString, sender, isAccepted, isResponse},
+  }: {
+    item: IEventBotInvite
+  }) => (
+    <EventCardTemplate
+      profile={sender}
+      icon={geoIcon}
+      timestamp={relativeDateAsString}
+      action={
+        isResponse
+          ? isAccepted ? 'accepted your invite to' : 'rejected your invite to'
+          : 'invited you to follow'
+      }
+      line2={bot.title}
+      onPress={() => Actions.botDetails({botId: bot.id})}
+    />
+  )
+)
+
+const EventBotPostCard = observer(
+  ({item: {bot, relativeDateAsString, post}}: {item: IEventBotPost}) => (
+    <EventCardTemplate
+      profile={post.profile}
+      icon={notificationIcon}
+      timestamp={relativeDateAsString}
+      action="commented on"
+      line2={bot.title}
+      onPress={() => Actions.botDetails({botId: bot.id})}
+    />
+  )
+)
+
+const EventBotGeofenceCard = observer(
+  ({item: {bot, relativeDateAsString, profile, isEnter}}: {item: IEventBotGeofence}) => (
+    <EventCardTemplate
+      profile={profile}
+      icon={geoIcon}
+      timestamp={relativeDateAsString}
+      action={isEnter ? 'is at' : 'left'}
+      line2={bot.title}
+      onPress={() => Actions.botDetails({botId: bot.id})}
+    />
+  )
+)
 
 const eventCardMap: {[key: string]: any} = {
   // EventBotCreate: EventBotCard,
@@ -27,55 +69,12 @@ const eventCardMap: {[key: string]: any} = {
   EventBotInvite: EventBotInviteCard,
 }
 
-@inject('log')
-@observer
-class EventCard extends React.Component<Props> {
-  card: any
-  CardClass: any
-
-  constructor(props: Props) {
-    super(props)
-    this.CardClass = eventCardMap[getType(this.props.item).name]
-    // console.log('& name', getType(this.props.item).name, this.CardClass)
-  }
-
-  onCardPress = () => {
-    if (this.card.onPress) this.card.onPress()
-  }
-
-  setCardRef = (r: any) => (this.card = r)
-
-  render() {
-    // const row = this.props.item
-    const {CardClass} = this
-    // let profile
-    // try {
-    //   if (!row || !isAlive(row)) return null
-    //   // TODO: deleted bot throws an error here trying to generate a profile from a bad id
-    //   profile = row.target
-    //   if (!profile || !profile.id) {
-    //     return null
-    //   }
-    // } catch (err) {
-    //   this.props.log('TODO: fix bot delete after server-side changes', err)
-    //   return null
-    // }
-
-    return (
-      <Card
-        key={this.props.item.id}
-        onPress={this.onCardPress}
-        style={{
-          paddingTop: 10 * k,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingBottom: 0,
-        }}
-      >
-        <CardClass ref={this.setCardRef} item={this.props.item} />
-      </Card>
-    )
-  }
+type Props = {
+  item: IEvent
+}
+const EventCard = ({item}: Props) => {
+  const CardClass = eventCardMap[getType(item).name]
+  return CardClass ? <CardClass item={item} /> : null
 }
 
 export default EventCard
