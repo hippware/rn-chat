@@ -10,9 +10,7 @@ import Separator from './Separator'
 import BottomButton from './BottomButton'
 import CloseButton from './CloseButton'
 import ProfileStack from './ProfileStack'
-
-// NOTE: this import causes Jest failures. Maybe related to Animated?
-// import DraggablePopupList from './DraggablePopupList'
+import GradientButton from './GradientButton'
 
 export {
   RText,
@@ -27,5 +25,5 @@ export {
   BottomButton,
   CloseButton,
   ProfileStack,
-  // DraggablePopupList,
+  GradientButton,
 }

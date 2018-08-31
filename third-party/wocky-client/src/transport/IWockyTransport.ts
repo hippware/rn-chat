@@ -1,6 +1,6 @@
 import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
-import {IBot} from '../model/Bot'
+import {IBot, IBotData} from '../model/Bot'
 
 export interface IPagingList {
   list: any[]
@@ -62,6 +62,7 @@ export interface IWockyTransport {
   generateId(): Promise<string>
   updateBot(bot: any, userLocation?: ILocation): Promise<void>
   shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
+  inviteBot(id: string, recepients: string[]): Promise<string>
   loadRelations(
     userId: string,
     relation: string,
@@ -82,7 +83,10 @@ export interface IWockyTransport {
   disablePush(): Promise<void>
   loadUpdates(ver: string): Promise<{list: [any]; version: string; bots: [any]}>
   loadHomestream(lastId: any, max?: number): Promise<IPagingList>
-  loadNotifications(lastId?: string, max?: number): Promise<any>
+  loadNotifications(
+    lastId?: string,
+    max?: number
+  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>

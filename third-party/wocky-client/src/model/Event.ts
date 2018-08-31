@@ -1,5 +1,5 @@
 import {types} from 'mobx-state-tree'
-import {Timeable} from './Timeable'
+import {Timeable, ITimeableData} from './Timeable'
 import {Base, IBaseData} from './Base'
 import {IProfile} from './Profile'
 
@@ -16,4 +16,4 @@ export const Event = types
 type IEventType = typeof Event.Type
 export interface IEvent extends IEventType {}
 
-export interface IEventData extends IBaseData {}
+export interface IEventData extends IBaseData, ITimeableData {}

@@ -123,6 +123,9 @@ export const Bot = types
     share: (userIDs: string[], message: string = '', action: string = 'share') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
     },
+    invite: (userIDs: string[]): Promise<any> => {
+      return self.service._inviteBot(self.id, userIDs)
+    },
     setNew: (value: boolean) => {
       self.isNew = value
     },

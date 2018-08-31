@@ -40,10 +40,14 @@ class GeofenceShare extends React.Component<Props> {
     }
   }
 
-  share = () => {
+  share = async () => {
     const shareSelect = this.selection.selected.map(sp => sp.id)
     try {
-      this.bot!.share(shareSelect, '', 'geofence share')
+      // TODO: implement share (no accept needed) later when we restore public bots
+      // this.bot!.share(shareSelect, '', 'geofence share')
+
+      await this.bot!.invite(shareSelect)
+
       const num = shareSelect.length
       this.props.notificationStore.flash(
         `Presence shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`

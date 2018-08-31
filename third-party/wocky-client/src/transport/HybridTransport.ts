@@ -1,6 +1,6 @@
 import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
 import {IProfilePartial} from '../model/Profile'
-import {IBot} from '../model/Bot'
+import {IBot, IBotData} from '../model/Bot'
 import {computed} from 'mobx'
 import {ILocation} from '../model/Location'
 
@@ -197,6 +197,10 @@ export class HybridTransport implements IWockyTransport {
     this._xmpp.shareBot(id, server, recepients, message, action)
   }
 
+  async inviteBot(id: string, recipients: string[]): Promise<string> {
+    return this._gql.inviteBot(id, recipients)
+  }
+
   loadRelations(
     userId: string,
     relation: string,
@@ -256,7 +260,10 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.loadHomestream(lastId, max)
   }
 
-  loadNotifications(lastId: any, max?: number): Promise<IPagingList> {
+  loadNotifications(
+    lastId: any,
+    max?: number
+  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}> {
     return this._gql.loadNotifications(lastId, max)
   }
 

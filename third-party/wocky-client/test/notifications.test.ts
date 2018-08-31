@@ -86,7 +86,7 @@ describe('GraphQL Notifications', () => {
 
       // Location Invite -	@user invited you to follow Location Name
       // alice invites bob to the bot (NOTE: this is different from `share`)
-      invitationId = await gqlAlice.inviteBot(aliceBot.id, bob.username)
+      invitationId = await gqlAlice.inviteBot(aliceBot.id, [bob.username])
       // console.log('& invite id', inviteId)
 
       await pause(1000)
@@ -103,9 +103,6 @@ describe('GraphQL Notifications', () => {
   it('gets Location Invite Accept notification', async done => {
     try {
       timestamp()
-
-      // TODO: remove this after Bernard fixes on the backend
-      await bobsAliceBot.subscribeGeofence()
 
       await gqlBob.inviteBotReply(invitationId, true)
 

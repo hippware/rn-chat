@@ -1,12 +1,11 @@
 import React from 'react'
-import {View} from 'react-native'
 import {isAlive} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
-import {k} from './Global'
-import {IWocky, IEventBot} from 'wocky-client'
-import {RText, Separator} from './common'
+import {IWocky, IEvent} from 'wocky-client'
+import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
+import {navBarStyle} from './Router'
 
 type Props = {
   wocky?: IWocky
@@ -15,39 +14,38 @@ type Props = {
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
+  componentDidMount() {
+    // TODO: move this to wocky-client?
+    this.props.wocky.notifications.load({force: true})
+  }
+
   render() {
-    const {profile, events} = this.props.wocky
+    const {profile, notifications} = this.props.wocky
     if (!profile || !isAlive(profile)) {
       return null
     }
     return (
       <DraggablePopupList
-        headerInner={
-          <RText size={16} style={{marginBottom: 20 * k}}>
-            Updates
-          </RText>
-        }
-        data={events.length > 0 ? events.list : null}
+        fadeNavConfig={{
+          back: true,
+          title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
+        }}
+        headerInner={<RText size={16}>Updates</RText>}
+        data={notifications.length > 0 ? notifications.list : null}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+        onEndReachedThreshold={0.5}
+        onEndReached={notifications.load}
         // ListFooterComponent={
         //   connected
         //     ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
         //     : null
         // }
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
-        onEndReachedThreshold={0.5}
-        onEndReached={events.load}
-        initialNumToRender={2}
-        ItemSeparatorComponent={() => (
-          <View style={{backgroundColor: 'white'}}>
-            <Separator />
-          </View>
-        )}
       />
     )
   }
 
-  renderItem = ({item}: {item: IEventBot}) => <EventCard item={item} />
+  renderItem = ({item}: {item: IEvent}) => <EventCard item={item} />
 
   keyExtractor = (item: any) => item.id
 }
