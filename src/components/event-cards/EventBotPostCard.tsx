@@ -13,7 +13,7 @@ const geoIcon = require('../../../images/notificationGeo.png')
 @observer
 export default class EventBotInviteCard extends React.Component<Props> {
   onPress() {
-    Actions.botDetails({item: this.props.item.bot.id})
+    Actions.botDetails({botId: this.props.item.bot.id})
   }
 
   render() {
@@ -24,7 +24,7 @@ export default class EventBotInviteCard extends React.Component<Props> {
         profile={post.profile}
         icon={geoIcon}
         timestamp={relativeDateAsString}
-        action="commentedOn"
+        action="commented on"
         line2={bot.title}
       />
     )

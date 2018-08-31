@@ -13,7 +13,7 @@ const geoIcon = require('../../../images/notificationGeo.png')
 @observer
 export default class EventBotGeofenceCard extends React.Component<Props> {
   onPress() {
-    Actions.botDetails({item: this.props.item.bot.id})
+    Actions.botDetails({botId: this.props.item.bot.id})
   }
 
   render() {

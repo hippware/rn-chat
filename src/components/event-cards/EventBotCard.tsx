@@ -16,7 +16,7 @@ type Props = {
 export default class EventBotCard extends React.Component<Props> {
   onPress() {
     if (this.props.item.bot && isAlive(this.props.item.bot)) {
-      Actions.botDetails({item: this.props.item.bot.id})
+      Actions.botDetails({botId: this.props.item.bot.id})
     }
   }
 
