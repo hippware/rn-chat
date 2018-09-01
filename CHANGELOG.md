@@ -4,12 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.3.3 - 2018 Aug 31
+
 * Change request for location profile ellipsis submenu (#2677)
 * [dev] re-enable back button on Notifications slider (#2711)
 * Avatar/Icons un-tappable on the presence widget (#2668)
 * Post on location: Keyboard stuck on Take Photo screen (#2678)
 * Top Left Back Caret (Rework #2676)
-* [dev] Notifications wocky-client API (#2708)
+* Notifications UI (#2728)
+  * [dev] Notifications wocky-client API (#2708)
 
 # 3.3.2 - 2018 Aug 23
 
