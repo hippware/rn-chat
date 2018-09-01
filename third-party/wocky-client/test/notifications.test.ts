@@ -160,52 +160,6 @@ describe('GraphQL Notifications', () => {
     }
   })
 
-  // it('check user follow notification subscription', async done => {
-  //   try {
-  //     timestamp()
-  //     await gql.subscribeNotifications()
-
-  //     // have user2 follow user1
-  //     const profile2 = await user2.loadProfile(user.username!)
-  //     expect(profile2.isFollowed).to.be.false
-  //     await profile2.follow()
-  //     expect(profile2.isFollowed).to.be.true
-
-  //     when(
-  //       () => !!gql.notification,
-  //       () => {
-  //         timestamp()
-  //         // console.log('& got notification from subscription!')
-  //         // console.log(gql.notification)
-  //         // expect(gql.botVisitor.bot.id).to.equal(bot.id)
-  //         done()
-  //       }
-  //     )
-
-  //     // // have user1 follow user2 back
-  //     // const userprofile2 = await user.loadProfile(user2.username!)
-  //     // expect(userprofile2.isFollowed).to.be.false
-  //     // await userprofile2.follow()
-  //     // expect(userprofile2.isFollowed).to.be.true
-
-  //     // // user2 shares a new bot with user1
-  //     // const user2bot = await user2.createBot()
-  //     // await user2bot.update({
-  //     //   public: true,
-  //     //   location: {latitude: 1.1, longitude: 2.1},
-  //     //   title: 'Test bot',
-  //     //   geofence: true,
-  //     //   addressData: {city: 'Los Angeles', country: 'California'},
-  //     // })
-  //     // await user2bot.save()
-  //     // // user2bot.share([user.username!], '', 'geofence share')\
-  //     // user2bot.shareToFollowers('share!!!')
-
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
-
   after('remove', async done => {
     try {
       await Promise.all([alice.remove(), bob.remove()])

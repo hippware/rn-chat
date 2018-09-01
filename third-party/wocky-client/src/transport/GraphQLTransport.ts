@@ -35,6 +35,56 @@ const BOT_PROPS = `id icon title address isPublic: public addressData descriptio
   subscribers(first:1 id: $ownUsername) { edges { relationships } }
 `
 
+const NOTIFICATIONS_PROPS = `
+  createdAt
+  id
+  data {
+    __typename
+    ... on UserFollowNotification {
+      user {
+        ${PROFILE_PROPS}
+      }
+    }
+    ... on InvitationNotification {
+      bot {${BOT_PROPS}}
+      invitation {
+        accepted
+        id
+        user {${PROFILE_PROPS}}
+      }
+    }
+    ... on InvitationResponseNotification {
+      accepted
+      invitation {
+        id
+      }
+      bot {
+        ${BOT_PROPS}
+      }
+      user {${PROFILE_PROPS}}
+    }
+    ... on BotItemNotification {
+      bot {${BOT_PROPS}}
+      botItem {
+        id
+        image
+        media {
+          fullUrl
+          thumbnailUrl
+          trosUrl
+        }
+        owner {${PROFILE_PROPS}}
+        stanza
+      }
+    }
+    ... on GeofenceEventNotification {
+      bot {${BOT_PROPS}}
+      user {${PROFILE_PROPS}}
+      event
+    }
+  }
+  `
+
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
@@ -359,53 +409,7 @@ export class GraphQLTransport implements IWockyTransport {
             edges {
               cursor
               node {
-                createdAt
-                id
-                data {
-                  __typename
-                  ... on UserFollowNotification {
-                    user {
-                      ${PROFILE_PROPS}
-                    }
-                  }
-                  ... on InvitationNotification {
-                    bot {${BOT_PROPS}}
-                    invitation {
-                      accepted
-                      id
-                      user {${PROFILE_PROPS}}
-                    }
-                  }
-                  ... on InvitationResponseNotification {
-                    accepted
-                    invitation {
-                      id
-                    }
-                    bot {
-                      ${BOT_PROPS}
-                    }
-                    user {${PROFILE_PROPS}}
-                  }
-                  ... on BotItemNotification {
-                    bot {${BOT_PROPS}}
-                    botItem {
-                      id
-                      image
-                      media {
-                        fullUrl
-                        thumbnailUrl
-                        trosUrl
-                      }
-                      owner {${PROFILE_PROPS}}
-                      stanza
-                    }
-                  }
-                  ... on GeofenceEventNotification {
-                    bot {${BOT_PROPS}}
-                    user {${PROFILE_PROPS}}
-                    event
-                  }
-                }
+                ${NOTIFICATIONS_PROPS}
               }
             }
           }
@@ -422,6 +426,7 @@ export class GraphQLTransport implements IWockyTransport {
       bots,
     }
   }
+
   subscribeNotifications() {
     if (this.notificationsSubscription) {
       return
@@ -429,30 +434,21 @@ export class GraphQLTransport implements IWockyTransport {
     this.notificationsSubscription = this.client
       .subscribe({
         query: gql`
-          subscription notifications {
+          subscription notifications($ownUsername: String!) {
             notifications {
-              createdAt
-              id
-              data {
-                __typename
-                ... on UserFollowNotification {
-                  user {
-                    id
-                  }
-                }
-              }
+              ${NOTIFICATIONS_PROPS}
             }
           }
         `,
-        // variables: {
-        //   ownUsername: this.username,
-        // },
+        variables: {
+          ownUsername: this.username,
+        },
       })
       .subscribe({
         next: action((result: any) => {
-          // console.log('& sub hit!', result)
-          // const update = result.data.notifications
-          // console.log('& SUB UPDATE:', update)
+          console.log('& sub hit!', result)
+          const update = result.data.notifications
+          console.log('& SUB UPDATE:', update)
           this.notification = {
             data: result.data,
           }
@@ -1040,6 +1036,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
   } catch (e) {
     // console.warn('convert notification error', e)
   }
+  return null
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {

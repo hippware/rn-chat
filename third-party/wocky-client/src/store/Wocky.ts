@@ -714,7 +714,10 @@ export const Wocky = types
           async (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
+
+              // TODO: move to componentWillMount on Messages screen?
               await self.loadChats()
+
               self.requestRoster()
               if (!self.version) {
                 await self.events.load()
