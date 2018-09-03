@@ -4,11 +4,14 @@ import {when} from 'mobx'
 import {IWocky} from '../src/store/Wocky'
 const fs = require('fs')
 let user1: IWocky, user2: IWocky
+let user1phone: string, user2phone: string
 
 describe('ConnectStore', () => {
   before(async done => {
-    user1 = await createXmpp(23)
-    user2 = await createXmpp(24)
+    user1 = await createXmpp()
+    user2 = await createXmpp()
+    user1phone = user1.profile.phoneNumber
+    user2phone = user2.profile.phoneNumber
     expect(user1.username).to.be.not.null
     expect(user2.username).to.be.not.null
     expect(user1.connected).to.be.true
@@ -57,14 +60,16 @@ describe('ConnectStore', () => {
   })
   it('update profile', async done => {
     try {
-      await user2.profile!.update({handle: 'aaac12', firstName: 'b', lastName: 'c'})
-      await user1.profile!.update({handle: 'aaac11', firstName: 'b', lastName: 'c'})
+      let user1handle = 'a' + user1phone.replace('+', '')
+      let user2handle = 'a' + user2phone.replace('+', '')
+      await user2.profile!.update({handle: user2handle, firstName: 'b', lastName: 'c'})
+      await user1.profile!.update({handle: user1handle, firstName: 'b', lastName: 'c'})
       const data = user1.profile!
-      expect(data.handle).to.be.equal('aaac11')
+      expect(data.handle).to.be.equal(user1handle)
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
-      await user1.profile!.update({handle: 'aaacc13'})
-      expect(data.handle).to.be.equal('aaacc13')
+      await user1.profile!.update({handle: user1handle + '2'})
+      expect(data.handle).to.be.equal(user1handle + '2')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
       done()
@@ -164,7 +169,7 @@ describe('ConnectStore', () => {
     try {
       await user2.logout()
       expect(user2.chats.list.length).to.be.equal(0)
-      user2 = await createXmpp(24)
+      user2 = await createXmpp(null, user2phone)
       await waitFor(() => user2.chats.list.length === 1)
       expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].last!.media).to.be.not.null
