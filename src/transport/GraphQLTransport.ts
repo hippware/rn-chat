@@ -98,7 +98,10 @@ export class GraphQLTransport implements IWockyTransport {
   host: string
   @observable geoBot: any
   @observable message: any
+
+  // TODO: reuse `notification` or create new property specific to GraphQL?
   @observable notification: any
+
   @observable presence: any
   @observable rosterItem: any
   @observable botVisitor: any
@@ -449,6 +452,9 @@ export class GraphQLTransport implements IWockyTransport {
           // console.log('& sub hit!', result)
           // const update = result.data.notifications TODO ?
           // console.log('& SUB UPDATE:', update)
+
+          // TODO: run `result.data` through convertNotification, set this.notification
+
           this.notification = {
             data: result.data,
           }
