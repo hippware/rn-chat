@@ -35,6 +35,56 @@ const BOT_PROPS = `id icon title address isPublic: public addressData descriptio
   subscribers(first:1 id: $ownUsername) { edges { relationships } }
 `
 
+const NOTIFICATIONS_PROPS = `
+  createdAt
+  id
+  data {
+    __typename
+    ... on UserFollowNotification {
+      user {
+        ${PROFILE_PROPS}
+      }
+    }
+    ... on InvitationNotification {
+      bot {${BOT_PROPS}}
+      invitation {
+        accepted
+        id
+        user {${PROFILE_PROPS}}
+      }
+    }
+    ... on InvitationResponseNotification {
+      accepted
+      invitation {
+        id
+      }
+      bot {
+        ${BOT_PROPS}
+      }
+      user {${PROFILE_PROPS}}
+    }
+    ... on BotItemNotification {
+      bot {${BOT_PROPS}}
+      botItem {
+        id
+        image
+        media {
+          fullUrl
+          thumbnailUrl
+          trosUrl
+        }
+        owner {${PROFILE_PROPS}}
+        stanza
+      }
+    }
+    ... on GeofenceEventNotification {
+      bot {${BOT_PROPS}}
+      user {${PROFILE_PROPS}}
+      event
+    }
+  }
+  `
+
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client: ApolloClient<any>
@@ -80,10 +130,12 @@ export class GraphQLTransport implements IWockyTransport {
       this.host = host
     }
 
-    const socketEndpoint = process.env.WOCKY_LOCAL ? 'ws://localhost:8080/graphql' : `wss://${this.host}/graphql`
+    const socketEndpoint = process.env.WOCKY_LOCAL
+      ? 'ws://localhost:8080/graphql'
+      : `wss://${this.host}/graphql`
 
     this.socket = new PhoenixSocket(socketEndpoint, {
-      reconnectAfterMs: () => 100000000 // disable auto-reconnect
+      reconnectAfterMs: () => 100000000, // disable auto-reconnect
       // uncomment to see all graphql messages!
       // logger: (kind, msg, data) => {
       //   if (msg !== 'close') {
@@ -92,7 +144,7 @@ export class GraphQLTransport implements IWockyTransport {
       // },
     })
     const fragmentMatcher = new IntrospectionFragmentMatcher({
-      introspectionQueryResultData
+      introspectionQueryResultData,
     })
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
@@ -100,13 +152,13 @@ export class GraphQLTransport implements IWockyTransport {
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'ignore'
+          errorPolicy: 'ignore',
         },
         query: {
           fetchPolicy: 'network-only',
-          errorPolicy: 'ignore'
-        }
-      }
+          errorPolicy: 'ignore',
+        },
+      },
     })
     this.socket.onError(() => {
       // console.log('& graphql Phoenix socket error')
@@ -141,7 +193,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {user, token}
+        variables: {user, token},
       })
       this.connected = !!res.data && res.data!.authenticate !== null
       return this.connected
@@ -159,10 +211,14 @@ export class GraphQLTransport implements IWockyTransport {
           query LoadProfile {
             user(id: "${user}") {
               ${PROFILE_PROPS}
-              ${user === this.username ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }' : ''}
+              ${
+                user === this.username
+                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }'
+                  : ''
+              }
             }
           }
-        `
+        `,
     })
     if (!res.data.user) {
       return null
@@ -189,7 +245,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         }
-      `
+      `,
     })
     return res.data!.botCreate!.result.id
   }
@@ -204,8 +260,8 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {
         id,
-        ownUsername: this.username
-      }
+        ownUsername: this.username,
+      },
     })
     return convertBot(res.data.bot)
   }
@@ -228,7 +284,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-      variables: {userId, after, max, ownUsername: this.username, relationship}
+      variables: {userId, after, max, ownUsername: this.username, relationship},
     })
     // return empty list for non-existed user
     if (!res.data.user) {
@@ -239,20 +295,27 @@ export class GraphQLTransport implements IWockyTransport {
     return {
       list,
       cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-      count: bots.totalCount
+      count: bots.totalCount,
     }
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
     const res = await this.client!.mutate({
       mutation: gql`
-        mutation setLocation($latitude: Float!, $longitude: Float!, $accuracy: Float!, $resource: String!) {
-          userLocationUpdate(input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}) {
+        mutation setLocation(
+          $latitude: Float!
+          $longitude: Float!
+          $accuracy: Float!
+          $resource: String!
+        ) {
+          userLocationUpdate(
+            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}
+          ) {
             result
             successful
           }
         }
       `,
-      variables: {...params, resource: this.resource}
+      variables: {...params, resource: this.resource},
     })
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
@@ -276,7 +339,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {limit, ownResource: this.resource}
+      variables: {limit, ownResource: this.resource},
     })
     return res.data.currentUser.locations.edges.map(e => {
       const {createdAt, lat, lon, accuracy} = e.node
@@ -318,8 +381,8 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `,
         variables: {
-          ownUsername: this.username
-        }
+          ownUsername: this.username,
+        },
       })
       .subscribe({
         next: action((result: any) => {
@@ -327,13 +390,16 @@ export class GraphQLTransport implements IWockyTransport {
           this.botVisitor = {
             visitor: {id: update.visitor.id},
             bot: convertBot(update.bot),
-            action: update.action
+            action: update.action,
           }
-        })
+        }),
       })
   }
 
-  async loadNotifications(cursor?: string, max: number = 3): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}> {
+  async loadNotifications(
+    cursor?: string,
+    max: number = 3
+  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
@@ -343,59 +409,13 @@ export class GraphQLTransport implements IWockyTransport {
             edges {
               cursor
               node {
-                createdAt
-                id
-                data {
-                  __typename
-                  ... on UserFollowNotification {
-                    user {
-                      ${PROFILE_PROPS}
-                    }
-                  }
-                  ... on InvitationNotification {
-                    bot {${BOT_PROPS}}
-                    invitation {
-                      accepted
-                      id
-                      user {${PROFILE_PROPS}}
-                    }
-                  }
-                  ... on InvitationResponseNotification {
-                    accepted
-                    invitation {
-                      id
-                    }
-                    bot {
-                      ${BOT_PROPS}
-                    }
-                    user {${PROFILE_PROPS}}
-                  }
-                  ... on BotItemNotification {
-                    bot {${BOT_PROPS}}
-                    botItem {
-                      id
-                      image
-                      media {
-                        fullUrl
-                        thumbnailUrl
-                        trosUrl
-                      }
-                      owner {${PROFILE_PROPS}}
-                      stanza
-                    }
-                  }
-                  ... on GeofenceEventNotification {
-                    bot {${BOT_PROPS}}
-                    user {${PROFILE_PROPS}}
-                    event
-                  }
-                }
+                ${NOTIFICATIONS_PROPS}
               }
             }
           }
         }
       `,
-      variables: {limit: max, ownUsername: this.username, cursor}
+      variables: {limit: max, ownUsername: this.username, cursor},
     })
     const {totalCount, edges} = res.data.notifications
     const {list, bots} = convertNotifications(edges)!
@@ -403,9 +423,10 @@ export class GraphQLTransport implements IWockyTransport {
       count: totalCount,
       list,
       cursor: edges && edges.length && edges[edges.length - 1].cursor,
-      bots
+      bots,
     }
   }
+
   subscribeNotifications() {
     if (this.notificationsSubscription) {
       return
@@ -413,34 +434,25 @@ export class GraphQLTransport implements IWockyTransport {
     this.notificationsSubscription = this.client
       .subscribe({
         query: gql`
-          subscription notifications {
+          subscription notifications($ownUsername: String!) {
             notifications {
-              createdAt
-              id
-              data {
-                __typename
-                ... on UserFollowNotification {
-                  user {
-                    id
-                  }
-                }
-              }
+              ${NOTIFICATIONS_PROPS}
             }
           }
-        `
-        // variables: {
-        //   ownUsername: this.username,
-        // },
+        `,
+        variables: {
+          ownUsername: this.username,
+        },
       })
       .subscribe({
         next: action((result: any) => {
-          // console.log('& sub hit!', result)
-          // const update = result.data.notifications
-          // console.log('& SUB UPDATE:', update)
+          console.log('& sub hit!', result)
+          const update = result.data.notifications
+          console.log('& SUB UPDATE:', update)
           this.notification = {
-            data: result.data
+            data: result.data,
           }
-        })
+        }),
       })
   }
   @action
@@ -452,7 +464,11 @@ export class GraphQLTransport implements IWockyTransport {
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this._loadBots('OWNED', id, lastId, max)
   }
-  async loadSubscribedBots(userId: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadSubscribedBots(
+    userId: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList> {
     return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
   async loadGeofenceBots(): Promise<IPagingList> {
@@ -483,15 +499,15 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        ownUsername: this.username
-      }
+        ownUsername: this.username,
+      },
     })
     const bots = res.data.currentUser.activeBots
     const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
     return {
       list,
       cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-      count: bots.totalCount
+      count: bots.totalCount,
     }
   }
 
@@ -527,7 +543,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       // TODO: change this to all user ids when the fix is in for https://github.com/hippware/wocky/issues/1808
-      variables: {input: {botId, userId: userIds[0]}}
+      variables: {input: {botId, userId: userIds[0]}},
     })
     return data.data.botInvite.result.id
   }
@@ -545,7 +561,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {input: {invitationId, accept}}
+      variables: {input: {invitationId, accept}},
     })
     // TODO: handle error?
   }
@@ -599,7 +615,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {values}
+      variables: {values},
     })
     if (!data.data.userUpdate.successful) {
       throw new Error(JSON.stringify(data.data.userUpdate.messages))
@@ -677,12 +693,33 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async updateBot(
-    {id, address, addressData, description, geofence, icon, image, lat, lon, radius, server, shortname, title, type, visibility, ...bot}: any,
+    {
+      id,
+      address,
+      addressData,
+      description,
+      geofence,
+      icon,
+      image,
+      lat,
+      lon,
+      radius,
+      server,
+      shortname,
+      title,
+      type,
+      visibility,
+      ...bot
+    }: any,
     userLocation?: ILocation
   ): Promise<void> {
     const res = await this.client.mutate({
       mutation: gql`
-        mutation botUpdate($id: String!, $userLocation: UserLocationUpdateInput, $values: BotParams) {
+        mutation botUpdate(
+          $id: String!
+          $userLocation: UserLocationUpdateInput
+          $values: BotParams
+        ) {
           botUpdate(input: {id: $id, userLocation: $userLocation, values: $values}) {
             successful
           }
@@ -704,16 +741,16 @@ export class GraphQLTransport implements IWockyTransport {
           server,
           shortname,
           title,
-          type
+          type,
         },
         ...(userLocation
           ? {
               lon: userLocation.longitude,
               lat: userLocation.latitude,
-              accuracy: userLocation.accuracy
+              accuracy: userLocation.accuracy,
             }
-          : {})
-      }
+          : {}),
+      },
     })
     if (!res.data!.botUpdate.successful) {
       throw new Error('Error during bot save!')
@@ -770,10 +807,20 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {tros}
+      variables: {tros},
     })
   }
-  async loadLocalBots({latitude, longitude, latitudeDelta, longitudeDelta}: {latitude: number; longitude: number; latitudeDelta: number; longitudeDelta: number}): Promise<[IBot]> {
+  async loadLocalBots({
+    latitude,
+    longitude,
+    latitudeDelta,
+    longitudeDelta,
+  }: {
+    latitude: number
+    longitude: number
+    latitudeDelta: number
+    longitudeDelta: number
+  }): Promise<[IBot]> {
     const res = await this.client.query<any>({
       query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
@@ -785,8 +832,8 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {
         pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
         pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
-        ownUsername: this.username
-      }
+        ownUsername: this.username,
+      },
     })
     return res.data.localBots.map(convertBot)
   }
@@ -800,11 +847,17 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {enable, expire}
+      variables: {enable, expire},
     })
   }
 
-  private async getBotProfiles(relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR', includeCurrentUser: boolean, id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  private async getBotProfiles(
+    relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
+    includeCurrentUser: boolean,
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList> {
     const res = await this.client.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
@@ -825,8 +878,8 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {
         botId: id,
         cursor: lastId,
-        limit: max
-      }
+        limit: max,
+      },
     })
     // return empty list for null data
     if (!res.data.bot || !res.data.bot.subscribers) {
@@ -843,7 +896,7 @@ export class GraphQLTransport implements IWockyTransport {
     return {
       list: list.map(p => convertProfile(p.node)),
       cursor: list.length ? list[list.length - 1].cursor : null,
-      count
+      count,
     }
   }
 }
@@ -855,113 +908,135 @@ function convertImage(image) {
 function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
-    hidden: hidden ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null} : null,
+    hidden: hidden
+      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
+      : null,
     avatar: convertImage(avatar),
     botsSize: bots.totalCount,
     followersSize: followers.totalCount,
     followedSize: followed.totalCount,
-    ...data
+    ...data,
   } as IProfilePartial
 }
 
-function convertBot({lat, lon, image, addressData, isPublic, owner, items, visitors, subscriberCount, visitorCount, guestCount, subscribers, ...data}: any) {
-  const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
-  const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
-  return {
-    ...data,
-    owner: convertProfile(owner),
-    image: convertImage(image),
-    addressData: addressData ? JSON.parse(addressData) : {},
-    totalItems: items ? items.totalCount : 0,
-    followersSize: subscriberCount.totalCount - 1,
-    visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
-    visitorsSize: visitorCount.totalCount,
-    guestsSize: guestCount.totalCount,
-    location: {latitude: lat, longitude: lon},
-    public: isPublic,
-    guest: contains('GUEST'),
-    visitor: contains('VISITOR'),
-    isSubscribed: contains('SUBSCRIBED')
+function convertBot({
+  lat,
+  lon,
+  image,
+  addressData,
+  isPublic,
+  owner,
+  items,
+  visitors,
+  subscriberCount,
+  visitorCount,
+  guestCount,
+  subscribers,
+  ...data
+}: any) {
+  try {
+    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+    return {
+      ...data,
+      owner: convertProfile(owner),
+      image: convertImage(image),
+      addressData: addressData ? JSON.parse(addressData) : {},
+      totalItems: items ? items.totalCount : 0,
+      followersSize: subscriberCount.totalCount - 1,
+      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
+      visitorsSize: visitorCount.totalCount,
+      guestsSize: guestCount.totalCount,
+      location: {latitude: lat, longitude: lon},
+      public: isPublic,
+      guest: contains('GUEST'),
+      visitor: contains('VISITOR'),
+      isSubscribed: contains('SUBSCRIBED'),
+    }
+  } catch (e) {
+    // console.error('ERROR CONVERTING:', arguments[0], e)
   }
 }
 
 function convertNotifications(notifications: any[]): {list: IEventData[]; bots: IBotData[]} | null {
-  const list: IEventData[] = []
-  const bots: IBotData[] = []
-  notifications.forEach(notification => {
-    let bot: IBotData
-    const {
-      data: {__typename, ...data},
-      id,
-      createdAt
-    } = notification.node
-    const time = new Date(createdAt).getTime()
-    // console.log('& converting type', __typename, createdAt, time)
-    switch (__typename) {
-      case 'UserFollowNotification':
-        const followNotification: IEventUserFollowData = {
-          id,
-          time,
-          // TODO: should we get the full profile info here instead?
-          // In the case of a follow this is (potentially) an uncached user
-          user: data.user.id
-        }
-        // console.log('& user follow:', followNotification)
-        // return followNotification
-        list.push(followNotification)
-        break
-      case 'BotItemNotification':
-        bot = convertBot(data.bot)
-        const botItemNotification: IEventBotPostData = {
-          id,
-          time,
-          post: {
-            id: data.botItem.id,
-            profile: data.botItem.owner.id
-          },
-          bot: bot.id
-        }
-        list.push(botItemNotification)
-        bots.push(bot)
-        break
-      case 'InvitationNotification':
-      case 'InvitationResponseNotification':
-        // console.log('& invite response notification', data.invitation)
-        bot = convertBot(data.bot)
-        const inviteNotification: IEventBotInviteData = {
-          id,
-          time,
-          bot: bot.id,
-          sender: __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
-          isResponse: !(__typename === 'InvitationNotification'),
-          isAccepted: data.accepted
-        }
-        // return inviteNotification
-        list.push(inviteNotification)
-        bots.push(bot)
-        break
-      case 'GeofenceEventNotification':
-        // console.log('& invite response notification', data.invitation)
-        bot = convertBot(data.bot)
-        const geofenceNotification: IEventBotGeofenceData = {
-          id,
-          time,
-          bot: bot.id,
-          // profile: convertProfile(data.user),
-          profile: data.user.id,
-          isEnter: data.event === 'ENTER'
-        }
-        // console.log('& after:', botItemNotification)
-        // return geofenceNotification
-        list.push(geofenceNotification)
-        bots.push(bot)
-        break
-      default:
-        throw new Error(`failed to process notification ${notification}`)
-    }
-  })
+  try {
+    const list: IEventData[] = []
+    const bots: IBotData[] = []
+    notifications.forEach(notification => {
+      let bot: IBotData
+      const {data: {__typename, ...data}, id, createdAt} = notification.node
+      const time = new Date(createdAt).getTime()
+      // console.log('& converting type', __typename, createdAt, time)
+      switch (__typename) {
+        case 'UserFollowNotification':
+          const followNotification: IEventUserFollowData = {
+            id,
+            time,
+            // TODO: should we get the full profile info here instead?
+            // In the case of a follow this is (potentially) an uncached user
+            user: data.user.id,
+          }
+          // console.log('& user follow:', followNotification)
+          // return followNotification
+          list.push(followNotification)
+          break
+        case 'BotItemNotification':
+          bot = convertBot(data.bot)
+          const botItemNotification: IEventBotPostData = {
+            id,
+            time,
+            post: {
+              id: data.botItem.id,
+              profile: data.botItem.owner.id,
+            },
+            bot: bot.id,
+          }
+          list.push(botItemNotification)
+          bots.push(bot)
+          break
+        case 'InvitationNotification':
+        case 'InvitationResponseNotification':
+          // console.log('& invite response notification', data.invitation)
+          bot = convertBot(data.bot)
+          const inviteNotification: IEventBotInviteData = {
+            id,
+            time,
+            bot: bot.id,
+            sender:
+              __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
+            isResponse: !(__typename === 'InvitationNotification'),
+            isAccepted: data.accepted,
+          }
+          // return inviteNotification
+          list.push(inviteNotification)
+          bots.push(bot)
+          break
+        case 'GeofenceEventNotification':
+          // console.log('& invite response notification', data.invitation)
+          bot = convertBot(data.bot)
+          const geofenceNotification: IEventBotGeofenceData = {
+            id,
+            time,
+            bot: bot.id,
+            // profile: convertProfile(data.user),
+            profile: data.user.id,
+            isEnter: data.event === 'ENTER',
+          }
+          // console.log('& after:', botItemNotification)
+          // return geofenceNotification
+          list.push(geofenceNotification)
+          bots.push(bot)
+          break
+        default:
+          throw new Error(`failed to process notification ${notification}`)
+      }
+    })
 
-  return {list, bots}
+    return {list, bots}
+  } catch (e) {
+    // console.warn('convert notification error', e)
+  }
+  return null
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {
