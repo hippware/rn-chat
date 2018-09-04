@@ -527,8 +527,8 @@ export class GraphQLTransport implements IWockyTransport {
   shareBot() {
     throw new Error('Not supported')
   }
-  async inviteBot(botId: string, userIds: string[]): Promise<string> {
-    const data: any = await this.client.mutate({
+  async inviteBot(botId: string, userIds: string[]): Promise<void> {
+    await this.client.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
@@ -542,10 +542,9 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      // TODO: change this to all user ids when the fix is in for https://github.com/hippware/wocky/issues/1808
-      variables: {input: {botId, userId: userIds[0]}},
+      variables: {input: {botId, userIds}},
     })
-    return data.data.botInvite.result.id
+    // TODO: assert all invites sent successfully?
   }
   async inviteBotReply(invitationId: string, accept: boolean) {
     // const data: any = await this.client.mutate({
@@ -996,7 +995,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           break
         case 'InvitationNotification':
         case 'InvitationResponseNotification':
-          // console.log('& invite response notification', data.invitation)
+          console.log('& invite notification', data.invitation)
           bot = convertBot(data.bot)
           const inviteNotification: IEventBotInviteData = {
             id,
@@ -1006,6 +1005,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
               __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
             isResponse: !(__typename === 'InvitationNotification'),
             isAccepted: data.accepted,
+            inviteId: data.invitation.id,
           }
           // return inviteNotification
           list.push(inviteNotification)
