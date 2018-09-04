@@ -48,6 +48,7 @@ export const Bot = types
       visitors: types.optional(ProfilePaginableList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
+      pendingInvitationId: types.maybe(types.number),
     })
   )
   .volatile(() => ({
@@ -213,6 +214,7 @@ export interface IBotData {
   visitors?: any
   posts?: any
   error?: string
+  pendingInvitationId?: number
 }
 
 export const BotPaginableList = createPaginable(types.reference(Bot))
