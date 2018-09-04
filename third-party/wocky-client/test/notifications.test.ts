@@ -91,6 +91,7 @@ describe('GraphQL Notifications', () => {
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(alice.username)
       invitationId = notifications.list[0].inviteId
+      expect(notifications.bots[0].pendingInvitationId).to.equal(invitationId)
       done()
     } catch (e) {
       done(e)

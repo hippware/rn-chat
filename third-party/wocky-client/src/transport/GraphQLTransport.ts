@@ -995,15 +995,18 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           break
         case 'InvitationNotification':
         case 'InvitationResponseNotification':
-          console.log('& invite notification', data.invitation)
+          // console.log('& invite notification', data.invitation)
+          const isInvite = __typename === 'InvitationNotification'
           bot = convertBot(data.bot)
+          if (isInvite) {
+            bot.pendingInvitationId = data.invitation.id
+          }
           const inviteNotification: IEventBotInviteData = {
             id,
             time,
             bot: bot.id,
-            sender:
-              __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
-            isResponse: !(__typename === 'InvitationNotification'),
+            sender: isInvite ? data.invitation.user.id : data.user.id,
+            isResponse: !isInvite,
             isAccepted: data.accepted,
             inviteId: data.invitation.id,
           }
