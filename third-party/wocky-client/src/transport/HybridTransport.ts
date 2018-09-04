@@ -54,6 +54,8 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.notification
   }
 
+  // TODO: add new computed value for passing through GraphQL notifications
+
   _xmpp: XmppTransport
   _gql: GraphQLTransport
   constructor(xmpp: XmppTransport, gql: GraphQLTransport) {
