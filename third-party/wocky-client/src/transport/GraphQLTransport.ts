@@ -446,9 +446,9 @@ export class GraphQLTransport implements IWockyTransport {
       })
       .subscribe({
         next: action((result: any) => {
-          console.log('& sub hit!', result)
+          // console.log('& sub hit!', result)
           const update = result.data.notifications
-          console.log('& SUB UPDATE:', update)
+          // console.log('& SUB UPDATE:', update)
           this.notification = {
             data: result.data,
           }
