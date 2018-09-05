@@ -57,6 +57,7 @@ const NOTIFICATIONS_PROPS = `
       accepted
       invitation {
         id
+        accepted
       }
       bot {
         ${BOT_PROPS}
@@ -543,6 +544,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {input: {botId, userIds}},
+      // variables: {input: {botId, userId: userIds[0]}},
     })
     // TODO: assert all invites sent successfully?
   }
@@ -997,9 +999,12 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
       case 'InvitationResponseNotification':
         // console.log('& invite notification', data.invitation)
         const isInvite = __typename === 'InvitationNotification'
-        bot = convertBot(data.bot)
-        if (isInvite) {
-          bot.pendingInvitationId = data.invitation.id
+        bot = {
+          ...convertBot(data.bot),
+          invitation: {
+            id: data.invitation.id,
+            accepted: data.invitation.accepted === true,
+          },
         }
         const inviteNotification: IEventBotInviteData = {
           id,
