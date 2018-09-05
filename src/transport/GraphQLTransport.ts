@@ -403,7 +403,7 @@ export class GraphQLTransport implements IWockyTransport {
   async loadNotifications(
     cursor?: string,
     max: number = 3
-  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}> {
+  ): Promise<{list: any[]; count: number; cursor: string | null}> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
@@ -422,12 +422,11 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {limit: max, ownUsername: this.username, cursor},
     })
     const {totalCount, edges} = res.data.notifications
-    const {list, bots} = convertNotifications(edges)!
+    const list = convertNotifications(edges)!
     return {
       count: totalCount,
       list,
       cursor: edges && edges.length && edges[edges.length - 1].cursor,
-      bots,
     }
   }
 
@@ -958,9 +957,8 @@ function convertBot({
   }
 }
 
-function convertNotifications(notifications: any[]): {list: IEventData[]; bots: IBotData[]} {
+function convertNotifications(notifications: any[]): IEventData[] {
   const list: IEventData[] = []
-  const bots: IBotData[] = []
   notifications.forEach(notification => {
     let bot: IBotData
     const {data: {__typename, ...data}, id, createdAt} = notification.node
@@ -988,10 +986,9 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
             id: data.botItem.id,
             profile: data.botItem.owner.id,
           },
-          bot: bot.id,
+          bot,
         }
         list.push(botItemNotification)
-        bots.push(bot)
         break
       case 'InvitationNotification':
       case 'InvitationResponseNotification':
@@ -1007,7 +1004,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
         const inviteNotification: IEventBotInviteData = {
           id,
           time,
-          bot: bot.id,
+          bot,
           sender: isInvite ? data.invitation.user.id : data.user.id,
           isResponse: !isInvite,
           isAccepted: data.accepted,
@@ -1015,7 +1012,6 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
         }
         // return inviteNotification
         list.push(inviteNotification)
-        bots.push(bot)
         break
       case 'GeofenceEventNotification':
         // console.log('& invite response notification', data.invitation)
@@ -1023,7 +1019,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
         const geofenceNotification: IEventBotGeofenceData = {
           id,
           time,
-          bot: bot.id,
+          bot,
           // profile: convertProfile(data.user),
           profile: data.user.id,
           isEnter: data.event === 'ENTER',
@@ -1031,14 +1027,13 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
         // console.log('& after:', botItemNotification)
         // return geofenceNotification
         list.push(geofenceNotification)
-        bots.push(bot)
         break
       default:
         throw new Error(`failed to process notification ${notification}`)
     }
   })
 
-  return {list, bots}
+  return list
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {

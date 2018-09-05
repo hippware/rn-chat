@@ -30,7 +30,7 @@ describe('GraphQL Notifications', () => {
       await alicesBobProfile.follow()
 
       // Expected Notification: User follow notification
-      await pause(1000)
+      await pause(500)
       const notifications = await gqlBob.loadNotifications()
       // console.log('& got notifications', notifications)
       expect(notifications.count).to.equal(1)
@@ -91,8 +91,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(alice.username)
       invitationId = notifications.list[0].inviteId
-      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
-      expect(notifications.bots[0].invitation.accepted).to.equal(false)
+      expect(notifications.list[0].bot.invitation.id).to.equal(invitationId)
+      expect(notifications.list[0].bot.invitation.accepted).to.equal(false)
       done()
     } catch (e) {
       done(e)
@@ -108,8 +108,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.count).to.equal(2)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(bob.username)
-      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
-      expect(notifications.bots[0].invitation.accepted).to.equal(true)
+      expect(notifications.list[0].bot.invitation.id).to.equal(invitationId)
+      expect(notifications.list[0].bot.invitation.accepted).to.equal(true)
       done()
     } catch (e) {
       done(e)
