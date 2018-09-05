@@ -450,7 +450,7 @@ export class GraphQLTransport implements IWockyTransport {
       .subscribe({
         next: action((result: any) => {
           // this.notification = result
-          this.notification = convertNotifications([{node: result.data.notifications}]).list[0] // TODO refactor convertNotifications
+          this.notification = convertNotifications([{node: result.data.notifications}])[0] // TODO refactor convertNotifications
         }),
       })
   }

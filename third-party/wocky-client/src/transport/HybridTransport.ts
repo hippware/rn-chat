@@ -1,6 +1,6 @@
 import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
 import {IProfilePartial} from '../model/Profile'
-import {IBot, IBotData} from '../model/Bot'
+import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
 import {ILocation} from '../model/Location'
 
