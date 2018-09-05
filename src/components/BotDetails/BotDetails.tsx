@@ -140,7 +140,9 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
+        {(!bot.invitation || bot.invitation.accepted) && (
+          <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
+        )}
       </View>
     )
   }
