@@ -30,7 +30,7 @@ describe('GraphQL Notifications', () => {
       await alicesBobProfile.follow()
 
       // Expected Notification: User follow notification
-      await pause(500)
+      await pause(1000)
       const notifications = await gqlBob.loadNotifications()
       // console.log('& got notifications', notifications)
       expect(notifications.count).to.equal(1)
