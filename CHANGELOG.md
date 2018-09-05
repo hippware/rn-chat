@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Improve unit/xmpp tests
+* Revert getLocationsVisited change (Rework/Revert #2701)
+* Wocky-client notifications subscription (PR #2737)
+  * ... and some wocky-client sync, fixes etc.
+
 # 3.3.3 - 2018 Aug 31
 
 * Change request for location profile ellipsis submenu (#2677)
