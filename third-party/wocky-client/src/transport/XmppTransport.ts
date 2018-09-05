@@ -1163,7 +1163,6 @@ export function processItem(item: any, delay: any, username: string): any {
       // console.log('& UNSUPPORTED ITEM!', item) TODO
       return bot ? {id, bot: bot.id, time, message: msg, action: bot.action} : null
     }
-  } else {
   }
   return null
 }
