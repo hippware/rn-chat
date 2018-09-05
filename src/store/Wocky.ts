@@ -719,11 +719,17 @@ export const Wocky = types
               await self.loadChats()
 
               self.requestRoster()
+
+              // TODO: load graphql notifications on startup?
+
               if (!self.version) {
                 await self.events.load()
               } else {
                 await self._loadUpdates()
               }
+
+              // TODO: subscribe to graphql notifications
+
               self._subscribeToHomestream(self.version)
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
@@ -746,6 +752,7 @@ export const Wocky = types
         reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, self._addMessage),
         reaction(() => self.transport.notification, self._onNotification),
+        // TODO: add reaction for GraphQL notifications
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
