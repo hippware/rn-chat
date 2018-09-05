@@ -63,6 +63,7 @@ export interface IWockyTransport {
   updateBot(bot: any, userLocation?: ILocation): Promise<void>
   shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
   inviteBot(id: string, recepients: string[]): Promise<void>
+  inviteBotReply(invitationId: string, accept?: boolean): Promise<void>
   loadRelations(
     userId: string,
     relation: string,

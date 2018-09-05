@@ -848,6 +848,10 @@ export class XmppTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
+  async inviteBotReply(invitationId: string, accept: boolean = true) {
+    throw new Error('Not supported')
+  }
+
   async publishBotPost(botId: string, post: any) {
     const iq = $iq({type: 'set', to: this.host})
       .c('publish', {xmlns: BOT_NS, node: `bot/${botId}`})

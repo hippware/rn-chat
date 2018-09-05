@@ -107,6 +107,10 @@ export const Bot = types
       self.service.profile!.subscribedBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id)
     }),
+    acceptInvitation: flow(function*() {
+      yield self.service._acceptBotInvitation(self.invitation.id)
+      self.invitation.accepted = true
+    }),
     subscribeGeofence: flow(function*() {
       self.isSubscribed = true
       self.guest = true

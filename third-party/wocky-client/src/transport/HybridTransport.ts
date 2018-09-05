@@ -203,6 +203,10 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.inviteBot(id, recipients)
   }
 
+  async inviteBotReply(invitationId: string, accept: boolean = true) {
+    return this._gql.inviteBotReply(invitationId, accept)
+  }
+
   loadRelations(
     userId: string,
     relation: string,
