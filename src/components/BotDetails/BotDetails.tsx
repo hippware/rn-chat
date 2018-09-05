@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, Image, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Image, Clipboard, TouchableOpacity} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
@@ -66,7 +66,7 @@ export default class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics} = this.props
     runInAction(() => (this.bot = wocky!.getBot({id: this.props.botId})))
-    // console.log('& bot', this.bot)
+    console.log('& bot', this.bot)
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
       await wocky!.loadBot(this.props.botId, undefined)
@@ -109,9 +109,6 @@ export default class BotDetails extends React.Component<Props> {
     }
     if (!isAlive(bot)) {
       return null
-    }
-    if (bot.error) {
-      return <BotUnavailable />
     }
 
     return (
@@ -195,16 +192,6 @@ const ShareButton = observer(({bot}) => {
     </TouchableOpacity>
   ) : null
 })
-
-const BotUnavailable = () => (
-  <View style={{alignItems: 'center'}}>
-    <RText size={17} style={{textAlign: 'center'}}>
-      <Text style={{color: 'red'}}>Oops. </Text>
-      <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
-    </RText>
-    <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
-  </View>
-)
 
 const Loader = () => (
   <View

@@ -1,5 +1,14 @@
 import React from 'react'
-import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
+import {
+  View,
+  Animated,
+  Alert,
+  Image,
+  StyleSheet,
+  Clipboard,
+  TouchableOpacity,
+  Text,
+} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
@@ -90,6 +99,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   render() {
     const {bot, locationStore} = this.props
     if (!bot || !isAlive(bot)) return null
+    if (bot.error) return <BotUnavailable />
     // console.log('& invitation?', bot.invitation)
     return (
       <View>
@@ -237,6 +247,16 @@ const FollowLocationView = ({onFollow}) => (
         Follow Location
       </RText>
     </TouchableOpacity>
+  </View>
+)
+
+const BotUnavailable = () => (
+  <View style={{alignItems: 'center'}}>
+    <RText size={17} style={{textAlign: 'center'}}>
+      <Text style={{color: 'red'}}>Oops. </Text>
+      <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+    </RText>
+    <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
   </View>
 )
 
