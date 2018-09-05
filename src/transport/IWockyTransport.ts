@@ -1,6 +1,6 @@
 import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
-import {IBot, IBotData} from '../model/Bot'
+import {IBot} from '../model/Bot'
 
 export interface IPagingList {
   list: any[]
