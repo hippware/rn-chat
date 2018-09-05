@@ -91,7 +91,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(alice.username)
       invitationId = notifications.list[0].inviteId
-      expect(notifications.bots[0].pendingInvitationId).to.equal(invitationId)
+      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
+      expect(notifications.bots[0].invitation.accepted).to.equal(false)
       done()
     } catch (e) {
       done(e)
@@ -107,6 +108,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.count).to.equal(2)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(bob.username)
+      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
+      expect(notifications.bots[0].invitation.accepted).to.equal(true)
       done()
     } catch (e) {
       done(e)
