@@ -83,17 +83,16 @@ describe('GraphQL Notifications', () => {
   it('gets Location Invite notification', async done => {
     try {
       timestamp()
-
-      // Location Invite -	@user invited you to follow Location Name
       // alice invites bob to the bot (NOTE: this is different from `share`)
-      invitationId = await gqlAlice.inviteBot(aliceBot.id, [bob.username])
-      // console.log('& invite id', inviteId)
-
+      await gqlAlice.inviteBot(aliceBot.id, [bob.username])
       await pause(1000)
       const notifications = await gqlBob.loadNotifications()
       expect(notifications.count).to.equal(2)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(alice.username)
+      invitationId = notifications.list[0].inviteId
+      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
+      expect(notifications.bots[0].invitation.accepted).to.equal(false)
       done()
     } catch (e) {
       done(e)
@@ -103,16 +102,14 @@ describe('GraphQL Notifications', () => {
   it('gets Location Invite Accept notification', async done => {
     try {
       timestamp()
-
       await gqlBob.inviteBotReply(invitationId, true)
-
-      // Expected Notification: Location Accept -	@user accepted your invite to Location Name
       await pause(1000)
       const notifications = await gqlAlice.loadNotifications()
       expect(notifications.count).to.equal(2)
-      // expect(notifications[0].__typename).to.equal('InvitationResponseNotification')
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(bob.username)
+      expect(notifications.bots[0].invitation.id).to.equal(invitationId)
+      expect(notifications.bots[0].invitation.accepted).to.equal(true)
       done()
     } catch (e) {
       done(e)

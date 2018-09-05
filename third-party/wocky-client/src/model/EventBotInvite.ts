@@ -20,4 +20,5 @@ export interface IEventBotInviteData extends IEventBotData {
   sender: string
   isAccepted?: boolean
   isResponse: boolean
+  inviteId: number
 }

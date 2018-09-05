@@ -844,7 +844,7 @@ export class XmppTransport implements IWockyTransport {
     this.sendStanza(msg)
   }
 
-  inviteBot(id: string, recepients: string[]): Promise<string> {
+  async inviteBot(id: string, recepients: string[]) {
     throw new Error('Not supported')
   }
 
@@ -1160,10 +1160,9 @@ export function processItem(item: any, delay: any, username: string): any {
           msg.time = Utils.iso8601toDate(item.version).getTime()
         }
       }
+      // console.log('& UNSUPPORTED ITEM!', item) TODO
       return bot ? {id, bot: bot.id, time, message: msg, action: bot.action} : null
     }
-  } else {
-    // console.log('& UNSUPPORTED ITEM!', item) TODO
   }
   return null
 }

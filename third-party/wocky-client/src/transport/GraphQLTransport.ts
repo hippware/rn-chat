@@ -57,6 +57,7 @@ const NOTIFICATIONS_PROPS = `
       accepted
       invitation {
         id
+        accepted
       }
       bot {
         ${BOT_PROPS}
@@ -533,8 +534,8 @@ export class GraphQLTransport implements IWockyTransport {
   shareBot() {
     throw new Error('Not supported')
   }
-  async inviteBot(botId: string, userIds: string[]): Promise<string> {
-    const data: any = await this.client.mutate({
+  async inviteBot(botId: string, userIds: string[]): Promise<void> {
+    await this.client.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
@@ -548,10 +549,10 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      // TODO: change this to all user ids when the fix is in for https://github.com/hippware/wocky/issues/1808
-      variables: {input: {botId, userId: userIds[0]}},
+      variables: {input: {botId, userIds}},
+      // variables: {input: {botId, userId: userIds[0]}},
     })
-    return data.data.botInvite.result.id
+    // TODO: assert all invites sent successfully?
   }
   async inviteBotReply(invitationId: string, accept: boolean) {
     // const data: any = await this.client.mutate({
@@ -925,6 +926,7 @@ function convertProfile({avatar, bots, followers, followed, hidden, ...data}): I
   } as IProfilePartial
 }
 
+// TODO: remove try/catch on this?
 function convertBot({
   lat,
   lon,
@@ -964,85 +966,87 @@ function convertBot({
   }
 }
 
-function convertNotifications(notifications: any[]): {list: IEventData[]; bots: IBotData[]} | null {
-  try {
-    const list: IEventData[] = []
-    const bots: IBotData[] = []
-    notifications.forEach(notification => {
-      let bot: IBotData
-      const {data: {__typename, ...data}, id, createdAt} = notification.node
-      const time = new Date(createdAt).getTime()
-      // console.log('& converting type', __typename, createdAt, time)
-      switch (__typename) {
-        case 'UserFollowNotification':
-          const followNotification: IEventUserFollowData = {
-            id,
-            time,
-            // TODO: should we get the full profile info here instead?
-            // In the case of a follow this is (potentially) an uncached user
-            user: data.user.id,
-          }
-          // console.log('& user follow:', followNotification)
-          // return followNotification
-          list.push(followNotification)
-          break
-        case 'BotItemNotification':
-          bot = convertBot(data.bot)
-          const botItemNotification: IEventBotPostData = {
-            id,
-            time,
-            post: {
-              id: data.botItem.id,
-              profile: data.botItem.owner.id,
-            },
-            bot: bot.id,
-          }
-          list.push(botItemNotification)
-          bots.push(bot)
-          break
-        case 'InvitationNotification':
-        case 'InvitationResponseNotification':
-          // console.log('& invite response notification', data.invitation)
-          bot = convertBot(data.bot)
-          const inviteNotification: IEventBotInviteData = {
-            id,
-            time,
-            bot: bot.id,
-            sender:
-              __typename === 'InvitationNotification' ? data.invitation.user.id : data.user.id,
-            isResponse: !(__typename === 'InvitationNotification'),
-            isAccepted: data.accepted,
-          }
-          // return inviteNotification
-          list.push(inviteNotification)
-          bots.push(bot)
-          break
-        case 'GeofenceEventNotification':
-          // console.log('& invite response notification', data.invitation)
-          bot = convertBot(data.bot)
-          const geofenceNotification: IEventBotGeofenceData = {
-            id,
-            time,
-            bot: bot.id,
-            // profile: convertProfile(data.user),
-            profile: data.user.id,
-            isEnter: data.event === 'ENTER',
-          }
-          // console.log('& after:', botItemNotification)
-          // return geofenceNotification
-          list.push(geofenceNotification)
-          bots.push(bot)
-          break
-        default:
-          throw new Error(`failed to process notification ${notification}`)
-      }
-    })
+function convertNotifications(notifications: any[]): {list: IEventData[]; bots: IBotData[]} {
+  const list: IEventData[] = []
+  const bots: IBotData[] = []
+  notifications.forEach(notification => {
+    let bot: IBotData
+    const {data: {__typename, ...data}, id, createdAt} = notification.node
+    const time = new Date(createdAt).getTime()
+    // console.log('& converting type', __typename, createdAt, time)
+    switch (__typename) {
+      case 'UserFollowNotification':
+        const followNotification: IEventUserFollowData = {
+          id,
+          time,
+          // TODO: should we get the full profile info here instead?
+          // In the case of a follow this is (potentially) an uncached user
+          user: data.user.id,
+        }
+        // console.log('& user follow:', followNotification)
+        // return followNotification
+        list.push(followNotification)
+        break
+      case 'BotItemNotification':
+        bot = convertBot(data.bot)
+        const botItemNotification: IEventBotPostData = {
+          id,
+          time,
+          post: {
+            id: data.botItem.id,
+            profile: data.botItem.owner.id,
+          },
+          bot: bot.id,
+        }
+        list.push(botItemNotification)
+        bots.push(bot)
+        break
+      case 'InvitationNotification':
+      case 'InvitationResponseNotification':
+        // console.log('& invite notification', data.invitation)
+        const isInvite = __typename === 'InvitationNotification'
+        bot = {
+          ...convertBot(data.bot),
+          invitation: {
+            id: data.invitation.id,
+            accepted: data.invitation.accepted === true,
+          },
+        }
+        const inviteNotification: IEventBotInviteData = {
+          id,
+          time,
+          bot: bot.id,
+          sender: isInvite ? data.invitation.user.id : data.user.id,
+          isResponse: !isInvite,
+          isAccepted: data.accepted,
+          inviteId: data.invitation.id,
+        }
+        // return inviteNotification
+        list.push(inviteNotification)
+        bots.push(bot)
+        break
+      case 'GeofenceEventNotification':
+        // console.log('& invite response notification', data.invitation)
+        bot = convertBot(data.bot)
+        const geofenceNotification: IEventBotGeofenceData = {
+          id,
+          time,
+          bot: bot.id,
+          // profile: convertProfile(data.user),
+          profile: data.user.id,
+          isEnter: data.event === 'ENTER',
+        }
+        // console.log('& after:', botItemNotification)
+        // return geofenceNotification
+        list.push(geofenceNotification)
+        bots.push(bot)
+        break
+      default:
+        throw new Error(`failed to process notification ${notification}`)
+    }
+  })
 
-    return {list, bots}
-  } catch (e) {
-    // console.warn('convert notification error', e)
-  }
-  return null
+  return {list, bots}
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {

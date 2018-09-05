@@ -199,7 +199,7 @@ export class HybridTransport implements IWockyTransport {
     this._xmpp.shareBot(id, server, recepients, message, action)
   }
 
-  async inviteBot(id: string, recipients: string[]): Promise<string> {
+  async inviteBot(id: string, recipients: string[]): Promise<void> {
     return this._gql.inviteBot(id, recipients)
   }
 

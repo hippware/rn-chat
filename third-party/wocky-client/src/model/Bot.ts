@@ -10,6 +10,11 @@ import {createUpdatable} from './Updatable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
 
+const Invitation = types.model('BotInvitation', {
+  id: types.string,
+  accepted: types.boolean,
+})
+
 export const Bot = types
   .compose(
     Base,
@@ -48,6 +53,7 @@ export const Bot = types
       visitors: types.optional(ProfilePaginableList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
+      invitation: types.maybe(Invitation),
     })
   )
   .volatile(() => ({
@@ -213,6 +219,10 @@ export interface IBotData {
   visitors?: any
   posts?: any
   error?: string
+  invitation?: {
+    id: string
+    accepted: boolean
+  }
 }
 
 export const BotPaginableList = createPaginable(types.reference(Bot))

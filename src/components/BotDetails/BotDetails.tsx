@@ -66,8 +66,12 @@ export default class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics} = this.props
     runInAction(() => (this.bot = wocky!.getBot({id: this.props.botId})))
-    await wocky!.loadBot(this.props.botId, undefined)
-    await this.bot!.posts.load({force: true})
+    // console.log('& bot', this.bot)
+
+    if (!this.bot.invitation || this.bot.invitation.accepted) {
+      await wocky!.loadBot(this.props.botId, undefined)
+      await this.bot!.posts.load({force: true})
+    }
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))
