@@ -554,7 +554,7 @@ export class GraphQLTransport implements IWockyTransport {
     })
     // TODO: assert all invites sent successfully?
   }
-  async inviteBotReply(invitationId: string, accept: boolean) {
+  async inviteBotReply(invitationId: string, accept: boolean = true) {
     // const data: any = await this.client.mutate({
     await this.client.mutate({
       mutation: gql`
