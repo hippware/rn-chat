@@ -450,23 +450,15 @@ export class GraphQLTransport implements IWockyTransport {
       })
       .subscribe({
         next: action((result: any) => {
-          // console.log('& sub hit!', result)
-          // const update = result.data.notifications TODO ?
-          // console.log('& SUB UPDATE:', update)
-
-          // TODO: run `result.data` through convertNotification, set this.notification
-
-          this.notification = {
-            data: result.data,
-          }
+          // this.notification = result
+          this.notification = convertNotifications([{node: result.data.notifications}]).list[0] // TODO refactor convertNotifications
         }),
       })
   }
   @action
   unsubscribeNotifications() {
-    throw new Error('TODO')
-    // if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
-    // this.botGuestVisitorsSubscription = undefined
+    if (this.notificationsSubscription) this.notificationsSubscription.unsubscribe()
+    this.notificationsSubscription = undefined
   }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this._loadBots('OWNED', id, lastId, max)
@@ -981,7 +973,7 @@ function convertNotifications(notifications: any[]): {list: IEventData[]; bots: 
           time,
           // TODO: should we get the full profile info here instead?
           // In the case of a follow this is (potentially) an uncached user
-          user: data.user.id,
+          user: convertProfile(data.user),
         }
         // console.log('& user follow:', followNotification)
         // return followNotification
