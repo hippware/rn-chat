@@ -86,7 +86,7 @@ export interface IWockyTransport {
   loadNotifications(
     lastId?: string,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}>
+  ): Promise<{list: any[]; count: number; cursor: string | null}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
