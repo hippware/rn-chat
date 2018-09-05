@@ -85,6 +85,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   render() {
     const {bot, locationStore} = this.props
     if (!bot || !isAlive(bot)) return null
+    // console.log('& invitation?', bot.invitation)
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -112,35 +113,43 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
         </View>
 
-        <VisitorsArea bot={bot} />
+        {bot.invitation && !bot.invitation.accepted ? (
+          <View>
+            <RText>TODO: Location Accept UI</RText>
+          </View>
+        ) : (
+          <View>
+            <VisitorsArea bot={bot} />
 
-        <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={bot.owner} size={40 * k} />
-          {bot.owner && (
-            <ProfileHandle
-              style={{marginLeft: 10 * k, flex: 1}}
-              onPress={() => Actions.profileDetails({item: bot.owner.id})}
-              size={15}
-              profile={bot.owner}
+            <View style={styles.userInfoRow}>
+              <ProfileAvatar profile={bot.owner} size={40 * k} />
+              {bot.owner && (
+                <ProfileHandle
+                  style={{marginLeft: 10 * k, flex: 1}}
+                  onPress={() => Actions.profileDetails({item: bot.owner.id})}
+                  size={15}
+                  profile={bot.owner}
+                />
+              )}
+
+              {/* TODO: add bot.createdAt when ready on the backend */}
+            </View>
+            {!!bot.description && (
+              <View style={styles.descriptionContainer}>
+                <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
+                  {bot.description}
+                </RText>
+              </View>
+            )}
+            <Image
+              source={bot.image ? bot.image.thumbnail : null}
+              style={{width, height: width, marginHorizontal: -20 * k}}
+              resizeMode="contain"
             />
-          )}
-
-          {/* TODO: add bot.createdAt when ready on the backend */}
-        </View>
-        {!!bot.description && (
-          <View style={styles.descriptionContainer}>
-            <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
-              {bot.description}
-            </RText>
+            {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
+            <Separator style={{marginHorizontal: 5}} />
           </View>
         )}
-        <Image
-          source={bot.image ? bot.image.thumbnail : null}
-          style={{width, height: width, marginHorizontal: -20 * k}}
-          resizeMode="contain"
-        />
-        {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
-        <Separator style={{marginHorizontal: 5}} />
       </View>
     )
   }
