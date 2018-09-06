@@ -544,7 +544,6 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {input: {botId, userIds}},
-      // variables: {input: {botId, userId: userIds[0]}},
     })
     // TODO: assert all invites sent successfully?
   }
