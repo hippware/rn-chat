@@ -112,7 +112,19 @@ export const Storages = types
     }
   })
   .actions(self => ({
-    create: <T>(type: IType<any, T>, data: {[key: string]: any}) => {
+    create: <T>(type: IType<any, T>, param: {[key: string]: any}) => {
+      const data = {...param}
+      // some workaround to create references on the fly (maybe recent MST can do it automatically?)
+      if (param.user && typeof param.user === 'object') {
+        // create reference to profile!
+        self.profiles.get(param.user.id, param.user)
+        data.user = param.user.id
+      }
+      if (param.bot && typeof param.bot === 'object') {
+        // create reference to bot!
+        self.bots.get(param.bot.id, param.bot)
+        data.bot = param.bot.id
+      }
       return type.create(self._registerReferences(type, data), getEnv(self))
     },
     load: (instance: any, data: {[key: string]: any}) => {

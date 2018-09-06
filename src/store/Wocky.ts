@@ -81,12 +81,10 @@ export const Wocky = types
       roster: types.optional(types.map(types.reference(Profile)), {} as ObservableMap),
       profile: types.maybe(OwnProfile),
       updates: types.optional(types.array(EventEntity), []),
-      events: types.optional(EventList, {}),
       notifications: types.optional(EventList, {}),
       geofenceBots: types.optional(BotPaginableList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
-      version: '',
     })
   )
   .named(SERVICE_NAME)
@@ -282,11 +280,6 @@ export const Wocky = types
       }
     },
     deleteBot: (id: string) => {
-      self.events.result.forEach((event: any) => {
-        if (event.bot && event.bot.id === id) {
-          self.events.remove(event.id)
-        }
-      })
       self.notifications.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
           self.notifications.remove(event.id)
@@ -538,36 +531,12 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       yield self.transport.removeUpload(tros)
     }),
-    _loadUpdates: flow(function*() {
-      yield waitFor(() => self.connected)
-      const {list, bots, version} = yield self.transport.loadUpdates(self.version)
-      bots.forEach(self.getBot)
-      self.version = version
-      list.forEach((data: any) => {
-        if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
-          return
-        }
-        const item = self.create(EventEntity, data)
-        self.updates.unshift(item)
-      })
-    }),
-    _loadHomestream: flow(function*(lastId: any, max: number = 3) {
-      yield waitFor(() => self.connected)
-      const {list, count, bots, version} = yield self.transport.loadHomestream(lastId, max)
-      bots.forEach(self.getBot)
-      self.version = version
-      return {list: list.map((data: any) => self.create(EventEntity, data)), count}
-    }),
     _loadNotifications: flow(function*(lastId: any, max: number = 10) {
       yield waitFor(() => self.connected)
-      const {list, count, bots, cursor} = yield self.transport.loadNotifications(lastId, max)
+      const {list, count, cursor} = yield self.transport.loadNotifications(lastId, max)
       // console.log('& load notifications', count, version)
-      bots.forEach(self.getBot)
       return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
     }),
-    _subscribeToHomestream: (version: string) => {
-      self.transport.subscribeToHomestream(version)
-    },
     _onBotVisitor: flow(function*({bot, action, visitor}: any) {
       // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
       const id = visitor.id
@@ -584,53 +553,54 @@ export const Wocky = types
         }
       }
     }),
-    _onNotification: flow(function*({changed, version, ...data}: any) {
+    _onNotification: flow(function*(data: any) {
       // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
-      if (!version) {
-        throw new Error('No version for notification:' + JSON.stringify(data))
-      }
-      self.version = version
-      // ignore /changed and /description delete
-      // delete creation event if we have also delete event
-      if (data.delete) {
-        if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
-          return
-        }
-        let existed = self.updates.findIndex((u: any) => u.id === data.id)
-        if (existed !== -1 && getType(self.updates[existed]).name === EventBotCreate.name) {
-          while (existed !== -1) {
-            self.updates.splice(existed, 1)
-            existed = self.updates.findIndex((u: any) => u.id === data.id)
-          }
-          return
-        }
-        if (!self.events.exists(data.id)) return
-        // if (!self.notifications.exists(data.id)) return
-        // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
-      }
-      if (changed && data.bot) {
-        yield self.loadBot(data.bot.id, data.bot.server)
-      } else {
+      // if (!version) {
+      //   throw new Error('No version for notification:' + JSON.stringify(data))
+      // }
+      // self.version = version
+      // // ignore /changed and /description delete
+      // // delete creation event if we have also delete event
+      // if (data.delete) {
+      //   if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
+      //     return
+      //   }
+      //   let existed = self.updates.findIndex((u: any) => u.id === data.id)
+      //   if (existed !== -1 && getType(self.updates[existed]).name === EventBotCreate.name) {
+      //     while (existed !== -1) {
+      //       self.updates.splice(existed, 1)
+      //       existed = self.updates.findIndex((u: any) => u.id === data.id)
+      //     }
+      //     return
+      //   }
+      //   if (!self.events.exists(data.id)) return
+      //   // if (!self.notifications.exists(data.id)) return
+      //   // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
+      // }
+      // if (changed && data.bot) {
+      //   yield self.loadBot(data.bot.id, data.bot.server)
+      // } else {
+      try {
         const item: any = self.create(EventEntity, data)
-        if (item.bot && !item.bot.owner) {
-          yield self.loadBot(item.bot.id, null)
-        }
         const existed = self.updates.findIndex((u: any) => u.id === item.id)
         if (existed !== -1) {
           self.updates.splice(existed, 1)
         }
         self.updates.unshift(item)
+      } catch (e) {
+        getEnv(self).logger.log('ONNOTIFICATION ERROR: ' + e.message)
       }
+      // }
     }),
     incorporateUpdates: () => {
       for (let i = self.updates.length - 1; i >= 0; i--) {
         const {id} = self.updates[i]
         // delete item
-        self.events.remove(id)
+        self.notifications.remove(id)
         if (getType(self.updates[i]).name !== EventDelete.name) {
           const event: any = self.updates[i]
           if (event.bot && isAlive(event.bot)) {
-            self.events.addToTop(clone(event))
+            self.notifications.addToTop(clone(event))
           }
         } else {
           const parts = id.split('/')
@@ -704,7 +674,6 @@ export const Wocky = types
       self.roster.clear()
       self.chats.clear()
       self.geoBots.clear()
-      self.events.refresh()
       self.notifications.refresh()
       self.updates.clear()
       self.profiles.clear()
@@ -718,23 +687,11 @@ export const Wocky = types
           async (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
-
+              self.transport.subscribeNotifications()
+              self.requestRoster()
+              await self.notifications.load()
               // TODO: move to componentWillMount on Messages screen?
               await self.loadChats()
-
-              self.requestRoster()
-
-              // TODO: load graphql notifications on startup?
-
-              if (!self.version) {
-                await self.events.load()
-              } else {
-                await self._loadUpdates()
-              }
-
-              // TODO: subscribe to graphql notifications
-
-              self._subscribeToHomestream(self.version)
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
                 profile.setStatus('unavailable')
@@ -756,7 +713,6 @@ export const Wocky = types
         reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, self._addMessage),
         reaction(() => self.transport.notification, self._onNotification),
-        // TODO: add reaction for GraphQL notifications
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
@@ -770,12 +726,10 @@ export const Wocky = types
         self.profile = null
         clearCache()
         self.sessionCount = 0
-        self.version = ''
         self.username = null
         self.password = null
       }),
       afterCreate: () => {
-        self.events.setRequest(self._loadHomestream)
         self.notifications.setRequest(self._loadNotifications)
         self.geofenceBots.setRequest(self._loadGeofenceBots)
         startReactions()

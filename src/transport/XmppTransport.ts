@@ -1,4 +1,4 @@
-declare var Strophe, $iq, $pres, $msg: any
+declare var Strophe, $iq, $msg: any
 
 import {observable, when, action, runInAction} from 'mobx'
 import * as Utils from './utils'
@@ -23,7 +23,6 @@ const MAM_NS = 'urn:xmpp:mam:1'
 const MAXINT = 1000
 const USER = 'hippware.com/hxep/user'
 const HANDLE = 'hippware.com/hxep/handle'
-const EVENT_NS = 'hippware.com/hxep/publishing'
 
 export class XmppTransport implements IWockyTransport {
   provider: any
@@ -62,19 +61,6 @@ export class XmppTransport implements IWockyTransport {
         if (msg[EXPLORE_NEARBY].bot) {
           const bot = msg[EXPLORE_NEARBY].bot
           this.geoBot = {id: bot.id, ...processMap(bot)}
-        }
-      } else if (msg.notification) {
-        if (msg.notification['reference-changed']) {
-          this.notification = {changed: true, ...msg.notification['reference-changed']}
-        } else if (msg.notification.item) {
-          const item = processItem(msg.notification.item, msg.delay, this.username)
-          if (item) {
-            this.notification = {...item, version: msg.notification.item.version}
-          }
-        } else if (msg.notification.delete) {
-          this.notification = {...msg.notification.delete, delete: true}
-        } else {
-          // console.warn('& notification: unhandled homestream notification', msg.notification) TODO logger
         }
       }
     })
@@ -852,6 +838,10 @@ export class XmppTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
+  async subscribeNotifications() {
+    throw new Error('Not supported')
+  }
+
   async publishBotPost(botId: string, post: any) {
     const iq = $iq({type: 'set', to: this.host})
       .c('publish', {xmlns: BOT_NS, node: `bot/${botId}`})
@@ -896,46 +886,8 @@ export class XmppTransport implements IWockyTransport {
     const data = await this.sendIQ(iq)
     return parseInt(data['subscriber_count'])
   }
-  async loadUpdates(ver: string) {
-    const iq = $iq({type: 'get', to: this.username + '@' + this.host})
-    iq.c('catchup', {xmlns: EVENT_NS, node: 'home_stream', version: ver})
-    const data = await this.sendIQ(iq)
-    const {list, version, bots} = processHomestreamResponse(data, this.username)
-    return {list, version, bots: bots.map((bot: any) => ({id: bot.id, ...processMap(bot)}))}
-  }
-  async loadHomestream(lastId: any, max: number = 3) {
-    const iq = $iq({type: 'get', to: this.username + '@' + this.host})
-    iq.c('items', {xmlns: EVENT_NS, node: 'home_stream'})
-    iq.c('exclude-deleted').up()
-    iq
-      .c('set', {xmlns: RSM_NS})
-      .c('reverse')
-      .up()
-      .c('max')
-      .t(max.toString())
-      .up()
-
-    if (lastId) {
-      iq
-        .c('before')
-        .t(lastId)
-        .up()
-    } else {
-      iq.c('before').up()
-    }
-    const data = await this.sendIQ(iq)
-    const {list, count, version, bots} = processHomestreamResponse(data, this.username)
-    return {list, count, version, bots: bots.map((bot: any) => ({id: bot.id, ...processMap(bot)}))}
-  }
   async loadNotifications(lastId, max): Promise<any> {
     throw new Error('Not supported')
-  }
-  subscribeToHomestream(version: string) {
-    const iq = $pres({to: `${this.username}@${this.host}/home_stream`}).c('query', {
-      xmlns: EVENT_NS,
-      version,
-    })
-    this.sendStanza(iq)
   }
   async geosearch({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
     if (!this.isGeoSearching) {
