@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Revert getLocationsVisited change (Rework/Revert #2701)
 * [dev] wocky-client notification subscriptions (#2725, PR #2737)
   * ... and some wocky-client sync, fixes etc.
+* Bot invite for multiple users (PR #2742)
+* Location Invitation Accept UI (#2729, PR #2744)
 
 # 3.3.3 - 2018 Aug 31
 
