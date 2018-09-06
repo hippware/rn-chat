@@ -52,7 +52,7 @@ class GeofenceShare extends React.Component<Props> {
       this.props.notificationStore.flash(
         `Presence shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`
       )
-      Actions.pop({animated: false})
+      Actions.popTo('home')
       Actions.botDetails({botId: this.props.botId, isNew: true})
       this.props.analytics.track('bot_share_geo')
     } catch (e) {
