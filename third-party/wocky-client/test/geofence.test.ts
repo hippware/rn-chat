@@ -20,7 +20,7 @@ describe('Geofence', () => {
   it('create user1', async done => {
     try {
       timestamp()
-      user1 = await createXmpp(28)
+      user1 = await createXmpp()
       console.log('user1 credentials', user1.username, user1.password)
       done()
     } catch (e) {
@@ -31,7 +31,7 @@ describe('Geofence', () => {
   it('create user2', async done => {
     try {
       timestamp()
-      user2 = await createXmpp(29)
+      user2 = await createXmpp()
       console.log('user2 credentials', user2.username, user2.password)
       timestamp()
       await waitFor(() => user1.profile !== null)
