@@ -449,8 +449,7 @@ export class GraphQLTransport implements IWockyTransport {
       })
       .subscribe({
         next: action((result: any) => {
-          // this.notification = result
-          this.notification = convertNotifications([{node: result.data.notifications}])[0] // TODO refactor convertNotifications
+          this.notification = convertNotification({node: result.data.notifications})
         }),
       })
   }
@@ -575,6 +574,7 @@ export class GraphQLTransport implements IWockyTransport {
     // console.log('& graphql disconnect')
     if (this.socket && this.socket.isConnected()) {
       this.unsubscribeBotVisitors()
+      this.unsubscribeNotifications()
       return new Promise<void>((resolve, reject) => {
         try {
           this.socket.disconnect(() => {
@@ -957,83 +957,72 @@ function convertBot({
   }
 }
 
-function convertNotifications(notifications: any[]): IEventData[] {
-  const list: IEventData[] = []
-  notifications.forEach(notification => {
-    let bot: IBotData
-    const {data: {__typename, ...data}, id, createdAt} = notification.node
-    const time = new Date(createdAt).getTime()
-    // console.log('& converting type', __typename, createdAt, time)
-    switch (__typename) {
-      case 'UserFollowNotification':
-        const followNotification: IEventUserFollowData = {
-          id,
-          time,
-          // TODO: should we get the full profile info here instead?
-          // In the case of a follow this is (potentially) an uncached user
-          user: convertProfile(data.user),
-        }
-        // console.log('& user follow:', followNotification)
-        // return followNotification
-        list.push(followNotification)
-        break
-      case 'BotItemNotification':
-        bot = convertBot(data.bot)
-        const botItemNotification: IEventBotPostData = {
-          id,
-          time,
-          post: {
-            id: data.botItem.id,
-            profile: data.botItem.owner.id,
-          },
-          bot,
-        }
-        list.push(botItemNotification)
-        break
-      case 'InvitationNotification':
-      case 'InvitationResponseNotification':
-        // console.log('& invite notification', data.invitation)
-        const isInvite = __typename === 'InvitationNotification'
-        bot = {
-          ...convertBot(data.bot),
-          invitation: {
-            id: data.invitation.id,
-            accepted: data.invitation.accepted === true,
-          },
-        }
-        const inviteNotification: IEventBotInviteData = {
-          id,
-          time,
-          bot,
-          sender: isInvite ? data.invitation.user.id : data.user.id,
-          isResponse: !isInvite,
-          isAccepted: data.accepted,
-          inviteId: data.invitation.id,
-        }
-        // return inviteNotification
-        list.push(inviteNotification)
-        break
-      case 'GeofenceEventNotification':
-        // console.log('& invite response notification', data.invitation)
-        bot = convertBot(data.bot)
-        const geofenceNotification: IEventBotGeofenceData = {
-          id,
-          time,
-          bot,
-          // profile: convertProfile(data.user),
-          profile: data.user.id,
-          isEnter: data.event === 'ENTER',
-        }
-        // console.log('& after:', botItemNotification)
-        // return geofenceNotification
-        list.push(geofenceNotification)
-        break
-      default:
-        throw new Error(`failed to process notification ${notification}`)
-    }
-  })
+function convertNotification(notification: any): IEventData {
+  let bot: IBotData
+  const {data: {__typename, ...data}, id, createdAt} = notification.node
+  const time = new Date(createdAt).getTime()
+  // console.log('& converting type', __typename, createdAt, time)
+  switch (__typename) {
+    case 'UserFollowNotification':
+      const followNotification: IEventUserFollowData = {
+        id,
+        time,
+        user: convertProfile(data.user),
+      }
+      // console.log('& user follow:', followNotification)
+      return followNotification
+    case 'BotItemNotification':
+      bot = convertBot(data.bot)
+      const botItemNotification: IEventBotPostData = {
+        id,
+        time,
+        post: {
+          id: data.botItem.id,
+          profile: data.botItem.owner.id,
+        },
+        bot,
+      }
+      return botItemNotification
+    case 'InvitationNotification':
+    case 'InvitationResponseNotification':
+      // console.log('& invite notification', data.invitation)
+      const isInvite = __typename === 'InvitationNotification'
+      bot = {
+        ...convertBot(data.bot),
+        invitation: {
+          id: data.invitation.id,
+          accepted: data.invitation.accepted === true,
+        },
+      }
+      const inviteNotification: IEventBotInviteData = {
+        id,
+        time,
+        bot,
+        sender: isInvite ? data.invitation.user.id : data.user.id,
+        isResponse: !isInvite,
+        isAccepted: data.accepted,
+        inviteId: data.invitation.id,
+      }
+      return inviteNotification
+    case 'GeofenceEventNotification':
+      // console.log('& invite response notification', data.invitation)
+      bot = convertBot(data.bot)
+      const geofenceNotification: IEventBotGeofenceData = {
+        id,
+        time,
+        bot,
+        // profile: convertProfile(data.user),
+        profile: data.user.id,
+        isEnter: data.event === 'ENTER',
+      }
+      return geofenceNotification
+    default:
+      throw new Error(`failed to process notification ${notification}`)
+  }
+}
 
-  return list
+function convertNotifications(notifications: any[]): IEventData[] {
+  return notifications.map(convertNotification)
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {

@@ -31,7 +31,7 @@ describe('GraphQL Notifications Subscription', () => {
         () => !!gqlBob.notification,
         () => {
           timestamp()
-          console.log(JSON.stringify(gqlBob.notification))
+          expect(gqlBob.notification.user.id, alicesBobProfile.id)
           done()
         }
       )
