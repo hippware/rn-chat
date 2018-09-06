@@ -66,14 +66,6 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
     )
     console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()
-    reaction(
-      () => service.transport.notification,
-      async data => {
-        if (service.connected) {
-          console.log('ONNOTIFICATION FOR USER:', service.username, JSON.stringify(data))
-        }
-      }
-    )
     return service
   } catch (e) {
     console.error(e)

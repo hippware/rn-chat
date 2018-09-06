@@ -78,11 +78,8 @@ export interface IWockyTransport {
   }): Promise<void>
   sendMessage(msg: any): void
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
-  subscribeToHomestream(version: string): void
   enablePush(token: string): Promise<void>
   disablePush(): Promise<void>
-  loadUpdates(ver: string): Promise<{list: [any]; version: string; bots: [any]}>
-  loadHomestream(lastId: any, max?: number): Promise<IPagingList>
   loadNotifications(
     lastId?: string,
     max?: number
@@ -101,4 +98,5 @@ export interface IWockyTransport {
     longitudeDelta: number
   }): Promise<IBot[]>
   hideUser(enable: boolean, expire?: Date): Promise<void>
+  subscribeNotifications()
 }
