@@ -1,6 +1,6 @@
 import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
-import {IBot, IBotData} from '../model/Bot'
+import {IBot} from '../model/Bot'
 
 export interface IPagingList {
   list: any[]
@@ -78,15 +78,12 @@ export interface IWockyTransport {
   }): Promise<void>
   sendMessage(msg: any): void
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
-  subscribeToHomestream(version: string): void
   enablePush(token: string): Promise<void>
   disablePush(): Promise<void>
-  loadUpdates(ver: string): Promise<{list: [any]; version: string; bots: [any]}>
-  loadHomestream(lastId: any, max?: number): Promise<IPagingList>
   loadNotifications(
     lastId?: string,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}>
+  ): Promise<{list: any[]; count: number; cursor: string | null}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
@@ -101,4 +98,5 @@ export interface IWockyTransport {
     longitudeDelta: number
   }): Promise<IBot[]>
   hideUser(enable: boolean, expire?: Date): Promise<void>
+  subscribeNotifications()
 }

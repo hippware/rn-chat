@@ -1,6 +1,6 @@
 import {IWockyTransport, IPagingList, XmppTransport, GraphQLTransport, ILocationSnapshot} from '../'
 import {IProfilePartial} from '../model/Profile'
-import {IBot, IBotData} from '../model/Bot'
+import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
 import {ILocation} from '../model/Location'
 
@@ -51,7 +51,7 @@ export class HybridTransport implements IWockyTransport {
   }
   @computed
   get notification() {
-    return this._xmpp.notification
+    return this._gql.notification
   }
 
   // TODO: add new computed value for passing through GraphQL notifications
@@ -242,10 +242,6 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.loadChat(userId, lastId, max)
   }
 
-  subscribeToHomestream(version: string): void {
-    this._xmpp.subscribeToHomestream(version)
-  }
-
   enablePush(token: string): Promise<void> {
     return this._xmpp.enablePush(token)
   }
@@ -254,18 +250,10 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.disablePush()
   }
 
-  loadUpdates(ver: string): Promise<{list: [any]; version: string; bots: [any]}> {
-    return this._xmpp.loadUpdates(ver)
-  }
-
-  loadHomestream(lastId: any, max?: number): Promise<IPagingList> {
-    return this._xmpp.loadHomestream(lastId, max)
-  }
-
   loadNotifications(
     lastId: any,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null; bots: IBotData[]}> {
+  ): Promise<{list: any[]; count: number; cursor: string | null}> {
     return this._gql.loadNotifications(lastId, max)
   }
 
@@ -304,5 +292,9 @@ export class HybridTransport implements IWockyTransport {
   }
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
     await this._gql.hideUser(enable, expire)
+  }
+
+  subscribeNotifications() {
+    this._gql.subscribeNotifications()
   }
 }

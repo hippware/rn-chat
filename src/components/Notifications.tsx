@@ -15,7 +15,7 @@ type Props = {
 @observer
 class Notifications extends React.Component<Props> {
   componentDidMount() {
-    // TODO: move this to wocky-client?
+    // TODO: remove this if we load notifications on wocky-client start
     this.props.wocky.notifications.load({force: true})
   }
 
