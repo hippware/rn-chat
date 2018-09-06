@@ -257,7 +257,7 @@ export class HybridTransport implements IWockyTransport {
   loadNotifications(
     lastId: any,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null}> {
+  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
     return this._gql.loadNotifications(lastId, max)
   }
 
