@@ -203,6 +203,10 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.inviteBot(id, recipients)
   }
 
+  async inviteBotReply(invitationId: string, accept: boolean = true) {
+    return this._gql.inviteBotReply(invitationId, accept)
+  }
+
   loadRelations(
     userId: string,
     relation: string,
@@ -253,7 +257,7 @@ export class HybridTransport implements IWockyTransport {
   loadNotifications(
     lastId: any,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null}> {
+  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
     return this._gql.loadNotifications(lastId, max)
   }
 

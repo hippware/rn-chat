@@ -50,8 +50,8 @@ const NOTIFICATIONS_PROPS = `
       invitation {
         accepted
         id
-        user {${PROFILE_PROPS}}
       }
+      user {${PROFILE_PROPS}}
     }
     ... on InvitationResponseNotification {
       accepted
@@ -403,7 +403,7 @@ export class GraphQLTransport implements IWockyTransport {
   async loadNotifications(
     cursor?: string,
     max: number = 3
-  ): Promise<{list: any[]; count: number; cursor: string | null}> {
+  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
     const res = await this.client.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
@@ -421,13 +421,17 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {limit: max, ownUsername: this.username, cursor},
     })
-    const {totalCount, edges} = res.data.notifications
-    const list = convertNotifications(edges)!
-    return {
-      count: totalCount,
-      list,
-      cursor: edges && edges.length && edges[edges.length - 1].cursor,
+    if (res.data) {
+      const {totalCount, edges} = res.data.notifications
+
+      const list = convertNotifications(edges)!
+      return {
+        count: totalCount,
+        list,
+        cursor: edges && edges.length && edges[edges.length - 1].cursor,
+      }
     }
+    return {count: 0, list: [], cursor}
   }
 
   subscribeNotifications() {
@@ -540,11 +544,10 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {input: {botId, userIds}},
-      // variables: {input: {botId, userId: userIds[0]}},
     })
     // TODO: assert all invites sent successfully?
   }
-  async inviteBotReply(invitationId: string, accept: boolean) {
+  async inviteBotReply(invitationId: string, accept: boolean = true) {
     // const data: any = await this.client.mutate({
     await this.client.mutate({
       mutation: gql`
@@ -986,7 +989,6 @@ function convertNotification(notification: any): IEventData {
     case 'InvitationNotification':
     case 'InvitationResponseNotification':
       // console.log('& invite notification', data.invitation)
-      const isInvite = __typename === 'InvitationNotification'
       bot = {
         ...convertBot(data.bot),
         invitation: {
@@ -998,8 +1000,8 @@ function convertNotification(notification: any): IEventData {
         id,
         time,
         bot,
-        sender: isInvite ? data.invitation.user.id : data.user.id,
-        isResponse: !isInvite,
+        sender: data.user.id,
+        isResponse: __typename === 'InvitationResponseNotification',
         isAccepted: data.accepted,
         inviteId: data.invitation.id,
       }

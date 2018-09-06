@@ -1,5 +1,14 @@
 import React from 'react'
-import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
+import {
+  View,
+  Animated,
+  Alert,
+  Image,
+  StyleSheet,
+  Clipboard,
+  TouchableOpacity,
+  Text,
+} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
@@ -26,6 +35,7 @@ type State = {
 
 const DOUBLE_PRESS_DELAY = 300
 const shareIcon = require('../../../images/shareIcon.png')
+const followIcon = require('../../../images/shoesPink.png')
 
 @inject('notificationStore', 'analytics', 'locationStore')
 @observer
@@ -82,9 +92,14 @@ class BotDetailsHeader extends React.Component<Props, State> {
     this.props.notificationStore.flash('Address copied to clipboard 👍')
   }
 
+  acceptInvitation = () => {
+    this.props.bot.acceptInvitation()
+  }
+
   render() {
     const {bot, locationStore} = this.props
     if (!bot || !isAlive(bot)) return null
+    if (bot.error) return <BotUnavailable />
     // console.log('& invitation?', bot.invitation)
     return (
       <View>
@@ -114,9 +129,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
         </View>
 
         {bot.invitation && !bot.invitation.accepted ? (
-          <View>
-            <RText>TODO: Location Accept UI</RText>
-          </View>
+          <FollowLocationView onFollow={this.acceptInvitation} />
         ) : (
           <View>
             <VisitorsArea bot={bot} />
@@ -146,7 +159,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
               style={{width, height: width, marginHorizontal: -20 * k}}
               resizeMode="contain"
             />
-            {/* <View style={{flex: 1, height: 1000, backgroundColor: 'red'}} /> */}
             <Separator style={{marginHorizontal: 5}} />
           </View>
         )}
@@ -223,6 +235,31 @@ const Pill = ({children}) => (
   </View>
 )
 
+const FollowLocationView = ({onFollow}) => (
+  <View style={{width: '100%', alignItems: 'center', justifyContent: 'center'}}>
+    <Separator style={{width: '100%'}} />
+    <Image source={followIcon} style={{marginVertical: 15 * k}} />
+    <RText size={15} color={colors.WARM_GREY_2} weight="Light" style={{textAlign: 'center'}}>
+      {`Know when friends arrive\r\nand depart this location`}
+    </RText>
+    <TouchableOpacity style={styles.followButton} onPress={onFollow}>
+      <RText size={16.8} color={colors.PINK}>
+        Follow Location
+      </RText>
+    </TouchableOpacity>
+  </View>
+)
+
+const BotUnavailable = () => (
+  <View style={{alignItems: 'center'}}>
+    <RText size={17} style={{textAlign: 'center'}}>
+      <Text style={{color: 'red'}}>Oops. </Text>
+      <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+    </RText>
+    <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
+  </View>
+)
+
 export default BotDetailsHeader
 
 const styles = StyleSheet.create({
@@ -256,5 +293,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     marginBottom: 10 * k,
+  },
+  followButton: {
+    borderWidth: 1,
+    borderColor: colors.PINK,
+    borderRadius: 20,
+    height: 40,
+    width: 170,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15 * k,
   },
 })

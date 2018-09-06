@@ -63,6 +63,7 @@ export interface IWockyTransport {
   updateBot(bot: any, userLocation?: ILocation): Promise<void>
   shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
   inviteBot(id: string, recepients: string[]): Promise<void>
+  inviteBotReply(invitationId: string, accept?: boolean): Promise<void>
   loadRelations(
     userId: string,
     relation: string,
@@ -83,7 +84,7 @@ export interface IWockyTransport {
   loadNotifications(
     lastId?: string,
     max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | null}>
+  ): Promise<{list: any[]; count: number; cursor: string | undefined}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>

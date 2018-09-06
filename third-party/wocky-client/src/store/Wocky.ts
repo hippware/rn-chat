@@ -464,6 +464,10 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       return yield self.transport.unsubscribeBot(id, false)
     }),
+    _acceptBotInvitation: flow(function*(inviteId: string) {
+      yield waitFor(() => self.connected)
+      return yield self.transport.inviteBotReply(inviteId)
+    }),
     geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
       yield waitFor(() => self.connected)
       yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
@@ -530,7 +534,7 @@ export const Wocky = types
     _loadNotifications: flow(function*(lastId: any, max: number = 10) {
       yield waitFor(() => self.connected)
       const {list, count, cursor} = yield self.transport.loadNotifications(lastId, max)
-      // console.log('& load notifications', count, version)
+      // console.log('& load notifications', list)
       return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
     }),
     _onBotVisitor: flow(function*({bot, action, visitor}: any) {
