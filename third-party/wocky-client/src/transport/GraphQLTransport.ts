@@ -36,52 +36,54 @@ const BOT_PROPS = `id icon title address isPublic: public addressData descriptio
 `
 
 const NOTIFICATIONS_PROPS = `
-  createdAt
-  id
-  data {
-    __typename
-    ... on UserFollowNotification {
-      user {
-        ${PROFILE_PROPS}
-      }
-    }
-    ... on InvitationNotification {
-      bot {${BOT_PROPS}}
-      invitation {
-        accepted
-        id
-      }
-      user {${PROFILE_PROPS}}
-    }
-    ... on InvitationResponseNotification {
-      accepted
-      invitation {
-        id
-        accepted
-      }
-      bot {
-        ${BOT_PROPS}
-      }
-      user {${PROFILE_PROPS}}
-    }
-    ... on BotItemNotification {
-      bot {${BOT_PROPS}}
-      botItem {
-        id
-        image
-        media {
-          fullUrl
-          thumbnailUrl
-          trosUrl
+  ... on Notification {
+    id
+    createdAt
+    data {
+      __typename
+      ... on UserFollowNotification {
+        user {
+          ${PROFILE_PROPS}
         }
-        owner {${PROFILE_PROPS}}
-        stanza
       }
-    }
-    ... on GeofenceEventNotification {
-      bot {${BOT_PROPS}}
-      user {${PROFILE_PROPS}}
-      event
+      ... on InvitationNotification {
+        bot {${BOT_PROPS}}
+        invitation {
+          accepted
+          id
+        }
+        user {${PROFILE_PROPS}}
+      }
+      ... on InvitationResponseNotification {
+        accepted
+        invitation {
+          id
+          accepted
+        }
+        bot {
+          ${BOT_PROPS}
+        }
+        user {${PROFILE_PROPS}}
+      }
+      ... on BotItemNotification {
+        bot {${BOT_PROPS}}
+        botItem {
+          id
+          image
+          media {
+            fullUrl
+            thumbnailUrl
+            trosUrl
+          }
+          owner {${PROFILE_PROPS}}
+          stanza
+        }
+      }
+      ... on GeofenceEventNotification {
+        bot {${BOT_PROPS}}
+        user {${PROFILE_PROPS}}
+        event
+      }
     }
   }
   `
@@ -960,8 +962,12 @@ function convertBot({
   }
 }
 
-function convertNotification(notification: any): IEventData {
+function convertNotification(notification: any): IEventData | null {
   let bot: IBotData
+  // TODO handle delete notifications
+  if (notification.node.__typename === 'NotificationDeleted') {
+    return null
+  }
   const {data: {__typename, ...data}, id, createdAt} = notification.node
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
@@ -1024,7 +1030,7 @@ function convertNotification(notification: any): IEventData {
 }
 
 function convertNotifications(notifications: any[]): IEventData[] {
-  return notifications.map(convertNotification)
+  return notifications.map(convertNotification).filter(x => x)
 }
 
 // function timeout(promise: Promise<any>, timeoutMillis: number) {
