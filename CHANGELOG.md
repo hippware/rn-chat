@@ -4,12 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.3.4 - 2018 Sep 6
+
 * Improve unit/xmpp tests
 * Revert getLocationsVisited change (Rework/Revert #2701)
-* [dev] wocky-client notification subscriptions (#2725, PR #2737)
+* [dev] wocky-client notification subscriptions (#2725, PR #2737, PR #2743)
   * ... and some wocky-client sync, fixes etc.
 * Bot invite for multiple users (PR #2742)
-* Location Invitation Accept UI (#2729, PR #2744)
+* Location Invitation Accept UI (#2729, PR #2744, PR #2745)
 
 # 3.3.3 - 2018 Aug 31
 
