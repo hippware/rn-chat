@@ -31,20 +31,25 @@ export function createFactory(type: IType<any, any>) {
         self.storage.delete(id)
       },
       get: (id: string, data?: {[key: string]: any}) => {
-        if (!self.storage.get(id)) {
-          const entity = getParent(self).create(type, {
-            id,
-            ...data,
-            loaded: data && !!Object.keys(data).length,
-          })
-          self.storage.put(entity)
-        } else {
-          const entity: any = self.storage.get(id)!
-          if (entity.load && data && Object.keys(data).length) {
-            entity.load(getParent(self)._registerReferences(type, data))
+        try {
+          if (!self.storage.get(id)) {
+            const entity = getParent(self).create(type, {
+              id,
+              ...data,
+              loaded: data && !!Object.keys(data).length,
+            })
+            self.storage.put(entity)
+          } else {
+            const entity: any = self.storage.get(id)!
+            if (entity.load && data && Object.keys(data).length) {
+              entity.load(getParent(self)._registerReferences(type, data))
+            }
           }
+          return self.storage.get(id)!
+        } catch (e) {
+          // invalid data
+          return null
         }
-        return self.storage.get(id)!
       },
     }))
 }
@@ -89,8 +94,12 @@ export const Storages = types
                   let value = data[key]
                   if (typeof value === 'object') {
                     // we have object instead of reference, let's create it!
-                    self[field].get(value.id, value)
-                    value = value.id
+                    try {
+                      self[field].get(value.id, value)
+                      value = value.id
+                    } catch (e) {
+                      // invalid data
+                    }
                   }
                   res[key] = self[field].get(value)
                 } else if (data[key] && typeof data[key] === 'object') {
