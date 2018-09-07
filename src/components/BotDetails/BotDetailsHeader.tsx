@@ -179,30 +179,34 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
     size = bot.guestsSize
     text = 'accepted the invite!'
   }
-  return bot.owner && (bot.owner.isOwn || list) ? (
-    <View style={{alignItems: 'center'}}>
-      {list && [
-        <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 10 * k}} key="1" />,
-        <TouchableOpacity
-          key="2"
-          onPress={() => Actions.visitors({botId: bot.id})}
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            paddingVertical: 10 * k,
-          }}
-        >
-          <ProfileStack
-            firstProfile={list[0]}
-            stackSize={size}
-            circleSize={50}
-            textSize={16.5}
-            style={{marginBottom: 10 * k}}
-          />
-          <RText size={14}>{text}</RText>
-        </TouchableOpacity>,
-      ]}
+  let inner = null
+  if (bot.owner && bot.owner.isOwn && list) {
+    inner = [
+      <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 30}} key="1" />,
+      <TouchableOpacity
+        key="2"
+        onPress={() => Actions.visitors({botId: bot.id})}
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          paddingVertical: 10 * k,
+        }}
+      >
+        <ProfileStack
+          firstProfile={list[0]}
+          stackSize={size}
+          circleSize={50}
+          textSize={16.5}
+          style={{marginBottom: 10 * k}}
+        />
+        <RText size={14}>{text}</RText>
+      </TouchableOpacity>,
+    ]
+  }
+  return (
+    <VisitorsWrapper>
+      {inner}
       {bot.owner.isOwn && (
         <TouchableOpacity
           style={[styles.invite, {marginTop: list ? 5 * k : 20 * k}]}
@@ -214,10 +218,16 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
           </RText>
         </TouchableOpacity>
       )}
-      <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 15 * k}} />
-    </View>
-  ) : null
+    </VisitorsWrapper>
+  )
 }
+
+const VisitorsWrapper = ({children}) => (
+  <View style={{alignItems: 'center'}}>
+    {children}
+    <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 35}} />
+  </View>
+)
 
 const Pill = ({children}) => (
   <View
@@ -282,6 +292,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.WHITE,
+    marginBottom: 10,
   },
   invite: {
     height: 40 * k,
