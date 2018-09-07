@@ -47,7 +47,7 @@ export function createFactory(type: IType<any, any>) {
           }
           return self.storage.get(id)!
         } catch (e) {
-          // invalid data
+          getEnv(self).logger.warn('Factory.ts get: Invalid data', e)
           return null
         }
       },
@@ -98,7 +98,7 @@ export const Storages = types
                       self[field].get(value.id, value)
                       value = value.id
                     } catch (e) {
-                      // invalid data
+                      getEnv(self).logger.warn('Factory.ts _registerReferences1: Invalid data', e)
                     }
                   }
                   res[key] = self[field].get(value)
@@ -106,7 +106,7 @@ export const Storages = types
                   try {
                     res[key] = self.create(targetType, data[key])
                   } catch (e) {
-                    // invalid data
+                    getEnv(self).logger.warn('Factory.ts _registerReferences2: Invalid data', e)
                   }
                 }
               } else {
