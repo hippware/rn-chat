@@ -11,6 +11,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IBot} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
+import {IHomeStore} from '../../store/HomeStore'
 // import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
@@ -18,9 +19,10 @@ type Props = {
   edit?: boolean
   geocodingStore?: any
   analytics?: any
+  homeStore?: IHomeStore
 }
 
-@inject('geocodingStore', 'analytics')
+@inject('geocodingStore', 'analytics', 'homeStore')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any
@@ -59,9 +61,11 @@ class AddressBar extends React.Component<Props> {
         return {address, isCurrent: location && location.isCurrent}
       },
       ({address, isCurrent}) => {
-        this.text = address
-        if (!isCurrent || (this.input && !this.input.isFocused())) {
-          this.searchEnabled = false
+        if (address) {
+          this.text = address
+          if (!isCurrent || (this.input && !this.input.isFocused())) {
+            this.searchEnabled = false
+          }
         }
       },
       {fireImmediately: true, name: 'AddressBar: set textbox text on bot address change'}
@@ -83,7 +87,7 @@ class AddressBar extends React.Component<Props> {
 
   onLocationSelect = async data => {
     const {location, address, isCurrent, meta} = data
-    const {bot, analytics, edit} = this.props
+    const {bot, analytics, edit, homeStore} = this.props
     this.searchEnabled = false
     this.text = data.address
     // const title = isPlace ? placeName : bot.title ? bot.title : address
@@ -95,6 +99,7 @@ class AddressBar extends React.Component<Props> {
       addressData: meta,
       // title,
     })
+    homeStore.setFocusedLocation(location)
     bot.location!.load({isCurrent})
     if (edit) {
       bot.save()
