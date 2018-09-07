@@ -36,51 +36,22 @@ describe('Geofence', () => {
       timestamp()
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
+      const user1phone = user1.profile.phoneNumber
+      const user2phone = user2.profile.phoneNumber
       await user1.profile!.update({
-        handle: 'abccc3',
+        handle: 'd' + user1phone.replace('+', ''),
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
       })
       await user2.profile!.update({
-        handle: 'abccc4',
+        handle: 'e' + user2phone.replace('+', ''),
         firstName: 'name2',
         lastName: 'lname2',
         email: 'a2@aa.com',
       })
       const profile1 = await user2.loadProfile(user1.username!)
       await profile1.follow()
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
-  it('update user1 profile', async done => {
-    try {
-      timestamp()
-      await waitFor(() => user1.profile !== null)
-      await user1.profile!.update({
-        handle: 'abccc3',
-        firstName: 'name1',
-        lastName: 'lname1',
-        email: 'a@aa.com',
-      })
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
-  it('update user2 profile', async done => {
-    try {
-      timestamp()
-      await user2.profile!.update({
-        handle: 'abccc4',
-        firstName: 'name2',
-        lastName: 'lname2',
-        email: 'a2@aa.com',
-      })
       done()
     } catch (e) {
       done(e)
