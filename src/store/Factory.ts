@@ -94,7 +94,11 @@ export const Storages = types
                   }
                   res[key] = self[field].get(value)
                 } else if (data[key] && typeof data[key] === 'object') {
-                  res[key] = self.create(targetType, data[key])
+                  try {
+                    res[key] = self.create(targetType, data[key])
+                  } catch (e) {
+                    // invalid data
+                  }
                 }
               } else {
                 res[key] = data[key]
