@@ -421,7 +421,7 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {limit: max, ownUsername: this.username, cursor},
     })
-    if (res.data) {
+    if (res.data && res.data.notifications) {
       const {totalCount, edges} = res.data.notifications
 
       const list = convertNotifications(edges)!
