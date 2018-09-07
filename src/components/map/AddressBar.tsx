@@ -59,9 +59,11 @@ class AddressBar extends React.Component<Props> {
         return {address, isCurrent: location && location.isCurrent}
       },
       ({address, isCurrent}) => {
-        this.text = address
-        if (!isCurrent || (this.input && !this.input.isFocused())) {
-          this.searchEnabled = false
+        if (address) {
+          this.text = address
+          if (!isCurrent || (this.input && !this.input.isFocused())) {
+            this.searchEnabled = false
+          }
         }
       },
       {fireImmediately: true, name: 'AddressBar: set textbox text on bot address change'}
