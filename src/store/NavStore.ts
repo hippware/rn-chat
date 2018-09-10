@@ -17,7 +17,8 @@ const NavStore = types
       reaction(
         () => ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(self.scene),
         getParent(self).homeStore.setCreationMode
-      )
+      ),
+        reaction(() => self.scene === 'home', getParent(self).homeStore.disableFullScreen)
     },
     postProcessSnapshot(snapshot: any) {
       // No need to persist this store
