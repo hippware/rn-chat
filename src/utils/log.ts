@@ -10,12 +10,10 @@ const defaultConfig = {
 }
 const defaultConfigLength = Object.keys(defaultConfig).length
 
-// type Config = {
-//   category?: string,
-//   level?: number
-// };
+export const log = (...args: any[]): void => {
+  // don't log on non-dev builds
+  if (!__DEV__) return
 
-export const log = (...args: any): void => {
   let config = args.length > 1 ? args[args.length - 1] : {}
   if (!config || typeof config !== 'object') {
     config = {}
@@ -36,13 +34,21 @@ export const log = (...args: any): void => {
   // (!config.category || !settings.logCategory (config.category && settings.logCategory && config.category === settings.logCategory)
   if (config.level <= settings.logLevel) {
     if (config.level === levels.WARNING) {
-      console.warn(...args) // eslint-disable-line no-console
-    } else console.log(...args) // eslint-disable-line no-console
+      // tslint:disable-next-line
+      console.warn(...args)
+    } else {
+      // tslint:disable-next-line
+      console.log(...args)
+    }
   } else {
     // console.log('no log!', config, settings);
   }
 }
 
-export const warn = (...args: any): void => {
-  console.warn(...args) // eslint-disable-line
+export const warn = (...args: any[]): void => {
+  // don't log on non-dev builds
+  if (!__DEV__) return
+
+  // tslint:disable-next-line
+  console.warn(...args)
 }
