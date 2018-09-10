@@ -68,7 +68,7 @@ export class BotCompose extends React.Component<Props> {
 
   @computed
   get saveable() {
-    return this.text !== '' && this.icon
+    return this.text
   }
 
   onEmojiSelected = e => {
