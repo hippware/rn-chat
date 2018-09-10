@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Text, ViewStyle} from 'react-native'
+import {View, StyleSheet, Text} from 'react-native'
 import {colors} from '../../constants'
 import {width} from '../Global'
 import Carousel from 'react-native-snap-carousel'
@@ -8,15 +8,55 @@ import IconStore from '../../store/IconStore'
 
 const itemSize = 63
 type Props = {
-  style?: ViewStyle
   iconStore?: IconStore
   onSnap?: any
+  icon?: string
 }
 
 @inject('iconStore')
 @observer
 class IconSelector extends React.Component<Props> {
   selector?: any
+
+  componentWillMount() {
+    const {icon, iconStore} = this.props
+    // console.log('& cwm', icon)
+    if (icon) {
+      iconStore.setIcon(icon)
+    }
+  }
+
+  render() {
+    const {iconStore} = this.props
+    return (
+      <View>
+        <Carousel
+          ref={r => (this.selector = r)}
+          data={iconStore.iconList.slice()}
+          renderItem={this.renderIcon}
+          sliderWidth={width}
+          itemWidth={itemSize}
+          onBeforeSnapToItem={this.onSnap}
+          inactiveSlideOpacity={1}
+          firstItem={iconStore.index}
+          enableMomentum
+        />
+        <View
+          style={{
+            position: 'absolute',
+            top: 2,
+            bottom: 0,
+            left: width / 2 - itemSize / 2 + 2,
+            width: itemSize - 4,
+            height: itemSize - 4,
+            borderWidth: 2,
+            borderColor: colors.PINK,
+            borderRadius: 4.4,
+          }}
+        />
+      </View>
+    )
+  }
 
   onSnap = (index: number) => {
     const {iconStore, onSnap} = this.props
@@ -26,34 +66,12 @@ class IconSelector extends React.Component<Props> {
     }
   }
 
-  render() {
-    return (
-      <View style={this.props.style}>
-        <Carousel
-          ref={r => (this.selector = r)}
-          data={this.props.iconStore.iconList.slice()}
-          renderItem={this.renderIcon}
-          sliderWidth={width}
-          itemWidth={itemSize}
-          onBeforeSnapToItem={this.onSnap}
-          inactiveSlideOpacity={1}
-        />
-      </View>
-    )
-  }
-
   renderIcon = ({item, index}) => {
     return (
       <Observer>
         {() => (
           <View style={[styles.iconWrapper]}>
-            <View
-              style={[
-                styles.shadow,
-                {backgroundColor: item ? 'white' : 'transparent'},
-                this.props.iconStore.index === index && styles.selectedIcon,
-              ]}
-            >
+            <View style={[styles.shadow, {backgroundColor: item ? 'white' : 'transparent'}]}>
               {item && <Text style={styles.icon}>{item}</Text>}
             </View>
           </View>
@@ -82,13 +100,6 @@ const styles = StyleSheet.create({
     shadowColor: colors.PINK,
     borderRadius: 4.4,
     flex: 1,
-  },
-  selectedIcon: {
-    shadowOffset: undefined,
-    shadowRadius: 0,
-    shadowOpacity: 0,
-    borderWidth: 2,
-    borderColor: colors.PINK,
   },
   icon: {
     fontFamily: 'fontello',

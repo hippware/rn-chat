@@ -66,6 +66,10 @@ export class BotCompose extends React.Component<Props> {
     )
   }
 
+  componentWillUnmount() {
+    this.props.iconStore.reset()
+  }
+
   @computed
   get saveable() {
     return this.text
@@ -88,7 +92,7 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} />
+        <IconSelector onSnap={this.onSnap} icon={this.bot.icon} />
         <Animated.View
           style={{
             position: 'absolute',
