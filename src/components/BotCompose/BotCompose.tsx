@@ -92,7 +92,7 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} icon={this.bot.icon} />
+        {this.bot && <IconSelector onSnap={this.onSnap} icon={this.bot.icon} />}
         <Animated.View
           style={{
             position: 'absolute',
