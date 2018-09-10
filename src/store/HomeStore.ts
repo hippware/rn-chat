@@ -142,6 +142,9 @@ const HomeStore = types
     toggleFullscreen: () => {
       self.fullScreenMode = !self.fullScreenMode
     },
+    disableFullScreen: () => {
+      self.fullScreenMode = false
+    },
     postProcessSnapshot(snapshot: any) {
       // No need to persist this store
       return {}
