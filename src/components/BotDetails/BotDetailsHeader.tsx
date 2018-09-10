@@ -154,11 +154,13 @@ class BotDetailsHeader extends React.Component<Props, State> {
                 </RText>
               </View>
             )}
-            <Image
-              source={bot.image ? bot.image.thumbnail : null}
-              style={{width, height: width, marginHorizontal: -20 * k}}
-              resizeMode="contain"
-            />
+            {bot.image && (
+              <Image
+                source={bot.image.thumbnail}
+                style={{width, height: width, marginHorizontal: -20 * k}}
+                resizeMode="contain"
+              />
+            )}
             <Separator style={{marginHorizontal: 5}} />
           </View>
         )}
