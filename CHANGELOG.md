@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Fixes for null notifications and invalid data.
+* Speculative fix for: Addresses do not populate (#2654)
+* Location Creation: Map does not move to location with address search (#2681)
+
 # 3.3.4 - 2018 Sep 6
 
 * Improve unit/xmpp tests
