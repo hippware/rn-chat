@@ -101,26 +101,30 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
             <Image source={currentLocation} />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              Actions.notifications()
-            }}
-            style={styles.button}
-          >
+          {!homeStore.fullScreenMode && (
             <View>
-              <Image source={notificationsButton} />
-              {wocky.updates.length && <View style={styles.newDot} />}
-            </View>
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Actions.notifications()
+                }}
+                style={styles.button}
+              >
+                <View>
+                  <Image source={notificationsButton} />
+                  {wocky.updates.length && <View style={styles.newDot} />}
+                </View>
+              </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              Actions.createBot()
-            }}
-            style={styles.button}
-          >
-            <Image source={create} />
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Actions.createBot()
+                }}
+                style={styles.button}
+              >
+                <Image source={create} />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       )
   )
