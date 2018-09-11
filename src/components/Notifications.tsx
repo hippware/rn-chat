@@ -15,8 +15,7 @@ type Props = {
 @observer
 class Notifications extends React.Component<Props> {
   componentDidMount() {
-    // TODO: remove this if we load notifications on wocky-client start
-    this.props.wocky.notifications.load({force: true})
+    this.props.wocky.incorporateUpdates()
   }
 
   render() {
@@ -31,7 +30,7 @@ class Notifications extends React.Component<Props> {
           title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
         }}
         headerInner={<RText size={16}>Updates</RText>}
-        data={notifications.length > 0 ? notifications.list : null}
+        data={notifications.length > 0 ? notifications.list.slice() : null}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}
