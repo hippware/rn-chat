@@ -40,7 +40,6 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 
   list: any
-  reactions: any[] = []
 
   componentWillReceiveProps(newProps) {
     if (newProps.enabled !== this.props.enabled) {
@@ -68,7 +67,6 @@ export default class HorizontalCardList extends React.Component<Props, State> {
           firstItem={index}
           sliderWidth={width}
           itemWidth={width - 50 * k}
-          // onSnapToItem={index => list[index].select()} // enable if you don't need to unselect current bot for you/tutorial
           onSnapToItem={setIndex}
           inactiveSlideOpacity={1}
           initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
@@ -83,9 +81,9 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 }
 
-const ButtonColumn = inject('homeStore', 'navStore', 'locationStore')(
+const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
   observer(
-    ({homeStore, navStore, locationStore}) =>
+    ({homeStore, navStore, locationStore, wocky}) =>
       navStore.scene !== 'botCompose' && (
         <View
           style={{
@@ -109,7 +107,10 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore')(
             }}
             style={styles.button}
           >
-            <Image source={notificationsButton} />
+            <View>
+              <Image source={notificationsButton} />
+              {wocky.updates.length && <View style={styles.newDot} />}
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -125,6 +126,8 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore')(
   )
 )
 
+const dotWidth = 13
+
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'flex-end',
@@ -138,5 +141,16 @@ const styles = StyleSheet.create({
     shadowRadius: 5 * k,
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 0},
+  },
+  newDot: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: dotWidth / 2,
+    width: 13,
+    height: 13,
+    backgroundColor: colors.GOLD,
   },
 })
