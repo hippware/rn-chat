@@ -15,10 +15,12 @@ import {Actions} from 'react-native-router-flux'
 import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
   navStore?: INavStore
+  homeStore?: IHomeStore
   analytics?: any
   enabled: boolean
 }
@@ -45,7 +47,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   }
 
   render() {
-    const {wocky, navStore} = this.props
+    const {wocky, navStore, homeStore} = this.props
     const {activeBots, profile} = wocky!
     return (
       <Animated.View
@@ -78,19 +80,20 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
         </View>
         <HeaderLocationOverlay />
         <InvisibleModeOverlay />
-        {navStore.scene !== 'botCompose' && (
-          <TouchableOpacity
-            onPress={() => Actions.bottomMenu()}
-            onLongPress={() => settings.isStaging && Actions.debugScreen()}
-            style={{
-              position: 'absolute',
-              bottom: -45 * k,
-              right: 10 * k,
-            }}
-          >
-            <Image source={settingsImg} />
-          </TouchableOpacity>
-        )}
+        {navStore.scene !== 'botCompose' &&
+          !homeStore.fullScreenMode && (
+            <TouchableOpacity
+              onPress={() => Actions.bottomMenu()}
+              onLongPress={() => settings.isStaging && Actions.debugScreen()}
+              style={{
+                position: 'absolute',
+                bottom: -45 * k,
+                right: 10 * k,
+              }}
+            >
+              <Image source={settingsImg} />
+            </TouchableOpacity>
+          )}
       </Animated.View>
     )
   }
