@@ -11,10 +11,10 @@ const icons = {
 const {silverware, drinks, trees, plane, store, heart} = icons
 
 const defaultEmoji = '\ud83d\ude1c'
+const defaultList = [undefined, silverware, drinks, trees, plane, store, heart, defaultEmoji]
 
 export default class IconStore {
-  @observable
-  iconList: string[] = [undefined, silverware, drinks, trees, plane, store, heart, defaultEmoji]
+  readonly iconList = observable.array<string>(defaultList)
   @observable index: number = 0
   @observable isEmojiKeyboardShown: boolean = false
 
@@ -38,11 +38,9 @@ export default class IconStore {
     if (!icon) {
       this.setIndex(0)
     } else {
-      for (let i = 1; i < this.iconList.length - 1; i += 1) {
-        if (icon === this.iconList[i]) {
-          this.setIndex(i)
-          return
-        }
+      if (this.iconList.includes(icon)) {
+        this.setIndex(this.iconList.indexOf(icon))
+        return
       }
       // means that we have emoji
       this.changeEmoji(icon)
@@ -52,6 +50,13 @@ export default class IconStore {
   @action
   changeEmoji = (icon: string) => {
     this.iconList[this.iconList.length - 1] = icon
+    this.isEmojiKeyboardShown = false
+  }
+
+  @action
+  reset = () => {
+    this.iconList.replace(defaultList)
+    this.index = 0
     this.isEmojiKeyboardShown = false
   }
 }
