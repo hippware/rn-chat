@@ -17,7 +17,7 @@ const BotMarker = observer(({card}) => {
   return (
     <HackMarker
       coordinate={{latitude, longitude}}
-      zIndex={isSelected ? 500 : 1}
+      zIndex={isSelected ? 2000 : 1} // selected marker should be on top #2696
       onPress={card.select}
       key={card.bot.id}
       stopPropagation
