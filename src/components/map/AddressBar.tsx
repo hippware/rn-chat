@@ -12,6 +12,8 @@ import {IBot} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
+import {formatText} from '../../utils/maps'
+
 // import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
@@ -111,7 +113,6 @@ class AddressBar extends React.Component<Props> {
   }
 
   suggestion = ({item}) => {
-    const {geocodingStore} = this.props
     const wrapBold = (text: string, key: string) => (
       <RText key={key} weight="Bold" size={16}>
         {text}
@@ -120,16 +121,10 @@ class AddressBar extends React.Component<Props> {
 
     // have to add unique place id to the key to avoid warning (text could be the same)
     const formatSuggestion = row =>
-      geocodingStore
-        .formatText(
-          row.main_text,
-          row.main_text_matched_substrings,
-          wrapBold,
-          `${item.place_id}main`
-        )
+      formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
         .concat(['\n'])
         .concat(
-          geocodingStore.formatText(
+          formatText(
             row.secondary_text,
             row.secondary_text_matched_substrings,
             wrapBold,
