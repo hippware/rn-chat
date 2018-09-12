@@ -40,6 +40,7 @@ class IconSelector extends React.Component<Props> {
           inactiveSlideOpacity={1}
           firstItem={iconStore.index}
           enableMomentum
+          decelerationRate={0.1}
         />
         <View
           style={{
