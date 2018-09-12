@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, TextInput} from 'react-native'
 import RText from '../common/RText'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
