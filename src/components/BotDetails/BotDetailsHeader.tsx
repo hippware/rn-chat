@@ -21,6 +21,7 @@ import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
 import {Actions} from 'react-native-router-flux'
 import ProfileAvatar from '../ProfileAvatar'
+import LinearGradient from 'react-native-linear-gradient'
 
 type Props = {
   bot: IBot
@@ -105,7 +106,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
-            size={18}
+            size={20}
             color={colors.DARK_PURPLE}
             style={{width: '75%', textAlign: 'center'}}
             numberOfLines={2}
@@ -182,7 +183,8 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
     text = 'accepted the invite!'
   }
   let inner = null
-  if (bot.owner && bot.owner.isOwn && list) {
+  // if (bot.owner && bot.owner.isOwn && list) {
+  if (list) {
     inner = [
       <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 30}} key="1" />,
       <TouchableOpacity
@@ -192,7 +194,8 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
-          paddingVertical: 10 * k,
+          paddingBottom: 10 * k,
+          marginBottom: bot.owner.isOwn ? 0 : 20,
         }}
       >
         <ProfileStack
@@ -211,7 +214,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
       {inner}
       {bot.owner.isOwn && (
         <TouchableOpacity
-          style={[styles.invite, {marginTop: list ? 5 * k : 20 * k}]}
+          style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
           onPress={() => Actions.geofenceShare({botId: bot.id})}
         >
           <Image source={shareIcon} />
@@ -220,6 +223,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
           </RText>
         </TouchableOpacity>
       )}
+      {!(bot.owner.isOwn || list) && <View style={{height: 17}} />}
     </VisitorsWrapper>
   )
 }
@@ -227,14 +231,16 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
 const VisitorsWrapper = ({children}) => (
   <View style={{alignItems: 'center'}}>
     {children}
-    <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 35}} />
+    <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 0}} />
   </View>
 )
 
 const Pill = ({children}) => (
-  <View
+  <LinearGradient
+    start={{x: 0, y: 0.5}}
+    end={{x: 1, y: 0.5}}
+    colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
     style={{
-      backgroundColor: colors.PINK, // TODO: change to gradient
       paddingHorizontal: 10 * k,
       paddingVertical: 3 * k,
       borderRadius: 5,
@@ -244,7 +250,7 @@ const Pill = ({children}) => (
     <RText size={12} weight="Medium" color={colors.WHITE}>
       {children}
     </RText>
-  </View>
+  </LinearGradient>
 )
 
 const FollowLocationView = ({onFollow}) => (
