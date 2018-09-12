@@ -172,7 +172,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
 const VisitorsArea = ({bot}: {bot: IBot}) => {
   let list: IProfile[], size: number, text: string
-  if (!bot) return null
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
     size = bot.visitorsSize
@@ -183,7 +182,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
     text = 'accepted the invite!'
   }
   let inner = null
-  // if (bot.owner && bot.owner.isOwn && list) {
+
   if (list) {
     inner = [
       <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 30}} key="1" />,

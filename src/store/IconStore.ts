@@ -43,6 +43,7 @@ export default class IconStore {
         return
       }
       // means that we have emoji
+      this.setIndex(this.iconList.length - 1)
       this.changeEmoji(icon)
     }
   }

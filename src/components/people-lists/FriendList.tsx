@@ -7,7 +7,7 @@ import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import DraggablePopupList from '../common/DraggablePopupList'
-import InviteFriendsRow from './InviteFriendsRow'
+import InviteFriendsRowNew from './InviteFriendsRowNew'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {IWocky} from 'wocky-client'
 import {observable} from 'mobx'
@@ -58,7 +58,7 @@ class FriendList extends React.Component<Props> {
       <View style={{width: 300 * k, alignSelf: 'center'}}>
         {!this.searchMode ? (
           <View>
-            <InviteFriendsRow />
+            <InviteFriendsRowNew />
             <View
               style={{
                 flexDirection: 'row',

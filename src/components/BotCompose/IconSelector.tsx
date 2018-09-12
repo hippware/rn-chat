@@ -10,21 +10,12 @@ const itemSize = 63
 type Props = {
   iconStore?: IconStore
   onSnap?: any
-  icon?: string
 }
 
 @inject('iconStore')
 @observer
 class IconSelector extends React.Component<Props> {
   selector?: any
-
-  componentWillMount() {
-    const {icon, iconStore} = this.props
-    // console.log('& cwm', icon)
-    if (icon) {
-      iconStore.setIcon(icon)
-    }
-  }
 
   render() {
     const {iconStore} = this.props
