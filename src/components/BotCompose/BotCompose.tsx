@@ -42,18 +42,17 @@ export class BotCompose extends React.Component<Props> {
   @observable bot?: IBot
   @observable uploadingPhoto: boolean = false
   @observable text: string = ''
-  @observable icon: string
   controls: any
   botTitle: any
   note: any
   accessoryText?: any
   emojiOffsetY = new Animated.Value(emojiKeyboardHeight)
+  @observable iconSnappedOnce: boolean = false
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
-    this.icon = this.bot.icon
-    this.props.iconStore.setIcon(this.bot.icon)
     this.text = this.bot.title
+    this.props.iconStore.setIcon(this.bot.icon)
 
     reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
@@ -83,7 +82,7 @@ export class BotCompose extends React.Component<Props> {
     if (this.botTitle) {
       this.botTitle.blur()
     }
-    this.icon = this.props.iconStore.icon
+    this.iconSnappedOnce = true
   }
 
   render() {
@@ -92,21 +91,20 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        {this.bot && <IconSelector onSnap={this.onSnap} icon={this.bot.icon} />}
+        {this.bot && <IconSelector onSnap={this.onSnap} />}
         <Animated.View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: emojiKeyboardHeight,
-            backgroundColor: 'white',
-            transform: [
-              {
-                translateY: this.emojiOffsetY,
-              },
-            ],
-          }}
+          style={[
+            styles.absolute,
+            {
+              height: emojiKeyboardHeight,
+              backgroundColor: 'white',
+              transform: [
+                {
+                  translateY: this.emojiOffsetY,
+                },
+              ],
+            },
+          ]}
         >
           <EmojiSelector
             key={this.props.iconStore.isEmojiKeyboardShown}
@@ -115,7 +113,7 @@ export class BotCompose extends React.Component<Props> {
             columns={8}
           />
         </Animated.View>
-        {!this.props.iconStore.isEmojiKeyboardShown && (
+        {!(this.props.iconStore.isEmojiKeyboardShown && this.iconSnappedOnce) && (
           <View>
             <TextInput
               style={styles.textStyle}
@@ -192,7 +190,7 @@ export class BotCompose extends React.Component<Props> {
     try {
       this.isLoading = true
       const {isNew, geofence, load, save, id} = this.bot
-      load({title: this.text, icon: this.icon})
+      load({title: this.text, icon: this.props.iconStore.icon})
       await save()
       if (isNew) {
         setTimeout(() => {
@@ -256,6 +254,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16 * k,
     marginTop: 8 * k,
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   gradient: {
     flex: 1,
