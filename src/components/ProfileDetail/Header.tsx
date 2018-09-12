@@ -24,7 +24,7 @@ const Header = observer((props: Props) => {
   return (
     <View style={{backgroundColor: colors.WHITE}}>
       <Card style={styles.header}>
-        <ProfileAvatar size={100} profile={profile} tappable={false} />
+        <ProfileAvatar size={100} profile={profile} tappable={false} fontSize="large" />
         <RText size={16} style={styles.displayName}>
           {profile.displayName}
         </RText>
