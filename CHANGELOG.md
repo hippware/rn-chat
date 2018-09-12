@@ -12,6 +12,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Disabled "Pin Location" and "Save Changes" (#2685)
 * Homescreen is Fullscreen and should be non fullscreen (#2691)
 * Collapse Whitespace (#2692)
+* Notifications update UI (#2726)
+* Remove buttons on full map mode (#2716)
+* Home screen: Pin in focus should be on top (#2696)
 
 # 3.3.4 - 2018 Sep 6
 
