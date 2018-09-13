@@ -257,7 +257,7 @@ const FollowLocationView = ({onFollow}) => (
     <Separator style={{width: '100%'}} />
     <Image source={followIcon} style={{marginVertical: 15 * k}} />
     <RText size={15} color={colors.WARM_GREY_2} weight="Light" style={{textAlign: 'center'}}>
-      {`Know when friends arrive\r\nand depart this location`}
+      {`Know when friends arrive\r\nand depart this location.`}
     </RText>
     <TouchableOpacity style={styles.followButton} onPress={onFollow}>
       <RText size={16.8} color={colors.PINK}>
