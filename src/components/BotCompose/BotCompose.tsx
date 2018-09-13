@@ -189,16 +189,17 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {isNew, geofence, load, save, id} = this.bot
+      const {geofence, load, save, id} = this.bot
       load({title: this.text, icon: this.props.iconStore.icon})
       await save()
-      if (isNew) {
+
+      if (!this.props.edit) {
         setTimeout(() => {
           if (geofence) Actions.geofenceShare({botId: id})
           else Actions.botDetails({botId: id, isNew: true})
         })
       } else {
-        Actions.pop()
+        Actions.popTo('home')
       }
       this.props.analytics.track('botcreate_complete', getSnapshot(this.bot))
     } catch (e) {
