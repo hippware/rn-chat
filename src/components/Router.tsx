@@ -1,17 +1,17 @@
 import React from 'react'
-import {when, autorun} from 'mobx'
-import {observer, inject} from 'mobx-react/native'
+import { when, autorun } from 'mobx'
+import { observer, inject } from 'mobx-react/native'
 
-import {colors} from '../constants'
+import { colors } from '../constants'
 
-import {settings} from '../globals'
+import { settings } from '../globals'
 
-import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
-import {IWocky} from 'wocky-client'
-import {ILocationStore} from '../store/LocationStore'
-import {INavStore} from '../store/NavStore'
+import { Actions, Router, Scene, Stack, Modal, Lightbox, Tabs } from 'react-native-router-flux'
+import { IWocky } from 'wocky-client'
+import { ILocationStore } from '../store/LocationStore'
+import { INavStore } from '../store/NavStore'
 
-import {k} from './Global'
+import { k } from './Global'
 
 import Camera from './Camera'
 import CreateMessage from './CreateMessage'
@@ -27,7 +27,6 @@ import BotsScreen from './BotsScreen'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
-import BotAddressScene from './map/BotAddressScene'
 import * as peopleLists from './people-lists'
 import VisitorList from './people-lists/VisitorList'
 import ReportUser from './report-modals/ReportUser'
@@ -113,7 +112,7 @@ type Props = {
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, locationStore} = this.props
+    const { wocky, locationStore } = this.props
 
     autorun(
       () => {
@@ -121,23 +120,23 @@ class TinyRobotRouter extends React.Component<Props> {
           if (Actions.locationWarning) Actions.locationWarning()
         }
       },
-      {delay: 1000}
+      { delay: 1000 }
     )
 
     // TODO: Move it outside, why we can't put it inside Home?
     autorun(
       () => {
-        const {navStore: {scene}, store: {locationPrimed}, locationStore: {alwaysOn}} = this.props
+        const { navStore: { scene }, store: { locationPrimed }, locationStore: { alwaysOn } } = this.props
         if (scene === 'home' && !alwaysOn && !locationPrimed) {
           if (Actions.locationPrimer) Actions.locationPrimer()
         }
       },
-      {delay: 1000}
+      { delay: 1000 }
     )
   }
 
   render() {
-    const {store, wocky, navStore} = this.props
+    const { store, wocky, navStore } = this.props
 
     return (
       <Router onStateChange={() => navStore.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
@@ -182,12 +181,9 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="visitors" component={VisitorList} draggable />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
-
-                    {/* TODO: why doesn't the `left` param disable the back button here? */}
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />
 
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
-                    <Scene key="botAddress" component={BotAddressScene} back title="Edit Location" />
                     <Scene key="profileDetails" component={ProfileDetail} back navTransparent={false} />
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
@@ -229,20 +225,20 @@ class TinyRobotRouter extends React.Component<Props> {
     )
   }
 
-  onDeepLink = async ({action, params}) => {
-    const {analytics} = this.props
-    analytics.track('deeplink', {action, params})
+  onDeepLink = async ({ action, params }) => {
+    const { analytics } = this.props
+    analytics.track('deeplink', { action, params })
     if (Actions[action]) {
       // wait until connected
       when(
         () => this.props.wocky!.connected,
         () => {
           try {
-            analytics.track('deeplink_try', {action, params})
+            analytics.track('deeplink_try', { action, params })
             Actions[action](params)
-            analytics.track('deeplink_success', {action, params})
+            analytics.track('deeplink_success', { action, params })
           } catch (err) {
-            analytics.track('deeplink_fail', {error: err, action, params})
+            analytics.track('deeplink_fail', { error: err, action, params })
           }
         }
       )
@@ -261,7 +257,7 @@ class TinyRobotRouter extends React.Component<Props> {
       await this.props.wocky!.login()
       return true
     } catch (error) {
-      this.props.analytics.track('error_connection', {error})
+      this.props.analytics.track('error_connection', { error })
     }
     return false
   }

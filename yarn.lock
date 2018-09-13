@@ -2589,7 +2589,7 @@ create-react-class@^15.6.3:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-create-react-context@^0.2.1:
+create-react-context@0.2.2, create-react-context@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
   dependencies:
@@ -5060,7 +5060,7 @@ lodash.isboolean@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
 
-lodash.isequal@^4.1.4, lodash.isequal@^4.5.0:
+lodash.isequal@4.5.0, lodash.isequal@^4.1.4:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
 
@@ -6084,9 +6084,9 @@ path-to-regexp@^1.7.0:
   dependencies:
     isarray "0.0.1"
 
-path-to-regexp@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.2.1.tgz#90b617025a16381a879bc82a38d4e8bdeb2bcf45"
+path-to-regexp@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.4.0.tgz#35ce7f333d5616f1c1e1bfe266c3aba2e5b2e704"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -6671,15 +6671,15 @@ react-native-push-notification@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
 
-react-native-router-flux@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0.tgz#3bac7eb3c9b6ab73ffa2fb24b9593bcf72aac668"
+"react-native-router-flux@github:aksonov/react-native-router-flux#14269ff8eb5224104dcac42fa644ebc1a3c00485":
+  version "4.0.2-dev"
+  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/14269ff8eb5224104dcac42fa644ebc1a3c00485"
   dependencies:
-    lodash.isequal "^4.5.0"
+    lodash.isequal "4.5.0"
     opencollective "^1.0.3"
-    path-to-regexp "^2.2.1"
+    path-to-regexp "^2.4.0"
     prop-types "^15.6.2"
-    react-navigation "^2.8.0"
+    react-navigation "2.13.x"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
@@ -6690,6 +6690,12 @@ react-native-safe-area-view@^0.7.0:
 react-native-safe-area-view@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.8.0.tgz#22d78cb8e8658d04a10cd53c1546e0bc86cb7aea"
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+
+react-native-safe-area-view@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.9.0.tgz#10ece2ecac70e7005a5b0b3f06c8833060e6d21f"
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
@@ -6818,27 +6824,15 @@ react-navigation-deprecated-tab-navigator@1.3.0:
   dependencies:
     react-native-tab-view "^0.0.77"
 
-react-navigation-drawer@0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-0.4.3.tgz#c04c94e2429b7e724801af05bd0a93a79cb27f71"
-  dependencies:
-    react-native-drawer-layout-polyfill "^1.3.2"
-
 react-navigation-drawer@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-0.5.0.tgz#d91b6a6ec65c34ba78c00f814b1e6508922cc9ec"
   dependencies:
     react-native-drawer-layout-polyfill "^1.3.2"
 
-react-navigation-tabs@0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.5.1.tgz#ed33bce3a3e21b92646700de25bd94b8fc570371"
-  dependencies:
-    hoist-non-react-statics "^2.5.0"
-    prop-types "^15.6.1"
-    react-lifecycles-compat "^3.0.4"
-    react-native-safe-area-view "^0.7.0"
-    react-native-tab-view "^1.0.0"
+react-navigation-stack@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-0.3.0.tgz#cdd056771e5fd12114811824653b1ec7e9ae5de1"
 
 react-navigation-tabs@0.6.0:
   version "0.6.0"
@@ -6849,6 +6843,31 @@ react-navigation-tabs@0.6.0:
     react-lifecycles-compat "^3.0.4"
     react-native-safe-area-view "^0.7.0"
     react-native-tab-view "^1.0.0"
+
+react-navigation-tabs@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.7.0.tgz#c89d41e501043f7fdb38550de85814452c3e6104"
+  dependencies:
+    hoist-non-react-statics "^2.5.0"
+    prop-types "^15.6.1"
+    react-lifecycles-compat "^3.0.4"
+    react-native-tab-view "^1.0.0"
+
+react-navigation@2.13.x:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.13.0.tgz#7102ff7cbc492c8daf2ad90fc80463c3469f8b78"
+  dependencies:
+    clamp "^1.0.1"
+    create-react-context "0.2.2"
+    hoist-non-react-statics "^2.2.0"
+    path-to-regexp "^1.7.0"
+    query-string "^6.1.0"
+    react-lifecycles-compat "^3"
+    react-native-safe-area-view "^0.9.0"
+    react-navigation-deprecated-tab-navigator "1.3.0"
+    react-navigation-drawer "0.5.0"
+    react-navigation-stack "0.3.0"
+    react-navigation-tabs "0.7.0"
 
 react-navigation@^2.11.2:
   version "2.11.2"
@@ -6864,21 +6883,6 @@ react-navigation@^2.11.2:
     react-navigation-deprecated-tab-navigator "1.3.0"
     react-navigation-drawer "0.5.0"
     react-navigation-tabs "0.6.0"
-
-react-navigation@^2.8.0:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.9.1.tgz#122bc0a3f320b0c80ae2e68f0f21bb633c41fc24"
-  dependencies:
-    clamp "^1.0.1"
-    create-react-context "^0.2.1"
-    hoist-non-react-statics "^2.2.0"
-    path-to-regexp "^1.7.0"
-    query-string "^6.1.0"
-    react-lifecycles-compat "^3"
-    react-native-safe-area-view "^0.8.0"
-    react-navigation-deprecated-tab-navigator "1.3.0"
-    react-navigation-drawer "0.4.3"
-    react-navigation-tabs "0.5.1"
 
 react-proxy@^1.1.7:
   version "1.1.8"

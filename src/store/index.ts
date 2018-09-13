@@ -18,7 +18,6 @@ import fileService from './fileService'
 import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
 import ProfileValidationStore from './ProfileValidationStore'
-import GeocodingStore from './GeocodingStore'
 import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
@@ -27,6 +26,7 @@ import rs from './ReportStore'
 import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
+import geocodingStore from './geocodingService'
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')
@@ -49,6 +49,7 @@ const env = {
   storage: AsyncStorage,
   auth,
   logger,
+  geocodingStore,
   fileService,
   geolocation,
   searchIndex,
@@ -65,7 +66,6 @@ const Store = types
     locationStore: LocationStore,
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,
-    geocodingStore: GeocodingStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
     version: types.string,
