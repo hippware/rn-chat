@@ -1,4 +1,4 @@
-import {types, flow, getSnapshot, isAlive} from 'mobx-state-tree'
+import {types, flow, getSnapshot, getEnv, isAlive} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location} from './Location'
@@ -9,6 +9,7 @@ import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
+import {reaction} from 'mobx'
 
 const Invitation = types.model('BotInvitation', {
   id: types.string,
@@ -81,12 +82,6 @@ export const Bot = types
     },
     setPublic: (value: boolean) => {
       self.public = value
-    },
-    afterAttach: () => {
-      self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-      self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
-      self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
-      self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
     },
     createPost: (content: string = '') => {
       const id = utils.generateID()
@@ -179,6 +174,29 @@ export const Bot = types
       return res
     },
   }))
+  .actions(self => {
+    const {geocodingStore} = getEnv(self)
+    let handler
+    return {
+      afterAttach: () => {
+        handler = reaction(
+          () => geocodingStore && self.location,
+          loc => {
+            geocodingStore.reverse(loc).then(data => {
+              self.load({addressData: data.meta, address: data.address})
+            })
+          }
+        )
+        self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+        self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
+        self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
+        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
+      },
+      beforeDestroy: () => {
+        handler()
+      },
+    }
+  })
   .views(self => ({
     get isPublic(): boolean {
       return self.public

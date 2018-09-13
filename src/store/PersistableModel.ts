@@ -8,7 +8,6 @@ export const cleanState = {
   locationStore: {},
   searchStore: {},
   profileValidationStore: {},
-  geocodingStore: {},
   homeStore: {},
   navStore: {},
   codePushStore: {},
