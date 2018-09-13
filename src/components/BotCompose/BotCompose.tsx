@@ -54,7 +54,9 @@ export class BotCompose extends React.Component<Props> {
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
     // all bots now are geofence
-    this.bot.load({geofence: true, location: {...this.props.homeStore.mapCenterLocation}})
+    if (this.props.homeStore.mapCenterLocation) {
+      this.bot.load({geofence: true, location: {...this.props.homeStore.mapCenterLocation}})
+    }
     this.text = this.bot.title
     this.props.iconStore.setIcon(this.bot.icon)
   }
