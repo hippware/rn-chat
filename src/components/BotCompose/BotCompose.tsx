@@ -1,5 +1,14 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, TouchableOpacity, Image, Alert, Animated} from 'react-native'
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Alert,
+  Animated,
+} from 'react-native'
 import {RText, Spinner} from '../common'
 import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
@@ -14,6 +23,7 @@ import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
 import EmojiSelector from 'react-native-emoji-selector'
 import LinearGradient from 'react-native-linear-gradient'
+import {IHomeStore} from '../../store/HomeStore'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -26,6 +36,7 @@ type Props = {
   titleBlurred?: boolean
   wocky?: IWocky
   iconStore?: IconStore
+  homeStore?: IHomeStore
   notificationStore?: any
   locationStore?: any
   log?: any
@@ -35,7 +46,7 @@ type Props = {
 
 const emojiKeyboardHeight = 305
 
-@inject('wocky', 'iconStore', 'notificationStore', 'analytics', 'log')
+@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log')
 @observer
 export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
@@ -48,13 +59,17 @@ export class BotCompose extends React.Component<Props> {
   accessoryText?: any
   emojiOffsetY = new Animated.Value(emojiKeyboardHeight)
   @observable iconSnappedOnce: boolean = false
+  handler: any
+  handler2: any
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
     this.text = this.bot.title
     this.props.iconStore.setIcon(this.bot.icon)
+  }
 
-    reaction(
+  componentDidMount() {
+    this.handler = reaction(
       () => this.props.iconStore.isEmojiKeyboardShown,
       shown => {
         Animated.timing(this.emojiOffsetY, {
@@ -63,10 +78,20 @@ export class BotCompose extends React.Component<Props> {
         }).start()
       }
     )
+    this.handler2 = reaction(
+      () => ({...this.props.homeStore.mapCenterLocation}),
+      location => {
+        if (this.props.homeStore.creationMode) {
+          this.bot.load({location})
+        }
+      }
+    )
   }
 
   componentWillUnmount() {
     this.props.iconStore.reset()
+    this.handler()
+    this.handler2()
   }
 
   @computed
@@ -191,8 +216,11 @@ export class BotCompose extends React.Component<Props> {
       this.isLoading = true
       const {isNew, geofence, load, save, id} = this.bot
       load({title: this.text, icon: this.props.iconStore.icon})
+      Keyboard.dismiss()
       await save()
       if (isNew) {
+        // need to add new bot to HomeMap
+        this.props.homeStore.addBotsToList('home', [this.bot])
         setTimeout(() => {
           if (geofence) Actions.geofenceShare({botId: id})
           else Actions.botDetails({botId: id, isNew: true})

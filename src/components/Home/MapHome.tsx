@@ -109,10 +109,13 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {addBotsToList, setMapCenter} = this.props.homeStore!
+    const {addBotsToList, creationMode, setMapCenter} = this.props.homeStore!
     setMapCenter(region)
-    const bots = await this.props.wocky.loadLocalBots(region)
-    addBotsToList('home', bots)
+    // don't add bot during creation mode (to avoid replacing of new location)
+    if (!creationMode) {
+      const bots = await this.props.wocky.loadLocalBots(region)
+      addBotsToList('home', bots)
+    }
   }
 
   createFromLongPress = ({nativeEvent: {coordinate}}) => {

@@ -8,11 +8,11 @@ import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 // import {Actions} from 'react-native-router-flux'
-import {IBot} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
+import {IBot} from 'wocky-client'
 
 // import {getSnapshot} from 'mobx-state-tree'
 
@@ -40,7 +40,7 @@ class AddressBar extends React.Component<Props> {
       () => ({
         searchEnabled: this.searchEnabled,
         text: this.text,
-        loc: this.props.bot && this.props.bot.location,
+        loc: this.props.homeStore.mapCenterLocation,
       }),
       ({searchEnabled, text, loc}) => {
         if (searchEnabled) {
@@ -52,34 +52,18 @@ class AddressBar extends React.Component<Props> {
               this.suggestions.replace(data)
             })
           }
+        } else if (loc) {
+          this.props.geocodingStore.reverse(loc).then(data => {
+            this.text = data.address
+          })
         }
       },
       {delay: 500, name: 'AddressBar: update address suggestions on search view'}
     )
-    this.handler2 = reaction(
-      () => {
-        if (!this.props.bot) return {address: undefined, isCurrent: undefined}
-        const {address, location} = this.props.bot
-        return {address, isCurrent: location && location.isCurrent}
-      },
-      ({address, isCurrent}) => {
-        if (address) {
-          this.text = address
-          if (!isCurrent || (this.input && !this.input.isFocused())) {
-            this.searchEnabled = false
-          }
-        }
-      },
-      {fireImmediately: true, name: 'AddressBar: set textbox text on bot address change'}
-    )
-    // if (!this.props.edit) {
-    //   setTimeout(() => (this.searchEnabled = true), 500)
-    // }
   }
 
   componentWillUnmount() {
     if (this.handler) this.handler()
-    if (this.handler2) this.handler2()
   }
 
   onSuggestionSelect = async placeId => {
@@ -88,27 +72,12 @@ class AddressBar extends React.Component<Props> {
   }
 
   onLocationSelect = async data => {
-    const {location, address, isCurrent, meta} = data
-    const {bot, analytics, edit, homeStore} = this.props
+    const {location} = data
+    const {analytics, bot, homeStore} = this.props
     this.searchEnabled = false
     this.text = data.address
-    // const title = isPlace ? placeName : bot.title ? bot.title : address
-    await bot.load({
-      location: {
-        ...location,
-      },
-      address,
-      addressData: meta,
-      // title,
-    })
     homeStore.setFocusedLocation(location)
-    bot.location!.load({isCurrent})
-    if (edit) {
-      bot.save()
-      Actions.pop()
-    } else {
-      Actions.botCompose({botId: bot.id})
-    }
+    Actions.botCompose({botId: bot.id})
     analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
 

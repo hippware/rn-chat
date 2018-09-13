@@ -88,6 +88,7 @@ class BotButtons extends React.Component<Props> {
                 text: 'Delete',
                 style: 'destructive',
                 onPress: () => {
+                  this.props.homeStore.removeBot(bot)
                   wocky.removeBot(bot ? bot.id : null)
                   Actions.pop()
                   Actions.pop({animated: false})

@@ -26,7 +26,7 @@ import rs from './ReportStore'
 import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
-import geocodingStore from './geocodingStore'
+import geocodingStore from './geocodingService'
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
 const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')

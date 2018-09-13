@@ -180,9 +180,8 @@ export const Bot = types
     return {
       afterAttach: () => {
         handler = reaction(
-          () => self.location,
+          () => geocodingStore && self.location,
           loc => {
-            console.log('REVERSE GEOCODING FOR BOT:', self.id, location)
             geocodingStore.reverse(loc).then(data => {
               self.load({addressData: data.meta, address: data.address})
             })
