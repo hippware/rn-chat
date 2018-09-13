@@ -64,6 +64,8 @@ export class BotCompose extends React.Component<Props> {
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
+    // all bots now are geofence
+    this.bot.load({geofence: true, location: {...this.props.homeStore.mapCenterLocation}})
     this.text = this.bot.title
     this.props.iconStore.setIcon(this.bot.icon)
   }
@@ -214,7 +216,7 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {isNew, geofence, load, save, id} = this.bot
+      const {isNew, load, save, id} = this.bot
       load({title: this.text, icon: this.props.iconStore.icon})
       Keyboard.dismiss()
       await save()
@@ -222,14 +224,14 @@ export class BotCompose extends React.Component<Props> {
         // need to add new bot to HomeMap
         this.props.homeStore.addBotsToList('home', [this.bot])
         setTimeout(() => {
-          if (geofence) Actions.geofenceShare({botId: id})
-          else Actions.botDetails({botId: id, isNew: true})
+          Actions.geofenceShare({botId: id}) // all bots now are 'geofence'
         })
       } else {
         Actions.pop()
       }
       this.props.analytics.track('botcreate_complete', getSnapshot(this.bot))
     } catch (e) {
+      console.error(e)
       this.props.notificationStore.flash('Something went wrong, please try again.')
       this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot), error: e})
       this.props.log('BotCompose save problem', e)
