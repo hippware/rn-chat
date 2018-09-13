@@ -17,6 +17,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Location Create: Tweaks to the icon/emoticon selector (#2679)
 * Tweaks: Location Profile - tappable "Who's Here" CTA (Rework #2564)
 * Replace Presence Share Popup (#2688)
+* Location Detail Adjustments (#2693)
+* Note Add Adjustments (#2695)
 
 # 3.3.4 - 2018 Sep 6
 
