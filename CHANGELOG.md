@@ -8,13 +8,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Speculative fix for: Addresses do not populate (#2654)
 * Location Creation: Map does not move to location with address search (#2681)
 * Error logging (dev mode only) (PR #2753)
-* Style tweaks: Location Profile - tappable "Who's Here" CTA (#2564)
 * Disabled "Pin Location" and "Save Changes" (#2685)
 * Homescreen is Fullscreen and should be non fullscreen (#2691)
 * Collapse Whitespace (#2692)
 * Notifications update UI (#2726)
 * Remove buttons on full map mode (#2716)
 * Home screen: Pin in focus should be on top (#2696)
+* Location Create: Tweaks to the icon/emoticon selector (#2679)
+* Tweaks: Location Profile - tappable "Who's Here" CTA (Rework #2564)
+* Replace Presence Share Popup (#2688)
 
 # 3.3.4 - 2018 Sep 6
 
