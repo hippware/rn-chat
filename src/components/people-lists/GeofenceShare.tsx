@@ -25,7 +25,16 @@ type Props = {
 class GeofenceShare extends React.Component<Props> {
   static rightButton = (props: Props) => <RightButton {...props} />
 
-  selection = SelectableProfileList.create({})
+  // TODO: if `bot.isNew` disable back button
+  static headerLeft = (props: Props) => {
+    console.log('& header left', props)
+    return null
+  }
+  static leftButton = (props: Props) => {
+    console.log('& left button', props)
+    return null
+  }
+  static selection = SelectableProfileList.create({})
 
   @observable bot?: IBot
 
