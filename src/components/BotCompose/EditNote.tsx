@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, TextInput} from 'react-native'
 import RText from '../common/RText'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
@@ -7,6 +7,7 @@ import {observer, inject} from 'mobx-react/native'
 import {IWocky, IBot} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import withKeyboardHOC from '../common/withKeyboardHOC'
+import {GradientButton} from '../common'
 
 type Props = {
   botId: string
@@ -27,7 +28,7 @@ class EditNote extends React.Component<Props> {
     return (
       <View>
         <TextInput
-          style={[styles.textStyle, {width, height: 120}]}
+          style={[styles.textStyle, {width, height: 120, paddingTop: 15}]}
           placeholder="Tell us about this place!"
           ref={r => (this.note = r)}
           onChangeText={text => this.bot.load({description: text})}
@@ -36,19 +37,20 @@ class EditNote extends React.Component<Props> {
           multiline
           onBlur={Actions.pop}
         />
-        <TouchableOpacity
-          style={{
+        <GradientButton
+          innerStyle={{
             width,
-            backgroundColor: colors.PINK, // TODO: gradient background
+            // backgroundColor: colors.PINK, // TODO: gradient background
             paddingVertical: 15 * k,
             alignItems: 'center',
           }}
+          isPink
           onPress={Actions.pop}
         >
           <RText color="white" size={15}>
             Add Note
           </RText>
-        </TouchableOpacity>
+        </GradientButton>
       </View>
     )
   }
