@@ -183,11 +183,12 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {isNew, load, save, id} = this.bot
+      const {load, save, id} = this.bot
       load({title: this.text, icon: this.props.iconStore.icon})
       Keyboard.dismiss()
       await save()
-      if (isNew) {
+
+      if (!this.props.edit) {
         // need to add new bot to HomeMap
         this.props.homeStore.addBotsToList('home', [this.bot])
         setTimeout(() => {

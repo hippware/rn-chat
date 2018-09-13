@@ -181,7 +181,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="visitors" component={VisitorList} draggable />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
-                    <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />
+                    <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" back />
 
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
                     <Scene key="profileDetails" component={ProfileDetail} back navTransparent={false} />
