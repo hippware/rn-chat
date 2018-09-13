@@ -64,18 +64,12 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    const {wocky, analytics} = this.props
-    runInAction(() => (this.bot = wocky!.getBot({id: this.props.botId})))
+    const {wocky, analytics, botId} = this.props
+    runInAction(() => (this.bot = wocky!.getBot({id: botId})))
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
-      await wocky!.loadBot(this.props.botId, undefined)
-      try {
-        // TODO: figure out why load posts throws 403 auth error on bot after accepting invite
-        await this.bot!.posts.load({force: true})
-      } catch (err) {
-        // console.warn('load posts error', err)
-        this.bot.load({error: ''})
-      }
+      await wocky!.loadBot(botId, undefined)
+      await this.bot!.posts.load({force: true})
     }
 
     this.viewTimeout = setTimeout(() => {
