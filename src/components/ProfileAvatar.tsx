@@ -10,6 +10,7 @@ type Props = {
   size: number
   style?: any
   wrapperStyle?: any
+  fontSize?: 'large' | 'small'
 }
 
 const ProfileAvatar = (props: Props) => {
