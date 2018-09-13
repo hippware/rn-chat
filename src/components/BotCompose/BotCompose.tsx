@@ -231,7 +231,6 @@ export class BotCompose extends React.Component<Props> {
       }
       this.props.analytics.track('botcreate_complete', getSnapshot(this.bot))
     } catch (e) {
-      console.error(e)
       this.props.notificationStore.flash('Something went wrong, please try again.')
       this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot), error: e})
       this.props.log('BotCompose save problem', e)
