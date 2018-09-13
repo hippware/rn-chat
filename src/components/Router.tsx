@@ -27,7 +27,6 @@ import BotsScreen from './BotsScreen'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
-import BotAddressScene from './map/BotAddressScene'
 import * as peopleLists from './people-lists'
 import VisitorList from './people-lists/VisitorList'
 import ReportUser from './report-modals/ReportUser'
@@ -182,12 +181,9 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="visitors" component={VisitorList} draggable />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
-
-                    {/* TODO: why doesn't the `left` param disable the back button here? */}
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" left={() => null} />
 
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
-                    <Scene key="botAddress" component={BotAddressScene} back title="Edit Location" />
                     <Scene key="profileDetails" component={ProfileDetail} back navTransparent={false} />
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />

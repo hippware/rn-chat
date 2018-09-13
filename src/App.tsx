@@ -10,6 +10,7 @@ import * as logger from './utils/log'
 // import TinyRobotRouter from './components/RouterTest';
 // require('./utils/reactotron');
 import ErrorHandler from './components/common/ErrorHandler'
+import geocodingStore from './store/geocodingService'
 
 const App = () => (
   <Provider
@@ -20,6 +21,7 @@ const App = () => (
     reportStore={reportStore}
     pushStore={pushStore}
     iconStore={iconStore}
+    geocodingStore={geocodingStore}
     {...logger}
   >
     <View style={{flex: 1}} testID="wrapper">

@@ -7,7 +7,7 @@ import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
 import {observer, inject, Observer} from 'mobx-react/native'
 import {ICard} from '../../store/HomeStore'
-import {getType} from 'mobx-state-tree'
+import {getType, isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 
@@ -62,7 +62,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         <Carousel
           key={`carousel${enabled}`}
           ref={r => (this.list = r)}
-          data={list.slice()}
+          data={list.filter(x => isAlive(x)).slice()} // avoid problems after bot delete
           renderItem={this.renderItem}
           firstItem={index}
           sliderWidth={width}

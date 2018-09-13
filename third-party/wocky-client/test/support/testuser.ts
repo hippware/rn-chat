@@ -4,6 +4,7 @@ import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
 import {when, reaction} from 'mobx'
+
 const fs = require('fs')
 
 export function timestamp() {
