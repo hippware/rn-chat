@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Keyboard,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  Animated,
-} from 'react-native'
+import {StyleSheet, Keyboard, View, TextInput, TouchableOpacity, Image, Alert} from 'react-native'
 import {RText, Spinner} from '../common'
 import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
@@ -57,8 +48,6 @@ export class BotCompose extends React.Component<Props> {
   botTitle: any
   note: any
   accessoryText?: any
-  emojiOffsetY = new Animated.Value(emojiKeyboardHeight)
-  @observable iconSnappedOnce: boolean = false
   handler: any
   handler2: any
 
@@ -74,15 +63,6 @@ export class BotCompose extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(
-      () => this.props.iconStore.isEmojiKeyboardShown,
-      shown => {
-        Animated.timing(this.emojiOffsetY, {
-          toValue: shown ? 0 : emojiKeyboardHeight,
-          duration: 500,
-        }).start()
-      }
-    )
-    this.handler2 = reaction(
       () => ({...this.props.homeStore.mapCenterLocation}),
       location => {
         if (this.props.homeStore.creationMode) {
@@ -95,7 +75,6 @@ export class BotCompose extends React.Component<Props> {
   componentWillUnmount() {
     this.props.iconStore.reset()
     this.handler()
-    this.handler2()
   }
 
   @computed
@@ -111,7 +90,6 @@ export class BotCompose extends React.Component<Props> {
     if (this.botTitle) {
       this.botTitle.blur()
     }
-    this.iconSnappedOnce = true
   }
 
   render() {
@@ -120,29 +98,16 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        {this.bot && <IconSelector onSnap={this.onSnap} />}
-        <Animated.View
-          style={[
-            styles.absolute,
-            {
-              height: emojiKeyboardHeight,
-              backgroundColor: 'white',
-              transform: [
-                {
-                  translateY: this.emojiOffsetY,
-                },
-              ],
-            },
-          ]}
+        <IconSelector onSnap={this.onSnap} />
+        <View
+          style={{
+            height: this.props.iconStore.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
+            backgroundColor: 'white',
+          }}
         >
-          <EmojiSelector
-            key={this.props.iconStore.isEmojiKeyboardShown}
-            onEmojiSelected={this.onEmojiSelected}
-            showSearchBar={false}
-            columns={8}
-          />
-        </Animated.View>
-        {!(this.props.iconStore.isEmojiKeyboardShown && this.iconSnappedOnce) && (
+          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+        </View>
+        {!this.props.iconStore.isEmojiKeyboardShown && (
           <View>
             <TextInput
               style={styles.textStyle}
