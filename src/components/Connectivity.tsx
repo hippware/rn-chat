@@ -7,16 +7,18 @@ import * as log from '../utils/log'
 
 // TODO: need to export declaration file to make this work as expected?
 import {IWocky} from 'wocky-client'
+import {IHomeStore} from '../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
+  homeStore?: IHomeStore
   notificationStore?: any
   locationStore?: any
   log?: any
   analytics?: any
 }
 
-@inject('wocky', 'notificationStore', 'locationStore', 'log', 'analytics')
+@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics')
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -119,21 +121,24 @@ export default class Connectivity extends React.Component<Props> {
 
   _handleAppStateChange = async currentAppState => {
     this.retryDelay = 1000
+    const {notificationStore, locationStore, homeStore, wocky} = this.props
     this.props.log('CURRENT APPSTATE:', currentAppState, {
       level: log.levels.INFO,
     })
     // reconnect automatically
     if (currentAppState === 'active') {
       this.isActive = true
-      this.props.notificationStore.start()
-      this.props.locationStore.start()
+      notificationStore.start()
+      locationStore.start()
+      homeStore.start()
       await this.tryReconnect('currentAppState: active')
     }
     if (currentAppState === 'background') {
       this.isActive = false
-      this.props.wocky!.disconnect()
-      this.props.notificationStore.finish()
-      this.props.locationStore.finish()
+      wocky!.disconnect()
+      notificationStore.finish()
+      locationStore.finish()
+      homeStore.finish()
     }
   }
 
