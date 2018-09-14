@@ -150,16 +150,17 @@ const Title = inject('wocky')(
 const Right = inject('profileValidationStore', 'wocky')(
   observer(({profileValidationStore, wocky}) => {
     const {profile} = wocky
+    const disabled = profile.updating || profile.uploading || profile.avatar.loading
     return profile ? (
       <TouchableOpacity
         onPress={() => MyAccount.submit(profileValidationStore)}
-        disabled={profile.updating}
+        disabled={disabled}
       >
         <RText
           size={16}
           style={{
             marginRight: 10 * k,
-            color: colors.PINK,
+            color: disabled ? colors.GREY : colors.PINK,
             opacity: profile.updating ? 0.5 : 1,
           }}
         >

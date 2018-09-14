@@ -3,45 +3,27 @@ import {Image, TouchableOpacity} from 'react-native'
 import {k} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {Spinner} from './common'
 
 type Props = {
   style?: any
   wocky?: any
   cameraScene?: string
+  warn?: any
 }
 
 const AVATAR_DIMENSION = 80 * k
 
-@inject('wocky')
+@inject('wocky', 'warn')
 @observer
 class SignUpAvatar extends React.Component<Props> {
-  @observable source: any
-
-  imageSelected = async (src, response) => {
-    try {
-      this.props.wocky.profile.upload({
-        file: src,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-      })
-      this.source = src
-    } catch (err) {
-      // TODO handle upload error
-      // console.warn('upload error', err)
-    }
-  }
-
   render() {
     const {profile} = this.props.wocky
     const {avatar} = profile
-    // TODO: should we switch to source instead of thumbnail?
-    const theAvatar =
-      this.source || (avatar && avatar.thumbnail) || require('../../images/addPhoto.png')
+    const theAvatar = (avatar && avatar.thumbnail) || require('../../images/addPhoto.png')
     return (
       <TouchableOpacity
-        style={{alignItems: 'center'}}
+        style={{alignItems: 'center', justifyContent: 'center', height: AVATAR_DIMENSION}}
         onPress={() =>
           showImagePicker({
             title: 'Select Avatar',
@@ -50,20 +32,38 @@ class SignUpAvatar extends React.Component<Props> {
           })
         }
       >
-        <Image
-          style={[
-            {
-              width: AVATAR_DIMENSION,
-              height: AVATAR_DIMENSION,
-              borderRadius: AVATAR_DIMENSION / 2,
-            },
-            this.props.style,
-          ]}
-          source={theAvatar}
-          resizeMode="cover"
-        />
+        {avatar && (avatar.loading || profile.uploading) ? (
+          <Spinner size={AVATAR_DIMENSION / 2} />
+        ) : (
+          <Image
+            style={[
+              {
+                width: AVATAR_DIMENSION,
+                height: AVATAR_DIMENSION,
+                borderRadius: AVATAR_DIMENSION / 2,
+              },
+              this.props.style,
+            ]}
+            source={theAvatar}
+            resizeMode="cover"
+          />
+        )}
       </TouchableOpacity>
     )
+  }
+
+  imageSelected = async (src, response) => {
+    try {
+      await this.props.wocky.profile.upload({
+        file: src,
+        width: response.width,
+        height: response.height,
+        size: response.size,
+      })
+    } catch (err) {
+      // TODO handle upload error
+      this.props.warn('upload error', err)
+    }
   }
 }
 
