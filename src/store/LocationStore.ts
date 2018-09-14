@@ -378,12 +378,15 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      if (config.debugSounds && !self.debugSounds) self.backgroundGeolocation.playSound(1028) // newsflash
+      if (config.debugSounds && !self.debugSounds && self.backgroundGeolocation)
+        self.backgroundGeolocation.playSound(1028) // newsflash
       self.setState({
         debugSounds: config.debugSounds,
         fetchResult: Number.parseInt(config.fetchResult) || 0,
       })
-      self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+      if (self.backgroundGeolocation) {
+        self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+      }
     }
 
     return {
