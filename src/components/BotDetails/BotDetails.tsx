@@ -26,7 +26,7 @@ type Props = {
   navigation: any
 }
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'notificationStore')
 @observer
 export default class BotDetails extends React.Component<Props> {
   @observable bot?: IBot
