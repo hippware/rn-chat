@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.3.5 - 2018 Sep 13
+
 * Fixes for null notifications and invalid data.
 * Speculative fix for: Addresses do not populate (#2654)
 * Location Creation: Map does not move to location with address search (#2681)
@@ -19,6 +21,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Replace Presence Share Popup (#2688)
 * Location Detail Adjustments (#2693)
 * Note Add Adjustments (#2695)
+* Bug: User cannot change pin location (#2704)
+  * restore zindex on YouPin (PR #2778)
+* Location Invitation Accept UI (#2729)
+* Loading posts on shared/invited bots causes 403 auth error (#2747)
+* Creation/Share Flow: Back caret on share flow breaks creation flow (#2718)
 
 # 3.3.4 - 2018 Sep 6
 
