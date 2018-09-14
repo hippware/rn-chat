@@ -1,5 +1,6 @@
-import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
 import {Bot, IBot, Location} from 'wocky-client'
+import {when} from 'mobx'
 
 export const SelectableCard = types
   .model('SelectableCard', {
@@ -112,44 +113,59 @@ const HomeStore = types
       }
     },
   }))
-  .actions(self => ({
-    logout() {
-      applySnapshot(self, {})
-    },
-    addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
-      const list = listName === 'home' ? self.homeBotList : self.discoverList
-      bots.forEach(bot => {
-        // it is probably less effective than merge but order is always preserved and no need to do 'map to array' conversion every time
-        if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
-          list.push(BotCard.create({bot}))
+  .actions(self => {
+    let handler
+    return {
+      logout() {
+        applySnapshot(self, {})
+      },
+      addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
+        const list = listName === 'home' ? self.homeBotList : self.discoverList
+        bots.forEach(bot => {
+          // it is probably less effective than merge but order is always preserved and no need to do 'map to array' conversion every time
+          if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
+            list.push(BotCard.create({bot}))
+          }
+        })
+      },
+      removeBot(bot: IBot): void {
+        let index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+        if (index !== -1) {
+          self.homeBotList.splice(index, 1)
         }
-      })
-    },
-    removeBot(bot: IBot): void {
-      let index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
-      if (index !== -1) {
-        self.homeBotList.splice(index, 1)
-      }
-      index = self.discoverList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
-      if (index !== -1) {
-        self.discoverList.splice(index, 1)
-      }
-    },
-    // toggleListMode: (): void => {
-    //   self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
-    //   self.fullScreenMode = false
-    // },
-    toggleFullscreen: () => {
-      self.fullScreenMode = !self.fullScreenMode
-    },
-    disableFullScreen: () => {
-      self.fullScreenMode = false
-    },
-    postProcessSnapshot(snapshot: any) {
-      // No need to persist this store
-      return {}
-    },
-  }))
+        index = self.discoverList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+        if (index !== -1) {
+          self.discoverList.splice(index, 1)
+        }
+      },
+      // toggleListMode: (): void => {
+      //   self.setIndex(self.index) // need to do it to 'refresh' bot markers, deselect and set new map center
+      //   self.fullScreenMode = false
+      // },
+      toggleFullscreen: () => {
+        self.fullScreenMode = !self.fullScreenMode
+      },
+      disableFullScreen: () => {
+        self.fullScreenMode = false
+      },
+      postProcessSnapshot(snapshot: any) {
+        // No need to persist this store
+        return {}
+      },
+      start() {
+        // re-center map each app start
+        handler = when(
+          () => getRoot(self).locationStore.location,
+          () => {
+            self.setFocusedLocation(getRoot(self).locationStore.location)
+          }
+        )
+      },
+      finish() {
+        handler()
+      },
+    }
+  })
 
 export default HomeStore
 type HomeStoreType = typeof HomeStore.Type
