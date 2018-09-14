@@ -8,6 +8,7 @@ import {observable} from 'mobx'
 type Props = {
   style?: any
   wocky?: any
+  cameraScene?: string
 }
 
 const AVATAR_DIMENSION = 80 * k
@@ -41,7 +42,13 @@ class SignUpAvatar extends React.Component<Props> {
     return (
       <TouchableOpacity
         style={{alignItems: 'center'}}
-        onPress={() => showImagePicker('Select Avatar', this.imageSelected)}
+        onPress={() =>
+          showImagePicker({
+            title: 'Select Avatar',
+            callback: this.imageSelected,
+            cameraScene: 'cameraSignup',
+          })
+        }
       >
         <Image
           style={[

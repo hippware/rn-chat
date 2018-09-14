@@ -231,18 +231,21 @@ const InputArea = inject('wocky')(
 )
 
 const onAttach = (message, notificationStore) => {
-  showImagePicker('Select Image', async (source, response) => {
-    try {
-      await message.upload({
-        file: source,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-      })
-      message.send()
-    } catch (e) {
-      notificationStore.flash(e.message)
-    }
+  showImagePicker({
+    title: 'Select Image',
+    callback: async (source, response) => {
+      try {
+        await message.upload({
+          file: source,
+          width: response.width,
+          height: response.height,
+          size: response.size,
+        })
+        message.send()
+      } catch (e) {
+        notificationStore.flash(e.message)
+      }
+    },
   })
 }
 

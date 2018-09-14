@@ -159,6 +159,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="testRegisterScene" component={TestRegister} success="connect" />
                 </Stack>
                 <Scene key="signUp" component={SignUp} hideNavBar />
+                <Scene key="cameraSignup" component={Camera} />
                 <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                   <Stack>
                     <Stack hideNavBar renderer={SplitRenderer}>
