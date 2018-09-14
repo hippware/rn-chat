@@ -4,15 +4,11 @@ import ImagePicker from 'react-native-image-crop-picker'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 
-const createHandler = (callback: any, response: Image) => {
-  // log('SIZE:', response, {level: levels.VERBOSE})
-  const source = {
-    uri: response.path,
-    type: response.mime,
-    name: response.path.substring(response.path.lastIndexOf('/') + 1),
-    isStatic: true,
-  }
-  callback(source, response)
+type Props = {
+  title?: string
+  callback: any
+  cropping?: boolean
+  cameraScene?: string
 }
 
 type Image = {
@@ -26,10 +22,18 @@ type Image = {
 
 const IMG_DEFAULT_SIZE = 1000
 
-export const launchImageLibrary = async (
-  callback: any,
-  cropping: boolean = true
-): Promise<void> => {
+function createHandler(callback: any, response: Image) {
+  // log('SIZE:', response, {level: levels.VERBOSE})
+  const source = {
+    uri: response.path,
+    type: response.mime,
+    name: response.path.substring(response.path.lastIndexOf('/') + 1),
+    isStatic: true,
+  }
+  callback(source, response)
+}
+
+async function launchImageLibrary({callback, cropping}: Props): Promise<void> {
   try {
     const image = await ImagePicker.openPicker({
       width: IMG_DEFAULT_SIZE,
@@ -48,7 +52,7 @@ export const launchImageLibrary = async (
   }
 }
 
-export const launchCamera = async (callback: any /*cropping: boolean = true*/): Promise<void> => {
+async function launchCamera({callback, cameraScene}: Props): Promise<void> {
   const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
@@ -66,22 +70,7 @@ export const launchCamera = async (callback: any /*cropping: boolean = true*/): 
     }
   }
   Keyboard.dismiss()
-  Actions.camera({callback})
-  // @TODO
-  // try {
-  //   const image = await ImagePicker.openCamera({
-  //     width: IMG_DEFAULT_SIZE,
-  //     height: IMG_DEFAULT_SIZE,
-  //     cropping,
-  //     cropperCircleOverlay: false,
-  //     // compressImageMaxWidth: 640,
-  //     // compressImageMaxHeight: 480,
-  //     // compressImageQuality: 0.5,
-  //   });
-  //   createHandler(callback)(image);
-  // } catch (err) {
-  //   log('launchCamera error', err, {level: levels.ERROR});
-  // }
+  Actions[cameraScene]({callback})
 }
 
 const photoActions = [
@@ -96,15 +85,19 @@ const photoActions = [
 ]
 
 // @ANDROID
-export const showImagePicker = (title: string, callback: any, cropping: boolean = true): void => {
+export function showImagePicker(props: Props): void {
+  const defaultProps = {
+    cropping: true,
+    cameraScene: 'camera',
+  }
   const options = {
     options: [...photoActions.map(a => a.title), 'Cancel'],
     cancelButtonIndex: photoActions.length,
   }
-  if (title) {
-    ;(options as any).title = title
+  if (props.title) {
+    ;(options as any).title = props.title
   }
   ActionSheetIOS.showActionSheetWithOptions(options, index => {
-    if (index < photoActions.length) (photoActions[index] as any).action(callback, cropping)
+    if (index < photoActions.length) photoActions[index].action({...defaultProps, ...props})
   })
 }
