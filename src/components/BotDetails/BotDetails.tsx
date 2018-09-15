@@ -147,36 +147,27 @@ export default class BotDetails extends React.Component<Props> {
 const NavTitle = ({bot, onLongPress}) => {
   const {titleStyle} = navBarStyle
   return (
-    <TouchableOpacity
-      onLongPress={onLongPress}
-      onPress={null}
-      style={{marginHorizontal: 16, paddingTop: 10}}
-    >
+    <TouchableOpacity onLongPress={onLongPress} onPress={null} style={{marginHorizontal: 16}}>
       <RText
-        numberOfLines={2}
+        // numberOfLines={2}
         // must wait for solution to https://github.com/facebook/react-native/issues/14981
         // adjustsFontSizeToFit
-        minimumFontScale={0.8}
-        size={18}
+        // minimumFontScale={0.8}
+        size={16}
         color={colors.DARK_PURPLE}
-        style={[
-          titleStyle,
-          {
-            textAlign: 'center',
-          },
-        ]}
+        style={[titleStyle, {textAlign: 'center'}]}
       >
         {bot.error ? 'Bot Unavailable' : bot.title}
       </RText>
       <RText
-        minimumFontScale={0.6}
+        // minimumFontScale={0.6}
         numberOfLines={1}
         weight="Light"
-        size={14}
+        size={12}
         color={colors.DARK_PURPLE}
         style={{textAlign: 'center'}}
       >
-        {bot.address}
+        {bot.addressData && bot.addressData.locationShort}
       </RText>
     </TouchableOpacity>
   )
