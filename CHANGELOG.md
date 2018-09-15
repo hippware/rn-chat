@@ -4,6 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.4.0 - 2018 Sep 14
+
+* User Profile: Done on Take Photo flow creates user profile (#2717)
+* Pin alignment changes (#2646)
+* App crash with Debugger (#2727)
+* Change app compatibility listing to 'only iPhones' (#2730)
+* App Crash with "Address copied to the clipboard" (#2752)
+* Map View is not current location (#2697)
+
 # 3.3.5 - 2018 Sep 13
 
 * Fixes for null notifications and invalid data.
