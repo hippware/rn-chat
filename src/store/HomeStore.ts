@@ -17,7 +17,7 @@ export const SelectableCard = types
   .actions(self => ({
     setSelected: (value: boolean) => (self.isSelected = value),
     select: () => {
-      getParent(getParent(self)).setIndex(self.index)
+      getParent(self, 2).setIndex(self.index)
     },
   }))
 
@@ -122,7 +122,6 @@ const HomeStore = types
       addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
         const list = listName === 'home' ? self.homeBotList : self.discoverList
         bots.forEach(bot => {
-          // it is probably less effective than merge but order is always preserved and no need to do 'map to array' conversion every time
           if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
             list.push(BotCard.create({bot}))
           }
@@ -166,6 +165,17 @@ const HomeStore = types
       },
     }
   })
+  .actions(self => ({
+    selectBot(bot: IBot) {
+      const index = self.list.findIndex((b: any) => b.bot && b.bot.id === bot.id)
+      if (index >= 0) {
+        self.setIndex(index)
+      } else {
+        self.addBotsToList('home', [bot])
+        self.setIndex(self.list.length - 1)
+      }
+    },
+  }))
 
 export default HomeStore
 type HomeStoreType = typeof HomeStore.Type
