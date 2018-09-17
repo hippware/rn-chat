@@ -106,6 +106,8 @@ exports[`Signup renders 1`] = `
         style={
           Object {
             "alignItems": "center",
+            "height": 160,
+            "justifyContent": "center",
             "opacity": 1,
           }
         }
