@@ -28,7 +28,6 @@ class SignUpAvatar extends React.Component<Props> {
           showImagePicker({
             title: 'Select Avatar',
             callback: this.imageSelected,
-            cameraScene: 'cameraSignup',
           })
         }
       >

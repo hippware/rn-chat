@@ -16,13 +16,21 @@ type Props = {
   wocky?: IWocky
   scrollToEnd: () => void
   notificationStore?: any // TODO proper type
+  navStore: any
 }
 
-@inject('notificationStore', 'wocky')
+type ImageData = {
+  source: string
+  size: number
+  width: number
+  height: number
+}
+
+@inject('notificationStore', 'wocky', 'navStore')
 @observer
 class AddBotPost extends React.Component<Props> {
-  @observable imageSrc: any = null
-  @observable image: any = null
+  @observable imageURI?: string
+  image?: ImageData
   @observable text: string = ''
   @observable focused: boolean = false
   // TODO: add `publishing` and `published` props on wocky-client botpost
@@ -49,8 +57,8 @@ class AddBotPost extends React.Component<Props> {
       await this.post.publish()
       this.post = null
       this.text = ''
-      this.imageSrc = null
-      this.image = null
+      this.imageURI = undefined
+      this.image = undefined
       this.textInput.blur()
       Keyboard.dismiss()
       this.props.scrollToEnd()
@@ -69,9 +77,9 @@ class AddBotPost extends React.Component<Props> {
 
   onAttach = () => {
     showImagePicker({
-      callback: async (source, response) => {
+      callback: (source, response) => {
         const {size, width, height} = response
-        this.imageSrc = source
+        this.imageURI = source.uri
         this.image = {source, size, width, height}
         if (this.textInput) {
           this.textInput.focus()
@@ -100,13 +108,13 @@ class AddBotPost extends React.Component<Props> {
             hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
             style={{borderWidth: 0, borderColor: 'transparent'}}
             onPress={this.onAttach}
-            disabled={!!this.imageSrc}
+            disabled={!!this.imageURI}
           >
             <Image
               style={{height: 21}}
               resizeMode="contain"
               source={
-                this.imageSrc
+                this.imageURI
                   ? require('../../../images/attachPhotoGray.png')
                   : require('../../../images/attachPhoto.png')
               }
@@ -128,7 +136,7 @@ class AddBotPost extends React.Component<Props> {
           />
           <TouchableOpacity
             hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-            disabled={(textLength === 0 && !this.imageSrc) || !wocky!.connected || this.sendingPost}
+            disabled={(textLength === 0 && !this.imageURI) || !wocky!.connected || this.sendingPost}
             onPress={this.onSend}
           >
             {this.sendingPost ? (
@@ -137,7 +145,7 @@ class AddBotPost extends React.Component<Props> {
               <RText
                 size={16}
                 color={
-                  (textLength || this.imageSrc) && wocky!.connected ? colors.PINK : colors.GREY
+                  (textLength || this.imageURI) && wocky!.connected ? colors.PINK : colors.GREY
                 }
               >
                 Post
@@ -147,9 +155,9 @@ class AddBotPost extends React.Component<Props> {
         </View>
         <View style={{backgroundColor: 'white'}}>
           <ImagePost
-            imageSrc={this.imageSrc}
+            imageURI={this.imageURI}
             deleteImage={() => {
-              this.imageSrc = null
+              this.imageURI = null
               this.image = null
             }}
           />
@@ -159,11 +167,11 @@ class AddBotPost extends React.Component<Props> {
   }
 }
 
-const ImagePost = ({imageSrc, deleteImage}) => {
-  return imageSrc && imageSrc.uri ? (
+const ImagePost = ({imageURI, deleteImage}) => {
+  return imageURI ? (
     <View style={styles.imageContainer}>
       <Image
-        source={{uri: imageSrc.uri}}
+        source={{uri: imageURI}}
         style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k}}
       />
       <TouchableOpacity onPress={deleteImage}>
