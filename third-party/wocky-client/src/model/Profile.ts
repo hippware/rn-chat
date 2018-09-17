@@ -1,15 +1,9 @@
-import {types, flow, isAlive, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, isAlive} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
-import {createPaginable, IPaginable} from './PaginableList'
+import {createPaginable} from './PaginableList'
 import {IBotPaginableList} from './Bot'
-import {IObservableArray} from 'mobx'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IObs = IObservableArray<any>
-export type __ISnap = ISnapshottable<any>
-export type __IPaginable = IPaginable
 
 export const Profile = types
   .compose(
@@ -129,7 +123,7 @@ export const Profile = types
     }
   })
 
-export const ProfilePaginableList = createPaginable(types.reference(Profile))
+export const ProfilePaginableList = createPaginable<IProfile>(types.reference(Profile))
 export type IProfilePaginableListType = typeof ProfilePaginableList.Type
 export interface IProfilePaginableList extends IProfilePaginableListType {}
 export type IProfileType = typeof Profile.Type
