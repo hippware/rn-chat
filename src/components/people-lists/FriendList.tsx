@@ -41,7 +41,7 @@ class FriendList extends React.Component<Props> {
         keyExtractor={item => item.id}
         fadeNavConfig={{
           back: true,
-          title: () => (
+          title: (
             <RText size={16} color={colors.DARK_PURPLE}>
               Friends
             </RText>
