@@ -444,6 +444,7 @@ const LocationStore = types
         navigator.geolocation.clearWatch(self.watch)
         self.watch = null
       }
+      self.location = null
     }
 
     return {
