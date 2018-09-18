@@ -8,7 +8,6 @@ type Props = {
   title?: string
   callback: any
   cropping?: boolean
-  cameraScene?: string
 }
 
 type Image = {
@@ -52,7 +51,7 @@ async function launchImageLibrary({callback, cropping}: Props): Promise<void> {
   }
 }
 
-async function launchCamera({callback, cameraScene}: Props): Promise<void> {
+async function launchCamera({callback}: Props): Promise<void> {
   const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
@@ -70,7 +69,7 @@ async function launchCamera({callback, cameraScene}: Props): Promise<void> {
     }
   }
   Keyboard.dismiss()
-  Actions[cameraScene]({callback})
+  Actions.camera({callback})
 }
 
 const photoActions = [
@@ -88,7 +87,6 @@ const photoActions = [
 export function showImagePicker(props: Props): void {
   const defaultProps = {
     cropping: true,
-    cameraScene: 'camera',
   }
   const options = {
     options: [...photoActions.map(a => a.title), 'Cancel'],
