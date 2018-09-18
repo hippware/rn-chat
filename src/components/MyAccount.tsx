@@ -1,12 +1,10 @@
 import React from 'react'
-import {View, TouchableOpacity} from 'react-native'
+import {TouchableOpacity, View, StyleSheet, Linking, Alert} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {k} from './Global'
 import SignUpAvatar from './SignUpAvatar'
 import {Actions} from 'react-native-router-flux'
-import LogoutButton from './LogoutButton'
-import Screen from './Screen'
 import * as log from '../utils/log'
 import Card from './Card'
 import Cell from './Cell'
@@ -16,6 +14,11 @@ import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
+import Screen from './Screen'
+import {DARK_GREY, PINK} from '../constants/colors'
+import {settings} from '../globals'
+// import {format} from 'libphonenumber-js'
+const {version} = require('../../package.json')
 
 type Props = {
   wocky?: IWocky
@@ -54,29 +57,35 @@ class MyAccount extends React.Component<Props> {
   }
 
   render() {
-    const {profile} = this.props.wocky
-    if (!profile) {
+    const {wocky} = this.props
+    const {profile} = wocky
+    if (!profile || !this.vProfile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR})
-      return <Screen />
+      return <View style={{flex: 1, backgroundColor: 'white'}} />
     }
     return (
       <Screen>
         <KeyboardAwareScrollView testID="myAccountScrollView">
-          <SignUpAvatar
-            style={{
-              top: 5,
-              backgroundColor: 'rgb(243,244,246)',
-              borderRadius: 33 * k,
-              width: 66 * k,
-              height: 66 * k,
-            }}
-          />
+          <View style={styles.headerOuter}>
+            <SignUpAvatar
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+              }}
+              showDot
+            />
+          </View>
+
           <Card style={{opacity: 0.95}}>
-            <View style={{padding: 15 * k}} testID="profileInfo">
-              <RText size={16} weight="Medium" style={{color: colors.navBarTextColorDay}}>
-                Profile Info
-              </RText>
-            </View>
+            <RText
+              size={16}
+              weight="Medium"
+              style={{padding: 15, color: colors.navBarTextColorDay}}
+              testID="profileInfo"
+            >
+              About
+            </RText>
             <Separator />
             <FormTextInput
               label="First Name"
@@ -98,9 +107,14 @@ class MyAccount extends React.Component<Props> {
               icon={require('../../images/iconUsernameNew.png')}
               onSubmitEditing={() => this.email.focus()}
             />
-            {/* TODO: phoneStore.format
-            <Cell image={require('../../images/iconPhoneSmall.png')}>{format(props.profile.phoneNumber)}</Cell>
-          <Separator width={1} /> */}
+            <FormTextInput
+              label="Phone"
+              icon={require('../../images/phone.png')}
+              editable={false}
+              // todo format with libphonenumber-js
+              // value={format(profile.phoneNumber, 'E.164')}
+              value={profile.phoneNumber}
+            />
             <FormTextInput
               ref={r => (this.email = r)}
               label="Email"
@@ -109,10 +123,10 @@ class MyAccount extends React.Component<Props> {
               onSubmitEditing={() => MyAccount.submit(this.props.profileValidationStore)}
             />
             <Cell
-              image={require('../../images/block.png')}
+              image={require('../../images/blocked.png')}
               onPress={Actions.blocked}
               imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}
-              style={{marginTop: 10 * k}}
+              style={{marginTop: 0}}
             >
               <RText numberOfLines={1} size={18} style={{flex: 1, color: colors.DARK_PURPLE}}>
                 Blocked Users
@@ -121,7 +135,63 @@ class MyAccount extends React.Component<Props> {
             {/* <Cell image={icon} style={{justifyContent: 'center'}} imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}> */}
           </Card>
 
-          <LogoutButton />
+          {/* <LogoutButton /> */}
+
+          <View style={{marginVertical: 30, alignItems: 'center'}}>
+            <RText size={15} color={DARK_GREY} style={styles.text}>
+              {`Version ${version}`}
+            </RText>
+            <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}>
+              Terms of Service
+            </LinkButton>
+            <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}>
+              Privacy Policy
+            </LinkButton>
+            <LinkButton
+              onPress={() => {
+                Alert.alert('Log Out', `Are you sure you want to log out?`, [
+                  {text: 'Cancel', style: 'cancel'},
+                  {
+                    text: 'Log Out',
+                    style: 'destructive',
+                    onPress: async () => {
+                      Actions.pop({animated: false})
+                      Actions.pop({animated: false})
+                      Actions.logout()
+                    },
+                  },
+                ])
+              }}
+            >
+              Logout
+            </LinkButton>
+            {settings.isStaging && (
+              <LinkButton
+                style={{marginTop: 50}}
+                onPress={() => {
+                  Alert.alert(
+                    'Delete Profile',
+                    `Are you reeeeally sure you want to remove this profile? This action cannot be reversed.`,
+                    [
+                      {text: 'Cancel', style: 'cancel'},
+                      {
+                        text: 'Delete Profile',
+                        style: 'destructive',
+                        onPress: async () => {
+                          Actions.pop({animated: false})
+                          Actions.pop({animated: false})
+                          Actions.logout()
+                          wocky!.remove()
+                        },
+                      },
+                    ]
+                  )
+                }}
+              >
+                Delete Profile
+              </LinkButton>
+            )}
+          </View>
         </KeyboardAwareScrollView>
       </Screen>
     )
@@ -129,6 +199,22 @@ class MyAccount extends React.Component<Props> {
 }
 
 export default MyAccount
+
+const LinkButton = ({
+  children,
+  onPress,
+  style,
+}: {
+  children: any
+  onPress: () => void
+  style?: any
+}) => (
+  <TouchableOpacity onPress={onPress}>
+    <RText size={15} color={PINK} style={[styles.text, style]}>
+      {children}
+    </RText>
+  </TouchableOpacity>
+)
 
 const Title = inject('wocky')(
   observer(
@@ -170,3 +256,17 @@ const Right = inject('profileValidationStore', 'wocky')(
     ) : null
   })
 )
+
+const styles = StyleSheet.create({
+  headerOuter: {
+    paddingTop: 10,
+    paddingBottom: 20,
+    backgroundColor: 'white',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    marginBottom: 15,
+  },
+})

@@ -1,15 +1,16 @@
 import React from 'react'
-import {Image, TouchableOpacity} from 'react-native'
+import {Image, TouchableOpacity, View} from 'react-native'
 import {k} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
-import {Spinner} from './common'
+import {Spinner, PresenceDot} from './common'
 
 type Props = {
   style?: any
   wocky?: any
   cameraScene?: string
   warn?: any
+  showDot?: boolean
 }
 
 const AVATAR_DIMENSION = 80 * k
@@ -18,12 +19,12 @@ const AVATAR_DIMENSION = 80 * k
 @observer
 class SignUpAvatar extends React.Component<Props> {
   render() {
-    const {profile} = this.props.wocky
+    const {wocky: {profile}, showDot, style} = this.props
     const {avatar} = profile
     const theAvatar = (avatar && avatar.thumbnail) || require('../../images/addPhoto.png')
     return (
       <TouchableOpacity
-        style={{alignItems: 'center', justifyContent: 'center', height: AVATAR_DIMENSION}}
+        style={{alignItems: 'center', justifyContent: 'center'}}
         onPress={() =>
           showImagePicker({
             title: 'Select Avatar',
@@ -34,18 +35,36 @@ class SignUpAvatar extends React.Component<Props> {
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner size={AVATAR_DIMENSION / 2} />
         ) : (
-          <Image
-            style={[
-              {
-                width: AVATAR_DIMENSION,
-                height: AVATAR_DIMENSION,
-                borderRadius: AVATAR_DIMENSION / 2,
-              },
-              this.props.style,
-            ]}
-            source={theAvatar}
-            resizeMode="cover"
-          />
+          <View>
+            <Image
+              style={[
+                {
+                  width: AVATAR_DIMENSION,
+                  height: AVATAR_DIMENSION,
+                  borderRadius: AVATAR_DIMENSION / 2,
+                },
+                style,
+              ]}
+              source={theAvatar}
+              resizeMode="cover"
+            />
+            {showDot && (
+              <PresenceDot
+                profile={profile}
+                size={30}
+                style={{
+                  position: 'absolute',
+                  bottom: 5,
+                  right: 5,
+                  left: undefined,
+                  top: undefined,
+                  height: 18,
+                  width: 18,
+                  borderRadius: 9,
+                }}
+              />
+            )}
+          </View>
         )}
       </TouchableOpacity>
     )
