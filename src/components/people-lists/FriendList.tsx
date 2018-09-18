@@ -39,6 +39,14 @@ class FriendList extends React.Component<Props> {
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
+        fadeNavConfig={{
+          back: true,
+          title: (
+            <RText size={16} color={colors.DARK_PURPLE}>
+              Friends
+            </RText>
+          ),
+        }}
         // keyExtractor={(item, index) => item.id + index}
         data={this.searchMode ? globalResult.filteredList.map(p => p.profile) : friends}
         // long list
