@@ -1,20 +1,20 @@
 import {types, flow, IModelType, isAlive} from 'mobx-state-tree'
 
-export interface IPaginable extends IModelType<any, any> {
-  result?: any[]
-  list?: any[]
+export interface IPaginable<T> extends IModelType<any, any> {
+  result?: T[]
+  list?: T[]
   cursor?: string
   count?: number
   loading?: boolean
   finished?: boolean
-  add?: (i: any) => any
+  add?: (i: T) => any
   refresh?: () => void
   load?: (args?: {force?: boolean}) => Promise<any[]>
-  addToTop?: (i: any) => any
+  addToTop?: (i: T) => any
   remove?: (id: string) => void
 }
 
-export function createPaginable(type: any): IPaginable {
+export function createPaginable<T>(type: any): IPaginable<T> {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),

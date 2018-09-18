@@ -1,17 +1,5 @@
-import {
-  types,
-  isAlive,
-  clone,
-  getType,
-  getParent,
-  getEnv,
-  flow,
-  ISnapshottable,
-  IType,
-  IModelType,
-  IExtendedObservableMap,
-} from 'mobx-state-tree'
-import {reaction, IObservableArray, ObservableMap, IReactionDisposer} from 'mobx'
+import {types, isAlive, clone, getType, getParent, getEnv, flow} from 'mobx-state-tree'
+import {reaction, ObservableMap, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
@@ -27,7 +15,7 @@ import {EventBotGeofence} from '../model/EventBotGeofence'
 import {EventDelete} from '../model/EventDelete'
 import {EventUserFollow} from '../model/EventUserFollow'
 import {EventBotInvite} from '../model/EventBotInvite'
-import {createPaginable, IPaginable} from '../model/PaginableList'
+import {createPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
@@ -45,13 +33,7 @@ export const EventEntity = types.union(
   EventBotInvite
 )
 export type IEventEntity = typeof EventEntity.Type
-export type __IModelType = IModelType<any, any>
-export type __IType = IType<any, any>
-export type __IObservableArray = IObservableArray<any>
-export type __ISnapshotable = ISnapshottable<any>
-export type __IExtendedObservableMap = IExtendedObservableMap<any>
-// export interface IEventEntity extends IEventEntityType {}
-export const EventList = createPaginable(EventEntity).actions(() => ({
+export const EventList = createPaginable<IEventEntity>(EventEntity).actions(() => ({
   postProcessSnapshot: (snapshot: any) => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)
@@ -63,10 +45,6 @@ export const EventList = createPaginable(EventEntity).actions(() => ({
 }))
 export type IEventListType = typeof EventList.Type
 export interface IEventList extends IEventListType {}
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IPaginable = IPaginable
-export type __IProfile = IProfile
 
 export const Wocky = types
   .compose(

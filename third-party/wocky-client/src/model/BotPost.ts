@@ -3,14 +3,9 @@ import {FileRef} from './File'
 import {ProfileRef} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
-import {createPaginable, IPaginable} from './PaginableList'
-import {IBot} from './Bot'
+import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IPaginable = IPaginable
-export type __IBot = IBot
 
 export const BotPost = types
   .compose(
@@ -37,8 +32,7 @@ export const BotPost = types
   }))
 
 export type IBotPost = typeof BotPost.Type
-export const BotPostPaginableList = createPaginable(BotPost)
-// export type IBotPostPaginableList = typeof BotPostPaginableList.Type
+export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
 
 export interface IBotPostData {
   id: string
