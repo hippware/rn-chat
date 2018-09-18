@@ -125,7 +125,9 @@ export default class MapHome extends React.Component<IProps> {
 
   onMapPress = () => {
     const {homeStore: {toggleFullscreen}, navStore: {scene}} = this.props
-    if (!['home', 'createBot', 'botCompose'].includes(scene)) {
+    if (['botCompose', 'botEdit', 'createBot'].includes(scene)) {
+      return
+    } else if (scene !== 'home') {
       Actions.popTo('home')
     } else {
       toggleFullscreen()
