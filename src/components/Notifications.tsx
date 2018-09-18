@@ -6,6 +6,7 @@ import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
 import {navBarStyle} from './Router'
+import ListFooter from './ListFooter'
 
 type Props = {
   wocky?: IWocky
@@ -35,11 +36,9 @@ class Notifications extends React.Component<Props> {
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}
         onEndReached={notifications.load}
-        // ListFooterComponent={
-        //   connected
-        //     ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />)
-        //     : null
-        // }
+        ListFooterComponent={observer(() => (
+          <ListFooter style={{backgroundColor: 'white'}} finished={notifications.finished} />
+        ))}
       />
     )
   }
