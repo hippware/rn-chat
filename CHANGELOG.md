@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Unable to change user avatar (#2706)
+* Location Detail Adjustments (#2693)
+* Presence Widget: Widget should also refocus the map to location (#2723)
+* Take Photo does not add image to Post (#2732)
+* Add notification screen loader (#2733)
+
 # 3.4.0 - 2018 Sep 14
 
 * User Profile: Done on Take Photo flow creates user profile (#2717)
