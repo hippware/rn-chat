@@ -10,6 +10,7 @@ import {RText, ProfileStack} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
+import {IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   wocky?: IWocky
@@ -17,12 +18,14 @@ type Props = {
   analytics?: any
   outerStyle: ViewStyle
   innerStyle: ViewStyle
+  homeStore?: IHomeStore
 }
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'homeStore')
 @observer
 class ActiveBot extends React.Component<Props> {
   goToBot = (): void => {
+    this.props.homeStore.selectBot(this.props.bot)
     Actions.botDetails({botId: this.props.bot.id})
     // setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
