@@ -7,10 +7,7 @@ import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
-
-const onlineColor = colors.LIGHT_BLUE
-const offlineColor = 'rgb(211,211,211)'
-const imgAnon = require('../../../images/follower.png')
+import {PresenceDot} from '.'
 
 type Props = {
   profile: IProfile
@@ -91,31 +88,6 @@ const Avatar = observer(
     )
   }
 )
-
-const PresenceDot = observer(({profile, size, disableStatus}) => {
-  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor
-  const shift = size * k * 3 / 4
-  const d = Math.max(10, size / 5) * k
-  const style = {
-    borderRadius: d / 2,
-    borderWidth: d / 10,
-    height: d,
-    width: d,
-    top: shift,
-    left: shift,
-  }
-
-  if (profile) {
-    const {isOwn, isMutual} = profile
-    if ((isMutual || isOwn) && !disableStatus) {
-      return <View style={[styles.dot, style, {backgroundColor}]} />
-    } else {
-      return <Image source={imgAnon} style={[styles.dot, style]} />
-    }
-  } else {
-    return null
-  }
-})
 
 const AvatarImage = ({source, style, size, showLoader, showMask}) =>
   showLoader ? (

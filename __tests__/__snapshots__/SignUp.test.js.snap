@@ -106,30 +106,31 @@ exports[`Signup renders 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "height": 160,
             "justifyContent": "center",
             "opacity": 1,
           }
         }
       >
-        <Image
-          resizeMode="cover"
-          source={
-            Object {
-              "testUri": "../../../images/addPhoto.png",
-            }
-          }
-          style={
-            Array [
+        <View>
+          <Image
+            resizeMode="cover"
+            source={
               Object {
-                "borderRadius": 80,
-                "height": 160,
-                "width": 160,
-              },
-              undefined,
-            ]
-          }
-        />
+                "testUri": "../../../images/addPhoto.png",
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "borderRadius": 80,
+                  "height": 160,
+                  "width": 160,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
       </View>
     </View>
     <View

@@ -11,6 +11,7 @@ import BottomButton from './BottomButton'
 import CloseButton from './CloseButton'
 import ProfileStack from './ProfileStack'
 import GradientButton from './GradientButton'
+import PresenceDot from './PresenceDot'
 
 export {
   RText,
@@ -26,4 +27,5 @@ export {
   CloseButton,
   ProfileStack,
   GradientButton,
+  PresenceDot,
 }

@@ -78,47 +78,85 @@ exports[`MyAccount renders 1`] = `
     >
       <View>
         <View
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
-              "height": 160,
+              "backgroundColor": "white",
               "justifyContent": "center",
-              "opacity": 1,
+              "paddingBottom": 20,
+              "paddingTop": 10,
+              "width": "100%",
             }
           }
         >
-          <Image
-            resizeMode="cover"
-            source={
+          <View
+            accessible={true}
+            isTVSelectable={true}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
               Object {
-                "testUri": "../../../images/addPhoto.png",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "opacity": 1,
               }
             }
-            style={
-              Array [
-                Object {
-                  "borderRadius": 80,
-                  "height": 160,
-                  "width": 160,
-                },
-                Object {
-                  "backgroundColor": "rgb(243,244,246)",
-                  "borderRadius": 66,
-                  "height": 132,
-                  "top": 5,
-                  "width": 132,
-                },
-              ]
-            }
-          />
+          >
+            <View>
+              <Image
+                resizeMode="cover"
+                source={
+                  Object {
+                    "testUri": "../../../images/addPhoto.png",
+                  }
+                }
+                style={
+                  Array [
+                    Object {
+                      "borderRadius": 80,
+                      "height": 160,
+                      "width": 160,
+                    },
+                    Object {
+                      "borderRadius": 50,
+                      "height": 100,
+                      "width": 100,
+                    },
+                  ]
+                }
+              />
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/follower.png",
+                  }
+                }
+                style={
+                  Array [
+                    Object {
+                      "borderColor": "white",
+                      "position": "absolute",
+                    },
+                    Object {
+                      "borderRadius": 9,
+                      "borderWidth": 2,
+                      "bottom": 5,
+                      "height": 18,
+                      "left": undefined,
+                      "position": "absolute",
+                      "right": 5,
+                      "top": undefined,
+                      "width": 18,
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
         </View>
         <View
           style={
@@ -155,34 +193,27 @@ exports[`MyAccount renders 1`] = `
               ]
             }
           >
-            <View
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
               style={
-                Object {
-                  "padding": 30,
-                }
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontFamily": "Roboto-Medium",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "rgb(63,50,77)",
+                    "padding": 15,
+                  },
+                ]
               }
               testID="profileInfo"
             >
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Array [
-                    Object {
-                      "color": undefined,
-                      "fontFamily": "Roboto-Medium",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "rgb(63,50,77)",
-                    },
-                  ]
-                }
-              >
-                Profile Info
-              </Text>
-            </View>
+              About
+            </Text>
             <View
               style={
                 Array [
@@ -551,6 +582,110 @@ exports[`MyAccount renders 1`] = `
               />
             </View>
             <View>
+              <View
+                style={
+                  Object {
+                    "height": 22,
+                  }
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "padding": 30,
+                    },
+                    Object {
+                      "justifyContent": "center",
+                      "paddingTop": 4,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "paddingLeft": 10,
+                        "paddingRight": 30,
+                        "width": 30,
+                      },
+                      Object {
+                        "height": 40,
+                        "marginHorizontal": 10,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <Image
+                    source={
+                      Object {
+                        "testUri": "../../../images/phone.png",
+                      }
+                    }
+                  />
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <TextInput
+                    allowFontScaling={true}
+                    autoCorrect={false}
+                    clearButtonMode="while-editing"
+                    editable={false}
+                    icon={
+                      Object {
+                        "testUri": "../../../images/phone.png",
+                      }
+                    }
+                    label="Phone"
+                    onChangeText={[Function]}
+                    placeholder="Phone"
+                    placeholderTextColor="rgb(212,212,212)"
+                    returnKeyType="next"
+                    style={
+                      Object {
+                        "color": "rgb(63,50,77)",
+                        "flex": 1,
+                        "fontFamily": "Roboto-Regular",
+                        "fontSize": 36,
+                      }
+                    }
+                    underlineColorAndroid="transparent"
+                  />
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "width": 30,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "rgb(63,50,77)",
+                    "height": 1,
+                    "opacity": 0.2,
+                  }
+                }
+              />
+            </View>
+            <View>
               <Text
                 accessible={true}
                 allowFontScaling={true}
@@ -685,7 +820,7 @@ exports[`MyAccount renders 1`] = `
                     "padding": 30,
                   },
                   Object {
-                    "marginTop": 20,
+                    "marginTop": 0,
                   },
                 ]
               }
@@ -710,7 +845,7 @@ exports[`MyAccount renders 1`] = `
                 <Image
                   source={
                     Object {
-                      "testUri": "../../../images/block.png",
+                      "testUri": "../../../images/blocked.png",
                     }
                   }
                 />
@@ -751,27 +886,10 @@ exports[`MyAccount renders 1`] = `
           </View>
         </View>
         <View
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "alignItems": "center",
-              "alignSelf": "stretch",
-              "backgroundColor": "rgb(254,92,108)",
-              "borderRadius": 4,
-              "borderWidth": 0,
-              "flexDirection": "row",
-              "height": 100,
-              "justifyContent": "center",
-              "margin": 30,
-              "marginBottom": 10,
-              "opacity": 1,
+              "marginVertical": 30,
             }
           }
         >
@@ -782,21 +900,132 @@ exports[`MyAccount renders 1`] = `
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "textAlign": "center",
+                  "color": "rgb(155,155,155)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 15,
                 },
                 Object {
-                  "color": "white",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 30,
+                  "marginBottom": 15,
                 },
               ]
             }
           >
-            Logout
+            Version 3.4.0
           </Text>
+          <View
+            accessible={true}
+            isTVSelectable={true}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(253,95,108)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 15,
+                  },
+                  Array [
+                    Object {
+                      "marginBottom": 15,
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Terms of Service
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            isTVSelectable={true}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(253,95,108)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 15,
+                  },
+                  Array [
+                    Object {
+                      "marginBottom": 15,
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Privacy Policy
+            </Text>
+          </View>
+          <View
+            accessible={true}
+            isTVSelectable={true}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(253,95,108)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 15,
+                  },
+                  Array [
+                    Object {
+                      "marginBottom": 15,
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Logout
+            </Text>
+          </View>
         </View>
       </View>
     </RCTScrollView>
