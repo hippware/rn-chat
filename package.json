@@ -106,7 +106,7 @@
     "react-native-actionsheet": "^2.2.2",
     "react-native-background-geolocation": "^2.12.0-beta.2",
     "react-native-blur": "^3.2.2",
-    "react-native-camera-kit": "github:aksonov/react-native-camera-kit#6fb593bed81547a68e039a77c5042f070e3a9fa1",
+    "react-native-camera-kit": "^6.2.6",
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",
     "react-native-code-push": "^5.3.4",
     "react-native-country-picker-modal": "github:hippware/react-native-country-picker-modal",
