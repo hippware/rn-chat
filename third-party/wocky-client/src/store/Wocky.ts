@@ -1,7 +1,7 @@
 import {types, isAlive, clone, getType, getParent, getEnv, flow} from 'mobx-state-tree'
 import {reaction, ObservableMap, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile, IProfile} from '../model/Profile'
+import {Profile, IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
@@ -332,278 +332,288 @@ export const Wocky = types
       self.deleteBot(id)
     }),
   }))
-  .actions(self => ({
-    createBot: flow<IBot>(function*() {
-      yield waitFor(() => self.connected)
-      const id = yield self.transport.generateId()
-      const bot = self.getBot({id, owner: self.username})
-      bot.setNew(true)
-      return bot
-    }),
-    _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
-      return {list: list.map(self.getBot), count, cursor}
-    }),
-    _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
-      if (list.length) {
+  .actions(self => {
+    // Typescript type for flow
+    // https://spectrum.chat/thread/eb6b60fb-9b1b-45d0-90e0-9559e5cb6ad2?m=MTUyNDA2MDkwNjA0Mw==
+    const searchUsers = flow(function*(text: string) {
+      const users: IProfilePartial[] = yield self.transport.searchUsers(text)
+      return Promise.all(users.map(u => (self.getProfile as any)(u.id, u)))
+    }) as (a1: string) => Promise<IProfile[]>
+
+    return {
+      createBot: flow<IBot>(function*() {
+        yield waitFor(() => self.connected)
+        const id = yield self.transport.generateId()
+        const bot = self.getBot({id, owner: self.username})
+        bot.setNew(true)
+        return bot
+      }),
+      _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
+        return {list: list.map(self.getBot), count, cursor}
+      }),
+      _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
+        if (list.length) {
+          self.profile!.setHasUsedGeofence(true)
+        }
+        return {list: list.map(self.getBot), count, cursor}
+      }),
+      _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
+        return {
+          list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+          count,
+          cursor,
+        }
+      }),
+      _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadBotGuests(id, lastId, max)
+        return {
+          list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+          count,
+          cursor,
+        }
+      }),
+      _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadBotVisitors(id, lastId, max)
+        return {
+          list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
+          count,
+          cursor,
+        }
+      }),
+      _loadBotPosts: flow(function*(id: string, before?: string) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
+        return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
+      }),
+      _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
+        return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
+      }),
+      _updateBot: flow(function*(d: any, userLocation: ILocation) {
+        yield waitFor(() => self.connected)
+        yield self.transport.updateBot(d, userLocation)
+        if (d.geofence) {
+          self.profile!.setHasUsedGeofence(true)
+        }
+        // subscribe owner to his bot
+        const bot = self.bots.storage.get(d.id)
+        self.profile!.ownBots.addToTop(bot)
+        self.profiles.get(self.username!)!.ownBots.addToTop(bot)
+        return {isNew: false}
+      }),
+      _removeBotPost: flow(function*(id: string, postId: string) {
+        yield waitFor(() => self.connected)
+        yield self.transport.removeBotPost(id, postId)
+      }),
+      _shareBot: (
+        id: string,
+        server: string,
+        recepients: string[],
+        message: string,
+        action: string
+      ) => {
+        self.transport.shareBot(id, server, recepients, message, action)
+      },
+      _inviteBot: flow(function*(botId: string, recepients: string[]) {
+        yield self.transport.inviteBot(botId, recepients)
+      }),
+      _publishBotPost: flow(function*(post: IBotPost) {
+        yield waitFor(() => self.connected)
+        let parent = getParent(post)
+        while (!parent.id) parent = getParent(parent)
+        const botId = parent.id
+        yield self.transport.publishBotPost(botId, post)
+      }),
+      _subscribeGeofenceBot: flow(function*(id: string) {
+        yield waitFor(() => self.connected)
         self.profile!.setHasUsedGeofence(true)
-      }
-      return {list: list.map(self.getBot), count, cursor}
-    }),
-    _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
-      return {
-        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
-        count,
-        cursor,
-      }
-    }),
-    _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadBotGuests(id, lastId, max)
-      return {
-        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
-        count,
-        cursor,
-      }
-    }),
-    _loadBotVisitors: flow(function*(id: string, lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadBotVisitors(id, lastId, max)
-      return {
-        list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
-        count,
-        cursor,
-      }
-    }),
-    _loadBotPosts: flow(function*(id: string, before?: string) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
-      return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
-    }),
-    _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
-      return {list: list.map((bot: any) => self.getBot(bot)), count, cursor}
-    }),
-    _updateBot: flow(function*(d: any, userLocation: ILocation) {
-      yield waitFor(() => self.connected)
-      yield self.transport.updateBot(d, userLocation)
-      if (d.geofence) {
-        self.profile!.setHasUsedGeofence(true)
-      }
-      // subscribe owner to his bot
-      const bot = self.bots.storage.get(d.id)
-      self.profile!.ownBots.addToTop(bot)
-      self.profiles.get(self.username!)!.ownBots.addToTop(bot)
-      return {isNew: false}
-    }),
-    _removeBotPost: flow(function*(id: string, postId: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.removeBotPost(id, postId)
-    }),
-    _shareBot: (
-      id: string,
-      server: string,
-      recepients: string[],
-      message: string,
-      action: string
-    ) => {
-      self.transport.shareBot(id, server, recepients, message, action)
-    },
-    _inviteBot: flow(function*(botId: string, recepients: string[]) {
-      yield self.transport.inviteBot(botId, recepients)
-    }),
-    _publishBotPost: flow(function*(post: IBotPost) {
-      yield waitFor(() => self.connected)
-      let parent = getParent(post)
-      while (!parent.id) parent = getParent(parent)
-      const botId = parent.id
-      yield self.transport.publishBotPost(botId, post)
-    }),
-    _subscribeGeofenceBot: flow(function*(id: string) {
-      yield waitFor(() => self.connected)
-      self.profile!.setHasUsedGeofence(true)
-      return yield self.transport.subscribeBot(id, true)
-    }),
-    _subscribeBot: flow(function*(id: string) {
-      yield waitFor(() => self.connected)
-      return yield self.transport.subscribeBot(id, false)
-    }),
-    _unsubscribeGeofenceBot: flow(function*(id: string) {
-      yield waitFor(() => self.connected)
-      return yield self.transport.subscribeBot(id, false)
-    }),
-    _unsubscribeBot: flow(function*(id: string) {
-      yield waitFor(() => self.connected)
-      return yield self.transport.unsubscribeBot(id, false)
-    }),
-    _acceptBotInvitation: flow(function*(inviteId: string) {
-      yield waitFor(() => self.connected)
-      return yield self.transport.inviteBotReply(inviteId)
-    }),
-    geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
-      yield waitFor(() => self.connected)
-      yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
-    }),
-    loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
-      yield waitFor(() => self.connected)
-      const arr = yield self.transport.loadLocalBots({
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta,
-      })
-      return arr.map(self.getBot)
-    }) as (a) => Promise<IBot[]>,
-    _loadRelations: flow(function*(
-      userId: string,
-      relation: string = 'following',
-      lastId?: string,
-      max: number = 10
-    ) {
-      yield waitFor(() => self.connected)
-      const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
-      const res: any = []
-      for (const rec of list) {
-        const {id} = rec
-        // TODO avoid extra request to load profile (server-side)
-        const profile = yield self.getProfile(id)
-        res.push(profile)
-      }
-      return {list: res, count}
-    }),
-    _sendMessage: (msg: IMessage) => {
-      self.transport.sendMessage(msg)
-      self._addMessage({id: msg.to, message: msg})
-    },
-    loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
-      yield waitFor(() => self.connected)
-      yield self.transport.loadChat(userId, lastId, max)
-    }),
-    downloadURL: flow(function*(tros: string) {
-      return yield self.transport.downloadURL(tros)
-    }),
-    setLocation: flow(function*(location: ILocationSnapshot) {
-      return yield self.transport.setLocation(location)
-    }),
-    getLocationsVisited: (limit?: number): Promise<object[]> => {
-      return self.transport.getLocationsVisited(limit)
-    },
-    _requestUpload: flow(function*({file, size, width, height, access}: any) {
-      yield waitFor(() => self.connected)
-      const data = yield self.transport.requestUpload({file, size, width, height, access})
-      try {
-        yield upload(data)
-        return data.reference_url
-      } catch (e) {
-        yield self.transport.removeUpload(data.reference_url)
-        throw e
-      }
-    }),
-    _removeUpload: flow(function*(tros: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.removeUpload(tros)
-    }),
-    _loadNotifications: flow(function*(lastId: any, max: number = 10) {
-      yield waitFor(() => self.connected)
-      const {list, count, cursor} = yield self.transport.loadNotifications(lastId, max)
-      // console.log('& load notifications', list)
-      return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
-    }),
-    _onBotVisitor: flow(function*({bot, action, visitor}: any) {
-      // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
-      const id = visitor.id
-      const botModel: IBot = self.bots.get(bot.id, bot)
-      if (action === 'ARRIVE') {
-        if (id === self.username) {
-          botModel.visitor = true
+        return yield self.transport.subscribeBot(id, true)
+      }),
+      _subscribeBot: flow(function*(id: string) {
+        yield waitFor(() => self.connected)
+        return yield self.transport.subscribeBot(id, false)
+      }),
+      _unsubscribeGeofenceBot: flow(function*(id: string) {
+        yield waitFor(() => self.connected)
+        return yield self.transport.subscribeBot(id, false)
+      }),
+      _unsubscribeBot: flow(function*(id: string) {
+        yield waitFor(() => self.connected)
+        return yield self.transport.unsubscribeBot(id, false)
+      }),
+      _acceptBotInvitation: flow(function*(inviteId: string) {
+        yield waitFor(() => self.connected)
+        return yield self.transport.inviteBotReply(inviteId)
+      }),
+      geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+        yield waitFor(() => self.connected)
+        yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
+      }),
+      loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+        yield waitFor(() => self.connected)
+        const arr = yield self.transport.loadLocalBots({
+          latitude,
+          longitude,
+          latitudeDelta,
+          longitudeDelta,
+        })
+        return arr.map(self.getBot)
+      }) as (a) => Promise<IBot[]>,
+      _loadRelations: flow(function*(
+        userId: string,
+        relation: string = 'following',
+        lastId?: string,
+        max: number = 10
+      ) {
+        yield waitFor(() => self.connected)
+        const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
+        const res: any = []
+        for (const rec of list) {
+          const {id} = rec
+          // TODO avoid extra request to load profile (server-side)
+          const profile = yield self.getProfile(id)
+          res.push(profile)
         }
-        self.geofenceBots.remove(botModel.id)
-        self.geofenceBots.addToTop(botModel)
-      } else {
-        if (id === self.username) {
-          botModel.visitor = false
+        return {list: res, count}
+      }),
+      _sendMessage: (msg: IMessage) => {
+        self.transport.sendMessage(msg)
+        self._addMessage({id: msg.to, message: msg})
+      },
+      loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
+        yield waitFor(() => self.connected)
+        yield self.transport.loadChat(userId, lastId, max)
+      }),
+      downloadURL: flow(function*(tros: string) {
+        return yield self.transport.downloadURL(tros)
+      }),
+      setLocation: flow(function*(location: ILocationSnapshot) {
+        return yield self.transport.setLocation(location)
+      }),
+      getLocationsVisited: (limit?: number): Promise<object[]> => {
+        return self.transport.getLocationsVisited(limit)
+      },
+      _requestUpload: flow(function*({file, size, width, height, access}: any) {
+        yield waitFor(() => self.connected)
+        const data = yield self.transport.requestUpload({file, size, width, height, access})
+        try {
+          yield upload(data)
+          return data.reference_url
+        } catch (e) {
+          yield self.transport.removeUpload(data.reference_url)
+          throw e
         }
-      }
-    }),
-    _onNotification: flow(function*(data: any) {
-      // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
-      // if (!version) {
-      //   throw new Error('No version for notification:' + JSON.stringify(data))
-      // }
-      // self.version = version
-      // // ignore /changed and /description delete
-      // // delete creation event if we have also delete event
-      // if (data.delete) {
-      //   if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
-      //     return
-      //   }
-      //   let existed = self.updates.findIndex((u: any) => u.id === data.id)
-      //   if (existed !== -1 && getType(self.updates[existed]).name === EventBotCreate.name) {
-      //     while (existed !== -1) {
-      //       self.updates.splice(existed, 1)
-      //       existed = self.updates.findIndex((u: any) => u.id === data.id)
-      //     }
-      //     return
-      //   }
-      //   if (!self.events.exists(data.id)) return
-      //   // if (!self.notifications.exists(data.id)) return
-      //   // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
-      // }
-      // if (changed && data.bot) {
-      //   yield self.loadBot(data.bot.id, data.bot.server)
-      // } else {
-      try {
-        const item: any = self.create(EventEntity, data)
-        const existed = self.updates.findIndex((u: any) => u.id === item.id)
-        if (existed !== -1) {
-          self.updates.splice(existed, 1)
-        }
-        self.updates.unshift(item)
-      } catch (e) {
-        getEnv(self).logger.log('ONNOTIFICATION ERROR: ' + e.message)
-      }
-      // }
-    }),
-    incorporateUpdates: () => {
-      for (let i = self.updates.length - 1; i >= 0; i--) {
-        const {id} = self.updates[i]
-        // delete item
-        self.notifications.remove(id)
-        if (getType(self.updates[i]).name !== EventDelete.name) {
-          const event: any = self.updates[i]
-          if (event.bot && isAlive(event.bot)) {
-            self.notifications.addToTop(clone(event))
+      }),
+      _removeUpload: flow(function*(tros: string) {
+        yield waitFor(() => self.connected)
+        yield self.transport.removeUpload(tros)
+      }),
+      _loadNotifications: flow(function*(lastId: any, max: number = 10) {
+        yield waitFor(() => self.connected)
+        const {list, count, cursor} = yield self.transport.loadNotifications(lastId, max)
+        // console.log('& load notifications', list)
+        return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
+      }),
+      _onBotVisitor: flow(function*({bot, action, visitor}: any) {
+        // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
+        const id = visitor.id
+        const botModel: IBot = self.bots.get(bot.id, bot)
+        if (action === 'ARRIVE') {
+          if (id === self.username) {
+            botModel.visitor = true
           }
+          self.geofenceBots.remove(botModel.id)
+          self.geofenceBots.addToTop(botModel)
         } else {
-          const parts = id.split('/')
-          self.deleteBot(parts[parts.length - 1])
+          if (id === self.username) {
+            botModel.visitor = false
+          }
         }
-      }
-      self.updates.clear()
-    },
-    _onGeoBot: (bot: any) => {
-      if (!self.geoBots.has(bot.id)) {
-        self.geoBots.set(bot.id, self.getBot(bot))
-      }
-    },
-    enablePush: flow(function*(token: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.enablePush(token)
-    }),
-    disablePush: flow(function*() {
-      yield waitFor(() => self.connected)
-      yield self.transport.disablePush()
-    }),
-    setSessionCount: (value: number) => {
-      self.sessionCount = value
-    },
-  }))
+      }),
+      _onNotification: flow(function*(data: any) {
+        // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
+        // if (!version) {
+        //   throw new Error('No version for notification:' + JSON.stringify(data))
+        // }
+        // self.version = version
+        // // ignore /changed and /description delete
+        // // delete creation event if we have also delete event
+        // if (data.delete) {
+        //   if (data.id.indexOf('/changed') !== -1 || data.id.indexOf('/description') !== -1) {
+        //     return
+        //   }
+        //   let existed = self.updates.findIndex((u: any) => u.id === data.id)
+        //   if (existed !== -1 && getType(self.updates[existed]).name === EventBotCreate.name) {
+        //     while (existed !== -1) {
+        //       self.updates.splice(existed, 1)
+        //       existed = self.updates.findIndex((u: any) => u.id === data.id)
+        //     }
+        //     return
+        //   }
+        //   if (!self.events.exists(data.id)) return
+        //   // if (!self.notifications.exists(data.id)) return
+        //   // self.events.remove(data.id) DON'T remove HS item until user presses 'New Updates'
+        // }
+        // if (changed && data.bot) {
+        //   yield self.loadBot(data.bot.id, data.bot.server)
+        // } else {
+        try {
+          const item: any = self.create(EventEntity, data)
+          const existed = self.updates.findIndex((u: any) => u.id === item.id)
+          if (existed !== -1) {
+            self.updates.splice(existed, 1)
+          }
+          self.updates.unshift(item)
+        } catch (e) {
+          getEnv(self).logger.log('ONNOTIFICATION ERROR: ' + e.message)
+        }
+        // }
+      }),
+      incorporateUpdates: () => {
+        for (let i = self.updates.length - 1; i >= 0; i--) {
+          const {id} = self.updates[i]
+          // delete item
+          self.notifications.remove(id)
+          if (getType(self.updates[i]).name !== EventDelete.name) {
+            const event: any = self.updates[i]
+            if (event.bot && isAlive(event.bot)) {
+              self.notifications.addToTop(clone(event))
+            }
+          } else {
+            const parts = id.split('/')
+            self.deleteBot(parts[parts.length - 1])
+          }
+        }
+        self.updates.clear()
+      },
+      _onGeoBot: (bot: any) => {
+        if (!self.geoBots.has(bot.id)) {
+          self.geoBots.set(bot.id, self.getBot(bot))
+        }
+      },
+      enablePush: flow(function*(token: string) {
+        yield waitFor(() => self.connected)
+        yield self.transport.enablePush(token)
+      }),
+      disablePush: flow(function*() {
+        yield waitFor(() => self.connected)
+        yield self.transport.disablePush()
+      }),
+      setSessionCount: (value: number) => {
+        self.sessionCount = value
+      },
+      searchUsers,
+    }
+  })
   .actions(self => {
     const fs: IFileService = getEnv(self).fileService
     return {

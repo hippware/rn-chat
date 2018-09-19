@@ -854,6 +854,20 @@ export class GraphQLTransport implements IWockyTransport {
     })
   }
 
+  async searchUsers(text: string): Promise<IProfilePartial[]> {
+    const res = await this.client.query<any>({
+      query: gql`
+        query searchUsers($text: String!){
+          users(limit: 20, searchTerm: $text) {
+            ${PROFILE_PROPS}
+          }
+        }
+      `,
+      variables: {text},
+    })
+    return res.data.users.map(u => convertProfile(u))
+  }
+
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
     includeCurrentUser: boolean,

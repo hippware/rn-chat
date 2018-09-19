@@ -1,9 +1,9 @@
-import {types, getEnv, flow, getParent, applySnapshot} from 'mobx-state-tree'
+import {types, flow, getParent, applySnapshot} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import validate from 'validate.js'
 import SelectableProfileList from './SelectableProfileList'
+import {IWocky} from 'wocky-client'
 
-// HACK
 declare module 'validate.js' {
   // tslint:disable-next-line
   interface ValidateJS {
@@ -13,8 +13,6 @@ declare module 'validate.js' {
 
 const SearchStore = types
   .model('SearchStore', {
-    // we need deep observability for observers in afterAttach so we can't use volatile for these
-    // https://github.com/mobxjs/mobx-state-tree#modelvolatile
     local: '',
     global: '',
     globalResult: types.optional(SelectableProfileList, {}),
@@ -50,64 +48,51 @@ const SearchStore = types
     },
   }))
   .actions(self => {
+    const {wocky} = getParent(self)
     const _searchGlobal = flow(function*(text) {
-      const {wocky} = getParent(self)
       if (!text.length) {
         self.globalResult.clear()
       } else {
         try {
-          const data = yield _search(text)
-          const profileArr = data.hits.map(hit => wocky.createProfile(hit.objectID, hit))
+          const profileArr = yield (wocky as IWocky).searchUsers(text)
           self.globalResult.replace(profileArr)
         } catch (err) {
-          // console.log('data hit err', err);
+          // console.log('global search error', err);
         }
       }
     })
 
-    function _search(text) {
-      const {searchIndex} = getEnv(self)
-
-      return new Promise((resolve, reject) => {
-        searchIndex.search(text, (err, content) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(content)
-          }
-        })
-      })
-    }
-
     function setGlobal(text: string) {
       self.global = text
+    }
+
+    async function queryUsername(text: string) {
+      const profileArr = await (wocky as IWocky).searchUsers(text)
+      return (
+        profileArr.length > 0 &&
+        profileArr.findIndex(p => p.handle.toLowerCase() === text.toLowerCase()) >= 0
+      )
+    }
+
+    function addUsernameValidator() {
+      validate.validators.usernameUniqueValidator = value => {
+        if (!value) return new validate.Promise(res => res())
+        return new validate.Promise(resolve => {
+          queryUsername(value).then(res => {
+            res ? resolve('not available') : resolve()
+          })
+        })
+      }
     }
 
     return {
       setGlobal,
       setLocal: text => (self.local = text),
       _searchGlobal,
-      _search,
+      queryUsername,
+      addUsernameValidator,
     }
   })
-  .actions(self => ({
-    queryUsername: flow(function*(text: string) {
-      const res = yield self._search(text)
-      return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase()
-    }),
-  }))
-  .actions(self => ({
-    addUsernameValidator: () => {
-      validate.validators.usernameUniqueValidator = value => {
-        if (!value) return new validate.Promise(res => res())
-        return new validate.Promise(resolve => {
-          self.queryUsername(value).then(res => {
-            res ? resolve('not available') : resolve()
-          })
-        })
-      }
-    },
-  }))
   .actions(self => {
     let wocky, handler1
     function afterAttach() {
