@@ -17,7 +17,7 @@ type Props = {
 const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
   <EventCardTemplate
     timestamp={relativeDateAsString}
-    action={'started following you'}
+    action={'started following you.'}
     icon={geoIcon}
     profile={user}
     rightColumnElement={<FollowButton profile={user} />}
