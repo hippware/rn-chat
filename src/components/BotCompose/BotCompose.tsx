@@ -103,6 +103,7 @@ export class BotCompose extends React.Component<Props> {
           style={{
             height: this.props.iconStore.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
             backgroundColor: 'white',
+            overflow: 'hidden',
           }}
         >
           <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
