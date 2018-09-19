@@ -37,7 +37,7 @@ export const EventList = createPaginable<IEventEntity>(EventEntity).actions(() =
   postProcessSnapshot: (snapshot: any) => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)
-      const cursor = result[result.length - 1].id
+      const cursor = result[result.length - 1].cursor
       return {...snapshot, result, cursor}
     }
     return snapshot
