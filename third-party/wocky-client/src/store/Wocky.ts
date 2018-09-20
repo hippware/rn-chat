@@ -678,8 +678,6 @@ export const Wocky = types
               self.transport.subscribeNotifications()
               self.requestRoster()
               await self.notifications.load()
-              // TODO: move to componentWillMount on Messages screen?
-              await self.loadChats()
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
                 profile.setStatus('unavailable')
