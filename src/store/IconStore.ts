@@ -38,7 +38,10 @@ export default class IconStore {
     if (!icon) {
       this.setIndex(0)
     } else {
-      if (this.iconList.includes(icon)) {
+      if (
+        this.iconList.indexOf(icon) >= 0 &&
+        this.iconList.indexOf(icon) < this.iconList.length - 1
+      ) {
         this.setIndex(this.iconList.indexOf(icon))
         return
       }
