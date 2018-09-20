@@ -13,6 +13,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Change app compatibility listing to 'only iPhones' (Rework #2730)
 * Map View is not current location (Rework #2697, PR #2797)
 * Top left caret + header (#2731)
+* Make version number visible somewhere (#2748)
+* Location Edit: User taken back to HS with tap on the map (#2792)
+* Notification Screen: Missing Punctuation (#2751)
+* Location Edit Adjustments (#2787)
+* Speculative fix for: Cropped image does not display on post (#2741)
 
 # 3.4.0 - 2018 Sep 14
 
