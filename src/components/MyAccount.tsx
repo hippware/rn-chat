@@ -17,7 +17,7 @@ import {IWocky} from 'wocky-client'
 import Screen from './Screen'
 import {DARK_GREY, PINK} from '../constants/colors'
 import {settings} from '../globals'
-// import {format} from 'libphonenumber-js'
+import {format} from 'libphonenumber-js'
 const {version} = require('../../package.json')
 
 type Props = {
@@ -111,9 +111,8 @@ class MyAccount extends React.Component<Props> {
               label="Phone"
               icon={require('../../images/phone.png')}
               editable={false}
-              // todo format with libphonenumber-js
-              // value={format(profile.phoneNumber, 'E.164')}
-              value={profile.phoneNumber}
+              value={format({phone: profile.phoneNumber, country: null}, 'International')}
+              // value={format({phone: profile.phoneNumber.replace('+', ''), country: 'US'}, 'E.164')}
             />
             <FormTextInput
               ref={r => (this.email = r)}
