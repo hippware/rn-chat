@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native'
+import {View, Image, Alert, StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native'
 import BottomPopup from './BottomPopup'
 import {Actions} from 'react-native-router-flux'
 import {isAlive} from 'mobx-state-tree'
@@ -112,7 +112,16 @@ export default class BottomMenu extends React.Component<Props> {
     if (!profile.hidden.enabled) {
       Actions.invisibleExpirationSelector()
     } else {
-      profile.hide(false, null)
+      Alert.alert('', 'Are you sure you want to turn off invisible mode?', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Turn Off',
+          style: 'destructive',
+          onPress: () => {
+            profile.hide(false, null)
+          },
+        },
+      ])
     }
   }
 }
