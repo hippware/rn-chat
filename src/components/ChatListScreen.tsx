@@ -20,6 +20,10 @@ class ChatListScreen extends React.Component<any> {
     this.list.scrollTo(params)
   }
 
+  componentDidMount() {
+    this.props.wocky.loadChats()
+  }
+
   renderItem = ({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />
 
   keyExtractor = item => `${item.id}`

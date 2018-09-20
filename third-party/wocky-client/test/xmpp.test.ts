@@ -170,6 +170,7 @@ describe('ConnectStore', () => {
       await user2.logout()
       expect(user2.chats.list.length).to.be.equal(0)
       user2 = await createXmpp(null, user2phone)
+      await user2.loadChats()
       await waitFor(() => user2.chats.list.length === 1)
       expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].last!.media).to.be.not.null
