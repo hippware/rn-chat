@@ -236,7 +236,11 @@ const Title = inject('wocky')(
 const Right = inject('profileValidationStore', 'wocky')(
   observer(({profileValidationStore, wocky}) => {
     const {profile} = wocky
-    const disabled = !profile || profile.updating || profile.uploading || profile.avatar.loading
+    const disabled =
+      !profile ||
+      profile.updating ||
+      profile.uploading ||
+      (profile.avatar && profile.avatar.loading)
     return profile ? (
       <TouchableOpacity
         onPress={() => MyAccount.submit(profileValidationStore)}
