@@ -407,7 +407,6 @@ export class GraphQLTransport implements IWockyTransport {
     max: number = 3
   ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
     const res = await this.client.query<any>({
-      // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
         query getNotifications($limit: Int!, $ownUsername: String!, $cursor: String) {
           notifications(first: $limit, after: $cursor) {
@@ -974,19 +973,20 @@ function convertBot({
   }
 }
 
-function convertNotification(notification: any): IEventData | null {
+function convertNotification(edge: any): IEventData | null {
   let bot: IBotData
   // TODO handle delete notifications
-  if (notification.node.__typename === 'NotificationDeleted') {
+  if (edge.node.__typename === 'NotificationDeleted') {
     return null
   }
-  const {data: {__typename, ...data}, id, createdAt} = notification.node
+  const {cursor, node: {data: {__typename, ...data}, id, createdAt}} = edge
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
     case 'UserFollowNotification':
       const followNotification: IEventUserFollowData = {
         id,
+        cursor,
         time,
         user: convertProfile(data.user),
       }
@@ -997,6 +997,7 @@ function convertNotification(notification: any): IEventData | null {
       const botItemNotification: IEventBotPostData = {
         id,
         time,
+        cursor,
         post: {
           id: data.botItem.id,
           profile: data.botItem.owner.id,
@@ -1017,6 +1018,7 @@ function convertNotification(notification: any): IEventData | null {
       const inviteNotification: IEventBotInviteData = {
         id,
         time,
+        cursor,
         bot,
         sender: data.user.id,
         isResponse: __typename === 'InvitationResponseNotification',
@@ -1030,6 +1032,7 @@ function convertNotification(notification: any): IEventData | null {
       const geofenceNotification: IEventBotGeofenceData = {
         id,
         time,
+        cursor,
         bot,
         // profile: convertProfile(data.user),
         profile: data.user.id,
@@ -1037,7 +1040,7 @@ function convertNotification(notification: any): IEventData | null {
       }
       return geofenceNotification
     default:
-      throw new Error(`failed to process notification ${notification}`)
+      throw new Error(`failed to process notification ${edge}`)
   }
 }
 
