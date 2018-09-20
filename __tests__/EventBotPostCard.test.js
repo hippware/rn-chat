@@ -43,7 +43,7 @@ describe('EventBotPostCard', () => {
       title: 'a title',
       profile: owner,
     })
-    const botPost = EventBotPost.create({id: '123', time: 123, bot, post})
+    const botPost = EventBotPost.create({id: '123', cursor: '123', time: 123, bot, post})
     const toRender = (
       <Provider locationStore={mockLocationStore}>
         <EventCard item={botPost} />
