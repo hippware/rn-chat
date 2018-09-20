@@ -924,6 +924,10 @@ export class XmppTransport implements IWockyTransport {
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
     throw new Error('Not supported')
   }
+
+  async searchUsers(text: string): Promise<IProfilePartial[]> {
+    throw new Error('Not supported')
+  }
 }
 export function processMessage(stanza: any, ownUserId: string) {
   let id = stanza.id

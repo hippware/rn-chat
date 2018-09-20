@@ -301,4 +301,8 @@ export class HybridTransport implements IWockyTransport {
   subscribeNotifications() {
     this._gql.subscribeNotifications()
   }
+
+  async searchUsers(text: string) {
+    return this._gql.searchUsers(text)
+  }
 }

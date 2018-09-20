@@ -100,4 +100,5 @@ export interface IWockyTransport {
   }): Promise<IBot[]>
   hideUser(enable: boolean, expire?: Date): Promise<void>
   subscribeNotifications()
+  searchUsers(text: string): Promise<IProfilePartial[]>
 }

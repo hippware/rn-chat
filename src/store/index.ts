@@ -3,7 +3,6 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import algoliasearch from 'algoliasearch/reactnative'
 import {Wocky, XmppTransport, HybridTransport, GraphQLTransport} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 import backgroundFetch from 'react-native-background-fetch'
@@ -28,8 +27,6 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 
-const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89')
-const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users')
 const provider = new XmppIOS()
 const xmppTransport = new XmppTransport(provider, DeviceInfo.getUniqueID())
 const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
@@ -52,7 +49,6 @@ const env = {
   geocodingStore,
   fileService,
   geolocation,
-  searchIndex,
   analytics,
   nativeEnv,
   backgroundFetch,

@@ -228,6 +228,18 @@ describe('GraphQL', () => {
       done(e)
     }
   })
+  it('searches users', async done => {
+    try {
+      timestamp()
+      await gql.login(user.username!, user.password!, host)
+      await gql.searchUsers('abc')
+      // NOTE: results for newly created users don't show up in the results which makes expected values
+      // on the return from `searchUsers` difficult here
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
   after('remove', async done => {
     try {
