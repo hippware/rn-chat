@@ -126,7 +126,9 @@
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>sms</string>
+		<string>gps</string>
+		<string>magnetometer</string>
+	</array>
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
