@@ -71,12 +71,6 @@ export interface IWockyTransport {
     max?: number
   ): Promise<IPagingList>
   publishBotPost(botId: string, post: any): Promise<void>
-  geosearch(props: {
-    latitude: number
-    longitude: number
-    latitudeDelta: number
-    longitudeDelta: number
-  }): Promise<void>
   sendMessage(msg: any): void
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
   enablePush(token: string): Promise<void>
