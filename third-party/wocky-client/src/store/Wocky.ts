@@ -454,10 +454,6 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         return yield self.transport.inviteBotReply(inviteId)
       }),
-      geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
-        yield waitFor(() => self.connected)
-        yield self.transport.geosearch({latitude, longitude, latitudeDelta, longitudeDelta})
-      }),
       loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
         yield waitFor(() => self.connected)
         const arr = yield self.transport.loadLocalBots({

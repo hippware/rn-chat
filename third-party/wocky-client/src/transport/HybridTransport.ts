@@ -220,15 +220,6 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.publishBotPost(botId, post)
   }
 
-  geosearch(props: {
-    latitude: number
-    longitude: number
-    latitudeDelta: number
-    longitudeDelta: number
-  }): Promise<void> {
-    return this._xmpp.geosearch(props)
-  }
-
   loadLocalBots(props: {
     latitude: number
     longitude: number

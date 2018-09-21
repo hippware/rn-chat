@@ -27,7 +27,6 @@ class LocationGeofenceWarning extends React.Component<Props> {
       () => this.props.locationStore.alwaysOn,
       alwaysOn => {
         if (alwaysOn) {
-          this.props.bot.setGeofence(true)
           Actions.pop()
         }
       }

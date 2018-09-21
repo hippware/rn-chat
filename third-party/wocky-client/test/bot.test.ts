@@ -63,7 +63,6 @@ describe('BotStore', () => {
       bot = await user1.createBot()
       expect(bot.icon).to.be.empty
       expect(bot.isNew).to.be.true
-      expect(bot.isPublic).to.be.false
       done()
     } catch (e) {
       done(e)
@@ -82,7 +81,6 @@ describe('BotStore', () => {
     })
     expect(bot.icon).to.be.equal(icon)
     expect(bot.isNew).to.be.false
-    expect(bot.isPublic).to.be.false
     expect(bot.title).to.be.equal('Test bot')
     expect(bot.location!.latitude).to.be.equal(1.1)
     expect(bot.location!.longitude).to.be.equal(2.1)
@@ -99,12 +97,10 @@ describe('BotStore', () => {
     timestamp()
     try {
       await bot.update({
-        public: true,
         location: {latitude: 1.3, longitude: 2.3},
         title: 'Test bot!',
       })
       expect(bot.isNew).to.be.false
-      expect(bot.isPublic).to.be.true
       expect(bot.title).to.be.equal('Test bot!')
       expect(bot.location!.latitude).to.be.equal(1.3)
       expect(bot.location!.longitude).to.be.equal(2.3)
@@ -250,23 +246,6 @@ describe('BotStore', () => {
       done(e)
     }
   })
-
-  it('geosearch', async done => {
-    try {
-      expect(Array.from(user1.geoBots.keys()).length).to.be.equal(0)
-      await user1.geosearch({
-        latitude: 1.2,
-        longitude: 2.2,
-        latitudeDelta: 0.5,
-        longitudeDelta: 0.5,
-      })
-      await waitFor(() => Array.from(user1.geoBots.keys()).length >= 2)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
   it('get local bots 1', async done => {
     try {
       timestamp()

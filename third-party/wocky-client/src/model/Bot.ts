@@ -37,11 +37,9 @@ export const Bot = types
       title: types.maybe(types.string),
       server: types.maybe(types.string),
       radius: 100,
-      geofence: false,
       owner: types.maybe(types.reference(Profile)),
       image: FileRef,
       description: '',
-      public: false,
       location: types.maybe(Location),
       address: '',
       followersSize: 0,
@@ -76,12 +74,6 @@ export const Bot = types
     },
     finishLoading() {
       self.loading = false
-    },
-    setGeofence: (value: boolean) => {
-      self.geofence = value
-    },
-    setPublic: (value: boolean) => {
-      self.public = value
     },
     createPost: (content: string = '') => {
       const id = utils.generateID()
@@ -198,9 +190,6 @@ export const Bot = types
     }
   })
   .views(self => ({
-    get isPublic(): boolean {
-      return self.public
-    },
     get coverColor(): number {
       return utils.hashCode(self.id)
     },
@@ -224,7 +213,6 @@ export interface IBotData {
   title?: string
   server?: string
   radius: number
-  geofence: boolean
   owner?: IProfilePartial
   image: any
   description?: string

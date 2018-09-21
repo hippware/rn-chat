@@ -889,30 +889,6 @@ export class XmppTransport implements IWockyTransport {
   async loadNotifications(lastId, max): Promise<any> {
     throw new Error('Not supported')
   }
-  async geosearch({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
-    if (!this.isGeoSearching) {
-      try {
-        this.isGeoSearching = true
-        const iq = $iq({type: 'get', to: this.host})
-          .c('bots', {
-            xmlns: BOT_NS,
-          })
-          .c('explore-nearby', {
-            limit: 100,
-            lat_delta: latitudeDelta,
-            lon_delta: longitudeDelta,
-            lat: latitude,
-            lon: longitude,
-          })
-        await this.sendIQ(iq)
-      } catch (e) {
-        // TODO: how do we handle errors here?
-        // console.error(e)
-      } finally {
-        this.isGeoSearching = false
-      }
-    }
-  }
   async loadLocalBots(props: {
     latitude: number
     longitude: number
