@@ -4,15 +4,16 @@ import Swiper from 'react-native-swiper'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../constants'
 import {settings} from '../globals'
-import {TouchableOpTrack, RText} from './common'
+import {RText, GradientButton} from './common'
 import {width, height, k} from './Global'
+import {inject} from 'mobx-react/native'
 
 const bg1 = require('../../images/slide1.png')
 const footprints = require('../../images/foot.png')
 const bg2 = require('../../images/slide2.png')
 const discover = require('../../images/discover.png')
 const bg3 = require('../../images/slide3.png')
-const explore = require('../../images/magnifinder.png')
+const notification = require('../../images/notificationBell.png')
 const maskLeft = require('../../images/maskLeft.png')
 const maskCenter = require('../../images/maskCenter.png')
 const maskRight = require('../../images/maskRight.png')
@@ -25,7 +26,7 @@ class Onboarding extends React.Component<any> {
     return (
       <View style={{flex: 1}} testID="onboarding">
         <SwiperAny
-          paginationStyle={{bottom: 95 * k}}
+          paginationStyle={{bottom: 135 * k}}
           dotColor={colors.GREY}
           activeDotColor={colors.PINK}
           bounces
@@ -35,16 +36,16 @@ class Onboarding extends React.Component<any> {
           loop
         >
           <Slide bgImg={bg1} iconImg={footprints} left>
-            {"See who's at your\r\nfavorite places!"}
+            {"See who's at your\r\nfavorite locations!"}
           </Slide>
           <Slide bgImg={bg2} iconImg={discover} center>
-            {'Discover places\r\npeople love!'}
+            {'Share locations with\r\nfriends and family!'}
           </Slide>
-          <Slide bgImg={bg3} iconImg={explore}>
-            {"Explore what's\r\naround you!"}
+          <Slide bgImg={bg3} iconImg={notification}>
+            {'Know when friends\r\nare visiting!'}
           </Slide>
         </SwiperAny>
-        <ButtonRow />
+        <Buttons />
         <BypassButton />
       </View>
     )
@@ -58,12 +59,12 @@ const Slide = ({bgImg, iconImg, left, center, children}: any) => {
   const align = left ? 'flex-start' : center ? 'center' : 'flex-end'
   const mask = left ? maskLeft : center ? maskCenter : maskRight
   return (
-    <View style={styles.slide}>
+    <View style={{flex: 1}}>
       <View style={styles.bgContainer}>
         <Image source={bgImg} style={{width, height: BG_IMG_RATIO * width}} />
         <Image
           source={mask}
-          style={{position: 'absolute', top: height * FLEX * 0.01 - 60, width}}
+          style={{position: 'absolute', top: height * FLEX * 0.01 - 80, width}}
         />
       </View>
       <View style={[styles.textContainer, {alignSelf: align, alignItems: align}]}>
@@ -72,7 +73,6 @@ const Slide = ({bgImg, iconImg, left, center, children}: any) => {
           style={[styles.title, {textAlign: left ? 'left' : center ? 'center' : 'right'}]}
           color={colors.PINK}
           size={24}
-          weight="Light"
         >
           {children}
         </RText>
@@ -93,28 +93,27 @@ const BypassButton = () => {
   ) : null
 }
 
-const ButtonRow = () => (
+const Buttons = inject('analytics')(({analytics}) => (
   <View style={styles.footerButtons}>
-    <TouchableOpTrack
-      style={[styles.button, styles.login]}
-      onPress={Actions.signIn}
-      trackName="login"
+    <GradientButton
+      isPink
+      style={[styles.button]}
+      onPress={() => {
+        analytics.track('signup')
+        Actions.signIn()
+      }}
     >
-      <RText size={15} color={colors.PINK}>
-        Log in
+      <RText size={17.5} color={colors.WHITE}>
+        Get Started
       </RText>
-    </TouchableOpTrack>
-    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName="signup">
-      <RText size={15} color={colors.WHITE}>
-        Sign up
-      </RText>
-    </TouchableOpTrack>
+    </GradientButton>
+    {/* TODO: Add Facebook button */}
   </View>
-)
+))
 
 export default Onboarding
 
-const FOOTER_HEIGHT = 75 * k
+const FOOTER_HEIGHT = 100 * k
 
 const styles = StyleSheet.create({
   absolute: {
@@ -124,12 +123,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  slide: {
-    flex: 1,
-  },
   icon: {height: 46, width: 46},
   title: {
-    marginTop: 15 * k,
+    marginTop: 10 * k,
     lineHeight: 34,
   },
   bgContainer: {
@@ -143,7 +139,6 @@ const styles = StyleSheet.create({
   footerButtons: {
     height: FOOTER_HEIGHT,
     paddingHorizontal: 20 * k,
-    flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
   bypassButton: {
     position: 'absolute',
     padding: 10 * k,
-    bottom: 100 * k,
+    bottom: 130 * k,
     right: 10 * k,
     backgroundColor: 'transparent',
     borderColor: colors.PINK,
@@ -161,14 +156,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    flex: 1,
+    // flex: 1,
     height: 50 * k,
-    borderWidth: 0,
+    // borderWidth: 0,
     borderRadius: 5 * k,
-    backgroundColor: colors.PINK,
-    alignItems: 'center',
-    marginHorizontal: 5 * k,
-    justifyContent: 'center',
+    // backgroundColor: colors.PINK,
+    // alignItems: 'center',
+    marginHorizontal: 15 * k,
+    marginBottom: 10 * k,
+    // justifyContent: 'center',
   },
   login: {
     borderWidth: 1,
