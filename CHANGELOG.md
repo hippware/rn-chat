@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Blocked list broken (#2802)
+
 # 3.4.1 - 2018 Sep 20
 
 * Unable to change user avatar (#2706)
