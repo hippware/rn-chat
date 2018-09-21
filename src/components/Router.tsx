@@ -166,7 +166,6 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Stack key="loggedHome">
                         <Scene key="home" component={Home} hideNavBar />
                         <Scene key="botsScene" component={BotsScreen} title="Favorites" />
-                        <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" />
                         <Scene key="chats" component={ChatListScreen} title="Messages" />
                         <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
                       </Stack>
@@ -188,7 +187,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                     <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
-                    <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back right={() => null} />
+                    <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" back />
                     {settings.isStaging && [
                       <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                       <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
