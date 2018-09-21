@@ -164,7 +164,7 @@ const LocationStore = types
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, backgroundFetch, analytics} = getEnv(self)
+    const {logger, nativeEnv, analytics} = getEnv(self)
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -208,41 +208,6 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === 3)
       if (!self.alwaysOn) {
         self.disposeBackgroundGeolocation()
-      }
-    }
-
-    async function sendLastKnownLocation(extraParams?: object): Promise<void> {
-      if (!self.backgroundGeolocation) {
-        return
-      }
-      logger.log(prefix, 'send last known location')
-      if (self.location) {
-        const {latitude, longitude, accuracy} = self.location
-        const {url, headers, params} = await self.backgroundGeolocation.getState()
-        logger.log(prefix, 'options:', url, headers, params)
-        try {
-          const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-              ...headers,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              ...extraParams,
-              location: [
-                {
-                  coords: {latitude, longitude, accuracy},
-                },
-              ],
-              resource: params.resource,
-            }),
-          })
-          onHttp(res)
-        } catch (err) {
-          onHttpError(err)
-        }
-      } else {
-        analytics.track('location_bg_error', {error: 'no location stored'})
       }
     }
 
@@ -310,33 +275,10 @@ const LocationStore = types
       } else if (state.enabled && !self.alwaysOn) {
         self.disposeBackgroundGeolocation()
       }
-
-      if (settings.isStaging) {
-        // guarantee updates when user isn't moving enough to trigger rnbgl events
-        backgroundFetch.configure(
-          {
-            minimumFetchInterval: 15, // (15 minutes is minimum allowed)
-          },
-          async () => {
-            try {
-              analytics.track('location_bg_fetch_start')
-              await sendLastKnownLocation({isFetch: true})
-            } catch (err) {
-              onHttpError(err)
-            }
-            analytics.track('location_bg_fetch_finish', {result: self.fetchResult})
-            backgroundFetch.finish(self.fetchResult)
-          },
-          error => {
-            logger.log('RNBackgroundFetch failed to start', error)
-          }
-        )
-      }
     })
 
     function stopBackground() {
       self.disposeBackgroundGeolocation()
-      backgroundFetch.stop()
     }
 
     function initialize() {
