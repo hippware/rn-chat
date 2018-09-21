@@ -5,7 +5,6 @@ import firebase from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Wocky, XmppTransport, HybridTransport, GraphQLTransport} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
-import backgroundFetch from 'react-native-background-fetch'
 
 import {settings} from '../globals'
 import XmppIOS from './xmpp/XmppIOS'
@@ -51,7 +50,6 @@ const env = {
   geolocation,
   analytics,
   nativeEnv,
-  backgroundFetch,
 }
 
 const Store = types
