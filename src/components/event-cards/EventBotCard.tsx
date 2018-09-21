@@ -31,10 +31,10 @@ export default class EventBotCard extends React.Component<Props> {
       <View>
         <EventBotTitle
           bot={bot}
-          action={bot.geofence ? 'created a presence bot' : 'created'}
+          action={'created a presence bot'}
           timestamp={eventBot.relativeDateAsString}
         />
-        <BotImage bot={bot} isGeo={bot.geofence} />
+        <BotImage bot={bot} isGeo={true} />
         <EventBotMetabar bot={bot} />
       </View>
     )

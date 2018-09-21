@@ -1,6 +1,5 @@
 import React from 'react'
 import {TouchableOpacity, ImageRequireSource} from 'react-native'
-import {defaultCover} from '../Global'
 // import Bubble from './BubbleAnimated'
 import Bubble from './Bubble'
 import {observer} from 'mobx-react/native'
@@ -22,12 +21,7 @@ const BotBubble = observer((props: Props) => {
     return null
   }
   const coverImage =
-    image ||
-    (bot.image
-      ? bot.image.thumbnail
-      : bot.geofence
-        ? require('../../../images/footPrintCover.png')
-        : defaultCover[bot.coverColor % 4])
+    image || (bot.image ? bot.image.thumbnail : require('../../../images/footPrintCover.png'))
   const text = bot.addressData ? bot.addressData.locationShort : bot.address
   const bubble = (
     <Bubble

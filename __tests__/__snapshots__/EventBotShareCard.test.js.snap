@@ -219,7 +219,7 @@ exports[`EventBotShareCard renders 1`] = `
             }
           >
              
-            created
+            created a presence bot
           </Text>
         </View>
         <Text
@@ -277,7 +277,7 @@ exports[`EventBotShareCard renders 1`] = `
     resizeMode="cover"
     source={
       Object {
-        "testUri": "../../../images/defaultCover2.png",
+        "testUri": "../../../images/geoShareDefault.png",
       }
     }
     style={
