@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.4.1 - 2018 Sep 20
+
 * Unable to change user avatar (#2706)
   * Fix crash during logout (PR #2798)
 * Location Detail Adjustments (#2693)
@@ -17,7 +19,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Location Edit: User taken back to HS with tap on the map (#2792)
 * Notification Screen: Missing Punctuation (#2751)
 * Location Edit Adjustments (#2787)
+  * Fix emoji popup (PR #2820)
 * Speculative fix for: Cropped image does not display on post (#2741)
+* Replace algolia user search with graphql user search (#2766)
+* Prevent crash if no avatar (PR #2815)
+* Lazy loading of conversations (#2826)
+* User details: Please fix phone number formatting. (#2810)
+* Alert when turning off invisible mode (#2809)
 
 # 3.4.0 - 2018 Sep 14
 
