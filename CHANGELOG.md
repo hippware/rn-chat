@@ -4,7 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.4.2 - 2018 Sep 21
+
 * Blocked list broken (#2802)
+* [dev] Disable/comment out background fetch (#2715)
+* Fix production 3.4.1 crash (#2831)
+* Remove 'explore nearby' XMPP related code (#2828)
+* Revert app compatibility list (#2841, Reverts #2730)
 
 # 3.4.1 - 2018 Sep 20
 
