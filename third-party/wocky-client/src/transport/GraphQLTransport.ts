@@ -919,7 +919,9 @@ export class GraphQLTransport implements IWockyTransport {
 }
 
 function convertImage(image) {
-  return image ? {id: image.trosUrl, url: image.thumbnailUrl} : null
+  return image && image.trosUrl && image.thumbnailUrl
+    ? {id: image.trosUrl, url: image.thumbnailUrl}
+    : null
 }
 
 function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
