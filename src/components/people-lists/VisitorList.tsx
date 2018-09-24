@@ -35,24 +35,18 @@ export default class VisitorList extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    if (!this.bot || !isAlive(this.bot)) return null
-    const {list, loading} = this.bot.visitors
-    if (loading) {
-      return (
-        <Screen>
-          <View style={{alignItems: 'center'}}>
-            <Spinner />
-          </View>
-        </Screen>
-      )
-    }
     return (
       <KeyboardAwareDraggablePopupList
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
-        data={list.slice()}
+        data={this.bot && isAlive(this.bot) ? this.bot.visitors.list.slice() : []}
         keyboardShouldPersistTaps="handled"
+        ListEmptyComponent={
+          <View style={{alignItems: 'center', height: 600, width: '100%', paddingTop: 40}}>
+            <Spinner />
+          </View>
+        }
         fadeNavConfig={{
           back: true,
           title: (
