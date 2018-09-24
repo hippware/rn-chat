@@ -31,11 +31,7 @@ export default class SplitRenderer extends React.Component<Props> {
           pointerEvents="box-none"
         >
           <BackButton transitionProps={transitionProps} scene={scene} />
-          <AnimatedPushScene
-            key={scene.route.key + '_scene'}
-            transitionProps={transitionProps}
-            scene={scene}
-          />
+          <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
         </View>
       )
     }
