@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {createXmpp, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
+import {createXmpp, sleep, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
 const fs = require('fs')

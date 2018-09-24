@@ -11,6 +11,12 @@ export function timestamp() {
   console.log('TIME: ', new Date().toLocaleString())
 }
 
+export function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
 export function testFile() {
   const fileName = `${__dirname}/../img/test.jpg`
   const file = {

@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {createXmpp, waitFor, timestamp} from './support/testuser'
+import {createXmpp, sleep, waitFor, timestamp} from './support/testuser'
 import {IWocky, IProfile, IOwnProfile} from '../src'
 import {IBot} from '../src/model/Bot'
 
@@ -9,11 +9,13 @@ let bot: IBot, bot2: IBot, loadedBot: IBot
 async function enterBot(user: IWocky) {
   await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
   user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+  await sleep(500)
 }
 
 async function exitBot(user: IWocky) {
   await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
   user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+  await sleep(500)
 }
 
 describe('Geofence', () => {

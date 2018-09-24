@@ -401,9 +401,7 @@ export const Wocky = types
       _updateBot: flow(function*(d: any, userLocation: ILocation) {
         yield waitFor(() => self.connected)
         yield self.transport.updateBot(d, userLocation)
-        if (d.geofence) {
-          self.profile!.setHasUsedGeofence(true)
-        }
+        self.profile!.setHasUsedGeofence(true) // all bots now are geofence
         // subscribe owner to his bot
         const bot = self.bots.storage.get(d.id)
         self.profile!.ownBots.addToTop(bot)
