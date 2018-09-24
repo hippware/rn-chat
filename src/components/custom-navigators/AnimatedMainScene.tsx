@@ -1,5 +1,6 @@
 import React from 'react'
 import {Animated} from 'react-native'
+import {height} from '../Global'
 
 type Props = {
   scene: any
@@ -8,10 +9,7 @@ type Props = {
 
 class AnimatedMainScene extends React.Component<Props> {
   isOffset: boolean = false
-
-  state = {
-    yOffset: new Animated.Value(0), // initialize to full screen height
-  }
+  yOffset: Animated.Value = new Animated.Value(height) // initialize to full screen height
 
   componentWillReceiveProps(nextProps) {
     const {index, scene: {route: {params: {fromTop}}}} = nextProps.transitionProps
@@ -24,7 +22,7 @@ class AnimatedMainScene extends React.Component<Props> {
 
   slideSceneTo = toHeight => {
     this.isOffset = toHeight !== 0
-    Animated.spring(this.state.yOffset, {
+    Animated.spring(this.yOffset, {
       toValue: toHeight,
       useNativeDriver: true,
     }).start()
@@ -38,13 +36,13 @@ class AnimatedMainScene extends React.Component<Props> {
       <Animated.View
         style={{
           position: 'absolute',
+          top: 0,
           left: 0,
           right: 0,
-          top: 0,
-          bottom: 0,
+          height: this.isOffset ? height + 150 : height,
           transform: [
             {
-              translateY: this.state.yOffset,
+              translateY: this.yOffset,
             },
           ],
         }}
