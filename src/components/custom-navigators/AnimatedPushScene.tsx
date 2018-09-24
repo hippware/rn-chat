@@ -9,7 +9,7 @@ type Props = {
   transitionProps: any
 }
 
-class AnimatedPushScene extends React.Component<Props> {
+class AnimatedPushScene extends React.PureComponent<Props> {
   @observable viewHeight: number = 0
   animating: boolean = false
   slideHeight = new Animated.Value(height) // initialize to full screen height
@@ -51,6 +51,7 @@ class AnimatedPushScene extends React.Component<Props> {
   render() {
     const {descriptor: {navigation, getComponent}, route: {params: {fromTop}}} = this.props.scene
     const Scene = getComponent()
+    console.log('RENDER SCENE:', this.props.scene.index, this.props.scene.route.key)
     return (
       <Wrapper {...this.props}>
         <Animated.View

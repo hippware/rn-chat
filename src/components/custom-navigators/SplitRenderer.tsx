@@ -13,6 +13,9 @@ type Props = {
 }
 
 export default class SplitRenderer extends React.Component<Props> {
+  shouldComponentUpdate(nextProps) {
+    return this.props.navigation.state.index !== nextProps.navigation.state.index
+  }
   _renderScene = (transitionProps, scene) => {
     const {index} = scene
     if (index === 0) {
@@ -28,7 +31,11 @@ export default class SplitRenderer extends React.Component<Props> {
           pointerEvents="box-none"
         >
           <BackButton transitionProps={transitionProps} scene={scene} />
-          <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
+          <AnimatedPushScene
+            key={scene.route.key + '_scene'}
+            transitionProps={transitionProps}
+            scene={scene}
+          />
         </View>
       )
     }
@@ -41,6 +48,7 @@ export default class SplitRenderer extends React.Component<Props> {
   onTransitionStart = () => null
   onTransitionEnd = () => null
   render() {
+    console.log('RENDER SPLITNAVIGATOR')
     const TransitionerAny = Transitioner as any
     return (
       <TransitionerAny

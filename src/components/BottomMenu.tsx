@@ -43,6 +43,12 @@ type Props = {
 @inject('wocky')
 @observer
 export default class BottomMenu extends React.Component<Props> {
+  componentDidMount() {
+    console.log('BOTTOMMENU MOUNT')
+  }
+  componentWillUnmount() {
+    console.log('BOTTOMMENU UNMOUNT')
+  }
   render() {
     const {wocky: {profile}} = this.props
     if (!profile || !isAlive(profile)) {

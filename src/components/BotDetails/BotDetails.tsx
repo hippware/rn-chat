@@ -14,6 +14,7 @@ import Separator from './Separator'
 import {navBarStyle} from '../Router'
 import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
+import BottomPopup from '../BottomPopup'
 
 type Props = {
   botId: string
@@ -43,14 +44,16 @@ export default class BotDetails extends React.Component<Props> {
 
   _footerComponent = observer(() => {
     return (
-      this.props.wocky!.connected &&
-      this.bot &&
-      isAlive(this.bot) &&
-      this.bot.posts.loading && <Loader />
+      (!this.bot ||
+        (this.props.wocky!.connected &&
+          this.bot &&
+          isAlive(this.bot) &&
+          this.bot.posts.loading)) && <Loader />
     )
   })
 
   componentDidMount() {
+    console.log('BOTDETAILS MOUNT')
     this.loadBot()
     // if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
     //   Actions.visitors({item: this.props.botId})
@@ -58,6 +61,7 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   componentWillUnmount() {
+    console.log('BOTDETAILS UNMOUNT')
     if (this.viewTimeout) {
       clearTimeout(this.viewTimeout)
     }
@@ -103,10 +107,7 @@ export default class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this
-    if (!bot) {
-      return <Loader />
-    }
-    if (!isAlive(bot)) {
+    if (bot && !isAlive(bot)) {
       return null
     }
 
@@ -136,9 +137,10 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {(!bot.invitation || bot.invitation.accepted) && (
-          <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
-        )}
+        {bot &&
+          (!bot.invitation || bot.invitation.accepted) && (
+            <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
+          )}
       </View>
     )
   }
@@ -146,6 +148,9 @@ export default class BotDetails extends React.Component<Props> {
 
 const NavTitle = ({bot, onLongPress}) => {
   const {titleStyle} = navBarStyle
+  if (!bot) {
+    return null
+  }
   return (
     <TouchableOpacity onLongPress={onLongPress} onPress={null} style={{marginHorizontal: 16}}>
       <RText
