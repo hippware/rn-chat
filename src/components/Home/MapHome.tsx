@@ -4,7 +4,7 @@ import {StyleSheet, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
-import {IWocky} from 'wocky-client'
+import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {Spinner} from '../common'
@@ -44,11 +44,11 @@ export default class MapHome extends React.Component<IProps> {
   @observable showSatelliteOverlay: boolean = false
   @observable opacity: number = 0
 
-  mapRef: any
+  mapRef?: MapView
   reactions: any[] = []
   region: any
 
-  setCenterCoordinate = (location: Location) => {
+  setCenterCoordinate = (location: ILocation) => {
     if (this.mapRef && location) {
       this.mapRef.animateToCoordinate(location)
     }
