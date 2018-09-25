@@ -15,10 +15,10 @@ import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
 import Screen from './Screen'
-import {DARK_GREY, PINK} from '../constants/colors'
+import {PINK} from '../constants/colors'
 import {settings} from '../globals'
 import {format} from 'libphonenumber-js'
-const {version} = require('../../package.json')
+import Version from './Version'
 
 type Props = {
   wocky?: IWocky
@@ -137,9 +137,7 @@ class MyAccount extends React.Component<Props> {
           {/* <LogoutButton /> */}
 
           <View style={{marginVertical: 30, alignItems: 'center'}}>
-            <RText size={15} color={DARK_GREY} style={styles.text}>
-              {`Version ${version}`}
-            </RText>
+            <Version />
             <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}>
               Terms of Service
             </LinkButton>
