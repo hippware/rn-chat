@@ -13,15 +13,6 @@ class AnimatedMainScene extends React.Component<Props> {
     yOffset: new Animated.Value(0), // initialize to full screen height
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {index, scene: {route: {params: {fromTop}}}} = nextProps.transitionProps
-    if (index > 0 && !fromTop && !this.isOffset) {
-      this.slideSceneTo(-150)
-    } else if ((fromTop || index === 0) && this.isOffset) {
-      this.slideSceneTo(0)
-    }
-  }
-
   slideSceneTo = toHeight => {
     this.isOffset = toHeight !== 0
     Animated.spring(this.state.yOffset, {

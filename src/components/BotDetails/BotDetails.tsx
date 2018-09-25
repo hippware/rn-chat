@@ -42,17 +42,17 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   _footerComponent = observer(() => {
+    if (!this.bot) return null
     return (
-      (!this.bot ||
-        (this.props.wocky!.connected &&
-          this.bot &&
-          isAlive(this.bot) &&
-          this.bot.posts.loading)) && <Loader />
+      this.props.wocky!.connected &&
+      this.bot &&
+      isAlive(this.bot) &&
+      this.bot.posts.loading && <Loader />
     )
   })
 
   componentDidMount() {
-    console.log('BOTDETAILS MOUNT')
+    // console.log('BOTDETAILS MOUNT')
     this.loadBot()
     // if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
     //   Actions.visitors({item: this.props.botId})
@@ -60,7 +60,7 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    console.log('BOTDETAILS UNMOUNT')
+    // console.log('BOTDETAILS UNMOUNT')
     if (this.viewTimeout) {
       clearTimeout(this.viewTimeout)
     }
@@ -113,7 +113,7 @@ export default class BotDetails extends React.Component<Props> {
     return (
       <View style={{flex: 1}}>
         <DraggablePopupList
-          data={this.bot ? this.bot.posts.list.slice() : []}
+          data={this.bot && !this.bot.error ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,

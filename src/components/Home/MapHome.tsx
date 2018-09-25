@@ -96,7 +96,9 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = (region: MapViewRegion) => {
     const {homeStore} = this.props
-    homeStore.setFocusedLocation(undefined)
+    if (homeStore.focusedBotLocation) {
+      homeStore.setFocusedLocation(undefined)
+    }
     this.region = region
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true

@@ -49,9 +49,12 @@ class AnimatedPushScene extends React.PureComponent<Props> {
   }
 
   render() {
-    const {descriptor: {navigation, getComponent}, route: {params: {fromTop}}} = this.props.scene
+    const {
+      index,
+      descriptor: {navigation, getComponent},
+      route: {params: {fromTop}},
+    } = this.props.scene
     const Scene = getComponent()
-    console.log('RENDER SCENE:', this.props.scene.index, this.props.scene.route.key)
     return (
       <Wrapper {...this.props}>
         <Animated.View
@@ -72,7 +75,7 @@ class AnimatedPushScene extends React.PureComponent<Props> {
             (this.viewHeight = viewHeight)
           }
         >
-          <Scene navigation={navigation} />
+          {index === this.props.transitionProps.index && <Scene navigation={navigation} />}
         </Animated.View>
       </Wrapper>
     )
