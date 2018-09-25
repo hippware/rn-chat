@@ -159,7 +159,7 @@ export default class MapHome extends React.Component<IProps> {
             latitudeDelta: INIT_DELTA,
             longitudeDelta: INIT_DELTA,
           }}
-          style={commonStyles.absolute}
+          style={[commonStyles.absolute, {bottom: -15}]}
           customMapStyle={mapStyle}
           mapType={this.mapType}
           onRegionChange={this.onRegionChange}
