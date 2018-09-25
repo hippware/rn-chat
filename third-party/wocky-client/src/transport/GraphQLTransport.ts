@@ -25,7 +25,7 @@ const PROFILE_PROPS = `id firstName lastName handle
   followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
   followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 `
-const BOT_PROPS = `id icon title address isPublic: public addressData description geofence public radius server shortname 
+const BOT_PROPS = `id icon title address addressData description radius server shortname 
   image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
@@ -701,7 +701,6 @@ export class GraphQLTransport implements IWockyTransport {
       address,
       addressData,
       description,
-      geofence,
       icon,
       image,
       lat,
@@ -734,12 +733,11 @@ export class GraphQLTransport implements IWockyTransport {
           address,
           addressData: JSON.stringify(addressData),
           description,
-          geofence,
           icon,
           image,
+          geofence: true,
           lat: bot.location.latitude,
           lon: bot.location.longitude,
-          public: bot.public,
           radius: Math.round(radius),
           server,
           shortname,
@@ -944,7 +942,6 @@ function convertBot({
   lon,
   image,
   addressData,
-  isPublic,
   owner,
   items,
   visitors,
@@ -968,7 +965,6 @@ function convertBot({
       visitorsSize: visitorCount.totalCount,
       guestsSize: guestCount.totalCount,
       location: {latitude: lat, longitude: lon},
-      public: isPublic,
       guest: contains('GUEST'),
       visitor: contains('VISITOR'),
       isSubscribed: contains('SUBSCRIBED'),
