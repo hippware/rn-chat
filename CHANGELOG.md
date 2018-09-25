@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Please update the current login/signup screen. (#2803)
+* Cropped image does not display on post (Rework #2741)
+  * Update: react-native-image-crop-picker
+* Properly handle missing Avatar (#2511)
+* Update: RNRF, react-navigation and some other components
+
 # 3.4.2 - 2018 Sep 21
 
 * Blocked list broken (#2802)

@@ -546,7 +546,7 @@ exports[`MyAccount renders 1`] = `
                         "errorMessage": "",
                         "isValid": undefined,
                         "key": "handle",
-                        "value": "jerkham",
+                        "value": "eric",
                       }
                     }
                     style={
@@ -558,7 +558,7 @@ exports[`MyAccount renders 1`] = `
                       }
                     }
                     underlineColorAndroid="transparent"
-                    value="jerkham"
+                    value="eric"
                   />
                   <View
                     style={
@@ -893,25 +893,7 @@ exports[`MyAccount renders 1`] = `
             }
           }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {
-                  "color": "rgb(155,155,155)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 15,
-                },
-                Object {
-                  "marginBottom": 15,
-                },
-              ]
-            }
-          >
-            Version 3.4.1
-          </Text>
+          Version
           <View
             accessible={true}
             isTVSelectable={true}
