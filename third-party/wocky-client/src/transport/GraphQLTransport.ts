@@ -404,14 +404,15 @@ export class GraphQLTransport implements IWockyTransport {
 
   async loadNotifications(params: {
     limit?: number
-    before?: string
-    after?: string
-  }): Promise<{list: any[]; count: number; cursor: string | undefined}> {
-    const {limit, before, after} = params
+    beforeId?: string
+    afterId?: string
+  }): Promise<{list: any[]; count: number}> {
+    const {limit, beforeId, afterId} = params
+    // console.log('& gql load', beforeId, afterId, limit)
     const res = await this.client.query<any>({
       query: gql`
-        query notifications($first: Int, $last: Int, $before: String, $after: String, $ownUsername: String!) {
-          notifications(first: $first, last: $last, before: $before, after: $after) {
+        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
+          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
             totalCount
             edges {
               node {
@@ -421,9 +422,9 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {before, after, first: limit || 20, ownUsername: this.username},
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username},
     })
-    // console.log('& res', JSON.stringify(res.data.notifications))
+    // console.log('& gql res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {
       const {totalCount, edges} = res.data.notifications
 
@@ -431,10 +432,9 @@ export class GraphQLTransport implements IWockyTransport {
       return {
         count: totalCount,
         list,
-        cursor: edges && edges.length && edges[edges.length - 1].cursor,
       }
     }
-    return {count: 0, list: [], cursor: undefined}
+    return {count: 0, list: []}
   }
 
   subscribeNotifications() {
