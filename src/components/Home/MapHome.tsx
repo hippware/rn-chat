@@ -147,7 +147,7 @@ export default class MapHome extends React.Component<IProps> {
     }
     const {latitude, longitude} = location
     return (
-      <View style={commonStyles.absolute}>
+      <View style={[commonStyles.absolute, {bottom: -30}]}>
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}
@@ -159,7 +159,7 @@ export default class MapHome extends React.Component<IProps> {
             latitudeDelta: INIT_DELTA,
             longitudeDelta: INIT_DELTA,
           }}
-          style={[commonStyles.absolute, {bottom: -15}]}
+          style={commonStyles.absolute}
           customMapStyle={mapStyle}
           mapType={this.mapType}
           onRegionChange={this.onRegionChange}
