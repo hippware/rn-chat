@@ -479,14 +479,15 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)
       }),
-      _loadNotifications: flow(function*(lastId: any, max: number = 10) {
+      _loadNotifications: flow(function*(lastId: any, max: number = 20) {
+        // console.log('& load', lastId)
         yield waitFor(() => self.connected)
-        const {list, count, cursor} = yield self.transport.loadNotifications({
-          before: lastId,
+        const {list, count} = yield self.transport.loadNotifications({
+          beforeId: lastId,
           limit: max,
         })
-        // console.log('& load notifications', list)
-        return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
+        // console.log('& load notifications list', list)
+        return {list: list.map((data: any) => self.create(EventEntity, data)), count}
       }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
@@ -586,27 +587,30 @@ export const Wocky = types
     const fs: IFileService = getEnv(self).fileService
     return {
       _loadNewNotifications: flow(function*() {
-        /**
-         * On app open: get notifications with `afterId`. If new ones, unread = true.
-         * When notification arrives via subscription: unread = true
-         * On page: get notifications with beforeId
-         */
         yield waitFor(() => self.connected)
         const mostRecentNotification = self.notifications.first
-        const {list, count, cursor} = yield self.transport.loadNotifications({
-          after: mostRecentNotification && mostRecentNotification.id,
+        const limit = 20
+        const {list} = yield self.transport.loadNotifications({
+          afterId: mostRecentNotification && mostRecentNotification.id,
+          limit,
         })
+        if (list.length === limit) {
+          // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
+          self.notifications.refresh()
+        }
         const beforeCount = self.notifications.length
         list.forEach(n => self._onNotification(n, true))
         const afterCount = self.notifications.length
         if (afterCount === beforeCount) {
           self.hasUnreadNotifications = false
+        } else if (beforeCount === 0) {
+          // first app load or after cache reset
+          self.hasUnreadNotifications = true
         }
+        self.notifications.cursor = self.notifications.last && self.notifications.last.id
         // console.log(
-        //   '& notifications list after',
-        //   beforeCount,
-        //   afterCount,
-        //   self.notifications.list.slice()
+        //   '& notifications list after initial load',
+        //   self.notifications.list.map(n => n.id)
         // )
       }),
       downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {

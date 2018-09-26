@@ -886,7 +886,7 @@ export class XmppTransport implements IWockyTransport {
     const data = await this.sendIQ(iq)
     return parseInt(data['subscriber_count'])
   }
-  async loadNotifications(lastId, max): Promise<any> {
+  async loadNotifications(params): Promise<any> {
     throw new Error('Not supported')
   }
   async loadLocalBots(props: {

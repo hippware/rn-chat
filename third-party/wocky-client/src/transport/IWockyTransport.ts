@@ -77,9 +77,9 @@ export interface IWockyTransport {
   disablePush(): Promise<void>
   loadNotifications(params: {
     limit?: number
-    before?: string
-    after?: string
-  }): Promise<{list: any[]; count: number; cursor: string | undefined}>
+    beforeId?: string
+    afterId?: string
+  }): Promise<{list: any[]; count: number}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
