@@ -402,17 +402,18 @@ export class GraphQLTransport implements IWockyTransport {
       })
   }
 
-  async loadNotifications(
-    cursor?: string,
-    max: number = 3
-  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
+  async loadNotifications(params: {
+    limit?: number
+    before?: string
+    after?: string
+  }): Promise<{list: any[]; count: number; cursor: string | undefined}> {
+    const {limit, before, after} = params
     const res = await this.client.query<any>({
       query: gql`
-        query getNotifications($limit: Int!, $ownUsername: String!, $cursor: String) {
-          notifications(first: $limit, after: $cursor) {
+        query notifications($first: Int, $last: Int, $before: String, $after: String, $ownUsername: String!) {
+          notifications(first: $first, last: $last, before: $before, after: $after) {
             totalCount
             edges {
-              cursor
               node {
                 ${NOTIFICATIONS_PROPS}
               }
@@ -420,8 +421,9 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {limit: max, ownUsername: this.username, cursor},
+      variables: {before, after, first: limit || 20, ownUsername: this.username},
     })
+    // console.log('& res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {
       const {totalCount, edges} = res.data.notifications
 
@@ -432,7 +434,7 @@ export class GraphQLTransport implements IWockyTransport {
         cursor: edges && edges.length && edges[edges.length - 1].cursor,
       }
     }
-    return {count: 0, list: [], cursor}
+    return {count: 0, list: [], cursor: undefined}
   }
 
   subscribeNotifications() {
@@ -979,14 +981,13 @@ function convertNotification(edge: any): IEventData | null {
   if (edge.node.__typename === 'NotificationDeleted') {
     return null
   }
-  const {cursor, node: {data: {__typename, ...data}, id, createdAt}} = edge
+  const {node: {data: {__typename, ...data}, id, createdAt}} = edge
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
     case 'UserFollowNotification':
       const followNotification: IEventUserFollowData = {
         id,
-        cursor,
         time,
         user: convertProfile(data.user),
       }
@@ -997,7 +998,6 @@ function convertNotification(edge: any): IEventData | null {
       const botItemNotification: IEventBotPostData = {
         id,
         time,
-        cursor,
         post: {
           id: data.botItem.id,
           profile: data.botItem.owner.id,
@@ -1018,7 +1018,6 @@ function convertNotification(edge: any): IEventData | null {
       const inviteNotification: IEventBotInviteData = {
         id,
         time,
-        cursor,
         bot,
         sender: data.user.id,
         isResponse: __typename === 'InvitationResponseNotification',
@@ -1032,7 +1031,6 @@ function convertNotification(edge: any): IEventData | null {
       const geofenceNotification: IEventBotGeofenceData = {
         id,
         time,
-        cursor,
         bot,
         // profile: convertProfile(data.user),
         profile: data.user.id,

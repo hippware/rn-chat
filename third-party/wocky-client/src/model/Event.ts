@@ -4,13 +4,7 @@ import {Base, IBaseData} from './Base'
 import {IProfile} from './Profile'
 
 export const Event = types
-  .compose(
-    Base,
-    Timeable,
-    types.model('Event', {
-      cursor: types.string,
-    })
-  )
+  .compose(Base, Timeable)
   .named('Event')
   .views(() => ({
     get target(): IProfile {
@@ -22,6 +16,4 @@ export const Event = types
 type IEventType = typeof Event.Type
 export interface IEvent extends IEventType {}
 
-export interface IEventData extends IBaseData, ITimeableData {
-  cursor: string
-}
+export interface IEventData extends IBaseData, ITimeableData {}
