@@ -220,7 +220,10 @@ describe('GraphQL', () => {
       timestamp()
       const loaded = await gql.loadBot(bot.id, bot.server)
       expect(loaded.title).to.equal(bot.title)
-      expect(loaded.geofence).to.equal(bot.geofence)
+
+      // NOTE: all bots are geofence now
+      // expect(loaded.geofence).to.equal(bot.geofence)
+
       expect(loaded.guest).to.equal(true)
       expect(loaded.id).to.equal(bot.id)
       done()
