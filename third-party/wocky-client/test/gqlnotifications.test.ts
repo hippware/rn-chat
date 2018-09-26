@@ -49,14 +49,13 @@ describe('GraphQL Notifications', () => {
     }
   })
 
-  it('gets User Comment notification', async done => {
+  it('gets Location Invite notification', async done => {
     try {
       timestamp()
 
       // alice creates a bot
       aliceBot = await alice.createBot()
       await aliceBot.update({
-        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         geofence: true,
@@ -64,25 +63,6 @@ describe('GraphQL Notifications', () => {
       })
       await aliceBot.save()
 
-      // bob comments on alice's bot
-      bobsAliceBot = await bob.loadBot(aliceBot.id, null)
-      const post = bobsAliceBot.createPost('cool bot!')
-      await post.publish()
-
-      await pause(1000)
-      const notifications = await gqlAlice.loadNotifications({})
-      // console.log('& got botitem notifications for alice', notifications)
-      expect(notifications.count).to.equal(1)
-      expect(notifications.list[0]).to.haveOwnProperty('post')
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
-  it('gets Location Invite notification', async done => {
-    try {
-      timestamp()
       // alice invites bob to the bot (NOTE: this is different from `share`)
       await gqlAlice.inviteBot(aliceBot.id, [bob.username])
       await pause(1000)
@@ -105,11 +85,31 @@ describe('GraphQL Notifications', () => {
       await gqlBob.inviteBotReply(invitationId, true)
       await pause(1000)
       const notifications = await gqlAlice.loadNotifications({})
-      expect(notifications.count).to.equal(2)
+      expect(notifications.count).to.equal(1)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(bob.username)
       expect(notifications.list[0].bot.invitation.id).to.equal(invitationId)
       expect(notifications.list[0].bot.invitation.accepted).to.equal(true)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('gets User Comment notification', async done => {
+    try {
+      timestamp()
+
+      // bob comments on alice's bot
+      bobsAliceBot = await bob.loadBot(aliceBot.id, null)
+      const post = bobsAliceBot.createPost('cool bot!')
+      await post.publish()
+
+      await pause(1000)
+      const notifications = await gqlAlice.loadNotifications({})
+      // console.log('& got botitem notifications for alice', notifications)
+      expect(notifications.count).to.equal(2)
+      expect(notifications.list[0]).to.haveOwnProperty('post')
       done()
     } catch (e) {
       done(e)
