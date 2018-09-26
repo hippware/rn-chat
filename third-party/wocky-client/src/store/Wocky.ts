@@ -284,7 +284,7 @@ export const Wocky = types
           const data = yield self.transport.loadBot(id, server)
           self.load(bot, data)
         } catch (e) {
-          // console.error(e) TODO
+          // console.error('bot load error', e)
           bot.setError(JSON.stringify(e))
         } finally {
           bot.finishLoading()
