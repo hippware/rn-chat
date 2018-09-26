@@ -111,7 +111,7 @@ export default class BotDetails extends React.Component<Props> {
     }
 
     return (
-      <View style={{flex: 1}}>
+      <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
           data={this.bot && !this.bot.error ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}

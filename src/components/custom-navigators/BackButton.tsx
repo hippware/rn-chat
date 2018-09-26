@@ -41,14 +41,13 @@ export default class BackButton extends React.Component<Props> {
           style={{position: 'absolute', top: 0, left: 0}}
           source={require('../../../images/backButtonContainer.png')}
         />
-        {this.props.transitionProps.index === this.props.scene.index && (
-          <TouchableOpacity
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-            onPress={this.props.scene.descriptor.options.backAction || Actions.pop}
-          >
-            <Image source={navBarStyle.backButtonImage} />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+          onPress={this.props.scene.descriptor.options.backAction || Actions.pop}
+        >
+          <Image source={navBarStyle.backButtonImage} />
+        </TouchableOpacity>
+        )
       </Animated.View>
     )
   }

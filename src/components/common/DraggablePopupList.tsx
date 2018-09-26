@@ -4,6 +4,7 @@ import {width, height, k} from '../Global'
 import {TouchThroughView} from 'react-native-touch-through-view'
 import BottomPopup from '../BottomPopup'
 import NavBarHeader, {NavConfig} from '../custom-navigators/NavBarHeader'
+import {TouchThroughWrapper} from 'react-native-touch-through-view'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
@@ -22,7 +23,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
       outputRange: [0, 0, 1],
     })
     return (
-      <View style={{width, height}}>
+      <TouchThroughWrapper style={{width, height}}>
         <FlatList
           ref={r => (this.list = r)}
           bounces={false}
@@ -38,7 +39,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
             <NavBarHeader config={fadeNavConfig} />
           </Animated.View>
         )}
-      </View>
+      </TouchThroughWrapper>
     )
   }
 
