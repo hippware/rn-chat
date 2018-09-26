@@ -24,12 +24,14 @@ export default class Home extends React.Component<Props> {
       <View style={{flex: 1, justifyContent: 'space-between'}} testID="screenHome">
         <MapHome />
         <ActiveGeoBotBanner enabled={!fullScreenMode && isCurrent} />
-        <HorizontalCardList
-          setIndex={setIndex}
-          list={list.slice()}
-          index={index}
-          enabled={!fullScreenMode && isCurrent}
-        />
+        {isCurrent && (
+          <HorizontalCardList
+            setIndex={setIndex}
+            list={list.slice()}
+            index={index}
+            enabled={!fullScreenMode && isCurrent}
+          />
+        )}
       </View>
     )
   }

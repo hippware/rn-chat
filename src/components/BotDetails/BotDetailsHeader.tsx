@@ -15,7 +15,7 @@ import {colors} from '../../constants'
 import {getSnapshot, isAlive} from 'mobx-state-tree'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
-import {RText, ProfileHandle, ProfileStack} from '../common'
+import {RText, Spinner, ProfileHandle, ProfileStack} from '../common'
 import {IBot, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
@@ -99,7 +99,12 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   render() {
     const {bot, locationStore} = this.props
-    if (!bot || !isAlive(bot)) return null
+    if (!bot || !isAlive(bot))
+      return (
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Spinner />
+        </View>
+      )
     if (bot.error) return <BotUnavailable />
     // console.log('& invitation?', bot.invitation)
     return (

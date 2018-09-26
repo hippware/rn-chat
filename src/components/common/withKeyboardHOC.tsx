@@ -49,6 +49,7 @@ export default (Component): any => {
       const {forwardedRef, ...rest} = this.props
       return (
         <Animated.View
+          pointerEvents="box-none"
           style={{
             transform: [
               {

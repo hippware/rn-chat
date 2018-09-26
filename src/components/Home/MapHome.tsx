@@ -4,7 +4,7 @@ import {StyleSheet, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
-import {IWocky} from 'wocky-client'
+import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {Spinner} from '../common'
@@ -44,11 +44,11 @@ export default class MapHome extends React.Component<IProps> {
   @observable showSatelliteOverlay: boolean = false
   @observable opacity: number = 0
 
-  mapRef: any
+  mapRef?: MapView
   reactions: any[] = []
   region: any
 
-  setCenterCoordinate = (location: Location) => {
+  setCenterCoordinate = (location: ILocation) => {
     if (this.mapRef && location) {
       this.mapRef.animateToCoordinate(location)
     }
@@ -96,7 +96,9 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = (region: MapViewRegion) => {
     const {homeStore} = this.props
-    homeStore.setFocusedLocation(undefined)
+    if (homeStore.focusedBotLocation) {
+      homeStore.setFocusedLocation(undefined)
+    }
     this.region = region
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
@@ -145,7 +147,7 @@ export default class MapHome extends React.Component<IProps> {
     }
     const {latitude, longitude} = location
     return (
-      <View style={commonStyles.absolute}>
+      <View style={[commonStyles.absolute, {bottom: -30}]}>
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}

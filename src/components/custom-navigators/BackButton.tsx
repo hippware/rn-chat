@@ -47,6 +47,7 @@ export default class BackButton extends React.Component<Props> {
         >
           <Image source={navBarStyle.backButtonImage} />
         </TouchableOpacity>
+        )
       </Animated.View>
     )
   }
