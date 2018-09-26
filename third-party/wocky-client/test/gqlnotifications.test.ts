@@ -31,7 +31,7 @@ describe('GraphQL Notifications', () => {
 
       // Expected Notification: User follow notification
       await pause(1000)
-      const notifications = await gqlBob.loadNotifications()
+      const notifications = await gqlBob.loadNotifications({})
       // console.log('& got notifications', notifications)
       expect(notifications.count).to.equal(1)
       // console.log('& user follow notification? ', typeof notifications.list[0])
@@ -70,7 +70,7 @@ describe('GraphQL Notifications', () => {
       await post.publish()
 
       await pause(1000)
-      const notifications = await gqlAlice.loadNotifications()
+      const notifications = await gqlAlice.loadNotifications({})
       // console.log('& got botitem notifications for alice', notifications)
       expect(notifications.count).to.equal(1)
       expect(notifications.list[0]).to.haveOwnProperty('post')
@@ -86,7 +86,7 @@ describe('GraphQL Notifications', () => {
       // alice invites bob to the bot (NOTE: this is different from `share`)
       await gqlAlice.inviteBot(aliceBot.id, [bob.username])
       await pause(1000)
-      const notifications = await gqlBob.loadNotifications()
+      const notifications = await gqlBob.loadNotifications({})
       expect(notifications.count).to.equal(2)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(alice.username)
@@ -104,7 +104,7 @@ describe('GraphQL Notifications', () => {
       timestamp()
       await gqlBob.inviteBotReply(invitationId, true)
       await pause(1000)
-      const notifications = await gqlAlice.loadNotifications()
+      const notifications = await gqlAlice.loadNotifications({})
       expect(notifications.count).to.equal(2)
       expect(notifications.list[0]).to.haveOwnProperty('sender')
       expect(notifications.list[0].sender).to.equal(bob.username)
@@ -125,7 +125,7 @@ describe('GraphQL Notifications', () => {
 
       // Expected Notification: Geofence Entry
       await pause(1000)
-      const notifications = await gqlAlice.loadNotifications()
+      const notifications = await gqlAlice.loadNotifications({})
       expect(notifications.count).to.equal(3)
       expect(notifications.list[0]).to.haveOwnProperty('isEnter')
       expect(notifications.list[0].isEnter).to.be.true
@@ -147,7 +147,7 @@ describe('GraphQL Notifications', () => {
 
       // Expected Notification: Geofence Exit
       await pause(1000)
-      const notifications = await gqlAlice.loadNotifications()
+      const notifications = await gqlAlice.loadNotifications({})
       expect(notifications.count).to.equal(4)
       expect(notifications.list[0]).to.haveOwnProperty('isEnter')
       expect(notifications.list[0].isEnter).to.be.false
