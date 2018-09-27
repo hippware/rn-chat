@@ -1,4 +1,4 @@
-import {types, isAlive, clone, getType, getParent, getEnv, flow} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow} from 'mobx-state-tree'
 import {reaction, ObservableMap, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -7,44 +7,12 @@ import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import {Bot, IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
-import {EventBotCreate} from '../model/EventBotCreate'
-import {EventBotPost} from '../model/EventBotPost'
-import {EventBotNote} from '../model/EventBotNote'
-import {EventBotShare} from '../model/EventBotShare'
-import {EventBotGeofence} from '../model/EventBotGeofence'
-import {EventDelete} from '../model/EventDelete'
-import {EventUserFollow} from '../model/EventUserFollow'
-import {EventBotInvite} from '../model/EventBotInvite'
-import {createPaginable} from '../model/PaginableList'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
-
-export const EventEntity = types.union(
-  EventBotPost,
-  EventBotNote,
-  EventBotShare,
-  EventBotCreate,
-  EventBotGeofence,
-  EventDelete,
-  EventUserFollow,
-  EventBotInvite
-)
-export type IEventEntity = typeof EventEntity.Type
-export const EventList = createPaginable<IEventEntity>(EventEntity).actions(() => ({
-  postProcessSnapshot: (snapshot: any) => {
-    if (snapshot.result.length > 20) {
-      const result = snapshot.result.slice(0, 20)
-      const cursor = result[result.length - 1].id
-      return {...snapshot, result, cursor}
-    }
-    return snapshot
-  },
-}))
-export type IEventListType = typeof EventList.Type
-export interface IEventList extends IEventListType {}
+import {EventList, EventEntity} from '../model/EventList'
 
 export const Wocky = types
   .compose(
@@ -58,8 +26,8 @@ export const Wocky = types
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {} as ObservableMap),
       profile: types.maybe(OwnProfile),
-      updates: types.optional(types.array(EventEntity), []),
       notifications: types.optional(EventList, {}),
+      hasUnreadNotifications: false,
       geofenceBots: types.optional(BotPaginableList, {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
@@ -119,11 +87,11 @@ export const Wocky = types
               return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
             })
         },
-        get updatesToAdd(): IEventEntity[] {
-          return self.updates.filter((e: IEventEntity) => {
-            return getType(e).name !== EventDelete.name
-          })
-        },
+        // get updatesToAdd(): IEventEntity[] {
+        //   return self.updates.filter((e: IEventEntity) => {
+        //     return getType(e).name !== EventDelete.name
+        //   })
+        // },
       },
       actions: {
         postProcessSnapshot: (snapshot: any) => {
@@ -258,7 +226,7 @@ export const Wocky = types
       }
     },
     deleteBot: (id: string) => {
-      self.notifications.result.forEach((event: any) => {
+      self.notifications!.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
           self.notifications.remove(event.id)
         }
@@ -316,7 +284,7 @@ export const Wocky = types
           const data = yield self.transport.loadBot(id, server)
           self.load(bot, data)
         } catch (e) {
-          // console.error(e) TODO
+          // console.error('bot load error', e)
           bot.setError(JSON.stringify(e))
         } finally {
           bot.finishLoading()
@@ -511,19 +479,26 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)
       }),
-      _loadNotifications: flow(function*(lastId: any, max: number = 10) {
+      _loadNotifications: flow(function*(lastId: any, max: number = 20) {
+        // console.log('& load', lastId)
         yield waitFor(() => self.connected)
-        const {list, count, cursor} = yield self.transport.loadNotifications(lastId, max)
-        // console.log('& load notifications', list)
-        return {list: list.map((data: any) => self.create(EventEntity, data)), count, cursor}
+        const {list, count} = yield self.transport.loadNotifications({
+          beforeId: lastId,
+          limit: max,
+        })
+        // console.log('& load notifications list', list)
+        return {list: list.map((data: any) => self.create(EventEntity, data)), count}
       }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
-        // console.log('ONBOTVISITOR', action, JSON.stringify(bot), visitor)
+        console.log('ONBOTVISITOR', action, /*JSON.stringify(bot),*/ visitor)
         const id = visitor.id
         const botModel: IBot = self.bots.get(bot.id, bot)
         if (action === 'ARRIVE') {
           if (id === self.username) {
+            console.log('is visitor')
             botModel.visitor = true
+          } else {
+            console.log('not a visitor')
           }
           self.geofenceBots.remove(botModel.id)
           self.geofenceBots.addToTop(botModel)
@@ -533,8 +508,9 @@ export const Wocky = types
           }
         }
       }),
-      _onNotification: flow(function*(data: any) {
-        // console.log('ONNOTIFICATION', self.username, JSON.stringify(data))
+      // _onNotification: flow(function*(data: any) {
+      _onNotification(data: any, addToBottom: boolean = false) {
+        // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
         // }
@@ -560,35 +536,37 @@ export const Wocky = types
         // if (changed && data.bot) {
         //   yield self.loadBot(data.bot.id, data.bot.server)
         // } else {
+
         try {
           const item: any = self.create(EventEntity, data)
-          const existed = self.updates.findIndex((u: any) => u.id === item.id)
-          if (existed !== -1) {
-            self.updates.splice(existed, 1)
-          }
-          self.updates.unshift(item)
+          self.notifications.remove(item.id)
+          if (addToBottom) self.notifications.add(item)
+          else self.notifications.addToTop(item)
         } catch (e) {
-          getEnv(self).logger.log('ONNOTIFICATION ERROR: ' + e.message)
+          getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
-      }),
-      incorporateUpdates: () => {
-        for (let i = self.updates.length - 1; i >= 0; i--) {
-          const {id} = self.updates[i]
-          // delete item
-          self.notifications.remove(id)
-          if (getType(self.updates[i]).name !== EventDelete.name) {
-            const event: any = self.updates[i]
-            if (event.bot && isAlive(event.bot)) {
-              self.notifications.addToTop(clone(event))
-            }
-          } else {
-            const parts = id.split('/')
-            self.deleteBot(parts[parts.length - 1])
-          }
-        }
-        self.updates.clear()
       },
+      viewNotifications() {
+        self.hasUnreadNotifications = false
+      },
+      // incorporateUpdates: () => {
+      //   for (let i = self.updates.length - 1; i >= 0; i--) {
+      //     const {id} = self.updates[i]
+      //     // delete item
+      //     self.notifications.remove(id)
+      //     if (getType(self.updates[i]).name !== EventDelete.name) {
+      //       const event: any = self.updates[i]
+      //       if (event.bot && isAlive(event.bot)) {
+      //         self.notifications.addToTop(clone(event))
+      //       }
+      //     } else {
+      //       const parts = id.split('/')
+      //       self.deleteBot(parts[parts.length - 1])
+      //     }
+      //   }
+      //   self.updates.clear()
+      // },
       _onGeoBot: (bot: any) => {
         if (!self.geoBots.has(bot.id)) {
           self.geoBots.set(bot.id, self.getBot(bot))
@@ -611,6 +589,33 @@ export const Wocky = types
   .actions(self => {
     const fs: IFileService = getEnv(self).fileService
     return {
+      _loadNewNotifications: flow(function*() {
+        yield waitFor(() => self.connected)
+        const mostRecentNotification = self.notifications.first
+        const limit = 20
+        const {list} = yield self.transport.loadNotifications({
+          afterId: mostRecentNotification && mostRecentNotification.id,
+          limit,
+        })
+        if (list.length === limit) {
+          // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
+          self.notifications.refresh()
+        }
+        const beforeCount = self.notifications.length
+        list.forEach(n => self._onNotification(n, true))
+        const afterCount = self.notifications.length
+        if (afterCount === beforeCount) {
+          self.hasUnreadNotifications = false
+        } else if (beforeCount === 0) {
+          // first app load or after cache reset
+          self.hasUnreadNotifications = true
+        }
+        self.notifications.cursor = self.notifications.last && self.notifications.last.id
+        // console.log(
+        //   '& notifications list after initial load',
+        //   self.notifications.list.map(n => n.id)
+        // )
+      }),
       downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
         const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
         if (!(yield fs.fileExists(folder))) {
@@ -657,7 +662,6 @@ export const Wocky = types
       self.chats.clear()
       self.geoBots.clear()
       self.notifications.refresh()
-      self.updates.clear()
       self.profiles.clear()
       self.bots.clear()
     }
@@ -666,12 +670,12 @@ export const Wocky = types
       reactions = [
         reaction(
           () => self.profile && self.connected,
-          async (connected: boolean) => {
+          (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
               self.transport.subscribeNotifications()
               self.requestRoster()
-              await self.notifications.load()
+              self._loadNewNotifications()
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
                 profile.setStatus('unavailable')
@@ -692,7 +696,7 @@ export const Wocky = types
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, self._addMessage),
-        reaction(() => self.transport.notification, self._onNotification),
+        reaction(() => self.transport.notification, n => self._onNotification(n)),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }

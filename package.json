@@ -22,7 +22,8 @@
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
     "precommit": "pretty-quick --staged",
-    "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts"
+    "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
+    "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" wocky-client master"
   },
   "jest": {
     "preset": "react-native",
