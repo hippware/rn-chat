@@ -58,7 +58,6 @@ describe('GraphQL Notifications', () => {
       await aliceBot.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
-        geofence: true,
         addressData: {city: 'Los Angeles', country: 'California'},
       })
       await aliceBot.save()

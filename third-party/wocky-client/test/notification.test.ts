@@ -22,7 +22,7 @@ describe('Wocky Live Notifications', () => {
       const alicesBobProfile = await alice.loadProfile(bob.username!)
       await alicesBobProfile.follow()
       // wait for live notifications
-      await waitFor(() => bob.updates.length === 1)
+      await waitFor(() => bob.notifications.length === 1)
       done()
 
       // const notifications = await gqlBob.loadNotifications()

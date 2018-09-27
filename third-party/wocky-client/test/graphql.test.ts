@@ -144,18 +144,14 @@ describe('GraphQL', () => {
       timestamp()
       bot = await user.createBot()
       await bot.update({
-        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
-        geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       bot2 = await user.createBot()
       await bot2.update({
-        public: true,
         location: {latitude: 1.2, longitude: 2.2},
         title: 'Test bot2',
-        geofence: false,
         addressData: {city: 'New York', country: 'US'},
       })
       const bots = await gql.loadOwnBots(user.username!, null, 1)
@@ -218,9 +214,8 @@ describe('GraphQL', () => {
   it('load bot', async done => {
     try {
       timestamp()
-      const loaded = await gql.loadBot(bot.id, bot.server)
+      const loaded = await gql.loadBot(bot.id)
       expect(loaded.title).to.equal(bot.title)
-      expect(loaded.geofence).to.equal(bot.geofence)
       expect(loaded.guest).to.equal(true)
       expect(loaded.id).to.equal(bot.id)
       done()

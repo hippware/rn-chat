@@ -22,7 +22,6 @@ describe('EventBotShareCard', () => {
       owner,
       // image: FileRef,
       description: 'description',
-      public: true,
       location: {latitude: 1, longitude: 1},
       address: 'address',
       followersSize: 0,
