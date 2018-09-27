@@ -16,11 +16,7 @@ type Props = {
 @observer
 class Notifications extends React.Component<Props> {
   componentDidMount() {
-    this.props.wocky.viewNotifications()
-  }
-
-  componentWillUnmount() {
-    this.props.wocky.viewNotifications()
+    this.props.wocky.incorporateUpdates()
   }
 
   render() {
@@ -35,7 +31,7 @@ class Notifications extends React.Component<Props> {
           title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
         }}
         headerInner={<RText size={16}>Updates</RText>}
-        data={notifications.length > 0 ? notifications.list.slice() : []}
+        data={notifications.length > 0 ? notifications.list.slice() : null}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}

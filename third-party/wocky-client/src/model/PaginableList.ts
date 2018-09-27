@@ -66,24 +66,24 @@ export function createPaginable<T>(type: any): IPaginable<T> {
               self.result.splice(index, 1)
             }
           },
-          // // TODO fix code duplicate here, was not able to pass optional param because of generics
-          // loadPage: flow<number>(function*(max: number) {
-          //   if (self.loading || self.finished) {
-          //     return self.result
-          //   }
-          //   self.loading = true
-          //   try {
-          //     const {list, count, cursor, ...data} = yield request(self.cursor, max)
-          //     self.count = count
-          //     self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
-          //     Object.assign(self, data)
-          //     list.forEach((el: any) => self.add(el))
-          //     self.finished = list.length === 0
-          //   } finally {
-          //     self.loading = false
-          //   }
-          //   return self.result
-          // }),
+          // TODO fix code duplicate here, was not able to pass optional param because of generics
+          loadPage: flow<number>(function*(max: number) {
+            if (self.loading || self.finished) {
+              return self.result
+            }
+            self.loading = true
+            try {
+              const {list, count, cursor, ...data} = yield request(self.cursor, max)
+              self.count = count
+              self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
+              Object.assign(self, data)
+              list.forEach((el: any) => self.add(el))
+              self.finished = list.length === 0
+            } finally {
+              self.loading = false
+            }
+            return self.result
+          }),
           refresh: () => {
             self.result.clear()
             self.cursor = null

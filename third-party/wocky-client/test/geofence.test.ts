@@ -88,30 +88,17 @@ describe('Geofence', () => {
       expect(user1.profile.hasUsedGeofence).to.be.false
       bot = await user1.createBot()
       await bot.update({
+        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
+        geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       expect(user1.profile.hasUsedGeofence).to.be.true
       // console.log('bot updated', bot.toJSON())
+      expect(bot.geofence).to.be.true
       expect(bot.visitorsSize).to.equal(0)
       expect(bot.guestsSize).to.equal(0)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('invite user2 to bot', async done => {
-    try {
-      await bot.invite([user2.username])
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('invite user2 to bot', async done => {
-    try {
-      await waitFor(() => user2.notifications.length === 1)
       done()
     } catch (e) {
       done(e)
@@ -132,11 +119,14 @@ describe('Geofence', () => {
       timestamp()
       bot2 = await user1.createBot()
       await bot2.update({
+        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot2',
+        geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       // console.log('bot updated', bot.toJSON())
+      expect(bot2.geofence).to.be.true
       expect(bot2.visitorsSize).to.equal(0)
       expect(bot2.guestsSize).to.equal(0)
       done()
@@ -198,16 +188,6 @@ describe('Geofence', () => {
       await waitFor(() => !loadedBot.loading)
       expect(loadedBot.guestsSize).to.equal(1)
       expect(loadedBot.guest).to.equal(false)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
-  it('accept invite', async done => {
-    try {
-      timestamp()
-      await loadedBot.acceptInvitation()
       done()
     } catch (e) {
       done(e)

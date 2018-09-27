@@ -234,6 +234,7 @@ describe('BotStore', () => {
       bot2 = await user1.createBot()
       expect(bot2.isNew).to.be.true
       await bot2.update({
+        public: true,
         location: {latitude: 1.2, longitude: 2.2},
         title: 'Test bot2',
       })

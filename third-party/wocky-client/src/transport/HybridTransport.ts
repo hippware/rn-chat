@@ -245,12 +245,11 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.disablePush()
   }
 
-  loadNotifications(params: {
-    limit?: number
-    beforeId?: string
-    afterId?: string
-  }): Promise<{list: any[]; count: number}> {
-    return this._gql.loadNotifications(params)
+  loadNotifications(
+    lastId: any,
+    max?: number
+  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
+    return this._gql.loadNotifications(lastId, max)
   }
 
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {

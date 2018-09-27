@@ -111,7 +111,7 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
               >
                 <View>
                   <Image source={notificationsButton} />
-                  {wocky.hasUnreadNotifications && <View style={styles.newDot} />}
+                  {wocky.updates.length && <View style={styles.newDot} />}
                 </View>
               </TouchableOpacity>
 
