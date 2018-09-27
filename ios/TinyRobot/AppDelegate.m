@@ -16,6 +16,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>
 #import <React/RCTLinkingManager.h>
+#import "RNFirebaseLinks.h"
 
 @import GoogleMaps;
 
@@ -100,7 +101,8 @@
 {
   [GMSServices provideAPIKey:@"AIzaSyD0DHHzl3sSy3aEbZo9OLqEYo3FAlEM_qI"];
   [FIRApp configure];
-  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+  NSString *schema = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
+  [FIROptions defaultOptions].deepLinkURLScheme  = schema;
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
@@ -115,6 +117,19 @@
   });
   
 }
+// TODO: ENABLE IT FOR DYNAMIC LINKS
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//            options:(NSDictionary<NSString *, id> *)options {
+//  return [[RNFirebaseLinks instance] application:application openURL:url options:options];
+//}
+//
+//- (BOOL)application:(UIApplication *)application
+//continueUserActivity:(NSUserActivity *)userActivity
+// restorationHandler:(void (^)(NSArray *))restorationHandler {
+//  return [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+//}
+//
 // Add this above the `@end`:
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
