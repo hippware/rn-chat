@@ -538,7 +538,10 @@ export const Wocky = types
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
           if (addToBottom) self.notifications.add(item)
-          else self.notifications.addToTop(item)
+          else {
+            self.notifications.addToTop(item)
+            self.hasUnreadNotifications = true
+          }
         } catch (e) {
           getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
