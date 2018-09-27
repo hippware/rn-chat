@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Update: RNRF, react-navigation and some other components
 * [dev] Remove version string from MyAccount snapshot test (#2833)
 * Hot-fix: Avoid setting null geofence during bot update
+* SplitRenderer and other improvements (PR #2851)
+  * Laggy transition from location profile to Who's Here screen (#2825)
 
 # 3.4.2 - 2018 Sep 21
 
