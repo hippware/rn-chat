@@ -1087,9 +1087,6 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
-							com.apple.SafariKeychain = {
-								enabled = 1;
-							};
 						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -1107,14 +1104,11 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
-							com.apple.SafariKeychain = {
-								enabled = 1;
-							};
 						};
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2417,7 +2411,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
