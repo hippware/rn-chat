@@ -38,6 +38,9 @@ PODS:
     - FirebaseAnalytics (= 5.0.1)
   - Firebase/CoreOnly (5.2.0):
     - FirebaseCore (= 5.0.3)
+  - Firebase/DynamicLinks (5.2.0):
+    - Firebase/Core
+    - FirebaseDynamicLinks (= 3.0.1)
   - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
@@ -48,6 +51,8 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (5.0.3):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseDynamicLinks (3.0.1):
+    - FirebaseAnalytics (~> 5.0)
   - FirebaseInstanceID (3.1.0):
     - FirebaseCore (~> 5.0)
   - Folly (2016.09.26.00):
@@ -166,7 +171,7 @@ PODS:
     - React
   - RNFS (2.10.14):
     - React
-  - RNImageCropPicker (0.20.3):
+  - RNImageCropPicker (0.21.2):
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
@@ -347,6 +352,7 @@ DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/DynamicLinks
   - GoogleMaps
   - KissXML (from `https://github.com/aksonov/KissXML.git`, branch `5.1.4`)
   - QBImagePickerController
@@ -393,6 +399,7 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
+    - FirebaseDynamicLinks
     - FirebaseInstanceID
     - Folly
     - glog
@@ -472,6 +479,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
   FirebaseCore: a3c87242451633fff8490183898075ce77d168d2
+  FirebaseDynamicLinks: d624a7adc81a8fd70d52be5a6a47a2bc0644b923
   FirebaseInstanceID: 05d779cbb97bd5bd5c51a38a903fc9cfe1b2454a
   Folly: 211775e49d8da0ca658aebc8eab89d642935755c
   glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
@@ -502,6 +510,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: 399663f64af6e85a72fd39d2632fb2b76e07a7da
+PODFILE CHECKSUM: 940769fddf3b996e4b0674bd19ec97fcada62c9b
 
 COCOAPODS: 1.5.3
