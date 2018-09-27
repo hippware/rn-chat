@@ -2,22 +2,38 @@ import {expect} from 'chai'
 import {types, getType, applySnapshot, getSnapshot} from 'mobx-state-tree'
 import {processItem, processHomestreamResponse} from '../src/transport/XmppTransport'
 import {FileSource} from '../src/model/File'
-import {EventList, EventEntity} from '../src/store/Wocky'
 import {Base} from '../src/model/Base'
 import {EventBotNote} from '../src/model/EventBotNote'
 import {EventBotPost} from '../src/model/EventBotPost'
 import {Storages} from '../src/store/Factory'
 import {homestreamTestData} from './support/testuser'
+import {EventEntity, EventList} from '../src/model/EventList'
 const env = {
   wocky: {
-    _loadBotVisitors: () => {},
-    _loadBotGuests: () => {},
-    _loadSubscribedBots: () => {},
-    _loadGeofenceBots: () => {},
-    _loadBotSubscribers: () => {},
-    _loadBotPosts: () => {},
-    _loadRelations: () => {},
-    _loadOwnBots: () => {},
+    _loadBotVisitors: () => {
+      /* noop */
+    },
+    _loadBotGuests: () => {
+      /* noop */
+    },
+    _loadSubscribedBots: () => {
+      /* noop */
+    },
+    _loadGeofenceBots: () => {
+      /* noop */
+    },
+    _loadBotSubscribers: () => {
+      /* noop */
+    },
+    _loadBotPosts: () => {
+      /* noop */
+    },
+    _loadRelations: () => {
+      /* noop */
+    },
+    _loadOwnBots: () => {
+      /* noop */
+    },
   },
 }
 
@@ -46,7 +62,7 @@ describe('Home stream', () => {
       testModel.home.add(eventNote)
       testModel.home.add(eventBotPost)
 
-      console.log(JSON.stringify(getSnapshot(testModel), null, 2))
+      // console.log(JSON.stringify(getSnapshot(testModel), null, 2))
       snapshot = JSON.stringify(getSnapshot(testModel))
       done()
     } catch (e) {

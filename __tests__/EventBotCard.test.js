@@ -22,7 +22,6 @@ describe('EventBotCard', () => {
       owner,
       // image: FileRef,
       description: 'description',
-      public: true,
       location: {latitude: 1, longitude: 1},
       address: 'address',
       followersSize: 0,
@@ -35,7 +34,13 @@ describe('EventBotCard', () => {
 
     mockLocationStore.setPosition({longitude: 2, latitude: 2, accuracy: 2})
 
-    const botCreate = EventBotCreate.create({id: '123', time: 123, bot, created: true})
+    const botCreate = EventBotCreate.create({
+      id: '123',
+      cursor: '123',
+      time: 123,
+      bot,
+      created: true,
+    })
     const toRender = (
       <Provider locationStore={mockLocationStore}>
         <EventCard item={botCreate} />

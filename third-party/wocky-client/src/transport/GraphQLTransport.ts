@@ -402,18 +402,19 @@ export class GraphQLTransport implements IWockyTransport {
       })
   }
 
-  async loadNotifications(
-    cursor?: string,
-    max: number = 3
-  ): Promise<{list: any[]; count: number; cursor: string | undefined}> {
+  async loadNotifications(params: {
+    limit?: number
+    beforeId?: string
+    afterId?: string
+  }): Promise<{list: any[]; count: number}> {
+    const {limit, beforeId, afterId} = params
+    // console.log('& gql load', beforeId, afterId, limit)
     const res = await this.client.query<any>({
-      // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
-        query getNotifications($limit: Int!, $ownUsername: String!, $cursor: String) {
-          notifications(first: $limit, after: $cursor) {
+        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
+          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
             totalCount
             edges {
-              cursor
               node {
                 ${NOTIFICATIONS_PROPS}
               }
@@ -421,8 +422,9 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {limit: max, ownUsername: this.username, cursor},
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username},
     })
+    // console.log('& gql res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {
       const {totalCount, edges} = res.data.notifications
 
@@ -430,10 +432,9 @@ export class GraphQLTransport implements IWockyTransport {
       return {
         count: totalCount,
         list,
-        cursor: edges && edges.length && edges[edges.length - 1].cursor,
       }
     }
-    return {count: 0, list: [], cursor}
+    return {count: 0, list: []}
   }
 
   subscribeNotifications() {
@@ -974,13 +975,13 @@ function convertBot({
   }
 }
 
-function convertNotification(notification: any): IEventData | null {
+function convertNotification(edge: any): IEventData | null {
   let bot: IBotData
   // TODO handle delete notifications
-  if (notification.node.__typename === 'NotificationDeleted') {
+  if (edge.node.__typename === 'NotificationDeleted') {
     return null
   }
-  const {data: {__typename, ...data}, id, createdAt} = notification.node
+  const {node: {data: {__typename, ...data}, id, createdAt}} = edge
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
@@ -1037,7 +1038,7 @@ function convertNotification(notification: any): IEventData | null {
       }
       return geofenceNotification
     default:
-      throw new Error(`failed to process notification ${notification}`)
+      throw new Error(`failed to process notification ${edge}`)
   }
 }
 
