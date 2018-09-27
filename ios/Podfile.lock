@@ -166,7 +166,7 @@ PODS:
     - React
   - RNFS (2.10.14):
     - React
-  - RNImageCropPicker (0.20.3):
+  - RNImageCropPicker (0.21.2):
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
