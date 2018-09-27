@@ -22,7 +22,6 @@ describe('EventBotPostCard', () => {
       owner,
       // image: FileRef,
       description: 'description',
-      public: true,
       location: {latitude: 1, longitude: 1},
       address: 'address',
       followersSize: 0,
@@ -43,7 +42,7 @@ describe('EventBotPostCard', () => {
       title: 'a title',
       profile: owner,
     })
-    const botPost = EventBotPost.create({id: '123', time: 123, bot, post})
+    const botPost = EventBotPost.create({id: '123', cursor: '123', time: 123, bot, post})
     const toRender = (
       <Provider locationStore={mockLocationStore}>
         <EventCard item={botPost} />

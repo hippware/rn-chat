@@ -75,10 +75,11 @@ export interface IWockyTransport {
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
   enablePush(token: string): Promise<void>
   disablePush(): Promise<void>
-  loadNotifications(
-    lastId?: string,
-    max?: number
-  ): Promise<{list: any[]; count: number; cursor: string | undefined}>
+  loadNotifications(params: {
+    limit?: number
+    beforeId?: string
+    afterId?: string
+  }): Promise<{list: any[]; count: number}>
   loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
   loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
   loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
