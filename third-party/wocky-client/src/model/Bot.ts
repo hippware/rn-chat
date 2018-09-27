@@ -216,7 +216,6 @@ export interface IBotData {
   owner?: IProfilePartial
   image: any
   description?: string
-  public: boolean
   location: any // TODO
   address?: string
   followersSize: number

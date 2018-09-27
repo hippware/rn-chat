@@ -393,6 +393,7 @@ export class GraphQLTransport implements IWockyTransport {
       .subscribe({
         next: action((result: any) => {
           const update = result.data.botGuestVisitors
+          console.log('visitor', update.visitor.id)
           this.botVisitor = {
             visitor: {id: update.visitor.id},
             bot: convertBot(update.bot),

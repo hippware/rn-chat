@@ -88,15 +88,12 @@ describe('Geofence', () => {
       expect(user1.profile.hasUsedGeofence).to.be.false
       bot = await user1.createBot()
       await bot.update({
-        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
-        geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       expect(user1.profile.hasUsedGeofence).to.be.true
       // console.log('bot updated', bot.toJSON())
-      expect(bot.geofence).to.be.true
       expect(bot.visitorsSize).to.equal(0)
       expect(bot.guestsSize).to.equal(0)
       done()
@@ -119,14 +116,11 @@ describe('Geofence', () => {
       timestamp()
       bot2 = await user1.createBot()
       await bot2.update({
-        public: true,
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot2',
-        geofence: true,
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       // console.log('bot updated', bot.toJSON())
-      expect(bot2.geofence).to.be.true
       expect(bot2.visitorsSize).to.equal(0)
       expect(bot2.guestsSize).to.equal(0)
       done()
@@ -137,38 +131,43 @@ describe('Geofence', () => {
 
   // TODO: this fails every OTHER run of the test...
 
-  // it('load visitors and live updates', async done => {
-  //   try {
-  //     timestamp()
-  //     await bot.visitors.load!()
-  //     expect(bot.visitors.list.length).to.equal(0)
-  //     expect(bot.visitorsSize).to.equal(0)
-  //     await enterBot(user1)
-  //     await waitFor(() => bot.visitors.list.length === 1)
-  //     expect(bot.visitorsSize).to.equal(1)
-  //     await waitFor(() => user1.activeBots.length === 2)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('load visitors and live updates', async done => {
+    try {
+      timestamp()
+      await bot.visitors.load!()
+      expect(bot.visitors.list.length).to.equal(0)
+      expect(bot.visitorsSize).to.equal(0)
+      await enterBot(user1)
+      await waitFor(() => bot.visitors.list.length === 1)
+      expect(bot.visitorsSize).to.equal(1)
+      await waitFor(() => user1.activeBots.length === 2)
+      done()
+    } catch (e) {
+      console.error(
+        'Visitors list length is off',
+        bot.visitors.list.length,
+        user1.activeBots.length
+      )
+      done(e)
+    }
+  })
 
-  // it('load visitors2', async done => {
-  //   try {
-  //     timestamp()
-  //     bot.visitors.refresh!()
-  //     expect(bot.visitors.list.length).to.equal(0)
-  //     await bot.visitors.load!()
-  //     expect(bot.visitors.list.length).to.equal(1)
-  //     await exitBot(user1)
-  //     await waitFor(() => bot.visitors.list.length === 0)
-  //     expect(bot.visitorsSize).to.equal(0)
-  //     await waitFor(() => user1.activeBots.length === 0)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
+  it('load visitors2', async done => {
+    try {
+      timestamp()
+      bot.visitors.refresh!()
+      expect(bot.visitors.list.length).to.equal(0)
+      await bot.visitors.load!()
+      expect(bot.visitors.list.length).to.equal(1, 'There should be 1 bot visitor')
+      await exitBot(user1)
+      await waitFor(() => bot.visitors.list.length === 0)
+      expect(bot.visitorsSize).to.equal(0)
+      await waitFor(() => user1.activeBots.length === 0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
 
   it('loads own bot', async done => {
     try {
