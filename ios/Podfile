@@ -35,6 +35,7 @@ def testing_pods
   pod 'Firebase/Core'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'Firebase/Auth'
+  pod 'Firebase/DynamicLinks'
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
   # Pods for AppCenter
   pod 'AppCenter/Analytics', '~> 1.7.1'
