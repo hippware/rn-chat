@@ -121,13 +121,21 @@
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
             options:(NSDictionary<NSString *, id> *)options {
-  return [[RNFirebaseLinks instance] application:application openURL:url options:options];
+  BOOL handled = [[RNFirebaseLinks instance] application:application openURL:url options:options];
+  if (!handled) {
+    handled = [RCTLinkingManager application:application openURL:url options:options];
+  }
+  return handled;
 }
 
 - (BOOL)application:(UIApplication *)application
 continueUserActivity:(NSUserActivity *)userActivity
  restorationHandler:(void (^)(NSArray *))restorationHandler {
-  return [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+  BOOL handled = [[RNFirebaseLinks instance] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+  if (!handled) {
+    handled = [RCTLinkingManager application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+  }
+  return handled;
 }
 
 // Add this above the `@end`:
