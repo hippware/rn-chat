@@ -199,7 +199,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
           justifyContent: 'center',
           width: '100%',
           paddingBottom: 10 * k,
-          marginBottom: bot.owner.isOwn ? 0 : 20,
+          marginBottom: bot.owner && bot.owner.isOwn ? 0 : 20,
         }}
       >
         <ProfileStack
@@ -216,18 +216,19 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
   return (
     <VisitorsWrapper>
       {inner}
-      {bot.owner.isOwn && (
-        <TouchableOpacity
-          style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
-          onPress={() => Actions.geofenceShare({botId: bot.id})}
-        >
-          <Image source={shareIcon} />
-          <RText size={16} pink style={{marginLeft: 12}}>
-            Invite
-          </RText>
-        </TouchableOpacity>
-      )}
-      {!(bot.owner.isOwn || list) && <View style={{height: 17}} />}
+      {bot.owner &&
+        bot.owner.isOwn && (
+          <TouchableOpacity
+            style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
+            onPress={() => Actions.geofenceShare({botId: bot.id})}
+          >
+            <Image source={shareIcon} />
+            <RText size={16} pink style={{marginLeft: 12}}>
+              Invite
+            </RText>
+          </TouchableOpacity>
+        )}
+      {!((bot.owner && bot.owner.isOwn) || list) && <View style={{height: 17}} />}
     </VisitorsWrapper>
   )
 }
