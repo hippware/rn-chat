@@ -4,15 +4,21 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.5.0 - 2018 Sep 27
+
 * Please update the current login/signup screen. (#2803)
 * Cropped image does not display on post (Rework #2741)
-  * Update: react-native-image-crop-picker
+  * Update: react-native-image-crop-picker, RNImageCropPicker pod
 * Properly handle missing Avatar (#2511)
 * Update: RNRF, react-navigation and some other components
 * [dev] Remove version string from MyAccount snapshot test (#2833)
 * Hot-fix: Avoid setting null geofence during bot update
 * SplitRenderer and other improvements (PR #2851)
   * Laggy transition from location profile to Who's Here screen (#2825)
+* Notifications fixes (PR #2816)
+  * Notification Screen: Notifications not in chronological order (#2800)
+  * Notifications Screen: Notifications not catching up. (#2801)
+  * Notification bell CTA should reflect new updates on app start (#2823)
 
 # 3.4.2 - 2018 Sep 21
 
