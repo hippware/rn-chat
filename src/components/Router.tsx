@@ -113,7 +113,7 @@ type Props = {
 @inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics', 'navStore', 'log')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
-  _handleOpenURL(event) {
+  _handleOpenURL = (event) => {
     this.props.log(event.url)
   }
   
