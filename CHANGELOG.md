@@ -4,6 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.6.1 - 2018 Sep 28
+
+* [dev] Prevent crash (#2882)
+
+# 3.6.0 - 2018 Sep 28
+
+* Bugsnag: Deep linking from push notification (#2860)
+* Set unread on "live" notification (PR #2863, Rework #2801)
+* HOTFIX: inject log to prevent crash
+
 # 3.5.0 - 2018 Sep 27
 
 * Please update the current login/signup screen. (#2803)
