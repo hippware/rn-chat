@@ -29,10 +29,10 @@ export class HybridTransport implements IWockyTransport {
   get host() {
     return this._xmpp.host
   }
-  @computed
-  get geoBot() {
-    return this._xmpp.geoBot
-  }
+  // @computed
+  // get geoBot() {
+  //   return this._xmpp.geoBot
+  // }
   @computed
   get message() {
     return this._xmpp.message

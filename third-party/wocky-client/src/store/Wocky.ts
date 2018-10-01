@@ -5,7 +5,7 @@ import {Profile, IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
-import {Bot, IBot, BotPaginableList} from '../model/Bot'
+import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
@@ -29,7 +29,7 @@ export const Wocky = types
       notifications: types.optional(EventList, {}),
       hasUnreadNotifications: false,
       geofenceBots: types.optional(BotPaginableList, {}),
-      geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
+      // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
     })
   )
@@ -96,7 +96,7 @@ export const Wocky = types
       actions: {
         postProcessSnapshot: (snapshot: any) => {
           const data = {...snapshot}
-          delete data.geoBots
+          // delete data.geoBots
           delete data.files
           return data
         },
@@ -235,7 +235,7 @@ export const Wocky = types
       self.profile!.ownBots.remove(id)
       self.profiles.get(self.username!)!.ownBots.remove(id)
       self.geofenceBots.remove(id)
-      self.geoBots.delete(id)
+      // self.geoBots.delete(id)
       self.bots.delete(id)
     },
   }))
@@ -567,11 +567,11 @@ export const Wocky = types
       //   }
       //   self.updates.clear()
       // },
-      _onGeoBot: (bot: any) => {
-        if (!self.geoBots.has(bot.id)) {
-          self.geoBots.set(bot.id, self.getBot(bot))
-        }
-      },
+      // _onGeoBot: (bot: any) => {
+      //   if (!self.geoBots.has(bot.id)) {
+      //     self.geoBots.set(bot.id, self.getBot(bot))
+      //   }
+      // },
       enablePush: flow(function*(token: string) {
         yield waitFor(() => self.connected)
         yield self.transport.enablePush(token)
@@ -660,7 +660,7 @@ export const Wocky = types
       self.geofenceBots.refresh()
       self.roster.clear()
       self.chats.clear()
-      self.geoBots.clear()
+      // self.geoBots.clear()
       self.notifications.refresh()
       self.profiles.clear()
       self.bots.clear()
@@ -683,7 +683,7 @@ export const Wocky = types
             }
           }
         ),
-        reaction(() => self.transport.geoBot, self._onGeoBot),
+        // reaction(() => self.transport.geoBot, self._onGeoBot),
         reaction(
           () => self.transport.presence,
           ({id, status}) => {
