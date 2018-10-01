@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Bugsnag: Deep linking from push notification (#2860)
 * Set unread on "live" notification (PR #2863, Rework #2801)
+* Support iOS Universal Links (#2865)
 * HOTFIX: inject log to prevent crash
 
 # 3.5.0 - 2018 Sep 27
