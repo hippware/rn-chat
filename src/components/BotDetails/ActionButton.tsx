@@ -15,7 +15,6 @@ type Props = {
   locationStore?: ILocationStore
   homeStore?: IHomeStore
   copyAddress: () => void
-  subscribe: () => void
   unsubscribe: () => void
   isSubscribed: boolean
   analytics?: any
