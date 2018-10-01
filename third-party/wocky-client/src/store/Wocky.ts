@@ -506,7 +506,7 @@ export const Wocky = types
         }
       }),
       // _onNotification: flow(function*(data: any) {
-      _onNotification(data: any, addToBottom: boolean = false) {
+      _onNotification(data: any) {
         // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
@@ -537,11 +537,8 @@ export const Wocky = types
         try {
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
-          if (addToBottom) self.notifications.add(item)
-          else {
-            self.notifications.addToTop(item)
-            self.hasUnreadNotifications = true
-          }
+          self.notifications.addToTop(item)
+          self.hasUnreadNotifications = true
         } catch (e) {
           getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
@@ -602,7 +599,7 @@ export const Wocky = types
           self.notifications.refresh()
         }
         const beforeCount = self.notifications.length
-        list.forEach(n => self._onNotification(n, true))
+        list.reverse().forEach(self._onNotification)
         const afterCount = self.notifications.length
         if (afterCount === beforeCount) {
           self.hasUnreadNotifications = false
@@ -696,7 +693,7 @@ export const Wocky = types
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, self._addMessage),
-        reaction(() => self.transport.notification, n => self._onNotification(n)),
+        reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
