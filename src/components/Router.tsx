@@ -1,5 +1,4 @@
 import React from 'react'
-import {Linking} from 'react-native'
 import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
@@ -113,14 +112,14 @@ type Props = {
 @inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics', 'navStore', 'log')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
-  _handleOpenURL = (event) => {
-    this.props.log(event.url)
-  }
-  
   componentDidMount() {
-    const {wocky, locationStore} = this.props
+    const {wocky, firebaseStore, locationStore} = this.props
+    autorun(() => {
+      if (firebaseStore.url) {
+        this.props.log('UNIVERSAL URL:', firebaseStore.url)
+      }
+    })
 
-    Linking.addEventListener('url', this._handleOpenURL);
     autorun(
       () => {
         if (wocky!.connected && !locationStore!.enabled) {
@@ -140,10 +139,6 @@ class TinyRobotRouter extends React.Component<Props> {
       },
       {delay: 1000}
     )
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this._handleOpenURL);
   }
 
   render() {

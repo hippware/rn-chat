@@ -18,6 +18,7 @@ const FirebaseStore = types
     resource: types.maybe(types.string),
   })
   .volatile(() => ({
+    url: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
@@ -32,14 +33,33 @@ const FirebaseStore = types
       self.buttonText = 'Verify'
     },
   }))
+  .actions(self => ({
+    setUrl: url => {
+      if (url) {
+        self.url = url
+      }
+    },
+  }))
   .actions(self => {
-    const {auth, logger, analytics} = getEnv(self)
+    const {firebase, auth, logger, analytics} = getEnv(self)
     let wocky: IWocky
     let confirmResult: any
+    let unsubscribe: any
 
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = getParent(self).wocky // wocky could be null for HMR (?)
+      // setup dynamic links
+      unsubscribe = firebase.links().onLink(self.setUrl)
+      // get initial link
+      firebase
+        .links()
+        .getInitialLink()
+        .then(self.setUrl)
+    }
+
+    function beforeDestroy() {
+      unsubscribe()
     }
 
     // NOTE: this is not a MST action
@@ -168,7 +188,7 @@ const FirebaseStore = types
       }
     })
 
-    return {afterAttach, logout, verifyPhone, confirmCode, resendCode}
+    return {afterAttach, logout, beforeDestroy, verifyPhone, confirmCode, resendCode}
   })
 
 export default FirebaseStore

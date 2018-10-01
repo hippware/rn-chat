@@ -44,6 +44,7 @@ const env = {
   transport,
   storage: AsyncStorage,
   auth,
+  firebase,
   logger,
   geocodingStore,
   fileService,
