@@ -37,7 +37,7 @@ type Props = {
 
 const emojiKeyboardHeight = 305
 
-@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log')
+@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log', 'locationStore')
 @observer
 export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
@@ -186,9 +186,10 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {load, save, id} = this.bot
+      const {load, save, id, setUserLocation} = this.bot
       load({title: this.text, icon: this.props.iconStore.icon})
       Keyboard.dismiss()
+      setUserLocation(this.props.locationStore.location)
       await save()
 
       if (!this.props.edit) {
