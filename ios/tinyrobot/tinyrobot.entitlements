@@ -6,8 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:tinyrobot.app.goo.gl</string>
-		<string>webcredentials:tinyrobot.com</string>
+		<string>applinks:tinyrobot.page.link</string>
 		<string>applinks:tinyrobot.com</string>
 	</array>
 </dict>
