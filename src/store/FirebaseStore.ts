@@ -67,11 +67,13 @@ const FirebaseStore = types
         .getInitialLink()
         .then(onFirebaseDynamicLink)
 
-      // listen for FDL invite codes and redeem once user is logged in
+      // listen for Dynamic Link invite codes and redeem once user is logged in
       when(
         () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
         () => {
           console.log('& TODO: redeem code', self.inviteCode)
+          // await wocky.redeemCode(self.inviteCode)
+          // self.setInviteCode(undefined)
         }
       )
     }
