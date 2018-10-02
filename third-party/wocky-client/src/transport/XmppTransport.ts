@@ -9,7 +9,7 @@ import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 const TIMEOUT = 30000
 const BOT_NS = 'hippware.com/hxep/bot'
-const EXPLORE_NEARBY = 'explore-nearby-result'
+// const EXPLORE_NEARBY = 'explore-nearby-result'
 const FILE_NS = 'hippware.com/hxep/http-file'
 const ROSTER = 'jabber:iq:roster'
 const NEW_GROUP = '__new__'
@@ -37,7 +37,7 @@ export class XmppTransport implements IWockyTransport {
   @observable username: string
   @observable password: string
   @observable host: string
-  @observable geoBot: any
+  // @observable geoBot: any
   @observable notification: any
   isGeoSearching: boolean = false
 
@@ -57,12 +57,15 @@ export class XmppTransport implements IWockyTransport {
       if (msg.body || msg.media || msg.image || msg.result) {
         const {chatId, ...message} = processMessage({...msg, unread: true}, this.username!)
         this.message = {id: chatId, message}
-      } else if (msg[EXPLORE_NEARBY] && msg[EXPLORE_NEARBY].bot) {
-        if (msg[EXPLORE_NEARBY].bot) {
-          const bot = msg[EXPLORE_NEARBY].bot
-          this.geoBot = {id: bot.id, ...processMap(bot)}
-        }
       }
+
+      // disable EXPLORE_NEARBY code
+      // else if (msg[EXPLORE_NEARBY] && msg[EXPLORE_NEARBY].bot) {
+      //   if (msg[EXPLORE_NEARBY].bot) {
+      //     const bot = msg[EXPLORE_NEARBY].bot
+      //     this.geoBot = {id: bot.id, ...processMap(bot)}
+      //   }
+      // }
     })
     provider.onPresence = action((stanza: any) => {
       const id = Utils.getNodeJid(stanza.from)!

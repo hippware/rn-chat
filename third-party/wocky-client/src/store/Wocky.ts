@@ -5,7 +5,7 @@ import {Profile, IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
-import {Bot, IBot, BotPaginableList} from '../model/Bot'
+import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
@@ -29,7 +29,7 @@ export const Wocky = types
       notifications: types.optional(EventList, {}),
       hasUnreadNotifications: false,
       geofenceBots: types.optional(BotPaginableList, {}),
-      geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
+      // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, Chats.create()),
     })
   )
@@ -96,7 +96,7 @@ export const Wocky = types
       actions: {
         postProcessSnapshot: (snapshot: any) => {
           const data = {...snapshot}
-          delete data.geoBots
+          // delete data.geoBots
           delete data.files
           return data
         },
@@ -235,7 +235,7 @@ export const Wocky = types
       self.profile!.ownBots.remove(id)
       self.profiles.get(self.username!)!.ownBots.remove(id)
       self.geofenceBots.remove(id)
-      self.geoBots.delete(id)
+      // self.geoBots.delete(id)
       self.bots.delete(id)
     },
   }))
@@ -506,7 +506,7 @@ export const Wocky = types
         }
       }),
       // _onNotification: flow(function*(data: any) {
-      _onNotification(data: any, addToBottom: boolean = false) {
+      _onNotification(data: any) {
         // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
         // if (!version) {
         //   throw new Error('No version for notification:' + JSON.stringify(data))
@@ -537,11 +537,8 @@ export const Wocky = types
         try {
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
-          if (addToBottom) self.notifications.add(item)
-          else {
-            self.notifications.addToTop(item)
-            self.hasUnreadNotifications = true
-          }
+          self.notifications.addToTop(item)
+          self.hasUnreadNotifications = true
         } catch (e) {
           getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
@@ -567,11 +564,11 @@ export const Wocky = types
       //   }
       //   self.updates.clear()
       // },
-      _onGeoBot: (bot: any) => {
-        if (!self.geoBots.has(bot.id)) {
-          self.geoBots.set(bot.id, self.getBot(bot))
-        }
-      },
+      // _onGeoBot: (bot: any) => {
+      //   if (!self.geoBots.has(bot.id)) {
+      //     self.geoBots.set(bot.id, self.getBot(bot))
+      //   }
+      // },
       enablePush: flow(function*(token: string) {
         yield waitFor(() => self.connected)
         yield self.transport.enablePush(token)
@@ -602,7 +599,7 @@ export const Wocky = types
           self.notifications.refresh()
         }
         const beforeCount = self.notifications.length
-        list.forEach(n => self._onNotification(n, true))
+        list.reverse().forEach(self._onNotification)
         const afterCount = self.notifications.length
         if (afterCount === beforeCount) {
           self.hasUnreadNotifications = false
@@ -660,7 +657,7 @@ export const Wocky = types
       self.geofenceBots.refresh()
       self.roster.clear()
       self.chats.clear()
-      self.geoBots.clear()
+      // self.geoBots.clear()
       self.notifications.refresh()
       self.profiles.clear()
       self.bots.clear()
@@ -683,7 +680,7 @@ export const Wocky = types
             }
           }
         ),
-        reaction(() => self.transport.geoBot, self._onGeoBot),
+        // reaction(() => self.transport.geoBot, self._onGeoBot),
         reaction(
           () => self.transport.presence,
           ({id, status}) => {
@@ -696,7 +693,7 @@ export const Wocky = types
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, self._addMessage),
-        reaction(() => self.transport.notification, n => self._onNotification(n)),
+        reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }

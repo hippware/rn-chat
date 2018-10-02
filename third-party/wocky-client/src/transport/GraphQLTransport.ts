@@ -99,7 +99,7 @@ export class GraphQLTransport implements IWockyTransport {
   username: string
   password: string
   host: string
-  @observable geoBot: any
+  // @observable geoBot: any
   @observable message: any
 
   // TODO: reuse `notification` or create new property specific to GraphQL?

@@ -4,6 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* More of: Support iOS Universal Links (Rework #2865)
+* Notifications not in chronological order (Rework #2800)
+* Notification bell CTA should reflect new updates on app start (#2823)
+* [dev] Send user location on bot create/update (#2856)
+* When a user creates a geofence bot, immediately see the presence bot (#2383)
+* Comment out explore-nearby code (PR #2889)
+* Remove bot subscribe and image press code (PR #2890)
+
 # 3.6.1 - 2018 Sep 28
 
 * [dev] Prevent crash (#2882)
