@@ -148,14 +148,13 @@ class BotDetailsHeader extends React.Component<Props, State> {
 }
 
 const VisitorsArea = observer(({bot}: {bot: IBot}) => {
-  let list: IProfile[], size: number, text: string
+  let list: IProfile[], text: string, onPress
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
-    size = bot.visitorsSize
     text = 'are currently here!'
-  } else if (bot.guests.list.length > 0) {
-    list = bot.guests.list
-    size = bot.guestsSize
+    onPress = () => Actions.visitors({botId: bot.id})
+  } else if (bot.guests.list.length > 1) {
+    list = bot.guests.list.filter((g: IProfile) => !g.isOwn)
     text = 'accepted the invite!'
   }
   let inner = null
@@ -165,7 +164,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
       <Separator style={{marginHorizontal: 5, width: '100%', marginBottom: 30}} key="1" />,
       <TouchableOpacity
         key="2"
-        onPress={() => Actions.visitors({botId: bot.id})}
+        onPress={onPress}
         style={{
           alignItems: 'center',
           justifyContent: 'center',
@@ -176,7 +175,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
       >
         <ProfileStack
           firstProfile={list[0]}
-          stackSize={size}
+          stackSize={list.length}
           circleSize={50}
           textSize={16.5}
           style={{marginBottom: 10 * k}}

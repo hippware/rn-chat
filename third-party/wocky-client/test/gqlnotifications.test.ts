@@ -2,6 +2,7 @@ import {expect} from 'chai'
 import {createXmpp, waitFor, timestamp} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
+import {getSnapshot} from 'mobx-state-tree'
 const host = 'testing.dev.tinyrobot.com'
 
 describe('GraphQL Notifications', () => {
@@ -89,6 +90,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.list[0].sender).to.equal(bob.username)
       expect(notifications.list[0].bot.invitation.id).to.equal(invitationId)
       expect(notifications.list[0].bot.invitation.accepted).to.equal(true)
+      await aliceBot.guests.load()
+      expect(aliceBot.guestsSize).to.equal(2) // bob is now a guest
       done()
     } catch (e) {
       done(e)

@@ -71,8 +71,11 @@ export default class BotDetails extends React.Component<Props> {
     runInAction(() => (this.bot = wocky!.getBot({id: botId})))
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
-      await wocky!.loadBot(botId, undefined)
-      await this.bot!.posts.load({force: true})
+      await Promise.all([
+        wocky!.loadBot(botId, undefined),
+        this.bot!.posts.load({force: true}),
+        this.bot!.guests.load(),
+      ])
     }
 
     this.viewTimeout = setTimeout(() => {
