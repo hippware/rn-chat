@@ -12,7 +12,7 @@ import {
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
-import {getSnapshot, isAlive} from 'mobx-state-tree'
+import {isAlive} from 'mobx-state-tree'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
 import {RText, Spinner, ProfileHandle, ProfileStack} from '../common'
@@ -34,7 +34,6 @@ type State = {
   fadeAnim: any
 }
 
-const DOUBLE_PRESS_DELAY = 300
 const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
@@ -51,23 +50,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
     }
   }
 
-  handleImagePress = () => {
-    const now = new Date().getTime()
-
-    if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
-      delete this.lastImagePress
-      this.handleImageDoublePress()
-    } else {
-      this.lastImagePress = now
-    }
-  }
-
-  handleImageDoublePress = () => {
-    if (!this.props.bot.isSubscribed) {
-      this.subscribe()
-    }
-  }
-
   unsubscribe = () => {
     Alert.alert('', 'Are you sure you want to remove this from your saved bots?', [
       {text: 'Cancel', style: 'cancel'},
@@ -77,15 +59,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
         onPress: () => this.props.bot.unsubscribe(),
       },
     ])
-  }
-
-  subscribe = () => {
-    this.props.bot.subscribe()
-    this.setState({fadeAnim: new Animated.Value(1)})
-    setTimeout(() => {
-      Animated.timing(this.state.fadeAnim, {toValue: 0}).start()
-    }, 500)
-    this.props.analytics.track('bot_save', getSnapshot(this.props.bot))
   }
 
   copyAddress = () => {
@@ -122,7 +95,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <ActionButton
             bot={bot}
             style={{position: 'absolute', right: 0}}
-            subscribe={this.subscribe}
             unsubscribe={this.unsubscribe}
             isSubscribed={bot.isSubscribed}
             copyAddress={this.copyAddress}
@@ -175,7 +147,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 }
 
-const VisitorsArea = ({bot}: {bot: IBot}) => {
+const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   let list: IProfile[], size: number, text: string
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
@@ -231,7 +203,7 @@ const VisitorsArea = ({bot}: {bot: IBot}) => {
       {!((bot.owner && bot.owner.isOwn) || list) && <View style={{height: 17}} />}
     </VisitorsWrapper>
   )
-}
+})
 
 const VisitorsWrapper = ({children}) => (
   <View style={{alignItems: 'center'}}>
