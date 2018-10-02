@@ -1,6 +1,5 @@
-import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
 import {Bot, IBot, Location} from 'wocky-client'
-import {when} from 'mobx'
 
 export const SelectableCard = types
   .model('SelectableCard', {
@@ -114,7 +113,6 @@ const HomeStore = types
     },
   }))
   .actions(self => {
-    let handler
     return {
       logout() {
         applySnapshot(self, {})
@@ -152,16 +150,10 @@ const HomeStore = types
         return {}
       },
       start() {
-        // re-center map each app start
-        handler = when(
-          () => getRoot(self).locationStore.location,
-          () => {
-            self.setFocusedLocation(getRoot(self).locationStore.location)
-          }
-        )
+        // empty
       },
       finish() {
-        handler()
+        // empty
       },
     }
   })
