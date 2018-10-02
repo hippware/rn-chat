@@ -12,6 +12,8 @@ type State = {
   errorMessage?: string
 }
 
+const codeUrlString = '?inviteCode='
+
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
@@ -45,9 +47,12 @@ const FirebaseStore = types
 
     function onFirebaseDynamicLink(url: string) {
       if (url) {
-        console.log('& url is', url)
-
-        // TODO: peel off the inviteCode and store
+        // const myUrl = 'https://tinyrobot.com/?inviteCode=1'
+        const index = url.indexOf(codeUrlString)
+        if (index > -1) {
+          const code = url.slice(index + codeUrlString.length)
+          self.setInviteCode(code)
+        }
       }
     }
 
@@ -61,6 +66,14 @@ const FirebaseStore = types
         .links()
         .getInitialLink()
         .then(onFirebaseDynamicLink)
+
+      // listen for FDL invite codes and redeem once user is logged in
+      when(
+        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
+        () => {
+          console.log('& TODO: redeem code', self.inviteCode)
+        }
+      )
     }
 
     function beforeDestroy() {
@@ -212,7 +225,7 @@ const FirebaseStore = types
           body: JSON.stringify({
             dynamicLinkInfo: {
               dynamicLinkDomain: 'tinyrobotstaging.page.link',
-              link: `https://tinyrobot.com/?inviteCode=${code}`,
+              link: `https://tinyrobot.com/${codeUrlString}${code}`,
               iosInfo: {
                 iosBundleId: 'com.hippware.ios.ChatStaging',
               },
