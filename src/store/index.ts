@@ -1,9 +1,15 @@
 import {types, getEnv, addMiddleware, flow} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
-import firebase from 'react-native-firebase'
+import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Wocky, XmppTransport, HybridTransport, GraphQLTransport} from 'wocky-client'
+import {
+  Wocky,
+  XmppTransport,
+  HybridTransport,
+  GraphQLTransport,
+  IWockyTransport,
+} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
@@ -40,6 +46,20 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
+
+export type IEnv = {
+  transport: IWockyTransport
+  storage: AsyncStorage
+  auth: RNFirebase.auth.Auth
+  firebase: Firebase
+  logger: any
+  geocodingStore: any
+  fileService: any
+  geolocation: Geolocation
+  analytics: any
+  nativeEnv: any
+}
+
 const env = {
   transport,
   storage: AsyncStorage,
