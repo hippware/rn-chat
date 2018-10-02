@@ -6,6 +6,7 @@ import {colors} from '../../constants'
 import {RText} from '../common'
 import {inject, observer} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
+import {IFirebaseStore} from '../../store/FirebaseStore'
 
 type Props = {
   style?: any
@@ -13,11 +14,12 @@ type Props = {
   botTitle?: string
   wocky?: IWocky
   analytics?: any
+  firebaseStore?: IFirebaseStore
 }
 
 const icon = require('../../../images/followers.png')
 
-@inject('wocky', 'analytics')
+@inject('wocky', 'analytics', 'firebaseStore')
 @observer
 class InviteFriendsRow extends React.Component<Props> {
   render() {
@@ -44,12 +46,13 @@ class InviteFriendsRow extends React.Component<Props> {
 
   share = async message => {
     this.props.analytics!.track('invite_friends')
+    const url = await this.props.firebaseStore.getFriendInviteLink()
+    // console.log('& link', url)
     const {action, activityType} = await (Share as any).share(
       {
         message: `${message} Download the app at`,
         // title: 'title',
-        url:
-          'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8',
+        url,
       },
       {
         subject: 'Check out tinyrobot',

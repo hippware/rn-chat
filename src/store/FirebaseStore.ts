@@ -1,6 +1,7 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
+import {IEnv} from '.'
 
 type State = {
   phone?: string
@@ -16,9 +17,9 @@ const FirebaseStore = types
     phone: '',
     token: types.maybe(types.string),
     resource: types.maybe(types.string),
+    inviteCode: types.maybe(types.string),
   })
   .volatile(() => ({
-    url: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
@@ -32,30 +33,34 @@ const FirebaseStore = types
       self.errorMessage = ''
       self.buttonText = 'Verify'
     },
-  }))
-  .actions(self => ({
-    setUrl: url => {
-      if (url) {
-        self.url = url
-      }
+    setInviteCode: code => {
+      self.inviteCode = code
     },
   }))
   .actions(self => {
-    const {firebase, auth, logger, analytics} = getEnv(self)
+    const {firebase, auth, logger, analytics}: IEnv = getEnv(self)
     let wocky: IWocky
     let confirmResult: any
     let unsubscribe: any
+
+    function onFirebaseDynamicLink(url: string) {
+      if (url) {
+        console.log('& url is', url)
+
+        // TODO: peel off the inviteCode and store
+      }
+    }
 
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = getParent(self).wocky // wocky could be null for HMR (?)
       // setup dynamic links
-      unsubscribe = firebase.links().onLink(self.setUrl)
+      unsubscribe = firebase.links().onLink(onFirebaseDynamicLink)
       // get initial link
       firebase
         .links()
         .getInitialLink()
-        .then(self.setUrl)
+        .then(onFirebaseDynamicLink)
     }
 
     function beforeDestroy() {
@@ -188,7 +193,47 @@ const FirebaseStore = types
       }
     })
 
-    return {afterAttach, logout, beforeDestroy, verifyPhone, confirmCode, resendCode}
+    // TODO: use rn-firebase for dynamic link generation when it's less broken
+    const getFriendInviteLink = flow(function*() {
+      const apiKey = 'AIzaSyCt7Lb8cjTHNWLuvSZEXFDKef54x4Es3N8'
+
+      // TODO get code from wocky
+      const code = '1234'
+
+      // https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+      const raw = yield fetch(
+        `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dynamicLinkInfo: {
+              dynamicLinkDomain: 'tinyrobotstaging.page.link',
+              link: `https://tinyrobot.com/?inviteCode=${code}`,
+              iosInfo: {
+                iosBundleId: 'com.hippware.ios.ChatStaging',
+              },
+            },
+          }),
+        }
+      )
+      const resp = yield raw.json()
+      // console.log('& resp', resp.shortLink)
+      return resp.shortLink
+    }) as () => Promise<string>
+
+    return {
+      afterAttach,
+      logout,
+      beforeDestroy,
+      verifyPhone,
+      confirmCode,
+      resendCode,
+      getFriendInviteLink,
+    }
   })
 
 export default FirebaseStore
