@@ -2,6 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {IEnv} from '.'
+import {settings} from '../globals'
 
 type State = {
   phone?: string
@@ -226,7 +227,9 @@ const FirebaseStore = types
           },
           body: JSON.stringify({
             dynamicLinkInfo: {
-              dynamicLinkDomain: 'tinyrobotstaging.page.link',
+              dynamicLinkDomain: settings.isStaging
+                ? 'tinyrobotstaging.page.link'
+                : 'tinyrobot.page.link',
               link: `https://tinyrobot.com/${codeUrlString}${code}`,
               iosInfo: {
                 iosBundleId: 'com.hippware.ios.ChatStaging',
