@@ -48,7 +48,6 @@ const FirebaseStore = types
 
     function onFirebaseDynamicLink(url: string) {
       if (url) {
-        // const myUrl = 'https://tinyrobot.com/?inviteCode=1'
         const index = url.indexOf(codeUrlString)
         if (index > -1) {
           let code = url.slice(index + codeUrlString.length)
