@@ -867,6 +867,45 @@ export class GraphQLTransport implements IWockyTransport {
     return res.data.users.map(u => convertProfile(u))
   }
 
+  async userInviteMakeCode(): Promise<string> {
+    const res = await this.client.mutate({
+      mutation: gql`
+        mutation userInviteMakeCode {
+          userInviteMakeCode {
+            result
+            successful
+          }
+        }
+      `,
+    })
+    return res.data.userInviteMakeCode.result
+  }
+
+  async userInviteRedeemCode(code: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      // need `when` because if code is redeemed immediately on an app load then `this.client` might be null
+      when(
+        () => this.connected,
+        async () => {
+          const res = await this.client.mutate({
+            mutation: gql`
+              mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
+                userInviteRedeemCode(input: $code) {
+                  successful
+                }
+              }
+            `,
+            variables: {code: {code}},
+          })
+          if (!res.data.userInviteRedeemCode.successful) {
+            reject(new Error('error redeeming invite code'))
+          }
+          resolve()
+        }
+      )
+    })
+  }
+
   private async getBotProfiles(
     relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
     includeCurrentUser: boolean,

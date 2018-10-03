@@ -47,7 +47,6 @@ class InviteFriendsRow extends React.Component<Props> {
   share = async message => {
     this.props.analytics!.track('invite_friends')
     const url = await this.props.firebaseStore.getFriendInviteLink()
-    // console.log('& link', url)
     const {action, activityType} = await (Share as any).share(
       {
         message: `${message} Download the app at`,

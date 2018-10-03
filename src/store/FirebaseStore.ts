@@ -51,7 +51,8 @@ const FirebaseStore = types
         // const myUrl = 'https://tinyrobot.com/?inviteCode=1'
         const index = url.indexOf(codeUrlString)
         if (index > -1) {
-          const code = url.slice(index + codeUrlString.length)
+          let code = url.slice(index + codeUrlString.length)
+          code = decodeURIComponent(code)
           self.setInviteCode(code)
         }
       }
@@ -71,10 +72,14 @@ const FirebaseStore = types
       // listen for Dynamic Link invite codes and redeem once user is logged in
       when(
         () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
-        () => {
-          console.log('& TODO: redeem code', self.inviteCode)
-          // await wocky.redeemCode(self.inviteCode)
-          // self.setInviteCode(undefined)
+        async () => {
+          try {
+            await wocky.userInviteRedeemCode(self.inviteCode)
+            analytics.track('invite_code_redeem', {code: self.inviteCode})
+          } catch (err) {
+            analytics.track('invite_code_redeem_fail', {code: self.inviteCode})
+          }
+          self.setInviteCode(undefined)
         }
       )
     }
@@ -212,9 +217,8 @@ const FirebaseStore = types
     // TODO: use rn-firebase for dynamic link generation when it's less broken
     const getFriendInviteLink = flow(function*() {
       const apiKey = 'AIzaSyCt7Lb8cjTHNWLuvSZEXFDKef54x4Es3N8'
-
-      // TODO get code from wocky
-      const code = '1234'
+      let code = yield wocky.userInviteMakeCode()
+      code = encodeURIComponent(code) // need this for maintaining valid URL
 
       // https://firebase.google.com/docs/reference/dynamic-links/link-shortener
       const raw = yield fetch(
@@ -239,7 +243,7 @@ const FirebaseStore = types
         }
       )
       const resp = yield raw.json()
-      // console.log('& resp', resp.shortLink)
+      analytics.track('invite_code_create', {code: resp.shortLink})
       return resp.shortLink
     }) as () => Promise<string>
 

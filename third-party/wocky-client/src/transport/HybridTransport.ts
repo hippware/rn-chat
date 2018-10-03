@@ -297,4 +297,12 @@ export class HybridTransport implements IWockyTransport {
   async searchUsers(text: string) {
     return this._gql.searchUsers(text)
   }
+
+  async userInviteMakeCode(): Promise<string> {
+    return this._gql.userInviteMakeCode()
+  }
+
+  async userInviteRedeemCode(code: string): Promise<void> {
+    return this._gql.userInviteRedeemCode(code)
+  }
 }
