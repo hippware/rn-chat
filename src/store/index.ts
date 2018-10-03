@@ -15,7 +15,7 @@ import nativeEnv from 'react-native-native-env'
 import {settings} from '../globals'
 import XmppIOS from './xmpp/XmppIOS'
 import * as logger from '../utils/log'
-import analytics from '../utils/analytics'
+import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
 import fileService from './fileService'
@@ -56,7 +56,7 @@ export type IEnv = {
   geocodingStore: any
   fileService: any
   geolocation: Geolocation
-  analytics: any
+  analytics: Analytics
   nativeEnv: any
 }
 
