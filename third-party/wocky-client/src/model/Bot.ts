@@ -9,7 +9,6 @@ import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {Base} from './Base'
-import {reaction} from 'mobx'
 
 const Invitation = types.model('BotInvitation', {
   id: types.string,
@@ -168,24 +167,19 @@ export const Bot = types
   }))
   .actions(self => {
     const {geocodingStore} = getEnv(self)
-    let handler
     return {
+      save: flow(function*() {
+        if (geocodingStore) {
+          const data = yield geocodingStore.reverse(self.location)
+          self.load({addressData: data.meta, address: data.address})
+        }
+        yield self.update({})
+      }),
       afterAttach: () => {
-        handler = reaction(
-          () => geocodingStore && self.location,
-          loc => {
-            geocodingStore.reverse(loc).then(data => {
-              self.load({addressData: data.meta, address: data.address})
-            })
-          }
-        )
         self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
         self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
         self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
         self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
-      },
-      beforeDestroy: () => {
-        handler()
       },
     }
   })
