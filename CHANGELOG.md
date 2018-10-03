@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * When a user creates a geofence bot, immediately see the presence bot (#2383)
 * Comment out explore-nearby code (PR #2889)
 * Remove bot subscribe and image press code (PR #2890)
+* Another fix (PR #2891) for:
+  * Location Profile - tappable "Who's Here" CTA (Rework #2564)
 
 # 3.6.1 - 2018 Sep 28
 

@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, getRoot, flow, getParent} from 'mobx-state-tree'
 import {when, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
@@ -365,10 +365,13 @@ const LocationStore = types
       reactions = [
         when(
           () => wocky.connected,
-          () => {
-            self.startBackground().then(() => {
-              self.getCurrentPosition()
-            })
+          async () => {
+            await self.startBackground()
+            await self.getCurrentPosition()
+            const {setFocusedLocation, creationMode} = getRoot(self).homeStore
+            if (!creationMode) {
+              setFocusedLocation(self.location)
+            }
           },
           {name: 'LocationStore: Start background after connected'}
         ),
@@ -386,7 +389,6 @@ const LocationStore = types
         navigator.geolocation.clearWatch(self.watch)
         self.watch = null
       }
-      self.location = null
     }
 
     return {
