@@ -19,7 +19,6 @@ import {INavStore} from '../../store/NavStore'
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
-const OPACITY_MIN = 0.6
 
 interface IProps {
   locationStore?: ILocationStore
@@ -42,8 +41,6 @@ export default class MapHome extends React.Component<IProps> {
 
   @observable
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
-  @observable showSatelliteOverlay: boolean = false
-  @observable opacity: number = 0
 
   mapRef?: MapView
   reactions: any[] = []
@@ -101,15 +98,7 @@ export default class MapHome extends React.Component<IProps> {
       homeStore.setFocusedLocation(undefined)
     }
     this.region = region
-    if (region.latitudeDelta <= TRANS_DELTA) {
-      this.showSatelliteOverlay = true
-      this.opacity = OPACITY_MIN
-      this.mapType = 'hybrid'
-    } else {
-      this.showSatelliteOverlay = false
-      this.mapType = 'standard'
-      this.opacity = 1
-    }
+    this.mapType = region.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
