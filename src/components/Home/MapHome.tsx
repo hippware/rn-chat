@@ -19,7 +19,6 @@ import {INavStore} from '../../store/NavStore'
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
-const OPACITY_MIN = 0.6
 
 interface IProps {
   locationStore?: ILocationStore
@@ -42,7 +41,6 @@ export default class MapHome extends React.Component<IProps> {
 
   @observable mapType: MapTypes = 'standard'
   @observable showSatelliteOverlay: boolean = false
-  @observable opacity: number = 0
 
   mapRef?: MapView
   reactions: any[] = []
@@ -102,11 +100,10 @@ export default class MapHome extends React.Component<IProps> {
     this.region = region
     if (region.latitudeDelta <= TRANS_DELTA) {
       this.showSatelliteOverlay = true
-      this.opacity = OPACITY_MIN
+      this.mapType = 'hybrid'
     } else {
       this.showSatelliteOverlay = false
       this.mapType = 'standard'
-      this.opacity = 1
     }
   }
 
@@ -167,13 +164,7 @@ export default class MapHome extends React.Component<IProps> {
           rotateEnabled={false}
           {...this.props}
         >
-          {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
-          <View style={{flex: 1, opacity: this.opacity}} pointerEvents="none" />
-
-          {this.showSatelliteOverlay && (
-            <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
-          )}
-
+          <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
           {list.map((card, i) => {
             const Card = markerMap[getType(card).name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
