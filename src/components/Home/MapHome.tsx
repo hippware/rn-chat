@@ -113,8 +113,8 @@ export default class MapHome extends React.Component<IProps> {
   onRegionChangeComplete = async (region: MapViewRegion) => {
     const {addBotsToList, creationMode, setMapCenter} = this.props.homeStore!
     // don't add bot during creation mode (to avoid replacing of new location)
+    setMapCenter(region)
     if (!creationMode) {
-      setMapCenter(region)
       const bots = await this.props.wocky.loadLocalBots(region)
       addBotsToList('home', bots)
     }
