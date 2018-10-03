@@ -1,5 +1,5 @@
 // NOTE: below is automatically generated in codepush.sh
-const codeBundleId = 'test-size'
+const codeBundleId = '2018-10-02_17-28-45'
 
 // -------------------------------------------------------------------------------------------------
 // Create a singleton instance of the bugsnag client so we don't have to duplicate our configuration
