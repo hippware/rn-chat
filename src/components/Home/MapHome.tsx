@@ -1,5 +1,5 @@
 import React from 'react'
-import MapView, {UrlTile, MapTypes} from 'react-native-maps'
+import MapView from 'react-native-maps'
 import {StyleSheet, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
@@ -19,7 +19,6 @@ import {INavStore} from '../../store/NavStore'
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
-const OPACITY_MIN = 0.6
 
 interface IProps {
   locationStore?: ILocationStore
@@ -40,9 +39,8 @@ export default class MapHome extends React.Component<IProps> {
     autoZoom: true,
   }
 
-  @observable mapType: MapTypes = 'standard'
-  @observable showSatelliteOverlay: boolean = false
-  @observable opacity: number = 0
+  @observable
+  mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
 
   mapRef?: MapView
   reactions: any[] = []
@@ -100,14 +98,7 @@ export default class MapHome extends React.Component<IProps> {
       homeStore.setFocusedLocation(undefined)
     }
     this.region = region
-    if (region.latitudeDelta <= TRANS_DELTA) {
-      this.showSatelliteOverlay = true
-      this.opacity = OPACITY_MIN
-    } else {
-      this.showSatelliteOverlay = false
-      this.mapType = 'standard'
-      this.opacity = 1
-    }
+    this.mapType = region.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
@@ -119,9 +110,9 @@ export default class MapHome extends React.Component<IProps> {
       addBotsToList('home', bots)
     }
   }
-
-  createFromLongPress = ({nativeEvent: {coordinate}}) => {
-    this.setCenterCoordinate(coordinate)
+  // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
+  createFromLongPress = (value: any) => {
+    this.setCenterCoordinate(value.nativeEvent.coordinate)
     Actions.createBot()
   }
 
@@ -167,13 +158,6 @@ export default class MapHome extends React.Component<IProps> {
           rotateEnabled={false}
           {...this.props}
         >
-          {/* TODO: this opacity mask will always be transparent without a `backgroundColor` style */}
-          <View style={{flex: 1, opacity: this.opacity}} pointerEvents="none" />
-
-          {this.showSatelliteOverlay && (
-            <UrlTile urlTemplate={'http://mt.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'} />
-          )}
-
           {list.map((card, i) => {
             const Card = markerMap[getType(card).name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
