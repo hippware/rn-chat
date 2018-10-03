@@ -137,7 +137,7 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore: {location}, homeStore: {list, creationMode}} = this.props
+    const {locationStore: {location}, homeStore: {list, detailsMode, creationMode}} = this.props
     if (!location) {
       return (
         <View style={styles.container}>
@@ -161,6 +161,7 @@ export default class MapHome extends React.Component<IProps> {
           }}
           style={commonStyles.absolute}
           customMapStyle={mapStyle}
+          scrollEnabled={!detailsMode}
           mapType={this.mapType}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}

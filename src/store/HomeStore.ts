@@ -54,6 +54,7 @@ export type ICard = typeof Card.Type
 const HomeStore = types
   .model('HomeStore', {
     fullScreenMode: false,
+    detailsMode: false,
     creationMode: false,
     discoverList: types.optional(types.array(Card), []),
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
@@ -76,6 +77,9 @@ const HomeStore = types
   .actions(self => ({
     setCreationMode(value) {
       self.creationMode = value
+    },
+    setDetailsMode(value) {
+      self.detailsMode = value
     },
     setFocusedLocation(location) {
       if (!location) {
