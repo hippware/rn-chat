@@ -27,6 +27,7 @@ class IconSelector extends React.Component<Props> {
           renderItem={this.renderIcon}
           sliderWidth={width}
           itemWidth={itemSize}
+          initialNumToRender={iconStore.iconList.length}
           onBeforeSnapToItem={this.onSnap}
           inactiveSlideOpacity={1}
           firstItem={iconStore.index}
