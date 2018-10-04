@@ -151,10 +151,11 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   let list: IProfile[], text: string, onPress
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
-    text = 'are currently here!'
+    const prefix = list.length > 1 ? 'are' : 'is'
+    text = prefix + ' currently here!'
     onPress = () => Actions.visitors({botId: bot.id})
   } else if (bot.guests.list.length > 1) {
-    list = bot.guests.list.filter((g: IProfile) => !g.isOwn)
+    list = bot.guests.list.filter((g: IProfile) => g.id !== bot.owner.id)
     text = 'accepted the invite!'
   }
   let inner = null
