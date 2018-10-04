@@ -28,6 +28,7 @@ import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
 import * as peopleLists from './people-lists'
+import FriendSearch from './people-lists/FriendSearch'
 import VisitorList from './people-lists/VisitorList'
 import ReportUser from './report-modals/ReportUser'
 import ReportBot from './report-modals/ReportBot'
@@ -177,6 +178,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="editNote" component={EditNote} />
                       <Scene key="notifications" component={Notifications} />
                       <Scene key="friends" component={peopleLists.FriendList} />
+                      <Scene key="friendSearch" component={FriendSearch} />
                       <Scene key="visitors" component={VisitorList} />
                     </Stack>
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
