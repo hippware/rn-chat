@@ -13,6 +13,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove bot subscribe and image press code (PR #2890)
 * Another fix (PR #2891) for:
   * Location Profile - tappable "Who's Here" CTA (Rework #2564)
+* Do not update to current location with background/foreground (#2853)
+* In-App Share Presence notification is cut in half (#2843)
+* HS Map Tweaks - Removal of map overlay (#2857)
+  * Upgrade react-native-maps and remove opacity and UrlTile (PR #2905)
+* Adjust/Enhance location profile map view (#2849)
+* City, State tag incorrect (#2869) / Georeverse before bot save (PR #2903)
 
 # 3.6.1 - 2018 Sep 28
 
