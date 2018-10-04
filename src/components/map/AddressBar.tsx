@@ -76,6 +76,7 @@ class AddressBar extends React.Component<Props> {
     const {analytics, bot, homeStore} = this.props
     this.searchEnabled = false
     this.text = data.address
+    this.input.blur()
     homeStore.setFocusedLocation(location)
     Actions.botCompose({botId: bot.id})
     analytics.track('botcreate_chooselocation', getSnapshot(bot))
@@ -164,7 +165,6 @@ class AddressBar extends React.Component<Props> {
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
             <TextInput
-              key={`searchBar${this.searchEnabled}`}
               // autoFocus={this.searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
