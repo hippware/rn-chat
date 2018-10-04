@@ -23,10 +23,11 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   notificationStore?: any
+  homeStore?: any
   navigation: any
 }
 
-@inject('wocky', 'analytics', 'notificationStore')
+@inject('wocky', 'analytics', 'notificationStore', 'homeStore')
 @observer
 export default class BotDetails extends React.Component<Props> {
   @observable bot?: IBot
@@ -67,8 +68,11 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    const {wocky, analytics, botId} = this.props
-    runInAction(() => (this.bot = wocky!.getBot({id: botId})))
+    const {wocky, analytics, botId, homeStore} = this.props
+    runInAction(() => {
+      this.bot = wocky!.getBot({id: botId})
+      homeStore.selectBot(this.bot)
+    })
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
       await Promise.all([
