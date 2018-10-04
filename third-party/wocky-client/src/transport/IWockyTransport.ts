@@ -96,4 +96,6 @@ export interface IWockyTransport {
   hideUser(enable: boolean, expire?: Date): Promise<void>
   subscribeNotifications()
   searchUsers(text: string): Promise<IProfilePartial[]>
+  userInviteMakeCode(): Promise<string>
+  userInviteRedeemCode(code: string): Promise<void>
 }

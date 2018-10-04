@@ -907,6 +907,14 @@ export class XmppTransport implements IWockyTransport {
   async searchUsers(text: string): Promise<IProfilePartial[]> {
     throw new Error('Not supported')
   }
+
+  async userInviteMakeCode(): Promise<string> {
+    throw new Error('Not supported')
+  }
+
+  async userInviteRedeemCode(code: string): Promise<void> {
+    throw new Error('Not supported')
+  }
 }
 export function processMessage(stanza: any, ownUserId: string) {
   let id = stanza.id

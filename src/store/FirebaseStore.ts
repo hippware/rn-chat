@@ -1,6 +1,8 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
+import {IEnv} from '.'
+import {settings} from '../globals'
 
 type State = {
   phone?: string
@@ -11,14 +13,16 @@ type State = {
   errorMessage?: string
 }
 
+const codeUrlString = '?inviteCode='
+
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
     token: types.maybe(types.string),
     resource: types.maybe(types.string),
+    inviteCode: types.maybe(types.string),
   })
   .volatile(() => ({
-    url: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
@@ -32,30 +36,51 @@ const FirebaseStore = types
       self.errorMessage = ''
       self.buttonText = 'Verify'
     },
-  }))
-  .actions(self => ({
-    setUrl: url => {
-      if (url) {
-        self.url = url
-      }
+    setInviteCode: code => {
+      self.inviteCode = code
     },
   }))
   .actions(self => {
-    const {firebase, auth, logger, analytics} = getEnv(self)
+    const {firebase, auth, logger, analytics}: IEnv = getEnv(self)
     let wocky: IWocky
     let confirmResult: any
     let unsubscribe: any
+
+    function onFirebaseDynamicLink(url: string) {
+      if (url) {
+        const index = url.indexOf(codeUrlString)
+        if (index > -1) {
+          let code = url.slice(index + codeUrlString.length)
+          code = decodeURIComponent(code)
+          self.setInviteCode(code)
+        }
+      }
+    }
 
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = getParent(self).wocky // wocky could be null for HMR (?)
       // setup dynamic links
-      unsubscribe = firebase.links().onLink(self.setUrl)
+      unsubscribe = firebase.links().onLink(onFirebaseDynamicLink)
       // get initial link
       firebase
         .links()
         .getInitialLink()
-        .then(self.setUrl)
+        .then(onFirebaseDynamicLink)
+
+      // listen for Dynamic Link invite codes and redeem once user is logged in
+      when(
+        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
+        async () => {
+          try {
+            await wocky.userInviteRedeemCode(self.inviteCode)
+            analytics.track('invite_code_redeem', {code: self.inviteCode})
+          } catch (err) {
+            analytics.track('invite_code_redeem_fail', {code: self.inviteCode})
+          }
+          self.setInviteCode(undefined)
+        }
+      )
     }
 
     function beforeDestroy() {
@@ -188,7 +213,50 @@ const FirebaseStore = types
       }
     })
 
-    return {afterAttach, logout, beforeDestroy, verifyPhone, confirmCode, resendCode}
+    // TODO: use rn-firebase for dynamic link generation when it's less broken
+    const getFriendInviteLink = flow(function*() {
+      const apiKey = 'AIzaSyCt7Lb8cjTHNWLuvSZEXFDKef54x4Es3N8'
+      let code = yield wocky.userInviteMakeCode()
+      code = encodeURIComponent(code) // need this for maintaining valid URL
+
+      // https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+      const raw = yield fetch(
+        `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dynamicLinkInfo: {
+              dynamicLinkDomain: settings.isStaging
+                ? 'tinyrobotstaging.page.link'
+                : 'tinyrobot.page.link',
+              link: `https://tinyrobot.com/${codeUrlString}${code}`,
+              iosInfo: {
+                iosBundleId: settings.isStaging
+                  ? 'com.hippware.ios.ChatStaging'
+                  : 'com.hippware.ios.Chat',
+              },
+            },
+          }),
+        }
+      )
+      const resp = yield raw.json()
+      analytics.track('invite_code_create', {code: resp.shortLink})
+      return resp.shortLink
+    }) as () => Promise<string>
+
+    return {
+      afterAttach,
+      logout,
+      beforeDestroy,
+      verifyPhone,
+      confirmCode,
+      resendCode,
+      getFriendInviteLink,
+    }
   })
 
 export default FirebaseStore

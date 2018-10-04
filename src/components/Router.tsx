@@ -104,21 +104,15 @@ type Props = {
   locationStore?: ILocationStore
   navStore?: INavStore
   store?: any
-  firebaseStore?: any
   analytics?: any
   log?: any
 }
 
-@inject('store', 'wocky', 'firebaseStore', 'locationStore', 'analytics', 'navStore', 'log')
+@inject('store', 'wocky', 'locationStore', 'analytics', 'navStore', 'log')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, firebaseStore, locationStore} = this.props
-    autorun(() => {
-      if (firebaseStore.url) {
-        this.props.log('UNIVERSAL URL:', firebaseStore.url)
-      }
-    })
+    const {wocky, locationStore} = this.props
 
     autorun(
       () => {

@@ -642,6 +642,12 @@ export const Wocky = types
         const {width, height} = yield fs.getImageSize(fileName)
         return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
       }),
+      userInviteMakeCode(): Promise<string> {
+        return self.transport.userInviteMakeCode()
+      },
+      userInviteRedeemCode(code: string): Promise<void> {
+        return self.transport.userInviteRedeemCode(code)
+      },
     }
   })
   .actions(self => ({

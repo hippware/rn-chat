@@ -8,7 +8,7 @@ import AppCenter from 'appcenter-analytics'
 
 export const analyticsGeoWidgetTap = 'geofence_widget_tap'
 
-class Analytics {
+export class Analytics {
   inSession: boolean = false
 
   constructor() {
