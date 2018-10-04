@@ -235,7 +235,9 @@ const FirebaseStore = types
                 : 'tinyrobot.page.link',
               link: `https://tinyrobot.com/${codeUrlString}${code}`,
               iosInfo: {
-                iosBundleId: 'com.hippware.ios.ChatStaging',
+                iosBundleId: settings.isStaging
+                  ? 'com.hippware.ios.ChatStaging'
+                  : 'com.hippware.ios.Chat',
               },
             },
           }),
