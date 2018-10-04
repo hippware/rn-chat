@@ -71,7 +71,6 @@ export default class BotDetails extends React.Component<Props> {
     const {wocky, analytics, botId, homeStore} = this.props
     runInAction(() => {
       this.bot = wocky!.getBot({id: botId})
-      homeStore.selectBot(this.bot)
     })
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
@@ -81,6 +80,10 @@ export default class BotDetails extends React.Component<Props> {
         this.bot!.guests.load(),
       ])
     }
+    runInAction(() => {
+      homeStore.selectBot(this.bot)
+      homeStore.setFocusedLocation(this.bot.location)
+    })
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))
