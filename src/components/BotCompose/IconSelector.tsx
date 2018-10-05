@@ -25,6 +25,7 @@ class IconSelector extends React.Component<Props> {
           ref={r => (this.selector = r)}
           data={iconStore.iconList.slice()}
           renderItem={this.renderIcon}
+          removeClippedSubviews={false}
           sliderWidth={width}
           itemWidth={itemSize}
           initialNumToRender={iconStore.iconList.length}
