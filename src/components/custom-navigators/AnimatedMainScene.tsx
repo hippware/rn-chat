@@ -45,7 +45,7 @@ class AnimatedMainScene extends React.Component<Props> {
           position: 'absolute',
           left: 0,
           right: 0,
-          top: 0,
+          top: this.isOffset ? -85 : 0,
           height: this.isOffset ? height + 150 : height,
           transform: [
             {
