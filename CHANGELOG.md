@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.7.0 - 2018 Oct 4
+
 * More of: Support iOS Universal Links (Rework #2865)
 * Notifications not in chronological order (Rework #2800)
 * Notification bell CTA should reflect new updates on app start (#2823)
@@ -19,6 +21,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Upgrade react-native-maps and remove opacity and UrlTile (PR #2905)
 * Adjust/Enhance location profile map view (#2849)
 * City, State tag incorrect (#2869) / Georeverse before bot save (PR #2903)
+* Speculative fix for: Emoji's missing from emoji selector (#2870)
+* App crash after user deletes location after creation flow (#2873)
+* Location Profile map is showing current location (#2868)
+* Search field requires 2 taps (#2898)
+* Dynamic link flow (PR #2899)
+  * Invite Friend flow (w/ dynamic links) (#2879)
+  * Dynamic Link flow (for invited user) (#2880)
 
 # 3.6.1 - 2018 Sep 28
 
