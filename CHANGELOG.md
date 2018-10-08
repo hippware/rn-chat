@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Location Profile - tappable "Who's Here" CTA (Rework #2564, PR #2911)
+* Changes to friend search (PR #2912)
+  * Friends Search: Design Enhancement (#2852)
+  * Missing Placeholder Text (#2877)
+* Adjust/Enhance location profile map view (Rework #2849, PR #2914)
+* Speculative fix for: Emoji's missing from emoji selector (#2870, PR #2915)
+
 # 3.7.0 - 2018 Oct 4
 
 * More of: Support iOS Universal Links (Rework #2865)
