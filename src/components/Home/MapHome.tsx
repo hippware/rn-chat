@@ -44,7 +44,6 @@ export default class MapHome extends React.Component<IProps> {
 
   mapRef?: MapView
   reactions: any[] = []
-  region: any
 
   setCenterCoordinate = (location: ILocation) => {
     if (this.mapRef && location) {
@@ -54,14 +53,6 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore} = this.props
-    // if (!wocky.events.length) {
-    //   this.loadMoreDiscoverList()
-    // } else {
-    //   homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
-    // }
-
-    // Actions.botEdit({botId: '3627448a-2e25-11e8-a510-0a580a0205ef'})
-    // Actions.botDetails({botId: 'a5cb8b80-21a4-11e8-92d5-0a580a020603'})
 
     this.reactions = [
       reaction(
@@ -71,11 +62,6 @@ export default class MapHome extends React.Component<IProps> {
           name: 'MapHome: re-center map on focused card',
         }
       ),
-      // reaction(
-      //   () => homeStore.discoverIndex === homeStore.discoverList.length - 1,
-      //   (shouldLoadMore: boolean) => shouldLoadMore && this.loadMoreDiscoverList(),
-      //   {name: 'MapHome: paging on discover list'}
-      // ),
     ]
   }
 
@@ -84,21 +70,10 @@ export default class MapHome extends React.Component<IProps> {
     this.reactions = []
   }
 
-  // loadMoreDiscoverList = async () => {
-  //   const {wocky, homeStore} = this.props
-  //   await wocky.events.load()
-  //   // TODO: solve for the case where no new events have bots? (Until we have new backend query ready?)
-  //   homeStore.addBotsToList('discover', wocky.events.list.map(event => event.bot))
-  // }
-
   @action
-  onRegionChange = (region: MapViewRegion) => {
-    const {homeStore} = this.props
-    if (homeStore.focusedBotLocation) {
-      homeStore.setFocusedLocation(undefined)
-    }
-    this.region = region
-    this.mapType = region.latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+  onRegionChange = ({latitudeDelta}: MapViewRegion) => {
+    // NOTE: this runs _very_ often while panning/scrolling the map
+    this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
