@@ -90,31 +90,21 @@ export const Bot = types
     }),
     subscribe: flow(function*() {
       self.isSubscribed = true
+      self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
+      self.service.geofenceBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id)
     }),
     acceptInvitation: flow(function*() {
       yield self.service._acceptBotInvitation(self.invitation.id)
       self.invitation.accepted = true
     }),
-    subscribeGeofence: flow(function*() {
-      self.isSubscribed = true
-      self.guest = true
-      self.service.profile!.subscribedBots.addToTop(self)
-      self.service.geofenceBots.addToTop(self)
-      self.followersSize = yield self.service._subscribeGeofenceBot(self.id)
-    }),
     unsubscribe: flow(function*() {
       self.guest = false
       self.isSubscribed = false
       self.service.profile!.subscribedBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeBot(self.id)
-    }),
-    unsubscribeGeofence: flow(function*() {
-      self.guest = false
-      self.service.profile!.subscribedBots.remove(self.id)
       self.service.geofenceBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeGeofenceBot(self.id)
+      self.followersSize = yield self.service._unsubscribeBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', action: string = 'share') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
