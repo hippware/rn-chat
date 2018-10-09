@@ -52,20 +52,24 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     return (
       <Animated.View
         style={{
-          backgroundColor: 'white',
-          paddingTop: isIphoneX ? 28 * k : 23 * k,
-          shadowColor: colors.GREY,
-          shadowOffset: {width: 0, height: 2},
-          shadowOpacity: 1,
-          shadowRadius: 5,
           transform: [{translateY: this.state.yOffset}],
         }}
         onStartShouldSetResponder={() => {
           this.props.analytics.track(analyticsGeoWidgetTap)
           return false
         }}
+        pointerEvents="box-none"
       >
-        <View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            paddingTop: isIphoneX ? 28 * k : 23 * k,
+            shadowColor: colors.GREY,
+            shadowOffset: {width: 0, height: 2},
+            shadowOpacity: 1,
+            shadowRadius: 5,
+          }}
+        >
           <FlatList
             data={profile && profile.hasUsedGeofence ? activeBots : placeholderItems}
             horizontal
@@ -77,23 +81,10 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
             ListEmptyComponent={<ActiveBannerPlaceholder />}
           />
           {!wocky!.connected && <View style={styles.overlay} />}
+          <HeaderLocationOverlay />
+          <InvisibleModeOverlay />
         </View>
-        <HeaderLocationOverlay />
-        <InvisibleModeOverlay />
-        {navStore.scene !== 'botCompose' &&
-          !homeStore.fullScreenMode && (
-            <TouchableOpacity
-              onPress={() => Actions.bottomMenu()}
-              onLongPress={() => settings.isStaging && Actions.debugScreen()}
-              style={{
-                position: 'absolute',
-                bottom: -45 * k,
-                right: 10 * k,
-              }}
-            >
-              <Image source={settingsImg} />
-            </TouchableOpacity>
-          )}
+        {navStore.scene !== 'botCompose' && !homeStore.fullScreenMode && <Buttons />}
       </Animated.View>
     )
   }
@@ -111,6 +102,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
 }
 
 const settingsImg = require('../../../images/settingsBtn.png')
+const infoImg = require('../../../images/info.png')
 
 const placeholderItems = [
   {
@@ -145,6 +137,28 @@ const Placeholder = () => (
       style={{backgroundColor: 'white', borderColor: lightPink}}
       triangleColor={lightPink}
     />
+  </View>
+)
+
+const Buttons = () => (
+  <View
+    style={{
+      marginRight: 10,
+      marginTop: 15,
+      alignItems: 'center',
+      alignSelf: 'flex-end',
+    }}
+    pointerEvents="box-none"
+  >
+    <TouchableOpacity
+      onPress={() => Actions.bottomMenu()}
+      onLongPress={() => settings.isStaging && Actions.debugScreen()}
+    >
+      <Image source={settingsImg} />
+    </TouchableOpacity>
+    <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
+      <Image source={infoImg} />
+    </TouchableOpacity>
   </View>
 )
 
