@@ -164,7 +164,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                   <Stack>
                     <Stack hideNavBar renderer={SplitRenderer}>
-                      <Scene key="loggedHome" component={Home} hideNavBar />
+                      <Scene key="home" component={Home} hideNavBar />
                       <Scene key="bottomMenu" component={BottomMenu} />
                       <Scene key="createBot" component={CreationHeader} fromTop />
                       <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
