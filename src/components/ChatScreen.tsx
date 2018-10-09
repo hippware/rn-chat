@@ -71,8 +71,9 @@ class ChatScreen extends React.Component<Props, State> {
   componentDidMount() {
     const {item, wocky} = this.props
     this.chat = wocky.createChat(item)
+    // load chat asynchronously
+    this.chat.load().then(() => this.chat.readAll())
     this.chat.setActive(true)
-    this.chat.readAll()
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
     this.mounted = true
