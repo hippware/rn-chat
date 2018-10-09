@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import Bubble from '../../map/Bubble'
 import {colors} from '../../../constants'
+import {isAlive} from 'mobx-state-tree'
 
 // interface ICardProps extends IProps {
 //   card: ISelectableCard
@@ -14,6 +15,9 @@ const defaultIcon = require('../../../../images/mapIcons/question.png')
 const BotMarker = inject('homeStore')(
   observer(({homeStore, card}) => {
     const {bot, isSelected} = card
+    if (!bot || !isAlive(bot)) {
+      return null
+    }
     // don't show marker for 'details' mode (when bot details page is shown)
     if (homeStore.detailsMode && !isSelected) {
       return null

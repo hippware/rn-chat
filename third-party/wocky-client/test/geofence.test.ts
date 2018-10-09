@@ -71,28 +71,15 @@ describe('Geofence', () => {
     }
   })
 
-  it('load own profile, check hasUsedGeofence', async done => {
-    try {
-      timestamp()
-      const profile1: IOwnProfile = await user1.loadProfile(user1.username!)
-      expect(profile1.hasUsedGeofence).to.be.false
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
   it('creates a geofence bot', async done => {
     try {
       timestamp()
-      expect(user1.profile.hasUsedGeofence).to.be.false
       bot = await user1.createBot()
       await bot.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
-      expect(user1.profile.hasUsedGeofence).to.be.true
       // console.log('bot updated', bot.toJSON())
       expect(bot.visitorsSize).to.equal(0)
       expect(bot.guestsSize).to.equal(0)
@@ -281,56 +268,6 @@ describe('Geofence', () => {
       done(e)
     }
   })
-  it('geofence unsubscribe', async done => {
-    try {
-      timestamp()
-      await loadedBot.unsubscribeGeofence()
-      expect(loadedBot.guest).to.equal(false)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  it('load bot guests again', async done => {
-    try {
-      timestamp()
-      await bot.guests.refresh()
-      expect(bot.guests.length).to.equal(0)
-      await bot.guests.load()
-      expect(bot.guests.length).to.equal(1)
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-  // TODO: find out why it fails _sometimes_
-  // it('geofence unsubscribe owner', async done => {
-  //   try {
-  //     timestamp()
-  //     const loadedBot2 = await user1.loadBot(bot.id, null)
-  //     await waitFor(() => !loadedBot2.loading)
-  //     expect(loadedBot2.guestsSize).to.equal(1)
-  //     expect(loadedBot2.guest).to.equal(true)
-  //     await loadedBot2.unsubscribeGeofence()
-  //     expect(loadedBot2.guest).to.equal(false)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
-  // it('load bot guests again 2', async done => {
-  //   try {
-  //     timestamp()
-  //     await bot.guests.refresh()
-  //     expect(bot.guests.length).to.equal(0)
-  //     await bot.guests.load()
-  //     expect(bot.guests.length).to.equal(0)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
-
   after('remove', async done => {
     try {
       await user2.removeBot(loadedBot.id)

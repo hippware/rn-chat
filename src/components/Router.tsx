@@ -23,7 +23,6 @@ import ProfileDetail from './ProfileDetail/ProfileDetail'
 import ChatListScreen from './ChatListScreen'
 import ChatScreen from './ChatScreen'
 import BotDetails from './BotDetails/BotDetails'
-import BotsScreen from './BotsScreen'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
 import OnboardingSlideshow from './OnboardingSlideshowScene'
@@ -49,6 +48,7 @@ import CreationHeader from './Home/CreationHeader'
 import BotCompose from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
+import Attribution from './Attribution'
 
 export const navBarStyle = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -164,12 +164,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                   <Stack>
                     <Stack hideNavBar renderer={SplitRenderer}>
-                      <Stack key="loggedHome">
-                        <Scene key="home" component={Home} hideNavBar />
-                        <Scene key="botsScene" component={BotsScreen} title="Favorites" />
-                        <Scene key="chats" component={ChatListScreen} title="Messages" />
-                        <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
-                      </Stack>
+                      <Scene key="home" component={Home} hideNavBar />
                       <Scene key="bottomMenu" component={BottomMenu} />
                       <Scene key="createBot" component={CreationHeader} fromTop />
                       <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
@@ -181,15 +176,17 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="friendSearch" component={FriendSearch} />
                       <Scene key="visitors" component={VisitorList} />
                     </Stack>
+                    <Scene key="chats" component={ChatListScreen} title="Messages" />
+                    <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="See Who's Here" back />
-
                     <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" />
                     <Scene key="profileDetails" component={ProfileDetail} back navTransparent={false} />
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                     <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                     <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" back />
+                    <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={Actions.pop} />
                     {settings.isStaging && [
                       <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                       <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,

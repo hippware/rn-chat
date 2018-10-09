@@ -10,6 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Missing Placeholder Text (#2877)
 * Adjust/Enhance location profile map view (Rework #2849, PR #2914)
 * Speculative fix for: Emoji's missing from emoji selector (#2870, PR #2915)
+* Improve nav structure for chat screens (PR #2918)
+  * Chat icon from User Profile does not function (#2916)
+* App crash after user deletes location after creation flow (Rework #2873)
 
 # 3.7.0 - 2018 Oct 4
 
