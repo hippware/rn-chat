@@ -8,6 +8,7 @@ import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 // import {settings} from '../../globals'
 import {IHomeStore} from '../../store/HomeStore'
+import {isAlive} from 'mobx-state-tree'
 
 type Props = {
   bot: IBot
@@ -45,7 +46,7 @@ class BotButtons extends React.Component<Props> {
 
   render() {
     const {bot, style} = this.props
-    if (!bot || !bot.owner) return null
+    if (!bot || !isAlive(bot) || !bot.owner) return null
     // const isShareable = bot.isPublic || bot.owner.isOwn
     const actions = this.getActions()
     const destructiveIndex = actions.findIndex((a: any) => !!a.destructive)
