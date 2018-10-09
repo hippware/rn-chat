@@ -214,7 +214,7 @@ describe('BotStore', () => {
       expect(loaded.isNew).to.be.false
       expect(loaded.title).to.be.equal('Test bot!')
       expect(loaded.isSubscribed).to.be.true
-      expect(loaded.guest).to.be.false
+      expect(loaded.guest).to.be.true // all bots now are geofence
       expect(loaded.visitor).to.be.false
       expect(loaded.location!.latitude).to.be.equal(1.3)
       expect(loaded.location!.longitude).to.be.equal(2.3)
