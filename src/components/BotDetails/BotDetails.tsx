@@ -74,10 +74,12 @@ export default class BotDetails extends React.Component<Props> {
     })
 
     if (!this.bot.invitation || this.bot.invitation.accepted) {
+      // TODO: load all bot info in one GraphQL call
       await Promise.all([
         wocky!.loadBot(botId, undefined),
         this.bot!.posts.load({force: true}),
         this.bot!.guests.load(),
+        this.bot!.visitors.load(),
       ])
     }
     runInAction(() => {
