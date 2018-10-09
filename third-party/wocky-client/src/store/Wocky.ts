@@ -399,22 +399,13 @@ export const Wocky = types
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
       }),
-      _subscribeGeofenceBot: flow(function*(id: string) {
-        yield waitFor(() => self.connected)
-        self.profile!.setHasUsedGeofence(true)
-        return yield self.transport.subscribeBot(id, true)
-      }),
       _subscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)
-        return yield self.transport.subscribeBot(id, false)
-      }),
-      _unsubscribeGeofenceBot: flow(function*(id: string) {
-        yield waitFor(() => self.connected)
-        return yield self.transport.subscribeBot(id, false)
+        return yield self.transport.subscribeBot(id)
       }),
       _unsubscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)
-        return yield self.transport.unsubscribeBot(id, false)
+        return yield self.transport.unsubscribeBot(id)
       }),
       _acceptBotInvitation: flow(function*(inviteId: string) {
         yield waitFor(() => self.connected)

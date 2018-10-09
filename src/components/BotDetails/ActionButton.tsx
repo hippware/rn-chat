@@ -33,7 +33,7 @@ class BotButtons extends React.Component<Props> {
       if (this.props.wocky!.connected && this.props.bot.guest) {
         if (!this.props.locationStore!.alwaysOn) {
           Actions.geofenceWarning({bot: this.props.bot})
-          this.props.bot.unsubscribeGeofence()
+          this.props.bot.unsubscribe()
         }
       }
     })

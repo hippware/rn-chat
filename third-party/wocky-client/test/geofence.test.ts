@@ -201,10 +201,10 @@ describe('Geofence', () => {
     }
   })
 
-  it('geofence subscribes', async done => {
+  it('subscribe', async done => {
     try {
       timestamp()
-      await loadedBot.subscribeGeofence()
+      await loadedBot.subscribe()
       expect(loadedBot.guest).to.equal(true)
       done()
     } catch (e) {

@@ -153,12 +153,12 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unblock(username)
   }
 
-  subscribeBot(id: string, geofence?: boolean): Promise<number> {
-    return this._xmpp.subscribeBot(id, geofence)
+  subscribeBot(id: string): Promise<number> {
+    return this._xmpp.subscribeBot(id)
   }
 
-  unsubscribeBot(id: string, geofence?: boolean): Promise<number> {
-    return this._xmpp.unsubscribeBot(id, geofence)
+  unsubscribeBot(id: string): Promise<number> {
+    return this._xmpp.unsubscribeBot(id)
   }
 
   requestRoster(): Promise<[any]> {
