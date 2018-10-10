@@ -369,12 +369,12 @@ const LocationStore = types
           async () => {
             await self.startBackground()
             await self.getCurrentPosition()
-            const {setFocusedLocation, creationMode, focusedBotLocation} = getRoot(self)
+            const {setFocusedLocation, creationMode, isBotSelected} = getRoot(self)
               .homeStore as IHomeStore
 
             // only set set focused location (animate the map) if the user hasn't
             // already started creating a bot or selected a bot
-            if (!creationMode && !focusedBotLocation) {
+            if (!creationMode && !isBotSelected) {
               setFocusedLocation(self.location)
             }
           },

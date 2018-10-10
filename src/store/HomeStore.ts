@@ -74,6 +74,11 @@ const HomeStore = types
       return self.homeBotIndex
     },
   }))
+  .views(self => ({
+    get isBotSelected(): boolean {
+      return getType(self.list[self.index]) === BotCard
+    },
+  }))
   .actions(self => ({
     setCreationMode(value) {
       self.creationMode = value
