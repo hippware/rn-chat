@@ -363,23 +363,20 @@ const LocationStore = types
       if (!self.alwaysOn) {
         self.stopBackground()
       }
-      reactions = [
-        when(
-          () => wocky.connected,
-          async () => {
-            await self.startBackground()
-            await self.getCurrentPosition()
-            const {setFocusedLocation, creationMode, isBotSelected} = getRoot(self)
-              .homeStore as IHomeStore
+      const {setFocusedLocation, creationMode, isBotSelected} = getRoot(self)
+        .homeStore as IHomeStore
 
-            // only set set focused location (animate the map) if the user hasn't
-            // already started creating a bot or selected a bot
-            if (!creationMode && !isBotSelected) {
-              setFocusedLocation(self.location)
-            }
-          },
-          {name: 'LocationStore: Start background after connected'}
-        ),
+      // only set set focused location (animate the map) if the user hasn't
+      // already started creating a bot or selected a bot
+      if (!creationMode && !isBotSelected) {
+        yield self.getCurrentPosition()
+        setFocusedLocation(self.location)
+      }
+
+      reactions = [
+        when(() => wocky.connected, self.startBackground, {
+          name: 'LocationStore: Start background after connected',
+        }),
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',

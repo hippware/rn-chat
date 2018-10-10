@@ -162,7 +162,7 @@ const HomeStore = types
         // empty
       },
       finish() {
-        // empty
+        self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
       },
     }
   })
