@@ -157,6 +157,7 @@ export default class MapHome extends React.Component<IProps> {
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
           rotateEnabled={false}
+          pitchEnabled={false}
           {...this.props}
         >
           {list.map((card, i) => {
