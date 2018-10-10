@@ -4,15 +4,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Location Profile - tappable "Who's Here" CTA (Rework #2564, PR #2911)
+* Location Profile - tappable "Who's Here" CTA (Rework #2564, PR #2911, PR #2923)
 * Changes to friend search (PR #2912)
   * Friends Search: Design Enhancement (#2852)
   * Missing Placeholder Text (#2877)
 * Adjust/Enhance location profile map view (Rework #2849, PR #2914)
 * Speculative fix for: Emoji's missing from emoji selector (#2870, PR #2915)
-* Improve nav structure for chat screens (PR #2918)
+* Improve nav structure for chat screens (PR #2918, PR #2921)
   * Chat icon from User Profile does not function (#2916)
 * App crash after user deletes location after creation flow (Rework #2873)
+* Attribution Button & Screen (#2534)
+* Update NSLocation description strings (#2906)
+* Chat icon from User Profile does not function (#2916)
+* [dev] Remove geofenceSubscribe/unsubscribe (#2926)
+* Disable crash after bot delete (#2920, PR #2925)
 
 # 3.7.0 - 2018 Oct 4
 
