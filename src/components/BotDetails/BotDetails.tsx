@@ -82,10 +82,9 @@ export default class BotDetails extends React.Component<Props> {
         this.bot!.visitors.load(),
       ])
     }
-    runInAction(() => {
-      homeStore.selectBot(this.bot)
-      homeStore.setFocusedLocation(this.bot.location)
-    })
+
+    homeStore.selectBot(this.bot)
+    homeStore.setFocusedLocation(this.bot.location)
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))
