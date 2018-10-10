@@ -237,7 +237,7 @@ const FirebaseStore = types
               iosInfo: {
                 iosBundleId: settings.isStaging
                   ? 'com.hippware.ios.ChatStaging'
-                  : 'com.hippware.ios.Chat',
+                  : 'com.hippware.tinyrobot',
               },
             },
           }),
