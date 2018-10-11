@@ -80,6 +80,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] Disable/comment out background fetch (#2715)
 * Fix production 3.4.1 crash (#2831)
 * Remove 'explore nearby' XMPP related code (#2828)
+* Prune code that references bot public and geofence flags (#2827)
 * Revert app compatibility list (#2841, Reverts #2730)
 
 # 3.4.1 - 2018 Sep 20
