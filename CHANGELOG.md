@@ -18,6 +18,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Chat icon from User Profile does not function (#2916)
 * [dev] Remove geofenceSubscribe/unsubscribe (#2926)
 * Disable crash after bot delete (#2920, PR #2925)
+* Disable map tilt (#2931)
+* Map focus timing (#2929)
+  * Selected Pin does not stay in focus (#2913)
 
 # 3.7.0 - 2018 Oct 4
 
