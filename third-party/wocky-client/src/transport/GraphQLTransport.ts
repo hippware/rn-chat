@@ -725,6 +725,10 @@ export class GraphQLTransport implements IWockyTransport {
         ) {
           botUpdate(input: {id: $id, userLocation: $userLocation, values: $values}) {
             successful
+            messages {
+              message
+              field
+            }
           }
         }
       `,
@@ -747,15 +751,18 @@ export class GraphQLTransport implements IWockyTransport {
         },
         ...(userLocation
           ? {
-              lon: userLocation.longitude,
-              lat: userLocation.latitude,
-              accuracy: userLocation.accuracy,
+              userLocation: {
+                resource: this.resource,
+                lon: userLocation.longitude,
+                lat: userLocation.latitude,
+                accuracy: userLocation.accuracy,
+              },
             }
           : {}),
       },
     })
     if (!res.data!.botUpdate.successful) {
-      throw new Error('Error during bot save!')
+      throw new Error('Error during bot save')
     }
   }
 

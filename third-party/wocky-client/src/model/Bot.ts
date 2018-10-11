@@ -57,7 +57,7 @@ export const Bot = types
   .volatile(() => ({
     isNew: false,
     loading: false,
-    userLocation: Location,
+    userLocation: null,
   }))
   .named('Bot')
   .actions(self => ({
