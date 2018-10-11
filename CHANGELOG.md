@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 3.8.1 ??
+# 3.8.1 - 2018 Oct 11
 
 (3.8.0 is an uncontrolled release)
 
