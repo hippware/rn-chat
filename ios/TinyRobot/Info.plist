@@ -6,6 +6,8 @@
 	<string>f108fb997359e5519815d5fc58c79ad3</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>tinyrobot</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.7.0</string>
+	<string>3.8.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -35,12 +37,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.548019610697-m2bscumisrho0h8t1rjid4sh0l03oj86</string>
+				<string>com.googleusercontent.apps.548019610697-cvfs1fjakvibmefqa4epp141a7a1c78o</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>16</string>
+	<string>17</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -95,7 +97,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This will let you take photos.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  <string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
 	<key>NSLocationUsageDescription</key>
@@ -129,6 +131,8 @@
 	<array>
 		<string>gps</string>
 		<string>magnetometer</string>
+		<string>telephony</string>
+		<string>sms</string>
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>

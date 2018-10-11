@@ -41,7 +41,7 @@ class Attribution extends React.Component<{}> {
 
   openAppStore = () => {
     // Note: this won't work in a simulator
-    Linking.openURL('itms-apps://itunes.apple.com/us/app/id1076718311?mt=8&action=write-review')
+    Linking.openURL('itms-apps://itunes.apple.com/us/app/id1295678402?mt=8&action=write-review')
   }
 }
 

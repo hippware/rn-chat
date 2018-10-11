@@ -77,7 +77,7 @@ class InviteFriendsRow extends React.Component<Props> {
         message: `${message} Download the app at`,
         // title: 'title',
         url:
-          'https://itunes.apple.com/app/apple-store/id1076718311?pt=117841011&ct=Invite%20Friends&mt=8',
+          'https://itunes.apple.com/app/apple-store/id1295678402?pt=117841011&ct=Invite%20Friends&mt=8',
       },
       {
         subject: 'Check out tinyrobot',
