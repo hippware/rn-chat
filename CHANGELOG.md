@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.8.1 ??
+
+(3.8.0 is an uncontrolled release)
+
 * Location Profile - tappable "Who's Here" CTA (Rework #2564, PR #2911, PR #2923)
 * Changes to friend search (PR #2912)
   * Friends Search: Design Enhancement (#2852)
@@ -21,6 +25,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Disable map tilt (#2931)
 * Map focus timing (#2929)
   * Selected Pin does not stay in focus (#2913)
+* [dev] Send user location on bot create/update (#2856)
+* When a user creates a geofence bot while they are in the bot, 
+  they should immediately see the presence bot in the widget (#2383)
+* Changes for new app store listing (PR #2942)
 
 # 3.7.0 - 2018 Oct 4
 
