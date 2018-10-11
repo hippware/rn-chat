@@ -1,0 +1,68 @@
+export const PROFILE_PROPS = `id firstName lastName handle
+  avatar { thumbnailUrl fullUrl trosUrl }
+  bots(first:0, relationship: OWNED) { totalCount }
+  followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
+  followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
+`
+export const BOT_PROPS = `id icon title address addressData description radius server shortname 
+  image { thumbnailUrl fullUrl trosUrl }
+  type lat lon owner { ${PROFILE_PROPS} } 
+  items(first:0) { totalCount }
+  guestCount: subscribers(first:0 type:GUEST){ totalCount }
+  visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
+  subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
+  subscribers(first:1 id: $ownUsername) { edges { relationships } }
+`
+
+export const NOTIFICATIONS_PROPS = `
+  ... on Notification {
+    id
+    createdAt
+    data {
+      __typename
+      ... on UserFollowNotification {
+        user {
+          ${PROFILE_PROPS}
+        }
+      }
+      ... on InvitationNotification {
+        bot {${BOT_PROPS}}
+        invitation {
+          accepted
+          id
+        }
+        user {${PROFILE_PROPS}}
+      }
+      ... on InvitationResponseNotification {
+        accepted
+        invitation {
+          id
+          accepted
+        }
+        bot {
+          ${BOT_PROPS}
+        }
+        user {${PROFILE_PROPS}}
+      }
+      ... on BotItemNotification {
+        bot {${BOT_PROPS}}
+        botItem {
+          id
+          image
+          media {
+            fullUrl
+            thumbnailUrl
+            trosUrl
+          }
+          owner {${PROFILE_PROPS}}
+          stanza
+        }
+      }
+      ... on GeofenceEventNotification {
+        bot {${BOT_PROPS}}
+        user {${PROFILE_PROPS}}
+        event
+      }
+    }
+  }
+  `
