@@ -88,8 +88,10 @@ export default class MapHome extends React.Component<IProps> {
   }
   // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
   createFromLongPress = (value: any) => {
-    this.setCenterCoordinate(value.nativeEvent.coordinate)
-    Actions.createBot()
+    if (!this.props.homeStore!.creationMode) {
+      this.setCenterCoordinate(value.nativeEvent.coordinate)
+      Actions.createBot()
+    }
   }
 
   onMapPress = () => {
