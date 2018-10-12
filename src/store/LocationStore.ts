@@ -1,10 +1,9 @@
-import {types, getEnv, getRoot, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
-import {IHomeStore} from './HomeStore'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
@@ -362,15 +361,6 @@ const LocationStore = types
 
       if (!self.alwaysOn) {
         self.stopBackground()
-      }
-      const {setFocusedLocation, creationMode, isBotSelected} = getRoot(self)
-        .homeStore as IHomeStore
-
-      // only set set focused location (animate the map) if the user hasn't
-      // already started creating a bot or selected a bot
-      if (!creationMode && !isBotSelected) {
-        yield self.getCurrentPosition()
-        setFocusedLocation(self.location)
       }
 
       reactions = [
