@@ -77,9 +77,10 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {addBotsToList, creationMode, setMapCenter} = this.props.homeStore!
+    const {addBotsToList, creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
     // don't add bot during creation mode (to avoid replacing of new location)
     setMapCenter(region)
+    setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
       const bots = await this.props.wocky.loadLocalBots(region)
       addBotsToList('home', bots)
