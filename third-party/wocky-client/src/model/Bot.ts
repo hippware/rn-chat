@@ -98,6 +98,10 @@ export const Bot = types
     acceptInvitation: flow(function*() {
       yield self.service._acceptBotInvitation(self.invitation.id)
       self.invitation.accepted = true
+      self.isSubscribed = true
+      self.guest = true
+      self.service.profile!.subscribedBots.addToTop(self)
+      self.service.geofenceBots.addToTop(self)
     }),
     unsubscribe: flow(function*() {
       self.guest = false

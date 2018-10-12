@@ -6,15 +6,18 @@ import {IBot} from '../src/model/Bot'
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot, loadedBot: IBot
 
+const insideBotLocation = {accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'}
+const outsideBotLocation = {accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'}
+
 async function enterBot(user: IWocky) {
-  await user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
-  user.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+  await user.setLocation(insideBotLocation)
+  user.setLocation(insideBotLocation)
   await sleep(500)
 }
 
 async function exitBot(user: IWocky) {
-  await user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
-  user.setLocation({accuracy: 1, longitude: 22.1, latitude: 1.1, resource: 'testing'})
+  await user.setLocation(outsideBotLocation)
+  user.setLocation(outsideBotLocation)
   await sleep(500)
 }
 
@@ -96,7 +99,7 @@ describe('Geofence', () => {
       done(e)
     }
   })
-  it('invite user2 to bot', async done => {
+  it('user2 receives bot invite', async done => {
     try {
       await waitFor(() => user2.notifications.length === 1)
       done()
@@ -195,16 +198,7 @@ describe('Geofence', () => {
     try {
       timestamp()
       await loadedBot.acceptInvitation()
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
-
-  it('subscribe', async done => {
-    try {
-      timestamp()
-      await loadedBot.subscribe()
+      // server subscribes automatically on invite accept
       expect(loadedBot.guest).to.equal(true)
       done()
     } catch (e) {
