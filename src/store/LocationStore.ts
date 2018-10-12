@@ -1,10 +1,9 @@
-import {types, getEnv, getRoot, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when, autorun} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
-import {IHomeStore} from './HomeStore'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
