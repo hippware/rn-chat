@@ -1,7 +1,7 @@
 import {types, flow, getSnapshot, getEnv, isAlive} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial, IProfile} from './Profile'
 import {FileRef} from './File'
-import {Location} from './Location'
+import {Location, ILocation} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
 import * as utils from '../transport/utils'
@@ -95,14 +95,14 @@ export const Bot = types
       self.service.geofenceBots.addToTop(self)
       self.followersSize = yield self.service._subscribeBot(self.id)
     }),
-    acceptInvitation: flow(function*() {
-      yield self.service._acceptBotInvitation(self.invitation.id)
+    acceptInvitation: flow(function*(userLocation: ILocation) {
+      yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
       self.invitation.accepted = true
       self.isSubscribed = true
       self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
       self.service.geofenceBots.addToTop(self)
-    }),
+    }) as (userLocation: ILocation) => Promise<void>,
     unsubscribe: flow(function*() {
       self.guest = false
       self.isSubscribed = false

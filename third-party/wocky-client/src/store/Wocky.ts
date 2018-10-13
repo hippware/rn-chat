@@ -375,7 +375,7 @@ export const Wocky = types
         self.profile!.ownBots.addToTop(bot)
         self.profiles.get(self.username!)!.ownBots.addToTop(bot)
         return {isNew: false}
-      }),
+      }) as (data: any, userLocation: ILocation) => Promise<{isNew: boolean}>,
       _removeBotPost: flow(function*(id: string, postId: string) {
         yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
@@ -407,9 +407,9 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         return yield self.transport.unsubscribeBot(id)
       }),
-      _acceptBotInvitation: flow(function*(inviteId: string) {
+      _acceptBotInvitation: flow(function*(inviteId: string, userLocation: ILocation) {
         yield waitFor(() => self.connected)
-        return yield self.transport.inviteBotReply(inviteId)
+        return yield self.transport.inviteBotReply(inviteId, userLocation)
       }),
       loadLocalBots: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
         yield waitFor(() => self.connected)
@@ -481,7 +481,7 @@ export const Wocky = types
         return {list: list.map((data: any) => self.create(EventEntity, data)), count}
       }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
-        console.log('& ONBOTVISITOR', action, visitor, JSON.stringify(bot))
+        console.log('& ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
         const botModel: IBot = self.bots.get(bot.id, bot)
         if (action === 'ARRIVE') {

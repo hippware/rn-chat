@@ -837,7 +837,7 @@ export class XmppTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async inviteBotReply(invitationId: string, accept: boolean = true) {
+  async inviteBotReply(invitationId: string, userLocation: any, accept: boolean = true) {
     throw new Error('Not supported')
   }
 

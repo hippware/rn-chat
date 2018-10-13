@@ -476,8 +476,11 @@ export class GraphQLTransport implements IWockyTransport {
     })
     // TODO: assert all invites sent successfully?
   }
-  async inviteBotReply(invitationId: string, accept: boolean = true) {
-    // const data: any = await this.client.mutate({
+  async inviteBotReply(
+    invitationId: string,
+    {latitude, longitude, accuracy}: ILocation,
+    accept: boolean = true
+  ) {
     await this.client.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
@@ -486,11 +489,19 @@ export class GraphQLTransport implements IWockyTransport {
             result
             messages {
               message
+              field
+              code
             }
           }
         }
       `,
-      variables: {input: {invitationId, accept}},
+      variables: {
+        input: {
+          invitationId,
+          accept,
+          userLocation: {accuracy, lat: latitude, lon: longitude, resource: this.resource},
+        },
+      },
     })
     // TODO: handle error?
   }
@@ -640,7 +651,7 @@ export class GraphQLTransport implements IWockyTransport {
       visibility,
       ...bot
     }: any,
-    userLocation?: ILocation
+    userLocation: ILocation
   ): Promise<void> {
     const res = await this.client.mutate({
       mutation: gql`

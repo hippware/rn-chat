@@ -2,6 +2,7 @@ import {expect} from 'chai'
 import {createXmpp, sleep, waitFor, timestamp} from './support/testuser'
 import {IWocky, IProfile, IOwnProfile} from '../src'
 import {IBot} from '../src/model/Bot'
+import {Location} from '../src/model/Location'
 
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot, loadedBot: IBot
@@ -78,6 +79,7 @@ describe('Geofence', () => {
     try {
       timestamp()
       bot = await user1.createBot()
+      bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
       await bot.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
@@ -121,6 +123,7 @@ describe('Geofence', () => {
     try {
       timestamp()
       bot2 = await user1.createBot()
+      bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
       await bot2.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot2',
@@ -197,7 +200,7 @@ describe('Geofence', () => {
   it('accept invite', async done => {
     try {
       timestamp()
-      await loadedBot.acceptInvitation()
+      await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
       // server subscribes automatically on invite accept
       expect(loadedBot.guest).to.equal(true)
       done()
@@ -257,6 +260,30 @@ describe('Geofence', () => {
       expect(user1.activeBots[0].visitors.list[0].id).to.equal(user2.username)
       expect(user1.activeBots[1].title).to.equal('Test bot2')
       expect(user1.activeBots[1].visitors.list.length).to.equal(1)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('2 users at same new bot location, both visitors', async done => {
+    try {
+      timestamp()
+      user2.notifications.refresh()
+      bot = await user1.createBot()
+      bot.setUserLocation(insideBotLocation)
+      await Promise.all([enterBot(user1), enterBot(user2)])
+      await bot.update({
+        location: insideBotLocation,
+        title: 'Test bot',
+        addressData: {city: 'West Hollywood', country: 'United States'},
+      })
+      await bot.invite([user2.username])
+      await waitFor(() => user2.notifications.length === 1)
+      loadedBot = await user2.loadBot(bot.id, null)
+      expect(loadedBot.visitorsSize).to.equal(1, 'should be 1 visitor before accepting invitation')
+      await loadedBot.acceptInvitation(Location.create(insideBotLocation))
+      expect(loadedBot.guest).to.equal(true, 'user2 should be a guest after accepting invitation')
+      await waitFor(() => loadedBot.visitorsSize === 2)
       done()
     } catch (e) {
       done(e)
