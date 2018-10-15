@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Remove re-centering map after background/foreground (PR #2951)
+  * Map focus timing (Rework #2929)
+* Disable Long Press within the creation & edit flow (#2946)
+* Current Location button only works once (#2948)
+
 # 3.8.1 - 2018 Oct 11
 
 (3.8.0 is an uncontrolled release)

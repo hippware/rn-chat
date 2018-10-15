@@ -77,9 +77,10 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {addBotsToList, creationMode, setMapCenter} = this.props.homeStore!
+    const {addBotsToList, creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
     // don't add bot during creation mode (to avoid replacing of new location)
     setMapCenter(region)
+    setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
       const bots = await this.props.wocky.loadLocalBots(region)
       addBotsToList('home', bots)
@@ -87,8 +88,10 @@ export default class MapHome extends React.Component<IProps> {
   }
   // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
   createFromLongPress = (value: any) => {
-    this.setCenterCoordinate(value.nativeEvent.coordinate)
-    Actions.createBot()
+    if (!this.props.homeStore!.creationMode) {
+      this.setCenterCoordinate(value.nativeEvent.coordinate)
+      Actions.createBot()
+    }
   }
 
   onMapPress = () => {
