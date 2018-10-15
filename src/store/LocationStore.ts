@@ -58,7 +58,6 @@ const LocationStore = types
     // should we persist location?
     location: types.maybe(Location),
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
-    fetchResult: 0,
   })
   .volatile(() => ({
     enabled: true,
@@ -324,7 +323,6 @@ const LocationStore = types
         self.backgroundGeolocation.playSound(1028) // newsflash
       self.setState({
         debugSounds: config.debugSounds,
-        fetchResult: Number.parseInt(config.fetchResult) || 0,
       })
       if (self.backgroundGeolocation) {
         self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)

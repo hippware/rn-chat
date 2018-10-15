@@ -20,13 +20,6 @@ import {colors} from '../constants'
 
 const Form = t.form.Form
 
-// https://github.com/transistorsoft/react-native-background-fetch#methods
-export const FetchResultChoices = {
-  '0': 'NEW DATA',
-  '1': 'NO DATA',
-  '2': 'FAILED',
-}
-
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
@@ -37,7 +30,6 @@ const debuggerSettings = t.struct({
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
   activityRecognitionInterval: t.Number,
-  fetchResult: t.enums(FetchResultChoices),
 })
 
 const options = {
@@ -65,9 +57,6 @@ const options = {
     },
     activityRecognitionInterval: {
       label: 'activityRecognitionInterval (in ms)',
-    },
-    fetchResult: {
-      label: 'fetchResult (background fetch)',
     },
   },
 }
@@ -106,10 +95,10 @@ export default class LocationDebug extends React.Component<Props> {
   )
 
   render() {
-    const {backgroundOptions, debugSounds, fetchResult} = this.props.locationStore!
+    const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
     let value = _.pick(backgroundOptions, BG_STATE_PROPS)
-    value = _.assign(value, {debugSounds, fetchResult})
+    value = _.assign(value, {debugSounds})
     const syncing = this.syncing || !this.props.wocky!.connected
 
     return (
