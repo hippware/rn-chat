@@ -27,6 +27,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
     profile && (
       <HackMarker
         zIndex={1000}
+        key={'youmarker' + profile.avatar && profile.avatar.loaded}
         coordinate={{latitude, longitude}}
         onPress={() => {
           card.select()

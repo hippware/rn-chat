@@ -37,7 +37,7 @@ export class FileService implements IFileService {
       headers,
       background: true,
       discretionary: true,
-      readTimeout: 600,
+      readTimeout: 5 * 60 * 1000, // 5 min
     })
     const {statusCode} = await promise
     if (statusCode !== 200) {

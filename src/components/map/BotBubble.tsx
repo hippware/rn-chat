@@ -15,28 +15,37 @@ type Props = {
   showLoader?: boolean
 }
 
-const BotBubble = observer((props: Props) => {
-  const {bot, showLoader, image, onImagePress, ...rest} = props
-  if (!bot || !isAlive(bot) || !bot.location) {
-    return null
+@observer
+class BotBubble extends React.Component<Props> {
+  componentDidMount() {
+    const {bot} = this.props
+    if (bot && isAlive(bot) && bot.image && !bot.image.thumbnail) {
+      bot.image.download()
+    }
   }
-  const coverImage =
-    image || (bot.image ? bot.image.thumbnail : require('../../../images/footPrintCover.png'))
-  const text = bot.addressData ? bot.addressData.locationShort : bot.address
-  const bubble = (
-    <Bubble
-      text={text}
-      image={coverImage}
-      showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
-      {...rest}
-    />
-  )
+  render() {
+    const {bot, showLoader, image, onImagePress, ...rest} = this.props
+    if (!bot || !isAlive(bot) || !bot.location) {
+      return null
+    }
+    const coverImage =
+      image || (bot.image ? bot.image.thumbnail : require('../../../images/footPrintCover.png'))
+    const text = bot.addressData ? bot.addressData.locationShort : bot.address
+    const bubble = (
+      <Bubble
+        text={text}
+        image={coverImage}
+        showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
+        {...rest}
+      />
+    )
 
-  return onImagePress ? (
-    <TouchableOpacity onPress={onImagePress}>{bubble}</TouchableOpacity>
-  ) : (
-    bubble
-  )
-})
+    return onImagePress ? (
+      <TouchableOpacity onPress={onImagePress}>{bubble}</TouchableOpacity>
+    ) : (
+      bubble
+    )
+  }
+}
 
 export default BotBubble
