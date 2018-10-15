@@ -22,19 +22,27 @@ type Props = {
   borderColor?: string
 }
 
-const Avatar = observer(
-  ({
-    size = 50,
-    disableStatus,
-    style,
-    borderWidth,
-    showFrame,
-    profile,
-    tappable = true,
-    hideDot,
-    borderColor,
-    fontSize,
-  }: Props) => {
+@observer
+class Avatar extends React.Component<Props> {
+  componentDidMount() {
+    const {profile} = this.props
+    if (profile && isAlive(profile) && profile.avatar && !profile.avatar.thumbnail) {
+      profile.avatar.download()
+    }
+  }
+  render() {
+    const {
+      size = 50,
+      disableStatus,
+      style,
+      borderWidth,
+      showFrame,
+      profile,
+      tappable = true,
+      hideDot,
+      borderColor,
+      fontSize,
+    } = this.props
     if (!profile || !isAlive(profile)) {
       return null
     }
@@ -87,7 +95,7 @@ const Avatar = observer(
       </Clazz>
     )
   }
-)
+}
 
 const AvatarImage = ({source, style, size, showLoader, showMask}) =>
   showLoader ? (

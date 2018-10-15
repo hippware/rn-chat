@@ -87,8 +87,6 @@ export const File = types
     afterAttach: flow(function*() {
       if (self.url) {
         yield self.downloadThumbnail()
-      } else {
-        yield self.download()
       }
     }),
   }))

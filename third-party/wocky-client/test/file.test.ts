@@ -37,6 +37,7 @@ describe('FileStore', () => {
       expect(user1.profile!.updated).to.be.true
       const profile = await user1.loadProfile(user1.username!)
       expect(profile.avatar).to.be.not.null
+      await profile.avatar.download()
       when(
         () =>
           user1.profile !== null &&
@@ -69,6 +70,7 @@ describe('FileStore', () => {
       // check how thumbnails are automatically loaded
       await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
       expect(user1.profile!.avatar!.url).to.be.empty
+      await user1.profile!.avatar.download()
       const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)
       expect(expectBuf.toString()).to.be.equal(testBuf.toString())
       done()

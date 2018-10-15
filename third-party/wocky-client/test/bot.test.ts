@@ -155,6 +155,7 @@ describe('BotStore', () => {
       expect(bot.uploaded).to.be.true
       expect(bot.uploading).to.be.false
       await bot.save()
+      await bot.image.download()
       await waitFor(() => bot.image!.source !== null)
     } catch (e) {
       done(e)

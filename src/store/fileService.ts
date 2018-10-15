@@ -31,7 +31,14 @@ export class FileService implements IFileService {
   }
 
   async downloadHttpFile(fromUrl: string, toFile: string, headers: any) {
-    const {promise} = fs.downloadFile({fromUrl, toFile, headers})
+    const {promise} = fs.downloadFile({
+      fromUrl,
+      toFile,
+      headers,
+      background: true,
+      discretionary: true,
+      readTimeout: 5 * 60 * 1000, // 5 min
+    })
     const {statusCode} = await promise
     if (statusCode !== 200) {
       try {
