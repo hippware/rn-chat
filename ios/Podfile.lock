@@ -161,7 +161,7 @@ PODS:
     - React
   - RNBackgroundFetch (2.4.3):
     - React
-  - RNBackgroundGeolocation (2.12.2):
+  - RNBackgroundGeolocation (2.13.4):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNDeviceInfo (0.9.3):

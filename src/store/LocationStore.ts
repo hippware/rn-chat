@@ -364,7 +364,7 @@ const LocationStore = types
       }
 
       reactions = [
-        when(() => wocky.connected, self.startBackground, {
+        when(() => wocky.connected, () => self.startBackground().then(self.getCurrentPosition), {
           name: 'LocationStore: Start background after connected',
         }),
         autorun(() => !self.location && self.getCurrentPosition(), {
