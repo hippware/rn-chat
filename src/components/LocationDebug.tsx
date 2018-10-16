@@ -72,6 +72,7 @@ export default class LocationDebug extends React.Component<Props> {
   // @observable locations?: ObservableArray<any> = new ObservableArray<any>([])
   readonly locations = observable.array<object>([])
   @observable syncing: boolean = false
+  emailForm: any
 
   componentWillMount() {
     when(() => this.props.wocky!.connected, this.getLocations)
