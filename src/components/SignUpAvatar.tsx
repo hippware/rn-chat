@@ -4,6 +4,7 @@ import {k} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner, PresenceDot} from './common'
+import {observable} from 'mobx'
 
 type Props = {
   style?: any
@@ -18,10 +19,15 @@ const AVATAR_DIMENSION = 80 * k
 @inject('wocky', 'warn')
 @observer
 class SignUpAvatar extends React.Component<Props> {
+  @observable imgSrc
+
   render() {
     const {wocky: {profile}, showDot, style} = this.props
     const {avatar} = profile
-    const theAvatar = (avatar && avatar.thumbnail) || require('../../images/addPhoto.png')
+    const theAvatar =
+      (avatar && avatar.loaded && avatar.thumbnail) ||
+      this.imgSrc ||
+      require('../../images/addPhoto.png')
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
@@ -78,6 +84,7 @@ class SignUpAvatar extends React.Component<Props> {
         height: response.height,
         size: response.size,
       })
+      this.imgSrc = src
     } catch (err) {
       // TODO handle upload error
       this.props.warn('upload error', err)
