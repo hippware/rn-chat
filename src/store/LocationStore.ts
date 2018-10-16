@@ -329,12 +329,19 @@ const LocationStore = types
       }
     }
 
+    function emailLog(email) {
+      if (self.backgroundGeolocation) {
+        self.backgroundGeolocation.emailLog(email)
+      }
+    }
+
     return {
       stopBackground,
       startBackground,
       getCurrentPosition,
       initialize,
       setBackgroundConfig,
+      emailLog,
     }
   })
   .actions(self => {
