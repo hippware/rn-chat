@@ -67,7 +67,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 
   acceptInvitation = () => {
-    this.props.bot.acceptInvitation()
+    this.props.bot.acceptInvitation(this.props.locationStore.location)
   }
 
   render() {

@@ -1,5 +1,12 @@
 declare var Strophe: any
 import {when, isObservableArray} from 'mobx'
+import {IEventBotGeofenceData} from '../model/EventBotGeofence'
+import {IEventData} from '../model/Event'
+import {IEventBotInviteData} from '../model/EventBotInvite'
+import {IEventBotPostData} from '../model/EventBotPost'
+import {IEventUserFollowData} from '../model/EventUserFollow'
+import {IBotData} from '../model/Bot'
+import {IProfilePartial} from '../model/Profile'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -285,4 +292,140 @@ export function iso8601toDate(date: string) {
     }
   }
   return new Date(timestamp)
+}
+
+export function convertImage(image) {
+  return image && image.trosUrl && image.thumbnailUrl
+    ? {id: image.trosUrl, url: image.thumbnailUrl}
+    : null
+}
+
+export function convertProfile({
+  avatar,
+  bots,
+  followers,
+  followed,
+  hidden,
+  ...data
+}): IProfilePartial {
+  // console.log('convertProfile', bots, followers, followed, data)
+  return {
+    hidden: hidden
+      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
+      : null,
+    avatar: convertImage(avatar),
+    botsSize: bots.totalCount,
+    followersSize: followers.totalCount,
+    followedSize: followed.totalCount,
+    ...data,
+  } as IProfilePartial
+}
+
+// TODO: remove try/catch on this?
+export function convertBot({
+  lat,
+  lon,
+  image,
+  addressData,
+  owner,
+  items,
+  visitors,
+  subscriberCount,
+  visitorCount,
+  guestCount,
+  subscribers,
+  ...data
+}: any) {
+  try {
+    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+    return {
+      ...data,
+      owner: convertProfile(owner),
+      image: convertImage(image),
+      addressData: addressData ? JSON.parse(addressData) : {},
+      totalItems: items ? items.totalCount : 0,
+      followersSize: subscriberCount.totalCount - 1,
+      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
+      visitorsSize: visitorCount.totalCount,
+      guestsSize: guestCount.totalCount,
+      location: {latitude: lat, longitude: lon},
+      guest: contains('GUEST'),
+      visitor: contains('VISITOR'),
+      isSubscribed: contains('SUBSCRIBED'),
+    }
+  } catch (e) {
+    // console.error('ERROR CONVERTING:', arguments[0], e)
+  }
+}
+
+export function convertNotification(edge: any): IEventData | null {
+  let bot: IBotData
+  // TODO handle delete notifications
+  if (edge.node.__typename === 'NotificationDeleted') {
+    return null
+  }
+  const {node: {data: {__typename, ...data}, id, createdAt}} = edge
+  const time = new Date(createdAt).getTime()
+  // console.log('& converting type', __typename, createdAt, time)
+  switch (__typename) {
+    case 'UserFollowNotification':
+      const followNotification: IEventUserFollowData = {
+        id,
+        time,
+        user: convertProfile(data.user),
+      }
+      // console.log('& user follow:', followNotification)
+      return followNotification
+    case 'BotItemNotification':
+      bot = convertBot(data.bot)
+      const botItemNotification: IEventBotPostData = {
+        id,
+        time,
+        post: {
+          id: data.botItem.id,
+          profile: data.botItem.owner.id,
+        },
+        bot,
+      }
+      return botItemNotification
+    case 'InvitationNotification':
+    case 'InvitationResponseNotification':
+      // console.log('& invite notification', data.invitation)
+      bot = {
+        ...convertBot(data.bot),
+        invitation: {
+          id: data.invitation.id,
+          accepted: data.invitation.accepted === true,
+        },
+      }
+      const inviteNotification: IEventBotInviteData = {
+        id,
+        time,
+        bot,
+        sender: data.user.id,
+        isResponse: __typename === 'InvitationResponseNotification',
+        isAccepted: data.accepted,
+        inviteId: data.invitation.id,
+      }
+      return inviteNotification
+    case 'GeofenceEventNotification':
+      // console.log('& invite response notification', data.invitation)
+      bot = convertBot(data.bot)
+      const geofenceNotification: IEventBotGeofenceData = {
+        id,
+        time,
+        bot,
+        // profile: convertProfile(data.user),
+        profile: data.user.id,
+        isEnter: data.event === 'ENTER',
+      }
+      return geofenceNotification
+    default:
+      throw new Error(`failed to process notification ${edge}`)
+  }
+}
+
+export function convertNotifications(notifications: any[]): IEventData[] {
+  return notifications.map(convertNotification).filter(x => x)
 }

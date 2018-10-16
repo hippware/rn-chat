@@ -1,5 +1,3 @@
-// import {observable, when} from 'mobx'
-// import * as Utils from './utils'
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
@@ -10,83 +8,11 @@ import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
 import {ILocationSnapshot} from '..'
-import {IBot, IBotData} from '../model/Bot'
+import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
-import {IEventUserFollowData} from '../model/EventUserFollow'
-import {IEventData} from '../model/Event'
-import {IEventBotPostData} from '../model/EventBotPost'
-import {IEventBotInviteData} from '../model/EventBotInvite'
-import {IEventBotGeofenceData} from '../model/EventBotGeofence'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-
-const PROFILE_PROPS = `id firstName lastName handle
-  avatar { thumbnailUrl fullUrl trosUrl }
-  bots(first:0, relationship: OWNED) { totalCount }
-  followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
-  followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
-`
-const BOT_PROPS = `id icon title address addressData description radius server shortname 
-  image { thumbnailUrl fullUrl trosUrl }
-  type lat lon owner { ${PROFILE_PROPS} } 
-  items(first:0) { totalCount }
-  guestCount: subscribers(first:0 type:GUEST){ totalCount }
-  visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
-  subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
-  subscribers(first:1 id: $ownUsername) { edges { relationships } }
-`
-
-const NOTIFICATIONS_PROPS = `
-  ... on Notification {
-    id
-    createdAt
-    data {
-      __typename
-      ... on UserFollowNotification {
-        user {
-          ${PROFILE_PROPS}
-        }
-      }
-      ... on InvitationNotification {
-        bot {${BOT_PROPS}}
-        invitation {
-          accepted
-          id
-        }
-        user {${PROFILE_PROPS}}
-      }
-      ... on InvitationResponseNotification {
-        accepted
-        invitation {
-          id
-          accepted
-        }
-        bot {
-          ${BOT_PROPS}
-        }
-        user {${PROFILE_PROPS}}
-      }
-      ... on BotItemNotification {
-        bot {${BOT_PROPS}}
-        botItem {
-          id
-          image
-          media {
-            fullUrl
-            thumbnailUrl
-            trosUrl
-          }
-          owner {${PROFILE_PROPS}}
-          stanza
-        }
-      }
-      ... on GeofenceEventNotification {
-        bot {${BOT_PROPS}}
-        user {${PROFILE_PROPS}}
-        event
-      }
-    }
-  }
-  `
+import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
+import {convertProfile, convertBot, convertNotification, convertNotifications} from './utils'
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
@@ -550,8 +476,11 @@ export class GraphQLTransport implements IWockyTransport {
     })
     // TODO: assert all invites sent successfully?
   }
-  async inviteBotReply(invitationId: string, accept: boolean = true) {
-    // const data: any = await this.client.mutate({
+  async inviteBotReply(
+    invitationId: string,
+    {latitude, longitude, accuracy},
+    accept: boolean = true
+  ) {
     await this.client.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
@@ -560,11 +489,19 @@ export class GraphQLTransport implements IWockyTransport {
             result
             messages {
               message
+              field
+              code
             }
           }
         }
       `,
-      variables: {input: {invitationId, accept}},
+      variables: {
+        input: {
+          invitationId,
+          accept,
+          userLocation: {accuracy, lat: latitude, lon: longitude, resource: this.resource},
+        },
+      },
     })
     // TODO: handle error?
   }
@@ -714,7 +651,7 @@ export class GraphQLTransport implements IWockyTransport {
       visibility,
       ...bot
     }: any,
-    userLocation?: ILocation
+    userLocation: ILocation | undefined
   ): Promise<void> {
     const res = await this.client.mutate({
       mutation: gql`
@@ -962,153 +899,3 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 }
-
-function convertImage(image) {
-  return image && image.trosUrl && image.thumbnailUrl
-    ? {id: image.trosUrl, url: image.thumbnailUrl}
-    : null
-}
-
-function convertProfile({avatar, bots, followers, followed, hidden, ...data}): IProfilePartial {
-  // console.log('convertProfile', bots, followers, followed, data)
-  return {
-    hidden: hidden
-      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
-      : null,
-    avatar: convertImage(avatar),
-    botsSize: bots.totalCount,
-    followersSize: followers.totalCount,
-    followedSize: followed.totalCount,
-    ...data,
-  } as IProfilePartial
-}
-
-// TODO: remove try/catch on this?
-function convertBot({
-  lat,
-  lon,
-  image,
-  addressData,
-  owner,
-  items,
-  visitors,
-  subscriberCount,
-  visitorCount,
-  guestCount,
-  subscribers,
-  ...data
-}: any) {
-  try {
-    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
-    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
-    return {
-      ...data,
-      owner: convertProfile(owner),
-      image: convertImage(image),
-      addressData: addressData ? JSON.parse(addressData) : {},
-      totalItems: items ? items.totalCount : 0,
-      followersSize: subscriberCount.totalCount - 1,
-      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
-      visitorsSize: visitorCount.totalCount,
-      guestsSize: guestCount.totalCount,
-      location: {latitude: lat, longitude: lon},
-      guest: contains('GUEST'),
-      visitor: contains('VISITOR'),
-      isSubscribed: contains('SUBSCRIBED'),
-    }
-  } catch (e) {
-    // console.error('ERROR CONVERTING:', arguments[0], e)
-  }
-}
-
-function convertNotification(edge: any): IEventData | null {
-  let bot: IBotData
-  // TODO handle delete notifications
-  if (edge.node.__typename === 'NotificationDeleted') {
-    return null
-  }
-  const {node: {data: {__typename, ...data}, id, createdAt}} = edge
-  const time = new Date(createdAt).getTime()
-  // console.log('& converting type', __typename, createdAt, time)
-  switch (__typename) {
-    case 'UserFollowNotification':
-      const followNotification: IEventUserFollowData = {
-        id,
-        time,
-        user: convertProfile(data.user),
-      }
-      // console.log('& user follow:', followNotification)
-      return followNotification
-    case 'BotItemNotification':
-      bot = convertBot(data.bot)
-      const botItemNotification: IEventBotPostData = {
-        id,
-        time,
-        post: {
-          id: data.botItem.id,
-          profile: data.botItem.owner.id,
-        },
-        bot,
-      }
-      return botItemNotification
-    case 'InvitationNotification':
-    case 'InvitationResponseNotification':
-      // console.log('& invite notification', data.invitation)
-      bot = {
-        ...convertBot(data.bot),
-        invitation: {
-          id: data.invitation.id,
-          accepted: data.invitation.accepted === true,
-        },
-      }
-      const inviteNotification: IEventBotInviteData = {
-        id,
-        time,
-        bot,
-        sender: data.user.id,
-        isResponse: __typename === 'InvitationResponseNotification',
-        isAccepted: data.accepted,
-        inviteId: data.invitation.id,
-      }
-      return inviteNotification
-    case 'GeofenceEventNotification':
-      // console.log('& invite response notification', data.invitation)
-      bot = convertBot(data.bot)
-      const geofenceNotification: IEventBotGeofenceData = {
-        id,
-        time,
-        bot,
-        // profile: convertProfile(data.user),
-        profile: data.user.id,
-        isEnter: data.event === 'ENTER',
-      }
-      return geofenceNotification
-    default:
-      throw new Error(`failed to process notification ${edge}`)
-  }
-}
-
-function convertNotifications(notifications: any[]): IEventData[] {
-  return notifications.map(convertNotification).filter(x => x)
-}
-
-// function timeout(promise: Promise<any>, timeoutMillis: number) {
-//   let timeout: any
-//   return Promise.race([
-//     promise,
-//     new Promise(function(resolve, reject) {
-//       timeout = setTimeout(function() {
-//         reject('Operation timed out')
-//       }, timeoutMillis)
-//     })
-//   ]).then(
-//     function(v) {
-//       clearTimeout(timeout)
-//       return v
-//     },
-//     function(err) {
-//       clearTimeout(timeout)
-//       throw err
-//     }
-//   )
-// }

@@ -143,12 +143,14 @@ describe('GraphQL', () => {
     try {
       timestamp()
       bot = await user.createBot()
+      bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
       await bot.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
         addressData: {city: 'Koper', country: 'Slovenia'},
       })
       bot2 = await user.createBot()
+      bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
       await bot2.update({
         location: {latitude: 1.2, longitude: 2.2},
         title: 'Test bot2',
