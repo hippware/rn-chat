@@ -46,6 +46,8 @@
         "15000",
         "-r",
         "ts-node/register",
+        "-r",
+        "tsconfig-paths/register",
         "${relativeFile}"
       ],
       "cwd": "${workspaceRoot}",

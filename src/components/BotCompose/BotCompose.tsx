@@ -194,7 +194,7 @@ export class BotCompose extends React.Component<Props> {
 
       if (!this.props.edit) {
         // need to add new bot to HomeMap
-        this.props.homeStore.addBotsToList('home', [this.bot])
+        this.props.homeStore.addBotsToList([this.bot])
         setTimeout(() => {
           Actions.geofenceShare({botId: id}) // all bots now are 'geofence'
         })
