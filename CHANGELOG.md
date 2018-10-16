@@ -4,11 +4,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.0 - 2018 Oct 16
+
 * Remove re-centering map after background/foreground (PR #2951)
   * Map focus timing (Rework #2929)
 * Disable Long Press within the creation & edit flow (#2946)
 * Current Location button only works once (#2948)
-* Lazy loading of user avatar images (PR #2955) / Missing Avatar (#2511)
+* Lazy loading of user avatar images (PR #2955, PR #2956)
+  * Missing Avatar (#2511)
+* User should appear in presence widget when accepting invite (#2939)
+  * ... (when they are at that location). 
+* Fix bot removal from homeStore, refactoring and unit tests (PR #2960)
+  * App Crash after deleting location after creation flow (#2945)
+* Update RNBG, add getCurrentPosition at the start (PR #2961)
+  * App brought from the background receives "Background location is not enabled" (#2023)
 
 # 3.8.1 - 2018 Oct 11
 
