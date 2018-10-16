@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import {when, spy} from 'mobx';
+import {expect} from 'chai'
+import {when, spy} from 'mobx'
 // import geocoding from '../src/store/geocodingStore';
 
 describe('geocoding', () => {
@@ -51,4 +51,4 @@ describe('geocoding', () => {
   //         done(e);
   //     }
   // });
-});
+})

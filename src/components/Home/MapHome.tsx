@@ -83,7 +83,7 @@ export default class MapHome extends React.Component<IProps> {
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
       const bots = await this.props.wocky.loadLocalBots(region)
-      addBotsToList('home', bots)
+      addBotsToList(bots)
     }
   }
   // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;

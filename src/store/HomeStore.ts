@@ -56,10 +56,8 @@ const HomeStore = types
     fullScreenMode: false,
     detailsMode: false,
     creationMode: false,
-    discoverList: types.optional(types.array(Card), []),
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
-    // discoverIndex: 0,
-    homeBotIndex: 0,
+    index: 0,
     focusedBotLocation: types.maybe(Location),
     mapCenterLocation: types.maybe(Location),
     scrolledToBot: types.maybe(types.reference(Bot)),
@@ -68,10 +66,6 @@ const HomeStore = types
     // return the list for current mode
     get list(): ICard[] {
       return self.creationMode ? [] : self.homeBotList
-    },
-    // return index for the current mode
-    get index(): number {
-      return self.homeBotIndex
     },
   }))
   .views(self => ({
@@ -109,8 +103,8 @@ const HomeStore = types
     // sets new index for the current mode, deselects previously selected bot and select new one.
     setIndex: (index: number): void => {
       self.fullScreenMode = false
-      self.homeBotList[self.homeBotIndex].setSelected(false)
-      self.homeBotIndex = index
+      self.homeBotList[self.index].setSelected(false)
+      self.index = index
       if (self.list.length) {
         // select card
         self.list[self.index].setSelected(true)
@@ -126,8 +120,8 @@ const HomeStore = types
       logout() {
         applySnapshot(self, {})
       },
-      addBotsToList(listName: 'discover' | 'home', bots: IBot[]): void {
-        const list = listName === 'home' ? self.homeBotList : self.discoverList
+      addBotsToList(bots: IBot[]): void {
+        const list = self.homeBotList
         bots.forEach(bot => {
           if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
             list.push(BotCard.create({bot}))
@@ -135,13 +129,12 @@ const HomeStore = types
         })
       },
       removeBot(bot: IBot): void {
-        let index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+        const index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
         if (index !== -1) {
           self.homeBotList.splice(index, 1)
         }
-        index = self.discoverList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
-        if (index !== -1) {
-          self.discoverList.splice(index, 1)
+        if (index >= self.index) {
+          self.index--
         }
       },
       // toggleListMode: (): void => {
@@ -172,7 +165,7 @@ const HomeStore = types
       if (index >= 0) {
         self.setIndex(index)
       } else {
-        self.addBotsToList('home', [bot])
+        self.addBotsToList([bot])
         self.setIndex(self.list.length - 1)
       }
     },

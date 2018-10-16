@@ -1,5 +1,7 @@
-import {action, when, observable, computed, reaction} from 'mobx'
+import {observable, computed} from 'mobx'
 import validate from 'validate.js'
+import {ValidateItem} from './ValidateItem'
+export {ValidateItem} from './ValidateItem'
 
 // eslint-disable-next-line
 const isAlphabet = '^\\pL[ 0-9`\'"\u0060\u00B4\u2018\u2019\u201C\u201D\\pL]*[\\pL0-9]?$'
@@ -49,42 +51,17 @@ const profileConstraints = {
   },
 }
 
-export const validateProfile = async (profileObject: Object): Promise<Object> => {
+export const validateProfile = async (profileObject: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     validate.async(profileObject, profileConstraints).then(res => resolve(res), res => reject(res))
   })
 }
 
-export class ValidateItem {
-  @observable errorMessage: string = ''
-  @observable value: string
-  @observable isValid: ?boolean = undefined
-  key: string
-
-  constructor(key: string, value: string, validator: Function) {
-    this.key = key
-    this.value = value
-    reaction(
-      () => this.value,
-      val =>
-        validator({[this.key]: val})
-          .then(r => {
-            this.isValid = true
-            this.errorMessage = ''
-          })
-          .catch(e => {
-            this.isValid = false
-            this.errorMessage = e[key][0]
-          })
-    )
-  }
-}
-
 type VProfileType = {
-  handle: string,
-  firstName: string,
-  lastName: string,
-  email: string,
+  handle: string
+  firstName: string
+  lastName: string
+  email: string
 }
 
 export class ValidatableProfile {
@@ -111,7 +88,7 @@ export class ValidatableProfile {
     )
   }
 
-  get asObject(): Object {
+  get asObject(): any {
     return {
       handle: this.handle.value,
       firstName: this.firstName.value,
