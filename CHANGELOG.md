@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Map focus timing (Rework #2929)
 * Disable Long Press within the creation & edit flow (#2946)
 * Current Location button only works once (#2948)
+* Lazy loading of user avatar images (PR #2955) / Missing Avatar (#2511)
 
 # 3.8.1 - 2018 Oct 11
 
