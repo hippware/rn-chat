@@ -95,7 +95,7 @@ export default class LocationDebug extends React.Component<Props> {
   )
 
   emailLog = () => {
-    let value = this.refs.emailForm.getValue()
+    const value = this.emailForm.getValue()
     if (value && value.email) {
       this.props.locationStore!.emailLog(value.email)
     }
@@ -120,7 +120,7 @@ export default class LocationDebug extends React.Component<Props> {
           <View style={{marginTop: 20}}>
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
               <Form
-                ref="emailForm"
+                ref={r => (this.emailForm = r)}
                 type={t.struct({email: t.String})}
                 options={{
                   fields: {email: {placeholder: 'Email address to log to'}},
