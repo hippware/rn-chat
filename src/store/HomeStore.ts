@@ -108,16 +108,22 @@ const HomeStore = types
   .actions(self => ({
     // sets new index for the current mode, deselects previously selected bot and select new one.
     setIndex: (index: number): void => {
-      self.fullScreenMode = false
-      self.homeBotList[self.homeBotIndex].setSelected(false)
-      self.homeBotIndex = index
-      if (self.list.length) {
-        // select card
-        self.list[self.index].setSelected(true)
-        // change map center if bot card is selected
-        if (getType(self.list[self.index]) === BotCard) {
-          self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
+      // TODO: figure out a better way of managing this for deletions.
+      // https://github.com/hippware/rn-chat/issues/2945
+      try {
+        self.fullScreenMode = false
+        self.homeBotList[self.homeBotIndex].setSelected(false)
+        self.homeBotIndex = index
+        if (self.list.length) {
+          // select card
+          self.list[self.index].setSelected(true)
+          // change map center if bot card is selected
+          if (getType(self.list[self.index]) === BotCard) {
+            self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
+          }
         }
+      } catch (err) {
+        // noop
       }
     },
   }))
