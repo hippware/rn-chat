@@ -233,6 +233,7 @@ describe('BotStore', () => {
     try {
       timestamp()
       bot2 = await user1.createBot()
+      bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
       expect(bot2.isNew).to.be.true
       await bot2.update({
         location: {latitude: 1.2, longitude: 2.2},

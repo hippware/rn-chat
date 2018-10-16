@@ -1,8 +1,6 @@
 import {expect} from 'chai'
-import {createXmpp, waitFor, timestamp} from './support/testuser'
+import {createXmpp, timestamp} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
-import {when} from 'mobx'
-import {getSnapshot} from 'mobx-state-tree'
 const host = 'testing.dev.tinyrobot.com'
 
 describe('GraphQL Notifications', () => {
@@ -56,6 +54,7 @@ describe('GraphQL Notifications', () => {
 
       // alice creates a bot
       aliceBot = await alice.createBot()
+      aliceBot.setUserLocation({latitude: 10, longitude: 20, accuracy: 1})
       await aliceBot.update({
         location: {latitude: 1.1, longitude: 2.1},
         title: 'Test bot',
@@ -82,7 +81,11 @@ describe('GraphQL Notifications', () => {
   it('gets Location Invite Accept notification', async done => {
     try {
       timestamp()
-      await gqlBob.inviteBotReply(invitationId, true)
+      await gqlBob.inviteBotReply(
+        invitationId,
+        {latitude: 10.1, longitude: 20.1, accuracy: 5},
+        true
+      )
       await pause(1000)
       const notifications = await gqlAlice.loadNotifications({})
       expect(notifications.count).to.equal(1)

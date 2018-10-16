@@ -478,7 +478,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
   async inviteBotReply(
     invitationId: string,
-    {latitude, longitude, accuracy}: ILocation,
+    {latitude, longitude, accuracy},
     accept: boolean = true
   ) {
     await this.client.mutate({
@@ -651,7 +651,7 @@ export class GraphQLTransport implements IWockyTransport {
       visibility,
       ...bot
     }: any,
-    userLocation: ILocation
+    userLocation: ILocation | undefined
   ): Promise<void> {
     const res = await this.client.mutate({
       mutation: gql`

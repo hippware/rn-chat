@@ -481,7 +481,7 @@ export const Wocky = types
         return {list: list.map((data: any) => self.create(EventEntity, data)), count}
       }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
-        console.log('& ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
+        // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
         const botModel: IBot = self.bots.get(bot.id, bot)
         if (action === 'ARRIVE') {
