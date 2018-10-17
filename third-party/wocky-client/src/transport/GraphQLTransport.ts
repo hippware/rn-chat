@@ -414,7 +414,7 @@ export class GraphQLTransport implements IWockyTransport {
                 cursor
                 node {
                   ${BOT_PROPS}
-                  visitors: subscribers(first: 1, type: VISITOR) {
+                  visitors: subscribers(first: 20, type: VISITOR) {
                     edges {
                       cursor
                       node {
