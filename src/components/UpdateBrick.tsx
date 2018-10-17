@@ -17,7 +17,11 @@ export default class UpdateBrick extends React.Component<{}> {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Image
           source={background}
-          style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+          }}
           resizeMode="cover"
         />
 
