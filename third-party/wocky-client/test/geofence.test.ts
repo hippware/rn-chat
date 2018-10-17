@@ -256,7 +256,7 @@ describe('Geofence', () => {
       await user1.geofenceBots.load()
       expect(user1.activeBots.length).to.equal(2)
       expect(user1.activeBots[0].title).to.equal('Test bot')
-      expect(user1.activeBots[0].visitors.list.length).to.equal(1) // load only last visitor!
+      expect(user1.activeBots[0].visitors.list.length).to.equal(2)
       expect(user1.activeBots[0].visitors.list[0].id).to.equal(user2.username)
       expect(user1.activeBots[1].title).to.equal('Test bot2')
       expect(user1.activeBots[1].visitors.list.length).to.equal(1)
