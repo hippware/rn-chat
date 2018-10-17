@@ -118,33 +118,38 @@ export default class LocationDebug extends React.Component<Props> {
             onChange={this.props.locationStore!.setBackgroundConfig}
             value={value}
           />
-          <View style={{marginTop: 20}}>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-              <Form
-                ref={r => (this.emailForm = r)}
-                type={t.struct({email: t.String})}
-                options={{
-                  fields: {email: {placeholder: 'Email address to log to'}},
-                  auto: 'placeholders',
-                }}
-              />
-              <TouchableOpacity
-                onPress={this.emailLog}
-                style={{
-                  backgroundColor: colors.PINK,
-                  padding: 5,
-                  borderRadius: 2,
-                  marginLeft: 10,
-                  marginBottom: 15,
-                  width: 100,
-                  alignItems: 'center',
-                }}
-              >
-                <RText size={20} color={colors.WHITE}>
-                  Email
-                </RText>
-              </TouchableOpacity>
-            </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 20,
+              marginBottom: 10,
+            }}
+          >
+            <Form
+              ref={r => (this.emailForm = r)}
+              type={t.struct({email: t.String})}
+              options={{
+                fields: {email: {placeholder: 'Email address to log to'}},
+                auto: 'placeholders',
+              }}
+            />
+            <TouchableOpacity
+              onPress={this.emailLog}
+              style={{
+                backgroundColor: colors.PINK,
+                padding: 5,
+                borderRadius: 2,
+                marginLeft: 10,
+                marginBottom: 15,
+                width: 100,
+                alignItems: 'center',
+              }}
+            >
+              <RText size={20} color={colors.WHITE}>
+                Email
+              </RText>
+            </TouchableOpacity>
           </View>
           <View style={{marginTop: 20}}>
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
