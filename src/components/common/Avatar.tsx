@@ -7,7 +7,7 @@ import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
-import {PresenceDot} from '.'
+import {PresenceDot, LazyImage} from '.'
 
 type Props = {
   profile: IProfile
@@ -22,33 +22,24 @@ type Props = {
   borderColor?: string
 }
 
-@observer
-class Avatar extends React.Component<Props> {
-  componentDidMount() {
-    const {profile} = this.props
-    if (profile && isAlive(profile) && profile.avatar && !profile.avatar.thumbnail) {
-      profile.avatar.download()
-    }
-  }
-  render() {
-    const {
-      size = 50,
-      disableStatus,
-      style,
-      borderWidth,
-      showFrame,
-      profile,
-      tappable = true,
-      hideDot,
-      borderColor,
-      fontSize,
-    } = this.props
+const Avatar = observer(
+  ({
+    size = 50,
+    disableStatus,
+    style,
+    borderWidth,
+    showFrame,
+    profile,
+    tappable = true,
+    hideDot,
+    borderColor,
+    fontSize,
+  }: Props) => {
     if (!profile || !isAlive(profile)) {
       return null
     }
     const showMask =
       profile.isOwn && (profile as IOwnProfile).hidden && (profile as IOwnProfile).hidden.enabled
-    // const showMask = true
     const title = profile.displayName || ' '
     const Clazz = tappable ? TouchableOpacity : View
     const sharedStyle = {
@@ -67,8 +58,7 @@ class Avatar extends React.Component<Props> {
         <View style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar ? (
             <AvatarImage
-              source={profile.avatar.thumbnail}
-              showLoader={!(profile.avatar && profile.avatar.loaded)}
+              avatar={profile.avatar}
               style={sharedStyle}
               size={size}
               showMask={showMask}
@@ -95,17 +85,19 @@ class Avatar extends React.Component<Props> {
       </Clazz>
     )
   }
-}
+)
 
-const AvatarImage = ({source, style, size, showLoader, showMask}) =>
-  showLoader ? (
-    <View style={[style, styles.avatarContainer]} />
-  ) : (
-    <View style={[style, {borderWidth: 0}]}>
-      <Image source={source} style={[style, styles.avatarContainer]} />
-      {showMask && <Mask size={size * 0.65} />}
-    </View>
-  )
+const AvatarImage = observer(({avatar, style, size, showMask}) => (
+  <View style={[style, {borderWidth: 0}]}>
+    <LazyImage
+      source={avatar.thumbnail}
+      file={avatar}
+      style={[style, styles.avatarContainer]}
+      placeholder={<View style={[style, styles.avatarContainer]} />}
+    />
+    {showMask && <Mask size={size * 0.65} />}
+  </View>
+))
 
 const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
   const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}

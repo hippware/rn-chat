@@ -15,13 +15,14 @@ import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
-import {RText, Spinner, ProfileHandle, ProfileStack} from '../common'
+import {RText, Spinner, ProfileHandle, ProfileStack, LazyImage} from '../common'
 import {IBot, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
 import {Actions} from 'react-native-router-flux'
 import ProfileAvatar from '../ProfileAvatar'
 import LinearGradient from 'react-native-linear-gradient'
+import {GREY} from 'src/constants/colors'
 
 type Props = {
   bot: IBot
@@ -133,10 +134,12 @@ class BotDetailsHeader extends React.Component<Props, State> {
               </View>
             )}
             {bot.image && (
-              <Image
+              <LazyImage
+                file={bot.image}
                 source={bot.image.thumbnail}
-                style={{width, height: width, marginHorizontal: -20 * k}}
+                style={styles.botImage as any}
                 resizeMode="contain"
+                placeholder={<View style={[styles.botImage, {backgroundColor: GREY}]} />}
               />
             )}
             <Separator style={{marginHorizontal: 5}} />
@@ -300,4 +303,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15 * k,
   },
+  botImage: {width, height: width, marginHorizontal: -20 * k},
 })
