@@ -87,7 +87,7 @@ const Avatar = observer(
   }
 )
 
-const AvatarImage = ({avatar, style, size, showMask}) => (
+const AvatarImage = observer(({avatar, style, size, showMask}) => (
   <View style={[style, {borderWidth: 0}]}>
     <LazyImage
       source={avatar.thumbnail}
@@ -97,7 +97,7 @@ const AvatarImage = ({avatar, style, size, showMask}) => (
     />
     {showMask && <Mask size={size * 0.65} />}
   </View>
-)
+))
 
 const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
   const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}
