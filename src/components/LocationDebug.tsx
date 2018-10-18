@@ -9,6 +9,7 @@ import {
   ILocationStore,
   LocationAccuracyChoices,
   ActivityTypeChoices,
+  LogLevelChoices,
   BG_STATE_PROPS,
 } from '../store/LocationStore'
 import Screen from './Screen'
@@ -20,13 +21,6 @@ import {colors} from '../constants'
 
 const Form = t.form.Form
 
-// https://github.com/transistorsoft/react-native-background-fetch#methods
-export const FetchResultChoices = {
-  '0': 'NEW DATA',
-  '1': 'NO DATA',
-  '2': 'FAILED',
-}
-
 const debuggerSettings = t.struct({
   debug: t.Boolean,
   debugSounds: t.Boolean,
@@ -37,7 +31,7 @@ const debuggerSettings = t.struct({
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
   activityRecognitionInterval: t.Number,
-  fetchResult: t.enums(FetchResultChoices),
+  logLevel: t.enums(LogLevelChoices),
 })
 
 const options = {
@@ -66,8 +60,8 @@ const options = {
     activityRecognitionInterval: {
       label: 'activityRecognitionInterval (in ms)',
     },
-    fetchResult: {
-      label: 'fetchResult (background fetch)',
+    logLevel: {
+      label: 'logLevel',
     },
   },
 }
@@ -106,10 +100,10 @@ export default class LocationDebug extends React.Component<Props> {
   )
 
   render() {
-    const {backgroundOptions, debugSounds, fetchResult} = this.props.locationStore!
+    const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
     let value = _.pick(backgroundOptions, BG_STATE_PROPS)
-    value = _.assign(value, {debugSounds, fetchResult})
+    value = _.assign(value, {debugSounds})
     const syncing = this.syncing || !this.props.wocky!.connected
 
     return (
@@ -121,6 +115,24 @@ export default class LocationDebug extends React.Component<Props> {
             onChange={this.props.locationStore!.setBackgroundConfig}
             value={value}
           />
+          <TouchableOpacity
+            // Calling emailLog with empty string seems to work
+            onPress={() => {
+              this.props.locationStore!.emailLog('')
+            }}
+            style={{
+              backgroundColor: colors.PINK,
+              padding: 5,
+              borderRadius: 2,
+              marginTop: 20,
+              width: 120,
+              alignItems: 'center',
+            }}
+          >
+            <RText size={20} color={colors.WHITE}>
+              Email log
+            </RText>
+          </TouchableOpacity>
           <View style={{marginTop: 20}}>
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
               <RText size={20}>{'Latest Locations'}</RText>

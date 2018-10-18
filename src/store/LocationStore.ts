@@ -20,6 +20,7 @@ export const BG_STATE_PROPS = [
   'activityType',
   'activityRecognitionInterval',
   'debug',
+  'logLevel',
 ]
 
 const prefix = 'BGGL'
@@ -42,6 +43,16 @@ export const ActivityTypeChoices = {
 }
 const ActivityTypeValues = Object.keys(ActivityTypeChoices)
 
+export const LogLevelChoices = {
+  '0': 'OFF',
+  '1': 'ERROR',
+  '2': 'WARNING',
+  '3': 'INFO',
+  '4': 'DEBUG',
+  '5': 'VERBOSE',
+}
+const LogLevelValues = Object.keys(LogLevelChoices)
+
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
   elasticityMultiplier: types.maybe(types.number),
   stopTimeout: types.maybe(types.number),
@@ -51,6 +62,7 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   debug: types.maybe(types.boolean),
   activityType: types.maybe(types.enumeration(ActivityTypeValues)),
   activityRecognitionInterval: types.maybe(types.number),
+  logLevel: types.maybe(types.enumeration(LogLevelValues)),
 })
 
 const LocationStore = types
@@ -58,7 +70,6 @@ const LocationStore = types
     // should we persist location?
     location: types.maybe(Location),
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
-    fetchResult: 0,
   })
   .volatile(() => ({
     enabled: true,
@@ -156,6 +167,7 @@ const LocationStore = types
           ...options,
           desiredAccuracy: options.desiredAccuracy.toString(),
           activityType: options.activityType.toString(),
+          logLevel: options.logLevel.toString(),
         },
       })
     },
@@ -324,10 +336,18 @@ const LocationStore = types
         self.backgroundGeolocation.playSound(1028) // newsflash
       self.setState({
         debugSounds: config.debugSounds,
-        fetchResult: Number.parseInt(config.fetchResult) || 0,
       })
       if (self.backgroundGeolocation) {
+        // For some reason, these parameters must be ints, not strings
+        config.activityType = parseInt(config.activityType)
+        config.logLevel = parseInt(config.logLevel)
         self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
+      }
+    }
+
+    function emailLog(email) {
+      if (self.backgroundGeolocation) {
+        self.backgroundGeolocation.emailLog(email)
       }
     }
 
@@ -337,6 +357,7 @@ const LocationStore = types
       getCurrentPosition,
       initialize,
       setBackgroundConfig,
+      emailLog,
     }
   })
   .actions(self => {
