@@ -338,6 +338,9 @@ const LocationStore = types
         debugSounds: config.debugSounds,
       })
       if (self.backgroundGeolocation) {
+        // For some reason, these parameters must be ints, not strings
+        config.activityType = parseInt(config.activityType)
+        config.logLevel = parseInt(config.logLevel)
         self.backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
       }
     }
