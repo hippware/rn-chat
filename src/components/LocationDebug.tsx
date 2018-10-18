@@ -77,7 +77,6 @@ export default class LocationDebug extends React.Component<Props> {
   // @observable locations?: ObservableArray<any> = new ObservableArray<any>([])
   readonly locations = observable.array<object>([])
   @observable syncing: boolean = false
-  emailForm: any
 
   componentWillMount() {
     when(() => this.props.wocky!.connected, this.getLocations)
@@ -100,13 +99,6 @@ export default class LocationDebug extends React.Component<Props> {
     </RText>
   )
 
-  emailLog = () => {
-    const value = this.emailForm.getValue()
-    if (value && value.email) {
-      this.props.locationStore!.emailLog(value.email)
-    }
-  }
-
   render() {
     const {backgroundOptions, debugSounds} = this.props.locationStore!
     if (!backgroundOptions) return null
@@ -123,39 +115,24 @@ export default class LocationDebug extends React.Component<Props> {
             onChange={this.props.locationStore!.setBackgroundConfig}
             value={value}
           />
-          <View
+          <TouchableOpacity
+            // Calling emailLog with empty string seems to work
+            onPress={() => {
+              this.props.locationStore!.emailLog('')
+            }}
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              backgroundColor: colors.PINK,
+              padding: 5,
+              borderRadius: 2,
               marginTop: 20,
-              marginBottom: 10,
+              width: 120,
+              alignItems: 'center',
             }}
           >
-            <Form
-              ref={r => (this.emailForm = r)}
-              type={t.struct({email: t.String})}
-              options={{
-                fields: {email: {placeholder: 'Email address to log to'}},
-                auto: 'placeholders',
-              }}
-            />
-            <TouchableOpacity
-              onPress={this.emailLog}
-              style={{
-                backgroundColor: colors.PINK,
-                padding: 5,
-                borderRadius: 2,
-                marginLeft: 10,
-                marginBottom: 15,
-                width: 100,
-                alignItems: 'center',
-              }}
-            >
-              <RText size={20} color={colors.WHITE}>
-                Email
-              </RText>
-            </TouchableOpacity>
-          </View>
+            <RText size={20} color={colors.WHITE}>
+              Email log
+            </RText>
+          </TouchableOpacity>
           <View style={{marginTop: 20}}>
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
               <RText size={20}>{'Latest Locations'}</RText>
