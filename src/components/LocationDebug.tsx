@@ -9,6 +9,7 @@ import {
   ILocationStore,
   LocationAccuracyChoices,
   ActivityTypeChoices,
+  LogLevelChoices,
   BG_STATE_PROPS,
 } from '../store/LocationStore'
 import Screen from './Screen'
@@ -30,6 +31,7 @@ const debuggerSettings = t.struct({
   stationaryRadius: t.Number,
   activityType: t.enums(ActivityTypeChoices),
   activityRecognitionInterval: t.Number,
+  logLevel: t.enums(LogLevelChoices),
 })
 
 const options = {
@@ -57,6 +59,9 @@ const options = {
     },
     activityRecognitionInterval: {
       label: 'activityRecognitionInterval (in ms)',
+    },
+    logLevel: {
+      label: 'logLevel',
     },
   },
 }
