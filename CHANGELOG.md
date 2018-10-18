@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.1 - 2018 Oct 17
+
+* Images not appearing (#2962)
+* Quick fix: Who's Here list changes with Background/Foreground (#2963)
+
 # 3.9.0 - 2018 Oct 16
 
 * Remove re-centering map after background/foreground (PR #2951)
