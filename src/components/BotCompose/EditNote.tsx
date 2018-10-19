@@ -17,8 +17,8 @@ type Props = {
 @inject('wocky')
 @observer
 class EditNote extends React.Component<Props> {
-  bot: IBot = null
-  note: any = null
+  bot?: IBot
+  note: any
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
@@ -31,8 +31,8 @@ class EditNote extends React.Component<Props> {
           style={[styles.textStyle, {width, height: 120, paddingTop: 15}]}
           placeholder="Tell us about this place!"
           ref={r => (this.note = r)}
-          onChangeText={text => this.bot.load({description: text})}
-          value={this.bot.description}
+          onChangeText={text => this.bot!.load({description: text})}
+          value={this.bot!.description}
           autoFocus
           multiline
           onBlur={Actions.pop}

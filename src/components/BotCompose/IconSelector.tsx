@@ -23,15 +23,15 @@ class IconSelector extends React.Component<Props> {
       <View>
         <Carousel
           ref={r => (this.selector = r)}
-          data={iconStore.iconList.slice()}
+          data={iconStore!.iconList.slice()}
           renderItem={this.renderIcon}
           removeClippedSubviews={false}
           sliderWidth={width}
           itemWidth={itemSize}
-          initialNumToRender={iconStore.iconList.length}
+          initialNumToRender={iconStore!.iconList.length}
           onBeforeSnapToItem={this.onSnap}
           inactiveSlideOpacity={1}
-          firstItem={iconStore.index}
+          firstItem={iconStore!.index}
           enableMomentum
           decelerationRate={0.1}
         />
@@ -54,7 +54,7 @@ class IconSelector extends React.Component<Props> {
 
   onSnap = (index: number) => {
     const {iconStore, onSnap} = this.props
-    iconStore.setIndex(index)
+    iconStore!.setIndex(index)
     if (onSnap) {
       onSnap(index)
     }

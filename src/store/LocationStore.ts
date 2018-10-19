@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, autorun} from 'mobx'
+import {when, autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -308,7 +308,7 @@ const LocationStore = types
             position => {
               self.setPosition(position.coords)
             },
-            null,
+            undefined,
             {
               timeout: 20,
               maximumAge: 1000,
@@ -362,7 +362,7 @@ const LocationStore = types
   })
   .actions(self => {
     let wocky
-    let reactions = []
+    let reactions: IReactionDisposer[] = []
 
     function afterAttach() {
       self.initialize()
@@ -399,7 +399,7 @@ const LocationStore = types
       reactions.forEach(disposer => disposer())
       reactions = []
       if (navigator && self.watch !== null) {
-        navigator.geolocation.clearWatch(self.watch)
+        navigator.geolocation.clearWatch(self.watch!)
         self.watch = null
       }
     }

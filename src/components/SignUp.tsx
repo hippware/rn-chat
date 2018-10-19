@@ -23,7 +23,7 @@ type Props = {
 @inject('wocky', 'analytics', 'warn')
 @observer
 class SignUp extends React.Component<Props> {
-  @observable vProfile: ValidatableProfile
+  @observable vProfile?: ValidatableProfile
   handle: any
   firstName: any
   lastName: any
@@ -34,7 +34,7 @@ class SignUp extends React.Component<Props> {
     runInAction(
       () =>
         (this.vProfile =
-          this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile))
+          this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile!))
     )
   }
 
@@ -49,11 +49,11 @@ class SignUp extends React.Component<Props> {
   }
 
   done = async () => {
-    if (!this.vProfile.isValid) return
+    if (!this.vProfile!.isValid) return
     const {profile} = this.props.wocky!
-    if (profile.updating) return
+    if (!profile || profile!.updating) return
     try {
-      await profile!.update(this.vProfile.asObject)
+      await profile!.update(this.vProfile!.asObject)
       Actions.logged()
       this.props.analytics.track('createprofile_complete', {
         profile: getSnapshot(this.props.wocky!.profile!),

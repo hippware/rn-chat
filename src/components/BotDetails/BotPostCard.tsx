@@ -25,7 +25,7 @@ const BotPostCard = (props: Props) => {
   // const timestamp = post.relativeDateAsString
   return (
     <View style={{backgroundColor: 'white'}}>
-      <UserInfoRow profile={post.profile} style={{paddingHorizontal: 20 * k}} />
+      <UserInfoRow profile={post.profile!} style={{paddingHorizontal: 20 * k}} />
       {!!post.content && (
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
           <RText size={14} color={colors.DARK_PURPLE}>

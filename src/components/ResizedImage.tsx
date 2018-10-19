@@ -2,12 +2,13 @@ import React from 'react'
 import {View, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 
+type State = {
+  dwidth: number
+}
+
 @observer
-export default class extends React.Component<any, any> {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+export default class extends React.Component<any, State> {
+  state = {dwidth: 0}
 
   render() {
     return (

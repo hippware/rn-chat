@@ -427,5 +427,5 @@ export function convertNotification(edge: any): IEventData | null {
 }
 
 export function convertNotifications(notifications: any[]): IEventData[] {
-  return notifications.map(convertNotification).filter(x => x)
+  return notifications.map(convertNotification).filter(x => x) as IEventData[]
 }

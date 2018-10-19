@@ -22,17 +22,17 @@ type Props = {
   swipeDisabled?: boolean
   activeBackgroundColor: string
   inactiveBackgroundColor: string
-  buttonRadius?: number
+  buttonRadius: number
   switchWidth: number
   switchHeight: number
   buttonContent?: any
   enableSlide?: boolean
-  switchAnimationTime?: number
+  switchAnimationTime: number
   onActivate?: any
   onDeactivate?: any
   onChangeState?: any
   onPress?: any
-  toggleWidth?: number
+  toggleWidth: number
   toggleHeight?: number
   style?: any
   top?: number
@@ -49,7 +49,7 @@ type State = {
 const padding = 2
 
 @autobind
-class MaterialSwitch extends React.Component<any, any> {
+class MaterialSwitch extends React.Component<Props, State> {
   static defaultProps = {
     active: false,
     swipeDisabled: false,
@@ -83,7 +83,6 @@ class MaterialSwitch extends React.Component<any, any> {
     },
   }
 
-  props: Props
   state: State
   _panResponder: any
   start: any = {}

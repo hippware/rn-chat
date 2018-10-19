@@ -39,11 +39,12 @@ class ActiveBot extends React.Component<Props> {
           <BotBubble bot={bot} scale={0} onImagePress={this.goToBot}>
             {bot.visitor ? (
               <View style={styles.youreHere}>
-                <RText
-                  size={13}
-                  color="white"
-                  style={{textAlign: 'center'}}
-                >{`You're\r\nHere`}</RText>
+                <RText size={13} color="white" style={{textAlign: 'center'}}>
+                  You're
+                </RText>
+                <RText size={13} color="white" style={{textAlign: 'center'}}>
+                  Here
+                </RText>
               </View>
             ) : null}
           </BotBubble>

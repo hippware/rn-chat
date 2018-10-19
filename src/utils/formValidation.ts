@@ -58,17 +58,17 @@ export const validateProfile = async (profileObject: any): Promise<any> => {
 }
 
 type VProfileType = {
-  handle: string
-  firstName: string
-  lastName: string
-  email: string
+  handle?: string
+  firstName?: string
+  lastName?: string
+  email?: string
 }
 
 export class ValidatableProfile {
-  @observable handle: ValidateItem
-  @observable firstName: ValidateItem
-  @observable lastName: ValidateItem
-  @observable email: ValidateItem
+  @observable handle?: ValidateItem
+  @observable firstName?: ValidateItem
+  @observable lastName?: ValidateItem
+  @observable email?: ValidateItem
 
   constructor(obj: VProfileType) {
     Object.keys(obj).forEach(key => {
@@ -81,19 +81,19 @@ export class ValidatableProfile {
   @computed
   get isValid(): boolean {
     return (
-      !!this.handle.isValid &&
-      !!this.firstName.isValid &&
-      !!this.lastName.isValid &&
-      !!this.email.isValid
+      !!this.handle!.isValid &&
+      !!this.firstName!.isValid &&
+      !!this.lastName!.isValid &&
+      !!this.email!.isValid
     )
   }
 
   get asObject(): any {
     return {
-      handle: this.handle.value,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      email: this.email.value,
+      handle: this.handle!.value,
+      firstName: this.firstName!.value,
+      lastName: this.lastName!.value,
+      email: this.email!.value,
     }
   }
 }

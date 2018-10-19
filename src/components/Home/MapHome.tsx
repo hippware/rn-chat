@@ -56,7 +56,7 @@ export default class MapHome extends React.Component<IProps> {
 
     this.reactions = [
       reaction(
-        () => homeStore.focusedBotLocation,
+        () => homeStore!.focusedBotLocation,
         (location: any) => this.setCenterCoordinate(location),
         {
           name: 'MapHome: re-center map on focused card',
@@ -73,7 +73,9 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = ({latitudeDelta}: MapViewRegion) => {
     // NOTE: this runs _very_ often while panning/scrolling the map
-    this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+    if (latitudeDelta) {
+      this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+    }
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
@@ -82,7 +84,7 @@ export default class MapHome extends React.Component<IProps> {
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
-      const bots = await this.props.wocky.loadLocalBots(region)
+      const bots = await this.props.wocky!.loadLocalBots(region)
       addBotsToList(bots)
     }
   }

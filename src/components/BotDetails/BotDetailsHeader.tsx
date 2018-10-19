@@ -68,7 +68,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 
   acceptInvitation = () => {
-    this.props.bot.acceptInvitation(this.props.locationStore.location)
+    this.props.bot.acceptInvitation(this.props.locationStore!.location)
   }
 
   render() {
@@ -104,7 +104,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
         <View style={{flexDirection: 'row', marginTop: 10 * k, justifyContent: 'center'}}>
           <Pill>{bot.addressData.locationShort}</Pill>
-          <Pill>{locationStore.distanceFromBot(bot.location)}</Pill>
+          <Pill>{locationStore!.distanceFromBot(bot.location)}</Pill>
         </View>
 
         {bot.invitation && !bot.invitation.accepted ? (

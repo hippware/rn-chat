@@ -18,7 +18,6 @@ const img = require('../../images/graphicEndBots.png')
 @inject('wocky')
 @observer
 export default class BotListView extends React.Component<Props> {
-  props: Props
   list: any
   bots?: any
 
@@ -26,8 +25,8 @@ export default class BotListView extends React.Component<Props> {
     const {filter, wocky, list} = this.props
     this.bots =
       filter === 'all'
-        ? wocky.profile.subscribedBots
-        : filter === 'own' ? wocky.profile.ownBots : list
+        ? wocky!.profile!.subscribedBots
+        : filter === 'own' ? wocky!.profile!.ownBots : list
     this.bots.load()
   }
 
@@ -37,11 +36,11 @@ export default class BotListView extends React.Component<Props> {
 
   render() {
     const {header, wocky} = this.props
-    if (!wocky.profile) {
+    if (!wocky!.profile) {
       return null
     }
     const {finished} = this.bots
-    const {connected} = wocky
+    const {connected} = wocky!
 
     return (
       this.bots && (

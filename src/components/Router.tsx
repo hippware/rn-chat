@@ -127,7 +127,9 @@ class TinyRobotRouter extends React.Component<Props> {
     // TODO: Move it outside, why we can't put it inside Home?
     autorun(
       () => {
-        const {navStore: {scene}, store: {locationPrimed}, locationStore: {alwaysOn}} = this.props
+        const {navStore, store: {locationPrimed}} = this.props
+        const {scene} = navStore!
+        const {alwaysOn} = locationStore!
         if (scene === 'home' && !alwaysOn && !locationPrimed) {
           if (Actions.locationPrimer) Actions.locationPrimer()
         }
@@ -140,7 +142,7 @@ class TinyRobotRouter extends React.Component<Props> {
     const {store, wocky, navStore} = this.props
 
     return (
-      <Router onStateChange={() => navStore.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store.hydrate} success="checkCredentials" failure="onboarding" />
@@ -252,7 +254,7 @@ class TinyRobotRouter extends React.Component<Props> {
   // TODO: Move it outside
   login = async () => {
     try {
-      await this.props.wocky!.login()
+      await this.props.wocky!.login(undefined, undefined, undefined)
       return true
     } catch (error) {
       this.props.analytics.track('error_connection', {error})

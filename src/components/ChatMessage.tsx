@@ -27,8 +27,6 @@ type State = {}
 @autobind
 @observer
 export default class ChatMessage extends React.Component<Props, State> {
-  props: Props
-
   renderName(name, displayNames, diffMessage) {
     if (displayNames === true) {
       if (diffMessage === null || name !== diffMessage.name) {

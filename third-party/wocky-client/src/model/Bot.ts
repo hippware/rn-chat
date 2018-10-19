@@ -1,5 +1,5 @@
 import {types, flow, getSnapshot, getEnv, isAlive} from 'mobx-state-tree'
-import {Profile, ProfilePaginableList, IProfilePartial, IProfile} from './Profile'
+import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
@@ -7,7 +7,7 @@ import {Address} from './Address'
 import * as utils from '../transport/utils'
 import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
-import {createPaginable, IPaginable} from './PaginableList'
+import {createPaginable} from './PaginableList'
 import {Base} from './Base'
 
 const Invitation = types.model('BotInvitation', {
@@ -187,10 +187,7 @@ export const Bot = types
 // export type __IPaginable = IPaginable
 
 export type IBotType = typeof Bot.Type
-export interface IBot extends IBotType {
-  visitors: IPaginable<IProfile>
-  subscribers: IPaginable<IProfile>
-}
+export interface IBot extends IBotType {}
 
 export interface IBotData {
   id: string

@@ -54,26 +54,26 @@ export class BotCompose extends React.Component<Props> {
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
     // all bots now are geofence
-    if (this.props.homeStore.mapCenterLocation) {
-      this.bot.load({geofence: true, location: {...this.props.homeStore.mapCenterLocation}})
+    if (this.props.homeStore!.mapCenterLocation) {
+      this.bot.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
     }
-    this.text = this.bot.title
-    this.props.iconStore.setIcon(this.bot.icon)
+    this.text = this.bot.title || ''
+    this.props.iconStore!.setIcon(this.bot.icon)
   }
 
   componentDidMount() {
     this.handler = reaction(
-      () => ({...this.props.homeStore.mapCenterLocation}),
+      () => ({...this.props.homeStore!.mapCenterLocation}),
       location => {
-        if (this.props.homeStore.creationMode) {
-          this.bot.load({location})
+        if (this.props.homeStore!.creationMode) {
+          this.bot!.load({location})
         }
       }
     )
   }
 
   componentWillUnmount() {
-    this.props.iconStore.reset()
+    this.props.iconStore!.reset()
     this.handler()
   }
 
@@ -83,7 +83,7 @@ export class BotCompose extends React.Component<Props> {
   }
 
   onEmojiSelected = e => {
-    this.props.iconStore.changeEmoji(e)
+    this.props.iconStore!.changeEmoji(e)
   }
 
   onSnap = () => {
@@ -101,14 +101,14 @@ export class BotCompose extends React.Component<Props> {
         <IconSelector onSnap={this.onSnap} />
         <View
           style={{
-            height: this.props.iconStore.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
+            height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
             backgroundColor: 'white',
             overflow: 'hidden',
           }}
         >
           <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
         </View>
-        {!this.props.iconStore.isEmojiKeyboardShown && (
+        {!this.props.iconStore!.isEmojiKeyboardShown && (
           <View>
             <TextInput
               style={styles.textStyle}
@@ -129,12 +129,12 @@ export class BotCompose extends React.Component<Props> {
                 >
                   <EditCTA
                     text="Note"
-                    icon={this.bot.description ? noteIconDone : noteIcon}
-                    onPress={() => Actions.editNote({botId: this.bot.id})}
+                    icon={this.bot!.description ? noteIconDone : noteIcon}
+                    onPress={() => Actions.editNote({botId: this.bot!.id})}
                   />
                   <EditCTA
                     text="Photo"
-                    icon={this.bot.image ? photoIconDone : photoIcon}
+                    icon={this.bot!.image ? photoIconDone : photoIcon}
                     onPress={this.addPhoto}
                     pending={this.uploadingPhoto}
                   />
@@ -186,25 +186,25 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {load, save, id, setUserLocation} = this.bot
-      load({title: this.text, icon: this.props.iconStore.icon})
+      const {load, save, id, setUserLocation} = this.bot!
+      load({title: this.text, icon: this.props.iconStore!.icon})
       Keyboard.dismiss()
       setUserLocation(this.props.locationStore.location)
       await save()
 
       if (!this.props.edit) {
         // need to add new bot to HomeMap
-        this.props.homeStore.addBotsToList([this.bot])
+        this.props.homeStore!.addBotsToList([this.bot!])
         setTimeout(() => {
           Actions.geofenceShare({botId: id}) // all bots now are 'geofence'
         })
       } else {
         Actions.pop()
       }
-      this.props.analytics.track('botcreate_complete', getSnapshot(this.bot))
+      this.props.analytics.track('botcreate_complete', getSnapshot(this.bot!))
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.')
-      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot), error: e})
+      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot!), error: e})
       this.props.log('BotCompose save problem', e)
     } finally {
       this.isLoading = false
