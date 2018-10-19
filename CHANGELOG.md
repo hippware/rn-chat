@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Add assets from codepush brick screen (PR #2967)
+* Add ability to email rnbgl logs (PR #2959)
+
 # 3.9.1 - 2018 Oct 17
 
 * Images not appearing (#2962)
