@@ -78,7 +78,7 @@ const FirebaseStore = types
             await wocky.userInviteRedeemCode(self.inviteCode!)
             analytics.track('invite_code_redeem', {code: self.inviteCode})
           } catch (err) {
-            analytics.track('invite_code_redeem_fail', {code: self.inviteCode})
+            analytics.track('invite_code_redeem_fail', {code: self.inviteCode, error: err})
           }
           self.setInviteCode(undefined)
         }
