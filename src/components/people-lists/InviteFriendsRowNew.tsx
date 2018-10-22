@@ -24,7 +24,7 @@ const icon = require('../../../images/followers.png')
 class InviteFriendsRow extends React.Component<Props> {
   render() {
     const {style, subtext, botTitle, wocky} = this.props
-    const {profile} = wocky
+    const {profile} = wocky!
     const handle = profile ? profile.handle : ''
     const message = botTitle
       ? `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`
@@ -46,7 +46,7 @@ class InviteFriendsRow extends React.Component<Props> {
 
   share = async message => {
     this.props.analytics!.track('invite_friends')
-    const url = await this.props.firebaseStore.getFriendInviteLink()
+    const url = await this.props.firebaseStore!.getFriendInviteLink()
     const {action, activityType} = await (Share as any).share(
       {
         message: `${message} Download the app at`,

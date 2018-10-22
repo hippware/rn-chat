@@ -70,7 +70,9 @@ const SearchStore = types
       const profileArr = await (wocky as IWocky).searchUsers(text)
       return (
         profileArr.length > 0 &&
-        profileArr.findIndex(p => p.handle.toLowerCase() === text.toLowerCase()) >= 0
+        profileArr.findIndex(
+          p => p.handle !== null && p.handle.toLowerCase() === text.toLowerCase()
+        ) >= 0
       )
     }
 
@@ -94,9 +96,8 @@ const SearchStore = types
     }
   })
   .actions(self => {
-    let wocky, handler1
+    let handler1
     function afterAttach() {
-      ;({wocky} = getParent(self))
       self.addUsernameValidator()
       handler1 = reaction(() => self.global, text => self._searchGlobal(text), {
         fireImmediately: false,

@@ -41,8 +41,7 @@ export default class MapHome extends React.Component<IProps> {
 
   @observable
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
-
-  mapRef?: MapView
+  mapRef: MapView | null = null
   reactions: any[] = []
 
   setCenterCoordinate = (location: ILocation) => {
@@ -56,7 +55,7 @@ export default class MapHome extends React.Component<IProps> {
 
     this.reactions = [
       reaction(
-        () => homeStore.focusedBotLocation,
+        () => homeStore!.focusedBotLocation,
         (location: any) => this.setCenterCoordinate(location),
         {
           name: 'MapHome: re-center map on focused card',
@@ -73,7 +72,9 @@ export default class MapHome extends React.Component<IProps> {
   @action
   onRegionChange = ({latitudeDelta}: MapViewRegion) => {
     // NOTE: this runs _very_ often while panning/scrolling the map
-    this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+    if (latitudeDelta) {
+      this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+    }
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
@@ -82,7 +83,7 @@ export default class MapHome extends React.Component<IProps> {
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
-      const bots = await this.props.wocky.loadLocalBots(region)
+      const bots = await this.props.wocky!.loadLocalBots(region)
       addBotsToList(bots)
     }
   }
@@ -95,7 +96,9 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onMapPress = () => {
-    const {homeStore: {toggleFullscreen}, navStore: {scene}} = this.props
+    const {homeStore, navStore} = this.props
+    const {toggleFullscreen} = homeStore!
+    const {scene} = navStore!
     if (['botCompose', 'botEdit', 'createBot'].includes(scene)) {
       return
     } else if (scene !== 'home') {
@@ -106,7 +109,9 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore: {location}, homeStore: {list, detailsMode, creationMode}} = this.props
+    const {locationStore, homeStore} = this.props
+    const {list, detailsMode, creationMode} = homeStore!
+    const {location} = locationStore!
     if (!location) {
       return (
         <View style={styles.container}>

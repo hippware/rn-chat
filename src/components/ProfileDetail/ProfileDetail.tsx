@@ -41,7 +41,7 @@ class ProfileDetail extends React.Component<Props> {
     this.props.wocky!.loadProfile(this.props.item)
   }
 
-  _header = () => <Header profile={this.profile} />
+  _header = () => <Header profile={this.profile!} />
 
   render() {
     if (!this.profile || !isAlive(this.profile)) {

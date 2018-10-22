@@ -9,7 +9,7 @@ const ProfileValidationStore = types
     },
   }))
   .actions(self => {
-    let vProfile: ValidatableProfile = null
+    let vProfile: ValidatableProfile
 
     function save() {
       return self.wocky.profile.update(vProfile.asObject)

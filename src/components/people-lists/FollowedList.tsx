@@ -17,7 +17,7 @@ type Props = {
 @inject('wocky')
 @observer
 class FollowedList extends React.Component<Props> {
-  @observable searchText: string
+  @observable searchText?: string
   @observable profile: any
   disposer: any
 

@@ -12,6 +12,8 @@ type State = {
 }
 
 export default class AutoExpandingTextInput extends React.Component<IProps, State> {
+  state = {text: '', height: 0}
+
   constructor(props) {
     super(props)
     this.state = {text: props.value || '', height: 0}

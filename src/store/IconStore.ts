@@ -14,7 +14,7 @@ const defaultEmoji = '\ud83d\ude1c'
 const defaultList = [undefined, silverware, drinks, trees, plane, store, heart, defaultEmoji]
 
 export default class IconStore {
-  readonly iconList = observable.array<string>(defaultList)
+  readonly iconList = observable.array<string | undefined>(defaultList)
   @observable index: number = 0
   @observable isEmojiKeyboardShown: boolean = false
 

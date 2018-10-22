@@ -15,7 +15,10 @@ export default class InvisibleSwitch extends React.Component<Props> {
   switch: any
 
   render() {
-    const {profile} = this.props.wocky
+    const {profile} = this.props.wocky!
+    if (!profile) {
+      return null
+    }
     return (
       <Switch
         ref={r => (this.switch = r)}
@@ -27,7 +30,7 @@ export default class InvisibleSwitch extends React.Component<Props> {
           shadowRadius: 0,
           shadowOffset: {height: 0, width: 0},
         }}
-        active={profile.hidden.enabled}
+        active={profile!.hidden.enabled}
         inactiveBackgroundColor={colors.GREY}
         activeBackgroundColor={colors.PINK}
         toggleHeight={16}
@@ -36,10 +39,10 @@ export default class InvisibleSwitch extends React.Component<Props> {
         switchWidth={42}
         swipeDisabled
         onPress={() => {
-          if (!profile.hidden.enabled) {
+          if (!profile!.hidden.enabled) {
             Actions.invisibleExpirationSelector()
           } else {
-            profile.hide(false, null)
+            profile!.hide(false, undefined)
           }
         }}
         activeButtonColor="white"

@@ -66,14 +66,16 @@ const FirebaseStore = types
       firebase
         .links()
         .getInitialLink()
-        .then(onFirebaseDynamicLink)
+        .then((url: string | null) => {
+          if (url) onFirebaseDynamicLink(url)
+        })
 
       // listen for Dynamic Link invite codes and redeem once user is logged in
       when(
-        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
+        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle && !!self.inviteCode,
         async () => {
           try {
-            await wocky.userInviteRedeemCode(self.inviteCode)
+            await wocky.userInviteRedeemCode(self.inviteCode!)
             analytics.track('invite_code_redeem', {code: self.inviteCode})
           } catch (err) {
             analytics.track('invite_code_redeem_fail', {code: self.inviteCode})
@@ -92,8 +94,8 @@ const FirebaseStore = types
       logger.log('FIREBASESTORE: AUTH STATE CHANGED')
       if (user) {
         try {
-          await auth.currentUser.reload()
-          const token = await auth.currentUser.getIdToken(true)
+          await auth!.currentUser!.reload()
+          const token = await auth!.currentUser!.getIdToken(true)
           self.setState({token})
           // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});)
         } catch (err) {

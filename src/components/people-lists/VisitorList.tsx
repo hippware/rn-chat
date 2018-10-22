@@ -39,7 +39,7 @@ export default class VisitorList extends React.Component<Props> {
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
-        data={this.bot && isAlive(this.bot) ? this.bot.visitors.list.slice() : []}
+        data={this.bot && isAlive(this.bot) ? this!.bot!.visitors.list.slice() : []}
         keyboardShouldPersistTaps="handled"
         ListEmptyComponent={
           <View style={{alignItems: 'center', height: 600, width: '100%', paddingTop: 40}}>

@@ -26,7 +26,7 @@ class TestRegister extends React.Component<Props, State> {
   }
 
   onRegister = async () => {
-    if (this.props.navStore.scene !== this.props.name) {
+    if (this.props.navStore!.scene !== this.props.name) {
       return
     }
     try {

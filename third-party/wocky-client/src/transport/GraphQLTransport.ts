@@ -16,15 +16,15 @@ import {convertProfile, convertBot, convertNotification, convertNotifications} f
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
-  client: ApolloClient<any>
-  socket: PhoenixSocket
+  client?: ApolloClient<any>
+  socket?: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
   notificationsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
-  username: string
-  password: string
-  host: string
+  username?: string
+  password?: string
+  host?: string
   // @observable geoBot: any
   @observable message: any
 
@@ -105,6 +105,13 @@ export class GraphQLTransport implements IWockyTransport {
       // console.log('& graphql open')
     })
 
+    if (!this.username) {
+      throw new Error('Username is not defined')
+    }
+    if (!this.password) {
+      throw new Error('Password is not defined')
+    }
+
     const res = await this.authenticate(this.username, this.password)
     if (res) {
       this.subscribeBotVisitors()
@@ -115,7 +122,7 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(user: string, token: string): Promise<boolean> {
     try {
-      const res = await this.client.mutate({
+      const res = await this.client!.mutate({
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
             authenticate(input: {user: $user, token: $token}) {
@@ -138,7 +145,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<IProfilePartial | null> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {
             user(id: "${user}") {
@@ -163,7 +170,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    const res = await this.client.mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation botCreate {
           botCreate {
@@ -182,7 +189,7 @@ export class GraphQLTransport implements IWockyTransport {
     return res.data!.botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
@@ -199,7 +206,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
             user(id: $userId) {
@@ -252,7 +259,7 @@ export class GraphQLTransport implements IWockyTransport {
     return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
         query getLocationsVisited($limit: Int!, $ownResource: String!) {
@@ -289,9 +296,8 @@ export class GraphQLTransport implements IWockyTransport {
     if (this.botGuestVisitorsSubscription) {
       return
     }
-    this.botGuestVisitorsSubscription = this.client
-      .subscribe({
-        query: gql`
+    this.botGuestVisitorsSubscription = this.client!.subscribe({
+      query: gql`
           subscription subscribeBotVisitors($ownUsername: String!){
             botGuestVisitors {
               action
@@ -312,20 +318,19 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {
-          ownUsername: this.username,
-        },
-      })
-      .subscribe({
-        next: action((result: any) => {
-          const update = result.data.botGuestVisitors
-          this.botVisitor = {
-            visitor: {id: update.visitor.id},
-            bot: convertBot(update.bot),
-            action: update.action,
-          }
-        }),
-      })
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        const update = result.data.botGuestVisitors
+        this.botVisitor = {
+          visitor: {id: update.visitor.id},
+          bot: convertBot(update.bot),
+          action: update.action,
+        }
+      }),
+    })
   }
 
   async loadNotifications(params: {
@@ -335,7 +340,7 @@ export class GraphQLTransport implements IWockyTransport {
   }): Promise<{list: any[]; count: number}> {
     const {limit, beforeId, afterId} = params
     // console.log('& gql load', beforeId, afterId, limit)
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
           notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
@@ -367,24 +372,22 @@ export class GraphQLTransport implements IWockyTransport {
     if (this.notificationsSubscription) {
       return
     }
-    this.notificationsSubscription = this.client
-      .subscribe({
-        query: gql`
+    this.notificationsSubscription = this.client!.subscribe({
+      query: gql`
           subscription notifications($ownUsername: String!) {
             notifications {
               ${NOTIFICATIONS_PROPS}
             }
           }
         `,
-        variables: {
-          ownUsername: this.username,
-        },
-      })
-      .subscribe({
-        next: action((result: any) => {
-          this.notification = convertNotification({node: result.data.notifications})
-        }),
-      })
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        this.notification = convertNotification({node: result.data.notifications})
+      }),
+    })
   }
   @action
   unsubscribeNotifications() {
@@ -403,7 +406,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
   async loadGeofenceBots(): Promise<IPagingList> {
     // load all guest bots
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query getActiveBots($ownUsername: String!) {
           currentUser {
@@ -458,7 +461,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
-    await this.client.mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
@@ -481,7 +484,7 @@ export class GraphQLTransport implements IWockyTransport {
     {latitude, longitude, accuracy},
     accept: boolean = true
   ) {
-    await this.client.mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
           botInvitationRespond(input: $input) {
@@ -520,7 +523,7 @@ export class GraphQLTransport implements IWockyTransport {
       this.unsubscribeNotifications()
       return new Promise<void>((resolve, reject) => {
         try {
-          this.socket.disconnect(() => {
+          this.socket!.disconnect(() => {
             // console.log('& graphql onDisconnect', something)
             resolve()
           })
@@ -545,7 +548,7 @@ export class GraphQLTransport implements IWockyTransport {
         values[field] = d[field]
       }
     })
-    const data: any = await this.client.mutate({
+    const data: any = await this.client!.mutate({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
           userUpdate(input: {values: $values}) {
@@ -653,7 +656,7 @@ export class GraphQLTransport implements IWockyTransport {
     }: any,
     userLocation: ILocation | undefined
   ): Promise<void> {
-    const res = await this.client.mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation botUpdate(
           $id: String!
@@ -745,7 +748,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
   async removeUpload(tros: string) {
-    await this.client.mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation mediaDelete($tros: String!) {
           mediaDelete(input: {url: $tros}) {
@@ -767,7 +770,7 @@ export class GraphQLTransport implements IWockyTransport {
     latitudeDelta: number
     longitudeDelta: number
   }): Promise<[IBot]> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
@@ -785,7 +788,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
-    await this.client.mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation userHide($enable: Boolean!, $expire: DateTime) {
           userHide(input: {enable: $enable, expire: $expire}) {
@@ -798,7 +801,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async searchUsers(text: string): Promise<IProfilePartial[]> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query searchUsers($text: String!){
           users(limit: 20, searchTerm: $text) {
@@ -812,7 +815,7 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async userInviteMakeCode(): Promise<string> {
-    const res = await this.client.mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation userInviteMakeCode {
           userInviteMakeCode {
@@ -822,7 +825,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
     })
-    return res.data.userInviteMakeCode.result
+    return res.data!.userInviteMakeCode.result
   }
 
   async userInviteRedeemCode(code: string): Promise<void> {
@@ -831,7 +834,7 @@ export class GraphQLTransport implements IWockyTransport {
       when(
         () => this.connected,
         async () => {
-          const res = await this.client.mutate({
+          const res = await this.client!.mutate({
             mutation: gql`
               mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
                 userInviteRedeemCode(input: $code) {
@@ -841,7 +844,7 @@ export class GraphQLTransport implements IWockyTransport {
             `,
             variables: {code: {code}},
           })
-          if (!res.data.userInviteRedeemCode.successful) {
+          if (!res.data!.userInviteRedeemCode.successful) {
             reject(new Error('error redeeming invite code'))
           }
           resolve()
@@ -857,7 +860,7 @@ export class GraphQLTransport implements IWockyTransport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList> {
-    const res = await this.client.query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
           bot(id: $botId) {

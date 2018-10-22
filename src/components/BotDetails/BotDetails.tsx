@@ -42,7 +42,7 @@ export default class BotDetails extends React.Component<Props> {
     }
   }
 
-  _footerComponent = observer(() => {
+  _footerComponent: any = observer(() => {
     if (!this.bot) return null
     return (
       this.props.wocky!.connected &&
@@ -72,8 +72,11 @@ export default class BotDetails extends React.Component<Props> {
     runInAction(() => {
       this.bot = wocky!.getBot({id: botId})
     })
+    if (!this.bot) {
+      return
+    }
 
-    if (!this.bot.invitation || this.bot.invitation.accepted) {
+    if (!this.bot!.invitation || this.bot!.invitation!.accepted) {
       // TODO: load all bot info in one GraphQL call
       await Promise.all([
         wocky!.loadBot(botId, undefined),
@@ -111,7 +114,7 @@ export default class BotDetails extends React.Component<Props> {
   )
 
   onNavLongPress = () => {
-    Clipboard.setString(this.bot.address)
+    Clipboard.setString(this.bot!.address)
     this.props.notificationStore.flash('Address copied to clipboard 👍')
   }
 
@@ -162,7 +165,7 @@ const NavTitle = ({bot, onLongPress}) => {
     return null
   }
   return (
-    <TouchableOpacity onLongPress={onLongPress} onPress={null} style={{marginHorizontal: 16}}>
+    <TouchableOpacity onLongPress={onLongPress} onPress={undefined} style={{marginHorizontal: 16}}>
       <RText
         // numberOfLines={2}
         // must wait for solution to https://github.com/facebook/react-native/issues/14981

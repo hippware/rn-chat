@@ -29,11 +29,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   @observable selection = SelectableProfileList.create({})
   @observable bot?: IBot
   mounted: boolean = false
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {height: 0, message: ''}
-  }
+  state = {height: 0, message: ''}
 
   @action
   componentDidMount() {

@@ -71,7 +71,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           }}
         >
           <FlatList
-            data={profile && profile.hasUsedGeofence ? activeBots : placeholderItems}
+            data={profile && profile.hasUsedGeofence ? activeBots.slice() : placeholderItems}
             horizontal
             keyExtractor={this.keyExtractor}
             renderItem={
@@ -84,12 +84,12 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           <HeaderLocationOverlay />
           <InvisibleModeOverlay />
         </View>
-        {navStore.scene !== 'botCompose' && !homeStore.fullScreenMode && <Buttons />}
+        {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && <Buttons />}
       </Animated.View>
     )
   }
 
-  keyExtractor = item => item.id
+  keyExtractor = (item, _1) => item.id
 
   renderActiveBot = ({item}: {item: IBot}) => (
     <ActiveGeofenceBot bot={item} outerStyle={styles.outer} innerStyle={styles.inner} />
@@ -104,7 +104,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
 const settingsImg = require('../../../images/settingsBtn.png')
 const infoImg = require('../../../images/info.png')
 
-const placeholderItems = [
+const placeholderItems: ReadonlyArray<any> = [
   {
     id: '0',
     render: () => <PlaceholderNew />,

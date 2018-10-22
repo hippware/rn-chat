@@ -40,7 +40,7 @@ class AddressBar extends React.Component<Props> {
       () => ({
         searchEnabled: this.searchEnabled,
         text: this.text,
-        loc: this.props.homeStore.mapCenterLocation,
+        loc: this.props.homeStore!.mapCenterLocation,
       }),
       ({searchEnabled, text, loc}) => {
         if (searchEnabled) {
@@ -77,7 +77,7 @@ class AddressBar extends React.Component<Props> {
     this.searchEnabled = false
     this.text = data.address
     this.input.blur()
-    homeStore.setFocusedLocation(location)
+    homeStore!.setFocusedLocation(location)
     Actions.botCompose({botId: bot.id})
     analytics.track('botcreate_chooselocation', getSnapshot(bot))
   }
@@ -187,7 +187,7 @@ class AddressBar extends React.Component<Props> {
                 keyboardShouldPersistTaps="always"
                 data={this.suggestions.slice()}
                 renderItem={this.suggestion}
-                keyExtractor={item => item.place_id}
+                keyExtractor={(item: any) => item.place_id}
                 ItemSeparatorComponent={Separator}
               />
             </KeyboardAwareScrollView>

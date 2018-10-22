@@ -31,7 +31,7 @@ const EventBotMetabar = inject('locationStore')(
         <Image source={locImg} style={{marginRight: 5 * k}} resizeMode="contain" />
         <RText color={colors.DARK_GREY} size={13} style={{marginRight: 15 * k}}>
           {bot.addressData && bot.addressData.locationShort} -{' '}
-          {locationStore.distanceFromBot(bot.location)}
+          {locationStore!.distanceFromBot(bot.location)}
         </RText>
       </View>
 

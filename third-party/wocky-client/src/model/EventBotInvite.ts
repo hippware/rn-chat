@@ -1,6 +1,6 @@
 import {types} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
-import {Profile} from './Profile'
+import {Profile, IProfile} from './Profile'
 
 export const EventBotInvite = types
   .compose(
@@ -14,7 +14,9 @@ export const EventBotInvite = types
   .named('EventBotInvite')
 
 type EventBotInviteType = typeof EventBotInvite.Type
-export interface IEventBotInvite extends EventBotInviteType {}
+export interface IEventBotInvite extends EventBotInviteType {
+  sender: IProfile
+}
 
 export interface IEventBotInviteData extends IEventBotData {
   sender: string

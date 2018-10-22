@@ -1,11 +1,12 @@
 import React from 'react'
-import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native'
+import {TouchableOpacity, StyleSheet, Image, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {Actions} from 'react-native-router-flux'
 import ProfileItem from './ProfileItem'
 import {RText} from '../common'
 import {k} from '../Global'
+import alert from '../../utils/alert'
 
 const FollowButton = inject('analytics')(({profile, analytics}) => (
   <TouchableOpacity
@@ -48,7 +49,7 @@ const BlockedButton = ({profile}) => (
 
 const unfollow = async (profile: any) => {
   return new Promise(resolve => {
-    Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
+    alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Unfollow',
@@ -63,7 +64,7 @@ const unfollow = async (profile: any) => {
 }
 
 const unblock = profile => {
-  Alert.alert(null, `Are you sure you want to unblock @${profile.handle}?`, [
+  alert(null, `Are you sure you want to unblock @${profile.handle}?`, [
     {text: 'Cancel', style: 'cancel'},
     {
       text: 'Unblock',

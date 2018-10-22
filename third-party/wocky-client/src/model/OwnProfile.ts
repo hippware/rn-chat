@@ -51,7 +51,7 @@ export const OwnProfile = types
     setHasUsedGeofence: value => {
       self.hasUsedGeofence = value
     },
-    hide: flow(function*(value: boolean, expires: Date) {
+    hide: flow(function*(value: boolean, expires: Date | undefined) {
       yield self.service._hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),

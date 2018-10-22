@@ -19,16 +19,12 @@ type State = {
 @observer
 class BottomButton extends React.Component<Props, State> {
   @observable keyboardHeight: number = 0
+  @observable animating: boolean = false
   keyboardDidShowListener: any
   keyboardDidHideListener: any
   animation: any
-  @observable animating: boolean = false
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      height: new Animated.Value(0),
-    }
+  state = {
+    height: new Animated.Value(0),
   }
 
   componentWillMount() {

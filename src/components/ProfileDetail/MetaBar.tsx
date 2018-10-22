@@ -49,8 +49,8 @@ const MetaBar = inject('wocky')(
             {profile.followersSize}
           </RText>
           {profile.isOwn &&
-            wocky.newFollowers &&
-            wocky.newFollowers.length > 0 && <NewFollowerDot />}
+            wocky!.newFollowers &&
+            wocky!.newFollowers.length > 0 && <NewFollowerDot />}
         </View>
         <RText weight="Light" size={11} style={styles.word}>
           FOLLOWERS

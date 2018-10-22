@@ -16,9 +16,9 @@ type Props = {
 @inject('wocky')
 @observer
 class Right extends React.Component<Props> {
-  @observable profile: IProfile
+  @observable profile?: IProfile
   async componentWillMount() {
-    this.profile = await this.props.wocky.getProfile(this.props.item)
+    this.profile = await this.props.wocky!.getProfile(this.props.item)
   }
   render() {
     if (!this.profile || !isAlive(this.profile)) {
@@ -39,7 +39,7 @@ class Right extends React.Component<Props> {
         <View style={styles.rightContainer}>
           <TouchableOpacity
             onPress={() => {
-              Actions.chat({item: this.profile.id})
+              Actions.chat({item: this.profile!.id})
             }}
             style={styles.rightButton}
           >

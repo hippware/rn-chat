@@ -16,7 +16,10 @@ type Props = {
 const defaultIcon = require('../../../images/mapIcons/question.png')
 
 const BotCard = observer(({bot, isSelected}: Props) => (
-  <Card profile={isSelected && bot.owner} onPress={() => Actions.botDetails({botId: bot.id})}>
+  <Card
+    profile={isSelected && bot.owner ? bot.owner! : undefined}
+    onPress={() => Actions.botDetails({botId: bot.id})}
+  >
     <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
       {bot.image ? (
         <Image style={styles.thumb} source={bot.image.thumbnail} />

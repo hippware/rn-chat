@@ -24,7 +24,7 @@ export const Wocky = types
       password: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
-      roster: types.optional(types.map(types.reference(Profile)), {} as ObservableMap),
+      roster: types.optional(types.map(types.reference(Profile)), {}),
       profile: types.maybe(OwnProfile),
       notifications: types.optional(EventList, {}),
       hasUnreadNotifications: false,
@@ -81,7 +81,7 @@ export const Wocky = types
           return self.transport.connecting
         },
         get sortedRoster(): IProfile[] {
-          return (Array.from(self.roster.values()) as IProfile[])
+          return (Array.from((self.roster as ObservableMap).values()) as IProfile[])
             .filter(x => x.handle)
             .sort((a, b) => {
               return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
@@ -191,7 +191,7 @@ export const Wocky = types
   }))
   .actions(self => ({
     addRosterItem: (profile: any) => {
-      self.roster.set(profile.id, self.profiles.get(profile.id, profile))
+      ;(self.roster as ObservableMap).set(profile.id, self.profiles.get(profile.id, profile))
     },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
       const profile = self.profiles.get(id, processMap(data))
@@ -652,18 +652,18 @@ export const Wocky = types
   .actions(self => {
     function clearCache() {
       self.geofenceBots.refresh()
-      self.roster.clear()
       self.chats.clear()
       // self.geoBots.clear()
       self.notifications.refresh()
-      self.profiles.clear()
       self.bots.clear()
+      ;(self.roster as ObservableMap).clear()
+      self.profiles.clear()
     }
     let reactions: IReactionDisposer[] = []
     function startReactions() {
       reactions = [
         reaction(
-          () => self.profile && self.connected,
+          () => !!self.profile && self.connected,
           (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})

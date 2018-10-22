@@ -20,9 +20,12 @@ interface ICardProps extends IProps {
 }
 
 const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps) => {
-  const {location} = locationStore
-  const {latitude, longitude} = location
-  const {profile} = wocky
+  const {location} = locationStore!
+  if (!locationStore!.location) {
+    return null
+  }
+  const {latitude, longitude} = location!
+  const {profile} = wocky!
   return (
     profile && (
       <HackMarker
@@ -31,7 +34,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         coordinate={{latitude, longitude}}
         onPress={() => {
           card.select()
-          homeStore.setFocusedLocation(location)
+          homeStore!.setFocusedLocation(location)
         }}
         stopPropagation
       >

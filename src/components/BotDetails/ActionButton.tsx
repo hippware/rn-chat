@@ -73,7 +73,8 @@ class BotButtons extends React.Component<Props> {
 
   getActions = () => {
     const {wocky, bot} = this.props
-    if (bot.owner.isOwn) {
+    if (bot!.owner!.isOwn) {
+      // TODO make owner non-null ?
       return [
         // shareVia,
         // copyLink,
@@ -88,8 +89,8 @@ class BotButtons extends React.Component<Props> {
                 text: 'Delete',
                 style: 'destructive',
                 onPress: () => {
-                  this.props.homeStore.removeBot(bot)
-                  wocky.removeBot(bot ? bot.id : null)
+                  this.props.homeStore!.removeBot(bot)
+                  wocky!.removeBot(bot!.id)
                   Actions.popTo('home')
                 },
               },
@@ -168,6 +169,6 @@ const unfollow = {
   action: ({bot, homeStore}: Props) => {
     Actions.pop()
     ;(bot as IBot).unsubscribe()
-    homeStore.removeBot(bot)
+    homeStore!.removeBot(bot)
   },
 }

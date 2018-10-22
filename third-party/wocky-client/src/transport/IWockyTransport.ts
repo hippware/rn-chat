@@ -11,10 +11,10 @@ export interface IPagingList {
 export interface IWockyTransport {
   connected: boolean
   connecting: boolean
-  username: string
-  password: string
-  host: string
-  resource: string
+  username?: string
+  password?: string
+  host?: string
+  resource?: string
   // geoBot: any // TODO inteface for bot
   message: any // TODO interface for message
   presence: any // TODO interface for presence

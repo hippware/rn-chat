@@ -10,21 +10,15 @@ class ErrorButton extends React.Component<any, any> {
     rowData: {},
     styles: {},
   }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      isLoading: false,
-    }
-
-    this.onPress = this.onPress.bind(this)
+  state = {
+    isLoading: false,
   }
 
   componentWillMount() {
     Object.assign(styles, this.props.styles)
   }
 
-  onPress() {
+  onPress = () => {
     this.setState({
       isLoading: true,
     })

@@ -15,30 +15,29 @@ type Props = {
 const foot = require('../../../images/footOpaquePink.png')
 
 const HeaderLocationOverlay = inject('locationStore')(
-  observer(
-    ({locationStore}: Props) =>
-      !locationStore!.alwaysOn && (
-        <HeaderOverlay>
-          <Image source={foot} style={styles.image} resizeMode="contain" />
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <RText color={colors.PINK} size={15} weight="Bold">
-              SHARE YOUR VISITS!
+  observer(({locationStore}: Props) => {
+    return locationStore!.alwaysOn ? null : (
+      <HeaderOverlay>
+        <Image source={foot} style={styles.image} resizeMode="contain" />
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <RText color={colors.PINK} size={15} weight="Bold">
+            SHARE YOUR VISITS!
+          </RText>
+          <RText size={13} color={colors.DARK_GREY} style={{marginTop: 5 * k}}>
+            Know when your friends visit your favorite places!
+          </RText>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => Linking.openURL('app-settings:{1}')}
+          >
+            <RText size={14} weight="Medium" color={colors.PINK}>
+              GIVE LOCATION ACCESS
             </RText>
-            <RText size={13} color={colors.DARK_GREY} style={{marginTop: 5 * k}}>
-              Know when your friends visit your favorite places!
-            </RText>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => Linking.openURL('app-settings:{1}')}
-            >
-              <RText size={14} weight="Medium" color={colors.PINK}>
-                GIVE LOCATION ACCESS
-              </RText>
-            </TouchableOpacity>
-          </View>
-        </HeaderOverlay>
-      )
-  )
+          </TouchableOpacity>
+        </View>
+      </HeaderOverlay>
+    )
+  })
 )
 
 export default HeaderLocationOverlay

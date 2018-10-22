@@ -1,7 +1,8 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventUserFollow, IProfile} from 'wocky-client'
-import {StyleSheet, Alert} from 'react-native'
+import {StyleSheet} from 'react-native'
+import alert from '../../utils/alert'
 import {inject, observer} from 'mobx-react/native'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -12,6 +13,7 @@ const geoIcon = require('../../../images/notificationFollow.png')
 
 type Props = {
   item: IEventUserFollow
+  user: IProfile
 }
 
 const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
@@ -58,7 +60,7 @@ const FollowButton = inject('analytics')(
 
 const unfollow = async (profile: any) => {
   return new Promise(resolve => {
-    Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
+    alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Unfollow',

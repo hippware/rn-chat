@@ -157,8 +157,8 @@ class AddBotPost extends React.Component<Props> {
           <ImagePost
             imageURI={this.imageURI}
             deleteImage={() => {
-              this.imageURI = null
-              this.image = null
+              this.imageURI = undefined
+              this.image = undefined
             }}
           />
         </View>

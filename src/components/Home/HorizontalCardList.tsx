@@ -84,7 +84,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
   observer(
     ({homeStore, navStore, locationStore, wocky}) =>
-      navStore.scene !== 'botCompose' && (
+      navStore.scene !== 'botCompose' ? (
         <View
           style={{
             position: 'absolute',
@@ -126,7 +126,7 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
             </View>
           )}
         </View>
-      )
+      ) : null
   )
 )
 
