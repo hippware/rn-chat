@@ -78,7 +78,7 @@ const FirebaseStore = types
             await wocky.userInviteRedeemCode(self.inviteCode!)
             analytics.track('invite_code_redeem', {code: self.inviteCode})
           } catch (err) {
-            analytics.track('invite_code_redeem_fail', {code: self.inviteCode})
+            analytics.track('invite_code_redeem_fail', {code: self.inviteCode, error: err})
           }
           self.setInviteCode(undefined)
         }
@@ -240,6 +240,7 @@ const FirebaseStore = types
                 iosBundleId: settings.isStaging
                   ? 'com.hippware.ios.ChatStaging'
                   : 'com.hippware.tinyrobot',
+                iosAppStoreId: '1295678402', // since there is no app store listing for Staging no need to differentiate
               },
             },
           }),
