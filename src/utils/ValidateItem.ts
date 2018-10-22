@@ -3,7 +3,7 @@ import {observable, reaction} from 'mobx'
 export class ValidateItem {
   @observable errorMessage: string = ''
   @observable value: string
-  @observable isValid: boolean | undefined = undefined
+  @observable isValid?: boolean
   key: string
 
   constructor(key: string, value: string, validator: any) {
