@@ -8,12 +8,13 @@ import * as log from '../utils/log'
 // TODO: need to export declaration file to make this work as expected?
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
+import {ILocationStore} from '../store/LocationStore'
 
 type Props = {
   wocky?: IWocky
   homeStore?: IHomeStore
   notificationStore?: any
-  locationStore?: any
+  locationStore?: ILocationStore
   log?: any
   analytics?: any
 }
@@ -129,16 +130,16 @@ export default class Connectivity extends React.Component<Props> {
     if (currentAppState === 'active') {
       this.isActive = true
       notificationStore.start()
-      locationStore.start()
-      homeStore.start()
+      locationStore!.start()
+      homeStore!.start()
       await this.tryReconnect('currentAppState: active')
     }
     if (currentAppState === 'background') {
       this.isActive = false
       wocky!.disconnect()
       notificationStore.finish()
-      locationStore.finish()
-      homeStore.finish()
+      locationStore!.finish()
+      homeStore!.finish()
     }
   }
 

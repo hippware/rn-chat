@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Alert, Image, StyleSheet, Text, Linking} from 'react-native'
+import {View, Image, StyleSheet, Text, Linking} from 'react-native'
 import {observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
@@ -13,6 +13,7 @@ import {RText, Spinner} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {IWocky} from 'wocky-client'
 import {getSnapshot} from 'mobx-state-tree'
+import alert from '../utils/alert'
 
 type Props = {
   wocky?: IWocky
@@ -23,7 +24,7 @@ type Props = {
 @inject('wocky', 'analytics', 'warn')
 @observer
 class SignUp extends React.Component<Props> {
-  @observable vProfile?: ValidatableProfile
+  @observable vProfile: ValidatableProfile | null = null
   handle: any
   firstName: any
   lastName: any
@@ -43,7 +44,7 @@ class SignUp extends React.Component<Props> {
       runInAction(
         () =>
           (this.vProfile =
-            this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile))
+            this.props.wocky!.profile && new ValidatableProfile(this.props.wocky!.profile!))
       )
     }
   }
@@ -63,12 +64,12 @@ class SignUp extends React.Component<Props> {
       try {
         // display first error if it is GraphQL error
         const error = JSON.parse(err.message)[0].message
-        Alert.alert(null, error)
+        alert(null, error)
       } catch {
-        Alert.alert(null, err.message)
+        alert(null, err.message)
       }
       this.props.analytics.track('createprofile_fail', {
-        profile: this.vProfile.asObject, // send entered data to mixpanel, not original profile
+        profile: this.vProfile!.asObject, // send entered data to mixpanel, not original profile
         error: err,
       })
     }
@@ -115,7 +116,7 @@ class SignUp extends React.Component<Props> {
             label="Username"
             autoCapitalize="none"
             onSubmitEditing={() => this.firstName.focus()}
-            store={this.vProfile && this.vProfile.handle}
+            store={this.vProfile ? this.vProfile.handle : undefined}
             testID="signUpUsername"
           />
           <FormTextInput
@@ -123,14 +124,14 @@ class SignUp extends React.Component<Props> {
             label="First Name"
             ref={r => (this.firstName = r)}
             onSubmitEditing={() => this.lastName.focus()}
-            store={this.vProfile && this.vProfile.firstName}
+            store={this.vProfile ? this.vProfile.firstName : undefined}
             testID="signUpFirstName"
           />
           <FormTextInput
             label="Last Name"
             ref={r => (this.lastName = r)}
             onSubmitEditing={() => this.email.focus()}
-            store={this.vProfile && this.vProfile.lastName}
+            store={this.vProfile ? this.vProfile.lastName : undefined}
             testID="signUpLastName"
           />
           <FormTextInput
@@ -141,7 +142,7 @@ class SignUp extends React.Component<Props> {
             keyboardType="email-address"
             returnKeyType="done"
             ref={r => (this.email = r)}
-            store={this.vProfile && this.vProfile.email}
+            store={this.vProfile ? this.vProfile.email : undefined}
             testID="signUpEmail"
           />
         </View>

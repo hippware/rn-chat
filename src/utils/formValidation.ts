@@ -58,10 +58,10 @@ export const validateProfile = async (profileObject: any): Promise<any> => {
 }
 
 type VProfileType = {
-  handle?: string
-  firstName?: string
-  lastName?: string
-  email?: string
+  handle: string | null
+  firstName: string | null
+  lastName: string | null
+  email: string | null
 }
 
 export class ValidatableProfile {

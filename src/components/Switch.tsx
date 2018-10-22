@@ -27,7 +27,7 @@ type Props = {
   switchHeight: number
   buttonContent?: any
   enableSlide?: boolean
-  switchAnimationTime: number
+  switchAnimationTime?: number
   onActivate?: any
   onDeactivate?: any
   onChangeState?: any
@@ -223,7 +223,7 @@ class MaterialSwitch extends React.Component<Props, State> {
     setTimeout(() => {
       this.setState({state})
       this.callback()
-    }, this.props.switchAnimationTime / 2)
+    }, this.props.switchAnimationTime! / 2)
   }
 
   callback() {

@@ -23,7 +23,11 @@ export const EventBotPost = types
   // }))
   .named('EventBotPost')
 
-export type IEventBotPost = typeof EventBotPost.Type
+export type IEventBotPostType = typeof EventBotPost.Type
+export interface IEventBotPost extends IEventBotPostType {
+  profile: IProfile
+}
+
 export interface IEventBotPostData extends IEventBotData {
   post: IBotPostData
 }

@@ -22,7 +22,7 @@ const icon = require('../../../images/followers.png')
 class InviteFriendsRow extends React.Component<Props> {
   render() {
     const {style, subtext, botTitle, wocky} = this.props
-    const {profile} = wocky
+    const {profile} = wocky!
     const handle = profile ? profile.handle : ''
     const message = botTitle
       ? `Hey, @${handle} invited you to check out "${botTitle}" on tinyrobot!`

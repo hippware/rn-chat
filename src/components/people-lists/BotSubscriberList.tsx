@@ -16,18 +16,17 @@ type Props = {
 @inject('wocky')
 @observer
 class BotSubscriberList extends React.Component<Props> {
-  props: Props
-  @observable bot: IBot
+  @observable bot: IBot | null = null
 
   componentWillMount() {
-    this.bot = this.props.wocky.getBot({id: this.props.item})
+    this.bot = this.props.wocky!.getBot({id: this.props.item})
     this.bot.subscribers.load({force: true})
-    this.props.wocky.loadBot(this.props.item, null)
+    this.props.wocky!.loadBot(this.props.item, null)
   }
 
   render() {
-    const {connected} = this.props.wocky
-    const {list, finished} = this.bot.subscribers
+    const {connected} = this.props.wocky!
+    const {list, finished} = this.bot!.subscribers
     return (
       <Screen>
         <CardList
@@ -37,7 +36,7 @@ class BotSubscriberList extends React.Component<Props> {
           ItemSeparatorComponent={() => <Separator />}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           keyExtractor={item => item.id}
-          onEndReached={() => this.bot.subscribers.load()}
+          onEndReached={() => this.bot!.subscribers.load()}
           onEndReachedThreshold={0.3}
           ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}
         />

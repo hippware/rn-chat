@@ -32,11 +32,11 @@ export class XmppTransport implements IWockyTransport {
   @observable connecting: boolean = false
   @observable iq: any = {}
   @observable rosterItem: any = {}
-  @observable message: {id: string; message: any}
-  @observable presence: {status: string; id: string}
-  @observable username: string
-  @observable password: string
-  @observable host: string
+  @observable message: {id: string; message: any} | null = null
+  @observable presence: {status: string; id: string} | null = null
+  @observable username?: string
+  @observable password?: string
+  @observable host?: string
   // @observable geoBot: any
   @observable notification: any
   isGeoSearching: boolean = false
@@ -49,7 +49,7 @@ export class XmppTransport implements IWockyTransport {
     provider.onIQ = action((iq: any) => {
       this.iq = iq
       // console.log('ON IQ:', JSON.stringify(iq))
-      if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid) {
+      if (iq.query && iq.query.item && !isArray(iq.query.item) && iq.query.item.jid && this.host) {
         this.rosterItem = processRosterItem(iq.query.item, this.host)
       }
     })
@@ -401,6 +401,9 @@ export class XmppTransport implements IWockyTransport {
     await this.addToRoster(username, '')
   }
   async requestRoster() {
+    if (!this.host) {
+      throw new Error('Host is not defined')
+    }
     const iq = $iq({type: 'get', to: `${this.username}@${this.host}`}).c('query', {
       xmlns: ROSTER,
     })
@@ -409,7 +412,7 @@ export class XmppTransport implements IWockyTransport {
     if (children && !isArray(children)) {
       children = [children]
     }
-    return children.map((rec: any) => processRosterItem(rec, this.host))
+    return children.map((rec: any) => processRosterItem(rec, this.host!))
   }
   async enablePush(token: string): Promise<void> {
     const iq = $iq({type: 'set'}).c('enable', {

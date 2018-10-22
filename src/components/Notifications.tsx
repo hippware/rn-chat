@@ -16,15 +16,15 @@ type Props = {
 @observer
 class Notifications extends React.Component<Props> {
   componentDidMount() {
-    this.props.wocky.viewNotifications()
+    this.props.wocky!.viewNotifications()
   }
 
   componentWillUnmount() {
-    this.props.wocky.viewNotifications()
+    this.props.wocky!.viewNotifications()
   }
 
   render() {
-    const {profile, notifications} = this.props.wocky
+    const {profile, notifications} = this.props.wocky!
     if (!profile || !isAlive(profile)) {
       return null
     }

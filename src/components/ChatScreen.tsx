@@ -64,7 +64,7 @@ class ChatScreen extends React.Component<Props, State> {
 
   @observable messages: any[] = []
   @observable chat: any
-  mounted: boolean
+  mounted: boolean = false
   handler: any
   list: any
 
@@ -108,7 +108,7 @@ class ChatScreen extends React.Component<Props, State> {
 
   // TODO: rework this so it's included in row render...inefficient this way
   renderDate = (rowData: any = {}) => {
-    let diffMessage = null
+    let diffMessage: any = null
     diffMessage = this.getPreviousMessage(rowData)
     if (rowData.date instanceof Date) {
       if (diffMessage === null) {
@@ -139,6 +139,11 @@ class ChatScreen extends React.Component<Props, State> {
         />
       </View>
     ) : null
+
+  _footerComponent: any = observer(
+    () =>
+      this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
+  )
 
   render() {
     return this.chat && isAlive(this.chat) ? (
@@ -181,12 +186,7 @@ class ChatScreen extends React.Component<Props, State> {
           keyExtractor={i => i.uniqueId}
           onEndReached={() => this.chat.load()}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={observer(
-            () =>
-              this.chat && this.chat.loading ? (
-                <ActivityIndicator style={{marginVertical: 20}} />
-              ) : null
-          )}
+          ListFooterComponent={this._footerComponent}
         />
         <InputArea chat={this.chat} onSend={this.onSend} />
         <View style={{height: this.state.height}} />

@@ -20,11 +20,11 @@ type Props = {
 @observer
 class CodePushScene extends React.Component<Props> {
   componentWillMount() {
-    this.props.codePushStore.getFreshData()
+    this.props.codePushStore!.getFreshData()
   }
 
   render() {
-    const {downloadProgress} = this.props.codePushStore
+    const {downloadProgress} = this.props.codePushStore!
     return (
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
@@ -54,11 +54,11 @@ class CodePushScene extends React.Component<Props> {
 
 const Metadata = inject('codePushStore')(
   observer(({codePushStore}: Props) => {
-    if (codePushStore.refreshing) {
+    if (codePushStore!.refreshing) {
       return <Text>retrieving CodePush status...</Text>
     }
-    if (codePushStore.metadata) {
-      const {description, label, isFirstRun, isMandatory, packageSize} = codePushStore.metadata
+    if (codePushStore!.metadata) {
+      const {description, label, isFirstRun, isMandatory, packageSize} = codePushStore!.metadata
       return (
         <View>
           <Text>{`Description: ${description}`}</Text>
@@ -81,18 +81,18 @@ const Metadata = inject('codePushStore')(
 const Channels = inject('codePushStore')(
   observer(({codePushStore}: Props) => {
     let inner
-    if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />
-    else if (!codePushStore.channelUpdates.length)
-      inner = <Text>{`No updates available for ${codePushStore.flavor}`}</Text>
+    if (codePushStore!.refreshing || codePushStore!.syncing) inner = <ActivityIndicator />
+    else if (!codePushStore!.channelUpdates.length)
+      inner = <Text>{`No updates available for ${codePushStore!.flavor}`}</Text>
     else {
       inner = (
         <View>
-          <Text>{`Available updates for ${codePushStore.flavor}:`}</Text>
-          {codePushStore.channelUpdates.map(c => (
+          <Text>{`Available updates for ${codePushStore!.flavor}:`}</Text>
+          {codePushStore!.channelUpdates.map(c => (
             <TouchableOpacity
               key={c.key}
               style={[styles.syncButton]}
-              onPress={() => codePushStore.sync(c)}
+              onPress={() => codePushStore!.sync(c)}
             >
               <Text style={{color: colors.PINK}}>{`${c.displayName} - ${
                 c.updateDescription
@@ -108,7 +108,7 @@ const Channels = inject('codePushStore')(
 
 const SyncStatus = inject('codePushStore')(
   observer(({codePushStore}: Props) => {
-    const {syncStatus: status} = codePushStore
+    const {syncStatus: status} = codePushStore!
     if (status.length) {
       return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>
     } else {

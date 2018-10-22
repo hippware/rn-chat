@@ -2,11 +2,8 @@ import React from 'react'
 import {Animated} from 'react-native'
 
 export default class extends React.Component<any, any> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      fadeAnim: new Animated.Value(0), // init opacity 0
-    }
+  state = {
+    fadeAnim: new Animated.Value(0), // init opacity 0
   }
 
   componentDidMount() {

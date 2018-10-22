@@ -24,7 +24,7 @@ class LocationGeofenceWarning extends React.Component<Props> {
   handler: any
   componentDidMount() {
     this.handler = reaction(
-      () => this.props.locationStore.alwaysOn,
+      () => this.props.locationStore!.alwaysOn,
       alwaysOn => {
         if (alwaysOn) {
           Actions.pop()

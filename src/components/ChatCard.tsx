@@ -26,7 +26,7 @@ export default class ChatCard extends React.Component<Props> {
     if (!chat || !isAlive(chat)) return null
     const msg = chat.last
     const {participants} = chat
-    let media = null
+    let media: any = null
     try {
       media = msg.media && msg.media.source ? msg.media : null
     } catch (err) {

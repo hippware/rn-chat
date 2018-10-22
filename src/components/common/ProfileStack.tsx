@@ -45,7 +45,7 @@ const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, text
         size={size / k}
         hideDot
         style={{marginRight: stackSize > 1 ? size * 0.75 : 0}}
-        fontSize={circleSize > 30 ? 'large' : 'small'}
+        fontSize={size > 30 ? 'large' : 'small'}
       />
     </View>
   ) : null

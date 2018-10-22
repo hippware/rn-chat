@@ -34,9 +34,11 @@ export default class InvisibleExpirationSelector extends React.Component<Props> 
 
   // closure that returns onPress function to hide user and set expire date
   expire = (hours?: number) => () => {
-    const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : null
-    const {profile} = this.props.wocky
-    profile.hide(true, date)
+    const date = hours ? new Date(Date.now() + hours * 3600 * 1000) : undefined
+    const {profile} = this.props.wocky!
+    if (profile) {
+      profile!.hide(true, date)
+    }
     this.dismiss()
   }
 

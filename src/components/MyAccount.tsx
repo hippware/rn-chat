@@ -17,8 +17,8 @@ import {IWocky} from 'wocky-client'
 import Screen from './Screen'
 import {PINK} from '../constants/colors'
 import {settings} from '../globals'
-import {format} from 'libphonenumber-js'
 import Version from './Version'
+import {phoneFormat} from '../utils/misc'
 
 type Props = {
   wocky?: IWocky
@@ -43,7 +43,7 @@ class MyAccount extends React.Component<Props> {
   }
 
   @observable saving: boolean = false
-  @observable vProfile: ValidatableProfile
+  @observable vProfile?: ValidatableProfile
   handle: any
   firstName: any
   lastName: any
@@ -51,14 +51,14 @@ class MyAccount extends React.Component<Props> {
 
   componentDidMount() {
     if (this.props.wocky!.profile) {
-      this.vProfile = new ValidatableProfile(this.props.wocky.profile)
+      this.vProfile = new ValidatableProfile(this.props.wocky!.profile!)
       this.props.profileValidationStore.setProfile(this.vProfile)
     }
   }
 
   render() {
     const {wocky} = this.props
-    const {profile} = wocky
+    const {profile} = wocky!
     if (!profile || !this.vProfile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR})
       return <View style={{flex: 1, backgroundColor: 'white'}} />
@@ -111,7 +111,7 @@ class MyAccount extends React.Component<Props> {
               label="Phone"
               icon={require('../../images/phone.png')}
               editable={false}
-              value={format({phone: profile.phoneNumber, country: null}, 'International')}
+              value={phoneFormat(profile.phoneNumber!)}
               // value={format({phone: profile.phoneNumber.replace('+', ''), country: 'US'}, 'E.164')}
             />
             <FormTextInput

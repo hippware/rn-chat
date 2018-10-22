@@ -1,8 +1,9 @@
 import React from 'react'
-import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native'
+import {StyleSheet, TouchableOpacity, Image, View, ActivityIndicator} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {k} from '../Global'
+import alert from '../../utils/alert'
 
 type Props = {
   profile: any
@@ -21,7 +22,7 @@ class FollowButton extends React.Component<Props> {
     const {profile} = this.props
     this.pendingFollowChange = true
     if (profile.isFollowed) {
-      Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
+      alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
         {text: 'Cancel', style: 'cancel'},
         {
           text: 'Unfollow',

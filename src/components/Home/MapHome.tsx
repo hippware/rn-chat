@@ -41,8 +41,7 @@ export default class MapHome extends React.Component<IProps> {
 
   @observable
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
-
-  mapRef?: MapView
+  mapRef: MapView | null = null
   reactions: any[] = []
 
   setCenterCoordinate = (location: ILocation) => {
@@ -97,7 +96,9 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onMapPress = () => {
-    const {homeStore: {toggleFullscreen}, navStore: {scene}} = this.props
+    const {homeStore, navStore} = this.props
+    const {toggleFullscreen} = homeStore!
+    const {scene} = navStore!
     if (['botCompose', 'botEdit', 'createBot'].includes(scene)) {
       return
     } else if (scene !== 'home') {
@@ -108,7 +109,9 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   render() {
-    const {locationStore: {location}, homeStore: {list, detailsMode, creationMode}} = this.props
+    const {locationStore, homeStore} = this.props
+    const {list, detailsMode, creationMode} = homeStore!
+    const {location} = locationStore!
     if (!location) {
       return (
         <View style={styles.container}>

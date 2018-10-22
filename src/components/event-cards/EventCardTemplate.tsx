@@ -11,7 +11,7 @@ type Props = {
   timestamp: string
   icon: ImageRequireSource
   action: string
-  line2?: string
+  line2?: string | null
   rightColumnElement?: ReactElement<any>
   onPress?: () => void
 }

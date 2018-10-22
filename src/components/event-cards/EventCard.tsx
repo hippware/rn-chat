@@ -34,16 +34,21 @@ const EventBotInviteCard = observer(
 )
 
 const EventBotPostCard = observer(
-  ({item: {bot, relativeDateAsString, post}}: {item: IEventBotPost}) => (
-    <EventCardTemplate
-      profile={post.profile}
-      icon={notificationIcon}
-      timestamp={relativeDateAsString}
-      action="commented on"
-      line2={bot.title}
-      onPress={() => Actions.botDetails({botId: bot.id})}
-    />
-  )
+  ({item: {bot, relativeDateAsString, post}}: {item: IEventBotPost}) => {
+    if (!post.profile) {
+      return null
+    }
+    return (
+      <EventCardTemplate
+        profile={post.profile!}
+        icon={notificationIcon}
+        timestamp={relativeDateAsString}
+        action="commented on"
+        line2={bot.title}
+        onPress={() => Actions.botDetails({botId: bot.id})}
+      />
+    )
+  }
 )
 
 const EventBotGeofenceCard = observer(

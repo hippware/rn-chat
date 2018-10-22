@@ -38,8 +38,8 @@ export default class CreationHeader extends React.Component<Props> {
   }
 
   next = () => {
-    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot))
-    Actions.botCompose({botId: this.bot.id})
+    this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot!))
+    Actions.botCompose({botId: this.bot!.id})
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class CreationHeader extends React.Component<Props> {
             )}
           </View>
         </View>
-        <AddressBar bot={this.bot} />
+        <AddressBar bot={this.bot!} />
       </View>
     )
   }

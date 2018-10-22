@@ -44,7 +44,8 @@ type Props = {
 @observer
 export default class BottomMenu extends React.Component<Props> {
   render() {
-    const {wocky: {profile}} = this.props
+    const {wocky} = this.props
+    const {profile} = wocky!
     if (!profile || !isAlive(profile)) {
       return null
     }
@@ -108,8 +109,12 @@ export default class BottomMenu extends React.Component<Props> {
   }
 
   toggleInvisible = () => {
-    const {wocky: {profile}} = this.props
-    if (!profile.hidden.enabled) {
+    const {wocky} = this.props
+    const {profile} = wocky!
+    if (!profile) {
+      return
+    }
+    if (!profile!.hidden.enabled) {
       Actions.invisibleExpirationSelector()
     } else {
       Alert.alert('', 'Are you sure you want to turn off invisible mode?', [
@@ -118,7 +123,7 @@ export default class BottomMenu extends React.Component<Props> {
           text: 'Turn Off',
           style: 'destructive',
           onPress: () => {
-            profile.hide(false, null)
+            profile.hide(false, undefined)
           },
         },
       ])

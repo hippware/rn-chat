@@ -96,13 +96,16 @@ export const Bot = types
       self.followersSize = yield self.service._subscribeBot(self.id)
     }),
     acceptInvitation: flow(function*(userLocation: ILocation) {
+      if (!self.invitation) {
+        throw new Error('Invitation is not set for the bot')
+      }
       yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
       self.invitation.accepted = true
       self.isSubscribed = true
       self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
       self.service.geofenceBots.addToTop(self)
-    }) as (userLocation: ILocation) => Promise<void>,
+    }),
     unsubscribe: flow(function*() {
       self.guest = false
       self.isSubscribed = false

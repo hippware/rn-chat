@@ -72,10 +72,10 @@ const FirebaseStore = types
 
       // listen for Dynamic Link invite codes and redeem once user is logged in
       when(
-        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle,
+        () => !!self.inviteCode && !!wocky.profile && !!wocky.profile.handle && !!self.inviteCode,
         async () => {
           try {
-            await wocky.userInviteRedeemCode(self.inviteCode)
+            await wocky.userInviteRedeemCode(self.inviteCode!)
             analytics.track('invite_code_redeem', {code: self.inviteCode})
           } catch (err) {
             analytics.track('invite_code_redeem_fail', {code: self.inviteCode})

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import {
   View,
   Animated,
@@ -13,6 +13,7 @@ import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
+import {when} from 'mobx'
 import ActionButton from './ActionButton'
 // import UserInfoRow from './UserInfoRow'
 import {RText, Spinner, ProfileHandle, ProfileStack, LazyImage} from '../common'
@@ -68,7 +69,11 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 
   acceptInvitation = () => {
-    this.props.bot.acceptInvitation(this.props.locationStore!.location)
+    // avoid null locationStore.location here
+    when(
+      () => !!this.props.locationStore!.location,
+      () => this.props.bot.acceptInvitation(this.props.locationStore!.location!)
+    )
   }
 
   render() {
@@ -114,11 +119,11 @@ class BotDetailsHeader extends React.Component<Props, State> {
             <VisitorsArea bot={bot} />
 
             <View style={styles.userInfoRow}>
-              <ProfileAvatar profile={bot.owner} size={40 * k} />
+              <ProfileAvatar profile={bot.owner!} size={40 * k} />
               {bot.owner && (
                 <ProfileHandle
                   style={{marginLeft: 10 * k, flex: 1}}
-                  onPress={() => Actions.profileDetails({item: bot.owner.id})}
+                  onPress={() => Actions.profileDetails({item: bot.owner!.id})}
                   size={15}
                   profile={bot.owner}
                 />
@@ -151,17 +156,19 @@ class BotDetailsHeader extends React.Component<Props, State> {
 }
 
 const VisitorsArea = observer(({bot}: {bot: IBot}) => {
-  let list: IProfile[], text: string, onPress
+  let list: IProfile[] | null = null,
+    text: string,
+    onPress
   if (bot.visitors.list.length > 0) {
     list = bot.visitors.list
-    const prefix = list.length > 1 ? 'are' : 'is'
+    const prefix = list!.length > 1 ? 'are' : 'is'
     text = prefix + ' currently here!'
     onPress = () => Actions.visitors({botId: bot.id})
   } else if (bot.guests.list.length > 1) {
-    list = bot.guests.list.filter((g: IProfile) => g.id !== bot.owner.id)
+    list = bot.guests.list.filter((g: IProfile) => g.id !== bot.owner!.id)
     text = 'accepted the invite!'
   }
-  let inner = null
+  let inner: Array<ReactElement<any>> | null = null
 
   if (list) {
     inner = [
@@ -184,7 +191,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
           textSize={16.5}
           style={{marginBottom: 10 * k}}
         />
-        <RText size={14}>{text}</RText>
+        <RText size={14}>{text!}</RText>
       </TouchableOpacity>,
     ]
   }

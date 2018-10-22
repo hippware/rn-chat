@@ -25,7 +25,8 @@ class FriendList extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    const {wocky: {friends}} = this.props
+    const {wocky} = this.props
+    const {friends} = wocky!
     return (
       <DraggablePopupList
         headerInner={this.renderHeader()}
@@ -58,7 +59,7 @@ class FriendList extends React.Component<Props> {
             justifyContent: 'space-between',
           }}
         >
-          <FriendCount count={wocky.friends.length} />
+          <FriendCount count={wocky!.friends.length} />
           <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={Actions.friendSearch}>
             <Image source={searchIcon} />
           </TouchableOpacity>

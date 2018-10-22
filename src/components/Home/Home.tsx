@@ -18,8 +18,8 @@ type Props = {
 export default class Home extends React.Component<Props> {
   render() {
     const {homeStore, navStore} = this.props
-    const {fullScreenMode, setIndex, list, index} = homeStore
-    const isCurrent = navStore.scene === this.props.name
+    const {fullScreenMode, setIndex, list, index} = homeStore!
+    const isCurrent = navStore!.scene === this.props.name
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}} testID="screenHome">
         <MapHome />
