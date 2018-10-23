@@ -408,10 +408,7 @@ export class XmppTransport implements IWockyTransport {
       xmlns: ROSTER,
     })
     const stanza = await this.sendIQ(iq)
-    let children = stanza.query.item
-    if (!children) {
-      children = []
-    }
+    let children = stanza.query.item || []
     if (!isArray(children)) {
       children = [children]
     }
