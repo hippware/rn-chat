@@ -4,8 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.2 - 2018 Oct 22
+
 * Add assets from codepush brick screen (PR #2967)
 * Add ability to email rnbgl logs (PR #2959)
+* [dev] Enable typescript strict mode for the app (#2970)
+* Add App Store app id to dynamic link (PR #2981) / 
+  * [prod] Dynamic links not working as expected (#2978)
 
 # 3.9.1 - 2018 Oct 17
 
