@@ -153,7 +153,6 @@ const FirebaseStore = types
             self.errorMessage =
               'Error verifying phone number. Please check the number and try again.'
         }
-        throw err
       }
     })
 
