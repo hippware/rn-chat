@@ -411,6 +411,8 @@ export class XmppTransport implements IWockyTransport {
     let children = stanza.query.item
     if (children && !isArray(children)) {
       children = [children]
+    } else {
+      children = []
     }
     return children.map((rec: any) => processRosterItem(rec, this.host!))
   }

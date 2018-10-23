@@ -69,8 +69,6 @@ export default class VerifyCode extends React.Component<Props> {
         () => firebaseStore!.registered,
         () => {
           this.isConfirming = false
-          Actions.pop({animated: false})
-          Actions.pop({animated: false})
           Actions.checkProfile()
         }
       )
