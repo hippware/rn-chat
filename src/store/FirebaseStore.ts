@@ -179,18 +179,15 @@ const FirebaseStore = types
     })
 
     const resendCode = flow(function*() {
-      try {
-        analytics.track('resend_code_try')
-        yield verifyPhone(self.phone)
+      analytics.track('resend_code_try')
+      if (yield verifyPhone(self.phone)) {
         analytics.track('resend_code_success')
-      } catch (err) {
-        analytics.track('resend_code_fail', {error: err})
-        throw err
+        return true
       }
-      return true
-    })
+      analytics.track('resend_code_fail')
+      return false
+    }) as () => Promise<boolean>
 
-    // const register = flow(function* register(token: string) {
     function register(): void {
       self.setState({buttonText: 'Registering...'})
       // TODO: set a timeout on firebase register
