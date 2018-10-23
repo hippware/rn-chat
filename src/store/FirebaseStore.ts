@@ -132,13 +132,14 @@ const FirebaseStore = types
       return true
     })
 
-    const verifyPhone = flow(function*({phone}: any) {
+    const verifyPhone = flow(function*(phone: string) {
       self.phone = phone
       try {
         self.errorMessage = ''
         analytics.track('sms_confirmation_try')
         confirmResult = yield auth.signInWithPhoneNumber(phone)
         analytics.track('sms_confirmation_success')
+        return true
       } catch (err) {
         analytics.track('sms_confirmation_fail', {error: err, phone})
         switch (err.code) {
@@ -149,12 +150,12 @@ const FirebaseStore = types
             self.errorMessage = 'Network error. Check your connection and try again.'
             break
           default:
-            // message = err.message;
             self.errorMessage =
               'Error verifying phone number. Please check the number and try again.'
         }
       }
-    })
+      return false
+    }) as (phone: string) => Promise<boolean>
 
     const confirmCode = flow(function*({code, resource}: any) {
       self.errorMessage = ''
@@ -180,7 +181,7 @@ const FirebaseStore = types
     const resendCode = flow(function*() {
       try {
         analytics.track('resend_code_try')
-        yield verifyPhone({phone: self.phone})
+        yield verifyPhone(self.phone)
         analytics.track('resend_code_success')
       } catch (err) {
         analytics.track('resend_code_fail', {error: err})
