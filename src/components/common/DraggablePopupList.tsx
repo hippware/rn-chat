@@ -51,7 +51,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
 /**
  * This list header wrapper ensures that the user can "touch through" to the map behind the list
  */
-export const DraggablePopupListHeader = ({inner}) => (
+const DraggablePopupListHeader = ({inner}) => (
   <View>
     <TouchThroughView style={{width, height: height / 2}} />
     <BottomPopup>

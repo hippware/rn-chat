@@ -1,7 +1,7 @@
 import fs from 'react-native-fs'
 import {Image} from 'react-native'
 import {IFileService} from 'wocky-client'
-export class FileService implements IFileService {
+class FileService implements IFileService {
   get tempDir() {
     return fs.CachesDirectoryPath
   }
