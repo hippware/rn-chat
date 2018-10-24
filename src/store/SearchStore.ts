@@ -27,7 +27,7 @@ const SearchStore = types
   })
   .views(self => ({
     get localResult() {
-      const {wocky} = getParent(self)
+      const wocky: IWocky = (getParent(self) as any).wocky
       const localLower = self.local.toLocaleLowerCase()
       return wocky.friends.filter(el => {
         return (
@@ -48,13 +48,13 @@ const SearchStore = types
     },
   }))
   .actions(self => {
-    const {wocky} = getParent(self)
+    const wocky: IWocky = (getParent(self) as any).wocky
     const _searchGlobal = flow(function*(text) {
       if (!text.length) {
         self.globalResult.clear()
       } else {
         try {
-          const profileArr = yield (wocky as IWocky).searchUsers(text)
+          const profileArr = yield wocky.searchUsers(text)
           self.globalResult.replace(profileArr)
         } catch (err) {
           // console.log('global search error', err);

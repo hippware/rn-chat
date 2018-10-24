@@ -1,4 +1,5 @@
 import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
+import {IObservableArray} from 'mobx'
 import {Bot, IBot, Location} from 'wocky-client'
 
 export const SelectableCard = types
@@ -8,7 +9,7 @@ export const SelectableCard = types
   .views(self => ({
     // returns index within parent list
     get index() {
-      return getParent(self).findIndex(item => {
+      return (getParent(self) as IObservableArray).findIndex(item => {
         return item === self
       })
     },
@@ -16,7 +17,7 @@ export const SelectableCard = types
   .actions(self => ({
     setSelected: (value: boolean) => (self.isSelected = value),
     select: () => {
-      getParent(self, 2).setIndex(self.index)
+      ;(getParent(self, 2) as IHomeStore).setIndex(self.index)
     },
   }))
 

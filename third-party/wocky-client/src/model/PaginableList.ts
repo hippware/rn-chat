@@ -115,5 +115,5 @@ export function createPaginable<T>(type: any): IPaginable<T> {
           }),
         },
       }
-    })
+    }) as IPaginable<T> // TODO: better workaround to fix error?
 }

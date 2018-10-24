@@ -1,7 +1,6 @@
 import {types} from 'mobx-state-tree'
 import {Bot, IBot, IBotData} from './Bot'
 import {Event, IEventData} from './Event'
-import {IProfile} from './Profile'
 
 // known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
 export type __IBot = IBot
@@ -14,7 +13,7 @@ export const EventBot = types
     })
   )
   .views(self => ({
-    get target(): IProfile {
+    get target() {
       return self.bot.owner!
     },
   }))

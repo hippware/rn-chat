@@ -33,7 +33,7 @@ export function createFactory(type: IType<any, any, any>) {
       get: (id: string, data?: {[key: string]: any}) => {
         try {
           if (!self.storage.get(id)) {
-            const entity = getParent(self).create(type, {
+            const entity = (getParent(self) as IStorages).create(type, {
               id,
               ...data,
               loaded: data && !!Object.keys(data).length,
@@ -42,7 +42,7 @@ export function createFactory(type: IType<any, any, any>) {
           } else {
             const entity: any = self.storage.get(id)!
             if (entity.load && data && Object.keys(data).length) {
-              entity.load(getParent(self)._registerReferences(type, data))
+              entity.load((getParent(self) as IStorages)._registerReferences(type, data))
             }
           }
           return self.storage.get(id)!
@@ -144,3 +144,5 @@ export const Storages = types
       instance.load(self._registerReferences(getType(instance), data))
     },
   }))
+
+export type IStorages = typeof Storages.Type

@@ -52,7 +52,7 @@ const PersistableModel = types
         const key = 'rnchat:model'
         data = await loadFromStorage(key)
         const {user, password, server} = JSON.parse(data)
-        applySnapshot(self.wocky, {...self.wocky, username: user, password, host: server})
+        applySnapshot(self.wocky, {...self.wocky, username: user, password, host: server} as any)
         storage.removeItem(key)
         analytics.track('migration_success', getSnapshot(self.wocky))
       } catch (err) {
@@ -134,7 +134,7 @@ const PersistableModel = types
         self.wocky.clearCache()
         self.wocky.disposeReactions()
         // wipe out old state and apply clean
-        applySnapshot(self, {
+        applySnapshot(self as any, {
           ...cleanState,
           version: settings.version,
           wocky: {host: settings.getDomain()},

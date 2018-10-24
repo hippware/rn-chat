@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, Text} from 'react-native'
+import {View, StyleSheet, Image, Text, ImageSourcePropType} from 'react-native'
 import {IBot} from 'wocky-client'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -22,7 +22,7 @@ const BotCard = observer(({bot, isSelected}: Props) => (
   >
     <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
       {bot.image ? (
-        <Image style={styles.thumb} source={bot.image.thumbnail} />
+        <Image style={styles.thumb} source={bot.image.thumbnail! as ImageSourcePropType} />
       ) : (
         <Icon icon={bot.icon} />
       )}

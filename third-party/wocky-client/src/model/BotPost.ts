@@ -6,13 +6,17 @@ import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
+import {IProfile} from './Profile'
 
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
     createUploadable(
       'image',
-      (self: any) => `redirect:${self.service.host}/bot/${getParent(getParent(getParent(self))).id}`
+      (self: any) =>
+        `redirect:${self.service.host}/bot/${
+          (getParent(getParent(getParent(self))) as IProfile).id
+        }`
     ),
     types.model('BotPost', {
       id: types.identifier,
