@@ -52,12 +52,7 @@
       "jsx",
       "json",
       "node"
-    ],
-    "globals": {
-      "ts-jest": {
-        "useBabelrc": true
-      }
-    }
+    ]
   },
   "detox": {
     "configurations": {
@@ -160,7 +155,7 @@
     "appcenter-cli": "^1.0.17",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -176,7 +171,7 @@
     "expect": "^1.13.0",
     "form-data": "^1.0.0-rc4",
     "husky": "^0.14.3",
-    "jest": "^23.0.1",
+    "jest": "^23.6.0",
     "mocha": "^2.3.4",
     "mocha-steps": "^0.0.1",
     "node-fetch": "^2.1.2",
