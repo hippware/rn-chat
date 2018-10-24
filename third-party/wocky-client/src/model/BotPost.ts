@@ -15,7 +15,7 @@ export const BotPost = types
       (self: any) => `redirect:${self.service.host}/bot/${getParent(getParent(getParent(self))).id}`
     ),
     types.model('BotPost', {
-      id: types.identifier(types.string),
+      id: types.identifier,
       content: '',
       title: '',
       image: FileRef,

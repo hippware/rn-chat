@@ -18,9 +18,9 @@ const codeUrlString = '?inviteCode='
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
-    token: types.maybe(types.string),
-    resource: types.maybe(types.string),
-    inviteCode: types.maybe(types.string),
+    token: types.maybeNull(types.string),
+    resource: types.maybeNull(types.string),
+    inviteCode: types.maybeNull(types.string),
   })
   .volatile(() => ({
     buttonText: 'Verify',

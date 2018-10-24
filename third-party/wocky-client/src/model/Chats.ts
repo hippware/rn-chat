@@ -19,7 +19,7 @@ export const Chats = types
   }))
   .views(self => ({
     get list() {
-      return self._filteredList.sort((a, b) => b.last!.time - a.last!.time)
+      return self._filteredList.slice().sort((a, b) => b.last!.time - a.last!.time)
     },
     get unread() {
       return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)

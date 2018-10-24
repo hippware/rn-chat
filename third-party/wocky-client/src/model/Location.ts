@@ -1,10 +1,10 @@
-import {types, ISnapshottable} from 'mobx-state-tree'
+import {types} from 'mobx-state-tree'
 
 export const Location = types
   .model('Location', {
     latitude: types.number,
     longitude: types.number,
-    accuracy: types.maybe(types.number),
+    accuracy: types.maybeNull(types.number),
   })
   .volatile(() => ({
     isCurrent: false,
@@ -16,4 +16,4 @@ export const Location = types
   }))
 
 export type ILocation = typeof Location.Type
-export type ILocationSnapshot = ISnapshottable<typeof Location.SnapshotType>
+export type ILocationSnapshot = typeof Location.SnapshotType

@@ -1,5 +1,5 @@
 import {types, getParent, getEnv, flow} from 'mobx-state-tree'
-import {reaction, ObservableMap, IReactionDisposer} from 'mobx'
+import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
@@ -20,20 +20,26 @@ export const Wocky = types
     Storages,
     types.model({
       id: 'wocky',
-      username: types.maybe(types.string),
-      password: types.maybe(types.string),
+      username: types.maybeNull(types.string),
+      password: types.maybeNull(types.string),
       host: types.string,
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {}),
-      profile: types.maybe(OwnProfile),
+      profile: types.maybeNull(OwnProfile),
       notifications: types.optional(EventList, {}),
       hasUnreadNotifications: false,
       geofenceBots: types.optional(BotPaginableList, {}),
       // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
-      chats: types.optional(Chats, Chats.create()),
+      chats: types.optional(Chats, {}),
     })
   )
   .named(SERVICE_NAME)
+  .postProcessSnapshot((snapshot: any) => {
+    const data = {...snapshot}
+    // delete data.geoBots
+    delete data.files
+    return data
+  })
   .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
@@ -68,7 +74,7 @@ export const Wocky = types
         }
         // add own profile to the storage
         self.profiles.get(id, data)
-        if (self.profile.handle) self.sessionCount = 3
+        if (self.profile!.handle) self.sessionCount = 3
         return self.profile
       }
       return self.profiles.get(id, data)
@@ -81,8 +87,9 @@ export const Wocky = types
           return self.transport.connecting
         },
         get sortedRoster(): IProfile[] {
-          return (Array.from((self.roster as ObservableMap).values()) as IProfile[])
+          return (Array.from(self.roster.values()) as IProfile[])
             .filter(x => x.handle)
+            .slice()
             .sort((a, b) => {
               return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
             })
@@ -94,12 +101,6 @@ export const Wocky = types
         // },
       },
       actions: {
-        postProcessSnapshot: (snapshot: any) => {
-          const data = {...snapshot}
-          // delete data.geoBots
-          delete data.files
-          return data
-        },
         login: flow(function*(user?: string, password?: string, host?: string) {
           if (user) {
             self.username = user
@@ -163,6 +164,7 @@ export const Wocky = types
         .filter((bot: IBot) => bot.visitorsSize)
         .map((data, index) => ({data, index}))
       return arr
+        .slice()
         .sort((a, b) => {
           if (a.data.visitor && !b.data.visitor) return -1
           if (!a.data.visitor && b.data.visitor) return 1
@@ -191,7 +193,7 @@ export const Wocky = types
   }))
   .actions(self => ({
     addRosterItem: (profile: any) => {
-      ;(self.roster as ObservableMap).set(profile.id, self.profiles.get(profile.id, profile))
+      self.roster.set(profile.id, self.profiles.get(profile.id, profile))
     },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
       const profile = self.profiles.get(id, processMap(data))
@@ -394,7 +396,7 @@ export const Wocky = types
       }),
       _publishBotPost: flow(function*(post: IBotPost) {
         yield waitFor(() => self.connected)
-        let parent = getParent(post)
+        let parent: any = getParent(post)
         while (!parent.id) parent = getParent(parent)
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
@@ -656,7 +658,7 @@ export const Wocky = types
       // self.geoBots.clear()
       self.notifications.refresh()
       self.bots.clear()
-      ;(self.roster as ObservableMap).clear()
+      self.roster.clear()
       self.profiles.clear()
     }
     let reactions: IReactionDisposer[] = []

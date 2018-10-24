@@ -1,15 +1,15 @@
 import {types, getEnv, getParent, getType, IType} from 'mobx-state-tree'
-import {ObservableMap} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot, IBot} from '../model/Bot'
 
 export type __IBot = IBot
 
-export function createFactory(type: IType<any, any>) {
+// TODO set generics instead of any here?
+export function createFactory(type: IType<any, any, any>) {
   return types
     .model({
-      storage: types.optional(types.map(type), {} as ObservableMap),
+      storage: types.optional(types.map(type), {}),
     })
     .named(`Factory${type.name}`)
     .views(self => ({
@@ -125,7 +125,7 @@ export const Storages = types
     }
   })
   .actions(self => ({
-    create: <T>(type: IType<any, T>, param: {[key: string]: any}) => {
+    create: <T>(type: IType<any, any, T>, param: {[key: string]: any}) => {
       const data = {...param}
       // some workaround to create references on the fly (maybe recent MST can do it automatically?)
       if (param.user && typeof param.user === 'object') {

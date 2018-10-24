@@ -18,8 +18,8 @@ export function createPaginable<T>(type: any): IPaginable<T> {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
-      cursor: types.maybe(types.string),
-      count: types.maybe(types.number),
+      cursor: types.maybeNull(types.string),
+      count: types.maybeNull(types.number),
     })
     .named('PaginableList')
     .volatile(() => ({

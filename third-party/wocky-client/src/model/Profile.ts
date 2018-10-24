@@ -10,12 +10,12 @@ export const Profile = types
     Base,
     Loadable,
     types.model('Profile', {
-      id: types.identifier(types.string),
+      id: types.identifier,
       avatar: FileRef,
-      handle: types.maybe(types.string),
+      handle: types.maybeNull(types.string),
       status: 'unavailable',
-      firstName: types.maybe(types.string),
-      lastName: types.maybe(types.string),
+      firstName: types.maybeNull(types.string),
+      lastName: types.maybeNull(types.string),
       isBlocked: false,
       isFollowed: false,
       isFollower: false,
@@ -27,6 +27,11 @@ export const Profile = types
     })
   )
   .named('Profile')
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.status
+    return res
+  })
   .extend(self => {
     let followers: IProfilePaginableListType,
       followed: IProfilePaginableListType,
@@ -76,11 +81,6 @@ export const Profile = types
         setStatus: (status: string) => {
           self.status = status
         },
-        postProcessSnapshot: (snapshot: any) => {
-          const res: any = {...snapshot}
-          delete res.status
-          return res
-        },
       },
       views: {
         get isOwn(): boolean {
@@ -129,7 +129,7 @@ export interface IProfilePaginableList extends IProfilePaginableListType {}
 export type IProfileType = typeof Profile.Type
 export interface IProfile extends IProfileType {}
 
-export const ProfileRef = types.maybe(
+export const ProfileRef = types.maybeNull(
   types.reference(Profile, {
     get(id: string, parent: any) {
       return (

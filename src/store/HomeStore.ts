@@ -58,9 +58,9 @@ const HomeStore = types
     creationMode: false,
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     index: 0,
-    focusedBotLocation: types.maybe(Location),
-    mapCenterLocation: types.maybe(Location),
-    scrolledToBot: types.maybe(types.reference(Bot)),
+    focusedBotLocation: types.maybeNull(Location),
+    mapCenterLocation: types.maybeNull(Location),
+    scrolledToBot: types.maybeNull(types.reference(Bot)),
   })
   .views(self => ({
     // return the list for current mode
@@ -147,10 +147,6 @@ const HomeStore = types
       disableFullScreen: () => {
         self.fullScreenMode = false
       },
-      postProcessSnapshot(snapshot: any) {
-        // No need to persist this store
-        return {}
-      },
       start() {
         // empty
       },
@@ -158,6 +154,10 @@ const HomeStore = types
         self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
       },
     }
+  })
+  .postProcessSnapshot((snapshot: any) => {
+    // No need to persist this store
+    return {}
   })
   .actions(self => ({
     selectBot(bot: IBot) {

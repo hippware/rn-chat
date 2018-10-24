@@ -7,7 +7,7 @@ export const EventBotInvite = types
     EventBot,
     types.model('EventBotInvite', {
       sender: types.reference(Profile),
-      isAccepted: types.maybe(types.boolean),
+      isAccepted: types.maybeNull(types.boolean),
       isResponse: types.boolean,
     })
   )

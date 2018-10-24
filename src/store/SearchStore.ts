@@ -17,15 +17,15 @@ const SearchStore = types
     global: '',
     globalResult: types.optional(SelectableProfileList, {}),
   })
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.global
+    delete res.globalResult
+    delete res.local
+    delete res.localResult
+    return res
+  })
   .views(self => ({
-    postProcessSnapshot: (snapshot: any) => {
-      const res: any = {...snapshot}
-      delete res.global
-      delete res.globalResult
-      delete res.local
-      delete res.localResult
-      return res
-    },
     get localResult() {
       const {wocky} = getParent(self)
       const localLower = self.local.toLocaleLowerCase()
@@ -110,7 +110,6 @@ const SearchStore = types
       handler1()
       applySnapshot(self, {
         local: '',
-        localResult: {},
         global: '',
         globalResult: '',
       })

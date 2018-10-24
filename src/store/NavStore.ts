@@ -21,11 +21,11 @@ const NavStore = types
       reaction(() => self.scene === 'home', getParent(self).homeStore.disableFullScreen)
       reaction(() => self.scene === 'botDetails', getParent(self).homeStore.setDetailsMode)
     },
-    postProcessSnapshot(snapshot: any) {
-      // No need to persist this store
-      return {}
-    },
   }))
+  .postProcessSnapshot((snapshot: any) => {
+    // No need to persist this store
+    return {}
+  })
 
 export default NavStore
 type NavStoreType = typeof NavStore.Type
