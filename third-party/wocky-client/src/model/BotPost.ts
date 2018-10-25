@@ -5,7 +5,8 @@ import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
-import {ProfileRef} from './Profile'
+import {Profile} from './Profile'
+// import {ProfileRef} from './Profile'
 
 export const BotPost = types
   .compose(
@@ -20,7 +21,8 @@ export const BotPost = types
       content: '',
       title: '',
       image: FileRef,
-      profile: types.late((): any => ProfileRef),
+      // profile: types.late(() => ProfileRef),
+      profile: types.reference(Profile),
     })
   )
   .named('BotPost')

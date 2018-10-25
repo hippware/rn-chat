@@ -1,4 +1,4 @@
-import {types, flow, isAlive, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, IAnyModelType} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -120,22 +120,20 @@ export interface IProfilePaginableList extends IProfilePaginableListType {}
 export type IProfileType = typeof Profile.Type
 export interface IProfile extends IProfileType {}
 
-export const ProfileRef = types.maybeNull(
-  types.reference(Profile, {
-    get(id: string, parent: any) {
-      return (
-        parent &&
-        parent.service &&
-        parent.service.profiles &&
-        isAlive(parent.service.profiles.get(id)) &&
-        parent.service.profiles.get(id)
-      )
-    },
-    set(value: any) {
-      return value.id
-    },
-  })
-)
+// export const ProfileRef = types.reference(Profile, {
+//   get(id: string, parent: any) {
+//     return (
+//       parent &&
+//       parent.service &&
+//       parent.service.profiles &&
+//       isAlive(parent.service.profiles.get(id)) &&
+//       parent.service.profiles.get(id)
+//     )
+//   },
+//   set(value: any) {
+//     return value.id
+//   },
+// })
 
 export interface IProfilePartial {
   id: string
