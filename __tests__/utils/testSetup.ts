@@ -1,4 +1,4 @@
-global.window = global
+// global.window = global
 jest.mock('mobx-react/native', () => require('mobx-react/custom'))
 jest.mock('Linking', () => {
   return {
