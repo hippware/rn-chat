@@ -3,7 +3,7 @@ import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
-import {IBotPaginableList} from './Bot'
+import {BotPaginableList} from './Bot'
 
 export const Profile = types
   .compose(
@@ -24,36 +24,37 @@ export const Profile = types
       followedSize: 0,
       botsSize: 0,
       roles: types.optional(types.array(types.string), []),
+      ownBots: types.optional(BotPaginableList, {}),
+      subscribedBots: types.optional(BotPaginableList, {}),
+      followed: types.optional(types.late(() => ProfilePaginableList), {}),
+      followers: types.optional(types.late(() => ProfilePaginableList), {}),
     })
   )
   .named('Profile')
-  .postProcessSnapshot((snapshot: any) => {
-    const res: any = {...snapshot}
+  .postProcessSnapshot(snapshot => {
+    const res = {...snapshot}
     delete res.status
+    delete res.ownBots
+    delete res.subscribedBots
+    delete res.followed
+    delete res.followers
     return res
   })
   .extend(self => {
-    let followers: IProfilePaginableListType,
-      followed: IProfilePaginableListType,
-      ownBots: IBotPaginableList,
-      subscribedBots: IBotPaginableList
-    const {BotPaginableList} = require('./Bot')
     return {
       actions: {
         afterAttach: () => {
           if (self.service) {
-            followers = ProfilePaginableList.create({})
-            followers.setRequest(
+            self.followers.setRequest(
               self.service._loadRelations.bind(self.service, self.id, 'follower')
             )
-            followed = ProfilePaginableList.create({})
-            followed.setRequest(
+            self.followed.setRequest(
               self.service._loadRelations.bind(self.service, self.id, 'following')
             )
-            ownBots = BotPaginableList.create({})
-            ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
-            subscribedBots = BotPaginableList.create({})
-            subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
+            self.ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
+            self.subscribedBots.setRequest(
+              self.service._loadSubscribedBots.bind(self.service, self.id)
+            )
             if (!self.loaded) {
               self.service.loadProfile(self.id)
             }
@@ -93,18 +94,6 @@ export const Profile = types
         get isMutual(): boolean {
           return self.isFollowed && self.isFollower
         },
-        get followers(): IProfilePaginableListType {
-          return followers
-        },
-        get followed(): IProfilePaginableListType {
-          return followed
-        },
-        get ownBots(): IBotPaginableList {
-          return ownBots
-        },
-        get subscribedBots(): IBotPaginableList {
-          return subscribedBots
-        },
         get displayName(): string {
           if (self.firstName && self.lastName) {
             return `${self.firstName} ${self.lastName}`
@@ -123,7 +112,9 @@ export const Profile = types
     }
   })
 
-export const ProfilePaginableList = createPaginable<IProfile>(types.reference(Profile))
+export const ProfilePaginableList = createPaginable<IProfile>(
+  types.reference(types.late(() => Profile))
+)
 export type IProfilePaginableListType = typeof ProfilePaginableList.Type
 export interface IProfilePaginableList extends IProfilePaginableListType {}
 export type IProfileType = typeof Profile.Type
@@ -140,7 +131,7 @@ export const ProfileRef = types.maybeNull(
         parent.service.profiles.get(id)
       )
     },
-    set(value) {
+    set(value: any) {
       return value.id
     },
   })

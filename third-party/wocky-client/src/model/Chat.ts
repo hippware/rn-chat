@@ -39,7 +39,7 @@ export const Chat = types
       )
     },
     get followedParticipants() {
-      return self.participants.filter(p => p.isFollowed)
+      return self.participants.filter((p: any) => p.isFollowed)
     },
   }))
   .views(self => ({

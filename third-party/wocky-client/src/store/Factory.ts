@@ -133,6 +133,11 @@ export const Storages = types
         self.profiles.get(param.user.id, param.user)
         data.user = param.user.id
       }
+      if (param.profile && typeof param.profile === 'object') {
+        // create reference to profile!
+        self.profiles.get(param.profile.id, param.profile)
+        data.profile = param.profile.id
+      }
       if (param.bot && typeof param.bot === 'object') {
         // create reference to bot!
         self.bots.get(param.bot.id, param.bot)
