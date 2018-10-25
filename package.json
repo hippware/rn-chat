@@ -12,7 +12,7 @@
     "mocha": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./test/* --require ts-node/register --require tsconfig-paths/register --timeout 10000",
     "mochaWocky": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./third-party/wocky-client/test/* --require ts-node/register --require tsconfig-paths/register --require ./third-party/wocky-client/test/support/setup.js  --timeout 30000",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest:all": "jest --testPathPattern __tests__/*.test.js",
+    "jest:all": "jest --testPathPattern __tests__/*.test.tsx",
     "jest": "jest",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
