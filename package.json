@@ -36,9 +36,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
-    "globalSetup": "./__tests__/utils/setupJest.js",
     "modulePaths": [
-      "<rootDir>"
+      "<rootDir>",
+      "<rootDir>/third-party/wocky-client/src"
     ],
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
@@ -52,7 +52,10 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "moduleNameMapper": {
+      "wocky-client": "third-party/wocky-client/src"
+    }
   },
   "detox": {
     "configurations": {
@@ -141,8 +144,8 @@
   },
   "devDependencies": {
     "@types/chai": "4.0.4",
-    "@types/detox": "^7.3.0",
     "@types/graphql": "^0.12.7",
+    "@types/jest": "^23.3.7",
     "@types/mocha": "2.2.43",
     "@types/node": "^9.3.0",
     "@types/node-fetch": "^1.6.7",
@@ -188,7 +191,7 @@
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.10.0",
-    "tslint-react": "^3.5.1",
+    "tslint-react": "^3.6.0",
     "tsutils": "^3.2.0",
     "typescript": "3.0.3",
     "websocket": "^1.0.22",
