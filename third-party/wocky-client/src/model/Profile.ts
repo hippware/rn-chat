@@ -1,4 +1,4 @@
-import {types, flow, isAlive} from 'mobx-state-tree'
+import {types, flow, isAlive, IAnyModelType} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -24,10 +24,10 @@ export const Profile = types
       followedSize: 0,
       botsSize: 0,
       roles: types.optional(types.array(types.string), []),
-      ownBots: types.optional(BotPaginableList, {}),
-      subscribedBots: types.optional(BotPaginableList, {}),
-      followed: types.optional(types.late(() => ProfilePaginableList), {}),
-      followers: types.optional(types.late(() => ProfilePaginableList), {}),
+      ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
+      followed: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
+      followers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
     })
   )
   .named('Profile')
