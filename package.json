@@ -7,7 +7,7 @@
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "test": "npm run testLocal && npm run mochaWocky",
-    "testLocal": "npm run mocha && npm run jest:all",
+    "testLocal": "npm run lint && npm run lintWocky && npm run tsc && npm run mocha && npm run jest:all",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "mocha": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./test/* --require ts-node/register --require tsconfig-paths/register --timeout 10000",
     "mochaWocky": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./third-party/wocky-client/test/* --require ts-node/register --require tsconfig-paths/register --require ./third-party/wocky-client/test/support/setup.js  --timeout 30000",
