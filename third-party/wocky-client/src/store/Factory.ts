@@ -2,6 +2,7 @@ import {types, getEnv, getParent, getType, IType} from 'mobx-state-tree'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot, IBot} from '../model/Bot'
+import _ from 'lodash'
 
 export type __IBot = IBot
 
@@ -31,6 +32,9 @@ export function createFactory(type: IType<any, any, any>) {
         self.storage.delete(id)
       },
       get: (id: string, data?: {[key: string]: any}) => {
+        // ensure that nothing inside data is observable (othwerise throws MST exception)
+        data = _.cloneDeep(data)
+
         try {
           if (!self.storage.get(id)) {
             const entity = (getParent(self) as IStorages).create(type, {
@@ -143,6 +147,8 @@ export const Storages = types
         self.bots.get(param.bot.id, param.bot)
         data.bot = param.bot.id
       }
+
+      // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this
       return type.create(self._registerReferences(type, data), getEnv(self))
     },
     load: (instance: any, data: {[key: string]: any}) => {
