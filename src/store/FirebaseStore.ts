@@ -198,7 +198,7 @@ const FirebaseStore = types
       try {
         yield wocky!.register({jwt: self.token}, 'firebase')
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login()
+        yield wocky.login(undefined, undefined, undefined)
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)

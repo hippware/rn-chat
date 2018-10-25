@@ -433,7 +433,7 @@ export const Wocky = types
         for (const rec of list) {
           const {id} = rec
           // TODO avoid extra request to load profile (server-side)
-          const profile = yield self.getProfile(id)
+          const profile = yield self.getProfile(id, undefined)
           res.push(profile)
         }
         return {list: res, count}

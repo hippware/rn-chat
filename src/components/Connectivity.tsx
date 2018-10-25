@@ -79,7 +79,7 @@ export default class Connectivity extends React.Component<Props> {
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        await model.login()
+        await model.login(undefined, undefined, undefined)
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
