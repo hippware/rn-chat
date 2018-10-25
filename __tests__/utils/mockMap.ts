@@ -1,8 +1,10 @@
 // from https://github.com/react-community/react-native-maps/issues/889#issuecomment-300637902
 
+/* tslint:disable:max-classes-per-file */
+
 jest.mock('react-native-maps', () => {
-  const React = require.requireActual('react')
-  const MapView = require.requireActual('react-native-maps')
+  const React = (jest as any).requireActual('react')
+  const MapView = (jest as any).requireActual('react-native-maps')
 
   class MockCallout extends React.Component {
     render() {

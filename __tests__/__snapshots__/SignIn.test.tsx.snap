@@ -1,0 +1,439 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignIn renders 1`] = `
+<RCTScrollView
+  automaticallyAdjustContentInsets={false}
+  contentInset={
+    Object {
+      "bottom": 0,
+    }
+  }
+  enableAutomaticScroll={true}
+  enableResetScrollToCoords={true}
+  extraHeight={75}
+  extraScrollHeight={0}
+  getScrollResponder={[Function]}
+  handleOnScroll={[Function]}
+  keyboardDismissMode="interactive"
+  keyboardOpeningTime={250}
+  keyboardShouldPersistTaps="always"
+  keyboardSpace={0}
+  onScroll={[Function]}
+  resetKeyboardSpace={[Function]}
+  scrollEventThrottle={1}
+  scrollForExtraHeightOnAndroid={[Function]}
+  scrollToEnd={[Function]}
+  scrollToFocusedInput={[Function]}
+  scrollToPosition={[Function]}
+  showsVerticalScrollIndicator={true}
+  style={
+    Object {
+      "backgroundColor": "rgb(255,255,255)",
+      "flex": 1,
+    }
+  }
+  viewIsInsideTabBar={false}
+>
+  <View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "marginLeft": 120,
+          "marginTop": 64,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../images/iconBot.png",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "height": 69,
+              "width": 60,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Object {
+            "marginLeft": 20,
+            "marginTop": -5,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(253,95,108)",
+                "fontFamily": "Roboto-Light",
+                "fontSize": 28,
+              },
+              undefined,
+            ]
+          }
+        >
+          Please verify
+your phone
+number.
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(155,155,155)",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 15,
+              },
+              Object {
+                "marginTop": 14,
+              },
+            ]
+          }
+        >
+          Don't worry we won't share
+your phone number.
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginTop": 40,
+        }
+      }
+    >
+      <CountryPicker
+        cca2="US"
+        closeable={true}
+        filterable={true}
+        onChange={[Function]}
+        translation="eng"
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View>
+            <View
+              style={
+                Object {
+                  "height": 22,
+                }
+              }
+            />
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "padding": 30,
+                  },
+                  Object {
+                    "justifyContent": "center",
+                    "paddingTop": 4,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "paddingLeft": 10,
+                      "paddingRight": 30,
+                      "width": 30,
+                    },
+                    Object {
+                      "height": 40,
+                      "marginHorizontal": 10,
+                      "width": 40,
+                    },
+                  ]
+                }
+              >
+                <Image
+                  source={
+                    Object {
+                      "testUri": "../../../images/globe.png",
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <TextInput
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  clearButtonMode="while-editing"
+                  editable={false}
+                  icon={
+                    Object {
+                      "testUri": "../../../images/globe.png",
+                    }
+                  }
+                  label="Country Code"
+                  onChangeText={[Function]}
+                  placeholder="Country Code"
+                  placeholderTextColor="rgb(212,212,212)"
+                  pointerEvents="none"
+                  returnKeyType="next"
+                  style={
+                    Object {
+                      "color": "rgb(63,50,77)",
+                      "flex": 1,
+                      "fontFamily": "Roboto-Regular",
+                      "fontSize": 36,
+                    }
+                  }
+                  underlineColorAndroid="transparent"
+                  value="United States +1"
+                />
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "width": 30,
+                    }
+                  }
+                />
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "backgroundColor": "rgb(63,50,77)",
+                  "height": 1,
+                  "opacity": 0.2,
+                }
+              }
+            />
+          </View>
+        </View>
+      </CountryPicker>
+      <View>
+        <View
+          style={
+            Object {
+              "height": 22,
+            }
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "padding": 30,
+              },
+              Object {
+                "justifyContent": "center",
+                "paddingTop": 4,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "paddingLeft": 10,
+                  "paddingRight": 30,
+                  "width": 30,
+                },
+                Object {
+                  "height": 40,
+                  "marginHorizontal": 10,
+                  "width": 40,
+                },
+              ]
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../images/phone.png",
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <TextInput
+              autoCorrect={false}
+              autoFocus={true}
+              clearButtonMode="while-editing"
+              icon={
+                Object {
+                  "testUri": "../../../images/phone.png",
+                }
+              }
+              keyboardType="phone-pad"
+              label="Phone Number"
+              onChangeText={[Function]}
+              placeholder="Phone Number"
+              placeholderTextColor="rgb(212,212,212)"
+              returnKeyType="next"
+              style={
+                Object {
+                  "color": "rgb(63,50,77)",
+                  "flex": 1,
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 36,
+                }
+              }
+              underlineColorAndroid="transparent"
+              value=""
+            />
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "width": 30,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(63,50,77)",
+              "height": 1,
+              "opacity": 0.2,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "marginHorizontal": 72,
+            "marginVertical": 40,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "height": 44,
+                "justifyContent": "center",
+                "marginBottom": 10,
+              },
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgb(253,95,108)",
+                "borderRadius": 10,
+                "borderWidth": 0,
+                "flex": 1,
+                "height": 100,
+                "justifyContent": "center",
+                "marginHorizontal": 10,
+              },
+              Object {
+                "opacity": 0.5,
+              },
+            ]
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "rgb(255,255,255)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 35,
+                  "letterSpacing": 0.8,
+                },
+              ]
+            }
+          >
+            Send Confirmation
+          </Text>
+        </View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(155,155,155)",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 12.5,
+              },
+              Object {
+                "marginTop": 20,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          By tapping "Send Confirmation", we will send you a SMS. Message, data rates may apply.
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

@@ -1,6 +1,5 @@
-// @flow
-
 import {Wocky, IWockyTransport} from 'wocky-client'
+// import {Wocky, IWockyTransport} from '../../third-party/wocky-client/src'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
 import {observable} from 'mobx'
@@ -13,8 +12,8 @@ export class XmppTransport implements IWockyTransport {
   @observable connecting: boolean = false
   @observable iq: any = {}
   @observable rosterItem: any = {}
-  @observable message: {id: string, message: any}
-  @observable presence: {status: string, id: string}
+  @observable message: {id: string; message: any}
+  @observable presence: {status: string; id: string}
   @observable username: string
   @observable password: string
   @observable host: string
@@ -93,7 +92,7 @@ export class XmppTransport implements IWockyTransport {
   async disablePush(): Promise<void> {}
   sendMessage(msg: any) {}
   async loadChat(userId: string, lastId?: string, max: number = 20) {}
-  async loadChats(max: number = 50): Promise<Array<{id: string, message: any}>> {
+  async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
     // return items.map((item: any) => {
     //   const {other_jid, message, outgoing, timestamp} = item
     //   const sender: string = Utils.getNodeJid(other_jid)!
@@ -203,7 +202,7 @@ class FakeFileService {
   mkdir(folder: string) {
     // return mkdir(folder);
   }
-  getImageSize(filename: string): Promise<{width: number, height: number}> {
+  getImageSize(filename: string): Promise<{width: number; height: number}> {
     return new Promise((resolve, reject) => resolve({width: 0, height: 0}))
   }
   downloadHttpFile(urlString: string, fileName: string, headers: any): Promise<any> {

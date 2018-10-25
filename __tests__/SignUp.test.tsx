@@ -7,7 +7,9 @@ import {Provider} from 'mobx-react/native'
 describe('Signup', () => {
   it('renders', () => {
     const wocky = {
-      createChat: () => {},
+      createChat: () => {
+        /*noop*/
+      },
       profile: {
         handle: 'jerkham',
         firstName: 'eric',
@@ -18,12 +20,18 @@ describe('Signup', () => {
       },
     }
     const analytics = {
-      track: () => {},
+      track: () => {
+        /*noop*/
+      },
     }
     const profileValidationStore = {
-      setProfile: () => {},
+      setProfile: () => {
+        /*noop*/
+      },
     }
-    const warn = () => {}
+    const warn = () => {
+      /*noop*/
+    }
     const tree = renderer
       .create(
         <Provider
