@@ -141,11 +141,6 @@ export const Storages = types
           data[key] = param[key].id
         }
       })
-      if (param.profile && typeof param.profile === 'object') {
-        // create reference to profile!
-        self.profiles.get(param.profile.id, param.profile)
-        data.profile = param.profile.id
-      }
       if (param.bot && typeof param.bot === 'object') {
         // create reference to bot!
         self.bots.get(param.bot.id, param.bot)
