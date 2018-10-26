@@ -52,22 +52,7 @@ export default class BotDetails extends React.Component<Props> {
     )
   })
 
-  componentDidMount() {
-    // console.log('BOTDETAILS MOUNT')
-    this.loadBot()
-    // if (this.props.params && this.props.params.indexOf('visitors') !== -1) {
-    //   Actions.visitors({item: this.props.botId})
-    // }
-  }
-
-  componentWillUnmount() {
-    // console.log('BOTDETAILS UNMOUNT')
-    if (this.viewTimeout) {
-      clearTimeout(this.viewTimeout)
-    }
-  }
-
-  loadBot = async () => {
+  async componentDidMount() {
     const {wocky, analytics, botId, homeStore} = this.props
     runInAction(() => {
       this.bot = wocky!.getBot({id: botId})
@@ -76,15 +61,13 @@ export default class BotDetails extends React.Component<Props> {
       return
     }
 
-    if (!this.bot!.invitation || this.bot!.invitation!.accepted) {
-      // TODO: load all bot info in one GraphQL call
-      await Promise.all([
-        wocky!.loadBot(botId, undefined),
-        this.bot!.posts.load({force: true}),
-        this.bot!.guests.load(),
-        this.bot!.visitors.load(),
-      ])
-    }
+    // TODO: load all bot info in one GraphQL call
+    await Promise.all([
+      wocky!.loadBot(botId, undefined),
+      this.bot!.posts.load({force: true}),
+      this.bot!.guests.load(),
+      this.bot!.visitors.load(),
+    ])
 
     homeStore.selectBot(this.bot)
     homeStore.setFocusedLocation(this.bot.location)
@@ -93,6 +76,12 @@ export default class BotDetails extends React.Component<Props> {
       if (this.bot && isAlive(this.bot))
         analytics.track('bot_view', {id: this.bot.id, title: this.bot.title})
     }, 7000)
+  }
+
+  componentWillUnmount() {
+    if (this.viewTimeout) {
+      clearTimeout(this.viewTimeout)
+    }
   }
 
   scrollToEnd = () => {
