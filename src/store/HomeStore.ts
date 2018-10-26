@@ -2,7 +2,7 @@ import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
 import {IObservableArray} from 'mobx'
 import {Bot, IBot, Location} from 'wocky-client'
 
-export const SelectableCard = types
+const SelectableCard = types
   .model('SelectableCard', {
     isSelected: false,
   })
@@ -23,7 +23,7 @@ export const SelectableCard = types
 
 type SelectableCardType = typeof SelectableCard.Type
 export interface ISelectableCard extends SelectableCardType {}
-export const BotCard = types
+const BotCard = types
   .compose(
     SelectableCard,
     types.model({
@@ -33,9 +33,9 @@ export const BotCard = types
   .named('BotCard')
 
 type BotCardType = typeof BotCard.Type
-export interface IBotCard extends BotCardType {}
+interface IBotCard extends BotCardType {}
 
-export const YouCard = SelectableCard.props({
+const YouCard = SelectableCard.props({
   you: types.boolean,
 }).named('YouCard')
 // NOTE: if we don't need to unselect current bot we can return empty 'select' and use it from HorizontalCardList
@@ -45,11 +45,11 @@ export const YouCard = SelectableCard.props({
 //   },
 // }))
 
-export const TutorialCard = SelectableCard.props({
+const TutorialCard = SelectableCard.props({
   tutorial: types.boolean,
 }).named('TutorialCard')
 
-export const Card = types.union(BotCard, YouCard, TutorialCard)
+const Card = types.union(BotCard, YouCard, TutorialCard)
 export type ICard = typeof Card.Type
 
 const HomeStore = types
