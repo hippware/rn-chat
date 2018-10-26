@@ -133,20 +133,28 @@ export const Storages = types
     create: <T>(type: IType<any, any, T>, param: {[key: string]: any}) => {
       const data = {...param}
       // some workaround to create references on the fly (maybe recent MST can do it automatically?)
-      if (param.user && typeof param.user === 'object') {
-        // create reference to profile!
-        self.profiles.get(param.user.id, param.user)
-        data.user = param.user.id
-      }
-      if (param.profile && typeof param.profile === 'object') {
-        // create reference to profile!
-        self.profiles.get(param.profile.id, param.profile)
-        data.profile = param.profile.id
-      }
+      const arr = ['user', 'profile', 'owner']
+      arr.forEach(key => {
+        if (param[key] && typeof param[key] === 'object') {
+          // create reference to profile!
+          self.profiles.get(param[key].id, param[key])
+          data[key] = param[key].id
+        }
+      })
       if (param.bot && typeof param.bot === 'object') {
         // create reference to bot!
         self.bots.get(param.bot.id, param.bot)
         data.bot = param.bot.id
+      }
+      if (param.avatar && typeof param.avatar === 'object') {
+        // create reference to file!
+        self.files.get(param.avatar.id, param.avatar)
+        data.avatar = param.avatar.id
+      }
+      if (param.image && typeof param.image === 'object') {
+        // create reference to file!
+        self.files.get(param.image.id, param.image)
+        data.image = param.image.id
       }
 
       // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this

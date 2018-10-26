@@ -5,6 +5,7 @@ import HackMarker from '../../map/HackMarker'
 import Bubble from '../../map/Bubble'
 import {colors} from '../../../constants'
 import {isAlive} from 'mobx-state-tree'
+import {IBot} from 'wocky-client'
 
 // interface ICardProps extends IProps {
 //   card: ISelectableCard
@@ -14,8 +15,15 @@ const defaultIcon = require('../../../../images/mapIcons/question.png')
 
 const BotMarker = inject('homeStore')(
   observer(({homeStore, card}) => {
-    const {bot, isSelected} = card
-    if (!bot || !isAlive(bot)) {
+    const {isSelected} = card
+    let bot: IBot
+    // dirty workaround for #3013 (until we will not found the real case)
+    try {
+      bot = card.bot
+    } catch {
+      return null
+    }
+    if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
     // don't show marker for 'details' mode (when bot details page is shown)
