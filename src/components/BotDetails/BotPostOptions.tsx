@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
 import ActionSheet from 'react-native-actionsheet'
-import {IBot, IBotPost} from 'wocky-client'
+import {IProfile, IBot, IBotPost} from 'wocky-client'
 
 type Props = {
   item: IBotPost
@@ -20,7 +20,7 @@ class BotPostOptions extends React.Component<Props> {
   render() {
     const post = this.props.item
     const {bot} = this.props
-    if (bot.owner!.isOwn || post.profile!.isOwn) {
+    if (bot.owner!.isOwn || (post.profile! as IProfile).isOwn) {
       return (
         <TouchableOpacity
           onPress={() => this.actionSheet.show()}

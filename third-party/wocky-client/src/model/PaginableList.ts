@@ -1,4 +1,4 @@
-import {types, flow, IModelType, isAlive} from 'mobx-state-tree'
+import {types, flow, IModelType, isAlive, IAnyType} from 'mobx-state-tree'
 
 export interface IPaginable<T> extends IModelType<any, any> {
   result?: T[]
@@ -14,7 +14,7 @@ export interface IPaginable<T> extends IModelType<any, any> {
   remove?: (id: string) => void
 }
 
-export function createPaginable<T>(type: any): IPaginable<T> {
+export function createPaginable<T>(type: IAnyType): IPaginable<T> {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),

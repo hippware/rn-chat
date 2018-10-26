@@ -527,6 +527,8 @@ export const Wocky = types
         //   yield self.loadBot(data.bot.id, data.bot.server)
         // } else {
 
+        if (!data) return
+
         try {
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)

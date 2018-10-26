@@ -52,9 +52,9 @@ class AddBotPost extends React.Component<Props> {
     try {
       this.post = bot.createPost(this.text.trim())
       if (this.image) {
-        await this.post.upload({...this.image, file: this.image.source})
+        await this.post!.upload({...this.image, file: this.image.source})
       }
-      await this.post.publish()
+      await this.post!.publish()
       this.post = null
       this.text = ''
       this.imageURI = undefined

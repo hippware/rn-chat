@@ -1,12 +1,12 @@
 import {types, flow, getParent} from 'mobx-state-tree'
 import {FileRef} from './File'
-import {ProfileRef} from './Profile'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
-import {IProfile} from './Profile'
+import {Profile} from './Profile'
+// import {ProfileRef} from './Profile'
 
 export const BotPost = types
   .compose(
@@ -14,16 +14,15 @@ export const BotPost = types
     createUploadable(
       'image',
       (self: any) =>
-        `redirect:${self.service.host}/bot/${
-          (getParent(getParent(getParent(self))) as IProfile).id
-        }`
+        `redirect:${self.service.host}/bot/${(getParent(getParent(getParent(self))) as any).id}`
     ),
     types.model('BotPost', {
       id: types.identifier,
       content: '',
       title: '',
       image: FileRef,
-      profile: ProfileRef,
+      // profile: types.late(() => ProfileRef),
+      profile: types.reference(Profile),
     })
   )
   .named('BotPost')
