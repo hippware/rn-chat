@@ -133,11 +133,14 @@ export const Storages = types
     create: <T>(type: IType<any, any, T>, param: {[key: string]: any}) => {
       const data = {...param}
       // some workaround to create references on the fly (maybe recent MST can do it automatically?)
-      if (param.user && typeof param.user === 'object') {
-        // create reference to profile!
-        self.profiles.get(param.user.id, param.user)
-        data.user = param.user.id
-      }
+      const arr = ['user', 'profile', 'owner']
+      arr.forEach(key => {
+        if (param[key] && typeof param[key] === 'object') {
+          // create reference to profile!
+          self.profiles.get(param[key].id, param[key])
+          data[key] = param[key].id
+        }
+      })
       if (param.profile && typeof param.profile === 'object') {
         // create reference to profile!
         self.profiles.get(param.profile.id, param.profile)
