@@ -13,48 +13,32 @@ declare module 'validate.js' {
 
 const SearchStore = types
   .model('SearchStore', {
-    local: '',
     global: '',
     globalResult: types.optional(SelectableProfileList, {}),
+    localResult: types.optional(SelectableProfileList, {}),
   })
-  .views(self => ({
-    postProcessSnapshot: (snapshot: any) => {
-      const res: any = {...snapshot}
-      delete res.global
-      delete res.globalResult
-      delete res.local
-      delete res.localResult
-      return res
-    },
-    get localResult() {
-      const {wocky} = getParent(self)
-      const localLower = self.local.toLocaleLowerCase()
-      return wocky.friends.filter(el => {
-        return (
-          !el.isOwn &&
-          (!self.local ||
-            (el.firstName && el.firstName.toLocaleLowerCase().startsWith(localLower)) ||
-            (el.lastName && el.lastName.toLocaleLowerCase().startsWith(localLower)) ||
-            (el.handle && el.handle.toLocaleLowerCase().startsWith(localLower)))
-        )
-      })
-    },
-  }))
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.global
+    delete res.globalResult
+    delete res.localResult
+    return res
+  })
   .actions(self => ({
     clear: () => {
       self.globalResult.clear()
-      self.local = ''
+      self.localResult.clear()
       self.global = ''
     },
   }))
   .actions(self => {
-    const {wocky} = getParent(self)
+    const wocky: IWocky = (getParent(self) as any).wocky
     const _searchGlobal = flow(function*(text) {
       if (!text.length) {
         self.globalResult.clear()
       } else {
         try {
-          const profileArr = yield (wocky as IWocky).searchUsers(text)
+          const profileArr = yield wocky.searchUsers(text)
           self.globalResult.replace(profileArr)
         } catch (err) {
           // console.log('global search error', err);
@@ -89,7 +73,6 @@ const SearchStore = types
 
     return {
       setGlobal,
-      setLocal: text => (self.local = text),
       _searchGlobal,
       queryUsername,
       addUsernameValidator,
@@ -109,8 +92,6 @@ const SearchStore = types
     function beforeDestroy() {
       handler1()
       applySnapshot(self, {
-        local: '',
-        localResult: {},
         global: '',
         globalResult: '',
       })

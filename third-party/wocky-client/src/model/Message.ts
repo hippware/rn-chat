@@ -22,7 +22,7 @@ export const Message = types
     types.model('Message', {
       id: types.optional(types.string, utils.generateID),
       archiveId: '',
-      from: types.maybe(types.reference(Profile)),
+      from: types.maybeNull(types.reference(Profile)),
       to: '',
       media: FileRef,
       unread: false,

@@ -1,13 +1,13 @@
 import {types, isAlive, flow, IModelType, IType} from 'mobx-state-tree'
 import {Base} from './Base'
 export type __IModelType = IModelType<any, any>
-export type __IType = IType<any, any>
+export type __IType = IType<any, any, any>
 export const FileSource = types
   .model('FileSource', {
     uri: types.string,
-    contentType: types.maybe(types.string),
-    width: types.maybe(types.number),
-    height: types.maybe(types.number),
+    contentType: types.maybeNull(types.string),
+    width: types.maybeNull(types.number),
+    height: types.maybeNull(types.number),
     cached: false,
   })
   .named('FileSource')
@@ -16,9 +16,9 @@ export const File = types
   .compose(
     Base,
     types.model('File', {
-      id: types.identifier(types.string),
-      source: types.maybe(FileSource),
-      thumbnail: types.maybe(FileSource),
+      id: types.identifier,
+      source: types.maybeNull(FileSource),
+      thumbnail: types.maybeNull(FileSource),
       url: '',
     })
   )
@@ -48,15 +48,15 @@ export const File = types
       }
     }),
   }))
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.source
+    delete res.thumbnail
+    delete res.url
+    return res
+  })
   .actions(self => {
     return {
-      postProcessSnapshot: (snapshot: any) => {
-        const res: any = {...snapshot}
-        delete res.source
-        delete res.thumbnail
-        delete res.url
-        return res
-      },
       setURL: (url: string) => {
         self.url = url
       },
@@ -93,7 +93,7 @@ export const File = types
 export type IFileType = typeof File.Type
 export interface IFile extends IFileType {}
 
-export const FileRef = types.maybe(
+export const FileRef = types.maybeNull(
   types.reference(File, {
     get(id: string, parent: any) {
       return (

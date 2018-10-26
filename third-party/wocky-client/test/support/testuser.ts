@@ -54,7 +54,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
       {
         transport,
         fileService,
-        logger: {log: (msg: string, ...params: any[]) => console.log(msg, ...params)},
+        logger: console,
       }
     )
     addMiddleware(service, simpleActionLogger)

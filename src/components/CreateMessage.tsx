@@ -14,12 +14,17 @@ import {ProfileList} from './people-lists'
 import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
-import SelectableProfileList from '../store/SelectableProfileList'
+import {IWocky} from 'wocky-client'
+import {ISearchStore} from '../store/SearchStore'
 
-@inject('wocky')
+type Props = {
+  wocky: IWocky
+  searchStore?: ISearchStore
+}
+
+@inject('wocky', 'searchStore')
 @observer
-class CreateMessage extends React.Component<any> {
+class CreateMessage extends React.Component<Props> {
   static backButton = ({state, style, textButtonStyle}) => (
     <TouchableOpacity
       onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
@@ -29,14 +34,12 @@ class CreateMessage extends React.Component<any> {
     </TouchableOpacity>
   )
 
-  // @observable selection: SelectableProfileList = new SelectableProfileList(wocky.friends, false);
-  @observable selection = SelectableProfileList.create({})
-
   componentDidMount() {
-    this.selection.setList(this.props.wocky.friends.map(f => ({profile: f})))
+    this.props.searchStore!.localResult.setList(this.props.wocky.friends.map(f => ({profile: f})))
   }
 
   render() {
+    const selection = this.props.searchStore!.localResult
     return (
       <Screen>
         <View
@@ -54,8 +57,8 @@ class CreateMessage extends React.Component<any> {
           <TextInput
             autoCorrect={false}
             autoCapitalize="none"
-            onChangeText={text => this.selection.setFilter(text)}
-            value={this.selection.filter}
+            onChangeText={text => selection.setFilter(text)}
+            value={selection.filter}
             placeholder="Search Friends"
             // placeholderColor="rgb(211,211,211)"
             style={{
@@ -65,24 +68,24 @@ class CreateMessage extends React.Component<any> {
               flex: 1,
             }}
           />
-          <TouchableOpacity onPress={() => this.selection.setFilter('')}>
+          <TouchableOpacity onPress={() => selection.setFilter('')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
               <Image source={require('../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
         </View>
         <ProfileList
-          selection={this.selection}
+          selection={selection}
           onSelect={profile => {
             Actions.pop()
             // messageStore.createChat(profile);
             Actions.chat({item: profile.id})
           }}
         />
-        {!!this.selection.selected.length && (
+        {!!selection.selected.length && (
           <Button
             containerStyle={styles.button}
-            onPress={() => Actions.createMessage(this.selection.selected[0])}
+            onPress={() => Actions.createMessage(selection.selected[0])}
             style={{
               color: 'white',
               letterSpacing: 0.7,

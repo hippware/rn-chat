@@ -1,10 +1,8 @@
-// @flow
-
 import {expect} from 'chai'
 import validate from 'validate.js'
 import {validateProfile} from '../src/utils/formValidation'
 
-validate.validators.usernameUniqueValidator = function(value) {
+validate.validators.usernameUniqueValidator = value => {
   // if (!value) return new validate.Promise(res => res());
   return new validate.Promise(resolve => {
     resolve()

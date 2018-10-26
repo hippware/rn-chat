@@ -10,7 +10,7 @@ export type __IBot = IBot
 const Hidden = types
   .model('HiddenType', {
     enabled: false,
-    expires: types.maybe(types.Date),
+    expires: types.maybeNull(types.Date),
   })
   .actions(self => ({
     setEnabled: (value: boolean) => {
@@ -41,8 +41,8 @@ export const OwnProfile = types
       createUpdatable((self, data) => self.service._updateProfile({...getSnapshot(self), ...data}))
     ),
     types.model('OwnProfile', {
-      email: types.maybe(types.string),
-      phoneNumber: types.maybe(types.string),
+      email: types.maybeNull(types.string),
+      phoneNumber: types.maybeNull(types.string),
       hasUsedGeofence: false,
       hidden: types.optional(Hidden, {}),
     })

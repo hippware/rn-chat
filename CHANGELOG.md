@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Show firebase errors on Verify Phone screen (#2988)
+
 # 3.9.3 - 2018 Oct 23
 
 * Users are failing to properly onboard after SMS verify. (#2982)
@@ -14,7 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add assets from codepush brick screen (PR #2967)
 * Add ability to email rnbgl logs (PR #2959)
 * [dev] Enable typescript strict mode for the app (#2970)
-* Add App Store app id to dynamic link (PR #2981) / 
+* Add App Store app id to dynamic link (PR #2981) /
   * [prod] Dynamic links not working as expected (#2978)
 
 # 3.9.1 - 2018 Oct 17
@@ -31,7 +33,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Lazy loading of user avatar images (PR #2955, PR #2956)
   * Missing Avatar (#2511)
 * User should appear in presence widget when accepting invite (#2939)
-  * ... (when they are at that location). 
+  * ... (when they are at that location).
 * Fix bot removal from homeStore, refactoring and unit tests (PR #2960)
   * App Crash after deleting location after creation flow (#2945)
 * Update RNBG, add getCurrentPosition at the start (PR #2961)
@@ -59,7 +61,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Map focus timing (#2929)
   * Selected Pin does not stay in focus (#2913)
 * [dev] Send user location on bot create/update (#2856)
-* When a user creates a geofence bot while they are in the bot, 
+* When a user creates a geofence bot while they are in the bot,
   they should immediately see the presence bot in the widget (#2383)
 * Changes for new app store listing (PR #2942)
 

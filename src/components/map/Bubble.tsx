@@ -18,7 +18,7 @@ type Props = {
   text?: string
   image?: ImageSourcePropType
   fontIcon?: string
-  showLoader?: boolean
+  showLoader?: boolean | null
   children?: any
   style?: ViewStyle
   outerStyle?: ViewStyle

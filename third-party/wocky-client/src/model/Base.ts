@@ -6,11 +6,11 @@ export type __IModelType = IModelType<any, any>
 
 // Base class for entities that want access to parent wocky service
 export const Base = types
-  .model('Base', {id: types.identifier(types.string)})
+  .model('Base', {id: types.identifier})
   .named('Base')
   .views(self => ({
     get service() {
-      let target = self
+      let target: any = self
       const {wocky} = getEnv(self)
       if (wocky) {
         return wocky

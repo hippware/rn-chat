@@ -8,11 +8,11 @@
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "test": "npm run testLocal && npm run mochaWocky",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc && npm run mocha && npm run jest:all",
-    "tsc": "node node_modules/.bin/tsc",
+    "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "mocha": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./test/* --require ts-node/register --require tsconfig-paths/register --timeout 10000",
     "mochaWocky": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./third-party/wocky-client/test/* --require ts-node/register --require tsconfig-paths/register --require ./third-party/wocky-client/test/support/setup.js  --timeout 30000",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest:all": "jest --testPathPattern __tests__/*.test.js",
+    "jest:all": "jest --testPathPattern __tests__/*.test.tsx",
     "jest": "jest",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
@@ -29,7 +29,7 @@
   "jest": {
     "preset": "react-native",
     "setupFiles": [
-      "./__tests__/utils/testSetup.js",
+      "./__tests__/utils/testSetup.ts",
       "./node_modules/appcenter/test/AppCenterMock.js",
       "./node_modules/appcenter-analytics/test/AppCenterAnalyticsMock.js",
       "./node_modules/appcenter-crashes/test/AppCenterCrashesMock.js"
@@ -37,9 +37,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
-    "globalSetup": "./__tests__/utils/setupJest.js",
     "modulePaths": [
-      "<rootDir>"
+      "<rootDir>",
+      "<rootDir>/third-party/wocky-client/src"
     ],
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
@@ -51,13 +51,10 @@
       "tsx",
       "js",
       "jsx",
-      "json",
-      "node"
+      "json"
     ],
-    "globals": {
-      "ts-jest": {
-        "useBabelrc": true
-      }
+    "moduleNameMapper": {
+      "wocky-client": "third-party/wocky-client/src"
     }
   },
   "detox": {
@@ -95,11 +92,11 @@
     "graphql-tag": "^2.8.0",
     "libphonenumber-js": "^0.4.29",
     "lodash": "^4.17.4",
-    "mobx": "^4.1.1",
+    "mobx": "^5.5.2",
     "mobx-react": "^5.0.0",
-    "mobx-state-tree": "^2.0.5",
+    "mobx-state-tree": "^3.7.1",
     "moment": "^2.18.1",
-    "mst-middlewares": "^2.0.5",
+    "mst-middlewares": "^3.7.1",
     "phoneformat.js": "github:hippware/phoneformat.js",
     "prop-types": "^15.6.0",
     "react": "16.3.1",
@@ -147,8 +144,8 @@
   },
   "devDependencies": {
     "@types/chai": "4.0.4",
-    "@types/detox": "^7.3.0",
     "@types/graphql": "^0.12.7",
+    "@types/jest": "^23.3.7",
     "@types/mocha": "2.2.43",
     "@types/node": "^9.3.0",
     "@types/node-fetch": "^1.6.7",
@@ -156,12 +153,13 @@
     "@types/react": "^16.3.14",
     "@types/react-native": "^0.55.16",
     "@types/react-navigation": "^2.0.12",
+    "@types/react-test-renderer": "^16.0.3",
     "@types/strophe": "1.2.27",
     "@types/xmldom": "^0.1.29",
     "appcenter-cli": "^1.0.17",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-jest": "^23.0.1",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -177,7 +175,7 @@
     "expect": "^1.13.0",
     "form-data": "^1.0.0-rc4",
     "husky": "^0.14.3",
-    "jest": "^23.0.1",
+    "jest": "^23.6.0",
     "mocha": "^2.3.4",
     "mocha-steps": "^0.0.1",
     "node-fetch": "^2.1.2",
@@ -188,15 +186,16 @@
     "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "^16.4.0",
     "readline-sync": "^1.4.7",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^23.10.4",
     "ts-node": "^4.1.0",
     "ts-unused-exports": "^2.0.11",
     "tsconfig-paths": "^3.6.0",
-    "tslib": "^1.9.0",
-    "tslint": "^5.9.1",
+    "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.10.0",
-    "tslint-react": "^3.5.1",
-    "typescript": "2.8.1",
+    "tslint-react": "^3.6.0",
+    "tsutils": "^3.2.0",
+    "typescript": "3.0.3",
     "websocket": "^1.0.22",
     "xmlhttprequest": "^1.8.0"
   }

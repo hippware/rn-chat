@@ -18,9 +18,9 @@ const codeUrlString = '?inviteCode='
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
-    token: types.maybe(types.string),
-    resource: types.maybe(types.string),
-    inviteCode: types.maybe(types.string),
+    token: types.maybeNull(types.string),
+    resource: types.maybeNull(types.string),
+    inviteCode: types.maybeNull(types.string),
   })
   .volatile(() => ({
     buttonText: 'Verify',
@@ -59,7 +59,7 @@ const FirebaseStore = types
 
     function afterAttach() {
       auth.onAuthStateChanged(processFirebaseAuthChange)
-      wocky = getParent(self).wocky // wocky could be null for HMR (?)
+      wocky = (getParent(self) as any).wocky // wocky could be null for HMR (?)
       // setup dynamic links
       unsubscribe = firebase.links().onLink(onFirebaseDynamicLink)
       // get initial link
@@ -198,7 +198,7 @@ const FirebaseStore = types
       try {
         yield wocky!.register({jwt: self.token}, 'firebase')
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login()
+        yield wocky.login(undefined, undefined, undefined)
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)

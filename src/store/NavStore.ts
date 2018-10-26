@@ -16,16 +16,16 @@ const NavStore = types
       // TODO add editBot here ?
       reaction(
         () => ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(self.scene),
-        getParent(self).homeStore.setCreationMode
+        (getParent(self) as any).homeStore.setCreationMode
       )
-      reaction(() => self.scene === 'home', getParent(self).homeStore.disableFullScreen)
-      reaction(() => self.scene === 'botDetails', getParent(self).homeStore.setDetailsMode)
-    },
-    postProcessSnapshot(snapshot: any) {
-      // No need to persist this store
-      return {}
+      reaction(() => self.scene === 'home', (getParent(self) as any).homeStore.disableFullScreen)
+      reaction(() => self.scene === 'botDetails', (getParent(self) as any).homeStore.setDetailsMode)
     },
   }))
+  .postProcessSnapshot((snapshot: any) => {
+    // No need to persist this store
+    return {}
+  })
 
 export default NavStore
 type NavStoreType = typeof NavStore.Type

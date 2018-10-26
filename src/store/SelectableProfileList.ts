@@ -84,3 +84,4 @@ function _filterFn(el: ISelectableProfile, filter: string) {
 }
 
 export default SelectableProfileList
+export type ISelectableProfileList = typeof SelectableProfile.Type

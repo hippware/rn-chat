@@ -14,10 +14,10 @@ export const Chat = types
   .compose(
     Base,
     types.model('Chat', {
-      id: types.identifier(types.string),
+      id: types.identifier,
       active: false,
       loaded: false,
-      requestedId: types.maybe(types.string),
+      requestedId: types.maybeNull(types.string),
       isPrivate: true,
       participants: types.optional(types.array(types.reference(Profile)), []),
       _messages: types.optional(types.array(Message), []),
@@ -30,7 +30,7 @@ export const Chat = types
   // .named('Chat')
   .views(self => ({
     get messages() {
-      return self._messages.sort((a, b) => a.time - b.time)
+      return self._messages.slice().sort((a, b) => a.time - b.time)
     },
     get unread(): number {
       return self._messages.reduce(
@@ -39,7 +39,7 @@ export const Chat = types
       )
     },
     get followedParticipants() {
-      return self.participants.filter(p => p.isFollowed)
+      return self.participants.filter((p: any) => p.isFollowed)
     },
   }))
   .views(self => ({
