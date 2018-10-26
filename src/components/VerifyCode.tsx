@@ -53,11 +53,12 @@ export default class VerifyCode extends React.Component<Props> {
   resend = async () => {
     this.isResending = true
     this.processText('')
-    await this.props.firebaseStore!.resendCode()
-    this.isResending = false
     // only allow one resend?
-    this.isResent = true
-    this.input.focus()
+    if (await this.props.firebaseStore!.resendCode()) {
+      this.isResent = true
+      this.input.focus()
+    }
+    this.isResending = false
   }
 
   verify = async () => {
@@ -69,8 +70,6 @@ export default class VerifyCode extends React.Component<Props> {
         () => firebaseStore!.registered,
         () => {
           this.isConfirming = false
-          Actions.pop({animated: false})
-          Actions.pop({animated: false})
           Actions.checkProfile()
         }
       )

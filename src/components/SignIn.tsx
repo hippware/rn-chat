@@ -11,6 +11,8 @@ import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {parse, asYouType} from 'libphonenumber-js'
+import {IFirebaseStore} from 'src/store/FirebaseStore'
+import {PINK} from 'src/constants/colors'
 
 // TODO: inject this dependency
 const CarrierInfo = NativeModules.RNCarrierInfo
@@ -19,7 +21,7 @@ const countryMap = {}
 getAllCountries().forEach(country => (countryMap[country.cca2] = country))
 
 type Props = {
-  firebaseStore: any
+  firebaseStore?: IFirebaseStore
 }
 
 @inject('firebaseStore')
@@ -57,24 +59,25 @@ class SignIn extends React.Component<Props> {
     }
   }
 
-  submit = async () => {
+  submit = async (): Promise<void> => {
     if (!this.phoneText.valid) {
       this.phoneText.message = 'Please check your phone number and try again'
     } else {
       this.submitting = true
       this.phoneText.message = ''
-      try {
-        await this.props.firebaseStore.verifyPhone({
-          phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`,
-        })
+      const verified = await this.props.firebaseStore!.verifyPhone(
+        `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`
+      )
+      if (verified) {
         Actions.verifyCode()
-      } finally {
-        this.submitting = false
       }
+
+      this.submitting = false
     }
   }
 
   render() {
+    const {firebaseStore} = this.props
     return (
       <KeyboardAwareScrollView
         style={{flex: 1, backgroundColor: colors.WHITE}}
@@ -93,11 +96,6 @@ class SignIn extends React.Component<Props> {
             <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
-            {/* {!!firebaseStore.errorMessage && (
-              <RText size={15} color='red' style={{marginTop: 7 * k, paddingRight: 120 * k}}>
-                {firebaseStore.errorMessage}
-              </RText>
-            )} */}
           </View>
         </View>
         <View style={{marginTop: 20 * k}}>
@@ -138,6 +136,11 @@ class SignIn extends React.Component<Props> {
           />
 
           <View style={{marginHorizontal: 36 * k, marginVertical: 20 * k}}>
+            {!!firebaseStore!.errorMessage && (
+              <RText size={15} color={PINK} style={{textAlign: 'center', marginBottom: 15}}>
+                {firebaseStore!.errorMessage}
+              </RText>
+            )}
             <Button
               style={styles.button}
               isDisabled={this.submitting || !this.phoneText || !this.phoneText.valid}

@@ -408,8 +408,8 @@ export class XmppTransport implements IWockyTransport {
       xmlns: ROSTER,
     })
     const stanza = await this.sendIQ(iq)
-    let children = stanza.query.item
-    if (children && !isArray(children)) {
+    let children = stanza.query.item || []
+    if (!isArray(children)) {
       children = [children]
     }
     return children.map((rec: any) => processRosterItem(rec, this.host!))
