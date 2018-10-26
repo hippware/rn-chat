@@ -1,4 +1,4 @@
-import {types, flow, getParent} from 'mobx-state-tree'
+import {types, flow, getParent, IAnyModelType} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -8,6 +8,7 @@ import {Timeable} from './Timeable'
 import {Profile} from './Profile'
 // import {ProfileRef} from './Profile'
 
+const BotPostProfileRef = types.late('LazyProfileRef', (): IAnyModelType => Profile)
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
@@ -21,8 +22,7 @@ export const BotPost = types
       content: '',
       title: '',
       image: FileRef,
-      // profile: types.late(() => ProfileRef),
-      profile: types.reference(Profile),
+      profile: types.reference(BotPostProfileRef),
     })
   )
   .named('BotPost')

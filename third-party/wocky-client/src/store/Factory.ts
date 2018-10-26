@@ -72,6 +72,7 @@ export const Storages = types
           map['File'] = 'files'
           map['Profile'] = 'profiles'
           map['Bot'] = 'bots'
+          map['LazyProfileRef'] = 'profiles'
         },
         _registerReferences: (type: any, data: {[key: string]: any}) => {
           let props = type['properties']
