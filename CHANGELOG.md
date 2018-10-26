@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.3 - 2018 Oct 23
+
+* Users are failing to properly onboard after SMS verify. (#2982)
+* Fix a bugsnag which triggers on empty roster.
+
 # 3.9.2 - 2018 Oct 22
 
 * Add assets from codepush brick screen (PR #2967)
