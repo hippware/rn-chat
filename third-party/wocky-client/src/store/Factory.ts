@@ -1,15 +1,16 @@
 import {types, getEnv, getParent, getType, IType} from 'mobx-state-tree'
-import {ObservableMap} from 'mobx'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot, IBot} from '../model/Bot'
+import _ from 'lodash'
 
 export type __IBot = IBot
 
-export function createFactory(type: IType<any, any>) {
+// TODO set generics instead of any here?
+export function createFactory(type: IType<any, any, any>) {
   return types
     .model({
-      storage: types.optional(types.map(type), {} as ObservableMap),
+      storage: types.optional(types.map(type), {}),
     })
     .named(`Factory${type.name}`)
     .views(self => ({
@@ -31,9 +32,12 @@ export function createFactory(type: IType<any, any>) {
         self.storage.delete(id)
       },
       get: (id: string, data?: {[key: string]: any}) => {
+        // ensure that nothing inside data is observable (othwerise throws MST exception)
+        data = _.cloneDeep(data)
+
         try {
           if (!self.storage.get(id)) {
-            const entity = getParent(self).create(type, {
+            const entity = (getParent(self) as IStorages).create(type, {
               id,
               ...data,
               loaded: data && !!Object.keys(data).length,
@@ -42,7 +46,7 @@ export function createFactory(type: IType<any, any>) {
           } else {
             const entity: any = self.storage.get(id)!
             if (entity.load && data && Object.keys(data).length) {
-              entity.load(getParent(self)._registerReferences(type, data))
+              entity.load((getParent(self) as IStorages)._registerReferences(type, data))
             }
           }
           return self.storage.get(id)!
@@ -68,6 +72,7 @@ export const Storages = types
           map['File'] = 'files'
           map['Profile'] = 'profiles'
           map['Bot'] = 'bots'
+          map['LazyProfileRef'] = 'profiles'
         },
         _registerReferences: (type: any, data: {[key: string]: any}) => {
           let props = type['properties']
@@ -125,7 +130,7 @@ export const Storages = types
     }
   })
   .actions(self => ({
-    create: <T>(type: IType<any, T>, param: {[key: string]: any}) => {
+    create: <T>(type: IType<any, any, T>, param: {[key: string]: any}) => {
       const data = {...param}
       // some workaround to create references on the fly (maybe recent MST can do it automatically?)
       if (param.user && typeof param.user === 'object') {
@@ -133,14 +138,23 @@ export const Storages = types
         self.profiles.get(param.user.id, param.user)
         data.user = param.user.id
       }
+      if (param.profile && typeof param.profile === 'object') {
+        // create reference to profile!
+        self.profiles.get(param.profile.id, param.profile)
+        data.profile = param.profile.id
+      }
       if (param.bot && typeof param.bot === 'object') {
         // create reference to bot!
         self.bots.get(param.bot.id, param.bot)
         data.bot = param.bot.id
       }
+
+      // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this
       return type.create(self._registerReferences(type, data), getEnv(self))
     },
     load: (instance: any, data: {[key: string]: any}) => {
       instance.load(self._registerReferences(getType(instance), data))
     },
   }))
+
+export type IStorages = typeof Storages.Type

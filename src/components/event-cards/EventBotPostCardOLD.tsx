@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import {View, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventBotTitle from './EventBotTitle'
@@ -40,7 +40,7 @@ class EventBotPostCard extends React.Component<Props> {
             )}
             {item.post.image && (
               <Image
-                source={item.post.image.source}
+                source={item.post.image.source! as ImageSourcePropType}
                 resizeMode="contain"
                 style={{height: imageWidth, width: imageWidth, marginTop: 15}}
               />

@@ -1,4 +1,4 @@
-import {types, flow, getSnapshot, getEnv, isAlive} from 'mobx-state-tree'
+import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
@@ -28,36 +28,36 @@ export const Bot = types
       )
     ),
     types.model('Bot', {
-      id: types.identifier(types.string),
+      id: types.identifier,
       isSubscribed: false,
       guest: false,
       visitor: false,
       icon: '',
-      title: types.maybe(types.string),
-      server: types.maybe(types.string),
+      title: types.maybeNull(types.string),
+      server: types.maybeNull(types.string),
       radius: 100,
-      owner: types.maybe(types.reference(Profile)),
+      owner: types.maybeNull(types.reference(types.late((): IAnyModelType => Profile))),
       image: FileRef,
       description: '',
-      location: types.maybe(Location),
+      location: types.maybeNull(Location),
       address: '',
       followersSize: 0,
       guestsSize: 0,
       visitorsSize: 0,
       totalItems: 0,
       addressData: types.optional(Address, {}),
-      subscribers: types.optional(ProfilePaginableList, {}),
-      guests: types.optional(ProfilePaginableList, {}),
-      visitors: types.optional(ProfilePaginableList, {}),
+      subscribers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
+      guests: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
+      visitors: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
-      invitation: types.maybe(Invitation),
+      invitation: types.maybeNull(Invitation),
     })
   )
   .volatile(() => ({
     isNew: false,
     loading: false,
-    userLocation: types.maybe(Location),
+    userLocation: types.maybeNull(Location),
   }))
   .named('Bot')
   .actions(self => ({
@@ -153,15 +153,15 @@ export const Bot = types
     shareToFollowers: (message: string = '') => {
       self.share(['followers'], message)
     },
-    postProcessSnapshot: (snapshot: any) => {
-      const res: any = {...snapshot}
-      delete res.posts
-      delete res.error
-      delete res.subscribers
-      delete res.guests
-      return res
-    },
   }))
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.posts
+    delete res.error
+    delete res.subscribers
+    delete res.guests
+    return res
+  })
   .actions(self => {
     const {geocodingStore} = getEnv(self)
     return {

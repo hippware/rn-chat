@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  /* Type declaration files to be included in compilation. */
+  "types": ["react", "react-native"], // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15960
+  "exclude": ["node_modules", "**/*.spec.tsx?", "**/*.test.tsx?"]
+}

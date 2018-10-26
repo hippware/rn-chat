@@ -1,6 +1,10 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, getParent} from 'mobx-state-tree'
+import {IBot} from './Bot'
 
+function getParentAsBot(self) {
+  return getParent(self) as IBot
+}
 export const Address = types
   .model('Address', {
     city: '',
@@ -16,8 +20,8 @@ export const Address = types
           ? `${city || county}, ${state}`
           : city || county || state ? `${city || county || state}, ${country}` : country
       } else {
-        if (getParent(self) && getParent(self).address) {
-          const arr = getParent(self).address.split(', ')
+        if (getParent(self) && getParentAsBot(self).address) {
+          const arr = getParentAsBot(self).address.split(', ')
           const parsedCity =
             arr.length > 2 ? `${arr[arr.length - 3].replace(/\d+/g, '').trim()}, ` : ''
           const parsedState = arr.length > 1 ? arr[arr.length - 2].replace(/\d+/g, '').trim() : ''

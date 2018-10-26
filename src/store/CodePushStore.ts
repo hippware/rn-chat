@@ -14,9 +14,9 @@ type Channel = {
 
 const CodePushStore = types
   .model('CodePushStore', {
-    metadata: types.optional(types.frozen, null),
+    metadata: types.optional(types.frozen(), null),
     syncStatus: types.optional(types.array(types.string), []),
-    channelUpdates: types.optional(types.array(types.frozen), []),
+    channelUpdates: types.optional(types.array(types.frozen()), []),
     pendingUpdate: false,
   })
   .volatile(() => ({

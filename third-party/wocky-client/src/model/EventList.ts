@@ -23,15 +23,14 @@ export type IEventEntity = typeof EventEntity.Type
 
 export const EventList: IPaginable<IEventEntity> = createPaginable<IEventEntity>(
   EventEntity
-).actions(() => ({
-  postProcessSnapshot: (snapshot: any) => {
-    if (snapshot.result.length > 20) {
-      const result = snapshot.result.slice(0, 20)
-      const cursor = result[result.length - 1].cursor
-      return {...snapshot, result, cursor}
-    }
-    return snapshot
-  },
-}))
+).postProcessSnapshot((snapshot: any) => {
+  if (snapshot.result.length > 20) {
+    const result = snapshot.result.slice(0, 20)
+    const cursor = result[result.length - 1].cursor
+    return {...snapshot, result, cursor}
+  }
+  return snapshot
+})
+
 export type IEventListType = typeof EventList.Type
 export interface IEventList extends IEventListType {}

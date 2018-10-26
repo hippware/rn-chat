@@ -317,6 +317,26 @@ exports[`MyAccount renders 1`] = `
                         "isValid": undefined,
                         "key": "firstName",
                         "value": "eric",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@8.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@8",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "eric",
+                            "isValid" => undefined,
+                          },
+                        },
                       }
                     }
                     style={
@@ -420,6 +440,26 @@ exports[`MyAccount renders 1`] = `
                         "isValid": undefined,
                         "key": "lastName",
                         "value": "kirkham",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@11.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@11",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "kirkham",
+                            "isValid" => undefined,
+                          },
+                        },
                       }
                     }
                     style={
@@ -547,6 +587,26 @@ exports[`MyAccount renders 1`] = `
                         "isValid": undefined,
                         "key": "handle",
                         "value": "eric",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@3.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@3",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "eric",
+                            "isValid" => undefined,
+                          },
+                        },
                       }
                     }
                     style={
@@ -777,6 +837,26 @@ exports[`MyAccount renders 1`] = `
                         "isValid": undefined,
                         "key": "email",
                         "value": "eric.kirkham@gmail.com",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@14.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@14",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "eric.kirkham@gmail.com",
+                            "isValid" => undefined,
+                          },
+                        },
                       }
                     }
                     style={

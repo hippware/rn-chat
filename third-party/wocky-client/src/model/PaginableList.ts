@@ -1,4 +1,4 @@
-import {types, flow, IModelType, isAlive} from 'mobx-state-tree'
+import {types, flow, IModelType, isAlive, IAnyType} from 'mobx-state-tree'
 
 export interface IPaginable<T> extends IModelType<any, any> {
   result?: T[]
@@ -14,12 +14,12 @@ export interface IPaginable<T> extends IModelType<any, any> {
   remove?: (id: string) => void
 }
 
-export function createPaginable<T>(type: any): IPaginable<T> {
+export function createPaginable<T>(type: IAnyType): IPaginable<T> {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
-      cursor: types.maybe(types.string),
-      count: types.maybe(types.number),
+      cursor: types.maybeNull(types.string),
+      count: types.maybeNull(types.number),
     })
     .named('PaginableList')
     .volatile(() => ({
@@ -115,5 +115,5 @@ export function createPaginable<T>(type: any): IPaginable<T> {
           }),
         },
       }
-    })
+    }) as IPaginable<T> // TODO: better workaround to fix error?
 }

@@ -54,15 +54,15 @@ export const LogLevelChoices = {
 const LogLevelValues = Object.keys(LogLevelChoices)
 
 const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOptions', {
-  elasticityMultiplier: types.maybe(types.number),
-  stopTimeout: types.maybe(types.number),
-  desiredAccuracy: types.maybe(types.enumeration(LocationAccuracyValues)),
-  distanceFilter: types.maybe(types.number),
-  stationaryRadius: types.maybe(types.number),
-  debug: types.maybe(types.boolean),
-  activityType: types.maybe(types.enumeration(ActivityTypeValues)),
-  activityRecognitionInterval: types.maybe(types.number),
-  logLevel: types.maybe(types.enumeration(LogLevelValues)),
+  elasticityMultiplier: types.maybeNull(types.number),
+  stopTimeout: types.maybeNull(types.number),
+  desiredAccuracy: types.maybeNull(types.enumeration(LocationAccuracyValues)),
+  distanceFilter: types.maybeNull(types.number),
+  stationaryRadius: types.maybeNull(types.number),
+  debug: types.maybeNull(types.boolean),
+  activityType: types.maybeNull(types.enumeration(ActivityTypeValues)),
+  activityRecognitionInterval: types.maybeNull(types.number),
+  logLevel: types.maybeNull(types.enumeration(LogLevelValues)),
 })
 
 // TODO any idea how to move these vars inside LocationStore as volatile with ts strict mode enabled?
@@ -72,7 +72,7 @@ let watch: number | null = null
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
-    location: types.maybe(Location),
+    location: types.maybeNull(Location),
     backgroundOptions: types.optional(BackgroundLocationConfigOptions, {}),
   })
   .volatile(() => ({
@@ -224,7 +224,7 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
-      const wocky: IWocky = getParent(self).wocky
+      const wocky: IWocky = (getParent(self) as any).wocky
       // don't run background service if user doesn't enable alwaysOn
       if (!self.alwaysOn) {
         return
@@ -366,7 +366,7 @@ const LocationStore = types
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self))
+      ;({wocky} = getParent(self) as any)
     }
 
     const start = flow(function*() {
