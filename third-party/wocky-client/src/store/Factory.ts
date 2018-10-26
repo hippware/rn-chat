@@ -148,6 +148,16 @@ export const Storages = types
         self.bots.get(param.bot.id, param.bot)
         data.bot = param.bot.id
       }
+      if (param.avatar && typeof param.avatar === 'object') {
+        // create reference to file!
+        self.files.get(param.avatar.id, param.avatar)
+        data.avatar = param.avatar.id
+      }
+      if (param.image && typeof param.image === 'object') {
+        // create reference to file!
+        self.files.get(param.image.id, param.image)
+        data.image = param.image.id
+      }
 
       // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this
       return type.create(self._registerReferences(type, data), getEnv(self))
