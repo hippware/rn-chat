@@ -15,7 +15,7 @@ const foot = require('../../../images/footOpaquePink.png')
 
 const HeaderLocationOverlay = inject('wocky')(
   observer(({wocky}: Props) => {
-    if (!wocky!.profile || wocky!.profile!.hidden || wocky!.profile!.hidden.enabled) {
+    if (!wocky!.profile || (wocky!.profile!.hidden && !wocky!.profile!.hidden.enabled)) {
       return null
     }
     return (
