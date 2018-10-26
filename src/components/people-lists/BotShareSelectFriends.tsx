@@ -7,15 +7,16 @@ import {k} from '../Global'
 import {AutoExpandingTextInput} from '../common'
 import Screen from '../Screen'
 import {colors} from '../../constants'
-import SelectableProfileList from '../../store/SelectableProfileList'
 import FriendMultiSelect from './FriendMultiSelect'
 import {IBot, IWocky} from 'wocky-client'
+import {ISearchStore} from '../../store/SearchStore'
 
 type Props = {
   botId: string
   wocky?: IWocky
   notificationStore?: any
   warn?: any
+  searchStore?: ISearchStore
 }
 
 type State = {
@@ -26,7 +27,6 @@ type State = {
 @inject('wocky', 'notificationStore', 'warn')
 @observer
 class BotShareSelectFriends extends React.Component<Props, State> {
-  @observable selection = SelectableProfileList.create({})
   @observable bot?: IBot
   mounted: boolean = false
   state = {height: 0, message: ''}
@@ -35,7 +35,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   componentDidMount() {
     const {friends, getBot} = this.props.wocky!
     this.bot = getBot({id: this.props.botId})
-    this.selection.setList(friends.map(f => ({profile: f})))
+    this.props.searchStore!.localResult.setList(friends.map(f => ({profile: f})))
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
     this.mounted = true
@@ -48,7 +48,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   }
 
   share = () => {
-    const shareSelect = this.selection.selected.map(sp => sp.id)
+    const shareSelect = this.props.searchStore!.localResult.selected.map(sp => sp.id)
     try {
       this.bot!.share(shareSelect, this.state.message)
       const num = shareSelect.length
@@ -71,10 +71,11 @@ class BotShareSelectFriends extends React.Component<Props, State> {
   }
 
   render() {
+    const selection = this.props.searchStore!.localResult
     return (
       <Screen>
-        <FriendMultiSelect selection={this.selection} botTitle={this.bot ? this.bot!.title! : ''} />
-        {!!this.selection.selected.length && (
+        <FriendMultiSelect selection={selection} botTitle={this.bot ? this.bot!.title! : ''} />
+        {!!selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
               <AutoExpandingTextInput
