@@ -2,7 +2,7 @@ import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType} from 'mobx-sta
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
-import {BotPostPaginableList, BotPost} from './BotPost'
+// import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
 import * as utils from '../transport/utils'
 import {createUploadable} from './Uploadable'
@@ -49,7 +49,7 @@ export const Bot = types
       subscribers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
       guests: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
       visitors: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      posts: types.optional(BotPostPaginableList, {}),
+      // posts: types.optional(BotPostPaginableList, {}),
       error: '',
       invitation: types.maybeNull(Invitation),
     })
@@ -74,20 +74,20 @@ export const Bot = types
     finishLoading() {
       self.loading = false
     },
-    createPost: (content: string = '') => {
-      const id = utils.generateID()
-      const botPost = BotPost.create({id, content, profile: self.service.profile.id})
-      self.posts.add(botPost)
-      self.totalItems += 1
-      return botPost
-    },
-    removePost: flow(function*(postId: string) {
-      if (self.posts.list.find((el: any) => el.id === postId)) {
-        yield self.service._removeBotPost(self.id, postId)
-        self.posts.remove(postId)
-        self.totalItems -= 1
-      }
-    }),
+    // createPost: (content: string = '') => {
+    //   const id = utils.generateID()
+    //   const botPost = BotPost.create({id, content, profile: self.service.profile.id})
+    //   self.posts.add(botPost)
+    //   self.totalItems += 1
+    //   return botPost
+    // },
+    // removePost: flow(function*(postId: string) {
+    //   if (self.posts.list.find((el: any) => el.id === postId)) {
+    //     yield self.service._removeBotPost(self.id, postId)
+    //     self.posts.remove(postId)
+    //     self.totalItems -= 1
+    //   }
+    // }),
     subscribe: flow(function*() {
       self.isSubscribed = true
       self.guest = true
@@ -176,7 +176,7 @@ export const Bot = types
         self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
         self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
         self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
-        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
+        // self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
       },
     }
   })
