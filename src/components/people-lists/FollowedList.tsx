@@ -47,7 +47,7 @@ class FollowedList extends React.Component<Props> {
           renderSectionHeader={({section}) => (
             <SectionHeader section={section} title="Following" count={followedCount} />
           )}
-          sections={followingSectionIndex(this.searchText, following)}
+          sections={followingSectionIndex(this.searchText!, following)}
           loadMore={this.profile.followed.load}
         />
       </PeopleSearchWrapper>

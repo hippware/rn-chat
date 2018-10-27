@@ -1,6 +1,7 @@
 import {Dimensions, Platform} from 'react-native'
 
-export const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('window')
+export {width, height}
 export const k = height / 667
 
 export const defaultCover = [

@@ -51,6 +51,7 @@ const profileConstraints = {
   },
 }
 
+// export for use in tests
 export const validateProfile = async (profileObject: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     validate.async(profileObject, profileConstraints).then(res => resolve(res), res => reject(res))

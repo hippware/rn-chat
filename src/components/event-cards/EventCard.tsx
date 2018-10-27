@@ -1,7 +1,5 @@
 import React from 'react'
-// import EventBotCard from './EventBotCard'
 import EventBotShareCard from './EventBotShareCard'
-// import EventBotNoteCard from './EventBotNoteCard'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventUserFollowCard from './EventUserFollowCard'

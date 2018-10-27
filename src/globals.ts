@@ -1,8 +1,8 @@
 import {log} from './constants'
 
-export const DEV_HOST = 'testing.dev.tinyrobot.com'
-export const PROD_HOST = 'us1.prod.tinyrobot.com'
-export const STAGING_HOST = 'staging.dev.tinyrobot.com'
+const DEV_HOST = 'testing.dev.tinyrobot.com'
+const PROD_HOST = 'us1.prod.tinyrobot.com'
+const STAGING_HOST = 'staging.dev.tinyrobot.com'
 // coefficient for scaling for smaller devices like iPhone 5S
 
 class Settings {
@@ -31,6 +31,4 @@ class Settings {
 }
 export const settings = new Settings()
 
-export const USE_IOS_XMPP = process.env.NODE_ENV !== 'test' && !settings.isTesting
 export const DEBUG = settings.isTesting
-export const PERSIST = !settings.isTesting

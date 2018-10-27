@@ -1,12 +1,12 @@
 import {types} from 'mobx-state-tree'
 import {Profile, IProfile} from 'wocky-client'
 
-export const SelectableProfile = types.model({
+const SelectableProfile = types.model({
   profile: types.reference(Profile),
   selected: false,
 })
 
-export type ISelectableProfile = typeof SelectableProfile.Type
+type ISelectableProfile = typeof SelectableProfile.Type
 
 const SelectableProfileList = types
   .model('SelectableProfileList', {
