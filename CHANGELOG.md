@@ -5,6 +5,17 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Show firebase errors on Verify Phone screen (#2988)
+* MobX, MST, TypeScript, Jest, TSLint upgrade (PR #2995)
+  * [dev] Upgrade to mobx 5 and mobx-state-tree 3 (#2811)
+  * [dev] upgrade typescript to latest version (#2971)
+* Various fixes for crashes after MST3 upgrade (PR #3012)
+  * App Crash: Deleted Location and pin marker reappeared (#3013)
+  * [dev] Avoid crash for local user search with MST3 (#3014)
+* [dev] Clear out old screens and dependencies (#2840)
+* Presence widget is visible when user is in invisible mode (#3016)
+* Follow Location: Missing Avatar (#3017)
+* Images do not load on cards, location profile or on user profile (#3018)
+* [dev] prevent memory leak on bot create (#3020)
 
 # 3.9.3 - 2018 Oct 23
 
