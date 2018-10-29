@@ -268,15 +268,26 @@ const LocationStore = types
         debug: false,
         // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
         logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-        stopOnTerminate: false,
-        startOnBoot: true,
+        // stopOnTerminate: false,
+        // startOnBoot: true,
         url,
         autoSync: true,
         params,
         headers,
       })
-      // apply this change every load to prevent stale auth headers
-      yield backgroundGeolocation.setConfig({headers, params, url})
+
+      // .ready() doesn't always apply configuration.
+      // Here are some things that we have to configure everytime.
+      // Note: If any user-configurable/debug settings appear here,
+      //   they will be overwritten
+      yield backgroundGeolocation.setConfig({
+        startOnBoot: true,
+        stopOnTerminate: false,
+        headers,
+        params,
+        url,
+      })
+
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
