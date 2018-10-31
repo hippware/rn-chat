@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.4 - 2018 Oct 30
+
 * Show firebase errors on Verify Phone screen (#2988)
 * MobX, MST, TypeScript, Jest, TSLint upgrade (PR #2995)
   * [dev] Upgrade to mobx 5 and mobx-state-tree 3 (#2811)
@@ -16,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Follow Location: Missing Avatar (#3017)
 * Images do not load on cards, location profile or on user profile (#3018)
 * [dev] prevent memory leak on bot create (#3020)
+* Configure RNBGL startOnBoot,stopOnTerminate more robustly (PR #3025)
+  * App not updating users location with app closed (#2508)
 
 # 3.9.3 - 2018 Oct 23
 
