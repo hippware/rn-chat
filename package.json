@@ -177,7 +177,6 @@
     "husky": "^0.14.3",
     "jest": "^23.6.0",
     "mocha": "^2.3.4",
-    "mocha-steps": "^0.0.1",
     "node-fetch": "^2.1.2",
     "prettier": "1.11.1",
     "pretty-quick": "^1.4.1",
