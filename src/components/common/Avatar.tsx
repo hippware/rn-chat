@@ -90,9 +90,10 @@ const Avatar = observer(
 const AvatarImage = observer(({avatar, style, size, showMask}) => (
   <View style={[style, {borderWidth: 0}]}>
     <LazyImage
-      source={avatar.thumbnail}
       file={avatar}
-      style={[style, styles.avatarContainer]}
+      imageProps={{
+        style: [style, styles.avatarContainer],
+      }}
       placeholder={<View style={[style, styles.avatarContainer]} />}
     />
     {showMask && <Mask size={size * 0.65} />}

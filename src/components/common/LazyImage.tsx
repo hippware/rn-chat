@@ -1,15 +1,17 @@
 import React, {ReactElement} from 'react'
-import {Image, ImageProps} from 'react-native'
+import {Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {IFile} from 'wocky-client'
 
-interface IProps extends ImageProps {
-  file: IFile
+interface IProps {
+  file?: IFile | null
   placeholder?: ReactElement<any>
+  // imageProps?: ImageProps
+  imageProps: any
 }
 
 @observer
-class LazyImage extends React.Component<IProps> {
+export default class LazyImage extends React.Component<IProps> {
   componentDidMount() {
     const {file} = this.props
     if (file && !file.thumbnail) {
@@ -17,9 +19,11 @@ class LazyImage extends React.Component<IProps> {
     }
   }
   render() {
-    const {file, placeholder, ...rest} = this.props
-    return file.thumbnail || !placeholder ? <Image {...rest} /> : placeholder
+    const {file, placeholder, imageProps} = this.props
+    return (file && file.thumbnail) || !placeholder ? (
+      <Image source={file && file.thumbnail} {...imageProps} />
+    ) : (
+      placeholder
+    )
   }
 }
-
-export default LazyImage

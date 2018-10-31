@@ -8,7 +8,6 @@ import {
   Clipboard,
   TouchableOpacity,
   Text,
-  ImageSourcePropType,
 } from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width} from '../Global'
@@ -86,7 +85,6 @@ class BotDetailsHeader extends React.Component<Props, State> {
         </View>
       )
     if (bot.error) return <BotUnavailable />
-    // console.log('& invitation?', bot.invitation)
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -139,16 +137,16 @@ class BotDetailsHeader extends React.Component<Props, State> {
                 </RText>
               </View>
             )}
-            {bot.image &&
-              bot.image.thumbnail && (
-                <LazyImage
-                  file={bot.image}
-                  source={bot.image.thumbnail! as ImageSourcePropType}
-                  style={styles.botImage as any}
-                  resizeMode="contain"
-                  placeholder={<View style={[styles.botImage, {backgroundColor: GREY}]} />}
-                />
-              )}
+            {bot.image && (
+              <LazyImage
+                file={bot.image}
+                imageProps={{
+                  style: styles.botImage as any,
+                  resizeMode: 'contain',
+                }}
+                placeholder={<View style={[styles.botImage, {backgroundColor: GREY}]} />}
+              />
+            )}
             <Separator style={{marginHorizontal: 5}} />
           </View>
         )}
