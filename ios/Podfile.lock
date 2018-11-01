@@ -162,7 +162,7 @@ PODS:
     - React
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFirebase (4.2.0):
+  - RNFirebase (5.0.0):
     - Firebase/Core
     - React
   - RNFS (2.10.14):
