@@ -2,7 +2,7 @@ import React from 'react'
 import {ImageProperties} from 'react-native'
 import * as colors from '../../constants/colors'
 import {observer} from 'mobx-react/native'
-import {LazyImage} from '.'
+import LazyImage from './LazyImage'
 
 type Props = {
   file: any
@@ -12,7 +12,7 @@ type Props = {
 
 const ProgressiveImage = observer(({style, file, ...rest}: Props) => {
   style = file && file.loaded ? style : [style, {backgroundColor: colors.gray(222)}]
-  return <LazyImage style={style} source={file.source} file={file} {...rest} />
+  return <LazyImage file={file} imageProps={{style, ...rest}} />
 })
 
 export default ProgressiveImage
