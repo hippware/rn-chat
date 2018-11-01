@@ -901,17 +901,10 @@ apollo-utilities@^1.0.0:
   dependencies:
     fast-json-stable-stringify "^2.0.0"
 
-appcenter-analytics@^1.6.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-1.9.0.tgz#16c2a2a715a8d9316c07a5f357015eeff15af343"
-  integrity sha512-I9RF+VdeCAM4WqSLSu57YHrHNwtK0t6dFlsVcfnYKdLAcAhzgWsYd5WPlFelVcNfjhPbEUqt+YE6Sas1X189cg==
-  dependencies:
-    appcenter "1.9.0"
-
-appcenter-cli@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.1.5.tgz#2c618a369d194db4515dca702ea33c89d6c12263"
-  integrity sha512-BBtUjSJ7hby8dqnj0PGCEw6D+TIoADtFwSE4kLEizGjGIX08rBSqFAE3Rfl2gx3tD8fGh3mfnGMo538bQYmFGA==
+appcenter-cli@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.0.17.tgz#a3969ec70edd98f53135939b2b48987ccf2134da"
+  integrity sha512-trFfBgTOGD25qcGhJoC1/fHvepZZyDL0OL1V1PWugLggjIM7tbHbu7wUNKdEeTTHmWwgqTFQOWJCHDTzuFKEOQ==
   dependencies:
     azure-storage "^2.10.1"
     bplist "0.0.4"
@@ -952,17 +945,10 @@ appcenter-cli@^1.1.5:
     xmldom "^0.1.27"
     yazl "^2.4.3"
 
-appcenter-crashes@^1.6.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-1.9.0.tgz#f1c14125c4a7c882cfd08e1381b6f78a54ea7386"
-  integrity sha512-FEh0MGOgmu0GVRYyV+dEthvEq/KT70Xltl02OhBU9pBlwfEmcEp9Ume5bjnTFwdWbS+9ogu0o1U7I/N5XHuRQg==
-  dependencies:
-    appcenter "1.9.0"
-
-appcenter-link-scripts@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.9.0.tgz#d8603e2943383bf76f585316e696328743284a67"
-  integrity sha512-R6UacmMhsLi9sn3Y1RjPyBfrkznI2KoNA/CgQ1A61dGxAMxMlKPShGXuG3C57UU8JvdJdo+KUE+dHbF6fAz27A==
+appcenter-link-scripts@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.6.0.tgz#75d7364de953661f43e3792f8d3cefeea0359254"
+  integrity sha512-2zcz8h6kwC1cO2S82lXQjuXU0r1DgxE0Fub61P6xOjhmR88cgZcFwO1UWWMpNHENhgTpH0eBeUgejhFC96dSJg==
   dependencies:
     debug "^2.2.0"
     glob "^5.0.15"
@@ -972,10 +958,10 @@ appcenter-link-scripts@1.9.0:
     which "^1.2.11"
     xcode "^1.0.0"
 
-appcenter@1.9.0, appcenter@^1.6.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.9.0.tgz#00ee98256bf6167c62e1ed2c35a59b448affb963"
-  integrity sha512-QyTmKPjM5N2GfqP2ob1htUMWsIVln5ujhXNocr/t/N0u1zJWzaWmcY895AnvH5B7JR1D8pdt57aQKPwTRZeAHA==
+appcenter@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.6.0.tgz#07bbc5d20d8b48064ce3a359aac360b0d5e079e8"
+  integrity sha512-muJ0PLGymc15zf1SO2IJov2PCgMRnD8ApQBh9X62ahlZWUsCivYQbsm8wXrWLgHPSYqC7nxJO6ye87SRnPG4VA==
   dependencies:
     appcenter-link-scripts "1.9.0"
 

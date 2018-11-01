@@ -30,9 +30,7 @@
     "preset": "react-native",
     "setupFiles": [
       "./__tests__/utils/testSetup.ts",
-      "./node_modules/appcenter/test/AppCenterMock.js",
-      "./node_modules/appcenter-analytics/test/AppCenterAnalyticsMock.js",
-      "./node_modules/appcenter-crashes/test/AppCenterCrashesMock.js"
+      "./node_modules/appcenter/test/AppCenterMock.js"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
@@ -81,8 +79,6 @@
     "apollo-client": "^2.4.5",
     "apollo-link": "^1.2.3",
     "appcenter": "^1.6.0",
-    "appcenter-analytics": "^1.6.0",
-    "appcenter-crashes": "^1.6.0",
     "apsl-react-native-button": "^3.1.0",
     "assert": "^1.3.0",
     "autobind-decorator": "^2.1.0",

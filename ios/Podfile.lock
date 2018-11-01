@@ -1,9 +1,5 @@
 PODS:
-  - AppCenter/Analytics (1.7.1):
-    - AppCenter/Core
   - AppCenter/Core (1.7.1)
-  - AppCenter/Crashes (1.7.1):
-    - AppCenter/Core
   - AppCenterReactNativeShared (1.6.0):
     - AppCenter/Core (= 1.7.1)
   - Base64 (1.1.2)
@@ -344,8 +340,6 @@ PODS:
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
-  - AppCenter/Analytics (~> 1.7.1)
-  - AppCenter/Crashes (~> 1.7.1)
   - AppCenterReactNativeShared (~> 1.6.0)
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -510,6 +504,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: 940769fddf3b996e4b0674bd19ec97fcada62c9b
+PODFILE CHECKSUM: 745e4a634dd2f97f1606ab7baa6c7b4aaf541774
 
 COCOAPODS: 1.5.3
