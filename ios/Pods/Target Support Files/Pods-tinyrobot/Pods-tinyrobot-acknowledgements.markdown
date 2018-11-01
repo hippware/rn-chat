@@ -112,11 +112,11 @@ All rights reserved.
 Redistribution and use of this software in source and binary forms,
 with or without modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above
+- Redistributions of source code must retain the above
   copyright notice, this list of conditions and the
   following disclaimer.
 
-* Neither the name of Deusty nor the names of its
+- Neither the name of Deusty nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
   written permission of Deusty, LLC.
@@ -983,7 +983,7 @@ http://www.apache.org/licenses/
 
 TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-1.  Definitions.
+1. Definitions.
 
 "License" shall mean the terms and conditions for use, reproduction, and
 distribution as defined by Sections 1 through 9 of this document.
@@ -1037,7 +1037,7 @@ owner as "Not a Contribution."
 of whom a Contribution has been received by Licensor and subsequently
 incorporated within the Work.
 
-2.  Grant of Copyright License.
+2. Grant of Copyright License.
 
 Subject to the terms and conditions of this License, each Contributor hereby
 grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free,
@@ -1045,7 +1045,7 @@ irrevocable copyright license to reproduce, prepare Derivative Works of,
 publicly display, publicly perform, sublicense, and distribute the Work and such
 Derivative Works in Source or Object form.
 
-3.  Grant of Patent License.
+3. Grant of Patent License.
 
 Subject to the terms and conditions of this License, each Contributor hereby
 grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free,
@@ -1060,7 +1060,7 @@ Contribution incorporated within the Work constitutes direct or contributory
 patent infringement, then any patent licenses granted to You under this License
 for that Work shall terminate as of the date such litigation is filed.
 
-4.  Redistribution.
+4. Redistribution.
 
 You may reproduce and distribute copies of the Work or Derivative Works thereof
 in any medium, with or without modifications, and in Source or Object form,
@@ -1093,7 +1093,7 @@ distribution of Your modifications, or for any such Derivative Works as a whole,
 provided Your use, reproduction, and distribution of the Work otherwise complies
 with the conditions stated in this License.
 
-5.  Submission of Contributions.
+5. Submission of Contributions.
 
 Unless You explicitly state otherwise, any Contribution intentionally submitted
 for inclusion in the Work by You to the Licensor shall be under the terms and
@@ -1102,14 +1102,14 @@ Notwithstanding the above, nothing herein shall supersede or modify the terms of
 any separate license agreement you may have executed with Licensor regarding
 such Contributions.
 
-6.  Trademarks.
+6. Trademarks.
 
 This License does not grant permission to use the trade names, trademarks,
 service marks, or product names of the Licensor, except as required for
 reasonable and customary use in describing the origin of the Work and
 reproducing the content of the NOTICE file.
 
-7.  Disclaimer of Warranty.
+7. Disclaimer of Warranty.
 
 Unless required by applicable law or agreed to in writing, Licensor provides the
 Work (and each Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -1120,7 +1120,7 @@ solely responsible for determining the appropriateness of using or
 redistributing the Work and assume any risks associated with Your exercise of
 permissions under this License.
 
-8.  Limitation of Liability.
+8. Limitation of Liability.
 
 In no event and under no legal theory, whether in tort (including negligence),
 contract, or otherwise, unless required by applicable law (such as deliberate
@@ -1132,7 +1132,7 @@ damages for loss of goodwill, work stoppage, computer failure or malfunction, or
 any and all other commercial damages or losses), even if such Contributor has
 been advised of the possibility of such damages.
 
-9.  Accepting Warranty or Additional Liability.
+9. Accepting Warranty or Additional Liability.
 
 While redistributing the Work or Derivative Works thereof, You may choose to
 offer, and charge a fee for, acceptance of support, warranty, indemnity, or
@@ -1406,7 +1406,7 @@ All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
@@ -1643,15 +1643,15 @@ MPTweakStore.m Copyright (c) 2014, Facebook, Inc. All rights reserved.
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this
+- Redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
 
-- Redistributions in binary form must reproduce the above copyright notice,
+* Redistributions in binary form must reproduce the above copyright notice,
   this list of conditions and the following disclaimer in the documentation
 
 and/or other materials provided with the distribution.
 
-* Neither the name Facebook nor the names of its contributors may be used to
+- Neither the name Facebook nor the names of its contributors may be used to
 
 endorse or promote products derived from this software without specific
 prior written permission.
@@ -1809,10 +1809,10 @@ All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this
+- Redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
 
-* Redistributions in binary form must reproduce the above copyright notice,
+- Redistributions in binary form must reproduce the above copyright notice,
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
@@ -1938,11 +1938,11 @@ All rights reserved.
 Redistribution and use of this software in source and binary forms,
 with or without modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above
+- Redistributions of source code must retain the above
   copyright notice, this list of conditions and the
   following disclaimer.
 
-* Neither the name of Deusty nor the names of its
+- Neither the name of Deusty nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
   written permission of Deusty, LLC.
@@ -1961,11 +1961,11 @@ All rights reserved.
 Redistribution and use of this software in source and binary forms,
 with or without modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above
+- Redistributions of source code must retain the above
   copyright notice, this list of conditions and the
   following disclaimer.
 
-* Neither the name of Deusty Designs nor the names of its
+- Neither the name of Deusty Designs nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
   written permission of Deusty Designs, LLC.
@@ -2036,23 +2036,23 @@ http://www.google.com/codesearch/p?hl=en#dR3YEbitojA/COPYING&q=GetSystemTimeAsFi
 
 The license of this code is:
 
-Copyright (c) 2003-2008, Jouni Malinen <mailto:j@w1.fi> and contributors
+Copyright (c) 2003-2008, Jouni Malinen <j@w1.fi> and contributors
 All Rights Reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
 met:
 
-1.  Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
 
-2.  Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
 
-3.  Neither the name(s) of the above-listed copyright holder(s) nor the
-    names of its contributors may be used to endorse or promote products
-    derived from this software without specific prior written permission.
+3. Neither the name(s) of the above-listed copyright holder(s) nor the
+   names of its contributors may be used to endorse or promote products
+   derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -2078,16 +2078,16 @@ Permission is granted to anyone to use this software for any
 purpose, including commercial applications, and to alter it and
 redistribute it freely, subject to the following restrictions:
 
-1.  The origin of this software must not be misrepresented; you
-    must not claim that you wrote the original software. If you use
-    this software in a product, an acknowledgment in the product
-    documentation would be appreciated but is not required.
+1. The origin of this software must not be misrepresented; you
+   must not claim that you wrote the original software. If you use
+   this software in a product, an acknowledgment in the product
+   documentation would be appreciated but is not required.
 
-2.  Altered source versions must be plainly marked as such, and
-    must not be misrepresented as being the original software.
+2. Altered source versions must be plainly marked as such, and
+   must not be misrepresented as being the original software.
 
-3.  This notice may not be removed or altered from any source
-    distribution.
+3. This notice may not be removed or altered from any source
+   distribution.
 
 ## react-native-blur
 

@@ -901,10 +901,10 @@ apollo-utilities@^1.0.0:
   dependencies:
     fast-json-stable-stringify "^2.0.0"
 
-appcenter-cli@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.0.17.tgz#a3969ec70edd98f53135939b2b48987ccf2134da"
-  integrity sha512-trFfBgTOGD25qcGhJoC1/fHvepZZyDL0OL1V1PWugLggjIM7tbHbu7wUNKdEeTTHmWwgqTFQOWJCHDTzuFKEOQ==
+appcenter-cli@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.1.5.tgz#2c618a369d194db4515dca702ea33c89d6c12263"
+  integrity sha512-BBtUjSJ7hby8dqnj0PGCEw6D+TIoADtFwSE4kLEizGjGIX08rBSqFAE3Rfl2gx3tD8fGh3mfnGMo538bQYmFGA==
   dependencies:
     azure-storage "^2.10.1"
     bplist "0.0.4"
@@ -963,7 +963,7 @@ appcenter@^1.6.0:
   resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.6.0.tgz#07bbc5d20d8b48064ce3a359aac360b0d5e079e8"
   integrity sha512-muJ0PLGymc15zf1SO2IJov2PCgMRnD8ApQBh9X62ahlZWUsCivYQbsm8wXrWLgHPSYqC7nxJO6ye87SRnPG4VA==
   dependencies:
-    appcenter-link-scripts "1.9.0"
+    appcenter-link-scripts "1.6.0"
 
 append-transform@^1.0.0:
   version "1.0.0"
@@ -7411,7 +7411,7 @@ react-native-background-fetch@~2.4.4:
     plist "^2.0.1"
     xcode "^0.9.1"
 
-react-native-background-geolocation@^2.13.4:
+react-native-background-geolocation@^2.14.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.14.1.tgz#5e4c49c04ddcab3a219becaad7f80eb7e51a20d7"
   integrity sha512-EBxr8deni+ebD7nz+Cd4IWBBNQRf3rstnGmdIvwXQLmRoa1/hqH0avsDrrQY3iQTvDcCa+7M4DA1XULMymLtFQ==
