@@ -151,11 +151,7 @@ class MyAccount extends React.Component<Props> {
                   {
                     text: 'Log Out',
                     style: 'destructive',
-                    onPress: async () => {
-                      Actions.pop({animated: false})
-                      Actions.pop({animated: false})
-                      Actions.logout()
-                    },
+                    onPress: Actions.logout,
                   },
                 ])
               }}
@@ -175,8 +171,6 @@ class MyAccount extends React.Component<Props> {
                         text: 'Delete Profile',
                         style: 'destructive',
                         onPress: async () => {
-                          Actions.pop({animated: false})
-                          Actions.pop({animated: false})
                           Actions.logout()
                           wocky!.remove()
                         },
