@@ -409,129 +409,6 @@ exports[`MyAccount renders 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Object {
-                        "width": 60,
-                      }
-                    }
-                  />
-                  <TextInput
-                    allowFontScaling={true}
-                    autoCorrect={false}
-                    clearButtonMode="while-editing"
-                    label="Last Name"
-                    onChangeText={[Function]}
-                    onSubmitEditing={[Function]}
-                    placeholder="Last Name"
-                    placeholderTextColor="rgb(212,212,212)"
-                    returnKeyType="next"
-                    store={
-                      ValidateItem {
-                        "errorMessage": "",
-                        "isValid": undefined,
-                        "key": "lastName",
-                        "value": "kirkham",
-                        Symbol(mobx did run lazy initializers): true,
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "ValidateItem@11.keys",
-                            "observers": Set {},
-                          },
-                          "name": "ValidateItem@11",
-                          "target": [Circular],
-                          "values": Map {
-                            "errorMessage" => "",
-                            "value" => "kirkham",
-                            "isValid" => undefined,
-                          },
-                        },
-                      }
-                    }
-                    style={
-                      Object {
-                        "color": "rgb(63,50,77)",
-                        "flex": 1,
-                        "fontFamily": "Roboto-Regular",
-                        "fontSize": 36,
-                      }
-                    }
-                    underlineColorAndroid="transparent"
-                    value="kirkham"
-                  />
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                        "width": 30,
-                      }
-                    }
-                  />
-                </View>
-              </View>
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "rgb(63,50,77)",
-                    "height": 1,
-                    "opacity": 0.2,
-                  }
-                }
-              />
-            </View>
-            <View>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Array [
-                    Object {
-                      "color": "rgb(253,95,108)",
-                      "fontFamily": "Roboto-Regular",
-                      "fontSize": 11,
-                    },
-                    Object {
-                      "marginLeft": 80,
-                      "marginTop": 10,
-                    },
-                  ]
-                }
-              >
-                
-              </Text>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "padding": 30,
-                    },
-                    Object {
-                      "justifyContent": "center",
-                      "paddingTop": 4,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
                     Array [
                       Object {
                         "alignItems": "center",
@@ -550,7 +427,7 @@ exports[`MyAccount renders 1`] = `
                   <Image
                     source={
                       Object {
-                        "testUri": "../../../images/iconUsernameNew.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
                   />
@@ -567,25 +444,24 @@ exports[`MyAccount renders 1`] = `
                 >
                   <TextInput
                     allowFontScaling={true}
-                    autoCapitalize="none"
                     autoCorrect={false}
                     clearButtonMode="while-editing"
                     icon={
                       Object {
-                        "testUri": "../../../images/iconUsernameNew.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
-                    label="Username"
+                    label="First Name"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
-                    placeholder="Username"
+                    placeholder="First Name"
                     placeholderTextColor="rgb(212,212,212)"
                     returnKeyType="next"
                     store={
                       ValidateItem {
                         "errorMessage": "",
                         "isValid": undefined,
-                        "key": "handle",
+                        "key": "firstName",
                         "value": "eric",
                         Symbol(mobx did run lazy initializers): true,
                         Symbol(mobx administration): ObservableObjectAdministration$$1 {
@@ -596,10 +472,10 @@ exports[`MyAccount renders 1`] = `
                             "isPendingUnobservation": false,
                             "lastAccessedBy": 0,
                             "lowestObserverState": 2,
-                            "name": "ValidateItem@3.keys",
+                            "name": "ValidateItem@8.keys",
                             "observers": Set {},
                           },
-                          "name": "ValidateItem@3",
+                          "name": "ValidateItem@8",
                           "target": [Circular],
                           "values": Map {
                             "errorMessage" => "",
@@ -642,13 +518,26 @@ exports[`MyAccount renders 1`] = `
               />
             </View>
             <View>
-              <View
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
                 style={
-                  Object {
-                    "height": 22,
-                  }
+                  Array [
+                    Object {
+                      "color": "rgb(253,95,108)",
+                      "fontFamily": "Roboto-Regular",
+                      "fontSize": 11,
+                    },
+                    Object {
+                      "marginLeft": 80,
+                      "marginTop": 10,
+                    },
+                  ]
                 }
-              />
+              >
+                
+              </Text>
               <View
                 style={
                   Array [
@@ -684,7 +573,7 @@ exports[`MyAccount renders 1`] = `
                   <Image
                     source={
                       Object {
-                        "testUri": "../../../images/phone.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
                   />
@@ -703,17 +592,45 @@ exports[`MyAccount renders 1`] = `
                     allowFontScaling={true}
                     autoCorrect={false}
                     clearButtonMode="while-editing"
-                    editable={false}
                     icon={
                       Object {
-                        "testUri": "../../../images/phone.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
-                    label="Phone"
+                    label="First Name"
                     onChangeText={[Function]}
-                    placeholder="Phone"
+                    onSubmitEditing={[Function]}
+                    placeholder="First Name"
                     placeholderTextColor="rgb(212,212,212)"
                     returnKeyType="next"
+                    store={
+                      ValidateItem {
+                        "errorMessage": "",
+                        "isValid": undefined,
+                        "key": "firstName",
+                        "value": "eric",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@8.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@8",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "eric",
+                            "isValid" => undefined,
+                          },
+                        },
+                      }
+                    }
                     style={
                       Object {
                         "color": "rgb(63,50,77)",
@@ -723,6 +640,7 @@ exports[`MyAccount renders 1`] = `
                       }
                     }
                     underlineColorAndroid="transparent"
+                    value="eric"
                   />
                   <View
                     style={
@@ -801,7 +719,7 @@ exports[`MyAccount renders 1`] = `
                   <Image
                     source={
                       Object {
-                        "testUri": "../../../images/iconEmailNew.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
                   />
@@ -822,21 +740,21 @@ exports[`MyAccount renders 1`] = `
                     clearButtonMode="while-editing"
                     icon={
                       Object {
-                        "testUri": "../../../images/iconEmailNew.png",
+                        "testUri": "../../../images/iconSubsNew.png",
                       }
                     }
-                    label="Email"
+                    label="First Name"
                     onChangeText={[Function]}
                     onSubmitEditing={[Function]}
-                    placeholder="Email"
+                    placeholder="First Name"
                     placeholderTextColor="rgb(212,212,212)"
                     returnKeyType="next"
                     store={
                       ValidateItem {
                         "errorMessage": "",
                         "isValid": undefined,
-                        "key": "email",
-                        "value": "eric.kirkham@gmail.com",
+                        "key": "firstName",
+                        "value": "eric",
                         Symbol(mobx did run lazy initializers): true,
                         Symbol(mobx administration): ObservableObjectAdministration$$1 {
                           "defaultEnhancer": [Function],
@@ -846,14 +764,14 @@ exports[`MyAccount renders 1`] = `
                             "isPendingUnobservation": false,
                             "lastAccessedBy": 0,
                             "lowestObserverState": 2,
-                            "name": "ValidateItem@14.keys",
+                            "name": "ValidateItem@8.keys",
                             "observers": Set {},
                           },
-                          "name": "ValidateItem@14",
+                          "name": "ValidateItem@8",
                           "target": [Circular],
                           "values": Map {
                             "errorMessage" => "",
-                            "value" => "eric.kirkham@gmail.com",
+                            "value" => "eric",
                             "isValid" => undefined,
                           },
                         },
@@ -868,7 +786,153 @@ exports[`MyAccount renders 1`] = `
                       }
                     }
                     underlineColorAndroid="transparent"
-                    value="eric.kirkham@gmail.com"
+                    value="eric"
+                  />
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "width": 30,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "rgb(63,50,77)",
+                    "height": 1,
+                    "opacity": 0.2,
+                  }
+                }
+              />
+            </View>
+            <View>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {
+                      "color": "rgb(253,95,108)",
+                      "fontFamily": "Roboto-Regular",
+                      "fontSize": 11,
+                    },
+                    Object {
+                      "marginLeft": 80,
+                      "marginTop": 10,
+                    },
+                  ]
+                }
+              >
+                
+              </Text>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "padding": 30,
+                    },
+                    Object {
+                      "justifyContent": "center",
+                      "paddingTop": 4,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "paddingLeft": 10,
+                        "paddingRight": 30,
+                        "width": 30,
+                      },
+                      Object {
+                        "height": 40,
+                        "marginHorizontal": 10,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <Image
+                    source={
+                      Object {
+                        "testUri": "../../../images/iconSubsNew.png",
+                      }
+                    }
+                  />
+                </View>
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <TextInput
+                    allowFontScaling={true}
+                    autoCorrect={false}
+                    clearButtonMode="while-editing"
+                    icon={
+                      Object {
+                        "testUri": "../../../images/iconSubsNew.png",
+                      }
+                    }
+                    label="First Name"
+                    onChangeText={[Function]}
+                    onSubmitEditing={[Function]}
+                    placeholder="First Name"
+                    placeholderTextColor="rgb(212,212,212)"
+                    returnKeyType="next"
+                    store={
+                      ValidateItem {
+                        "errorMessage": "",
+                        "isValid": undefined,
+                        "key": "firstName",
+                        "value": "eric",
+                        Symbol(mobx did run lazy initializers): true,
+                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                          "defaultEnhancer": [Function],
+                          "keysAtom": Atom$$1 {
+                            "diffValue": 0,
+                            "isBeingObserved": false,
+                            "isPendingUnobservation": false,
+                            "lastAccessedBy": 0,
+                            "lowestObserverState": 2,
+                            "name": "ValidateItem@8.keys",
+                            "observers": Set {},
+                          },
+                          "name": "ValidateItem@8",
+                          "target": [Circular],
+                          "values": Map {
+                            "errorMessage" => "",
+                            "value" => "eric",
+                            "isValid" => undefined,
+                          },
+                        },
+                      }
+                    }
+                    style={
+                      Object {
+                        "color": "rgb(63,50,77)",
+                        "flex": 1,
+                        "fontFamily": "Roboto-Regular",
+                        "fontSize": 36,
+                      }
+                    }
+                    underlineColorAndroid="transparent"
+                    value="eric"
                   />
                   <View
                     style={
