@@ -40,7 +40,7 @@ export class Analytics {
     )
   }
 
-  track = (name: string, properties?: object): void => {
+  track = (name: string, properties?: {[name: string]: any}): void => {
     if (__DEV__) {
       log.log('TRACK', name, properties)
       return
