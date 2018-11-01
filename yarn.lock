@@ -935,10 +935,10 @@ appcenter-cli@^1.1.5:
     xmldom "^0.1.27"
     yazl "^2.4.3"
 
-appcenter-link-scripts@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.6.0.tgz#75d7364de953661f43e3792f8d3cefeea0359254"
-  integrity sha512-2zcz8h6kwC1cO2S82lXQjuXU0r1DgxE0Fub61P6xOjhmR88cgZcFwO1UWWMpNHENhgTpH0eBeUgejhFC96dSJg==
+appcenter-link-scripts@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.9.0.tgz#d8603e2943383bf76f585316e696328743284a67"
+  integrity sha512-R6UacmMhsLi9sn3Y1RjPyBfrkznI2KoNA/CgQ1A61dGxAMxMlKPShGXuG3C57UU8JvdJdo+KUE+dHbF6fAz27A==
   dependencies:
     debug "^2.2.0"
     glob "^5.0.15"
@@ -948,12 +948,12 @@ appcenter-link-scripts@1.6.0:
     which "^1.2.11"
     xcode "^1.0.0"
 
-appcenter@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.6.0.tgz#07bbc5d20d8b48064ce3a359aac360b0d5e079e8"
-  integrity sha512-muJ0PLGymc15zf1SO2IJov2PCgMRnD8ApQBh9X62ahlZWUsCivYQbsm8wXrWLgHPSYqC7nxJO6ye87SRnPG4VA==
+appcenter@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.9.0.tgz#00ee98256bf6167c62e1ed2c35a59b448affb963"
+  integrity sha512-QyTmKPjM5N2GfqP2ob1htUMWsIVln5ujhXNocr/t/N0u1zJWzaWmcY895AnvH5B7JR1D8pdt57aQKPwTRZeAHA==
   dependencies:
-    appcenter-link-scripts "1.6.0"
+    appcenter-link-scripts "1.9.0"
 
 append-transform@^1.0.0:
   version "1.0.0"
@@ -7479,25 +7479,23 @@ react-native-image-crop-picker@^0.21.2:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.21.2.tgz#f0e7ad4615f1f7c79ba25e2e7708042e306d258e"
   integrity sha512-dJwEe4piQUklAOATGefFCh4GvIYnLSrnQxeADbHXHyzVCuP6YuTxXxxsvYLTLrnTOvnif58TQ+s4fZVQIScSSw==
 
-react-native-iphone-x-helper@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
-  integrity sha512-QHzpx4fv9u30VVU1DMgotiZsUB+m4BRjypca2rOczyj3cZBny5I+QDplrpFIBhzsa1iADNkziWa7kInzmKs00Q==
+react-native-iphone-x-helper@^1.0.3:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
+  integrity sha512-xIeTo4s77wwKgBZLVRIZC9tM9/PkXS46Ul76NXmvmixEb3ZwqGdQesR3zRiLMOoIdfOURB6N9bba9po7+x9Bag==
 
-react-native-keyboard-aware-scroll-view@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.5.0.tgz#57ab933089375bf62f4324797e8be949ad97849d"
-  integrity sha512-nGXsACZBCiWuwRrZy+UjiSJqb4tZ/6ePHUSY8M+09g4VfNm/ogvvWpwBa6B999NZ6DwhZTKBjVWeZxX9XG8bbQ==
+react-native-keyboard-aware-scroll-view@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.7.4.tgz#80fb4b56f3c5cb399da0c6832ec52729856ac08a"
+  integrity sha512-5AJ11sGcleiX43IJ32T0kPtIxcd1JWw0R+YPwkgyZWro7uuGBlq09CFW5jS9JTNoGq7crFzFfTcoTIY6B41rNQ==
   dependencies:
-    prop-types "^15.6.0"
-    react-native-iphone-x-helper "^1.0.1"
+    prop-types "^15.6.2"
+    react-native-iphone-x-helper "^1.0.3"
 
-react-native-linear-gradient@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"
-  integrity sha512-h4nwmcjfeedSiHGBmQkMmCSIqm3196YtT1AtbAqE93jgAcpib0btvoCx8nBUemmhfm+CA5mFEh8p5biA4wFw/A==
-  dependencies:
-    prop-types "^15.5.10"
+react-native-linear-gradient@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.3.tgz#a7f5fe685b1a2ac788cca37828c5c9ca91357a16"
+  integrity sha512-c1V5HMz9RWMaHA6hHQmwQqWNDJAGdhQG52Ht3wxp7XIAnqK4eJhPnuEjp6zI40eqYVqzmenZ8dU/PgXUVpg2ZQ==
 
 react-native-maps@^0.21.0:
   version "0.21.0"
@@ -7580,10 +7578,10 @@ react-native-screens@^1.0.0-alpha.11:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.12.tgz#5953c39c9dbfbe324610005e07d85a416081c48c"
   integrity sha512-n/XyqUStDjtCymXUhAxG98asvgI8/OSH+v9AaAzUFEqfBwJLY8/UjY6m8PIJSgqRt4aR/Z9nO+A1mcMXw6dMdA==
 
-react-native-snap-carousel@^3.7.1:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.2.tgz#da94f7b16076ec055c0980d169d1f85eef852d03"
-  integrity sha512-/XHc6IYRgTcwtxkgJwYRLJHdVC7vy0Mu/3gJ6ydVFGH3AS3M2Yyr4OhfNpetQSMdZ8IND92ViKezqlwQVzRwqQ==
+react-native-snap-carousel@^3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.5.tgz#7172456d40ab9161523055eb302f9b03b244240a"
+  integrity sha512-t0/wkjA4Doehv3QTcmzO56G7paGtYsvJgw9XrFI7GCDLK7MrHTiN22ROuJOxMy61nPetyjDAS0Qa3XMl8K7rVQ==
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
@@ -7601,13 +7599,6 @@ react-native-swiper@1.5.13:
   integrity sha512-byBPx3qz3FvZhk4O8LR8am5SoO/pwm2Sj1OmFuXOOLYEj87+PzQaTr9u7+mgU76Ti2TP1OWnCPTXH6XUXYwxyw==
   dependencies:
     prop-types "^15.5.10"
-
-react-native-tab-view@^0.0.73:
-  version "0.0.73"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.73.tgz#698dc8864b045edda7e8706d612d4e1877305bbf"
-  integrity sha512-6KmuliTcheEDGHL/2L4z2zDApS4Oq3JV+QCZrMhDStH2IF2/puKfvS0pbwCVi2GNvP3rhIiwSu9mk8xbbeVSEg==
-  dependencies:
-    prop-types "^15.6.0"
 
 react-native-tab-view@^0.0.77:
   version "0.0.77"

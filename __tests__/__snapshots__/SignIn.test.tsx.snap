@@ -9,6 +9,7 @@ exports[`SignIn renders 1`] = `
     }
   }
   enableAutomaticScroll={true}
+  enableOnAndroid={false}
   enableResetScrollToCoords={true}
   extraHeight={75}
   extraScrollHeight={0}
@@ -22,6 +23,7 @@ exports[`SignIn renders 1`] = `
   resetKeyboardSpace={[Function]}
   scrollEventThrottle={1}
   scrollForExtraHeightOnAndroid={[Function]}
+  scrollIntoView={[Function]}
   scrollToEnd={[Function]}
   scrollToFocusedInput={[Function]}
   scrollToPosition={[Function]}
@@ -32,6 +34,7 @@ exports[`SignIn renders 1`] = `
       "flex": 1,
     }
   }
+  update={[Function]}
   viewIsInsideTabBar={false}
 >
   <View>
