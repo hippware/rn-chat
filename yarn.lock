@@ -891,13 +891,6 @@ apollo-utilities@^1.0.0, apollo-utilities@^1.0.16:
   dependencies:
     fast-json-stable-stringify "^2.0.0"
 
-appcenter-analytics@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-1.6.0.tgz#c000e6b5fc12fafcd90f019e9321e30cf369e377"
-  integrity sha512-iNKon6xRzEjcSApqNmY9BlypFSSQ9aoo+gDSTHbhk04hqEeXhvDyjwrpeDIWhn02KP+x8zimm+T4MfUdOnkHHw==
-  dependencies:
-    appcenter "1.6.0"
-
 appcenter-cli@^1.0.17:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.0.17.tgz#a3969ec70edd98f53135939b2b48987ccf2134da"
@@ -941,13 +934,6 @@ appcenter-cli@^1.0.17:
     xmldom "^0.1.27"
     yazl "^2.4.3"
 
-appcenter-crashes@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-1.6.0.tgz#de385b858c310a24a61d46e7efd234ce5cea0a94"
-  integrity sha512-OU8KG62q2ctv2b6b66gKl5kIxuY9+H4MUnnLVgDc4Y4mXWs5eiVysUx2h4HxOR1tEYDWum1IG0XiLOqE3scWtQ==
-  dependencies:
-    appcenter "1.6.0"
-
 appcenter-link-scripts@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/appcenter-link-scripts/-/appcenter-link-scripts-1.6.0.tgz#75d7364de953661f43e3792f8d3cefeea0359254"
@@ -961,7 +947,7 @@ appcenter-link-scripts@1.6.0:
     which "^1.2.11"
     xcode "^1.0.0"
 
-appcenter@1.6.0, appcenter@^1.6.0:
+appcenter@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.6.0.tgz#07bbc5d20d8b48064ce3a359aac360b0d5e079e8"
   integrity sha512-muJ0PLGymc15zf1SO2IJov2PCgMRnD8ApQBh9X62ahlZWUsCivYQbsm8wXrWLgHPSYqC7nxJO6ye87SRnPG4VA==
