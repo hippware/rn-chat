@@ -23,7 +23,7 @@ export default {
       email: 'eric.kirkham@gmail.com',
       loaded: true,
       updateError: '',
-    },
+    } as any,
     service: jest.fn(),
     afterCreate: jest.fn(),
     _registerReferences: jest.fn(),
@@ -108,7 +108,7 @@ export default {
     logout: jest.fn(),
     startReactions: jest.fn(),
     disposeReactions: jest.fn(),
-  },
+  } as any,
   analytics: {
     track: jest.fn(),
   },
