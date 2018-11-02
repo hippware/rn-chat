@@ -255,38 +255,30 @@ const LocationStore = types
         resource: wocky.transport.resource,
       }
 
-      // initial config (only applies to first app boot without explicitly setting `reset: true`)
-      const state = yield backgroundGeolocation.ready({
-        // reset: true,
-        desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
-        elasticityMultiplier: 1,
-        preventSuspend: false,
-        useSignificantChangesOnly: false,
-        stationaryRadius: 25,
-        distanceFilter: 30,
-        stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
-        debug: false,
-        // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
-        logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-        // stopOnTerminate: false,
-        // startOnBoot: true,
-        url,
-        autoSync: true,
-        params,
+      // Don't supply any config to ready(). It's not always applied on
+      //   what we expect to be the first run.
+      yield backgroundGeolocation.ready({})
+
+      let config = {
         headers,
-      })
+        params,
+        startOnBoot: true,
+        stopOnTerminate: false,
+        url,
+      }
+
+      if (settings.isProduction) {
+        // We have observed devices with differing distanceFilter values
+        // in the wild so we set a value here so they are all consistent.
+        config.distanceFilter = 10
+        config.stopTimeout = 1
+      }
 
       // .ready() doesn't always apply configuration.
       // Here are some things that we have to configure everytime.
-      // Note: If any user-configurable/debug settings appear here,
+      // Note: If any user-configurable/debug settings appear in config,
       //   they will be overwritten
-      yield backgroundGeolocation.setConfig({
-        startOnBoot: true,
-        stopOnTerminate: false,
-        headers,
-        params,
-        url,
-      })
+      const state = yield backgroundGeolocation.setConfig(config)
 
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
