@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Images do not load on cards, location profile or on user profile (Rework #3018)
+
 # 3.9.4 - 2018 Oct 30
 
 * Show firebase errors on Verify Phone screen (#2988)
