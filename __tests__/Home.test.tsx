@@ -3,7 +3,6 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import Home from '../src/components/Home/Home'
 import {Provider} from 'mobx-react/native'
-import './utils/inject-mocks'
 import mockStore from './utils/mockStore'
 
 describe('Home', () => {
