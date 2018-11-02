@@ -53,7 +53,10 @@ export default {
     addRosterItem: jest.fn(),
     getProfile: jest.fn(),
     createProfile: jest.fn(),
-    getBot: jest.fn(),
+    getBot: () => ({
+      id: '1234',
+      description: 'description',
+    }),
     _addMessage: jest.fn(),
     deleteBot: jest.fn(),
     _follow: jest.fn(),
@@ -115,6 +118,7 @@ export default {
   profileValidationStore: {
     setProfile: jest.fn(),
   },
+  log: jest.fn(),
   warn: jest.fn(),
   firebaseStore: {
     phone: '1234567890',
@@ -138,4 +142,9 @@ export default {
   homeStore: {},
   navStore: {},
   locationStore: {},
+  iconStore: {
+    setIcon: jest.fn(),
+    iconList: [],
+  },
+  notificationStore: {},
 }
