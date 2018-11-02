@@ -1,20 +1,18 @@
 import 'react-native'
-// import React from 'react'
-// import renderer from 'react-test-renderer'
-// import BotDetails from '../src/components/BotDetails/BotDetails'
-// import {Provider} from 'mobx-react/native'
-// import injects from './utils/inject-mocks'
+import React from 'react'
+import renderer from 'react-test-renderer'
+import BotDetails from '../src/components/BotDetails/BotDetails'
+import {Provider} from 'mobx-react/native'
+import mockStore from './utils/mockStore'
 
 describe('BotDetails', () => {
-  // const wocky = {}
-
   it('renders with no data', () => {
-    // const toRender = (
-    //   <Provider wocky={wocky} {...injects}>
-    //     <BotDetails />
-    //   </Provider>
-    // );
-    // const tree = renderer.create(toRender).toJSON();
-    // expect(tree).toMatchSnapshot();
+    const toRender = (
+      <Provider {...mockStore}>
+        <BotDetails botId={'1234'} isNew={false} navigation={{state: {params: {isNew: false}}}} />
+      </Provider>
+    )
+    const tree = renderer.create(toRender).toJSON()
+    expect(tree).toMatchSnapshot()
   })
 })

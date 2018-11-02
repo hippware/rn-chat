@@ -1,4 +1,5 @@
 import {IFirebaseStore} from 'src/store/FirebaseStore'
+import {Bot} from 'wocky-client'
 
 export default {
   wocky: {
@@ -53,10 +54,7 @@ export default {
     addRosterItem: jest.fn(),
     getProfile: jest.fn(),
     createProfile: jest.fn(),
-    getBot: () => ({
-      id: '1234',
-      description: 'description',
-    }),
+    getBot: () => Bot.create({id: '1234'}),
     _addMessage: jest.fn(),
     deleteBot: jest.fn(),
     _follow: jest.fn(),
@@ -141,7 +139,9 @@ export default {
   } as IFirebaseStore,
   homeStore: {},
   navStore: {},
-  locationStore: {},
+  locationStore: {
+    distanceFromBot: jest.fn(),
+  },
   iconStore: {
     setIcon: jest.fn(),
     iconList: [],
