@@ -6,7 +6,8 @@ import {observer} from 'mobx-react/native'
 export default (Component): any => {
   @observer
   class KeyboardAwareView extends React.Component<any> {
-    @observable keyboardShowing: boolean = false
+    @observable
+    keyboardShowing: boolean = false
     keyboardHeight = new Animated.Value(0)
     keyboardDidShowListener: any
     keyboardDidHideListener: any
@@ -33,6 +34,7 @@ export default (Component): any => {
       Animated.timing(this.keyboardHeight, {
         toValue: -endCoordinates.height,
         duration,
+        useNativeDriver: true,
       }).start()
     }
 
@@ -42,6 +44,7 @@ export default (Component): any => {
       Animated.timing(this.keyboardHeight, {
         toValue: 0,
         duration,
+        useNativeDriver: true,
       }).start()
     }
 
