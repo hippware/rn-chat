@@ -12,7 +12,10 @@ export default {
     notifications: {},
     hasUnreadNotifications: false,
     geofenceBots: {},
-    chats: {},
+    chats: {
+      list: [],
+      unread: 0,
+    },
     files: {} as any,
     profiles: {} as any,
     bots: {} as any,

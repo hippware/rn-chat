@@ -1,17 +1,12 @@
 import 'react-native'
-// import React from 'react'
-// import renderer from 'react-test-renderer'
-// import ChatListScreen from '../src/components/ChatListScreen'
+import React from 'react'
+import renderer from 'react-test-renderer'
+import ChatListScreen from '../src/components/ChatListScreen'
+import mockStore from './utils/mockStore'
 
 describe('ChatListScreen', () => {
   it('renders with no data', () => {
-    // const wocky = {
-    //   loadChats: () => null,
-    //   chats: {
-    //     list: [],
-    //   },
-    // }
-    // const tree = renderer.create(<ChatListScreen wocky={wocky} />).toJSON()
-    // expect(tree).toMatchSnapshot()
+    const tree = renderer.create(<ChatListScreen {...mockStore} />).toJSON()
+    expect(tree).toMatchSnapshot()
   })
 })
