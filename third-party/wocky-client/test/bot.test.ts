@@ -1,13 +1,15 @@
 import {expect} from 'chai'
-import {createXmpp, sleep, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
+import {createXmpp, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
 import {IBot} from '../src/model/Bot'
 const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
-let bot: IBot, bot2: IBot, user2bot: IBot, bot3: IBot
+let bot: IBot, bot2: IBot, user2bot: IBot
 let user1phone: string, user2phone: string
 const icon = '\u00A9\uFE0F\u00A9'
+
+// tslint:disable:no-unused-expression no-console
 
 describe('BotStore', () => {
   it('create user1', async done => {
@@ -35,8 +37,8 @@ describe('BotStore', () => {
       timestamp()
       await waitFor(() => user1.profile !== null && user1.profile.phoneNumber !== null)
       await waitFor(() => user2.profile !== null && user2.profile.phoneNumber !== null)
-      user1phone = user1.profile.phoneNumber
-      user2phone = user2.profile.phoneNumber
+      user1phone = user1.profile!.phoneNumber!
+      user2phone = user2.profile!.phoneNumber!
       const profile1 = await user2.loadProfile(user1.username!)
       await profile1.follow()
       await user1.profile!.update({
@@ -155,7 +157,7 @@ describe('BotStore', () => {
       expect(bot.uploaded).to.be.true
       expect(bot.uploading).to.be.false
       await bot.save()
-      await bot.image.download()
+      await bot.image!.download()
       await waitFor(() => bot.image!.source !== null)
     } catch (e) {
       done(e)
@@ -196,7 +198,7 @@ describe('BotStore', () => {
     try {
       timestamp()
       await user2.logout()
-      user2 = await createXmpp(null, user2phone)
+      user2 = await createXmpp(undefined, user2phone)
       done()
     } catch (e) {
       done(e)
@@ -210,8 +212,8 @@ describe('BotStore', () => {
       const loaded = await user2.loadBot(bot.id, bot.server)
       await waitFor(() => !loaded.loading)
       expect(loaded.owner).to.be.not.null
-      expect(loaded.owner.id).to.be.equal(user1.profile.id)
-      expect(loaded.owner.handle).to.be.equal(user1.profile.handle)
+      expect(loaded.owner.id).to.be.equal(user1.profile!.id)
+      expect(loaded.owner.handle).to.be.equal(user1.profile!.handle)
       expect(loaded.isNew).to.be.false
       expect(loaded.title).to.be.equal('Test bot!')
       expect(loaded.isSubscribed).to.be.true
@@ -222,7 +224,7 @@ describe('BotStore', () => {
       expect(loaded.error).to.be.empty
       await user2._unsubscribeBot(bot.id)
       await user2.logout()
-      user2 = await createXmpp(null, user2phone)
+      user2 = await createXmpp(undefined, user2phone)
       done()
     } catch (e) {
       done(e)
@@ -512,13 +514,17 @@ describe('BotStore', () => {
   after('remove', async done => {
     try {
       await user1.removeBot(bot2.id)
-    } catch (e) {}
+    } catch (e) {
+      // noop
+    }
     try {
       await user1.removeBot(bot.id)
-    } catch (e) {}
-    try {
-      await user1.removeBot(bot3.id)
-    } catch (e) {}
+    } catch (e) {
+      // noop
+    }
+    // try {
+    //   await user1.removeBot(bot3.id)
+    // } catch (e) {// noop}
     try {
       await user1.remove()
       await user2.remove()

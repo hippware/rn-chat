@@ -123,7 +123,7 @@ export const Wocky = types
 
           self.sessionCount++
           return true
-        }),
+        }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'
@@ -276,7 +276,7 @@ export const Wocky = types
         const chat = self.createChat(item.id)
         chat.addMessage(msg)
       })
-    }),
+    }) as (max?: number) => Promise<void>,
     // TODO: make server an optional param
     loadBot: flow(function*(id: string, server: any) {
       yield waitFor(() => self.connected)

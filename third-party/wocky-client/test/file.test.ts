@@ -6,6 +6,8 @@ const fs = require('fs')
 let user1: IWocky
 let expectBuf: any
 
+// tslint:disable:no-unused-expression no-console
+
 describe('FileStore', () => {
   before(async done => {
     user1 = await createXmpp(25)
@@ -70,7 +72,7 @@ describe('FileStore', () => {
       // check how thumbnails are automatically loaded
       await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
       expect(user1.profile!.avatar!.url).to.be.empty
-      await user1.profile!.avatar.download()
+      await user1.profile!.avatar!.download()
       const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)
       expect(expectBuf.toString()).to.be.equal(testBuf.toString())
       done()
@@ -81,7 +83,7 @@ describe('FileStore', () => {
 
   it('remove upload', async done => {
     try {
-      await user1._removeUpload(user1.profile.avatar.id)
+      await user1._removeUpload(user1.profile!.avatar!.id)
       done()
     } catch (e) {
       done(e)

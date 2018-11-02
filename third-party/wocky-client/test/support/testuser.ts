@@ -3,7 +3,9 @@ import {Wocky, XmppTransport, IWocky, HybridTransport, GraphQLTransport} from '.
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
-import {when, reaction} from 'mobx'
+import {when} from 'mobx'
+
+// tslint:disable:no-unused-expression no-console
 
 const fs = require('fs')
 

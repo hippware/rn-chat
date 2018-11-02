@@ -6,12 +6,14 @@ const fs = require('fs')
 let user1: IWocky, user2: IWocky
 let user1phone: string, user2phone: string
 
+// tslint:disable:no-unused-expression no-console no-empty
+
 describe('ConnectStore', () => {
   before(async done => {
     user1 = await createXmpp()
     user2 = await createXmpp()
-    user1phone = user1.profile.phoneNumber
-    user2phone = user2.profile.phoneNumber
+    user1phone = user1.profile!.phoneNumber!
+    user2phone = user2.profile!.phoneNumber!
     expect(user1.username).to.be.not.null
     expect(user2.username).to.be.not.null
     expect(user1.connected).to.be.true
@@ -60,8 +62,8 @@ describe('ConnectStore', () => {
   })
   it('update profile', async done => {
     try {
-      let user1handle = 'a' + user1phone.replace('+', '')
-      let user2handle = 'a' + user2phone.replace('+', '')
+      const user1handle = 'a' + user1phone.replace('+', '')
+      const user2handle = 'a' + user2phone.replace('+', '')
       await user2.profile!.update({handle: user2handle, firstName: 'b', lastName: 'c'})
       await user1.profile!.update({handle: user1handle, firstName: 'b', lastName: 'c'})
       const data = user1.profile!
@@ -169,7 +171,7 @@ describe('ConnectStore', () => {
     try {
       await user2.logout()
       expect(user2.chats.list.length).to.be.equal(0)
-      user2 = await createXmpp(null, user2phone)
+      user2 = await createXmpp(undefined, user2phone)
       await user2.loadChats()
       await waitFor(() => user2.chats.list.length === 1)
       expect(user2.chats.list[0].last!.body).to.be.equal('')

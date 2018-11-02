@@ -3,6 +3,8 @@ import {createXmpp, timestamp} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
 const host = 'testing.dev.tinyrobot.com'
 
+// tslint:disable:no-unused-expression no-console
+
 describe('GraphQL Notifications', () => {
   let alice: IWocky,
     bob: IWocky,
@@ -63,7 +65,7 @@ describe('GraphQL Notifications', () => {
       await aliceBot.save()
 
       // alice invites bob to the bot (NOTE: this is different from `share`)
-      await gqlAlice.inviteBot(aliceBot.id, [bob.username])
+      await gqlAlice.inviteBot(aliceBot.id, [bob.username!])
       await pause(1000)
       const notifications = await gqlBob.loadNotifications({})
       expect(notifications.count).to.equal(2)
@@ -125,8 +127,8 @@ describe('GraphQL Notifications', () => {
     try {
       timestamp()
 
-      await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
-      await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1, resource: 'testing'})
+      await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1})
+      await gqlBob.setLocation({accuracy: 1, longitude: 2.1, latitude: 1.1})
 
       // Expected Notification: Geofence Entry
       await pause(1000)
@@ -135,8 +137,8 @@ describe('GraphQL Notifications', () => {
       expect(notifications.list[0]).to.haveOwnProperty('isEnter')
       expect(notifications.list[0].isEnter).to.be.true
 
-      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
-      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
+      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1})
+      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1})
       done()
     } catch (e) {
       done(e)
@@ -147,8 +149,8 @@ describe('GraphQL Notifications', () => {
     try {
       timestamp()
 
-      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
-      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1, resource: 'testing'})
+      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1})
+      await gqlBob.setLocation({accuracy: 1, longitude: 1.1, latitude: 1.1})
 
       // Expected Notification: Geofence Exit
       await pause(1000)

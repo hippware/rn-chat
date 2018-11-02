@@ -1,8 +1,10 @@
 import {expect} from 'chai'
-import {createXmpp, waitFor, timestamp} from './support/testuser'
-import {IBot, GraphQLTransport, IWocky} from '../src'
+import {createXmpp, timestamp} from './support/testuser'
+import {GraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
 const host = 'testing.dev.tinyrobot.com'
+
+// tslint:disable:no-unused-expression no-console no-empty
 
 describe('GraphQL Notifications Subscription', () => {
   let alice: IWocky, bob: IWocky, gqlAlice: GraphQLTransport, gqlBob: GraphQLTransport
@@ -49,7 +51,3 @@ describe('GraphQL Notifications Subscription', () => {
     done()
   })
 })
-
-async function pause(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
