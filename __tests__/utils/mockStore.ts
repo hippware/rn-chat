@@ -17,10 +17,10 @@ export default {
     profiles: {} as any,
     bots: {} as any,
     profile: {
-      handle: 'jerkham',
+      handle: 'southerneer',
       firstName: 'eric',
       lastName: 'kirkham',
-      email: 'eric.kirkham@gmail.com',
+      email: 'eric@hippware.com',
       loaded: true,
       updateError: '',
     } as any,

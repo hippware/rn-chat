@@ -103,9 +103,9 @@ exports[`BotDetails renders with no data 1`] = `
                   "newFollowers": Object {},
                   "password": "password",
                   "profile": Object {
-                    "email": "eric.kirkham@gmail.com",
+                    "email": "eric@hippware.com",
                     "firstName": "eric",
-                    "handle": "jerkham",
+                    "handle": "southerneer",
                     "lastName": "kirkham",
                     "loaded": true,
                     "updateError": "",
