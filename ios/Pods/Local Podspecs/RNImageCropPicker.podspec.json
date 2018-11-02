@@ -1,6 +1,6 @@
 {
   "name": "RNImageCropPicker",
-  "version": "0.21.2",
+  "version": "0.21.3",
   "summary": "Select single or multiple images, with cropping option",
   "requires_arc": true,
   "license": "MIT",
@@ -17,8 +17,14 @@
     "ios": "8.0"
   },
   "dependencies": {
-    "RSKImageCropper": [],
-    "QBImagePickerController": [],
-    "React/Core": []
+    "RSKImageCropper": [
+
+    ],
+    "QBImagePickerController": [
+
+    ],
+    "React/Core": [
+
+    ]
   }
 }

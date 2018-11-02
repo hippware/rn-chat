@@ -1,6 +1,6 @@
 {
   "name": "RNBackgroundFetch",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "summary": "iOS & Android BackgroundFetch API implementation for React Native",
   "description": "iOS BackgroundFetch API Implementation",
   "homepage": "https://transistorsoft.github.io/react-native-background-fetch",
@@ -8,16 +8,24 @@
   "authors": "Chris Scott, Transistor Software <chris@transistorsoft.com>",
   "source": {
     "git": "https://github.com/transistorsoft/react-native-background-fetch.git",
-    "tag": "2.4.3"
+    "tag": "2.4.4"
   },
   "requires_arc": true,
   "platforms": {
     "ios": "8.0"
   },
   "dependencies": {
-    "React": []
+    "React": [
+
+    ]
   },
-  "preserve_paths": ["docs", "CHANGELOG.md", "LICENSE", "package.json", "RNBackgroundFetch.ios.js"],
+  "preserve_paths": [
+    "docs",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json",
+    "RNBackgroundFetch.ios.js"
+  ],
   "source_files": [
     "ios/RNBackgroundFetch/RNBackgroundFetch.h",
     "ios/RNBackgroundFetch/RNBackgroundFetch.m"

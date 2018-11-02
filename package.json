@@ -22,7 +22,6 @@
     "version:bump": "babel-node ./scripts/version-increment.js",
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
-    "precommit": "pretty-quick --staged",
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json"
@@ -191,5 +190,10 @@
     "typescript": "3.0.3",
     "websocket": "^1.0.28",
     "xmlhttprequest": "^1.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
