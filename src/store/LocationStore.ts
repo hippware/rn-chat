@@ -259,7 +259,7 @@ const LocationStore = types
       //   what we expect to be the first run.
       yield backgroundGeolocation.ready({})
 
-      let config = {
+      let config = <any>{
         headers,
         params,
         startOnBoot: true,
