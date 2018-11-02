@@ -33,7 +33,7 @@ const EventBotInviteCard = observer(
   )
 )
 
-const EventBotPostCard = observer(
+export const EventBotPostCard = observer(
   ({item: {bot, relativeDateAsString, post}}: {item: IEventBotPost}) => {
     if (!post.profile) {
       return null

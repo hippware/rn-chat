@@ -18,7 +18,6 @@ type Props = {
 
 const EventCardTemplate = observer(
   ({profile, timestamp, icon, action, line2, rightColumnElement, onPress}: Props) => {
-    // console.log('& EventCardTemplate', profile, timestamp)
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View

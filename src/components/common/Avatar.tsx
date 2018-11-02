@@ -7,7 +7,8 @@ import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
-import {PresenceDot, LazyImage} from '.'
+import PresenceDot from './PresenceDot'
+import LazyImage from './LazyImage'
 
 type Props = {
   profile: IProfile
@@ -45,7 +46,7 @@ const Avatar = observer(
     const sharedStyle = {
       width: size * k,
       height: size * k,
-      borderRadius: size * k / 2,
+      borderRadius: (size * k) / 2,
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
       borderColor: showMask ? colors.DARK_GREY : borderColor || colors.WHITE,
       overflow: 'hidden',
@@ -107,7 +108,12 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
     ? ['rgb(166,166,166)', 'rgb(74,74,74)']
     : ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
   return (
-    <LinearGradient start={start} end={end} colors={theColors} style={{borderRadius: size * k / 2}}>
+    <LinearGradient
+      start={start}
+      end={end}
+      colors={theColors}
+      style={{borderRadius: (size * k) / 2}}
+    >
       <View style={[style, styles.avatarContainer]}>
         {showMask ? (
           <Mask size={size * 0.65} />
