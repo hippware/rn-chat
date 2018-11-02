@@ -292,7 +292,7 @@ your phone number.
             <Image
               source={
                 Object {
-                  "testUri": "../../../images/globe.png",
+                  "testUri": "../../../images/phone.png",
                 }
               }
             />
@@ -308,20 +308,19 @@ your phone number.
             }
           >
             <TextInput
-              autoCapitalize="none"
               autoCorrect={false}
+              autoFocus={true}
               clearButtonMode="while-editing"
-              editable={false}
               icon={
                 Object {
-                  "testUri": "../../../images/globe.png",
+                  "testUri": "../../../images/phone.png",
                 }
               }
-              label="Country Code"
+              keyboardType="phone-pad"
+              label="Phone Number"
               onChangeText={[Function]}
-              placeholder="Country Code"
+              placeholder="Phone Number"
               placeholderTextColor="rgb(212,212,212)"
-              pointerEvents="none"
               returnKeyType="next"
               style={
                 Object {
@@ -332,7 +331,7 @@ your phone number.
                 }
               }
               underlineColorAndroid="transparent"
-              value="United States +1"
+              value=""
             />
             <View
               style={
