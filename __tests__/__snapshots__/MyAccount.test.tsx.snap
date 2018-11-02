@@ -57,6 +57,7 @@ exports[`MyAccount renders 1`] = `
         }
       }
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={true}
       extraHeight={75}
       extraScrollHeight={0}
@@ -69,11 +70,13 @@ exports[`MyAccount renders 1`] = `
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       testID="myAccountScrollView"
+      update={[Function]}
       viewIsInsideTabBar={false}
     >
       <View>
@@ -723,6 +726,7 @@ exports[`MyAccount renders 1`] = `
                       }
                     }
                     underlineColorAndroid="transparent"
+                    value=""
                   />
                   <View
                     style={

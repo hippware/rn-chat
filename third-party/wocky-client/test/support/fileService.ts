@@ -1,4 +1,5 @@
-import {IFileService} from '../../src/store/FileStore'
+import {IFileService} from '../../src/transport/FileService'
+
 const fs = require('fs')
 const denodeify = require('denodeify')
 const mkdir = denodeify(fs.mkdir)
@@ -8,15 +9,20 @@ export class FileService implements IFileService {
     return require('os').tmpdir()
   }
 
+  removeFile = denodeify(fs.unlink)
+
   fileExists(filePath: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      fs.stat(filePath, function(error: any, stat: any): void {
-        if (error) {
-          resolve(false)
-        } else {
-          resolve(true)
+      fs.stat(
+        filePath,
+        (error: any, stat: any): void => {
+          if (error) {
+            resolve(false)
+          } else {
+            resolve(true)
+          }
         }
-      })
+      )
     })
   }
   mkdir(folder: string) {
@@ -57,7 +63,6 @@ export class FileService implements IFileService {
         })
     })
   }
-  removeFile = denodeify(fs.unlink)
 }
 
 const fileService = new FileService()

@@ -1,6 +1,5 @@
 import React from 'react'
 import {Image, View, TextInput, TextInputProperties} from 'react-native'
-import autobind from 'autobind-decorator'
 import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react/native'
@@ -14,16 +13,15 @@ interface IProps extends TextInputProperties {
   store?: ValidateItem
 }
 
-@autobind
 @observer
-class FormTextInput extends React.Component<IProps> {
+export default class FormTextInput extends React.Component<IProps> {
   input: any
 
-  focus() {
+  focus = () => {
     this.input.focus()
   }
 
-  blur() {
+  blur = () => {
     this.input.blur()
   }
 
@@ -66,7 +64,6 @@ class FormTextInput extends React.Component<IProps> {
             autoCorrect={false}
             {...this.props}
           />
-          {/* </View> */}
           <View style={{width: 15 * k, justifyContent: 'center', alignItems: 'center'}}>
             {store && store.isValid !== undefined ? (
               store.isValid ? (
@@ -82,5 +79,3 @@ class FormTextInput extends React.Component<IProps> {
     )
   }
 }
-
-export default FormTextInput

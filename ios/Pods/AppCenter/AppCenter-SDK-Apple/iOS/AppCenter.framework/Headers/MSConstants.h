@@ -54,9 +54,9 @@ static short const kMSPriorityCount = MSPriorityHigh + 1;
 
 /**
  * The priority by which the modules are initialized.
- *  MSPriorityMax is reserved for only 1 module and this needs to be Crashes. Crashes needs to be initialized first to
- *  catch crashes in our other SDK Modules (which will hopefully never happen) and to avoid losing any log at crash
- * time.
+ * MSPriorityMax is reserved for only 1 module and this needs to be Crashes.
+ * Crashes needs to be initialized first to catch crashes in our other SDK Modules (which will hopefully never happen) and to avoid losing
+ * any log at crash time.
  */
 typedef NS_ENUM(NSInteger, MSInitializationPriority) {
   MSInitializationPriorityDefault = 500,

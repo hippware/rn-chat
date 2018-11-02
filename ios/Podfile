@@ -38,14 +38,17 @@ def testing_pods
   pod 'Firebase/DynamicLinks'
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
   # Pods for AppCenter
-  pod 'AppCenter/Analytics', '~> 1.7.1'
-  pod 'AppCenter/Crashes', '~> 1.7.1'
-  pod 'AppCenterReactNativeShared', '~> 1.6.0'
+  pod 'AppCenterReactNativeShared', '~> 1.9.0'
   pod 'RNFS', :path => '../node_modules/react-native-fs'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  
   platform :ios, '9.0'
 end
 

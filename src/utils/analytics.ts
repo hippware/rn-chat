@@ -4,7 +4,6 @@ import {when} from 'mobx'
 import * as log from '../utils/log'
 import {IWocky} from 'wocky-client'
 import Mixpanel from 'react-native-mixpanel'
-import AppCenter from 'appcenter-analytics'
 
 export const analyticsGeoWidgetTap = 'geofence_widget_tap'
 
@@ -40,13 +39,12 @@ export class Analytics {
     )
   }
 
-  track = (name: string, properties?: object): void => {
+  track = (name: string, properties?: {[name: string]: any}): void => {
     if (__DEV__) {
       log.log('TRACK', name, properties)
       return
     }
     try {
-      AppCenter.trackEvent(name, properties)
       if (!properties) {
         Mixpanel.track(name)
       } else {

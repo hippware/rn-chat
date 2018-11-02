@@ -15,8 +15,8 @@
 @property(nonatomic) NSDate *timestamp;
 
 /**
- * A session identifier is used to correlate logs together. A session is an abstract concept in the API and
- * is not necessarily an analytics session, it can be used to only track crashes.
+ * A session identifier is used to correlate logs together. A session is an abstract concept in the API and is not necessarily an analytics
+ * session, it can be used to only track crashes.
  */
 @property(nonatomic, copy) NSString *sid;
 

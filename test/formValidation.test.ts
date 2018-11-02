@@ -2,6 +2,13 @@ import {expect} from 'chai'
 import validate from 'validate.js'
 import {validateProfile} from '../src/utils/formValidation'
 
+declare module 'validate.js' {
+  // tslint:disable-next-line
+  interface ValidateJS {
+    Promise: any
+  }
+}
+
 validate.validators.usernameUniqueValidator = value => {
   // if (!value) return new validate.Promise(res => res());
   return new validate.Promise(resolve => {

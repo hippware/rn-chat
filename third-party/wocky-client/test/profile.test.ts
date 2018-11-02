@@ -3,6 +3,8 @@ import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
 import {IWocky} from '../src/store/Wocky'
 
+// tslint:disable:no-unused-expression no-console no-empty
+
 let user1: IWocky, user2: IWocky, user3: IWocky
 
 function timestamp() {

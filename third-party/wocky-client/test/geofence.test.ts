@@ -1,8 +1,10 @@
 import {expect} from 'chai'
 import {createXmpp, sleep, waitFor, timestamp} from './support/testuser'
-import {IWocky, IProfile, IOwnProfile} from '../src'
+import {IWocky, IOwnProfile} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
+
+// tslint:disable:no-unused-expression no-console no-empty
 
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot, loadedBot: IBot
@@ -42,16 +44,16 @@ describe('Geofence', () => {
       timestamp()
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
-      const user1phone = user1.profile.phoneNumber
-      const user2phone = user2.profile.phoneNumber
+      const user1phone = user1.profile!.phoneNumber
+      const user2phone = user2.profile!.phoneNumber
       await user1.profile!.update({
-        handle: 'd' + user1phone.replace('+', ''),
+        handle: 'd' + user1phone!.replace('+', ''),
         firstName: 'name1',
         lastName: 'lname1',
         email: 'a@aa.com',
       })
       await user2.profile!.update({
-        handle: 'e' + user2phone.replace('+', ''),
+        handle: 'e' + user2phone!.replace('+', ''),
         firstName: 'name2',
         lastName: 'lname2',
         email: 'a2@aa.com',
@@ -95,7 +97,7 @@ describe('Geofence', () => {
   })
   it('invite user2 to bot', async done => {
     try {
-      await bot.invite([user2.username])
+      await bot.invite([user2!.username!])
       done()
     } catch (e) {
       done(e)
@@ -277,7 +279,7 @@ describe('Geofence', () => {
         title: 'Test bot',
         addressData: {city: 'West Hollywood', country: 'United States'},
       })
-      await bot.invite([user2.username])
+      await bot.invite([user2!.username!])
       await waitFor(() => user2.notifications.length === 1)
       loadedBot = await user2.loadBot(bot.id, null)
       expect(loadedBot.visitorsSize).to.equal(1, 'should be 1 visitor before accepting invitation')

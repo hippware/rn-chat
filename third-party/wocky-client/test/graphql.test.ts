@@ -4,6 +4,8 @@ import {IBot, GraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
+// tslint:disable:no-unused-expression no-console no-empty
+
 // // User "111" on Staging
 // const userId = 'e51c7f0a-18cc-11e8-b1e9-0a580a0206dc'
 // const token = '$T$AFNkdiDaQHC/lI4o2xzmmf4pQ+LaHF39STooScbv6E4='
@@ -58,8 +60,8 @@ describe('GraphQL', () => {
       timestamp()
       gql = new GraphQLTransport('testing')
       await gql.login(user.username!, user.password!, host)
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
       done()
     } catch (e) {
       done(e)
@@ -71,12 +73,12 @@ describe('GraphQL', () => {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
-      expect(profile.id).to.equal(user.username)
-      expect(profile.email).to.equal('a@aa.com')
-      expect(profile.phoneNumber).to.equal(user1phone)
-      expect(profile.__typename).to.equal('CurrentUser')
-      expect(profile.hidden.enabled).to.equal(false)
-      expect(profile.hidden.expires).to.equal(null)
+      expect(profile!.id).to.equal(user.username!)
+      expect((profile as any).email).to.equal('a@aa.com')
+      expect((profile as any).phoneNumber).to.equal(user1phone)
+      expect((profile as any).__typename).to.equal('CurrentUser')
+      expect(profile!.hidden!.enabled).to.equal(false)
+      expect(profile!.hidden!.expires).to.equal(null)
       done()
     } catch (e) {
       done(e)
@@ -97,8 +99,8 @@ describe('GraphQL', () => {
     try {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
-      expect(profile.hidden.expires.getTime()).to.equal(date.getTime())
-      expect(profile.hidden.enabled).to.equal(true)
+      expect(profile!.hidden!.expires.getTime()).to.equal(date.getTime())
+      expect(profile!.hidden!.enabled).to.equal(true)
       done()
     } catch (e) {
       done(e)
@@ -117,8 +119,8 @@ describe('GraphQL', () => {
     try {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
-      expect(profile.hidden.expires).to.be.null
-      expect(profile.hidden.enabled).to.equal(false)
+      expect(profile!.hidden!.expires).to.be.null
+      expect(profile!.hidden!.enabled).to.equal(false)
       done()
     } catch (e) {
       done(e)
@@ -129,10 +131,10 @@ describe('GraphQL', () => {
       timestamp()
       const profile = await gql.loadProfile(user2.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
-      expect(profile.id).to.equal(user2.username)
-      expect(profile.email).to.be.undefined
-      expect(profile.phoneNumber).to.be.undefined
-      expect(profile.__typename).to.equal('OtherUser')
+      expect(profile!.id).to.equal(user2.username)
+      expect((profile as any).email).to.be.undefined
+      expect((profile as any).phoneNumber).to.be.undefined
+      expect((profile as any).__typename).to.equal('OtherUser')
       done()
     } catch (e) {
       done(e)
@@ -156,7 +158,7 @@ describe('GraphQL', () => {
         title: 'Test bot2',
         addressData: {city: 'New York', country: 'US'},
       })
-      const bots = await gql.loadOwnBots(user.username!, null, 1)
+      const bots = await gql.loadOwnBots(user.username!, undefined, 1)
       // console.log('bots', bots)
       expect(bots.count).to.equal(2)
       expect(bots.list.length).to.equal(1)
@@ -176,8 +178,8 @@ describe('GraphQL', () => {
     try {
       timestamp()
       await gql.subscribeBotVisitors()
-      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1})
+      gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
@@ -198,8 +200,8 @@ describe('GraphQL', () => {
   it('check subscription exit', async done => {
     try {
       timestamp()
-      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
-      gql.setLocation({latitude: 0, longitude: 0, accuracy: 1, resource: 'testing'})
+      await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
+      gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
