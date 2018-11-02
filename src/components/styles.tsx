@@ -1,7 +1,54 @@
 import {StyleSheet} from 'react-native'
 import {k} from './Global'
+import {colors} from '../constants'
+import {settings} from '../globals'
 
 const coef = k
+
+export const navBarStyle = {
+  navBarTextColor: colors.DARK_PURPLE,
+  navBarRightButtonColor: 'rgb(254,92,108)',
+  navBarLeftButtonColor: colors.DARK_GREY,
+  navBarCancelColor: colors.DARK_GREY,
+  navBarButtonColor: settings.isStaging ? colors.STAGING_COLOR : 'rgb(117,117,117)',
+  navBarBackgroundColor: 'white',
+  navBarButtonFontSize: 15 * k,
+  navBarFontFamily: 'Roboto-Regular',
+  backButtonImage: require('../../images/iconBackGrayNew.png'),
+  titleStyle: {
+    fontSize: 16 * k,
+    fontWeight: undefined,
+    letterSpacing: 0.5,
+    color: colors.DARK_PURPLE,
+    fontFamily: 'Roboto-Regular',
+  },
+  leftButtonIconStyle: {
+    marginLeft: 10 * k,
+  },
+  rightButtonTextStyle: {
+    marginRight: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+  },
+  leftButtonTextStyle: {
+    marginLeft: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+  },
+  sceneStyle: {
+    backgroundColor: 'white',
+  },
+  navigationBarStyle: {
+    borderBottomWidth: 0,
+    elevation: 1,
+    backgroundColor: 'white',
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
+}
 
 export default StyleSheet.create({
   error: {

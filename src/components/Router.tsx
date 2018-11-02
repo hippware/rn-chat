@@ -1,18 +1,11 @@
 import React from 'react'
 import {when, autorun} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-
-import {colors} from '../constants'
-
 import {settings} from '../globals'
-
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
-
-import {k} from './Global'
-
 import Camera from './Camera'
 import CreateMessage from './CreateMessage'
 import Launch from './Launch'
@@ -49,51 +42,7 @@ import BotCompose from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
 import Attribution from './Attribution'
-
-export const navBarStyle = {
-  navBarTextColor: colors.DARK_PURPLE,
-  navBarRightButtonColor: 'rgb(254,92,108)',
-  navBarLeftButtonColor: colors.DARK_GREY,
-  navBarCancelColor: colors.DARK_GREY,
-  navBarButtonColor: settings.isStaging ? colors.STAGING_COLOR : 'rgb(117,117,117)',
-  navBarBackgroundColor: 'white',
-  navBarButtonFontSize: 15 * k,
-  navBarFontFamily: 'Roboto-Regular',
-  backButtonImage: require('../../images/iconBackGrayNew.png'),
-  titleStyle: {
-    fontSize: 16 * k,
-    fontWeight: undefined,
-    letterSpacing: 0.5,
-    color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular',
-  },
-  leftButtonIconStyle: {
-    marginLeft: 10 * k,
-  },
-  rightButtonTextStyle: {
-    marginRight: 10 * k,
-    color: colors.PINK,
-    fontFamily: 'Roboto-Regular',
-  },
-  leftButtonTextStyle: {
-    marginLeft: 10 * k,
-    color: colors.PINK,
-    fontFamily: 'Roboto-Regular',
-  },
-  sceneStyle: {
-    backgroundColor: 'white',
-  },
-  navigationBarStyle: {
-    borderBottomWidth: 0,
-    elevation: 1,
-    backgroundColor: 'white',
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: {
-      height: 0,
-    },
-  },
-}
+import { navBarStyle } from './styles';
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')

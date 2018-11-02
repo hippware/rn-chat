@@ -5,8 +5,8 @@ import {IWocky, IEvent} from 'wocky-client'
 import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
-import {navBarStyle} from './Router'
 import ListFooter from './ListFooter'
+import {navBarStyle} from './styles'
 
 type Props = {
   wocky?: IWocky

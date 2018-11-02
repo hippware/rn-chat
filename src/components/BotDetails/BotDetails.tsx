@@ -11,9 +11,9 @@ import AddBotPost from './AddBotPost'
 import Header from './BotDetailsHeader'
 import {isAlive} from 'mobx-state-tree'
 import Separator from './Separator'
-import {navBarStyle} from '../Router'
 import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
+import {navBarStyle} from '../styles'
 
 type Props = {
   botId: string
@@ -30,9 +30,12 @@ type Props = {
 @inject('wocky', 'analytics', 'notificationStore', 'homeStore')
 @observer
 export default class BotDetails extends React.Component<Props> {
-  @observable bot?: IBot
-  @observable owner?: IProfile
-  @observable numToRender: number = 8
+  @observable
+  bot?: IBot
+  @observable
+  owner?: IProfile
+  @observable
+  numToRender: number = 8
   list: any
   viewTimeout: any
 
