@@ -2,8 +2,8 @@ import React, {ReactElement} from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
-import {navBarStyle} from '../Router'
 import {colors} from '../../constants'
+import {navBarStyle} from '../styles'
 
 export type NavConfig = {
   title?: ReactElement<any>

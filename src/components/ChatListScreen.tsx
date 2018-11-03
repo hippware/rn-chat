@@ -8,12 +8,17 @@ import ChatCard from './ChatCard'
 import ListFooter from './ListFooter'
 import {RText} from './common'
 import {colors} from '../constants'
+import {IWocky} from 'wocky-client'
 
 const footerImage = require('../../images/graphicEndMsgs.png')
 
+type Props = {
+  wocky?: IWocky
+}
+
 @inject('wocky')
 @observer
-class ChatListScreen extends React.Component<any> {
+class ChatListScreen extends React.Component<Props> {
   list: any
 
   scrollTo = params => {
@@ -21,7 +26,7 @@ class ChatListScreen extends React.Component<any> {
   }
 
   componentDidMount() {
-    this.props.wocky.loadChats()
+    this.props.wocky!.loadChats()
   }
 
   renderItem = ({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />
@@ -29,7 +34,7 @@ class ChatListScreen extends React.Component<any> {
   keyExtractor = item => `${item.id}`
 
   render() {
-    const {list: chats, unread: num} = this.props.wocky.chats
+    const {list: chats, unread: num} = this.props.wocky!.chats
     return (
       <Screen>
         <FlatList

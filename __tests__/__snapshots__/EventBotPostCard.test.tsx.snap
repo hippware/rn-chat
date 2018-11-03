@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventBotPostCard renders 1`] = `
+<View
+  accessible={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flexDirection": "row",
+      "padding": 30,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "marginLeft": 10,
+        "marginRight": 20,
+        "paddingRight": 20,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "justifyContent": "flex-end",
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            undefined,
+            Object {
+              "height": 188,
+              "width": 188,
+            },
+          ]
+        }
+      >
+        <BVLinearGradient
+          colors={
+            Array [
+              "rgb(242,68,191)",
+              "rgb(254,110,98)",
+              "rgb(254,92,108)",
+            ]
+          }
+          end={
+            Object {
+              "x": 1,
+              "y": 0,
+            }
+          }
+          start={
+            Object {
+              "x": 0,
+              "y": 1,
+            }
+          }
+          style={
+            Object {
+              "borderRadius": 94,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "borderColor": "rgb(255,255,255)",
+                  "borderRadius": 94,
+                  "borderWidth": 4,
+                  "height": 188,
+                  "overflow": "hidden",
+                  "width": 188,
+                },
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(255,255,255)",
+                    "fontFamily": "Roboto-Regular",
+                  },
+                  Object {
+                    "fontSize": 36,
+                  },
+                ]
+              }
+            >
+               
+            </Text>
+          </View>
+        </BVLinearGradient>
+      </View>
+    </View>
+    <Image
+      source={
+        Object {
+          "testUri": "../../../images/notificationMessage.png",
+        }
+      }
+      style={
+        Object {
+          "bottom": 10,
+          "position": "absolute",
+          "right": 0,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontFamily": "Roboto-Regular",
+            "fontSize": 13,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontFamily": "Roboto-Medium",
+              "fontSize": 12,
+            },
+            undefined,
+          ]
+        }
+      >
+        @null 
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgb(114,100,109)",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 12,
+            },
+            undefined,
+          ]
+        }
+      >
+        commented on
+      </Text>
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "rgb(155,155,155)",
+            "fontFamily": "Roboto-Light",
+            "fontSize": 12,
+          },
+          undefined,
+        ]
+      }
+    >
+      1234
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 40,
+        "justifyContent": "center",
+        "width": 142,
+      }
+    }
+  />
+</View>
+`;

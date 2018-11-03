@@ -85,7 +85,7 @@ export const Profile = types
       },
       views: {
         get isOwn(): boolean {
-          const ownProfile = self.service.profile
+          const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
         },
         get isVerified(): boolean {

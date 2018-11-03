@@ -22,12 +22,13 @@ import ChatBubble from './ChatBubble'
 import ChatMessage from './ChatMessage'
 import {AutoExpandingTextInput} from './common'
 import {colors} from '../constants'
+import {IWocky} from 'wocky-client'
 
 const Button = require('apsl-react-native-button')
 
 type Props = {
   item: string
-  wocky?: any
+  wocky?: IWocky
 }
 
 type State = {
@@ -62,15 +63,17 @@ class ChatScreen extends React.Component<Props, State> {
     height: 0,
   }
 
-  @observable messages: any[] = []
-  @observable chat: any
+  @observable
+  messages: any[] = []
+  @observable
+  chat: any
   mounted: boolean = false
   handler: any
   list: any
 
   componentDidMount() {
     const {item, wocky} = this.props
-    this.chat = wocky.createChat(item)
+    this.chat = wocky!.createChat(item)
     // load chat asynchronously
     this.chat.load().then(() => this.chat.readAll())
     this.chat.setActive(true)

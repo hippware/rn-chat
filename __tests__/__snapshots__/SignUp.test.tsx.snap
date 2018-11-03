@@ -235,7 +235,7 @@ exports[`Signup renders 1`] = `
                   "errorMessage": "",
                   "isValid": undefined,
                   "key": "handle",
-                  "value": "jerkham",
+                  "value": "southerneer",
                   Symbol(mobx did run lazy initializers): true,
                   Symbol(mobx administration): ObservableObjectAdministration$$1 {
                     "defaultEnhancer": [Function],
@@ -252,7 +252,7 @@ exports[`Signup renders 1`] = `
                     "target": [Circular],
                     "values": Map {
                       "errorMessage" => "",
-                      "value" => "jerkham",
+                      "value" => "southerneer",
                       "isValid" => undefined,
                     },
                   },
@@ -268,7 +268,7 @@ exports[`Signup renders 1`] = `
               }
               testID="signUpUsername"
               underlineColorAndroid="transparent"
-              value="jerkham"
+              value="southerneer"
             />
             <View
               style={
@@ -655,7 +655,7 @@ exports[`Signup renders 1`] = `
                   "errorMessage": "",
                   "isValid": undefined,
                   "key": "email",
-                  "value": "eric.kirkham@gmail.com",
+                  "value": "eric@hippware.com",
                   Symbol(mobx did run lazy initializers): true,
                   Symbol(mobx administration): ObservableObjectAdministration$$1 {
                     "defaultEnhancer": [Function],
@@ -672,7 +672,7 @@ exports[`Signup renders 1`] = `
                     "target": [Circular],
                     "values": Map {
                       "errorMessage" => "",
-                      "value" => "eric.kirkham@gmail.com",
+                      "value" => "eric@hippware.com",
                       "isValid" => undefined,
                     },
                   },
@@ -688,7 +688,7 @@ exports[`Signup renders 1`] = `
               }
               testID="signUpEmail"
               underlineColorAndroid="transparent"
-              value="eric.kirkham@gmail.com"
+              value="eric@hippware.com"
             />
             <View
               style={

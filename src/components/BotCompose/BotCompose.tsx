@@ -40,10 +40,14 @@ const emojiKeyboardHeight = 305
 @inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log', 'locationStore')
 @observer
 export class BotCompose extends React.Component<Props> {
-  @observable isLoading: boolean = false
-  @observable bot?: IBot
-  @observable uploadingPhoto: boolean = false
-  @observable text: string = ''
+  @observable
+  isLoading: boolean = false
+  @observable
+  bot?: IBot
+  @observable
+  uploadingPhoto: boolean = false
+  @observable
+  text: string = ''
   controls: any
   botTitle: any
   note: any
@@ -57,8 +61,10 @@ export class BotCompose extends React.Component<Props> {
     if (this.props.homeStore!.mapCenterLocation) {
       this.bot.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
     }
-    this.text = this.bot.title || ''
-    this.props.iconStore!.setIcon(this.bot.icon)
+    if (this.bot) {
+      this.text = this.bot.title || ''
+      this.props.iconStore!.setIcon(this.bot.icon)
+    }
   }
 
   componentDidMount() {

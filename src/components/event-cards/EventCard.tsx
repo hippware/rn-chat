@@ -22,7 +22,9 @@ const EventBotInviteCard = observer(
       timestamp={relativeDateAsString}
       action={
         isResponse
-          ? isAccepted ? 'accepted your invite to' : 'rejected your invite to'
+          ? isAccepted
+            ? 'accepted your invite to'
+            : 'rejected your invite to'
           : 'invited you to follow'
       }
       line2={bot.title}
@@ -31,7 +33,7 @@ const EventBotInviteCard = observer(
   )
 )
 
-const EventBotPostCard = observer(
+export const EventBotPostCard = observer(
   ({item: {bot, relativeDateAsString, post}}: {item: IEventBotPost}) => {
     if (!post.profile) {
       return null
@@ -63,10 +65,8 @@ const EventBotGeofenceCard = observer(
 )
 
 const eventCardMap: {[key: string]: any} = {
-  // EventBotCreate: EventBotCard,
   EventBotPost: EventBotPostCard,
   EventBotShare: EventBotShareCard,
-  // EventBotNote: EventBotNoteCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventUserFollow: EventUserFollowCard,
   EventBotInvite: EventBotInviteCard,
