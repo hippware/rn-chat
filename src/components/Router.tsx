@@ -1,11 +1,11 @@
 import React from 'react'
-import {when, autorun} from 'mobx'
+import {when, autorun, reaction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 
 import {colors} from '../constants'
 
 import {settings} from '../globals'
-
+import {Keyboard} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
@@ -123,6 +123,8 @@ class TinyRobotRouter extends React.Component<Props> {
       },
       {delay: 1000}
     )
+
+    reaction(() => this.props.navStore!.scene, () => Keyboard.dismiss())
 
     // TODO: Move it outside, why we can't put it inside Home?
     autorun(
