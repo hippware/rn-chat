@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Images do not load on cards, location profile or on user profile (Rework #3018)
+* Update other outdated 3rd party modules (#3035)
+* Creation Flow: Keyboard does not slide down (#2953)
+* [dev] Avoid double Actions.pop calls, replace to popTo (#2987)
+* [dev] fix mockWocky and re-enable Jest snapshot tests (#3001)
 
 # 3.9.4 - 2018 Oct 30
 
