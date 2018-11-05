@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.10.0 - 2018 Nov 5
+
 * Images do not load on cards, location profile or on user profile (Rework #3018)
 * Update other outdated 3rd party modules (#3035)
 * Creation Flow: Keyboard does not slide down (#2953)
