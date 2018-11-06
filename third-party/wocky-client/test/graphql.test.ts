@@ -1,10 +1,9 @@
-import {expect} from 'chai'
 import {createXmpp, waitFor, timestamp} from './support/testuser'
 import {IBot, GraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
-// tslint:disable:no-unused-expression no-console no-empty
+// tslint:disable:no-console
 
 // // User "111" on Staging
 // const userId = 'e51c7f0a-18cc-11e8-b1e9-0a580a0206dc'
@@ -73,12 +72,12 @@ describe('GraphQL', () => {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
-      expect(profile!.id).to.equal(user.username!)
-      expect((profile as any).email).to.equal('a@aa.com')
-      expect((profile as any).phoneNumber).to.equal(user1phone)
-      expect((profile as any).__typename).to.equal('CurrentUser')
-      expect(profile!.hidden!.enabled).to.equal(false)
-      expect(profile!.hidden!.expires).to.equal(null)
+      expect(profile!.id).toEqual(user.username!)
+      expect((profile as any).email).toEqual('a@aa.com')
+      expect((profile as any).phoneNumber).toEqual(user1phone)
+      expect((profile as any).__typename).toEqual('CurrentUser')
+      expect(profile!.hidden!.enabled).toEqual(false)
+      expect(profile!.hidden!.expires).toEqual(null)
       done()
     } catch (e) {
       done(e)
@@ -99,8 +98,8 @@ describe('GraphQL', () => {
     try {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
-      expect(profile!.hidden!.expires.getTime()).to.equal(date.getTime())
-      expect(profile!.hidden!.enabled).to.equal(true)
+      expect(profile!.hidden!.expires.getTime()).toEqual(date.getTime())
+      expect(profile!.hidden!.enabled).toEqual(true)
       done()
     } catch (e) {
       done(e)
@@ -119,8 +118,8 @@ describe('GraphQL', () => {
     try {
       timestamp()
       const profile = await gql.loadProfile(user.username!)
-      expect(profile!.hidden!.expires).to.be.null
-      expect(profile!.hidden!.enabled).to.equal(false)
+      expect(profile!.hidden!.expires).toBe(null)
+      expect(profile!.hidden!.enabled).toEqual(false)
       done()
     } catch (e) {
       done(e)
@@ -131,10 +130,10 @@ describe('GraphQL', () => {
       timestamp()
       const profile = await gql.loadProfile(user2.username!)
       // console.log('PROFILE:', JSON.stringify(profile))
-      expect(profile!.id).to.equal(user2.username)
-      expect((profile as any).email).to.be.undefined
-      expect((profile as any).phoneNumber).to.be.undefined
-      expect((profile as any).__typename).to.equal('OtherUser')
+      expect(profile!.id).toEqual(user2.username)
+      expect((profile as any).email).toBeUndefined()
+      expect((profile as any).phoneNumber).toBeUndefined()
+      expect((profile as any).__typename).toEqual('OtherUser')
       done()
     } catch (e) {
       done(e)
@@ -160,14 +159,14 @@ describe('GraphQL', () => {
       })
       const bots = await gql.loadOwnBots(user.username!, undefined, 1)
       // console.log('bots', bots)
-      expect(bots.count).to.equal(2)
-      expect(bots.list.length).to.equal(1)
-      expect(bots.list[0].title).to.equal('Test bot2')
+      expect(bots.count).toEqual(2)
+      expect(bots.list.length).toEqual(1)
+      expect(bots.list[0].title).toEqual('Test bot2')
       const bots2 = await gql.loadOwnBots(user.username!, bots.cursor, 1)
       // console.log('bots', bots2)
-      expect(bots2.count).to.equal(2)
-      expect(bots2.list.length).to.equal(1)
-      expect(bots2.list[0].title).to.equal('Test bot')
+      expect(bots2.count).toEqual(2)
+      expect(bots2.list.length).toEqual(1)
+      expect(bots2.list[0].title).toEqual('Test bot')
       done()
     } catch (e) {
       done(e)
@@ -183,13 +182,13 @@ describe('GraphQL', () => {
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].id).to.equal(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].handle).to.equal(user.profile.handle)
-          expect(gql.botVisitor.bot.visitors[0].firstName).to.equal(user.profile.firstName)
-          expect(gql.botVisitor.bot.visitors[0].lastName).to.equal(user.profile.lastName)
-          expect(gql.botVisitor.action).to.equal('ARRIVE')
+          expect(gql.botVisitor.bot.id).toEqual(bot.id)
+          expect(gql.botVisitor.visitor.id).toEqual(user.profile.id)
+          expect(gql.botVisitor.bot.visitors[0].id).toEqual(user.profile.id)
+          expect(gql.botVisitor.bot.visitors[0].handle).toEqual(user.profile.handle)
+          expect(gql.botVisitor.bot.visitors[0].firstName).toEqual(user.profile.firstName)
+          expect(gql.botVisitor.bot.visitors[0].lastName).toEqual(user.profile.lastName)
+          expect(gql.botVisitor.action).toEqual('ARRIVE')
           done()
         }
       )
@@ -205,9 +204,9 @@ describe('GraphQL', () => {
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
-          expect(gql.botVisitor.bot.id).to.equal(bot.id)
-          expect(gql.botVisitor.visitor.id).to.equal(user.profile.id)
-          expect(gql.botVisitor.action).to.equal('DEPART')
+          expect(gql.botVisitor.bot.id).toEqual(bot.id)
+          expect(gql.botVisitor.visitor.id).toEqual(user.profile.id)
+          expect(gql.botVisitor.action).toEqual('DEPART')
           done()
         }
       )
@@ -219,9 +218,9 @@ describe('GraphQL', () => {
     try {
       timestamp()
       const loaded = await gql.loadBot(bot.id)
-      expect(loaded.title).to.equal(bot.title)
-      expect(loaded.guest).to.equal(true)
-      expect(loaded.id).to.equal(bot.id)
+      expect(loaded.title).toEqual(bot.title)
+      expect(loaded.guest).toEqual(true)
+      expect(loaded.id).toEqual(bot.id)
       done()
     } catch (e) {
       done(e)
@@ -240,7 +239,7 @@ describe('GraphQL', () => {
     }
   })
 
-  after('remove', async done => {
+  afterAll(async done => {
     try {
       await user.remove()
     } catch (e) {

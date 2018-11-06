@@ -1,9 +1,8 @@
-import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
 import {IWocky} from '../src/store/Wocky'
 
-// tslint:disable:no-unused-expression no-console no-empty
+// tslint:disable:no-console
 
 let user1: IWocky, user2: IWocky, user3: IWocky
 
@@ -64,11 +63,11 @@ describe('ProfileStore', () => {
   it('add two users to roster', async done => {
     try {
       const profile2 = await user1.loadProfile(user2.username!)
-      expect(profile2.isVerified).to.be.false
-      expect(profile2.handle).to.be.equal('abc2')
-      expect(profile2.isFollowed).to.be.false
+      expect(profile2.isVerified).toBe(false)
+      expect(profile2.handle).toEqual('abc2')
+      expect(profile2.isFollowed).toBe(false)
       await profile2.follow()
-      expect(profile2.isFollowed).to.be.true
+      expect(profile2.isFollowed).toBe(true)
       const profile3 = await user1.loadProfile(user3.username!)
       await profile3.follow()
       done()
@@ -86,30 +85,30 @@ describe('ProfileStore', () => {
   })
 
   it('get profile and check isOwn', () => {
-    expect(user1.profiles.get(user1.username!)).to.be.not.null
-    expect(user1.profiles.get(user1.username!)!.isOwn).to.be.true
-    expect(user1.profiles.get(user2.username!)).to.be.not.null
-    expect(user1.profiles.get(user2.username!)!.isOwn).to.be.false
+    expect(user1.profiles.get(user1.username!)).toBeTruthy()
+    expect(user1.profiles.get(user1.username!)!.isOwn).toBe(true)
+    expect(user1.profiles.get(user2.username!)).toBeTruthy()
+    expect(user1.profiles.get(user2.username!)!.isOwn).toBe(false)
   })
 
   it('followed profile relations', async done => {
     try {
       await user1.loadProfile(user1.username!)
-      expect(user1.profile!.followedSize).to.be.equal(2)
-      expect(user1.profile!.followed.loading).to.be.equal(false)
-      expect(user1.profile!.followed.finished).to.be.equal(false)
+      expect(user1.profile!.followedSize).toEqual(2)
+      expect(user1.profile!.followed.loading).toEqual(false)
+      expect(user1.profile!.followed.finished).toEqual(false)
       // load first page (one record per page)
       // await user1.profile!.followed.loadPage(1)
-      // expect(user1.profile!.followed.length).to.be.equal(1)
-      // expect(user1.profile!.followed.list.length).to.be.equal(1)
-      // expect(user1.profile!.followed.list[0].id).to.be.equal(user2.username)
-      // expect(user1.profile!.followed.finished).to.be.equal(false)
+      // expect(user1.profile!.followed.length).toEqual(1)
+      // expect(user1.profile!.followed.list.length).toEqual(1)
+      // expect(user1.profile!.followed.list[0].id).toEqual(user2.username)
+      // expect(user1.profile!.followed.finished).toEqual(false)
       // // load next page with one record
       // await user1.profile!.followed.loadPage(1)
-      // expect(user1.profile!.followed.length).to.be.equal(2)
-      // expect(user1.profile!.followed.list.length).to.be.equal(2)
-      // expect(user1.profile!.followed.list[1].id).to.be.equal(user3.username)
-      // expect(user1.profile!.followed.finished).to.be.equal(true)
+      // expect(user1.profile!.followed.length).toEqual(2)
+      // expect(user1.profile!.followed.list.length).toEqual(2)
+      // expect(user1.profile!.followed.list[1].id).toEqual(user3.username)
+      // expect(user1.profile!.followed.finished).toEqual(true)
       done()
     } catch (e) {
       done(e)
@@ -118,7 +117,7 @@ describe('ProfileStore', () => {
   it('followers profile relations', async done => {
     try {
       await user1.profile!.followers.load()
-      expect(user1.profile!.followers.length).to.be.equal(0)
+      expect(user1.profile!.followers.length).toEqual(0)
       done()
     } catch (e) {
       done(e)
@@ -127,10 +126,10 @@ describe('ProfileStore', () => {
   it('test lookup', async done => {
     try {
       const profile = await user1.lookup('abc12')
-      expect(profile.id).to.be.equal(user1.username)
-      expect(profile.handle).to.be.equal('abc12')
-      expect(profile.firstName).to.be.equal('name1')
-      expect(profile.lastName).to.be.equal('lname1')
+      expect(profile.id).toEqual(user1.username)
+      expect(profile.handle).toEqual('abc12')
+      expect(profile.firstName).toEqual('name1')
+      expect(profile.lastName).toEqual('lname1')
       done()
     } catch (e) {
       done(e)
@@ -139,16 +138,16 @@ describe('ProfileStore', () => {
   it('profile details', async done => {
     try {
       const profile = await user1.loadProfile(user2.username!)
-      expect(profile.id).to.be.equal(user2.username)
-      expect(profile.handle).to.be.equal('abc2')
-      expect(profile.firstName).to.be.equal('name2')
-      expect(profile.lastName).to.be.equal('lname2')
+      expect(profile.id).toEqual(user2.username)
+      expect(profile.handle).toEqual('abc2')
+      expect(profile.firstName).toEqual('name2')
+      expect(profile.lastName).toEqual('lname2')
       done()
     } catch (e) {
       done(e)
     }
   })
-  after('remove', async () => {
+  afterAll(async () => {
     await user1.remove()
     await user2.remove()
     await user3.remove()

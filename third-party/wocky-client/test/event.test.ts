@@ -1,4 +1,3 @@
-import {expect} from 'chai'
 import {types, getType, applySnapshot, getSnapshot} from 'mobx-state-tree'
 import {processItem, processHomestreamResponse} from '../src/transport/XmppTransport'
 import {FileSource} from '../src/model/File'
@@ -10,30 +9,14 @@ import {homestreamTestData} from './support/testuser'
 import {EventEntity, EventList} from '../src/model/EventList'
 const env = {
   wocky: {
-    _loadBotVisitors: () => {
-      /* noop */
-    },
-    _loadBotGuests: () => {
-      /* noop */
-    },
-    _loadSubscribedBots: () => {
-      /* noop */
-    },
-    _loadGeofenceBots: () => {
-      /* noop */
-    },
-    _loadBotSubscribers: () => {
-      /* noop */
-    },
-    _loadBotPosts: () => {
-      /* noop */
-    },
-    _loadRelations: () => {
-      /* noop */
-    },
-    _loadOwnBots: () => {
-      /* noop */
-    },
+    _loadBotVisitors: jest.fn(),
+    _loadBotGuests: jest.fn(),
+    _loadSubscribedBots: jest.fn(),
+    _loadGeofenceBots: jest.fn(),
+    _loadBotSubscribers: jest.fn(),
+    _loadBotPosts: jest.fn(),
+    _loadRelations: jest.fn(),
+    _loadOwnBots: jest.fn(),
   },
 }
 
@@ -73,8 +56,8 @@ describe('Home stream', () => {
     try {
       const testModel2 = TestModel.create({id: 'testmodel'}, env)
       applySnapshot(testModel2, JSON.parse(snapshot))
-      expect(getType(testModel2.home.list[0]).name).to.be.equal('EventBotNote')
-      expect(getType(testModel2.home.list[1]).name).to.be.equal('EventBotPost')
+      expect(getType(testModel2.home.list[0]).name).toEqual('EventBotNote')
+      expect(getType(testModel2.home.list[1]).name).toEqual('EventBotPost')
       done()
     } catch (e) {
       done(e)
@@ -86,10 +69,10 @@ describe('Home stream', () => {
       homestreamTestData,
       homestreamTestData.to.split('@')[0]
     )
-    expect(list.length).to.be.equal(3)
-    expect(bots.length).to.be.equal(2)
-    expect(version).to.be.equal('2018-02-04T14:04:10.944022Z')
-    expect(count).to.be.equal(2)
+    expect(list.length).toEqual(3)
+    expect(bots.length).toEqual(2)
+    expect(version).toEqual('2018-02-04T14:04:10.944022Z')
+    expect(count).toEqual(2)
   })
 
   it('parse live data', () => {
@@ -115,6 +98,6 @@ describe('Home stream', () => {
     const itemData = processItem(data, null, '39e09af8-09b4-11e8-80d4-0a580a02057d')
     const item = testModel.create(EventEntity, itemData)
     testModel.home.addToTop(item)
-    expect(testModel.home.list[0].bot.id).to.be.equal('3d577dbe-09b4-11e8-b7e5-0a580a02057d')
+    expect(testModel.home.list[0].bot.id).toEqual('3d577dbe-09b4-11e8-b7e5-0a580a02057d')
   })
 })
