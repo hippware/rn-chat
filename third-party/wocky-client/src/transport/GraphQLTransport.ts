@@ -18,22 +18,31 @@ export class GraphQLTransport implements IWockyTransport {
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
+  client2?: ApolloClient<any>
+  socket2?: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
   notificationsSubscription?: ZenObservable.Subscription
-  @observable connected: boolean = false
-  @observable connecting: boolean = false
+  @observable
+  connected: boolean = false
+  @observable
+  connecting: boolean = false
   username?: string
   password?: string
   host?: string
   // @observable geoBot: any
-  @observable message: any
+  @observable
+  message: any
 
   // TODO: reuse `notification` or create new property specific to GraphQL?
-  @observable notification: any
+  @observable
+  notification: any
 
-  @observable presence: any
-  @observable rosterItem: any
-  @observable botVisitor: any
+  @observable
+  presence: any
+  @observable
+  rosterItem: any
+  @observable
+  botVisitor: any
 
   constructor(resource: string) {
     this.resource = resource
@@ -72,25 +81,44 @@ export class GraphQLTransport implements IWockyTransport {
       // logger: (kind, msg, data) => {
       //   if (msg !== 'close') {
       //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   } else {
+      //     console.log('close')
+      //   }
+      // },
+    })
+    this.socket2 = new PhoenixSocket(socketEndpoint, {
+      reconnectAfterMs: () => 100000000, // disable auto-reconnect
+      // uncomment to see all graphql messages!
+      // logger: (kind, msg, data) => {
+      //   if (msg !== 'close') {
+      //     console.log('& socket2:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   } else {
+      //     console.log('close2')
       //   }
       // },
     })
     const fragmentMatcher = new IntrospectionFragmentMatcher({
       introspectionQueryResultData,
     })
+    const defaultOptions: any = {
+      watchQuery: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+      },
+    }
     this.client = new ApolloClient({
       link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
       cache: new InMemoryCache({fragmentMatcher}),
-      defaultOptions: {
-        watchQuery: {
-          fetchPolicy: 'network-only',
-          errorPolicy: 'ignore',
-        },
-        query: {
-          fetchPolicy: 'network-only',
-          errorPolicy: 'ignore',
-        },
-      },
+      defaultOptions,
+    })
+    this.client2 = new ApolloClient({
+      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket2)),
+      cache: new InMemoryCache({fragmentMatcher}),
+      defaultOptions,
     })
     this.socket.onError(() => {
       // console.log('& graphql Phoenix socket error')
@@ -103,6 +131,12 @@ export class GraphQLTransport implements IWockyTransport {
     })
     this.socket.onOpen(() => {
       // console.log('& graphql open')
+    })
+    this.socket2.onError(() => {
+      console.log('& graphql Phoenix socket error2')
+    })
+    this.socket2.onClose(() => {
+      console.log('& graphql Phoenix socket closed')
     })
 
     if (!this.username) {
@@ -122,7 +156,7 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(user: string, token: string): Promise<boolean> {
     try {
-      const res = await this.client!.mutate({
+      const mutation = {
         mutation: gql`
           mutation authenticate($user: String!, $token: String!) {
             authenticate(input: {user: $user, token: $token}) {
@@ -133,7 +167,10 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `,
         variables: {user, token},
-      })
+      }
+      // authenticate both connections
+      await this.client!.mutate(mutation)
+      const res = await this.client2!.mutate(mutation)
       this.connected = !!res.data && res.data!.authenticate !== null
       return this.connected
     } catch (err) {
@@ -170,23 +207,29 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    const res = await this.client!.mutate({
-      mutation: gql`
-        mutation botCreate {
-          botCreate {
-            messages {
-              field
-              message
-            }
-            successful
-            result {
-              id
+    try {
+      console.log('GENERATE BOT ID')
+      const res = await this.client!.mutate({
+        mutation: gql`
+          mutation botCreate {
+            botCreate {
+              messages {
+                field
+                message
+              }
+              successful
+              result {
+                id
+              }
             }
           }
-        }
-      `,
-    })
-    return res.data!.botCreate!.result.id
+        `,
+      })
+      console.log('GENERATED', res.data!.botCreate!.result.id)
+      return res.data!.botCreate!.result.id
+    } catch (e) {
+      console.error(e)
+    }
   }
   async loadBot(id: string): Promise<any> {
     const res = await this.client!.query<any>({
@@ -533,6 +576,19 @@ export class GraphQLTransport implements IWockyTransport {
         }
       })
     }
+    if (this.socket2 && this.socket2.isConnected()) {
+      return new Promise<void>((resolve, reject) => {
+        try {
+          this.socket2!.disconnect(() => {
+            // console.log('& graphql onDisconnect', something)
+            resolve()
+          })
+        } catch (err) {
+          // console.log('& graphql disconnect err', err)
+          reject(err)
+        }
+      })
+    }
   }
 
   async requestProfiles(): Promise<any> {
@@ -770,21 +826,30 @@ export class GraphQLTransport implements IWockyTransport {
     latitudeDelta: number
     longitudeDelta: number
   }): Promise<[IBot]> {
-    const res = await this.client!.query<any>({
-      query: gql`
+    try {
+      if (latitudeDelta > 100 || longitudeDelta > 100) {
+        return []
+      }
+      console.log('LOAD LOCAL BOTS')
+      const res = await this.client2!.query<any>({
+        query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
             ${BOT_PROPS}
           }
         }
       `,
-      variables: {
-        pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
-        pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
-        ownUsername: this.username,
-      },
-    })
-    return res.data.localBots.map(convertBot)
+        variables: {
+          pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
+          pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
+          ownUsername: this.username,
+        },
+      })
+      console.log('BOT LOADING COMPLETED', JSON.stringify(res))
+      return res.data.localBots.map(convertBot)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
