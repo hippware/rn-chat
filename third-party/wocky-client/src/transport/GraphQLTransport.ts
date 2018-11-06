@@ -133,10 +133,10 @@ export class GraphQLTransport implements IWockyTransport {
       // console.log('& graphql open')
     })
     this.socket2.onError(() => {
-      console.log('& graphql Phoenix socket error2')
+      // console.log('& graphql Phoenix socket error2')
     })
     this.socket2.onClose(() => {
-      console.log('& graphql Phoenix socket closed')
+      // console.log('& graphql Phoenix socket closed')
     })
 
     if (!this.username) {
@@ -207,29 +207,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    try {
-      console.log('GENERATE BOT ID')
-      const res = await this.client!.mutate({
-        mutation: gql`
-          mutation botCreate {
-            botCreate {
-              messages {
-                field
-                message
-              }
-              successful
-              result {
-                id
-              }
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation botCreate {
+          botCreate {
+            messages {
+              field
+              message
+            }
+            successful
+            result {
+              id
             }
           }
-        `,
-      })
-      console.log('GENERATED', res.data!.botCreate!.result.id)
-      return res.data!.botCreate!.result.id
-    } catch (e) {
-      console.error(e)
-    }
+        }
+      `,
+    })
+    return res.data!.botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
     const res = await this.client!.query<any>({
@@ -826,30 +820,24 @@ export class GraphQLTransport implements IWockyTransport {
     latitudeDelta: number
     longitudeDelta: number
   }): Promise<[IBot]> {
-    try {
-      if (latitudeDelta > 100 || longitudeDelta > 100) {
-        return []
-      }
-      console.log('LOAD LOCAL BOTS')
-      const res = await this.client2!.query<any>({
-        query: gql`
+    if (latitudeDelta > 100 || longitudeDelta > 100) {
+      return [] as any
+    }
+    const res = await this.client2!.query<any>({
+      query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
             ${BOT_PROPS}
           }
         }
       `,
-        variables: {
-          pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
-          pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
-          ownUsername: this.username,
-        },
-      })
-      console.log('BOT LOADING COMPLETED', JSON.stringify(res))
-      return res.data.localBots.map(convertBot)
-    } catch (e) {
-      console.error(e)
-    }
+      variables: {
+        pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
+        pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
+        ownUsername: this.username,
+      },
+    })
+    return res.data.localBots.map(convertBot)
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
