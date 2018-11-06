@@ -28,18 +28,12 @@ type Props = {
 @observer
 class SignIn extends React.Component<Props> {
   picker: any
-  @observable
-  cca2: any = 'US'
-  @observable
-  callingCode: string = '1'
-  @observable
-  countryName: string = 'United States'
-  @observable
-  phoneValue: string = ''
-  @observable
-  submitting: boolean = false
-  @observable
-  sendText: string = 'Send Confirmation'
+  @observable cca2: any = 'US'
+  @observable callingCode: string = '1'
+  @observable countryName: string = 'United States'
+  @observable phoneValue: string = ''
+  @observable submitting: boolean = false
+  @observable sendText: string = 'Send Confirmation'
   phoneText: any
 
   componentDidMount() {

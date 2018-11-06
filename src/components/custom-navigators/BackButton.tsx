@@ -13,9 +13,7 @@ export default class BackButton extends React.Component<Props> {
 
   // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      scene: {index, isActive},
-    } = nextProps
+    const {scene: {index, isActive}} = nextProps
     Animated.spring(this.offsetLeft, {
       toValue: index > 0 && isActive ? 0 : -100,
       useNativeDriver: true,

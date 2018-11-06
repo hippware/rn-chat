@@ -63,10 +63,8 @@ class ChatScreen extends React.Component<Props, State> {
     height: 0,
   }
 
-  @observable
-  messages: any[] = []
-  @observable
-  chat: any
+  @observable messages: any[] = []
+  @observable chat: any
   mounted: boolean = false
   handler: any
   list: any

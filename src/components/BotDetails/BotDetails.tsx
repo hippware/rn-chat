@@ -30,12 +30,9 @@ type Props = {
 @inject('wocky', 'analytics', 'notificationStore', 'homeStore')
 @observer
 export default class BotDetails extends React.Component<Props> {
-  @observable
-  bot?: IBot
-  @observable
-  owner?: IProfile
-  @observable
-  numToRender: number = 8
+  @observable bot?: IBot
+  @observable owner?: IProfile
+  @observable numToRender: number = 8
   list: any
   viewTimeout: any
 
