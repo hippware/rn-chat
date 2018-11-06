@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import {View, Image, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import Bubble from '../map/Bubble'
 import commonStyles from '../styles'
@@ -8,10 +8,10 @@ const drag = require('../../../images/dragTheMap.png')
 const defaultIcon = require('../../../images/mapIcons/question.png')
 
 const UberMarker = inject('iconStore')(
-  observer(({iconStore: {icon}}) => {
+  observer(({iconStore: {icon, index, setIndex}}) => {
     return (
       <View
-        pointerEvents="none"
+        pointerEvents="box-none"
         style={[
           commonStyles.absolute,
           {
@@ -20,20 +20,22 @@ const UberMarker = inject('iconStore')(
           },
         ]}
       >
-        <Bubble
-          image={!icon && defaultIcon}
-          fontIcon={icon}
-          style={{
-            backgroundColor: 'white',
-          }}
-          outerStyle={{
-            shadowOffset: {height: 2, width: 0},
-            shadowRadius: 3,
-            shadowOpacity: 0.12,
-          }}
-          imageStyle={{width: 20, height: 20}}
-          size={48}
-        />
+        <TouchableOpacity onPress={() => setIndex(1)}>
+          <Bubble
+            image={!icon && defaultIcon}
+            fontIcon={icon}
+            style={{
+              backgroundColor: 'white',
+            }}
+            outerStyle={{
+              shadowOffset: {height: 2, width: 0},
+              shadowRadius: 3,
+              shadowOpacity: 0.12,
+            }}
+            imageStyle={{width: 20, height: 20}}
+            size={48}
+          />
+        </TouchableOpacity>
         {/* <Image source={createPin} /> */}
         <Image source={drag} />
       </View>

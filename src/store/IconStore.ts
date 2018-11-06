@@ -1,22 +1,14 @@
 import {observable, computed, action} from 'mobx'
 
-const icons = {
-  drinks: 'a',
-  trees: 'b',
-  heart: 'c',
-  silverware: 'd',
-  store: 'e',
-  plane: 'g',
-}
-const {silverware, drinks, trees, plane, store, heart} = icons
-
 const defaultEmoji = '\ud83d\ude1c'
-const defaultList = [undefined, silverware, drinks, trees, plane, store, heart, defaultEmoji]
+const defaultList = [undefined, defaultEmoji]
 
 export default class IconStore {
   readonly iconList = observable.array<string | undefined>(defaultList)
-  @observable index: number = 0
-  @observable isEmojiKeyboardShown: boolean = false
+  @observable
+  index: number = 0
+  @observable
+  isEmojiKeyboardShown: boolean = false
 
   @computed
   get icon() {
@@ -25,6 +17,11 @@ export default class IconStore {
   @computed
   get isEmoji() {
     return this.index === this.iconList.length - 1
+  }
+
+  @action
+  setEmojiKeyboardShown(value: boolean) {
+    this.isEmojiKeyboardShown = value
   }
 
   @action

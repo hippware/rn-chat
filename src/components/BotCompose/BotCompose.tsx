@@ -9,7 +9,6 @@ import {observer, inject} from 'mobx-react/native'
 import {observable, reaction, computed} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
-import IconSelector from './IconSelector'
 import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
 import EmojiSelector from 'react-native-emoji-selector'
@@ -100,7 +99,6 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} />
         <View
           style={{
             height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
@@ -108,7 +106,12 @@ export class BotCompose extends React.Component<Props> {
             overflow: 'hidden',
           }}
         >
-          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+          <EmojiSelector
+            showHistory
+            onEmojiSelected={this.onEmojiSelected}
+            showSearchBar={false}
+            columns={8}
+          />
         </View>
         {!this.props.iconStore!.isEmojiKeyboardShown && (
           <View>
