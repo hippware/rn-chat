@@ -40,7 +40,10 @@ describe('GraphQL', () => {
   it('update profile', async done => {
     try {
       timestamp()
-      await waitFor(() => user.profile !== null && user.profile.phoneNumber !== null)
+      await waitFor(
+        () => user.profile !== null && user.profile.phoneNumber !== null,
+        'user1 profile to load'
+      )
       user1phone = user.profile.phoneNumber
       await user.profile!.update({
         handle: 'a' + user1phone.replace('+', ''),

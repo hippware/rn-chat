@@ -26,7 +26,7 @@ describe('FileStore', () => {
           type: 'image/jpeg',
         }
         const data = {height: 300, width: 300, size: 3801, file}
-        await waitFor(() => user1.profile !== null)
+        await waitFor(() => user1.profile !== null, 'user1 profile to load')
         expect(user1.profile!.avatar).toBe(null)
         await user1.profile!.upload(data)
         expect(user1.profile!.avatar).toBeTruthy()
@@ -67,7 +67,7 @@ describe('FileStore', () => {
       await user1.logout()
       expect(user1.profile).toBe(null)
       user1 = await createXmpp(25)
-      await waitFor(() => user1.profile !== null)
+      await waitFor(() => user1.profile !== null, 'user1 profile to load')
       expect(user1.profile!.avatar!.url).toBeTruthy()
       expect(user1.profile!.avatar!.thumbnail).toBe(null)
       // check how thumbnails are automatically loaded

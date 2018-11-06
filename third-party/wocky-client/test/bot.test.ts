@@ -11,6 +11,9 @@ const icon = '\u00A9\uFE0F\u00A9'
 // tslint:disable:no-console
 
 describe('BotStore', () => {
+  beforeAll(() => {
+    jest.setTimeout(10000)
+  })
   it('create user1', async done => {
     try {
       timestamp()
@@ -183,7 +186,7 @@ describe('BotStore', () => {
     try {
       timestamp()
       const loaded = await user2.loadBot(bot.id, bot.server)
-      await waitFor(() => !loaded.loading)
+      await waitFor(() => !loaded.loading, 'bot to finish loading')
       expect(loaded.icon).toBe(icon)
       expect(loaded.isNew).toBe(false)
       expect(loaded.title).toBe('Test bot!')
@@ -215,7 +218,7 @@ describe('BotStore', () => {
       timestamp()
       await user2._subscribeBot(bot.id)
       const loaded = await user2.loadBot(bot.id, bot.server)
-      await waitFor(() => !loaded.loading)
+      await waitFor(() => !loaded.loading, 'bot to finish loading')
       expect(loaded.owner).toBeTruthy()
       expect(loaded.owner.id).toBe(user1.profile!.id)
       expect(loaded.owner.handle).toBe(user1.profile!.handle)

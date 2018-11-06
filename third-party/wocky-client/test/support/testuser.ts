@@ -81,7 +81,8 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
-export async function waitFor(condition: () => boolean) {
+export async function waitFor(condition: () => boolean, message: string = '') {
+  console.log('wait for', message)
   return new Promise((resolve, reject) => {
     when(
       () => {

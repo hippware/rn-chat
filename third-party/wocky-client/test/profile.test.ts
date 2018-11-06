@@ -16,7 +16,7 @@ describe('ProfileStore', () => {
       timestamp()
       user1 = await createXmpp(31)
       timestamp()
-      await waitFor(() => user1.profile !== null)
+      await waitFor(() => user1.profile !== null, 'user1 profile to load')
       timestamp()
       await user1.profile!.update({
         handle: 'abc12',
@@ -34,7 +34,7 @@ describe('ProfileStore', () => {
       timestamp()
       user2 = await createXmpp(32)
       timestamp()
-      await waitFor(() => user2.profile !== null)
+      await waitFor(() => user2.profile !== null, 'user2 profile to load')
       timestamp()
       await user2.profile!.update({
         handle: 'abc2',
@@ -52,7 +52,7 @@ describe('ProfileStore', () => {
       timestamp()
       user3 = await createXmpp(33)
       timestamp()
-      await waitFor(() => user3.profile !== null)
+      await waitFor(() => user3.profile !== null, 'user3 profile to load')
       timestamp()
       await user3.profile!.update({handle: 'abc3', firstName: 'name3', email: 'a3@aa.com'})
       done()

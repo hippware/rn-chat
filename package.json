@@ -7,7 +7,7 @@
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "test": "npm run testLocal && npm run jestWocky",
-    "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jest:all",
+    "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jest",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
     "jestWocky": "jest --config jest.wocky.config.json --forceExit --detectOpenHandles",

@@ -41,8 +41,8 @@ describe('Geofence', () => {
       user2 = await createXmpp()
       console.log('user2 credentials', user2.username, user2.password)
       timestamp()
-      await waitFor(() => user1.profile !== null)
-      await waitFor(() => user2.profile !== null)
+      await waitFor(() => user1.profile !== null, 'user1 profile to load')
+      await waitFor(() => user2.profile !== null, 'user2 profile to load')
       const user1phone = user1.profile!.phoneNumber
       const user2phone = user2.profile!.phoneNumber
       await user1.profile!.update({
@@ -104,7 +104,10 @@ describe('Geofence', () => {
   })
   it('user2 receives bot invite', async done => {
     try {
-      await waitFor(() => user2.notifications.length === 1)
+      await waitFor(
+        () => user2.notifications.length === 1,
+        'user2 bot invitation notification to arrive'
+      )
       done()
     } catch (e) {
       done(e)
@@ -146,9 +149,9 @@ describe('Geofence', () => {
       expect(bot.visitors.list.length).toEqual(0)
       expect(bot.visitorsSize).toEqual(0)
       await enterBot(user1)
-      await waitFor(() => bot.visitors.list.length === 1)
+      await waitFor(() => bot.visitors.list.length === 1, 'bot visitors to increment')
       expect(bot.visitorsSize).toEqual(1)
-      await waitFor(() => user1.activeBots.length === 2)
+      await waitFor(() => user1.activeBots.length === 2, 'bot visitors to increment')
       done()
     } catch (e) {
       done(e)
@@ -163,9 +166,9 @@ describe('Geofence', () => {
       await bot.visitors.load!()
       expect(bot.visitors.list.length).toEqual(1)
       await exitBot(user1)
-      await waitFor(() => bot.visitors.list.length === 0)
+      await waitFor(() => bot.visitors.list.length === 0, 'bot visitors to increment')
       expect(bot.visitorsSize).toEqual(0)
-      await waitFor(() => user1.activeBots.length === 0)
+      await waitFor(() => user1.activeBots.length === 0, 'active bots to increment')
       done()
     } catch (e) {
       done(e)
@@ -176,7 +179,7 @@ describe('Geofence', () => {
     try {
       timestamp()
       const loadedBot2 = await user1.loadBot(bot.id, null)
-      await waitFor(() => !loadedBot2.loading)
+      await waitFor(() => !loadedBot2.loading, 'bot to load')
       expect(loadedBot2.guestsSize).toEqual(1)
       expect(loadedBot2.guest).toEqual(true)
       done()
@@ -189,7 +192,7 @@ describe('Geofence', () => {
     try {
       timestamp()
       loadedBot = await user2.loadBot(bot.id, null)
-      await waitFor(() => !loadedBot.loading)
+      await waitFor(() => !loadedBot.loading, 'bot to load')
       expect(loadedBot.guestsSize).toEqual(1)
       expect(loadedBot.guest).toEqual(false)
       done()
@@ -239,7 +242,7 @@ describe('Geofence', () => {
       expect(user1.activeBots.length).toEqual(0)
       await enterBot(user1)
       await enterBot(user2)
-      await waitFor(() => bot.visitorsSize === 2)
+      await waitFor(() => bot.visitorsSize === 2, 'bot visitors to increment')
       expect(user1.activeBots.length).toEqual(2)
       expect(user1.activeBots[0].title).toEqual('Test bot')
       expect(user1.activeBots[1].title).toEqual('Test bot2')
@@ -279,12 +282,12 @@ describe('Geofence', () => {
         addressData: {city: 'West Hollywood', country: 'United States'},
       })
       await bot.invite([user2!.username!])
-      await waitFor(() => user2.notifications.length === 1)
+      await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
       loadedBot = await user2.loadBot(bot.id, null)
       expect(loadedBot.visitorsSize).toEqual(1)
       await loadedBot.acceptInvitation(Location.create(insideBotLocation))
       expect(loadedBot.guest).toEqual(true)
-      await waitFor(() => loadedBot.visitorsSize === 2)
+      await waitFor(() => loadedBot.visitorsSize === 2, 'visitors size to increment')
       done()
     } catch (e) {
       done(e)
