@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Use two GraphQL connections (PR #3053)
+  * Fix: Next button missing during creation flow (#3005)
+
 # 3.10.0 - 2018 Nov 5
 
 * Images do not load on cards, location profile or on user profile (Rework #3018)
