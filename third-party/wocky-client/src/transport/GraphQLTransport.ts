@@ -22,27 +22,20 @@ export class GraphQLTransport implements IWockyTransport {
   socket2?: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
   notificationsSubscription?: ZenObservable.Subscription
-  @observable
-  connected: boolean = false
-  @observable
-  connecting: boolean = false
+  @observable connected: boolean = false
+  @observable connecting: boolean = false
   username?: string
   password?: string
   host?: string
   // @observable geoBot: any
-  @observable
-  message: any
+  @observable message: any
 
   // TODO: reuse `notification` or create new property specific to GraphQL?
-  @observable
-  notification: any
+  @observable notification: any
 
-  @observable
-  presence: any
-  @observable
-  rosterItem: any
-  @observable
-  botVisitor: any
+  @observable presence: any
+  @observable rosterItem: any
+  @observable botVisitor: any
 
   constructor(resource: string) {
     this.resource = resource
