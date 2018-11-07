@@ -40,14 +40,10 @@ const emojiKeyboardHeight = 305
 @inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log', 'locationStore')
 @observer
 export class BotCompose extends React.Component<Props> {
-  @observable
-  isLoading: boolean = false
-  @observable
-  bot?: IBot
-  @observable
-  uploadingPhoto: boolean = false
-  @observable
-  text: string = ''
+  @observable isLoading: boolean = false
+  @observable bot?: IBot
+  @observable uploadingPhoto: boolean = false
+  @observable text: string = ''
   controls: any
   botTitle: any
   note: any

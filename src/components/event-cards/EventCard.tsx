@@ -22,9 +22,7 @@ const EventBotInviteCard = observer(
       timestamp={relativeDateAsString}
       action={
         isResponse
-          ? isAccepted
-            ? 'accepted your invite to'
-            : 'rejected your invite to'
+          ? isAccepted ? 'accepted your invite to' : 'rejected your invite to'
           : 'invited you to follow'
       }
       line2={bot.title}
