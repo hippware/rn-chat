@@ -12,7 +12,7 @@
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
     "jestWocky": "jest --config jest.wocky.config.json --forceExit --detectOpenHandles",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest": "jest --config jest.config.json --verbose",
+    "jest": "jest --config jest.config.json --verbose --forceExit --detectOpenHandles --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
