@@ -1,4 +1,3 @@
-import {expect} from 'chai'
 import HomeStore from '../src/store/HomeStore'
 import {Bot} from 'wocky-client'
 import {types} from 'mobx-state-tree'
@@ -33,9 +32,9 @@ describe('homeStore test', () => {
         )
       model.homeStore.selectBot(model.bot)
       model.homeStore.selectBot(model.bot2)
-      expect(model.homeStore.index).to.be.equal(3)
+      expect(model.homeStore.index).toEqual(3)
       model.homeStore.removeBot(model.bot2)
-      expect(model.homeStore.index).to.be.equal(2)
+      expect(model.homeStore.index).toEqual(2)
       done()
     } catch (e) {
       done(e)

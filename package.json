@@ -6,15 +6,14 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
-    "test": "npm run testLocal && npm run mochaWocky",
-    "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run mocha && npm run jest:all",
+    "test": "npm run testLocal && npm run jestWocky",
+    "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
-    "mocha": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./test/* --require ts-node/register --require tsconfig-paths/register --timeout 10000",
-    "mochaWocky": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha ./third-party/wocky-client/test/* --require ts-node/register --require tsconfig-paths/register --require ./third-party/wocky-client/test/support/setup.js  --timeout 30000",
+    "jestWocky": "jest --config jest.wocky.config.json --forceExit --detectOpenHandles",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest:all": "jest --testPathPattern __tests__/*.test.tsx",
-    "jest": "jest",
+    "jest": "jest --config jest.config.json",
+    "jestCI": "jest --config jest.config.json --verbose --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
@@ -25,35 +24,6 @@
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json"
-  },
-  "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "./__tests__/utils/testSetup.ts",
-      "./node_modules/appcenter/test/AppCenterMock.js"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
-    "modulePaths": [
-      "<rootDir>",
-      "<rootDir>/third-party/wocky-client/src"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*(test|spec)\\.(jsx?|tsx?))$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "moduleNameMapper": {
-      "wocky-client": "third-party/wocky-client/src"
-    }
   },
   "detox": {
     "configurations": {
@@ -136,10 +106,9 @@
     "@absinthe/socket": "github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4"
   },
   "devDependencies": {
-    "@types/chai": "4.0.4",
     "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.9",
-    "@types/mocha": "2.2.43",
+    "@types/lodash": "^4.14.118",
     "@types/node": "^9.3.0",
     "@types/node-fetch": "^2.1.2",
     "@types/phoenix": "^0.0.4",
@@ -162,14 +131,12 @@
     "babel-preset-react-native": "^4.0.0",
     "babel-preset-stage-0": "^6.24.1",
     "bugsnag-sourcemaps": "^1.0.4",
-    "chai": "4.2.0",
     "chalk": "^2.4.1",
     "denodeify": "^1.2.1",
     "expect": "^23.6.0",
     "form-data": "^1.0.0-rc4",
     "husky": "^1.1.3",
     "jest": "^23.6.0",
-    "mocha": "^2.3.4",
     "node-fetch": "^2.1.2",
     "prettier": "1.11.1",
     "pretty-quick": "^1.8.0",

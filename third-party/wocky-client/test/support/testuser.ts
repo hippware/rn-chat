@@ -4,8 +4,9 @@ import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
+import _ from 'lodash'
 
-// tslint:disable:no-unused-expression no-console
+// tslint:disable:no-console
 
 const fs = require('fs')
 
@@ -47,9 +48,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
       phoneNum ||
       (num
         ? `+1555000000${num.toString()}`
-        : `+1555${Math.trunc(Math.random() * 10000000)
-            .toString()
-            .padStart(7, '0')}`)
+        : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
     const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
     const service = Wocky.create(
       {host},
@@ -82,7 +81,8 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
-export async function waitFor(condition: () => boolean) {
+export async function waitFor(condition: () => boolean, message: string = '') {
+  console.log('wait for', message)
   return new Promise((resolve, reject) => {
     when(
       () => {
