@@ -9,7 +9,7 @@ describe('GraphQL Notifications Subscription', () => {
   let alice: IWocky, bob: IWocky, gqlAlice: GraphQLTransport, gqlBob: GraphQLTransport
 
   it('gets User Follow notification', async done => {
-    jest.setTimeout(10000)
+    jest.setTimeout(20000)
     timestamp()
     bob = await createXmpp()
     alice = await createXmpp()
