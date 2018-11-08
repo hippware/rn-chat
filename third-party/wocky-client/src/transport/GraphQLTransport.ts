@@ -228,7 +228,7 @@ export class GraphQLTransport implements IWockyTransport {
                   lastName
                   handle
                   avatar {
-                    # thumbnailUrl - TODO load all images from thumbnailUrl
+                    thumbnailUrl
                     trosUrl
                   }
                 }
