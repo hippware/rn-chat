@@ -39,8 +39,9 @@ export function expectedImage() {
 export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
     const xmppTransport = new XmppTransport(provider, 'testing')
-    const gql = new GraphQLTransport('testing')
+    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
     const transport = new HybridTransport(xmppTransport, gql)
 
     // const provider = new XmppStropheV2(console.log)
@@ -49,7 +50,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
       (num
         ? `+1555000000${num.toString()}`
         : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
-    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
+
     const service = Wocky.create(
       {host},
       {

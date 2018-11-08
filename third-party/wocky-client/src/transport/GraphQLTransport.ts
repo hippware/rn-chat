@@ -1,7 +1,7 @@
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, IPagingList} from './IWockyTransport'
+import {IWockyTransport, IPagingList, LoginParams} from './IWockyTransport'
 import {observable, action, when} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
@@ -12,9 +12,19 @@ import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
 import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
-import {convertProfile, convertBot, convertNotification, convertNotifications} from './utils'
+import {
+  convertProfile,
+  convertBot,
+  convertNotification,
+  convertNotifications,
+  generateWockyToken,
+  waitFor,
+} from './utils'
+import uuid from 'uuid/v1'
 
 export class GraphQLTransport implements IWockyTransport {
+  userId?: string
+  token?: string
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -24,49 +34,29 @@ export class GraphQLTransport implements IWockyTransport {
   notificationsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
-  username?: string
-  password?: string
-  host?: string
   // @observable geoBot: any
   @observable message: any
-
-  // TODO: reuse `notification` or create new property specific to GraphQL?
   @observable notification: any
-
   @observable presence: any
   @observable rosterItem: any
   @observable botVisitor: any
 
-  constructor(resource: string) {
-    this.resource = resource
-  }
-  @action
-  async login(user?: string, password?: string, host?: string): Promise<boolean> {
-    if (this.connecting) {
-      // prevent duplicate login
-      return new Promise<boolean>(resolve => {
-        when(
-          () => !this.connecting,
-          () => {
-            resolve(this.connected)
-          }
-        )
-      })
-    }
-    this.connecting = true
-    if (user) {
-      this.username = user
-    }
-    if (password) {
-      this.password = password
-    }
-    if (host) {
-      this.host = host
-    }
+  // TODO: when we finish removing XMPP we should remove these as class properties since they're only used in login
+  version: string
+  os: string
+  deviceName: string
 
+  // TODO: add
+  constructor(resource: string, host: string, version: string, os: string, deviceName: string) {
+    this.resource = resource
+    this.version = version
+    this.os = os
+    this.deviceName = deviceName
+    // TODO: extract this
+    // this.host = 'testing.dev.tinyrobot.com'
     const socketEndpoint = process.env.WOCKY_LOCAL
       ? 'ws://localhost:8080/graphql'
-      : `wss://${this.host}/graphql`
+      : `wss://${host}/graphql`
 
     this.socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
@@ -114,7 +104,7 @@ export class GraphQLTransport implements IWockyTransport {
       defaultOptions,
     })
     this.socket.onError(() => {
-      // console.log('& graphql Phoenix socket error')
+      // console.log('& graphql Phoenix socket error', err)
       this.connected = false
     })
     this.socket.onClose(() => {
@@ -131,23 +121,45 @@ export class GraphQLTransport implements IWockyTransport {
     this.socket2.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
     })
+  }
 
-    if (!this.username) {
-      throw new Error('Username is not defined')
-    }
-    if (!this.password) {
-      throw new Error('Password is not defined')
-    }
+  // NOTE: we need to use a separate login (below) for GraphQL because it requires different parameters
+  async login(): Promise<any> {
+    throw new Error('not implemented')
+  }
 
-    const res = await this.authenticate(this.username, this.password)
-    if (res) {
-      this.subscribeBotVisitors()
-    }
-    return res
+  async register(): Promise<{username: string; password: string; host: string}> {
+    throw new Error('not implemented')
   }
 
   @action
-  async authenticate(user: string, token: string): Promise<boolean> {
+  async loginGQL(params: LoginParams): Promise<{userId: string; token: string}> {
+    const {userId, token} = params
+    if (this.connecting) {
+      // prevent duplicate login
+      await waitFor(() => !this.connecting)
+    } else {
+      this.connecting = true
+      this.userId = userId || uuid()
+      this.token =
+        token ||
+        generateWockyToken({
+          ...(params as any),
+          userId: this.userId!,
+          version: this.version,
+          os: this.os,
+          deviceName: this.deviceName,
+        })
+      const res = await this.authenticate()
+      if (res) {
+        this.subscribeBotVisitors()
+      }
+    }
+    return {userId: this.userId!, token: this.token!}
+  }
+
+  @action
+  async authenticate(): Promise<boolean> {
     try {
       const mutation = {
         mutation: gql`
@@ -159,12 +171,15 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-        variables: {user, token},
+        variables: {user: this.userId, token: this.token},
       }
       // authenticate both connections
-      await this.client!.mutate(mutation)
-      const res = await this.client2!.mutate(mutation)
-      this.connected = !!res.data && res.data!.authenticate !== null
+      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      this.connected = res.reduce<boolean>(
+        (accumulated, current) =>
+          !!accumulated && !!current.data && current.data!.authenticate !== null,
+        true
+      )
       return this.connected
     } catch (err) {
       this.connected = false
@@ -181,7 +196,7 @@ export class GraphQLTransport implements IWockyTransport {
             user(id: "${user}") {
               ${PROFILE_PROPS}
               ${
-                user === this.username
+                user === this.userId
                   ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }'
                   : ''
               }
@@ -229,7 +244,7 @@ export class GraphQLTransport implements IWockyTransport {
       `,
       variables: {
         id,
-        ownUsername: this.username,
+        ownUsername: this.userId,
       },
     })
     return convertBot(res.data.bot)
@@ -253,7 +268,7 @@ export class GraphQLTransport implements IWockyTransport {
             }
           }
         `,
-      variables: {userId, after, max, ownUsername: this.username, relationship},
+      variables: {userId, after, max, ownUsername: this.userId, relationship},
     })
     // return empty list for non-existed user
     if (!res.data.user) {
@@ -349,7 +364,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `,
       variables: {
-        ownUsername: this.username,
+        ownUsername: this.userId,
       },
     }).subscribe({
       next: action((result: any) => {
@@ -383,7 +398,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username},
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.userId},
     })
     // console.log('& gql res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {
@@ -411,7 +426,7 @@ export class GraphQLTransport implements IWockyTransport {
           }
         `,
       variables: {
-        ownUsername: this.username,
+        ownUsername: this.userId,
       },
     }).subscribe({
       next: action((result: any) => {
@@ -462,7 +477,7 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        ownUsername: this.username,
+        ownUsername: this.userId,
       },
     })
     const bots = res.data.currentUser.activeBots
@@ -537,9 +552,6 @@ export class GraphQLTransport implements IWockyTransport {
       },
     })
     // TODO: handle error?
-  }
-  async register(): Promise<{username: string; password: string; host: string}> {
-    throw new Error('Not supported')
   }
 
   async testRegister(): Promise<{username: string; password: string; host: string}> {
@@ -827,7 +839,7 @@ export class GraphQLTransport implements IWockyTransport {
       variables: {
         pointA: {lat: latitude - latitudeDelta / 2, lon: longitude - longitudeDelta / 2},
         pointB: {lat: latitude + latitudeDelta / 2, lon: longitude + longitudeDelta / 2},
-        ownUsername: this.username,
+        ownUsername: this.userId,
       },
     })
     return res.data.localBots.map(convertBot)

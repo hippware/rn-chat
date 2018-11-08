@@ -13,11 +13,11 @@ describe('GraphQL Notifications Subscription', () => {
     timestamp()
     bob = await createXmpp()
     alice = await createXmpp()
-    gqlBob = new GraphQLTransport('testing')
-    gqlAlice = new GraphQLTransport('testing')
+    gqlBob = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+    gqlAlice = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
     await Promise.all([
-      gqlBob.login(bob.username!, bob.password!, host),
-      gqlAlice.login(alice.username!, alice.password!, host),
+      gqlBob.loginGQL({userId: bob.username!, token: bob.password!}),
+      gqlAlice.loginGQL({userId: alice.username!, token: alice.password!}),
     ])
 
     gqlBob.subscribeNotifications()

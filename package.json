@@ -56,6 +56,7 @@
     "bugsnag-react-native": "^2.9.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "jsonwebtoken": "^8.3.0",
     "libphonenumber-js": "^1.6.4",
     "lodash": "^4.17.11",
     "mobx": "^5.5.2",
@@ -97,6 +98,7 @@
     "remotedev": "^0.2.7",
     "strophejs": "github:hippware/strophejs",
     "tcomb-form-native": "^0.6.20",
+    "uuid": "^3.3.2",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
     "xmldom": "^0.1.27",
     "xregexp": "^4.1.1"
@@ -108,6 +110,7 @@
   "devDependencies": {
     "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.9",
+    "@types/jsonwebtoken": "^8.3.0",
     "@types/lodash": "^4.14.118",
     "@types/node": "^9.3.0",
     "@types/node-fetch": "^2.1.2",

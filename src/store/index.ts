@@ -32,9 +32,18 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 
+const {version} = require('../../package.json')
+
 const provider = new XmppIOS()
 const xmppTransport = new XmppTransport(provider, DeviceInfo.getUniqueID())
-const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
+const graphqlTransport = new GraphQLTransport(
+  DeviceInfo.getUniqueID(),
+  settings.getDomain(),
+  version,
+  // TODO: get real os and device name
+  'ios',
+  'iPhone'
+)
 const transport = new HybridTransport(xmppTransport, graphqlTransport)
 
 const {geolocation} = navigator

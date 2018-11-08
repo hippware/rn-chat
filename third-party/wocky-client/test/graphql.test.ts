@@ -60,8 +60,8 @@ describe('GraphQL', () => {
   it('login via graphql and set user location', async done => {
     try {
       timestamp()
-      gql = new GraphQLTransport('testing')
-      await gql.login(user.username!, user.password!, host)
+      gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+      await gql.loginGQL({userId: user.username!, token: user.password})
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
       done()
@@ -232,7 +232,7 @@ describe('GraphQL', () => {
   it('searches users', async done => {
     try {
       timestamp()
-      await gql.login(user.username!, user.password!, host)
+      await gql.loginGQL({userId: user.username!, token: user.password!})
       await gql.searchUsers('abc')
       // NOTE: results for newly created users don't show up in the results which makes expected values
       // on the return from `searchUsers` difficult here

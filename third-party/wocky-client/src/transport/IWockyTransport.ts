@@ -8,6 +8,13 @@ export interface IPagingList {
   count: number
 }
 
+export type LoginParams = {
+  userId?: string
+  token?: string
+  accessToken?: string
+  bypass?: boolean
+}
+
 export interface IWockyTransport {
   connected: boolean
   connecting: boolean

@@ -7,6 +7,7 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventUserFollowData} from '../model/EventUserFollow'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
+import jwt, {SignOptions} from 'jsonwebtoken'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -428,4 +429,44 @@ export function convertNotification(edge: any): IEventData | null {
 
 export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
+}
+
+type TokenParams = {
+  userId: string
+  version: string
+  os: string
+  deviceName: string
+  bypass?: boolean
+  accessToken?: string
+  phoneNumber?: string
+}
+
+/**
+ * Generate a wocky-specific JWT. https://github.com/hippware/tr-wiki/wiki/Authentication#jwt-packet
+ */
+export function generateWockyToken({
+  userId,
+  version,
+  os,
+  deviceName,
+  bypass,
+  accessToken,
+  phoneNumber,
+}: TokenParams) {
+  const payload = {
+    jti: userId,
+    iss: `TinyRobot/${version} (${os}; ${deviceName})`,
+    typ: bypass ? 'bypass' : 'firebase',
+    sub: accessToken,
+    aud: 'Wocky',
+    phone_number: phoneNumber,
+  }
+
+  const signOptions: SignOptions = {
+    algorithm: 'HS512',
+  }
+
+  // TODO: store this with react-native-native-env
+  const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+  return jwt.sign(payload, magicKey, signOptions)
 }
