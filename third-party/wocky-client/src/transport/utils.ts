@@ -314,9 +314,9 @@ export function convertProfile({
       ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
       : null,
     avatar: convertImage(avatar),
-    botsSize: bots.totalCount,
-    followersSize: followers.totalCount,
-    followedSize: followed.totalCount,
+    botsSize: bots ? bots.totalCount : undefined,
+    followersSize: followers ? followers.totalCount : undefined,
+    followedSize: followed ? followed.totalCount : undefined,
     ...data,
   } as IProfilePartial
 }

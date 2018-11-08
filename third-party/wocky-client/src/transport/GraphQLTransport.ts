@@ -13,6 +13,7 @@ import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
 import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
 import {convertProfile, convertBot, convertNotification, convertNotifications} from './utils'
+import * as Utils from './utils'
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
@@ -22,27 +23,20 @@ export class GraphQLTransport implements IWockyTransport {
   socket2?: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
   notificationsSubscription?: ZenObservable.Subscription
-  @observable
-  connected: boolean = false
-  @observable
-  connecting: boolean = false
+  @observable connected: boolean = false
+  @observable connecting: boolean = false
   username?: string
   password?: string
   host?: string
   // @observable geoBot: any
-  @observable
-  message: any
+  @observable message: any
 
   // TODO: reuse `notification` or create new property specific to GraphQL?
-  @observable
-  notification: any
+  @observable notification: any
 
-  @observable
-  presence: any
-  @observable
-  rosterItem: any
-  @observable
-  botVisitor: any
+  @observable presence: any
+  @observable rosterItem: any
+  @observable botVisitor: any
 
   constructor(resource: string) {
     this.resource = resource
@@ -189,7 +183,22 @@ export class GraphQLTransport implements IWockyTransport {
               ${PROFILE_PROPS}
               ${
                 user === this.username
-                  ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }'
+                  ? `... on CurrentUser { 
+            #         contacts(first: 100, relationship: FRIEND) {
+            #   edges {
+            #     node {
+            #       id
+            #       firstName
+            #       lastName
+            #       handle
+            #       avatar {
+            #         thumbnailUrl
+            #         trosUrl
+            #       }
+            #     }
+            #   }
+            # } 
+            email phoneNumber hasUsedGeofence hidden {enabled expires} }`
                   : ''
               }
             }
@@ -203,7 +212,43 @@ export class GraphQLTransport implements IWockyTransport {
   }
   async requestRoster(): Promise<[any]> {
     // This is supported via the User.Contacts connection
-    throw new Error('Not supported')
+    const res = await this.client!.query<any>({
+      query: gql`
+        query requestRoster {
+          currentUser {
+            id
+            contacts(first: 100) {
+              edges {
+                relationship
+                createdAt
+                node {
+                  id
+                  roles
+                  firstName
+                  lastName
+                  handle
+                  avatar {
+                    # thumbnailUrl - TODO load all images from thumbnailUrl
+                    trosUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+    })
+    return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) => {
+      const createdTime = Utils.iso8601toDate(createdAt).getTime()
+      const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
+
+      return convertProfile({
+        isNew: days <= 7,
+        isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
+        isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
+        ...node,
+      })
+    })
   }
 
   async generateId(): Promise<string> {
