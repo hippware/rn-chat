@@ -332,8 +332,6 @@ export class GraphQLTransport implements IWockyTransport {
   }
   @action
   unsubscribeBotVisitors() {
-    this.connected = false
-    this.connecting = false
     if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
     this.botGuestVisitorsSubscription = undefined
   }
@@ -559,35 +557,10 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    // console.log('& graphql disconnect')
-    if (this.socket && this.socket.isConnected()) {
-      this.unsubscribeBotVisitors()
-      this.unsubscribeNotifications()
-      return new Promise<void>((resolve, reject) => {
-        try {
-          this.socket!.disconnect(() => {
-            // console.log('& graphql onDisconnect', something)
-            resolve()
-          })
-        } catch (err) {
-          // console.log('& graphql disconnect err', err)
-          reject(err)
-        }
-      })
-    }
-    if (this.socket2 && this.socket2.isConnected()) {
-      return new Promise<void>((resolve, reject) => {
-        try {
-          this.socket2!.disconnect(() => {
-            // console.log('& graphql onDisconnect', something)
-            resolve()
-          })
-        } catch (err) {
-          // console.log('& graphql disconnect err', err)
-          reject(err)
-        }
-      })
-    }
+    const sockets = [this.socket, this.socket2]
+    this.connected = false
+    this.connecting = false
+    await Promise.all(sockets.map(this.disconnectSocket))
   }
 
   async requestProfiles(): Promise<any> {
@@ -957,6 +930,21 @@ export class GraphQLTransport implements IWockyTransport {
       list: list.map(p => convertProfile(p.node)),
       cursor: list.length ? list[list.length - 1].cursor : null,
       count,
+    }
+  }
+
+  private async disconnectSocket(socket?: PhoenixSocket): Promise<void> {
+    if (socket && socket.isConnected()) {
+      this.unsubscribeBotVisitors()
+      this.unsubscribeNotifications()
+      return new Promise<void>((resolve, reject) => {
+        try {
+          this.socket!.disconnect(resolve)
+        } catch (err) {
+          // console.log('& graphql disconnect err', err)
+          reject(err)
+        }
+      })
     }
   }
 }
