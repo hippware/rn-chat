@@ -184,22 +184,7 @@ export class GraphQLTransport implements IWockyTransport {
               ${PROFILE_PROPS}
               ${
                 user === this.username
-                  ? `... on CurrentUser { 
-            #         contacts(first: 100, relationship: FRIEND) {
-            #   edges {
-            #     node {
-            #       id
-            #       firstName
-            #       lastName
-            #       handle
-            #       avatar {
-            #         thumbnailUrl
-            #         trosUrl
-            #       }
-            #     }
-            #   }
-            # } 
-            email phoneNumber hasUsedGeofence hidden {enabled expires} }`
+                  ? `... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }`
                   : ''
               }
             }
