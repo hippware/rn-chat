@@ -22,6 +22,7 @@ export class GraphQLTransport implements IWockyTransport {
   client2?: ApolloClient<any>
   socket2?: PhoenixSocket
   botGuestVisitorsSubscription?: ZenObservable.Subscription
+  contactsSubscription?: ZenObservable.Subscription
   notificationsSubscription?: ZenObservable.Subscription
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -238,17 +239,10 @@ export class GraphQLTransport implements IWockyTransport {
         }
       `,
     })
-    return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) => {
-      const createdTime = Utils.iso8601toDate(createdAt).getTime()
-      const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
-
-      return convertProfile({
-        isNew: days <= 7,
-        isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
-        isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
-        ...node,
-      })
-    })
+    this.subscribeContacts() // subscribe to contacts changes
+    return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) =>
+      processRosterItem(node, relationship, createdAt)
+    )
   }
 
   async generateId(): Promise<string> {
@@ -411,6 +405,43 @@ export class GraphQLTransport implements IWockyTransport {
           bot: convertBot(update.bot),
           action: update.action,
         }
+      }),
+    })
+  }
+
+  @action
+  unsubscribeContacts() {
+    if (this.contactsSubscription) this.contactsSubscription.unsubscribe()
+    this.contactsSubscription = undefined
+  }
+  subscribeContacts() {
+    if (this.contactsSubscription) {
+      return
+    }
+    this.contactsSubscription = this.client!.subscribe({
+      query: gql`
+        subscription subscribeContacts {
+          contacts {
+            createdAt
+            relationship
+            user {
+              id
+              roles
+              firstName
+              lastName
+              handle
+              avatar {
+                thumbnailUrl
+                trosUrl
+              }
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        const {user, relationship, createdAt} = result.data.contacts
+        this.rosterItem = processRosterItem(user, relationship, createdAt)
       }),
     })
   }
@@ -601,6 +632,7 @@ export class GraphQLTransport implements IWockyTransport {
   async disconnect(): Promise<void> {
     // console.log('& graphql disconnect')
     if (this.socket && this.socket.isConnected()) {
+      this.unsubscribeContacts()
       this.unsubscribeBotVisitors()
       this.unsubscribeNotifications()
       return new Promise<void>((resolve, reject) => {
@@ -999,4 +1031,16 @@ export class GraphQLTransport implements IWockyTransport {
       count,
     }
   }
+}
+
+function processRosterItem(user, relationship, createdAt) {
+  const createdTime = Utils.iso8601toDate(createdAt).getTime()
+  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
+
+  return convertProfile({
+    isNew: days <= 7,
+    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
+    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
+    ...user,
+  })
 }
