@@ -162,7 +162,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   requestRoster(): Promise<[any]> {
-    return this._xmpp.requestRoster()
+    return this._gql.requestRoster()
   }
 
   loadChats(max?: number): Promise<Array<{id: string; message: any}>> {

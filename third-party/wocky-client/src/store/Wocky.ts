@@ -686,10 +686,13 @@ export const Wocky = types
         reaction(
           () => self.transport.presence,
           ({id, status}) => {
-            const profile = self.profiles.get(id)
-            profile.setStatus(status)
-            if (profile.isOwn && self.profile) {
-              self.profile!.setStatus(status)
+            // no need to update own profile's status
+            if (id !== self.username) {
+              const profile = self.profiles.get(id)
+              profile.setStatus(status)
+              if (profile.isOwn && self.profile) {
+                self.profile!.setStatus(status)
+              }
             }
           }
         ),
