@@ -1,6 +1,6 @@
 import {types, getEnv, addMiddleware, flow} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
-import {AsyncStorage} from 'react-native'
+import {AsyncStorage, Platform} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {
@@ -41,8 +41,8 @@ const graphqlTransport = new GraphQLTransport(
   settings.getDomain(),
   version,
   // TODO: get real os and device name
-  'ios',
-  'iPhone'
+  Platform.OS,
+  DeviceInfo.getDeviceId()
 )
 const transport = new HybridTransport(xmppTransport, graphqlTransport)
 

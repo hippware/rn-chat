@@ -13,6 +13,7 @@ export type LoginParams = {
   token?: string
   accessToken?: string
   bypass?: boolean
+  phoneNumber?: string
 }
 
 export interface IWockyTransport {

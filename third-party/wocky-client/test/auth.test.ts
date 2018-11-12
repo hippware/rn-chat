@@ -1,27 +1,41 @@
-import {GraphQLTransport} from 'wocky-client'
 import {sleep} from './support/testuser'
+import {GraphQLTransport} from '../src/transport/GraphQLTransport'
 
-// import {createXmpp, timestamp, testFile, expectedImage, waitFor} from './support/testuser'
-// import {IWocky} from '../src/store/Wocky'
-// import {IBot} from '../src/model/Bot'
-// import fs from 'fs'
-
-// let user1: IWocky, user2: IWocky
-// let bot: IBot, bot2: IBot, user2bot: IBot
-// let user1phone: string, user2phone: string
+const host = 'testing.dev.tinyrobot.com'
 
 describe('GraphQL auth', () => {
-  it('registers via GraphQL', async () => {
-    const gql = new GraphQLTransport('testing', 'host', 'version', 'os', 'deviceName')
-    // const transport = new HybridTransport(xmppTransport, gql)
-    const result: any = await gql.register()
-    console.log('& in test result', result)
-    expect(result.data).toBeTruthy()
+  let userId, token
+
+  it.only('logs in new user with bypass', async () => {
+    const gql = new GraphQLTransport('testing', host, '1.1.4', 'os', 'deviceName')
+    const result: any = await gql.loginGQL({
+      accessToken: 'accessToken',
+      bypass: true,
+      phoneNumber: '+15551234567',
+    })
+    expect(result.userId).toBeTruthy()
+    expect(result.token).toBeTruthy()
+    expect(gql.connected).toBe(true)
+    expect(gql.connecting).toBe(false)
+    userId = result.userId
+    token = result.token
+    await gql.disconnect()
   })
+
+  it('logs in existing user with userId and token', async () => {
+    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+    const result: any = await gql.loginGQL({userId, token})
+    console.log('& in test result 2', result)
+    expect(result.userId).toBeTruthy()
+    expect(result.token).toBeTruthy()
+  })
+
   it('tests auth via HTTP header (not web sockets)', async () => {
     // todo
   })
+
   afterAll(async () => {
+    // allow time for the console logs to show up before exiting
     await sleep(1000)
   })
 })

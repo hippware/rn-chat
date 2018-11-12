@@ -183,6 +183,8 @@ export class GraphQLTransport implements IWockyTransport {
       return this.connected
     } catch (err) {
       this.connected = false
+      console.warn('GraphQL authenticate error with user', this.userId, 'and token', this.token)
+      console.warn(err)
       return false
     } finally {
       this.connecting = false
