@@ -52,6 +52,7 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore} = this.props
+    Actions.botEdit({botId: '0f87a608-dd43-11e8-9a89-72f6464ee5fd'})
 
     this.reactions = [
       reaction(
