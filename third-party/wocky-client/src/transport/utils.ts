@@ -446,29 +446,20 @@ type TokenParams = {
  */
 export function generateWockyToken({
   userId,
+  accessToken,
   version,
   os,
   deviceName,
   bypass,
-  accessToken,
   phoneNumber,
 }: TokenParams) {
-  // const payload = {
-  //   jti: userId,
-  //   iss: `TinyRobot/${version} (${os}; ${deviceName})`,
-  //   typ: bypass ? 'bypass' : 'firebase',
-  //   sub: accessToken,
-  //   aud: 'Wocky',
-  //   phone_number: phoneNumber,
-  // }
-
   const payload = {
-    jti: 'ae0b7110',
-    iss: 'TinyRobot/1.1.4 (ios; iPhone 7 Plus)',
-    typ: 'bypass',
-    sub: 'external_id',
-    // aud: 'Wocky',
-    phone_number: '+15551234567',
+    jti: userId,
+    iss: `TinyRobot/${version} (${os}; ${deviceName})`,
+    typ: bypass ? 'bypass' : 'firebase',
+    sub: accessToken,
+    aud: 'Wocky',
+    phone_number: phoneNumber,
   }
 
   const signOptions: SignOptions = {

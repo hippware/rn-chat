@@ -6,7 +6,7 @@ const host = 'testing.dev.tinyrobot.com'
 describe('GraphQL auth', () => {
   let userId, token
 
-  it.only('logs in new user with bypass', async () => {
+  it('logs in new user with bypass', async () => {
     const gql = new GraphQLTransport('testing', host, '1.1.4', 'os', 'deviceName')
     const result: any = await gql.loginGQL({
       accessToken: 'accessToken',
@@ -25,7 +25,6 @@ describe('GraphQL auth', () => {
   it('logs in existing user with userId and token', async () => {
     const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
     const result: any = await gql.loginGQL({userId, token})
-    console.log('& in test result 2', result)
     expect(result.userId).toBeTruthy()
     expect(result.token).toBeTruthy()
   })

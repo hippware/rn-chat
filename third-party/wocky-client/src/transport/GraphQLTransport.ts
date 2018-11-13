@@ -164,15 +164,15 @@ export class GraphQLTransport implements IWockyTransport {
     try {
       const mutation = {
         mutation: gql`
-          mutation authenticate($user: String!, $token: String!) {
-            authenticate(input: {user: $user, token: $token}) {
+          mutation authenticate($token: String!) {
+            authenticate(input: {token: $token}) {
               user {
                 id
               }
             }
           }
         `,
-        variables: {user: this.userId, token: this.token},
+        variables: {token: this.token},
       }
       // authenticate both connections
       const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
@@ -212,7 +212,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
     return convertProfile(res.data.user)
   }
-  async requestRoster(): Promise<[any]> {
+  async requestRoster(): Promise<any[]> {
     // This is supported via the User.Contacts connection
     const res = await this.client!.query<any>({
       query: gql`
@@ -362,6 +362,7 @@ export class GraphQLTransport implements IWockyTransport {
       return {createdAt, lat, lon, accuracy}
     })
   }
+
   @action
   unsubscribeBotVisitors() {
     if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
@@ -1002,7 +1003,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  private async disconnectSocket(socket?: PhoenixSocket): Promise<void> {
+  private disconnectSocket = async (socket?: PhoenixSocket): Promise<void> => {
     if (socket && socket.isConnected()) {
       this.unsubscribeBotVisitors()
       this.unsubscribeNotifications()
