@@ -33,7 +33,7 @@ const BotCard = types
   .named('BotCard')
 
 type BotCardType = typeof BotCard.Type
-interface IBotCard extends BotCardType {}
+export interface IBotCard extends BotCardType {}
 
 const YouCard = SelectableCard.props({
   you: types.boolean,

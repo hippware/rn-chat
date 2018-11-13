@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Image,
-  StyleSheet,
-  ViewStyle,
-  ImageStyle,
-  ImageSourcePropType,
-  Text,
-} from 'react-native'
+import {View, Image, StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native'
 import Triangle from './Triangle'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -17,7 +9,6 @@ import LinearGradient from 'react-native-linear-gradient'
 type Props = {
   text?: string
   image?: ImageSourcePropType
-  fontIcon?: string
   showLoader?: boolean | null
   children?: any
   style?: ViewStyle
@@ -41,7 +32,6 @@ const Bubble = observer(
     size,
     triangleColor,
     outerStyle,
-    fontIcon,
     gradient,
   }: Props) => {
     const theSize = size || defaultSize
@@ -58,10 +48,6 @@ const Bubble = observer(
               resizeMode="contain"
               source={image}
             />
-          ) : fontIcon ? (
-            <Text style={{fontFamily: 'fontello', fontSize: 25, color: colors.PINK}}>
-              {fontIcon}
-            </Text>
           ) : null}
 
           {text && (
