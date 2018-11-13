@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Fix: Next button missing during creation flow (#3005)
 * [dev] Fix prettier handling of decorators and line breaks (#3054)
 * Wocky client test improvements (PR #3055)
+* [dev] implement requestRoster API with GraphQL (#3058)
+
 
 # 3.10.0 - 2018 Nov 5
 
