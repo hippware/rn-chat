@@ -44,6 +44,7 @@ import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
 import Attribution from './Attribution'
 import { navBarStyle } from './styles';
+import { IFirebaseStore } from 'src/store/FirebaseStore';
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -57,9 +58,10 @@ type Props = {
   store?: any
   analytics?: any
   log?: any
+  firebaseStore?: IFirebaseStore
 }
 
-@inject('store', 'wocky', 'locationStore', 'analytics', 'navStore', 'log')
+@inject('store', 'wocky', 'locationStore', 'analytics', 'navStore', 'log', 'firebaseStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -206,7 +208,7 @@ class TinyRobotRouter extends React.Component<Props> {
   // TODO: Move it outside
   login = async () => {
     try {
-      await this.props.wocky!.login() // Remove that after new typings for MST3
+      await this.props.firebaseStore!.login()
       return true
     } catch (error) {
       this.props.analytics.track('error_connection', {error})

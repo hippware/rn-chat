@@ -89,9 +89,7 @@ export default class Connectivity extends React.Component<Props> {
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        const firebaseToken = this.props.firebaseStore!.token
-        console.log('& login with token...', firebaseToken)
-        await model.login(firebaseToken as string)
+        await this.props.firebaseStore!.login()
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {

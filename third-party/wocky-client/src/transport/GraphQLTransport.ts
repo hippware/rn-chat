@@ -27,8 +27,8 @@ import _ from 'lodash'
 export class GraphQLTransport implements IWockyTransport {
   userId?: string
   token?: string
-  // NOTE: temporary
   firebaseToken?: string
+  phoneNumber?: string
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -127,7 +127,7 @@ export class GraphQLTransport implements IWockyTransport {
     })
   }
 
-  // NOTE: we need to use a separate login (below) for GraphQL because it requires different parameters
+  // // NOTE: we need to use a separate login (below) for GraphQL because it requires different parameters
   async login(): Promise<any> {
     throw new Error('not implemented')
   }
@@ -137,28 +137,21 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   @action
-  async loginGQL({
-    userId,
-    token,
-    bypass,
-    phoneNumber,
-    accessToken,
-  }: LoginParams): Promise<{userId: string; token: string}> {
+  async loginGQL(params: LoginParams = {}): Promise<{userId: string; token: string}> {
+    console.log('& loginGQL', params, this.phoneNumber)
+    const {userId, token, accessToken} = params
     if (this.connecting) {
+      console.log('& loginGQL inside')
       // prevent duplicate login
       await waitFor(() => !this.connecting)
     } else {
       this.connecting = true
       this.userId = userId || uuid()
-
-      // if this is an XMPP-based password we need to generate a fresh JWT
-      const t = _.startsWith(token, '$T$') ? undefined : token
-      console.log('& old token?', token, _.startsWith(token, '$T$'))
       this.token =
-        t ||
+        token ||
         generateWockyToken({
-          bypass,
-          phoneNumber,
+          bypass: !!this.phoneNumber,
+          phoneNumber: `+1555${this.phoneNumber}`,
           accessToken,
           userId: this.userId!,
           version: this.version,
@@ -169,15 +162,17 @@ export class GraphQLTransport implements IWockyTransport {
       const res = await this.authenticate()
       if (res) {
         this.subscribeBotVisitors()
+        this.phoneNumber = undefined
       }
     }
+    console.log('& loginGQL')
     return {userId: this.userId!, token: this.token!}
   }
 
   @action
   async authenticate(): Promise<boolean> {
     try {
-      console.log('& authing', this.token)
+      // console.log('& authing', this.token)
       const mutation = {
         mutation: gql`
           mutation authenticate($token: String!) {
@@ -192,7 +187,7 @@ export class GraphQLTransport implements IWockyTransport {
       }
       // authenticate both connections
       const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-      console.log('& got responses', res)
+      // console.log('& got responses', res)
       this.connected = res.reduce<boolean>(
         (accumulated, current) =>
           !!accumulated && !!current.data && current.data!.authenticate !== null,
@@ -647,6 +642,7 @@ export class GraphQLTransport implements IWockyTransport {
     const sockets = [this.socket, this.socket2]
     this.connected = false
     this.connecting = false
+    this.phoneNumber = undefined
     await Promise.all(sockets.map(this.disconnectSocket))
   }
 

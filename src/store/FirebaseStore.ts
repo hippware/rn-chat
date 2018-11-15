@@ -198,7 +198,7 @@ const FirebaseStore = types
       try {
         yield wocky!.register({jwt: self.token}, 'firebase')
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login()
+        yield login()
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
@@ -211,6 +211,11 @@ const FirebaseStore = types
         })
       }
     })
+
+    function login(): Promise<boolean> {
+      console.log('& firebase login', self.token)
+      return wocky.login(self.token!)
+    }
 
     // TODO: use rn-firebase for dynamic link generation when it's less broken
     const getFriendInviteLink = flow(function*() {
@@ -251,6 +256,7 @@ const FirebaseStore = types
     return {
       afterAttach,
       logout,
+      login,
       beforeDestroy,
       verifyPhone,
       confirmCode,

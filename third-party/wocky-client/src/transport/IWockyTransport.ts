@@ -11,9 +11,8 @@ export interface IPagingList {
 export type LoginParams = {
   userId?: string
   token?: string
+  password?: string
   accessToken?: string
-  bypass?: boolean
-  phoneNumber?: string
   host?: string
 }
 
@@ -30,7 +29,7 @@ export interface IWockyTransport {
   rosterItem: any // TODO interface for roster
   notification: any // TODO interface for notification
   botVisitor: any // TODO interface for bot visitor
-  login(params?: LoginParams): Promise<boolean>
+  login(params?: LoginParams): Promise<{userId: string; password: string; token: string}>
   register(
     data: any,
     host?: string,

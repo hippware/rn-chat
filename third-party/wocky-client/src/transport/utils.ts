@@ -490,7 +490,7 @@ export function generateWockyToken({
       jti: userId,
       iss: `TinyRobot/${version} (${os}; ${deviceName})`,
       typ: bypass ? 'bypass' : 'firebase',
-      sub: accessToken,
+      sub: accessToken || 'bypass',
       aud: 'Wocky',
       phone_number: phoneNumber,
     }
@@ -501,7 +501,7 @@ export function generateWockyToken({
 
     // TODO: store this with react-native-native-env
     const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
-    const header = {alg: 'HS512'}
+    const header = {alg: 'HS512', typ: 'JWT'}
     const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
     console.log('& user', userId)
     console.log('& jwt', jwt)

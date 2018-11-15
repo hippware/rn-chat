@@ -21,7 +21,8 @@ export const Wocky = types
     types.model({
       id: 'wocky',
       username: types.maybeNull(types.string),
-      password: types.maybeNull(types.string),
+      password: types.maybeNull(types.string), // old XMPP password
+      token: types.maybeNull(types.string), // new GraphQL token
       host: types.string,
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {}),
@@ -121,12 +122,16 @@ export const Wocky = types
               }`
             )
           }
-          yield self.transport.login({
+          const res = yield self.transport.login({
             userId: self.username,
-            token: self.password,
+            password: self.password,
+            // TODO: since XMPP auth won't accept the new token style we need to store both and pass both here
+            token: self.token || undefined,
             host: self.host,
             accessToken,
           })
+          console.log('& wocky login result', res)
+          self.token = res.token
           yield self.loadProfile(self.username)
 
           self.sessionCount++
@@ -723,6 +728,7 @@ export const Wocky = types
         self.sessionCount = 0
         self.username = null
         self.password = null
+        self.token = null
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)

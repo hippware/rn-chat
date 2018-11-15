@@ -9,10 +9,8 @@ describe('GraphQL auth', () => {
 
   it('logs in new user via bypass', async () => {
     const gql = new GraphQLTransport('testing', host, '1.1.4', 'os', 'deviceName')
-    const {userId, token} = await gql.loginGQL({
-      bypass: true,
-      phoneNumber: '+15551234568',
-    })
+    gql.phoneNumber = '1234568'
+    const {userId, token} = await gql.loginGQL()
     expect(userId).toBeTruthy()
     expect(token).toBeTruthy()
     expect(gql.connected).toBe(true)

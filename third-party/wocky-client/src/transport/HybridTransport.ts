@@ -64,13 +64,15 @@ export class HybridTransport implements IWockyTransport {
     this._gql = gql
   }
 
-  async login(params: LoginParams): Promise<boolean> {
+  async login(params: LoginParams) {
     // parallel login
-    const logins = await Promise.all([
+    const results = await Promise.all([
       this._gql.loginGQL(params),
-      this._xmpp.login({user: params.userId, password: params.token, host: params.host}),
+      this._xmpp.loginXMPP({user: params.userId, password: params.password, host: params.host}),
     ])
-    return logins === [true, true]
+    // return logins === [true, true]
+    console.log('& hybrid login results', results)
+    return {userId: results[0].userId, password: results[1].password, token: results[0].token}
   }
 
   register(
@@ -85,6 +87,7 @@ export class HybridTransport implements IWockyTransport {
     {phoneNumber}: {phoneNumber: string},
     host: string
   ): Promise<{username: string; password: string; host: string}> {
+    this._gql.phoneNumber = phoneNumber
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
