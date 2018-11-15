@@ -81,7 +81,7 @@ export class XmppTransport implements IWockyTransport {
   }
 
   @action
-  async loginXMPP({user, password, host}): Promise<{userId: string; password: string}> {
+  async loginXMPP({user, password, host}): Promise<{username: string; password: string}> {
     try {
       if (user) {
         this.username = user
@@ -97,7 +97,7 @@ export class XmppTransport implements IWockyTransport {
         this.provider.login(this.username, this.password, this.host, this.resource),
         TIMEOUT
       )
-      return {userId: this.username!, password: this.password!}
+      return {username: this.username!, password: this.password!}
     } catch (e) {
       runInAction(() => (this.connected = false))
       throw e

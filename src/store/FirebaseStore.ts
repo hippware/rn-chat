@@ -213,7 +213,6 @@ const FirebaseStore = types
     })
 
     function login(): Promise<boolean> {
-      console.log('& firebase login', self.token)
       return wocky.login(self.token!)
     }
 

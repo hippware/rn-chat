@@ -65,6 +65,7 @@ export class HybridTransport implements IWockyTransport {
   }
 
   async login(params: LoginParams) {
+    console.log('& hybrid transport login', params)
     // parallel login
     const results = await Promise.all([
       this._gql.loginGQL(params),
@@ -87,7 +88,7 @@ export class HybridTransport implements IWockyTransport {
     {phoneNumber}: {phoneNumber: string},
     host: string
   ): Promise<{username: string; password: string; host: string}> {
-    this._gql.phoneNumber = phoneNumber
+    this._gql.phoneNumber = `+1555${phoneNumber}`
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 

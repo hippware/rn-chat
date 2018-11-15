@@ -77,6 +77,7 @@ const PersistableModel = types
       const modelName = getType(self).name
       let parsed
       try {
+        throw new Error()
         const data = await loadFromStorage(modelName)
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')

@@ -62,6 +62,7 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
+          console.log('& loading own profile', id, data)
           const profile = self.create(OwnProfile, {
             id,
             ...data,
@@ -122,6 +123,14 @@ export const Wocky = types
               }`
             )
           }
+          // console.log(
+          //   '& calling hybrid transport login',
+          //   self.username,
+          //   self.password,
+          //   self.token,
+          //   self.host,
+          //   accessToken
+          // )
           const res = yield self.transport.login({
             userId: self.username,
             password: self.password,
@@ -130,6 +139,7 @@ export const Wocky = types
             host: self.host,
             accessToken,
           })
+          // todo: sometimes this is mysteriously never returning for "real" login
           console.log('& wocky login result', res)
           self.token = res.token
           yield self.loadProfile(self.username)

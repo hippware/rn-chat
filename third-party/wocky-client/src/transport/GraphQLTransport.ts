@@ -141,7 +141,6 @@ export class GraphQLTransport implements IWockyTransport {
     console.log('& loginGQL', params, this.phoneNumber)
     const {userId, token, accessToken} = params
     if (this.connecting) {
-      console.log('& loginGQL inside')
       // prevent duplicate login
       await waitFor(() => !this.connecting)
     } else {
@@ -151,7 +150,7 @@ export class GraphQLTransport implements IWockyTransport {
         token ||
         generateWockyToken({
           bypass: !!this.phoneNumber,
-          phoneNumber: `+1555${this.phoneNumber}`,
+          phoneNumber: this.phoneNumber,
           accessToken,
           userId: this.userId!,
           version: this.version,
@@ -163,6 +162,8 @@ export class GraphQLTransport implements IWockyTransport {
       if (res) {
         this.subscribeBotVisitors()
         this.phoneNumber = undefined
+      } else {
+        throw new Error('GraphQL authentication failed')
       }
     }
     console.log('& loginGQL')
@@ -187,10 +188,14 @@ export class GraphQLTransport implements IWockyTransport {
       }
       // authenticate both connections
       const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-      // console.log('& got responses', res)
+      console.log('& got responses', res.map(r => r.data!.authenticate))
       this.connected = res.reduce<boolean>(
         (accumulated, current) =>
-          !!accumulated && !!current.data && current.data!.authenticate !== null,
+          !!accumulated &&
+          !!current.data &&
+          current.data!.authenticate !== null &&
+          // TODO: currently getting back a different userId than I submitted
+          current.data.authenticate.user.id === this.userId,
         true
       )
       return this.connected
@@ -205,6 +210,18 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<IProfilePartial | null> {
+    console.log('& load profile', user, this.userId)
+    console.log('& query is')
+    console.log(`query LoadProfile {
+      user(id: "${user}") {
+        ${PROFILE_PROPS}
+        ${
+          user === this.userId
+            ? '... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }'
+            : ''
+        }
+      }
+    }`)
     const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {

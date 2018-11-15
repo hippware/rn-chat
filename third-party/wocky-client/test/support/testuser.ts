@@ -41,7 +41,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
     const provider = new XmppStropheV2()
     const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
     const xmppTransport = new XmppTransport(provider, 'testing')
-    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+    const gql = new GraphQLTransport('testing', host, '1.1.4', 'ios', 'iPhone 1')
     const transport = new HybridTransport(xmppTransport, gql)
 
     // const provider = new XmppStropheV2(console.log)
@@ -60,6 +60,7 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
       }
     )
     addMiddleware(service, simpleActionLogger)
+    gql.phoneNumber = phoneNumber
     await service.register(
       {
         userID: `000000${phoneNumber.replace('+1555', '')}`,
