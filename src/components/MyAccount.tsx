@@ -18,10 +18,12 @@ import Screen from './Screen'
 import {settings} from '../globals'
 import {phoneFormat} from '../utils/misc'
 const {version} = require('../../package.json')
+import {ICodePushStore} from '../store/CodePushStore'
 
 type Props = {
   wocky?: IWocky
   profileValidationStore?: any
+  codePushStore?: ICodePushStore
 }
 
 @inject('wocky', 'profileValidationStore')
@@ -251,11 +253,23 @@ const Right = inject('profileValidationStore', 'wocky')(
   })
 )
 
-const Version = inject()(
-  observer(({}) => {
+const Version = inject('codePushStore')(
+  observer(({codePushStore}) => {
+    let versionString = settings.version // version from XCode
+    const packageJsonVersion = version // version from package.json
+
+    if (codePushStore!.metadata) {
+      const {deploymentKey, label} = codePushStore!.metadata
+
+      if (deploymentKey != 'Production') {
+        versionString = `${versionString}-${deploymentKey}`
+      }
+      versionString = `${versionString}-${label} (${packageJsonVersion})`
+    }
+
     return (
       <RText size={15} color={colors.DARK_GREY} style={{marginBottom: 15}}>
-        {`Version ${version}`}
+        {`Version ${versionString}`}
       </RText>
     )
   })
