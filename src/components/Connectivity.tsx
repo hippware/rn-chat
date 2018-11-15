@@ -9,6 +9,7 @@ import * as log from '../utils/log'
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
+import {IFirebaseStore} from 'src/store/FirebaseStore'
 
 type Props = {
   wocky?: IWocky
@@ -17,9 +18,18 @@ type Props = {
   locationStore?: ILocationStore
   log?: any
   analytics?: any
+  firebaseStore?: IFirebaseStore
 }
 
-@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics')
+@inject(
+  'wocky',
+  'homeStore',
+  'notificationStore',
+  'locationStore',
+  'log',
+  'analytics',
+  'firebaseStore'
+)
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -79,7 +89,9 @@ export default class Connectivity extends React.Component<Props> {
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        await model.login(undefined, undefined, undefined)
+        const firebaseToken = this.props.firebaseStore!.token
+        console.log('& login with token...', firebaseToken)
+        await model.login(firebaseToken as string)
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {

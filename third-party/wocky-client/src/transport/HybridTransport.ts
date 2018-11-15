@@ -3,6 +3,7 @@ import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
 import {ILocation} from '../model/Location'
+import {LoginParams} from './IWockyTransport'
 
 export class HybridTransport implements IWockyTransport {
   @computed
@@ -63,17 +64,11 @@ export class HybridTransport implements IWockyTransport {
     this._gql = gql
   }
 
-  async login(
-    user?: string,
-    password?: string,
-    host?: string,
-    accessToken?: string,
-    bypass?: boolean
-  ): Promise<boolean> {
+  async login(params: LoginParams): Promise<boolean> {
     // parallel login
     const logins = await Promise.all([
-      this._gql.loginGQL({userId: user, token: password, accessToken, bypass}),
-      this._xmpp.login(user, password, host),
+      this._gql.loginGQL(params),
+      this._xmpp.login({user: params.userId, password: params.token, host: params.host}),
     ])
     return logins === [true, true]
   }
@@ -166,7 +161,7 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unsubscribeBot(id)
   }
 
-  requestRoster(): Promise<[any]> {
+  requestRoster(): Promise<any[]> {
     return this._gql.requestRoster()
   }
 

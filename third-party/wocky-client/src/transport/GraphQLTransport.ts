@@ -22,10 +22,13 @@ import {
   iso8601toDate,
 } from './utils'
 import uuid from 'uuid/v1'
+import _ from 'lodash'
 
 export class GraphQLTransport implements IWockyTransport {
   userId?: string
   token?: string
+  // NOTE: temporary
+  firebaseToken?: string
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -129,28 +132,40 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('not implemented')
   }
 
-  async register(): Promise<{username: string; password: string; host: string}> {
+  async register(): Promise<any> {
     throw new Error('not implemented')
   }
 
   @action
-  async loginGQL(params: LoginParams): Promise<{userId: string; token: string}> {
-    const {userId, token} = params
+  async loginGQL({
+    userId,
+    token,
+    bypass,
+    phoneNumber,
+    accessToken,
+  }: LoginParams): Promise<{userId: string; token: string}> {
     if (this.connecting) {
       // prevent duplicate login
       await waitFor(() => !this.connecting)
     } else {
       this.connecting = true
       this.userId = userId || uuid()
+
+      // if this is an XMPP-based password we need to generate a fresh JWT
+      const t = _.startsWith(token, '$T$') ? undefined : token
+      console.log('& old token?', token, _.startsWith(token, '$T$'))
       this.token =
-        token ||
+        t ||
         generateWockyToken({
-          ...(params as any),
+          bypass,
+          phoneNumber,
+          accessToken,
           userId: this.userId!,
           version: this.version,
           os: this.os,
           deviceName: this.deviceName,
         })
+
       const res = await this.authenticate()
       if (res) {
         this.subscribeBotVisitors()
@@ -162,6 +177,7 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(): Promise<boolean> {
     try {
+      console.log('& authing', this.token)
       const mutation = {
         mutation: gql`
           mutation authenticate($token: String!) {
@@ -176,6 +192,7 @@ export class GraphQLTransport implements IWockyTransport {
       }
       // authenticate both connections
       const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      console.log('& got responses', res)
       this.connected = res.reduce<boolean>(
         (accumulated, current) =>
           !!accumulated && !!current.data && current.data!.authenticate !== null,

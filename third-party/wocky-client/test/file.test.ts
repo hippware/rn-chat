@@ -71,7 +71,10 @@ describe('FileStore', () => {
       expect(user1.profile!.avatar!.url).toBeTruthy()
       expect(user1.profile!.avatar!.thumbnail).toBe(null)
       // check how thumbnails are automatically loaded
-      await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
+      await waitFor(
+        () => user1.profile!.avatar!.thumbnail !== null,
+        'user1 avatar thumbnail to load'
+      )
       expect(user1.profile!.avatar!.url).toBe('')
       await user1.profile!.avatar!.download()
       const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)

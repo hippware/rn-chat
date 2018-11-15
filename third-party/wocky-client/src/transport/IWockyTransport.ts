@@ -14,6 +14,7 @@ export type LoginParams = {
   accessToken?: string
   bypass?: boolean
   phoneNumber?: string
+  host?: string
 }
 
 export interface IWockyTransport {
@@ -29,7 +30,7 @@ export interface IWockyTransport {
   rosterItem: any // TODO interface for roster
   notification: any // TODO interface for notification
   botVisitor: any // TODO interface for bot visitor
-  login(user?: string, password?: string, host?: string): Promise<boolean>
+  login(params?: LoginParams): Promise<boolean>
   register(
     data: any,
     host?: string,
@@ -62,7 +63,7 @@ export interface IWockyTransport {
   unblock(username: string): Promise<void>
   subscribeBot(id: string): Promise<number>
   unsubscribeBot(id: string): Promise<number>
-  requestRoster(): Promise<[any]>
+  requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>
   loadBot(id: string, server: any): Promise<any> // TODO define inteface for bot
   removeBot(id: string): Promise<void>

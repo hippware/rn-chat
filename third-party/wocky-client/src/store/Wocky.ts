@@ -101,16 +101,19 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*(user?: string, password?: string, host?: string) {
-          if (user) {
-            self.username = user
-          }
-          if (password) {
-            self.password = password
-          }
-          if (host) {
-            self.host = host
-          }
+        login: flow(function* login(accessToken?: string) {
+          // params: {user?: string; password?: string; host?: string} = {}
+
+          // const {user, password, host} = params
+          // if (user) {
+          //   self.username = user
+          // }
+          // if (password) {
+          //   self.password = password
+          // }
+          // if (host) {
+          //   self.host = host
+          // }
           if (!self.username || !self.password || !self.host) {
             throw new Error(
               `Cannot login without username/password/host:${self.username},${self.password},${
@@ -118,12 +121,18 @@ export const Wocky = types
               }`
             )
           }
-          yield self.transport.login(self.username!, self.password!, self.host)
+          yield self.transport.login({
+            userId: self.username,
+            token: self.password,
+            host: self.host,
+            accessToken,
+          })
           yield self.loadProfile(self.username)
 
           self.sessionCount++
           return true
-        }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
+          // }) as (params?: LoginParams) => Promise<boolean>,
+        }) as (accessToken?: string) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'

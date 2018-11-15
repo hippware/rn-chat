@@ -76,7 +76,7 @@ export class XmppTransport implements IWockyTransport {
     })
   }
   @action
-  async login(user?: string, password?: string, host?: string): Promise<boolean> {
+  async login({user, password, host}): Promise<boolean> {
     try {
       if (user) {
         this.username = user
@@ -107,6 +107,7 @@ export class XmppTransport implements IWockyTransport {
     host?: string,
     providerName = 'digits'
   ): Promise<{username: string; password: string; host: string}> {
+    // for "real" auth data = {jwt: someLongFirebaseToken}
     if (host) {
       this.host = host
     }
@@ -123,6 +124,7 @@ export class XmppTransport implements IWockyTransport {
       let d
       try {
         const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement
+        console.log('& xml', error)
         d = Utils.parseXml(xml).failure
       } catch (e) {
         throw error

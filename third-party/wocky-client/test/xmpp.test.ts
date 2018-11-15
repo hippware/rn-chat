@@ -21,7 +21,7 @@ describe('ConnectStore', () => {
     done()
   })
 
-  it('check automatic loading profile', async done => {
+  it.only('check automatic loading profile', async done => {
     when(
       () => (user1.profile ? true : false),
       () => {
@@ -141,20 +141,21 @@ describe('ConnectStore', () => {
       done(e)
     }
   })
-  it('check roster', async done => {
-    try {
-      await user2.login()
-      when(
-        () => user2.sortedRoster.length === 1,
-        () => {
-          expect(user2.sortedRoster[0].id === user1.username)
-          expect(user2.sortedRoster[0].status === 'available')
-          done()
-        }
-      )
-    } catch (e) {
-      done(e)
-    }
+  it('check roster', async () => {
+    console.log('CHECK ROSTER')
+    await user2.login()
+    console.log('USER2 LOGGED IN')
+    await waitFor(() => user2.sortedRoster.length > 0, 'user2 roster to load')
+    expect(user2.sortedRoster[0].id === user1.username)
+    expect(user2.sortedRoster[0].status === 'available')
+    // when(
+    //   () => user2.sortedRoster.length === 1,
+    //   () => {
+    //     expect(user2.sortedRoster[0].id === user1.username)
+    //     expect(user2.sortedRoster[0].status === 'available')
+    //     done()
+    //   }
+    // )
   })
   it('check message receive', async done => {
     try {
