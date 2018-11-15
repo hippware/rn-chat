@@ -114,6 +114,7 @@ const FirebaseStore = types
       analytics.track('logout')
       if (self.token) {
         self.token = null
+        self.phone = ''
         try {
           yield auth.signOut()
         } catch (err) {

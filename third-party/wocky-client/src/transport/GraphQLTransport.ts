@@ -139,7 +139,7 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async loginGQL(params: LoginParams = {}): Promise<{userId: string; token: string}> {
     console.log('& loginGQL', params, this.phoneNumber)
-    const {userId, token, accessToken} = params
+    const {userId, token, accessToken, password} = params
     if (this.connecting) {
       // prevent duplicate login
       await waitFor(() => !this.connecting)
@@ -173,7 +173,47 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(): Promise<boolean> {
     try {
-      // console.log('& authing', this.token)
+      console.log('& authing', this.token)
+      const mutation = {
+        mutation: gql`
+          mutation authenticate($token: String!) {
+            authenticate(input: {token: $token}) {
+              user {
+                id
+              }
+            }
+          }
+        `,
+        variables: {token: this.token},
+      }
+      // authenticate both connections
+      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      console.log('& got responses', res.map(r => r.data!.authenticate))
+      this.connected = res.reduce<boolean>(
+        (accumulated, current) =>
+          !!accumulated &&
+          !!current.data &&
+          current.data!.authenticate !== null &&
+          // TODO: currently getting back a different userId than I submitted
+          current.data.authenticate.user.id === this.userId,
+        true
+      )
+      return this.connected
+    } catch (err) {
+      this.connected = false
+      console.warn('GraphQL authenticate error with user', this.userId, 'and token', this.token)
+      console.warn(err)
+      return false
+    } finally {
+      this.connecting = false
+    }
+  }
+
+  // this auth flow will go away with XMPP.
+  @action
+  async authenticateDEPRECATED(): Promise<boolean> {
+    try {
+      console.log('& authing', this.token)
       const mutation = {
         mutation: gql`
           mutation authenticate($token: String!) {

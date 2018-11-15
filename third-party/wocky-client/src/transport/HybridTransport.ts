@@ -88,7 +88,7 @@ export class HybridTransport implements IWockyTransport {
     {phoneNumber}: {phoneNumber: string},
     host: string
   ): Promise<{username: string; password: string; host: string}> {
-    this._gql.phoneNumber = `+1555${phoneNumber}`
+    this._gql.phoneNumber = phoneNumber
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 

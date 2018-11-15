@@ -27,6 +27,14 @@ describe('GraphQL auth', () => {
     await gql.remove()
   })
 
+  it('bypass register a user with both transports', async () => {
+    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+    const {userId, token} = await gql.loginGQL({token: gqlToken})
+    expect(userId).toBeTruthy()
+    expect(token).toBeTruthy()
+    await gql.remove()
+  })
+
   // TODO: is there a way to do tests with "real" firebase tokens?
   // it('logs in existing XMPP-authed user via firebsae', async () => {
   //   const provider = new XmppStropheV2()
