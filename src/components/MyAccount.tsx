@@ -15,10 +15,10 @@ import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
 import Screen from './Screen'
-import {PINK} from '../constants/colors'
+import {PINK, DARK_GREY} from '../constants/colors'
 import {settings} from '../globals'
-import Version from './Version'
 import {phoneFormat} from '../utils/misc'
+const {version} = require('../../package.json')
 
 type Props = {
   wocky?: IWocky
@@ -249,6 +249,16 @@ const Right = inject('profileValidationStore', 'wocky')(
         </RText>
       </TouchableOpacity>
     ) : null
+  })
+)
+
+const Version = inject()(
+  observer(({}) => {
+    return (
+      <RText size={15} color={DARK_GREY} style={{marginBottom: 15}}>
+        {`Version ${version}`}
+      </RText>
+    )
   })
 )
 
