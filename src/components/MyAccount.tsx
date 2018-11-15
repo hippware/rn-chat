@@ -261,7 +261,7 @@ const Version = inject('codePushStore')(
     if (codePushStore!.metadata) {
       const {deploymentKey, label} = codePushStore!.metadata
 
-      if (deploymentKey != 'Production') {
+      if (deploymentKey !== 'Production') {
         versionString = `${versionString}-${deploymentKey}`
       }
       versionString = `${versionString}-${label} (${packageJsonVersion})`
