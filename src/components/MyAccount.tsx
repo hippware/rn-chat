@@ -15,7 +15,6 @@ import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
 import Screen from './Screen'
-import {PINK, DARK_GREY} from '../constants/colors'
 import {settings} from '../globals'
 import {phoneFormat} from '../utils/misc'
 const {version} = require('../../package.json')
@@ -201,7 +200,7 @@ const LinkButton = ({
   style?: any
 }) => (
   <TouchableOpacity onPress={onPress}>
-    <RText size={15} color={PINK} style={[styles.text, style]}>
+    <RText size={15} color={colors.PINK} style={[styles.text, style]}>
       {children}
     </RText>
   </TouchableOpacity>
@@ -255,7 +254,7 @@ const Right = inject('profileValidationStore', 'wocky')(
 const Version = inject()(
   observer(({}) => {
     return (
-      <RText size={15} color={DARK_GREY} style={{marginBottom: 15}}>
+      <RText size={15} color={colors.DARK_GREY} style={{marginBottom: 15}}>
         {`Version ${version}`}
       </RText>
     )
