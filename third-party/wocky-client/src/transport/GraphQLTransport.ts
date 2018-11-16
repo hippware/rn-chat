@@ -145,25 +145,35 @@ export class GraphQLTransport implements IWockyTransport {
       await waitFor(() => !this.connecting)
     } else {
       this.connecting = true
-      this.userId = userId || uuid()
-      this.token =
-        token ||
-        generateWockyToken({
-          bypass: !!this.phoneNumber,
-          phoneNumber: this.phoneNumber,
-          accessToken,
-          userId: this.userId!,
-          version: this.version,
-          os: this.os,
-          deviceName: this.deviceName,
-        })
-
-      const res = await this.authenticate()
-      if (res) {
-        this.subscribeBotVisitors()
-        this.phoneNumber = undefined
+      let res: boolean = false
+      if (this.phoneNumber || _.startsWith(token, '$T$')) {
+        // bypass auth so we need to use the "old" authentication method for both XMPP and GraphQL
+        console.log('& bypass auth')
+        this.userId = userId
+        this.token = password
+        res = await this.authenticateDEPRECATED(userId!, password!)
       } else {
-        throw new Error('GraphQL authentication failed')
+        console.log('& normal auth')
+        this.userId = userId || uuid()
+        this.token =
+          token ||
+          generateWockyToken({
+            bypass: !!this.phoneNumber,
+            phoneNumber: this.phoneNumber,
+            accessToken,
+            userId: this.userId!,
+            version: this.version,
+            os: this.os,
+            deviceName: this.deviceName,
+          })
+
+        res = await this.authenticate()
+        if (res) {
+          this.subscribeBotVisitors()
+          this.phoneNumber = undefined
+        } else {
+          throw new Error('GraphQL authentication failed')
+        }
       }
     }
     console.log('& loginGQL')
@@ -209,40 +219,29 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  // this auth flow will go away with XMPP.
+  // this auth flow (using an XMPP-generated token to auth GraphQL) will go away when we get rid of XMPP.
   @action
-  async authenticateDEPRECATED(): Promise<boolean> {
+  async authenticateDEPRECATED(user: string, token: string): Promise<boolean> {
     try {
-      console.log('& authing', this.token)
       const mutation = {
         mutation: gql`
-          mutation authenticate($token: String!) {
-            authenticate(input: {token: $token}) {
+          mutation authenticate($user: String!, $token: String!) {
+            authenticate(input: {user: $user, token: $token}) {
               user {
                 id
               }
             }
           }
         `,
-        variables: {token: this.token},
+        variables: {user, token},
       }
       // authenticate both connections
-      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-      console.log('& got responses', res.map(r => r.data!.authenticate))
-      this.connected = res.reduce<boolean>(
-        (accumulated, current) =>
-          !!accumulated &&
-          !!current.data &&
-          current.data!.authenticate !== null &&
-          // TODO: currently getting back a different userId than I submitted
-          current.data.authenticate.user.id === this.userId,
-        true
-      )
+      await this.client!.mutate(mutation)
+      const res = await this.client2!.mutate(mutation)
+      this.connected = !!res.data && res.data!.authenticate !== null
       return this.connected
     } catch (err) {
       this.connected = false
-      console.warn('GraphQL authenticate error with user', this.userId, 'and token', this.token)
-      console.warn(err)
       return false
     } finally {
       this.connecting = false

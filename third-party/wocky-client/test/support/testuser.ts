@@ -60,21 +60,20 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
       }
     )
     addMiddleware(service, simpleActionLogger)
-    // gql.phoneNumber = phoneNumber
-    // await service.register(
-    //   {
-    //     userID: `000000${phoneNumber.replace('+1555', '')}`,
-    //     phoneNumber,
-    //     authTokenSecret: '',
-    //     authToken: '',
-    //     emailAddressIsVerified: false,
-    //     'X-Auth-Service-Provider': 'http://localhost:9999',
-    //     emailAddress: '',
-    //     'X-Verify-Credentials-Authorization': '',
-    //   },
-    //   'digits'
-    // )
-    await service.testRegister({phoneNumber})
+    await service.register(
+      {
+        userID: `000000${phoneNumber.replace('+1555', '')}`,
+        phoneNumber,
+        authTokenSecret: '',
+        authToken: '',
+        emailAddressIsVerified: false,
+        'X-Auth-Service-Provider': 'http://localhost:9999',
+        emailAddress: '',
+        'X-Verify-Credentials-Authorization': '',
+      },
+      'digits'
+    )
+    // await service.testRegister({phoneNumber})
     console.log('credentials', service.username, service.password, service.token) // need it for debug with GraphiQL
     await service.login()
     return service

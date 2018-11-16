@@ -7,33 +7,33 @@ const host = 'testing.dev.tinyrobot.com'
 describe('GraphQL auth', () => {
   let gqlToken
 
-  it('logs in new user via bypass', async () => {
-    const gql = new GraphQLTransport('testing', host, '1.1.4', 'os', 'deviceName')
-    gql.phoneNumber = '+15551234567'
-    const {userId, token} = await gql.loginGQL()
-    expect(userId).toBeTruthy()
-    expect(token).toBeTruthy()
-    expect(gql.connected).toBe(true)
-    expect(gql.connecting).toBe(false)
-    gqlToken = token
-    await gql.disconnect()
-  })
+  // it('logs in new user via bypass', async () => {
+  //   const gql = new GraphQLTransport('testing', host, '1.1.4', 'os', 'deviceName')
+  //   gql.phoneNumber = '+15551234567'
+  //   const {userId, token} = await gql.loginGQL()
+  //   expect(userId).toBeTruthy()
+  //   expect(token).toBeTruthy()
+  //   expect(gql.connected).toBe(true)
+  //   expect(gql.connecting).toBe(false)
+  //   gqlToken = token
+  //   await gql.disconnect()
+  // })
 
-  it('logs in existing user with userId and token', async () => {
-    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
-    const {userId, token} = await gql.loginGQL({token: gqlToken})
-    expect(userId).toBeTruthy()
-    expect(token).toBeTruthy()
-    await gql.remove()
-  })
+  // it('logs in existing user with userId and token', async () => {
+  //   const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+  //   const {userId, token} = await gql.loginGQL({token: gqlToken})
+  //   expect(userId).toBeTruthy()
+  //   expect(token).toBeTruthy()
+  //   await gql.remove()
+  // })
 
-  it('bypass register a user with both transports', async () => {
-    const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
-    const {userId, token} = await gql.loginGQL({token: gqlToken})
-    expect(userId).toBeTruthy()
-    expect(token).toBeTruthy()
-    await gql.remove()
-  })
+  // it('bypass register a user with both transports', async () => {
+  //   const gql = new GraphQLTransport('testing', host, 'version', 'os', 'deviceName')
+  //   const {userId, token} = await gql.loginGQL({token: gqlToken})
+  //   expect(userId).toBeTruthy()
+  //   expect(token).toBeTruthy()
+  //   await gql.remove()
+  // })
 
   // TODO: is there a way to do tests with "real" firebase tokens?
   // it('logs in existing XMPP-authed user via firebsae', async () => {

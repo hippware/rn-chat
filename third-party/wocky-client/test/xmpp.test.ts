@@ -21,7 +21,7 @@ describe('ConnectStore', () => {
     done()
   })
 
-  it.only('check automatic loading profile', async done => {
+  it('check automatic loading profile', async done => {
     when(
       () => (user1.profile ? true : false),
       () => {
