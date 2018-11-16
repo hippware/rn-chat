@@ -261,8 +261,14 @@ const Version = inject('codePushStore')(
     if (codePushStore!.metadata) {
       const {deploymentKey, label} = codePushStore!.metadata
 
-      if (deploymentKey !== 'Production') {
-        versionString = `${versionString}-${deploymentKey}`
+      // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
+      if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
+        const deploymentInfo = codePushStore.channels.filter(
+          deployment => deployment.key === deploymentKey
+        )
+        const deploymentName = deploymentInfo.length > 0 ? deploymentInfo[0].name : deploymentKey
+
+        versionString = `${versionString}-${deploymentName}`
       }
       versionString = `${versionString}-${label} (${packageJsonVersion})`
     }
