@@ -74,6 +74,7 @@ const PersistableModel = types
       //     resource: 'cli-resource-ac35c6fb',
       //   },
       // });
+      // throw new Error()
       const modelName = getType(self).name
       let parsed
       try {

@@ -7,6 +7,7 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventUserFollowData} from '../model/EventUserFollow'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
+import jsrsasign from 'jsrsasign'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -428,4 +429,63 @@ export function convertNotification(edge: any): IEventData | null {
 
 export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
+}
+
+type TokenParams = {
+  userId: string
+  version: string
+  os: string
+  deviceName: string
+  bypass?: boolean
+  accessToken?: string
+  phoneNumber?: string
+}
+
+// tslint:disable:no-console
+
+export function generateWockyToken({
+  userId,
+  accessToken,
+  version,
+  os,
+  deviceName,
+  bypass,
+  phoneNumber,
+}: TokenParams) {
+  try {
+    console.log('& generating wocky token', bypass, accessToken)
+    assert(!!bypass || accessToken !== undefined, `Access token required for non-bypass auth.`)
+    assert(!bypass || phoneNumber, 'Phone number required with bypass auth')
+    const payload = {
+      jti: userId,
+      iss: `TinyRobot/${version} (${os}; ${deviceName})`,
+      typ: bypass ? 'bypass' : 'firebase',
+      sub: accessToken || 'bypass',
+      aud: 'Wocky',
+      phone_number: phoneNumber,
+    }
+    // const signOptions = {
+    //   algorithm: 'HS512',
+    // }
+    // TODO: store this with react-native-native-env
+    const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+    const header = {alg: 'HS512', typ: 'JWT'}
+    const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
+    console.log('& user', userId)
+    console.log('& jwt', jwt)
+    return jwt
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export function assert(condition, message) {
+  if (!condition) {
+    message = message || 'Assertion failed'
+    if (typeof Error !== 'undefined') {
+      throw new Error(message)
+    }
+    throw message // Fallback
+  }
 }

@@ -2,6 +2,28 @@ import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 
+export type LoginParams = {
+  userId?: string
+  token?: string
+  password?: string
+  accessToken?: string
+  host?: string
+}
+
+export interface ILoginGqlParams {
+  accessToken?: string
+  version?: string
+  os?: string
+  deviceName?: string
+}
+
+export interface ILoginNewParams extends ILoginGqlParams {
+  userId?: string | null
+  password?: string | null
+  token?: string | null
+  host?: string | null
+}
+
 export interface IPagingList {
   list: any[]
   cursor?: string
@@ -21,7 +43,8 @@ export interface IWockyTransport {
   rosterItem: any // TODO interface for roster
   notification: any // TODO interface for notification
   botVisitor: any // TODO interface for bot visitor
-  login(user?: string, password?: string, host?: string): Promise<boolean>
+  login(user?: string, password?: string, host?: string, token?: string): Promise<boolean>
+  loginNew(params: ILoginNewParams): Promise<{userId: string; token: string; password: string}>
   register(
     data: any,
     host?: string,

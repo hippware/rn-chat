@@ -3,6 +3,7 @@ import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 import {computed} from 'mobx'
 import {ILocation} from '../model/Location'
+import {ILoginNewParams} from './IWockyTransport'
 
 export class HybridTransport implements IWockyTransport {
   @computed
@@ -71,6 +72,16 @@ export class HybridTransport implements IWockyTransport {
       this._xmpp.login(user, password, host),
     ])
     return logins === [true, true]
+  }
+
+  async loginNew(
+    params: ILoginNewParams
+  ): Promise<{userId: string; token: string; password: string}> {
+    const logins = await Promise.all([
+      this._gql.loginNew(params),
+      this._xmpp.login(params.userId!, params.password!, params.host!),
+    ])
+    return {userId: logins[0].userId, password: params.password!, token: logins[0].token!}
   }
 
   register(

@@ -101,6 +101,10 @@ export class XmppTransport implements IWockyTransport {
     }
   }
 
+  loginNew(): Promise<any> {
+    throw new Error('not implemented')
+  }
+
   @action
   async register(
     data: any,

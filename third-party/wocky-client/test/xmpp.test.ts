@@ -9,7 +9,7 @@ let user1phone: string, user2phone: string
 
 describe('ConnectStore', () => {
   beforeAll(async done => {
-    jest.setTimeout(10000)
+    jest.setTimeout(20000)
     user1 = await createXmpp()
     user2 = await createXmpp()
     user1phone = user1.profile!.phoneNumber!

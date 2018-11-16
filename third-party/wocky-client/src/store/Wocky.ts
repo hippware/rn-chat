@@ -10,9 +10,10 @@ import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
-import {processMap, waitFor} from '../transport/utils'
+import {processMap, waitFor, assert} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
+import {ILoginGqlParams} from '../transport/IWockyTransport'
 
 export const Wocky = types
   .compose(
@@ -22,6 +23,7 @@ export const Wocky = types
       id: 'wocky',
       username: types.maybeNull(types.string),
       password: types.maybeNull(types.string),
+      token: types.maybeNull(types.string), // holds new GraphQL login token
       host: types.string,
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {}),
@@ -102,15 +104,15 @@ export const Wocky = types
       },
       actions: {
         login: flow(function*(user?: string, password?: string, host?: string) {
-          if (user) {
-            self.username = user
-          }
-          if (password) {
-            self.password = password
-          }
-          if (host) {
-            self.host = host
-          }
+          // if (user) {
+          //   self.username = user
+          // }
+          // if (password) {
+          //   self.password = password
+          // }
+          // if (host) {
+          //   self.host = host
+          // }
           if (!self.username || !self.password || !self.host) {
             throw new Error(
               `Cannot login without username/password/host:${self.username},${self.password},${
@@ -124,6 +126,30 @@ export const Wocky = types
           self.sessionCount++
           return true
         }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
+        loginGQL: flow(function*(params: ILoginGqlParams = {}) {
+          const {accessToken, version, os, deviceName} = params
+          assert(
+            self.token || (accessToken && version && os && deviceName),
+            'must login with all params if no stored token'
+          )
+          const {userId, token, password} = yield self.transport.loginNew({
+            accessToken,
+            version,
+            os,
+            deviceName,
+            userId: self.username,
+            password: self.password,
+            token: self.token,
+          })
+          self.username = userId
+          self.token = token
+          self.password = password
+          yield self.loadProfile(self.username!)
+
+          self.sessionCount++
+          return true
+        }),
+        //  as (user?: string, password?: string, host?: string) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'

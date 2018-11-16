@@ -1,7 +1,7 @@
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, IPagingList} from './IWockyTransport'
+import {IWockyTransport, IPagingList, ILoginNewParams} from './IWockyTransport'
 import {observable, action, when} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
@@ -12,8 +12,19 @@ import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
 import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
-import {convertProfile, convertBot, convertNotification, convertNotifications} from './utils'
+import {
+  convertProfile,
+  convertBot,
+  convertNotification,
+  convertNotifications,
+  waitFor,
+  generateWockyToken,
+} from './utils'
 import * as Utils from './utils'
+import _ from 'lodash'
+import uuid from 'uuid/v1'
+
+// tslint:disable:no-console
 
 export class GraphQLTransport implements IWockyTransport {
   resource: string
@@ -28,6 +39,7 @@ export class GraphQLTransport implements IWockyTransport {
   @observable connecting: boolean = false
   username?: string
   password?: string
+  token?: string
   host?: string
   // @observable geoBot: any
   @observable message: any
@@ -42,8 +54,10 @@ export class GraphQLTransport implements IWockyTransport {
   constructor(resource: string) {
     this.resource = resource
   }
+
   @action
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
+    console.log('& graphql login OLD', user, password)
     if (this.connecting) {
       // prevent duplicate login
       return new Promise<boolean>(resolve => {
@@ -65,7 +79,58 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
+    this.prepConnection()
 
+    if (!this.username) {
+      throw new Error('Username is not defined')
+    }
+    if (!this.password) {
+      throw new Error('Password is not defined')
+    }
+
+    const res = await this.authenticate(this.password, this.username)
+
+    if (res) {
+      this.subscribeBotVisitors()
+    }
+    return res
+  }
+
+  @action
+  async loginNew(
+    params: ILoginNewParams
+  ): Promise<{userId: string; token: string; password: string}> {
+    console.log('& loginNew', params)
+    if (this.connecting) {
+      // prevent duplicate login
+      await waitFor(() => !this.connecting)
+    } else {
+      this.connecting = true
+      this.prepConnection()
+      let res: boolean = false
+      const {userId, token, accessToken, version, os, deviceName} = params
+      this.username = userId || uuid()
+      this.token =
+        token ||
+        generateWockyToken({
+          bypass: false,
+          accessToken,
+          userId: this.username!,
+          version: version!,
+          os: os!,
+          deviceName: deviceName!,
+        })
+      res = await this.authenticate(this.token!)
+      if (res) {
+        this.subscribeBotVisitors()
+      } else {
+        throw new Error('GraphQL authentication failed')
+      }
+    }
+    return {userId: this.username!, token: this.token!, password: this.password!}
+  }
+
+  prepConnection() {
     const socketEndpoint = process.env.WOCKY_LOCAL
       ? 'ws://localhost:8080/graphql'
       : `wss://${this.host}/graphql`
@@ -133,43 +198,59 @@ export class GraphQLTransport implements IWockyTransport {
     this.socket2.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
     })
-
-    if (!this.username) {
-      throw new Error('Username is not defined')
-    }
-    if (!this.password) {
-      throw new Error('Password is not defined')
-    }
-
-    const res = await this.authenticate(this.username, this.password)
-    if (res) {
-      this.subscribeBotVisitors()
-    }
-    return res
   }
 
   @action
-  async authenticate(user: string, token: string): Promise<boolean> {
+  async authenticate(token: string, user?: string): Promise<boolean> {
     try {
-      const mutation = {
-        mutation: gql`
-          mutation authenticate($user: String!, $token: String!) {
-            authenticate(input: {user: $user, token: $token}) {
-              user {
-                id
+      console.log('& authing', token)
+      let mutation
+      if (!!user) {
+        // old auth mutation
+        mutation = {
+          mutation: gql`
+            mutation authenticate($user: String!, $token: String!) {
+              authenticate(input: {user: $user, token: $token}) {
+                user {
+                  id
+                }
               }
             }
-          }
-        `,
-        variables: {user, token},
+          `,
+          variables: {user, token},
+        }
+      } else {
+        mutation = {
+          mutation: gql`
+            mutation authenticate($token: String!) {
+              authenticate(input: {token: $token}) {
+                user {
+                  id
+                }
+              }
+            }
+          `,
+          variables: {token},
+        }
       }
+
       // authenticate both connections
-      await this.client!.mutate(mutation)
-      const res = await this.client2!.mutate(mutation)
-      this.connected = !!res.data && res.data!.authenticate !== null
+      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      console.log('& got responses', res.map(r => r.data!.authenticate))
+      this.connected = res.reduce<boolean>(
+        (accumulated, current) =>
+          !!accumulated &&
+          !!current.data &&
+          current.data!.authenticate !== null &&
+          // TODO: currently getting back a different userId than I submitted
+          current.data.authenticate.user.id === this.username,
+        true
+      )
       return this.connected
     } catch (err) {
       this.connected = false
+      console.warn('GraphQL authenticate error with user', user, 'and token', token)
+      console.warn(err)
       return false
     } finally {
       this.connecting = false

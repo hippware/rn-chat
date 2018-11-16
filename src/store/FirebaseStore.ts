@@ -3,6 +3,9 @@ import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
 import {IEnv} from '.'
 import {settings} from '../globals'
+import {Platform} from 'react-native'
+const {version} = require('../../package.json')
+import DeviceInfo from 'react-native-device-info'
 
 type State = {
   phone?: string
@@ -198,7 +201,8 @@ const FirebaseStore = types
       try {
         yield wocky!.register({jwt: self.token}, 'firebase')
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login(undefined, undefined, undefined)
+        // yield wocky.login(undefined, undefined, undefined)
+        yield login()
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
@@ -211,6 +215,20 @@ const FirebaseStore = types
         })
       }
     })
+
+    function login(): Promise<boolean> {
+      if (self.token) {
+        // if we have a firebase access token then we can login with new GraphQL flow...otherwise use old flow
+        return wocky.loginGQL({
+          accessToken: self.token!,
+          version,
+          os: Platform.OS,
+          deviceName: DeviceInfo.getDeviceId(),
+        })
+      } else {
+        return wocky.login()
+      }
+    }
 
     // TODO: use rn-firebase for dynamic link generation when it's less broken
     const getFriendInviteLink = flow(function*() {
@@ -256,6 +274,7 @@ const FirebaseStore = types
       confirmCode,
       resendCode,
       getFriendInviteLink,
+      login,
     }
   })
 
