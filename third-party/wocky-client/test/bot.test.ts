@@ -11,8 +11,9 @@ const icon = '\u00A9\uFE0F\u00A9'
 // tslint:disable:no-console
 
 describe('BotStore', () => {
+  // TODO find out how to setup global timeout?? Tried to do it within setup without success
   beforeAll(() => {
-    jest.setTimeout(10000)
+    jest.setTimeout(30000)
   })
   it('create user1', async done => {
     try {
