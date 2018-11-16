@@ -11,6 +11,9 @@ function timestamp() {
 }
 
 describe('ProfileStore', () => {
+  beforeAll(() => {
+    jest.setTimeout(30000)
+  })
   it('create first user', async done => {
     try {
       timestamp()
