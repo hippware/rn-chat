@@ -24,6 +24,9 @@ async function exitBot(user: IWocky) {
 }
 
 describe('Geofence', () => {
+  beforeAll(() => {
+    jest.setTimeout(30000)
+  })
   it('create user1', async done => {
     try {
       timestamp()
