@@ -18,9 +18,7 @@ const maskLeft = require('../../images/maskLeft.png')
 const maskCenter = require('../../images/maskCenter.png')
 const maskRight = require('../../images/maskRight.png')
 
-class Onboarding extends React.Component<any> {
-  swiper: any
-
+class Onboarding extends React.Component {
   render() {
     const SwiperAny = Swiper as any // TODO: swiper types broken
     return (
@@ -30,7 +28,6 @@ class Onboarding extends React.Component<any> {
           dotColor={colors.GREY}
           activeDotColor={colors.PINK}
           bounces
-          ref={r => (this.swiper = r)}
           autoplay
           autoplayTimeout={5}
           loop
@@ -68,7 +65,7 @@ const Slide = ({bgImg, iconImg, left, center, children}: any) => {
         />
       </View>
       <View style={[styles.textContainer, {alignSelf: align, alignItems: align}]}>
-        <Image source={iconImg} style={styles.icon} resizeMode="contain" />
+        <Image source={iconImg} style={styles.icon as any} resizeMode="contain" />
         <RText
           style={[styles.title, {textAlign: left ? 'left' : center ? 'center' : 'right'}]}
           color={colors.PINK}
@@ -156,15 +153,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    // flex: 1,
     height: 50 * k,
-    // borderWidth: 0,
     borderRadius: 5 * k,
-    // backgroundColor: colors.PINK,
-    // alignItems: 'center',
     marginHorizontal: 15 * k,
     marginBottom: 10 * k,
-    // justifyContent: 'center',
   },
   login: {
     borderWidth: 1,
