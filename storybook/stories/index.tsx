@@ -10,6 +10,17 @@ import {storiesOf} from '@storybook/react-native'
 // import Welcome from './Welcome'
 import OnboardingLocation from '../../src/components/Onboarding/OnboardingLocation'
 import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingAccelerometer'
+import OnboardingSwiper from '../../src/components/Onboarding/OnboardingSwiper'
+
+function emptyFn() {
+  /* noop */
+}
+
+storiesOf('Onboarding', module)
+  // tslint:disable-next-line
+  .add('Main Swiper', () => <OnboardingSwiper log={console.log} />)
+  .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
+  .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 
@@ -25,11 +36,3 @@ import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingA
 //       <Text>😀 😎 👍 💯</Text>
 //     </Button>
 //   ))
-
-function emptyFn() {
-  /* noop */
-}
-
-storiesOf('Onboarding', module)
-  .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
-  .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
