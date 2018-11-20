@@ -23,30 +23,30 @@
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
-    "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json"
+    "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
+    "storybook": "storybook start"
   },
-  "jest": {    
-      "preset": "react-native",
-      "setupFiles": [
-        "./__tests__/utils/testSetup.ts",
-        "./node_modules/appcenter/test/AppCenterMock.js",
-        "./third-party/wocky-client/test/support/setup.js"
-      ],
-      "transformIgnorePatterns": [
-        "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-      ],
-      "modulePaths": ["<rootDir>", "<rootDir>/third-party/wocky-client/src"],
-      "transform": {
-        "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
-        "^.+\\.tsx?$": "ts-jest"
-      },
-      "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
-      "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
-      "moduleNameMapper": {
-        "wocky-client": "third-party/wocky-client/src"
-      }
-    }  
-  ,
+  "jest": {
+    "preset": "react-native",
+    "setupFiles": [
+      "./__tests__/utils/testSetup.ts",
+      "./node_modules/appcenter/test/AppCenterMock.js",
+      "./third-party/wocky-client/test/support/setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
+    ],
+    "modulePaths": ["<rootDir>","<rootDir>/third-party/wocky-client/src"],
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+    "moduleNameMapper": {
+      "wocky-client": "third-party/wocky-client/src"
+    }
+  },
   "detox": {
     "configurations": {
       "ios.sim.debug": {
@@ -178,7 +178,12 @@
     "tsutils": "^3.2.0",
     "typescript": "3.0.3",
     "websocket": "^1.0.28",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "@storybook/react-native": "^4.0.7",
+    "@storybook/addon-actions": "^4.0.7",
+    "@storybook/addon-links": "^4.0.7",
+    "@storybook/addons": "^4.0.7",
+    "babel-runtime": "^6.26.0"
   },
   "husky": {
     "hooks": {

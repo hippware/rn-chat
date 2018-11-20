@@ -104,7 +104,7 @@ const Buttons = inject('analytics')(({analytics}) => (
       }}
     >
       <RText size={17.5} color={colors.WHITE}>
-        Get Started
+        Get Started!
       </RText>
     </GradientButton>
     {/* TODO: Add Facebook button */}
