@@ -18,7 +18,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
   render() {
-    const {log} = this.props
     return (
       <View style={{flex: 1}}>
         <RText style={{width: '100%', textAlign: 'center', marginTop: 30}} size={18}>
@@ -33,30 +32,31 @@ export default class OnboardingSwiper extends React.Component<Props> {
           scrollEnabled={false}
           loop
         >
-          <OnboardingLocation
-            onPress={async () => {
-              const resp1 = await Permissions.check('location', {type: 'always'})
-              if (resp1 === 'authorized') {
-                log!('always on permission authorized!')
-                this.swiper.scrollBy(1)
-              } else {
-                const resp2 = await Permissions.check('location', {type: 'whenInUse'})
-                if (resp2 === 'authorized') {
-                  log!('location permission - when in use')
-                } else {
-                  log!('permission denied')
-                  // TODO: what do we do here?
-                }
-              }
-            }}
-          />
-          <OnboardingAccelerometer
-            onPress={async () => {
-              log!('accelerometer press')
-            }}
-          />
+          <OnboardingLocation onPress={this.onLocationPermissions} />
+          <OnboardingAccelerometer onPress={this.onAccelerometerPermissions} />
         </Swiper>
       </View>
     )
+  }
+
+  onLocationPermissions = async () => {
+    const {log} = this.props
+    const resp1 = await Permissions.check('location', {type: 'always'})
+    if (resp1 === 'authorized') {
+      log!('always on permission authorized!')
+      this.swiper.scrollBy(1)
+    } else {
+      const resp2 = await Permissions.check('location', {type: 'whenInUse'})
+      if (resp2 === 'authorized') {
+        log!('location permission - when in use')
+      } else {
+        log!('permission denied')
+        // TODO: what do we do here?
+      }
+    }
+  }
+
+  onAccelerometerPermissions = async () => {
+    this.props.log!('accelerometer press')
   }
 }
