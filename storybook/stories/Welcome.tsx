@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text} from 'react-native'
 
-export default class Welcome extends React.Component {
+export default class Welcome extends React.Component<any> {
   styles = {
     wrapper: {
       flex: 1,
@@ -48,10 +48,10 @@ export default class Welcome extends React.Component {
   }
 }
 
-Welcome.defaultProps = {
-  showApp: null,
-}
+// Welcome.defaultProps = {
+//   showApp: null,
+// }
 
-Welcome.propTypes = {
-  showApp: PropTypes.func,
-}
+// Welcome.propTypes = {
+//   showApp: PropTypes.func,
+// }

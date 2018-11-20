@@ -26,8 +26,12 @@ storiesOf('Button', module)
     </Button>
   ))
 
+function emptyFn() {
+  /* noop */
+}
+
 storiesOf('Test', module).add('onboarding', () => (
-  <Provider analytics={{track: () => {}}}>
+  <Provider analytics={{track: emptyFn}}>
     <Onboarding />
   </Provider>
 ))
