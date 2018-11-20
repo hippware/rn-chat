@@ -9,6 +9,7 @@ import {storiesOf} from '@storybook/react-native'
 // import CenterView from './CenterView'
 // import Welcome from './Welcome'
 import OnboardingLocation from '../../src/components/Onboarding/OnboardingLocation'
+import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingAccelerometer'
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 
@@ -29,4 +30,6 @@ function emptyFn() {
   /* noop */
 }
 
-storiesOf('Onboarding', module).add('1 - Location', () => <OnboardingLocation />)
+storiesOf('Onboarding', module)
+  .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
+  .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
