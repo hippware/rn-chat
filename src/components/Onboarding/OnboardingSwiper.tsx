@@ -1,7 +1,7 @@
 import React from 'react'
 import Permissions from 'react-native-permissions'
 import Swiper from 'react-native-swiper'
-import {View, Alert} from 'react-native'
+import {View} from 'react-native'
 import {colors} from 'src/constants'
 
 import OnboardingLocation from './OnboardingLocation'
@@ -41,22 +41,21 @@ export default class OnboardingSwiper extends React.Component<Props> {
 
   checkLocationPermissions = async () => {
     const {log} = this.props
-    const resp1 = await Permissions.check('location', {type: 'always'})
-    if (resp1 === 'authorized') {
+    let check = await Permissions.check('location', 'always')
+    if (check === 'undetermined') {
+      // first-time user: show permissions request dialog
+      check = await Permissions.request('location', 'always')
+    }
+    if (check === 'authorized') {
       log!('always on permission authorized!')
       this.swiper.scrollBy(1)
     } else {
-      const resp2 = await Permissions.check('location', {type: 'whenInUse'})
-      if (resp2 === 'authorized') {
-        log!('location permission - when in use')
-      } else {
-        log!('permission denied')
-        Alert.alert("We need your location to show you what's nearby!")
-      }
+      // TODO: show overlay with instructions for changing location settings. https://zpl.io/bPdleyl
+      log!('location permission - when in use')
     }
   }
 
   checkAccelerometerPermissions = async () => {
-    this.props.log!('accelerometer press')
+    // TODO: show accelerometer permissions request
   }
 }
