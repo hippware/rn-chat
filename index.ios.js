@@ -11,4 +11,9 @@ YellowBox.ignoreWarnings([
   'Class RCTCxxModule was not exported.', // https://github.com/facebook/react-native/issues/18201#issuecomment-384166348
 ])
 
+// Uncomment for storybook
+// import storybook from './storybook'
+// export default storybook
+
+// Comment for storybook
 AppRegistry.registerComponent('App', () => App)
