@@ -38,7 +38,10 @@ export default class OnboardingSwiper extends React.Component<Props> {
           <OnboardingLocation onPress={this.checkLocationPermissions} />
           <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
           <OnboardingNotifications onPress={this.checkAccelerometerPermissions} />
-          <OnboardingFindFriends onPress={this.checkAccelerometerPermissions} />
+          <OnboardingFindFriends
+            onPress={this.checkAccelerometerPermissions}
+            onSkip={this.checkAccelerometerPermissions}
+          />
         </Swiper>
       </View>
     )
