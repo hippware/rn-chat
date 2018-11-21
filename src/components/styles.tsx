@@ -211,3 +211,18 @@ export default StyleSheet.create({
   linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
   paginationStyle: {bottom: 170 * coef},
 })
+
+export const onboardingSlideStyle = StyleSheet.create({
+  onboardingH1: {
+    color: '#fe5c6c',
+    fontSize: 30,
+    fontWeight: '100',
+    textAlign: 'center',
+  },
+  onboardingSubtext: {
+    color: '#757575',
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: '100',
+  },
+})

@@ -1,8 +1,9 @@
 import React from 'react'
 import {View, StyleSheet, Image, Text} from 'react-native'
 import {RText, GradientButton} from '../common'
-import {WHITE} from 'src/constants/colors'
+import {WHITE, PINK, WARM_GREY_2} from 'src/constants/colors'
 import {k} from '../Global'
+import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
   onPress: () => void // the function that gets called when the user presses "Always Allow Location"
@@ -11,7 +12,6 @@ type Props = {
 class OnboardingLocation extends React.Component<Props> {
   render() {
     return (
-      // TODO: @irfirl to add components and styling
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <View style={{width: '80%', marginBottom: 32 * k}}>
           <RText style={styles.onboardingH1}>Allow Location Access</RText>
@@ -45,24 +45,5 @@ class OnboardingLocation extends React.Component<Props> {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  almostDone: {
-    color: '#3f324d',
-    fontSize: 18,
-  },
-  onboardingH1: {
-    color: '#fe5c6c',
-    fontSize: 30,
-    fontWeight: '100',
-    textAlign: 'center',
-  },
-  onboardingSubtext: {
-    color: '#757575',
-    fontSize: 18,
-    textAlign: 'center',
-    fontWeight: '100',
-  },
-})
 
 export default OnboardingLocation
