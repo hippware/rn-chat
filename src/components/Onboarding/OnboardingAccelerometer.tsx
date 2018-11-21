@@ -9,7 +9,7 @@ type Props = {
   onPress: () => void // the function that gets called when the user presses "Allow Accelerometer"
 }
 
-class OnboardingLocation extends React.Component<Props> {
+class OnboardingAccelerometer extends React.Component<Props> {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -42,4 +42,4 @@ class OnboardingLocation extends React.Component<Props> {
   }
 }
 
-export default OnboardingLocation
+export default OnboardingAccelerometer
