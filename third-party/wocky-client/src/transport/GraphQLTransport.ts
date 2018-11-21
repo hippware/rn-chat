@@ -24,8 +24,6 @@ import * as Utils from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 
-// tslint:disable:no-console
-
 export class GraphQLTransport implements IWockyTransport {
   resource: string
   client?: ApolloClient<any>
@@ -57,7 +55,6 @@ export class GraphQLTransport implements IWockyTransport {
 
   @action
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
-    console.log('& graphql login OLD', user, password)
     if (this.connecting) {
       // prevent duplicate login
       return new Promise<boolean>(resolve => {
@@ -79,7 +76,6 @@ export class GraphQLTransport implements IWockyTransport {
     if (host) {
       this.host = host
     }
-    console.log('& login', user, password, host)
     this.prepConnection()
 
     if (!this.username) {
@@ -102,7 +98,6 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async loginGraphQL(params: LoginParams): Promise<{userId: string; token: string}> {
     const {token, accessToken, version, os, deviceName, phoneNumber, host} = params
-    console.log('& loginNew', params)
     if (this.connecting) {
       // prevent duplicate login
       await waitFor(() => !this.connecting)
@@ -208,7 +203,6 @@ export class GraphQLTransport implements IWockyTransport {
   @action
   async authenticate(token: string, user?: string): Promise<boolean> {
     try {
-      console.log('& authing', token)
       let mutation
       let res: any[]
       if (!!user) {
@@ -251,8 +245,8 @@ export class GraphQLTransport implements IWockyTransport {
       return this.connected
     } catch (err) {
       this.connected = false
-      console.warn('GraphQL authenticate error with user', user, 'and token', token)
-      console.warn(err)
+      // console.warn('GraphQL authenticate error with user', user, 'and token', token)
+      // console.warn(err)
       return false
     } finally {
       this.connecting = false
