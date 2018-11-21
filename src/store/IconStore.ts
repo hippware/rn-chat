@@ -1,63 +1,25 @@
-import {observable, computed, action} from 'mobx'
+import {observable, action} from 'mobx'
 
-const defaultEmoji = '\ud83d\ude1c'
-const defaultList = [undefined, defaultEmoji]
+// HACK: this is necessary so we don't have to coordinate the switch from old icons to emoji-only with the backend
+export const oldIcons = ['a', 'b', 'c', 'd', 'e', 'g']
 
 export default class IconStore {
-  readonly iconList = observable.array<string | undefined>(defaultList)
-  @observable
-  index: number = 0
-  @observable
-  isEmojiKeyboardShown: boolean = false
+  @observable isEmojiKeyboardShown: boolean = false
+  @observable emoji?: string
 
-  @computed
-  get icon() {
-    return this.iconList[this.index]
-  }
-  @computed
-  get isEmoji() {
-    return this.index === this.iconList.length - 1
+  @action
+  toggleEmojiKeyboard = () => {
+    this.isEmojiKeyboardShown = !this.isEmojiKeyboardShown
   }
 
   @action
-  setEmojiKeyboardShown(value: boolean) {
-    this.isEmojiKeyboardShown = value
-  }
-
-  @action
-  setIndex = (index: number) => {
-    this.index = index
-    this.isEmojiKeyboardShown = this.isEmoji
-  }
-
-  @action
-  setIcon = (icon: string) => {
-    if (!icon) {
-      this.setIndex(0)
-    } else {
-      if (
-        this.iconList.indexOf(icon) >= 0 &&
-        this.iconList.indexOf(icon) < this.iconList.length - 1
-      ) {
-        this.setIndex(this.iconList.indexOf(icon))
-        return
-      }
-      // means that we have emoji
-      this.setIndex(this.iconList.length - 1)
-      this.changeEmoji(icon)
-    }
-  }
-
-  @action
-  changeEmoji = (icon: string) => {
-    this.iconList[this.iconList.length - 1] = icon
-    this.isEmojiKeyboardShown = false
+  setEmoji = (emoji: string) => {
+    this.emoji = emoji
   }
 
   @action
   reset = () => {
-    this.iconList.replace(defaultList)
-    this.index = 0
     this.isEmojiKeyboardShown = false
+    this.emoji = undefined
   }
 }

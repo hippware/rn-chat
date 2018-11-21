@@ -1,6 +1,7 @@
-import {types, getType, getParent, applySnapshot} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
 import {IObservableArray} from 'mobx'
 import {Bot, IBot, Location} from 'wocky-client'
+import {IStore} from './index'
 
 const SelectableCard = types
   .model('SelectableCard', {
@@ -55,13 +56,27 @@ export type ICard = typeof Card.Type
 const HomeStore = types
   .model('HomeStore', {
     fullScreenMode: false,
-    detailsMode: false,
-    creationMode: false,
     homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     index: 0,
     focusedBotLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
     scrolledToBot: types.maybeNull(types.reference(Bot)),
+  })
+  .views(self => {
+    const {navStore} = getRoot<IStore>(self)
+    return {
+      get creationMode() {
+        return (
+          navStore && ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(navStore.scene)
+        )
+      },
+      get detailsMode() {
+        return navStore && navStore.scene === 'botDetails'
+      },
+      get isIconEditable() {
+        return ['botCompose', 'botEdit'].includes(navStore.scene)
+      },
+    }
   })
   .views(self => ({
     // return the list for current mode
@@ -75,12 +90,6 @@ const HomeStore = types
     },
   }))
   .actions(self => ({
-    setCreationMode(value) {
-      self.creationMode = value
-    },
-    setDetailsMode(value) {
-      self.detailsMode = value
-    },
     setFocusedLocation(location) {
       if (!location) {
         self.focusedBotLocation = null

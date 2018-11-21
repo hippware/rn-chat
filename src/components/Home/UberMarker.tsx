@@ -5,17 +5,20 @@ import Bubble from '../map/Bubble'
 import commonStyles from '../styles'
 import IconStore from 'src/store/IconStore'
 import {BotIcon} from '../common'
+import {IHomeStore} from 'src/store/HomeStore'
 
 const dragTheMap = require('../../../images/dragTheMap.png')
 const tapToChange = require('../../../images/tapToChange.png')
 
 type Props = {
   iconStore?: IconStore
+  homeStore?: IHomeStore
 }
 
-const UberMarker = inject('iconStore')(
-  observer(({iconStore}: Props) => {
-    const {emoji, setEmoji} = iconStore!
+const UberMarker = inject('iconStore', 'homeStore')(
+  observer(({iconStore, homeStore}: Props) => {
+    const {emoji, isEmojiKeyboardShown, toggleEmojiKeyboard} = iconStore!
+    const {isIconEditable} = homeStore!
     return (
       <View
         pointerEvents="box-none"
@@ -27,7 +30,7 @@ const UberMarker = inject('iconStore')(
           },
         ]}
       >
-        <TouchableOpacity onPress={() => setEmoji('1')}>
+        <Wrapper toggle={toggleEmojiKeyboard} isTouchable={isIconEditable}>
           <Bubble
             style={{
               backgroundColor: 'white',
@@ -42,13 +45,21 @@ const UberMarker = inject('iconStore')(
           >
             <BotIcon icon={emoji!} size={20} />
           </Bubble>
-          <Image source={tapToChange} style={styles.changeCTA as any} />
-        </TouchableOpacity>
-        <Image source={dragTheMap} />
+          {isIconEditable && <Image source={tapToChange} style={styles.changeCTA as any} />}
+        </Wrapper>
+        {!isEmojiKeyboardShown && <Image source={dragTheMap} />}
       </View>
     )
   })
 )
+
+const Wrapper = ({isTouchable, children, toggle}) => {
+  return isTouchable ? (
+    <TouchableOpacity onPress={toggle}>{children}</TouchableOpacity>
+  ) : (
+    <View>{children}</View>
+  )
+}
 
 export default UberMarker
 

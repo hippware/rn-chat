@@ -20,13 +20,11 @@ type Props = {
 @inject('wocky', 'analytics', 'iconStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
-  @observable
-  bot?: IBot
+  @observable bot?: IBot
   trackTimeout: any
 
   componentWillMount() {
     this.createBot()
-    this.props.iconStore.setIndex(0)
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
   }
 

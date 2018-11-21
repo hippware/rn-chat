@@ -58,7 +58,7 @@ export class BotCompose extends React.Component<Props> {
     }
     if (this.bot) {
       this.text = this.bot.title || ''
-      this.props.iconStore!.setIcon(this.bot.icon)
+      this.props.iconStore!.setEmoji(this.bot.icon)
     }
   }
 
@@ -84,7 +84,7 @@ export class BotCompose extends React.Component<Props> {
   }
 
   onEmojiSelected = e => {
-    this.props.iconStore!.changeEmoji(e)
+    this.props.iconStore!.setEmoji(e)
   }
 
   onSnap = () => {
@@ -192,7 +192,7 @@ export class BotCompose extends React.Component<Props> {
     try {
       this.isLoading = true
       const {load, save, id, setUserLocation} = this.bot!
-      load({title: this.text, icon: this.props.iconStore!.icon})
+      load({title: this.text, icon: this.props.iconStore!.emoji})
       Keyboard.dismiss()
       setUserLocation(this.props.locationStore.location)
       await save()
