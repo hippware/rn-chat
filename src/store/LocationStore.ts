@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, autorun, IReactionDisposer} from 'mobx'
+import {autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
@@ -395,11 +395,9 @@ const LocationStore = types
       if (!self.alwaysOn) {
         self.stopBackground()
       }
+      self.startBackground().then(self.getCurrentPosition)
 
       reactions = [
-        when(() => wocky.connected, () => self.startBackground().then(self.getCurrentPosition), {
-          name: 'LocationStore: Start background after connected',
-        }),
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
