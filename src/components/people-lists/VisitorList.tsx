@@ -1,8 +1,7 @@
 import React from 'react'
-import {View} from 'react-native'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
-import {Spinner, RText} from '../common'
+import {RText} from '../common'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {isAlive} from 'mobx-state-tree'
@@ -27,6 +26,7 @@ export default class VisitorList extends React.Component<Props> {
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
+    // TODO: refactor (remove?), it doesn't look good because we already load bot within BotDetails
     this.bot.visitors.load!({force: true})
     this.props.wocky!.loadBot(this.props.botId, undefined)
   }
@@ -34,6 +34,7 @@ export default class VisitorList extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
+    // TODO display spinner during loading
     return (
       <KeyboardAwareDraggablePopupList
         headerInner={this.renderHeader()}
@@ -41,11 +42,6 @@ export default class VisitorList extends React.Component<Props> {
         keyExtractor={item => item.id}
         data={this.bot && isAlive(this.bot) ? this!.bot!.visitors.list.slice() : []}
         keyboardShouldPersistTaps="handled"
-        ListEmptyComponent={
-          <View style={{alignItems: 'center', height: 600, width: '100%', paddingTop: 40}}>
-            <Spinner />
-          </View>
-        }
         fadeNavConfig={{
           back: true,
           title: (

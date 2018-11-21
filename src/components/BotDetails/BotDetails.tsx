@@ -65,8 +65,8 @@ export default class BotDetails extends React.Component<Props> {
     await Promise.all([
       wocky!.loadBot(botId, undefined),
       this.bot!.posts.load({force: true}),
-      this.bot!.guests.load(),
-      this.bot!.visitors.load(),
+      this.bot!.guests.load({force: true}),
+      this.bot!.visitors.load({force: true}),
     ])
 
     homeStore.selectBot(this.bot)
