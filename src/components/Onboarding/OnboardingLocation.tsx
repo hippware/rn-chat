@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image, Text} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
-import {k} from '../Global'
+import {s} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
@@ -12,23 +12,23 @@ type Props = {
 class OnboardingLocation extends React.Component<Props> {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{width: '80%', marginBottom: 32 * k}}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 44 * s}}>
+        <View style={{width: '80%', marginBottom: 32 * s}}>
           <RText style={styles.onboardingH1}>Allow Location Access</RText>
         </View>
 
-        <View style={{width: '70%', marginBottom: 67 * k}}>
+        <View style={{width: '70%', marginBottom: 67 * s}}>
           <RText style={styles.onboardingSubtext}>
             With '<Text style={{color: '#fe5c6c'}}>Always Allow</Text>' you won’t miss out on
             relevant location notifications.
           </RText>
         </View>
 
-        <View style={{marginBottom: 37 * k}}>
+        <View style={{marginBottom: 37 * s}}>
           <Image source={require('../../../images/001Gps.png')} />
         </View>
 
-        <View style={{marginBottom: 37 * k}}>
+        <View style={{marginBottom: 37 * s}}>
           <RText style={styles.onboardingSubtext}>You can also go invisible later 😉</RText>
         </View>
 
