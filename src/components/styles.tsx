@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 import {settings} from '../globals'
+import {WARM_GREY_2, PINK} from 'src/constants/colors'
 
 const coef = k
 
@@ -210,4 +211,19 @@ export default StyleSheet.create({
   },
   linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
   paginationStyle: {bottom: 170 * coef},
+})
+
+export const onboardingSlideStyle = StyleSheet.create({
+  onboardingH1: {
+    color: PINK,
+    fontSize: 30,
+    fontWeight: '100',
+    textAlign: 'center',
+  },
+  onboardingSubtext: {
+    color: WARM_GREY_2,
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: '100',
+  },
 })
