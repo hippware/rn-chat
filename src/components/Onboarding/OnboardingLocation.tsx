@@ -1,7 +1,7 @@
 import React from 'react'
-import {View, StyleSheet, Image, Text} from 'react-native'
+import {View, Image, Text} from 'react-native'
 import {RText, GradientButton} from '../common'
-import {WHITE, PINK, WARM_GREY_2} from 'src/constants/colors'
+import {WHITE} from 'src/constants/colors'
 import {k} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
