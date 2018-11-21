@@ -6,6 +6,7 @@ import {k} from '../Global'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {IWocky} from 'wocky-client'
+import {disableInvisibleMode} from '../BottomMenu'
 
 type Props = {
   wocky?: IWocky
@@ -27,7 +28,7 @@ const HeaderLocationOverlay = inject('wocky')(
           </RText>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => wocky!.profile!.hide(false, undefined)}
+            onPress={() => disableInvisibleMode(wocky!.profile!)}
           >
             <RText size={14} weight="Medium" color={colors.PINK}>
               Turn Off Invisible Mode

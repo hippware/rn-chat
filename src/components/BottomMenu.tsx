@@ -7,7 +7,7 @@ import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
 import {k} from './Global'
-import {IWocky} from 'wocky-client'
+import {IWocky, IOwnProfile} from 'wocky-client'
 import {RText} from './common'
 import moment from 'moment'
 
@@ -22,6 +22,18 @@ interface IMenuItemWrapperProps extends TouchableOpacityProps {
   children?: any
 }
 
+export function disableInvisibleMode(profile: IOwnProfile) {
+  Alert.alert('', 'Are you sure you want to turn off invisible mode?', [
+    {text: 'Cancel', style: 'cancel'},
+    {
+      text: 'Turn Off',
+      style: 'destructive',
+      onPress: () => {
+        profile.hide(false, undefined)
+      },
+    },
+  ])
+}
 const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
   const Wrapper = rest.onPress ? TouchableOpacity : View
   return <Wrapper {...rest}>{children}</Wrapper>
@@ -117,16 +129,7 @@ export default class BottomMenu extends React.Component<Props> {
     if (!profile!.hidden.enabled) {
       Actions.invisibleExpirationSelector()
     } else {
-      Alert.alert('', 'Are you sure you want to turn off invisible mode?', [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Turn Off',
-          style: 'destructive',
-          onPress: () => {
-            profile.hide(false, undefined)
-          },
-        },
-      ])
+      disableInvisibleMode(profile)
     }
   }
 }
