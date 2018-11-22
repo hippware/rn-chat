@@ -11,6 +11,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] implement requestRoster API with GraphQL (#3058)
 * Increase timeout for tests
 * Display more version info for codepushes (#3009)
+* Add storybook tool (PR #3079)
+  * Added onboarding Accelerometer / Location page UI (PR #3080)
+* Presence widget is visible when user is in invisible mode (#3016)
 
 # 3.10.0 - 2018 Nov 5
 
