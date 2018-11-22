@@ -373,12 +373,10 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    let wocky
     let reactions: IReactionDisposer[] = []
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self) as any)
     }
 
     const start = flow(function*() {
@@ -392,10 +390,11 @@ const LocationStore = types
         self.setState({enabled: resp2 !== 'denied'})
       }
 
-      if (!self.alwaysOn) {
+      if (self.alwaysOn) {
+        self.startBackground().then(self.getCurrentPosition)
+      } else {
         self.stopBackground()
       }
-      self.startBackground().then(self.getCurrentPosition)
 
       reactions = [
         autorun(() => !self.location && self.getCurrentPosition(), {
