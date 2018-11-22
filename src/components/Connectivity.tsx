@@ -50,7 +50,16 @@ export default class Connectivity extends React.Component<Props> {
       () => !this.props.wocky!.connected,
       () => (this.lastDisconnected = Date.now())
     )
-    setTimeout(() => this._handleAppStateChange('active'))
+
+    this.props.locationStore!.start()
+
+    // If app is in foreground, start some services
+    // Otherwise, no need to stop services which weren't started.
+    setTimeout(() => {
+      if (AppState.currentState === 'active') {
+        this._handleAppStateChange(AppState.currentState)
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -130,7 +139,6 @@ export default class Connectivity extends React.Component<Props> {
     if (currentAppState === 'active') {
       this.isActive = true
       notificationStore.start()
-      locationStore!.start()
       homeStore!.start()
       await this.tryReconnect('currentAppState: active')
     }

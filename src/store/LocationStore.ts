@@ -396,12 +396,14 @@ const LocationStore = types
         self.stopBackground()
       }
 
-      reactions = [
-        autorun(() => !self.location && self.getCurrentPosition(), {
-          delay: 500,
-          name: 'LocationStore: Get current location after cache reset',
-        }),
-      ]
+      if (reactions.length == 0) {
+        reactions = [
+          autorun(() => !self.location && self.getCurrentPosition(), {
+            delay: 500,
+            name: 'LocationStore: Get current location after cache reset',
+          }),
+        ]
+      }
     })
 
     function finish() {
