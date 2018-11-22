@@ -67,7 +67,6 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
 
 // TODO any idea how to move these vars inside LocationStore as volatile with ts strict mode enabled?
 let backgroundGeolocation: any
-let watch: number | null = null
 
 const LocationStore = types
   .model('LocationStore', {
@@ -313,23 +312,7 @@ const LocationStore = types
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
       if (self.loading) return self.location
-      // run own GPS watcher if backgroundGeolocation is not available
-      if (!backgroundGeolocation) {
-        if (navigator && watch === null) {
-          watch = navigator.geolocation.watchPosition(
-            position => {
-              self.setPosition(position.coords)
-            },
-            undefined,
-            {
-              timeout: 20,
-              maximumAge: 1000,
-              enableHighAccuracy: false,
-            }
-          )
-        }
-        return
-      }
+
       self.loading = true
       try {
         const position = yield backgroundGeolocation.getCurrentPosition({
@@ -409,10 +392,6 @@ const LocationStore = types
     function finish() {
       reactions.forEach(disposer => disposer())
       reactions = []
-      if (navigator && watch !== null) {
-        navigator.geolocation.clearWatch(watch!)
-        watch = null
-      }
     }
 
     return {
