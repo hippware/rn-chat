@@ -8,6 +8,18 @@ export interface IPagingList {
   count: number
 }
 
+export type LoginParams = {
+  userId?: string
+  token?: string
+  password?: string
+  accessToken?: string
+  host?: string
+  version?: string
+  os?: string
+  deviceName?: string
+  phoneNumber?: string
+}
+
 export interface IWockyTransport {
   connected: boolean
   connecting: boolean
