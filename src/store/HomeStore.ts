@@ -104,14 +104,18 @@ const HomeStore = types
     // sets new index for the current mode, deselects previously selected bot and select new one.
     setIndex: (index: number): void => {
       self.fullScreenMode = false
-      self.homeBotList[self.index].setSelected(false)
-      self.index = index
-      if (self.list.length) {
-        // select card
-        self.list[self.index].setSelected(true)
-        // change map center if bot card is selected
-        if (getType(self.list[self.index]) === BotCard) {
-          self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
+      if (self.index < self.homeBotList.length) {
+        self.homeBotList[self.index].setSelected(false)
+      }
+      if (index < self.homeBotList.length) {
+        self.index = index
+        if (self.list.length) {
+          // select card
+          self.list[self.index].setSelected(true)
+          // change map center if bot card is selected
+          if (getType(self.list[self.index]) === BotCard) {
+            self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
+          }
         }
       }
     },
@@ -134,8 +138,8 @@ const HomeStore = types
         if (index !== -1) {
           self.homeBotList.splice(index, 1)
         }
-        if (index >= self.index) {
-          self.index--
+        if (index <= self.index) {
+          self.setIndex(self.index - 1) // TODO set index within visible area
         }
       },
       // toggleListMode: (): void => {
