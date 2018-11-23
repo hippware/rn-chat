@@ -1,6 +1,7 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, autorun, IReactionDisposer} from 'mobx'
+import {autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
+import BackgroundGeolocation from 'react-native-background-geolocation'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
@@ -65,10 +66,6 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   logLevel: types.maybeNull(types.enumeration(LogLevelValues)),
 })
 
-// TODO any idea how to move these vars inside LocationStore as volatile with ts strict mode enabled?
-let backgroundGeolocation: any
-let watch: number | null = null
-
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
@@ -81,15 +78,6 @@ const LocationStore = types
     system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
     debugSounds: false,
-  }))
-  .actions(self => ({
-    disposeBackgroundGeolocation: () => {
-      if (backgroundGeolocation) {
-        backgroundGeolocation.stop()
-        backgroundGeolocation.removeListeners()
-        backgroundGeolocation = null
-      }
-    },
   }))
   .views(self => ({
     get isMetric() {
@@ -158,9 +146,6 @@ const LocationStore = types
     },
     setAlwaysOn: flow(function*(value: boolean) {
       self.alwaysOn = value
-      if (!value) {
-        self.disposeBackgroundGeolocation()
-      }
     }),
     updateBackgroundConfigSuccess(state) {
       const options = _.pick(state, BG_STATE_PROPS)
@@ -187,23 +172,23 @@ const LocationStore = types
 
     function onLocationError(err) {
       logger.warn(prefix, 'location error', err)
-      if (self.debugSounds && backgroundGeolocation) backgroundGeolocation.playSound(1024) // descent
+      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
     }
 
     function onHttp(response) {
       logger.log(prefix, 'on http', response)
       if (response.status >= 200 && response.status < 300) {
-        if (self.debugSounds && backgroundGeolocation) backgroundGeolocation.playSound(1016) // tweet sent
+        if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
         // analytics.track('location_bg_success', {location: self.location})
       } else {
-        if (self.debugSounds && backgroundGeolocation) backgroundGeolocation.playSound(1024) // descent
+        if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
         // analytics.track('location_bg_fail', {response})
       }
     }
 
     function onHttpError(err) {
       logger.log(prefix, 'on http error', err)
-      if (self.debugSounds && backgroundGeolocation) backgroundGeolocation.playSound(1024) // descent
+      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
       analytics.track('location_bg_error', {error: err})
     }
 
@@ -218,28 +203,18 @@ const LocationStore = types
     function onProviderChange(provider) {
       logger.log(prefix, 'Location provider changed:', provider)
       self.setAlwaysOn(provider.status === 3)
-      if (!self.alwaysOn) {
-        self.disposeBackgroundGeolocation()
-      }
     }
 
     const startBackground = flow(function*() {
       const wocky: IWocky = (getParent(self) as any).wocky
-      // don't run background service if user doesn't enable alwaysOn
-      if (!self.alwaysOn) {
-        return
-      }
-      if (!backgroundGeolocation) {
-        backgroundGeolocation = require('react-native-background-geolocation').default
-        backgroundGeolocation.on('location', onLocation, onLocationError)
-        backgroundGeolocation.on('http', onHttp, onHttpError)
-        // TODO: figure out how to track RNBGL errors in new version
-        // backgroundGeolocation.on('error', self.positionError)
-        backgroundGeolocation.on('motionchange', onMotionChange)
-        backgroundGeolocation.on('activitychange', onActivityChange)
-        backgroundGeolocation.on('providerchange', onProviderChange)
-        backgroundGeolocation = backgroundGeolocation
-      }
+
+      BackgroundGeolocation.on('location', onLocation, onLocationError)
+      BackgroundGeolocation.on('http', onHttp, onHttpError)
+      // TODO: figure out how to track RNBGL errors in new version
+      // backgroundGeolocation.on('error', self.positionError)
+      BackgroundGeolocation.on('motionchange', onMotionChange)
+      BackgroundGeolocation.on('activitychange', onActivityChange)
+      BackgroundGeolocation.on('providerchange', onProviderChange)
 
       const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
 
@@ -257,9 +232,9 @@ const LocationStore = types
       }
 
       // initial config (only applies to first app boot without explicitly setting `reset: true`)
-      const state = yield backgroundGeolocation.ready({
+      const state = yield BackgroundGeolocation.ready({
         // reset: true,
-        desiredAccuracy: backgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         elasticityMultiplier: 1,
         preventSuspend: false,
         useSignificantChangesOnly: false,
@@ -268,7 +243,7 @@ const LocationStore = types
         stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
         debug: false,
         // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
-        logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
+        logLevel: BackgroundGeolocation.LOG_LEVEL_ERROR,
         // stopOnTerminate: false,
         // startOnBoot: true,
         url,
@@ -281,7 +256,7 @@ const LocationStore = types
       // Here are some things that we have to configure everytime.
       // Note: If any user-configurable/debug settings appear here,
       //   they will be overwritten
-      yield backgroundGeolocation.setConfig({
+      yield BackgroundGeolocation.setConfig({
         startOnBoot: true,
         stopOnTerminate: false,
         headers,
@@ -292,18 +267,12 @@ const LocationStore = types
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
-      if (!state.enabled && self.alwaysOn) {
-        backgroundGeolocation.start(() => {
-          logger.log(prefix, 'Start success')
-        })
-      } else if (state.enabled && !self.alwaysOn) {
-        self.disposeBackgroundGeolocation()
-      }
+      // if (!state.enabled && self.alwaysOn) {
+      BackgroundGeolocation.start(() => {
+        logger.log(prefix, 'Start success')
+      })
+      // }
     })
-
-    function stopBackground() {
-      self.disposeBackgroundGeolocation()
-    }
 
     function initialize() {
       const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL'
@@ -313,26 +282,10 @@ const LocationStore = types
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
       if (self.loading) return self.location
-      // run own GPS watcher if backgroundGeolocation is not available
-      if (!backgroundGeolocation) {
-        if (navigator && watch === null) {
-          watch = navigator.geolocation.watchPosition(
-            position => {
-              self.setPosition(position.coords)
-            },
-            undefined,
-            {
-              timeout: 20,
-              maximumAge: 1000,
-              enableHighAccuracy: false,
-            }
-          )
-        }
-        return
-      }
+
       self.loading = true
       try {
-        const position = yield backgroundGeolocation.getCurrentPosition({
+        const position = yield BackgroundGeolocation.getCurrentPosition({
           timeout: 20,
           maximumAge: 1000,
           enableHighAccuracy: false,
@@ -344,27 +297,22 @@ const LocationStore = types
     })
 
     function setBackgroundConfig(config) {
-      if (config.debugSounds && !self.debugSounds && backgroundGeolocation)
-        backgroundGeolocation.playSound(1028) // newsflash
+      if (config.debugSounds && !self.debugSounds) BackgroundGeolocation.playSound(1028) // newsflash
       self.setState({
         debugSounds: config.debugSounds,
       })
-      if (backgroundGeolocation) {
-        // For some reason, these parameters must be ints, not strings
-        config.activityType = parseInt(config.activityType)
-        config.logLevel = parseInt(config.logLevel)
-        backgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
-      }
+
+      // For some reason, these parameters must be ints, not strings
+      config.activityType = parseInt(config.activityType)
+      config.logLevel = parseInt(config.logLevel)
+      BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
     function emailLog(email) {
-      if (backgroundGeolocation) {
-        backgroundGeolocation.emailLog(email)
-      }
+      BackgroundGeolocation.emailLog(email)
     }
 
     return {
-      stopBackground,
       startBackground,
       getCurrentPosition,
       initialize,
@@ -373,13 +321,15 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    let wocky
+    // let wocky
     let reactions: IReactionDisposer[] = []
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self) as any)
+      // ;({wocky} = getParent(self) as any)
     }
+
+    function didMount() {}
 
     const start = flow(function*() {
       const resp1 = yield Permissions.check('location', {type: 'always'})
@@ -392,14 +342,13 @@ const LocationStore = types
         self.setState({enabled: resp2 !== 'denied'})
       }
 
-      if (!self.alwaysOn) {
-        self.stopBackground()
-      }
+      self.startBackground().then(self.getCurrentPosition)
 
       reactions = [
+        /*
         when(() => wocky.connected, () => self.startBackground().then(self.getCurrentPosition), {
           name: 'LocationStore: Start background after connected',
-        }),
+        }),*/
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
@@ -410,16 +359,18 @@ const LocationStore = types
     function finish() {
       reactions.forEach(disposer => disposer())
       reactions = []
-      if (navigator && watch !== null) {
-        navigator.geolocation.clearWatch(watch!)
-        watch = null
-      }
+    }
+
+    function willUnmount() {
+      BackgroundGeolocation.removeListeners()
     }
 
     return {
       afterAttach,
+      didMount,
       start,
       finish,
+      willUnmount,
     }
   })
 
