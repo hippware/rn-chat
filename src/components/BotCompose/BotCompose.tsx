@@ -20,6 +20,10 @@ const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
 const photoIconDone = require('../../../images/photoAdded.png')
 
+export function backAction(iconStore: IconStore) {
+  iconStore!.isEmojiKeyboardShown ? iconStore!.toggleEmojiKeyboard() : Actions.pop()
+}
+
 type Props = {
   botId: string
   edit?: boolean
@@ -85,6 +89,7 @@ export class BotCompose extends React.Component<Props> {
 
   onEmojiSelected = e => {
     this.props.iconStore!.setEmoji(e)
+    this.props.iconStore!.toggleEmojiKeyboard()
   }
 
   onSnap = () => {

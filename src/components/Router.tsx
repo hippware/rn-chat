@@ -39,11 +39,12 @@ import FirstTimeGuestPrimer from './modals/FirstTimeGuestPrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
-import BotCompose from './BotCompose/BotCompose'
+import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
 import Attribution from './Attribution'
 import { navBarStyle } from './styles';
+import IconStore from '../store/IconStore';
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -54,12 +55,13 @@ type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   navStore?: INavStore
+  iconStore?: IconStore
   store?: any
   analytics?: any
   log?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'analytics', 'navStore', 'log')
+@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -91,7 +93,7 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, wocky, navStore} = this.props
+    const {store, iconStore, wocky, navStore} = this.props
 
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
@@ -122,8 +124,8 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="bottomMenu" component={BottomMenu} />
                       <Scene key="createBot" component={CreationHeader} fromTop />
                       <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
-                      <Scene key="botCompose" component={BotCompose} />
-                      <Scene key="botEdit" component={BotCompose} edit />
+                      <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
+                      <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                       <Scene key="editNote" component={EditNote} />
                       <Scene key="notifications" component={Notifications} />
                       <Scene key="friends" component={peopleLists.FriendList} />
