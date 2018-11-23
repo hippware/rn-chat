@@ -11,6 +11,8 @@ import {storiesOf} from '@storybook/react-native'
 import OnboardingLocation from '../../src/components/Onboarding/OnboardingLocation'
 import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingAccelerometer'
 import OnboardingSwiper from '../../src/components/Onboarding/OnboardingSwiper'
+import OnboardingNotifications from '../../src/components/Onboarding/OnboardingNotifications'
+import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
 
 function emptyFn() {
   /* noop */
@@ -21,6 +23,8 @@ storiesOf('Onboarding', module)
   .add('Main Swiper', () => <OnboardingSwiper log={console.log} />)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
   .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
+  .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
+  .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} />)
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 

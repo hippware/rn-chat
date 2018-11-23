@@ -6,8 +6,11 @@ import {colors} from 'src/constants'
 
 import OnboardingLocation from './OnboardingLocation'
 import OnboardingAccelerometer from './OnboardingAccelerometer'
+import OnboardingNotifications from './OnboardingNotifications'
+import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject} from 'mobx-react/native'
+import {s} from '../Global'
 
 type Props = {
   log?: (text: string) => void
@@ -20,7 +23,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <RText style={{width: '100%', textAlign: 'center', marginTop: 30}} size={18}>
+        <RText style={{width: '100%', textAlign: 'center', marginTop: 30 * s}} size={18}>
           almost done!
         </RText>
         <Swiper
@@ -34,6 +37,11 @@ export default class OnboardingSwiper extends React.Component<Props> {
         >
           <OnboardingLocation onPress={this.checkLocationPermissions} />
           <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
+          <OnboardingNotifications onPress={this.checkAccelerometerPermissions} />
+          <OnboardingFindFriends
+            onPress={this.checkAccelerometerPermissions}
+            onSkip={this.checkAccelerometerPermissions}
+          />
         </Swiper>
       </View>
     )

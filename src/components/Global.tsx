@@ -3,6 +3,7 @@ import {Dimensions, Platform} from 'react-native'
 const {width, height} = Dimensions.get('window')
 export {width, height}
 export const k = height / 667
+export const s = height / 667 < 1 ? height / 667 / 1.8 : height / 667
 
 export const defaultCover = [
   require('../../images/defaultCover0.png'),
