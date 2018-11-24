@@ -12,8 +12,8 @@ YellowBox.ignoreWarnings([
 ])
 
 // Uncomment for storybook
-// import storybook from './storybook'
-// export default storybook
+import storybook from './storybook'
+export default storybook
 
 // Comment for storybook
-AppRegistry.registerComponent('App', () => App)
+// AppRegistry.registerComponent('App', () => App)

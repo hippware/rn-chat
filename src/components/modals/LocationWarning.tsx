@@ -6,14 +6,19 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
+import {ILocationStore} from 'src/store/LocationStore'
 
 const botIcon = require('../../../images/iconBot.png')
 
+type Props = {
+  locationStore?: ILocationStore
+}
+
 @inject('locationStore')
 @observer
-class LocationWarning extends React.Component<any> {
+class LocationWarning extends React.Component<Props> {
   componentDidMount() {
-    when(() => this.props.locationStore.enabled, Actions.pop)
+    when(() => this.props.locationStore!.enabled, Actions.pop)
   }
 
   render() {
