@@ -23,32 +23,35 @@ class LocationWarning extends React.Component<Props> {
 
   render() {
     return (
-      <ModalContainer style={{backgroundColor: 'white'}}>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
-        <Image
-          source={botIcon}
-          style={{width: 60, height: 60, marginVertical: 15 * k}}
-          resizeMode="contain"
-        />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>
-          {"We need your location to show you\r\nwhat's happening nearby!"}
-        </Text>
-        <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              Actions.pop()
-              // Actions.home();
-              Linking.openURL('app-settings:{1}')
-            }}
-          >
-            <Text style={styles.btnText}>Change Settings</Text>
-          </TouchableOpacity>
-        </View>
-      </ModalContainer>
+      <LocationWarningUI
+        onPress={() => {
+          // Actions.pop()
+          // Actions.home();
+          Linking.openURL('app-settings:{1}')
+        }}
+      />
     )
   }
 }
+
+export const LocationWarningUI = ({onPress}) => (
+  <ModalContainer style={{backgroundColor: 'white'}}>
+    <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
+    <Image
+      source={botIcon}
+      style={{width: 60, height: 60, marginVertical: 15 * k}}
+      resizeMode="contain"
+    />
+    <Text style={[styles.muted, {textAlign: 'center'}]}>
+      {"We need your location to show you\r\nwhat's happening nearby!"}
+    </Text>
+    <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text style={styles.btnText}>Change Settings</Text>
+      </TouchableOpacity>
+    </View>
+  </ModalContainer>
+)
 
 export default LocationWarning
 

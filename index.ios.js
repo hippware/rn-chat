@@ -1,5 +1,7 @@
 import {AppRegistry, YellowBox} from 'react-native'
 import App from './src/App'
+import Swiper from './src/components/Onboarding/OnboardingSwiper'
+import LocationWarning from './src/components/modals/LocationWarning'
 
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated', // TODO: fixed in RN56. https://github.com/facebook/react-native/issues/18868#issuecomment-382671739
@@ -17,3 +19,5 @@ export default storybook
 
 // Comment for storybook
 // AppRegistry.registerComponent('App', () => App)
+// AppRegistry.registerComponent('App', () => Swiper)
+// AppRegistry.registerComponent('App', () => LocationWarning)

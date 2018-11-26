@@ -43,8 +43,9 @@ import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
 import Attribution from './Attribution'
-import { navBarStyle } from './styles';
-import IconStore from '../store/IconStore';
+import { navBarStyle } from './styles'
+import IconStore from '../store/IconStore'
+import { IStore } from 'src/store'
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -56,7 +57,7 @@ type Props = {
   locationStore?: ILocationStore
   navStore?: INavStore
   iconStore?: IconStore
-  store?: any
+  store?: IStore
   analytics?: any
   log?: any
 }
@@ -65,7 +66,7 @@ type Props = {
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, locationStore} = this.props
+    const {wocky, locationStore, navStore, store} = this.props
 
     autorun(
       () => {
@@ -81,7 +82,7 @@ class TinyRobotRouter extends React.Component<Props> {
     // TODO: Move it outside, why we can't put it inside Home?
     autorun(
       () => {
-        const {navStore, store: {locationPrimed}} = this.props
+        const {locationPrimed} = store!
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
         if (scene === 'home' && !alwaysOn && !locationPrimed) {
@@ -99,12 +100,12 @@ class TinyRobotRouter extends React.Component<Props> {
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
-            <Scene key="load" component={Launch} on={store.hydrate} success="checkCredentials" failure="onboarding" />
+            <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="onboarding" />
             <Scene key="checkCredentials" on={() => wocky!.username && wocky!.password && wocky!.host} success="checkProfile" failure="onboarding" />
             <Scene key="connect" on={this.login} success="checkHandle" failure="onboarding" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="logged" failure="signUp" />
-            <Scene key="logout" on={store.logout} success="onboarding" />
+            <Scene key="logout" on={store!.logout} success="onboarding" />
           </Stack>
           <Lightbox>
             <Stack initial hideNavBar key="main">
@@ -201,7 +202,7 @@ class TinyRobotRouter extends React.Component<Props> {
 
   // TODO: Move it outside
   resetSearchStore = () => {
-    this.props.store.searchStore.setGlobal('')
+    this.props.store!.searchStore.setGlobal('')
     Actions.pop()
   }
 

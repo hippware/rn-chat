@@ -48,7 +48,8 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   checkLocationPermissions = async () => {
-    const {log} = this.props
+    // const {log} = this.props
+    const {log} = console
     const check = await this.getPermission('location')
     if (check === 'authorized') {
       log!('always on permission authorized!')
@@ -60,7 +61,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   checkAccelerometerPermissions = async () => {
-    const {log} = this.props
+    const {log} = console
     // NOTE: this will return 'restricted' on a simulator
     const check = await this.getPermission('motion')
     log!(`check is now ${check}`)
