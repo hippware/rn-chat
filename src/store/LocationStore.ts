@@ -6,10 +6,6 @@ import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 
-const METRIC = 'METRIC'
-const IMPERIAL = 'IMPERIAL'
-const METRIC_TYPE = types.literal(METRIC)
-const IMPERIAL_TYPE = types.literal(IMPERIAL)
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
   // 'preventSuspend',
@@ -75,13 +71,13 @@ const LocationStore = types
   .volatile(() => ({
     enabled: true,
     alwaysOn: true,
-    system: types.optional(types.union(METRIC_TYPE, IMPERIAL_TYPE), METRIC),
     loading: false,
     debugSounds: false,
   }))
   .views(self => ({
     get isMetric() {
-      return METRIC_TYPE.is(self.system)
+      const {nativeEnv} = getEnv(self)
+      return nativeEnv.get('NSLocaleUsesMetricSystem')
     },
   }))
   .views(self => ({
@@ -122,9 +118,6 @@ const LocationStore = types
     },
   }))
   .actions(self => ({
-    setMetricSystem(type) {
-      self.system = type
-    },
     setPosition({latitude, longitude, accuracy}) {
       self.enabled = true
       if (!self.location) {
@@ -163,7 +156,7 @@ const LocationStore = types
     },
   }))
   .actions(self => {
-    const {logger, nativeEnv, analytics} = getEnv(self)
+    const {logger, analytics} = getEnv(self)
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -274,10 +267,7 @@ const LocationStore = types
       // }
     })
 
-    function initialize() {
-      const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL'
-      self.setMetricSystem(system)
-    }
+    function initialize() {}
 
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
