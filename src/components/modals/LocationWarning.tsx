@@ -5,8 +5,9 @@ import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {observer, inject} from 'mobx-react/native'
-import ModalContainer from './ModalContainer'
-import {ILocationStore} from 'src/store/LocationStore'
+import {ILocationStore} from '../../store/LocationStore'
+import {BlurView} from 'react-native-blur'
+import globalStyles from '../styles'
 
 const botIcon = require('../../../images/iconBot.png')
 
@@ -25,8 +26,7 @@ class LocationWarning extends React.Component<Props> {
     return (
       <LocationWarningUI
         onPress={() => {
-          // Actions.pop()
-          // Actions.home();
+          Actions.popTo('home')
           Linking.openURL('app-settings:{1}')
         }}
       />
@@ -34,8 +34,13 @@ class LocationWarning extends React.Component<Props> {
   }
 }
 
+// TODO: @irfirl to tweak the design here
 export const LocationWarningUI = ({onPress}) => (
-  <ModalContainer style={{backgroundColor: 'white'}}>
+  <BlurView
+    blurType="xlight"
+    blurAmount={10}
+    style={[globalStyles.absolute, {alignItems: 'center', justifyContent: 'center'}] as any}
+  >
     <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
     <Image
       source={botIcon}
@@ -50,7 +55,7 @@ export const LocationWarningUI = ({onPress}) => (
         <Text style={styles.btnText}>Change Settings</Text>
       </TouchableOpacity>
     </View>
-  </ModalContainer>
+  </BlurView>
 )
 
 export default LocationWarning

@@ -13,7 +13,7 @@ import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingA
 import OnboardingSwiper from '../../src/components/Onboarding/OnboardingSwiper'
 import OnboardingNotifications from '../../src/components/Onboarding/OnboardingNotifications'
 import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
-// import {LocationWarningUI} from '../../src/components/modals/LocationWarning'
+import {LocationWarningUI} from '../../src/components/modals/LocationWarning'
 
 function emptyFn() {
   /* noop */
@@ -23,8 +23,7 @@ storiesOf('Onboarding', module)
   // tslint:disable-next-line
   .add('Main Swiper', () => <OnboardingSwiper log={console.log} />)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
-  // TODO: this throws an error `decorated is not a function`. Not sure why.
-  // .add('1a - Location Warning', <LocationWarningUI onPress={emptyFn} />)
+  .add('1a - Location Warning', () => <LocationWarningUI onPress={emptyFn} />)
   .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
   .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
