@@ -9,7 +9,6 @@ import {observer, inject} from 'mobx-react/native'
 import {observable, reaction, computed} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
-import IconSelector from './IconSelector'
 import IconStore from '../../store/IconStore'
 import {showImagePicker} from '../ImagePicker'
 import EmojiSelector from 'react-native-emoji-selector'
@@ -20,6 +19,10 @@ const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
 const photoIcon = require('../../../images/attachPhotoPlus.png')
 const photoIconDone = require('../../../images/photoAdded.png')
+
+export function backAction(iconStore: IconStore) {
+  iconStore!.isEmojiKeyboardShown ? iconStore!.toggleEmojiKeyboard() : Actions.pop()
+}
 
 type Props = {
   botId: string
@@ -59,7 +62,7 @@ export class BotCompose extends React.Component<Props> {
     }
     if (this.bot) {
       this.text = this.bot.title || ''
-      this.props.iconStore!.setIcon(this.bot.icon)
+      this.props.iconStore!.setEmoji(this.bot.icon)
     }
   }
 
@@ -85,7 +88,8 @@ export class BotCompose extends React.Component<Props> {
   }
 
   onEmojiSelected = e => {
-    this.props.iconStore!.changeEmoji(e)
+    this.props.iconStore!.setEmoji(e)
+    this.props.iconStore!.toggleEmojiKeyboard()
   }
 
   onSnap = () => {
@@ -100,7 +104,6 @@ export class BotCompose extends React.Component<Props> {
       : [colors.DARK_GREY, colors.DARK_GREY]
     return (
       <View>
-        <IconSelector onSnap={this.onSnap} />
         <View
           style={{
             height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
@@ -108,7 +111,12 @@ export class BotCompose extends React.Component<Props> {
             overflow: 'hidden',
           }}
         >
-          <EmojiSelector onEmojiSelected={this.onEmojiSelected} showSearchBar={false} columns={8} />
+          <EmojiSelector
+            showHistory
+            onEmojiSelected={this.onEmojiSelected}
+            showSearchBar={false}
+            columns={8}
+          />
         </View>
         {!this.props.iconStore!.isEmojiKeyboardShown && (
           <View>
@@ -189,7 +197,7 @@ export class BotCompose extends React.Component<Props> {
     try {
       this.isLoading = true
       const {load, save, id, setUserLocation} = this.bot!
-      load({title: this.text, icon: this.props.iconStore!.icon})
+      load({title: this.text, icon: this.props.iconStore!.emoji})
       Keyboard.dismiss()
       setUserLocation(this.props.locationStore.location)
       await save()

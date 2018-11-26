@@ -1,5 +1,6 @@
 import {types, getParent} from 'mobx-state-tree'
 import {reaction} from 'mobx'
+import {IStore} from './index'
 
 // navigation store for the app, all navigation-conditional logic should be placed here
 const NavStore = types
@@ -11,15 +12,10 @@ const NavStore = types
       self.scene = value
     },
     afterAttach() {
-      // put all navigational logic here
-      // set creation mode depending from current screen(s)
-      // TODO add editBot here ?
       reaction(
-        () => ['createBot', 'botCompose', 'botEdit', 'editNote'].includes(self.scene),
-        (getParent(self) as any).homeStore.setCreationMode
+        () => self.scene === 'home',
+        () => getParent<IStore>(self).homeStore.disableFullScreen()
       )
-      reaction(() => self.scene === 'home', (getParent(self) as any).homeStore.disableFullScreen)
-      reaction(() => self.scene === 'botDetails', (getParent(self) as any).homeStore.setDetailsMode)
     },
   }))
   .postProcessSnapshot((snapshot: any) => {

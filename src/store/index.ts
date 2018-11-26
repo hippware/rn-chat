@@ -1,4 +1,4 @@
-import {types, getEnv, addMiddleware, flow} from 'mobx-state-tree'
+import {types, getEnv, addMiddleware, flow, Instance} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
@@ -111,6 +111,8 @@ const Store = types
       self.guestOnce = true
     },
   }))
+
+export interface IStore extends Instance<typeof Store.Type> {}
 
 const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
 
