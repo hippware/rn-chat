@@ -14,6 +14,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add storybook tool (PR #3079)
   * Added onboarding Accelerometer / Location page UI (PR #3080)
 * Presence widget is visible when user is in invisible mode (#3016)
+* Users incorrectly showing at locations (#3007)
+  * Showing visitors list with no visitors causes infinite spinner (#3043)
+* Add "new" login flow to GraphQLTransport with tests (PR #3077)
 
 # 3.10.0 - 2018 Nov 5
 
