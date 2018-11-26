@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
-import {s} from '../Global'
+import {s, minHeight} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
@@ -12,7 +12,14 @@ type Props = {
 class OnboardingNotifications extends React.Component<Props> {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 44 * s}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          marginTop: 40 * minHeight,
+        }}
+      >
         <View style={{width: '80%', marginBottom: 33 * s}}>
           <RText style={styles.onboardingH1}>Turn On Notifications</RText>
         </View>
@@ -23,7 +30,7 @@ class OnboardingNotifications extends React.Component<Props> {
           </RText>
         </View>
 
-        <View style={{marginBottom: 106 * s}}>
+        <View style={{marginBottom: 82 * s}}>
           <Image source={require('../../../images/notificationIcn.png')} />
         </View>
 

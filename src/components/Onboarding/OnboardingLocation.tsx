@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image, Text} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
-import {s} from '../Global'
+import {s, minHeight} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
@@ -12,7 +12,14 @@ type Props = {
 class OnboardingLocation extends React.Component<Props> {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 44 * s}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          marginTop: 40 * minHeight,
+        }}
+      >
         <View style={{width: '80%', marginBottom: 32 * s}}>
           <RText style={styles.onboardingH1}>Allow Location Access</RText>
         </View>
