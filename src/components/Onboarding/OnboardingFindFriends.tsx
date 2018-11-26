@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE, PINK} from 'src/constants/colors'
-import {s} from '../Global'
+import {s, minHeight} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
@@ -13,8 +13,15 @@ type Props = {
 class OnboardingFindFriends extends React.Component<Props> {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 44 * s}}>
-        <View style={{width: '80%', marginBottom: 72 * s}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          marginTop: 40 * minHeight,
+        }}
+      >
+        <View style={{width: '80%', marginBottom: 33 * s}}>
           <RText style={styles.onboardingH1}>Find Friends</RText>
         </View>
 
@@ -25,13 +32,13 @@ class OnboardingFindFriends extends React.Component<Props> {
           </RText>
         </View>
 
-        <View style={{marginBottom: 101 * s}}>
+        <View style={{marginBottom: 82 * s}}>
           <Image source={require('../../../images/FindFriends.png')} />
         </View>
 
         <GradientButton
           isPink
-          style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26}}
+          style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26 * s}}
           onPress={this.props.onPress}
         >
           <RText color={WHITE} size={17.5}>
