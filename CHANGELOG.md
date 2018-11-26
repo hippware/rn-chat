@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.10.1 - 2018 Nov 26
+
 * Use two GraphQL connections (PR #3053)
   * Fix: Next button missing during creation flow (#3005)
 * [dev] Fix prettier handling of decorators and line breaks (#3054)
@@ -17,6 +19,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Users incorrectly showing at locations (#3007)
   * Showing visitors list with no visitors causes infinite spinner (#3043)
 * Add "new" login flow to GraphQLTransport with tests (PR #3077)
+* Polish Emoji Selector (#3027)
+* Crash while deleting bots (#3069, PR #3089)
 
 # 3.10.0 - 2018 Nov 5
 
