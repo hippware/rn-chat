@@ -22,7 +22,7 @@ class Onboarding extends React.Component {
   render() {
     const SwiperAny = Swiper as any // TODO: swiper types broken
     return (
-      <View style={{flex: 1}} testID="preConnection">
+      <View style={{flex: 1}} testID="onboarding">
         <SwiperAny
           paginationStyle={{bottom: 135 * k}}
           dotColor={colors.GREY}
