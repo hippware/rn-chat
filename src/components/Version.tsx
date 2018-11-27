@@ -7,11 +7,11 @@ const {version} = require('../../package.json')
 
 const Version = inject('codePushStore')(
   observer(({codePushStore}) => {
-    let versionString = settings.version // version from XCode
-    const packageJsonVersion = version // version from package.json
+    let versionString = version // version of 'JS' part, from package.json
 
     if (codePushStore!.metadata) {
       const {deploymentKey, label} = codePushStore!.metadata
+      let codepushInfo = settings.version // version of 'native' part, from XCode
 
       // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
       if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
@@ -20,9 +20,9 @@ const Version = inject('codePushStore')(
         )
         const deploymentName = deploymentInfo.length > 0 ? deploymentInfo[0].name : deploymentKey
 
-        versionString = `${versionString}-${deploymentName}`
+        codepushInfo = `${codepushInfo}-${deploymentName}`
       }
-      versionString = `${versionString}-${label} (${packageJsonVersion})`
+      versionString = `${versionString} (${codepushInfo}-${label})`
     }
 
     return (
