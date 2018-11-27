@@ -125,7 +125,7 @@ const ChatMessage = ({
   if (rowData.view) {
     RowView = rowData.view
   }
-  return (
+  const messageView = (
     <View>
       {position === 'left' && !displayNamesInsideBubble
         ? renderName(rowData.name, displayNames, diffMessage, displayNamesInsideBubble)
@@ -164,6 +164,18 @@ const ChatMessage = ({
       {rowData.position === 'right' ? renderStatus(rowData.status) : null}
     </View>
   )
+
+  if (typeof onMessageLongPress === 'function') {
+    return (
+      <TouchableHighlight
+        underlayColor="transparent"
+        onLongPress={() => onMessageLongPress(rowData)}
+      >
+        {messageView}
+      </TouchableHighlight>
+    )
+  }
+  return messageView
 }
 export default observer(ChatMessage)
 
