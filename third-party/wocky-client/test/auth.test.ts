@@ -1,4 +1,4 @@
-// import {sleep} from './support/testuser'
+import {sleep} from './support/testuser'
 import {GraphQLTransport} from '../src/transport/GraphQLTransport'
 import _ from 'lodash'
 
@@ -36,5 +36,11 @@ describe('GraphQL auth', () => {
     // expect(gql2.connected).toBe(true)
     // expect(gql2.connecting).toBe(false)
     // await gql2.remove()
+  })
+
+  // for some reason this allows console.log calls in tests to show up before exiting.
+  // I think if there are multiple tests in this file then console.logs show up without this afterAll hack.
+  afterAll(async () => {
+    await sleep(500)
   })
 })
