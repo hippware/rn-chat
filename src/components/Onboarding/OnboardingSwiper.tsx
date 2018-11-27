@@ -12,12 +12,14 @@ import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject} from 'mobx-react/native'
 import {s} from '../Global'
+import {IOnceStore} from 'src/store/onceStore'
 
 type Props = {
   log?: (text: string) => void
+  onceStore?: IOnceStore
 }
 
-@inject('log')
+@inject('log', 'onceStore')
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
@@ -40,8 +42,11 @@ export default class OnboardingSwiper extends React.Component<Props> {
           <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
           <OnboardingNotifications onPress={this.checkAccelerometerPermissions} />
           <OnboardingFindFriends
-            onPress={this.findFriends}
-            onSkip={() => this.swiper.scrollBy(1)}
+            // onPress={this.findFriends}
+            // onSkip={() => this.swiper.scrollBy(1)}
+            // TODO: replace these with real calls in later tickets
+            onPress={this.done}
+            onSkip={this.done}
           />
         </Swiper>
       </View>
@@ -93,8 +98,13 @@ export default class OnboardingSwiper extends React.Component<Props> {
     return check
   }
 
-  private findFriends = () => {
-    // todo
-    this.swiper.scrollBy(1)
+  // todo
+  // private findFriends = () => {
+  //   this.swiper.scrollBy(1)
+  // }
+
+  private done = () => {
+    this.props.onceStore!.flip('onboarded')
+    Actions.logged()
   }
 }
