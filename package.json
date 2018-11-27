@@ -36,22 +36,13 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
-    "modulePaths": [
-      "<rootDir>",
-      "<rootDir>/third-party/wocky-client/src"
-    ],
+    "modulePaths": ["<rootDir>","<rootDir>/third-party/wocky-client/src"],
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
     "moduleNameMapper": {
       "wocky-client": "third-party/wocky-client/src"
     }
@@ -138,11 +129,6 @@
     "@absinthe/socket": "github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@storybook/addon-actions": "^4.0.7",
-    "@storybook/addon-links": "^4.0.7",
-    "@storybook/addons": "^4.0.7",
-    "@storybook/react-native": "^4.0.7",
     "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.9",
     "@types/lodash": "^4.14.118",
@@ -167,7 +153,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "^4.0.0",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-runtime": "^6.26.0",
     "bugsnag-sourcemaps": "^1.0.4",
     "chalk": "^2.4.1",
     "denodeify": "^1.2.1",
@@ -194,7 +179,12 @@
     "tsutils": "^3.2.0",
     "typescript": "3.0.3",
     "websocket": "^1.0.28",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "@storybook/react-native": "^4.0.7",
+    "@storybook/addon-actions": "^4.0.7",
+    "@storybook/addon-links": "^4.0.7",
+    "@storybook/addons": "^4.0.7",
+    "babel-runtime": "^6.26.0"
   },
   "husky": {
     "hooks": {

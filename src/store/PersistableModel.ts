@@ -1,4 +1,4 @@
-import {types, getType, flow, getSnapshot, applySnapshot, getEnv, Instance} from 'mobx-state-tree'
+import {types, getType, flow, getSnapshot, applySnapshot, getEnv} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import {Wocky} from 'wocky-client'
 import {settings} from '../globals'
@@ -11,7 +11,6 @@ export const cleanState = {
   homeStore: {},
   navStore: {},
   codePushStore: {},
-  onceStore: {},
 }
 
 export const STORE_NAME = 'MainStore'
@@ -145,7 +144,6 @@ const PersistableModel = types
         const data = yield loadFromStorage(STORE_NAME)
         const parsed = JSON.parse(data)
         loadMinimal(parsed)
-        // TODO: reload onceStore data here too?
         self.reloading = false
         startPersistenceReaction()
       }),
@@ -153,5 +151,3 @@ const PersistableModel = types
   })
 
 export default PersistableModel
-
-export interface IPersistable extends Instance<typeof PersistableModel> {}
