@@ -104,7 +104,7 @@ const Store = types
 
 const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
 
-export interface IStore extends Instance<typeof PersistableStore> {}
+export interface IStore extends Instance<typeof Store> {}
 
 const theStore = PersistableStore.create(
   {

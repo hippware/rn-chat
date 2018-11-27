@@ -1,4 +1,4 @@
-import {types, getType, flow, getSnapshot, applySnapshot, getEnv} from 'mobx-state-tree'
+import {types, getType, flow, getSnapshot, applySnapshot, getEnv, Instance} from 'mobx-state-tree'
 import {reaction} from 'mobx'
 import {Wocky} from 'wocky-client'
 import {settings} from '../globals'
@@ -153,3 +153,5 @@ const PersistableModel = types
   })
 
 export default PersistableModel
+
+export interface IPersistable extends Instance<typeof PersistableModel> {}

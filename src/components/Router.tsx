@@ -46,8 +46,9 @@ import Attribution from './Attribution'
 import { navBarStyle } from './styles'
 import IconStore from '../store/IconStore'
 import { IOnceStore } from 'src/store/onceStore'
-import { IStore } from 'src/store';
-import OnboardingSwiper from './Onboarding/OnboardingSwiper';
+import { IStore } from 'src/store'
+import { IPersistable } from 'src/store/PersistableModel'
+import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -59,7 +60,7 @@ type Props = {
   locationStore?: ILocationStore
   navStore?: INavStore
   iconStore?: IconStore
-  store?: IStore
+  store?: IStore & IPersistable
   onceStore?: IOnceStore
   analytics?: any
   log?: any
