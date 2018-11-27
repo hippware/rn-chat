@@ -1,32 +1,49 @@
 import React from 'react'
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native'
-import {when} from 'mobx'
-import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {k} from '../Global'
-import {observer, inject} from 'mobx-react/native'
-import {ILocationStore} from '../../store/LocationStore'
+import {observer} from 'mobx-react/native'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
+
+// TODO: test - does requiring rnbgl here trigger all permissions requests?
+import backgroundGeolocation from 'react-native-background-geolocation'
 
 const botIcon = require('../../../images/iconBot.png')
 
 type Props = {
-  locationStore?: ILocationStore
+  afterLocationAlwaysOn: () => void
 }
 
-@inject('locationStore')
 @observer
 class LocationWarning extends React.Component<Props> {
+  listenerDisposer: any
+
   componentDidMount() {
-    when(() => this.props.locationStore!.enabled, Actions.pop)
+    this.listenerDisposer = backgroundGeolocation.on(
+      'providerchange',
+      this.onLocationPermissionChanged
+    )
+  }
+
+  componentWillUnmount() {
+    if (this.listenerDisposer) {
+      this.listenerDisposer()
+    }
+  }
+
+  onLocationPermissionChanged = ({status}) => {
+    console.log('& perms changed', status)
+    if (status === 3) {
+      // 3 = always on
+      this.props.afterLocationAlwaysOn()
+    }
   }
 
   render() {
     return (
       <LocationWarningUI
         onPress={() => {
-          Actions.popTo('home')
           Linking.openURL('app-settings:{1}')
         }}
       />

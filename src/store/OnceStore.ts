@@ -2,6 +2,7 @@ import {types, Instance} from 'mobx-state-tree'
 
 /**
  * OnceStore is meant to hold all of the switches that should only ever meant to be flipped to true once
+ * NOTE: in Production this state should never be reset (to the extent that that's possible)
  */
 const OnceStore = types
   .model('OnceStore', {

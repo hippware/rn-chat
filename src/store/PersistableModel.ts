@@ -145,6 +145,7 @@ const PersistableModel = types
         const data = yield loadFromStorage(STORE_NAME)
         const parsed = JSON.parse(data)
         loadMinimal(parsed)
+        // TODO: reload onceStore data here too?
         self.reloading = false
         startPersistenceReaction()
       }),
