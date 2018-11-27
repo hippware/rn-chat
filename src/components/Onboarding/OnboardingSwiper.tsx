@@ -3,7 +3,7 @@ import Permissions from 'react-native-permissions'
 import Swiper from 'react-native-swiper'
 import {View, Alert} from 'react-native'
 import {colors} from 'src/constants'
-import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 import OnboardingLocation from './OnboardingLocation'
 import OnboardingAccelerometer from './OnboardingAccelerometer'
@@ -62,7 +62,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
       Alert.alert('', "We need your location to show you what's nearby!", [
         {
           text: 'OK',
-          // style: 'destructive',
           onPress: () => {
             Actions.locationWarning({
               afterLocationAlwaysOn: () => {
@@ -85,10 +84,11 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   private getPermission = async (perm: string, extra?: any): Promise<any> => {
-    const check = await Permissions.check(perm, extra)
+    let check = await Permissions.check(perm, extra)
     if (check === 'undetermined') {
       // first-time user: show permissions request dialog
-      return Permissions.request(perm, extra)
+      await Permissions.request(perm, extra)
+      check = await Permissions.check(perm, extra)
     }
     return check
   }
