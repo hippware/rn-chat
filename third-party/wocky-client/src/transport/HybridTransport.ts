@@ -77,14 +77,14 @@ export class HybridTransport implements IWockyTransport {
     data: any,
     host?: string,
     providerName?: string
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     return this._xmpp.register(data, host, providerName)
   }
 
   testRegister(
     {phoneNumber}: {phoneNumber: string},
     host: string
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 

@@ -36,6 +36,47 @@ export function expectedImage() {
   const expectedBuf = fs.readFileSync(fileNameThumbnail)
   return expectedBuf.toString()
 }
+export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
+  try {
+    const transport = new GraphQLTransport('next')
+    const phoneNumber =
+      phoneNum ||
+      (num
+        ? `+1555000000${num.toString()}`
+        : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'next.dev.tinyrobot.com'
+    const service = Wocky.create(
+      {host},
+      {
+        transport,
+        fileService,
+        logger: console,
+      }
+    )
+    addMiddleware(service, simpleActionLogger)
+
+    // TODO change register part here:
+    await service.register(
+      {
+        userID: `000000${phoneNumber.replace('+1555', '')}`,
+        phoneNumber,
+        authTokenSecret: '',
+        authToken: '',
+        emailAddressIsVerified: false,
+        'X-Auth-Service-Provider': 'http://localhost:9999',
+        emailAddress: '',
+        'X-Verify-Credentials-Authorization': '',
+      },
+      'digits'
+    )
+    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
+    await service.login()
+    return service
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}
 export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()

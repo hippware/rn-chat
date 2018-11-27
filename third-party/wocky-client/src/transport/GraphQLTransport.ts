@@ -17,7 +17,6 @@ import {
   convertBot,
   convertNotification,
   convertNotifications,
-  waitFor,
   generateWockyToken,
 } from './utils'
 import * as Utils from './utils'
@@ -78,9 +77,6 @@ export class GraphQLTransport implements IWockyTransport {
     }
     this.prepConnection()
 
-    if (!this.username) {
-      throw new Error('Username is not defined')
-    }
     if (!this.password) {
       throw new Error('Password is not defined')
     }
@@ -94,43 +90,10 @@ export class GraphQLTransport implements IWockyTransport {
     // return true
   }
 
-  // TODO: change this naming once XMPP has been removed
-  @action
-  async loginGraphQL(params: LoginParams): Promise<{userId: string; token: string}> {
-    const {token, accessToken, version, os, deviceName, phoneNumber, host} = params
-    if (this.connecting) {
-      // prevent duplicate login
-      await waitFor(() => !this.connecting)
-    } else {
-      this.connecting = true
-      if (host) {
-        this.host = host
-      }
-      this.prepConnection()
-      let res: boolean = false
-      this.token =
-        token ||
-        generateWockyToken({
-          // bypass: !!phoneNumber,
-          phoneNumber,
-          accessToken,
-          // TODO: username might already be embedded in token, so the uuid generated below may be different from what's returned in the `authenticate` mutation
-          userId: this.username || uuid(),
-          version: version!,
-          os: os!,
-          deviceName: deviceName!,
-        })
-      res = await this.authenticate(this.token!)
-      if (res) {
-        this.subscribeBotVisitors()
-      } else {
-        throw new Error('GraphQL authentication failed')
-      }
-    }
-    return {userId: this.username!, token: this.token!}
-  }
-
   prepConnection() {
+    if (this.client && this.client2) {
+      return
+    }
     const socketEndpoint = process.env.WOCKY_LOCAL
       ? 'ws://localhost:8080/graphql'
       : `wss://${this.host}/graphql`
@@ -683,8 +646,30 @@ export class GraphQLTransport implements IWockyTransport {
     })
     // TODO: handle error?
   }
-  async register(): Promise<{username: string; password: string; host: string}> {
-    throw new Error('Not supported')
+
+  @action
+  async register(
+    data: LoginParams,
+    host?: string
+  ): Promise<{username?: string; password: string; host?: string}> {
+    const {token, accessToken, version, os, deviceName, phoneNumber} = data
+    if (host) {
+      this.host = host
+    }
+    this.prepConnection()
+    const password =
+      token ||
+      generateWockyToken({
+        // bypass: !!phoneNumber,
+        phoneNumber,
+        accessToken,
+        // TODO: username might already be embedded in token, so the uuid generated below may be different from what's returned in the `authenticate` mutation
+        userId: this.username || uuid(),
+        version: version!,
+        os: os!,
+        deviceName: deviceName!,
+      })
+    return {password}
   }
 
   async testRegister(): Promise<{username: string; password: string; host: string}> {
@@ -697,6 +682,8 @@ export class GraphQLTransport implements IWockyTransport {
       this.unsubscribeContacts()
       this.unsubscribeBotVisitors()
       this.unsubscribeNotifications()
+      this.client2 = undefined
+      this.client = undefined
       return new Promise<void>((resolve, reject) => {
         try {
           this.socket!.disconnect(() => {

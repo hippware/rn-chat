@@ -15,7 +15,7 @@
     "jest": "jest --config jest.config.json",
     "jestCI": "jest --config jest.config.json --verbose --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
-    "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
+    "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "bash ./scripts/codepush.sh",
     "version:bump": "babel-node ./scripts/version-increment.js",

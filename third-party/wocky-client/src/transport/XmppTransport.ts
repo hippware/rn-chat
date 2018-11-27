@@ -106,7 +106,7 @@ export class XmppTransport implements IWockyTransport {
     data: any,
     host?: string,
     providerName = 'digits'
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     if (host) {
       this.host = host
     }
