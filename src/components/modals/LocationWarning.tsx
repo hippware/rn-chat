@@ -3,7 +3,7 @@ import {StyleSheet, Text, Image, Linking} from 'react-native'
 import {when} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
-import {k, s} from '../Global'
+import {k, s, minHeight} from '../Global'
 import {observer, inject} from 'mobx-react/native'
 import {ILocationStore} from '../../store/LocationStore'
 import {BlurView} from 'react-native-blur'
@@ -46,8 +46,7 @@ export const LocationWarningUI = ({onPress}) => (
     </Text>
     <Image
       source={require('../../../images/fixLocationPermission.png')}
-      style={{width: 224, marginVertical: 50 * s}}
-      resizeMode="contain"
+      style={{width: 224 * minHeight, height: 173 * minHeight, marginVertical: 50 * s}}
     />
     <Text style={styles.subtext}>
       With ‘Always’ access you won’t miss out on relevant location notifications.
