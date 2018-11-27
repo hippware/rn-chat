@@ -33,7 +33,7 @@ class LocationWarning extends React.Component<Props> {
   }
 
   onLocationPermissionChanged = ({status}) => {
-    console.log('& perms changed', status)
+    // console.log('& perms changed', status)
     if (status === 3) {
       // 3 = always on
       this.props.afterLocationAlwaysOn()
