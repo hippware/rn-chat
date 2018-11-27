@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
 import {IWocky} from 'wocky-client'
-import {IOnceStore} from 'src/store/onceStore'
+import {IOnceStore} from 'src/store/OnceStore'
 
 const footprint = require('../../../images/footprintWarning.png')
 

@@ -12,7 +12,7 @@ import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject} from 'mobx-react/native'
 import {s} from '../Global'
-import {IOnceStore} from 'src/store/onceStore'
+import {IOnceStore} from 'src/store/OnceStore'
 
 type Props = {
   log?: (text: string) => void

@@ -6,7 +6,7 @@ import {RText, GradientButton} from '../common'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
-import {IOnceStore} from 'src/store/onceStore'
+import {IOnceStore} from 'src/store/OnceStore'
 
 type Props = {
   onceStore?: IOnceStore

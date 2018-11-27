@@ -5,7 +5,7 @@ import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 import {IStore} from '.'
-import {IOnceStore} from './onceStore'
+import {IOnceStore} from './OnceStore'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'

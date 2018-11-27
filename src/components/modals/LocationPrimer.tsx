@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import {autorun} from 'mobx'
 import ModalContainer from './ModalContainer'
-import {IOnceStore} from 'src/store/onceStore'
+import {IOnceStore} from 'src/store/OnceStore'
 import {ILocationStore} from 'src/store/LocationStore'
 
 const footprint = require('../../../images/footprint.png')
