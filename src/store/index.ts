@@ -31,6 +31,7 @@ import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
+import OnceStore from './OnceStore'
 
 const provider = new XmppIOS()
 const xmppTransport = new XmppTransport(provider, DeviceInfo.getUniqueID())
@@ -83,10 +84,8 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
+    onceStore: OnceStore,
     version: types.string,
-    locationPrimed: false,
-    sharePresencePrimed: false,
-    guestOnce: false,
   })
   .views(self => ({
     get getImageSize() {
@@ -101,20 +100,11 @@ const Store = types
     afterCreate() {
       analytics.identify(self.wocky)
     },
-    dismissLocationPrimer: () => {
-      self.locationPrimed = true
-    },
-    dismissSharePresencePrimer: () => {
-      self.sharePresencePrimed = true
-    },
-    dismissFirstTimeGuestPrimer: () => {
-      self.guestOnce = true
-    },
   }))
 
-export interface IStore extends Instance<typeof Store.Type> {}
-
 const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
+
+export interface IStore extends Instance<typeof Store> {}
 
 const theStore = PersistableStore.create(
   {

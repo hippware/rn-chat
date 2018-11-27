@@ -1,9 +1,11 @@
-import {types, getEnv, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {when, autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
+import {IStore} from '.'
+import {IOnceStore} from './OnceStore'
 
 const METRIC = 'METRIC'
 const IMPERIAL = 'IMPERIAL'
@@ -373,12 +375,13 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    let wocky
+    let wocky: IWocky
+    let onceStore: IOnceStore
     let reactions: IReactionDisposer[] = []
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self) as any)
+      ;({wocky, onceStore} = getRoot<IStore>(self))
     }
 
     const start = flow(function*() {
@@ -397,10 +400,14 @@ const LocationStore = types
       }
 
       reactions = [
-        when(() => wocky.connected, () => self.startBackground().then(self.getCurrentPosition), {
-          name: 'LocationStore: Start background after connected',
-        }),
-        autorun(() => !self.location && self.getCurrentPosition(), {
+        when(
+          () => wocky.connected && onceStore.onboarded,
+          () => self.startBackground().then(self.getCurrentPosition),
+          {
+            name: 'LocationStore: Start background after connected',
+          }
+        ),
+        autorun(() => !self.location && onceStore.onboarded && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
         }),

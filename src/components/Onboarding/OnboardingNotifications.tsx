@@ -6,10 +6,10 @@ import {s, minHeight} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
-  onPress: () => void // the function that gets called when the user presses "Allow Accelerometer"
+  onPress: () => void // the function that gets called when the user presses "Allow Notifications"
 }
 
-class OnboardingAccelerometer extends React.Component<Props> {
+class OnboardingNotifications extends React.Component<Props> {
   render() {
     return (
       <View
@@ -21,18 +21,17 @@ class OnboardingAccelerometer extends React.Component<Props> {
         }}
       >
         <View style={{width: '80%', marginBottom: 33 * s}}>
-          <RText style={styles.onboardingH1}>Allow Accelerometer</RText>
+          <RText style={styles.onboardingH1}>Turn On Notifications</RText>
         </View>
 
-        <View style={{width: '70%', marginBottom: 42 * s}}>
+        <View style={{width: '70%', marginBottom: 72 * s}}>
           <RText style={styles.onboardingSubtext}>
-            Using the accelerometer increases battery-efficiency by intelligently toggling
-            location-tracking while moving.
+            Know instanly when friends visit your locations or share new locations with you.
           </RText>
         </View>
 
         <View style={{marginBottom: 82 * s}}>
-          <Image source={require('../../../images/walkingMan.png')} />
+          <Image source={require('../../../images/notificationIcn.png')} />
         </View>
 
         <GradientButton
@@ -41,7 +40,7 @@ class OnboardingAccelerometer extends React.Component<Props> {
           onPress={this.props.onPress}
         >
           <RText color={WHITE} size={17.5}>
-            Allow Accelerometer
+            Allow Notifications
           </RText>
         </GradientButton>
       </View>
@@ -49,4 +48,4 @@ class OnboardingAccelerometer extends React.Component<Props> {
   }
 }
 
-export default OnboardingAccelerometer
+export default OnboardingNotifications
