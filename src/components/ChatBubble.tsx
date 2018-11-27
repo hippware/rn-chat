@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native'
 import ResizedImage from './ResizedImage'
@@ -7,10 +6,9 @@ import ParsedText from 'react-native-parsed-text'
 
 const {width} = Dimensions.get('window')
 import {observer} from 'mobx-react/native'
-import autobind from 'autobind-decorator'
 import {colors} from '../constants'
 
-const styles = StyleSheet.create({
+const defaultStyles = StyleSheet.create({
   bubble: {
     borderRadius: 2,
     paddingLeft: 14,
@@ -68,29 +66,41 @@ const styles = StyleSheet.create({
   },
 })
 
-@autobind
-@observer
-export default class ChatBubble extends React.Component<any> {
-  componentWillMount() {
-    Object.assign(styles, this.props.styles)
-  }
-
-  renderMedia(media: any = '', position) {
+const ChatBubble = props => {
+  const {
+    text,
+    renderCustomText,
+    handleUrlPress,
+    handlePhonePress,
+    handleEmailPress,
+    parseText,
+    media,
+    position,
+    id,
+    name,
+    status,
+    ...other
+  } = props
+  const styles = {...defaultStyles, ...other.styles}
+  function renderMedia() {
     // if (!media.loaded) {}
     const w = position === 'left' ? width - 150 * k : width - 93
     return (
-      <View key={`${media.id}view`} style={{width: w, height: w * media.height / media.width}}>
-        <ResizedImage key={`${media.id}image`} image={media} />
+      <View
+        key={`${media.source.id}view`}
+        style={{width: w, height: w * media.source.height / media.source.width}}
+      >
+        <ResizedImage key={`${media.source.id}image`} image={media.source} />
       </View>
     )
   }
 
-  renderText(text = '', position) {
-    if (this.props.renderCustomText) {
-      return this.props.renderCustomText(this.props)
+  function renderText() {
+    if (renderCustomText) {
+      return renderCustomText(props)
     }
 
-    if (this.props.parseText === true) {
+    if (parseText === true) {
       return (
         <ParsedText
           style={[
@@ -105,21 +115,21 @@ export default class ChatBubble extends React.Component<any> {
               style: {
                 textDecorationLine: 'underline',
               },
-              onPress: this.props.handleUrlPress,
+              onPress: handleUrlPress,
             },
             {
               type: 'phone',
               style: {
                 textDecorationLine: 'underline',
               },
-              onPress: this.props.handlePhonePress,
+              onPress: handlePhonePress,
             },
             {
               type: 'email',
               style: {
                 textDecorationLine: 'underline',
               },
-              onPress: this.props.handleEmailPress,
+              onPress: handleEmailPress,
             },
           ]}
         >
@@ -140,52 +150,35 @@ export default class ChatBubble extends React.Component<any> {
       </Text>
     )
   }
-
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <View
-          style={[
-            this.props.media && this.props.media.source ? styles.mediaBubble : styles.bubble,
-            this.props.position === 'left'
-              ? styles.bubbleLeft
-              : this.props.position === 'right' ? styles.bubbleRight : styles.bubbleCenter,
-            this.props.status === 'ErrorButton' ? styles.bubbleError : null,
-          ]}
-          key={`${this.props.id}bubble`}
-        >
-          {this.props.name}
-          {this.renderText(this.props.text, this.props.position)}
-          {this.props.media &&
-            this.props.media.source &&
-            this.renderMedia(this.props.media.source, this.props.position)}
-        </View>
-        {this.props.position === 'left' && (
-          <Image
-            style={{position: 'absolute', bottom: 12, left: -4}}
-            source={require('../../images/triangleWhite.png')}
-          />
-        )}
-        {this.props.position === 'right' && (
-          <Image
-            style={{position: 'absolute', bottom: 5, right: 2}}
-            source={require('../../images/triangleYellow.png')}
-          />
-        )}
+  return (
+    <View style={{flex: 1}}>
+      <View
+        style={[
+          media && media.source ? styles.mediaBubble : styles.bubble,
+          position === 'left'
+            ? styles.bubbleLeft
+            : position === 'right' ? styles.bubbleRight : styles.bubbleCenter,
+          status === 'ErrorButton' ? styles.bubbleError : null,
+        ]}
+        key={`${id}bubble`}
+      >
+        {name}
+        {renderText()}
+        {media && media.source && renderMedia()}
       </View>
-    )
-  }
+      {position === 'left' && (
+        <Image
+          style={{position: 'absolute', bottom: 12, left: -4}}
+          source={require('../../images/triangleWhite.png')}
+        />
+      )}
+      {position === 'right' && (
+        <Image
+          style={{position: 'absolute', bottom: 5, right: 2}}
+          source={require('../../images/triangleYellow.png')}
+        />
+      )}
+    </View>
+  )
 }
-
-;(ChatBubble as any).propTypes = {
-  position: PropTypes.oneOf(['left', 'right', 'center']),
-  status: PropTypes.string,
-  text: PropTypes.string,
-  renderCustomText: PropTypes.func,
-  styles: PropTypes.object,
-  parseText: PropTypes.bool,
-  name: PropTypes.element,
-  handleUrlPress: PropTypes.func,
-  handlePhonePress: PropTypes.func,
-  handleEmailPress: PropTypes.func,
-}
+export default observer(ChatBubble)
