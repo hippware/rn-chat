@@ -55,7 +55,7 @@ class SignUp extends React.Component<Props> {
     if (!profile || profile!.updating) return
     try {
       await profile!.update(this.vProfile!.asObject)
-      Actions.logged()
+      Actions.checkOnboarded()
       this.props.analytics.track('createprofile_complete', {
         profile: getSnapshot(this.props.wocky!.profile!),
       })
