@@ -11,6 +11,7 @@ export const cleanState = {
   homeStore: {},
   navStore: {},
   codePushStore: {},
+  onceStore: {},
 }
 
 export const STORE_NAME = 'MainStore'
