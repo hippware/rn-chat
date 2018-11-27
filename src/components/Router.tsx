@@ -45,7 +45,10 @@ import Notifications from './Notifications'
 import Attribution from './Attribution'
 import { navBarStyle } from './styles'
 import IconStore from '../store/IconStore'
+import { IOnceStore } from 'src/store/OnceStore'
 import { IStore } from 'src/store'
+import { IPersistable } from 'src/store/PersistableModel'
+import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -57,21 +60,22 @@ type Props = {
   locationStore?: ILocationStore
   navStore?: INavStore
   iconStore?: IconStore
-  store?: IStore
+  store?: IStore & IPersistable
+  onceStore?: IOnceStore
   analytics?: any
   log?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log')
+@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log', 'onceStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, locationStore, navStore, store} = this.props
+    const {wocky, locationStore, navStore, onceStore} = this.props
 
     autorun(
       () => {
-        if (wocky!.connected && !locationStore!.enabled) {
-          if (Actions.locationWarning) Actions.locationWarning()
+        if (onceStore!.onboarded && wocky!.connected && !locationStore!.enabled) {
+          if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popToHome()})
         }
       },
       {delay: 1000}
@@ -82,10 +86,10 @@ class TinyRobotRouter extends React.Component<Props> {
     // TODO: Move it outside, why we can't put it inside Home?
     autorun(
       () => {
-        const {locationPrimed} = store!
+        const {locationPrimed, onboarded} = onceStore!
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
-        if (scene === 'home' && !alwaysOn && !locationPrimed) {
+        if (onboarded && scene === 'home' && !alwaysOn && !locationPrimed) {
           if (Actions.locationPrimer) Actions.locationPrimer()
         }
       },
@@ -94,29 +98,31 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, iconStore, wocky, navStore} = this.props
+    const {store, iconStore, wocky, navStore, onceStore} = this.props
 
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
-            <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="onboarding" />
-            <Scene key="checkCredentials" on={() => wocky!.username && wocky!.password && wocky!.host} success="checkProfile" failure="onboarding" />
-            <Scene key="connect" on={this.login} success="checkHandle" failure="onboarding" />
+            <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
+            <Scene key="checkCredentials" on={() => wocky!.username && wocky!.password && wocky!.host} success="checkProfile" failure="preConnection" />
+            <Scene key="connect" on={this.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
-            <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="logged" failure="signUp" />
-            <Scene key="logout" on={store!.logout} success="onboarding" />
+            <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
+            <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="logout" on={store!.logout} success="preConnection" />
           </Stack>
           <Lightbox>
             <Stack initial hideNavBar key="main">
               <Stack hideNavBar>
-                <Stack key="onboarding" navTransparent type="replace">
+                <Stack key="preConnection" navTransparent type="replace">
                   <Scene key="slideshow" component={OnboardingSlideshow} onSignIn="signIn" onBypass="testRegisterScene" />
                   <Scene key="signIn" component={SignIn} back />
                   <Scene key="verifyCode" component={VerifyCode} />
                   <Scene key="testRegisterScene" component={TestRegister} success="connect" />
                 </Stack>
                 <Scene key="signUp" component={SignUp} hideNavBar />
+                <Scene key="onboarding" component={OnboardingSwiper} hideNavBar />
                 <Scene key="camera" component={Camera} />
                 <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                   <Stack>
