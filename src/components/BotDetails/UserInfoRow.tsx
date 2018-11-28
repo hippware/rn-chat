@@ -45,7 +45,7 @@ class UserInfoRow extends React.Component<Props> {
         </View> */}
 
         <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={profile} size={40} fontSize="regular" fontFamily="regular" />
+          <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
           <ProfileHandle
             style={botProfileStyle.userInfoRow}
             onPress={() => Actions.profileDetails({item: profile.id})}
