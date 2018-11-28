@@ -19,6 +19,7 @@ type Props = {
   showFrame?: boolean
   tappable?: boolean
   fontSize?: 'small' | 'large'
+  fontFamily?: 'bold' | 'regular'
   hideDot?: boolean
   borderColor?: string
 }
@@ -35,6 +36,7 @@ const Avatar = observer(
     hideDot,
     borderColor,
     fontSize,
+    fontFamily,
   }: Props) => {
     if (!profile || !isAlive(profile)) {
       return null
@@ -69,6 +71,7 @@ const Avatar = observer(
               fontSize={fontSize}
               size={size}
               style={sharedStyle}
+              fontFamily={fontFamily}
               letter={title.length > 1 ? title[0] : title}
               showMask={showMask}
             />
@@ -101,7 +104,7 @@ const AvatarImage = observer(({avatar, style, size, showMask}) => (
   </View>
 ))
 
-const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
+const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontFamily}) => {
   const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}
   const end = showMask ? {x: 0.5, y: 1} : {x: 1, y: 0}
   const theColors = showMask
@@ -118,6 +121,7 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
               styles.title,
               {
                 fontSize: fontSize === 'small' ? 13.5 : fontSize === 'large' ? 25 : 20,
+                fontFamily: fontFamily === 'bold' ? 'Roboto-Bold' : 'Roboto-Regular',
               },
             ]}
           >
@@ -149,7 +153,6 @@ export default Avatar
 const styles = StyleSheet.create({
   title: {
     color: colors.WHITE,
-    fontFamily: 'Roboto-Bold',
   },
   dot: {
     position: 'absolute',

@@ -190,6 +190,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
           stackSize={list.length}
           circleSize={45}
           textSize={16.5}
+          fontFamily="bold"
           style={{marginBottom: 5 * k}}
         />
         <RText weight="Regular" size={15}>
