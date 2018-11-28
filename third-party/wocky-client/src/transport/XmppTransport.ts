@@ -798,43 +798,43 @@ export class XmppTransport implements IWockyTransport {
       .c('item', {id: postId})
     await this.sendIQ(iq)
   }
-  shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string) {
-    const msg = $msg({
-      from: this.username + '@' + this.host,
-      type: 'headline',
-      to: this.host,
-    }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
+  // shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string) {
+  //   const msg = $msg({
+  //     from: this.username + '@' + this.host,
+  //     type: 'headline',
+  //     to: this.host,
+  //   }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
 
-    recepients.forEach(user => {
-      if (user === 'friends') {
-        msg.c('address', {type: 'friends'}).up()
-      } else if (user === 'followers') {
-        msg.c('address', {type: 'followers'}).up()
-      } else {
-        msg.c('address', {type: 'to', jid: `${user}@${this.host}`}).up()
-      }
-    })
-    msg.up()
-    msg
-      .c('body')
-      .t(message)
-      .up()
-    msg
-      .c('bot', {xmlns: BOT_NS})
-      .c('jid')
-      .t(`${server}/bot/${id}`)
-      .up()
-      .c('id')
-      .t(id)
-      .up()
-      .c('server')
-      .t(server)
-      .up()
-      .c('action')
-      .t(shareAction)
+  //   recepients.forEach(user => {
+  //     if (user === 'friends') {
+  //       msg.c('address', {type: 'friends'}).up()
+  //     } else if (user === 'followers') {
+  //       msg.c('address', {type: 'followers'}).up()
+  //     } else {
+  //       msg.c('address', {type: 'to', jid: `${user}@${this.host}`}).up()
+  //     }
+  //   })
+  //   msg.up()
+  //   msg
+  //     .c('body')
+  //     .t(message)
+  //     .up()
+  //   msg
+  //     .c('bot', {xmlns: BOT_NS})
+  //     .c('jid')
+  //     .t(`${server}/bot/${id}`)
+  //     .up()
+  //     .c('id')
+  //     .t(id)
+  //     .up()
+  //     .c('server')
+  //     .t(server)
+  //     .up()
+  //     .c('action')
+  //     .t(shareAction)
 
-    this.sendStanza(msg)
-  }
+  //   this.sendStanza(msg)
+  // }
 
   async inviteBot(id: string, recepients: string[]) {
     throw new Error('Not supported')

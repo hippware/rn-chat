@@ -595,9 +595,9 @@ export class GraphQLTransport implements IWockyTransport {
     // This is supported via the Bot.Items connection
     throw new Error('Not supported')
   }
-  shareBot() {
-    throw new Error('Not supported')
-  }
+  // shareBot() {
+  //   throw new Error('Not supported')
+  // }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
     await this.client!.mutate({
       mutation: gql`
