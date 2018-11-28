@@ -6,6 +6,7 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
+const SERVER_NAME = 'staging'
 // tslint:disable:no-console
 
 const fs = require('fs')
@@ -38,13 +39,13 @@ export function expectedImage() {
 }
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new GraphQLTransport('next')
+    const transport = new GraphQLTransport(SERVER_NAME)
     const phoneNumber =
       phoneNum ||
       (num
         ? `+1555000000${num.toString()}`
         : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
-    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'next.dev.tinyrobot.com'
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : `${SERVER_NAME}.dev.tinyrobot.com`
     const service = Wocky.create(
       {host},
       {
@@ -55,19 +56,20 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     )
     addMiddleware(service, simpleActionLogger)
 
-    // TODO change register part here:
     await service.register(
       {
-        userID: `000000${phoneNumber.replace('+1555', '')}`,
+        version: '1.1.4',
+        os: 'ios',
+        deviceName: 'iPhone',
         phoneNumber,
-        authTokenSecret: '',
-        authToken: '',
-        emailAddressIsVerified: false,
-        'X-Auth-Service-Provider': 'http://localhost:9999',
-        emailAddress: '',
-        'X-Verify-Credentials-Authorization': '',
       },
-      'digits'
+      // {
+      //   version: '0.0.0',
+      //   os: 'web',
+      //   deviceName: 'Unit',
+      //   phoneNumber,
+      // },
+      host
     )
     console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()

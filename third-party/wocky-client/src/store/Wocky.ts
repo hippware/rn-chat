@@ -111,7 +111,7 @@ export const Wocky = types
           if (host) {
             self.host = host
           }
-          if (!self.username || !self.password || !self.host) {
+          if (!self.password || !self.host) {
             throw new Error(
               `Cannot login without username/password/host:${self.username},${self.password},${
                 self.host
@@ -119,8 +119,11 @@ export const Wocky = types
             )
           }
           yield self.transport.login(self.username!, self.password!, self.host)
-          yield self.loadProfile(self.username)
-
+          // set username
+          if (!self.username && self.transport.username) {
+            self.username = self.transport.username
+          }
+          yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
         }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
