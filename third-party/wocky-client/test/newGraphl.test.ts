@@ -45,17 +45,16 @@ describe('NewGraphQL tests', () => {
     }
   })
 
-  afterAll(async done => {
+  it('cleans up users', async () => {
     try {
       await user.remove()
     } catch (e) {
-      console.log(e)
+      expect(e).toBeUndefined()
     }
     try {
       await user2.remove()
     } catch (e) {
-      console.log(e)
+      expect(e).toBeUndefined()
     }
-    done()
   })
 })
