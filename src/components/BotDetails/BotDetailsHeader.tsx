@@ -24,6 +24,7 @@ import {Actions} from 'react-native-router-flux'
 import ProfileAvatar from '../ProfileAvatar'
 import LinearGradient from 'react-native-linear-gradient'
 import {GREY} from 'src/constants/colors'
+import {botProfileStyle} from '../styles'
 
 type Props = {
   bot: IBot
@@ -89,7 +90,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
-            size={20}
+            size={21}
             color={colors.DARK_PURPLE}
             style={{width: '75%', textAlign: 'center'}}
             numberOfLines={2}
@@ -118,12 +119,12 @@ class BotDetailsHeader extends React.Component<Props, State> {
             <VisitorsArea bot={bot} />
 
             <View style={styles.userInfoRow}>
-              <ProfileAvatar profile={bot.owner!} size={40 * k} />
+              <ProfileAvatar profile={bot.owner!} size={40} />
               {bot.owner && (
                 <ProfileHandle
-                  style={{marginLeft: 10 * k, flex: 1}}
+                  style={botProfileStyle.userInfoRow}
                   onPress={() => Actions.profileDetails({item: bot.owner!.id})}
-                  size={15}
+                  size={16}
                   profile={bot.owner}
                 />
               )}
@@ -132,7 +133,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
             </View>
             {!!bot.description && (
               <View style={styles.descriptionContainer}>
-                <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
+                <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
                   {bot.description}
                 </RText>
               </View>
@@ -187,11 +188,13 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
         <ProfileStack
           firstProfile={list[0]}
           stackSize={list.length}
-          circleSize={50}
+          circleSize={45}
           textSize={16.5}
-          style={{marginBottom: 10 * k}}
+          style={{marginBottom: 5 * k}}
         />
-        <RText size={14}>{text!}</RText>
+        <RText weight="Regular" size={15}>
+          {text!}
+        </RText>
       </TouchableOpacity>,
     ]
   }
@@ -234,7 +237,7 @@ const Pill = ({children}) => (
       marginRight: 5 * k,
     }}
   >
-    <RText size={12} weight="Medium" color={colors.WHITE}>
+    <RText size={13} weight="Medium" color={colors.WHITE}>
       {children}
     </RText>
   </LinearGradient>
@@ -272,9 +275,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20 * k,
   },
-  descriptionContainer: {
-    paddingBottom: 15 * k,
-  },
+  descriptionContainer: {},
   botAddedContainer: {
     height: width,
     position: 'absolute',

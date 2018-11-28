@@ -117,7 +117,7 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask}) => {
             style={[
               styles.title,
               {
-                fontSize: fontSize === 'small' ? 12 * k : fontSize === 'large' ? 25 * k : 18 * k,
+                fontSize: fontSize === 'small' ? 13.5 : fontSize === 'large' ? 25 : 20,
               },
             ]}
           >
@@ -149,7 +149,7 @@ export default Avatar
 const styles = StyleSheet.create({
   title: {
     color: colors.WHITE,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Bold',
   },
   dot: {
     position: 'absolute',

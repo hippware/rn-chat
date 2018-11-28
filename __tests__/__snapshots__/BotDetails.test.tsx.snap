@@ -225,7 +225,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Object {
                             "color": "rgb(63,50,77)",
                             "fontFamily": "Roboto-Regular",
-                            "fontSize": 20,
+                            "fontSize": 21,
                           },
                           Object {
                             "textAlign": "center",
@@ -282,7 +282,7 @@ exports[`BotDetails renders with no data 1`] = `
                             Object {
                               "color": "rgb(255,255,255)",
                               "fontFamily": "Roboto-Medium",
-                              "fontSize": 12,
+                              "fontSize": 13,
                             },
                             undefined,
                           ]
@@ -329,7 +329,7 @@ exports[`BotDetails renders with no data 1`] = `
                             Object {
                               "color": "rgb(255,255,255)",
                               "fontFamily": "Roboto-Medium",
-                              "fontSize": 12,
+                              "fontSize": 13,
                             },
                             undefined,
                           ]
@@ -357,8 +357,8 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "backgroundColor": "rgb(222,222,222)",
-                              "height": 2,
-                              "marginHorizontal": 50,
+                              "height": 1,
+                              "marginHorizontal": 40,
                               "marginVertical": 40,
                             },
                             Object {
@@ -385,7 +385,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "alignItems": "center",
-                              "height": 160,
+                              "height": 80,
                             },
                             undefined,
                           ]
@@ -397,8 +397,8 @@ exports[`BotDetails renders with no data 1`] = `
                         Array [
                           Object {
                             "backgroundColor": "rgb(222,222,222)",
-                            "height": 2,
-                            "marginHorizontal": 50,
+                            "height": 1,
+                            "marginHorizontal": 40,
                             "marginVertical": 40,
                           },
                           Object {

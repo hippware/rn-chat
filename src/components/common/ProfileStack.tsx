@@ -3,7 +3,6 @@ import {View, ViewStyle} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {IProfile} from 'wocky-client'
 
-import {k} from '../Global'
 import {Avatar, RText} from '../common'
 import {colors} from '../../constants'
 
@@ -34,7 +33,7 @@ const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, text
             justifyContent: 'center',
           }}
         >
-          <RText size={textSize || 12} color={colors.WHITE} weight="Medium">
+          <RText size={textSize || 12} color={colors.WHITE} weight="Bold">
             {`+${stackSize - 1}`}
           </RText>
         </View>
@@ -42,7 +41,7 @@ const ProfileStack = observer(({firstProfile, stackSize, circleSize, style, text
       <Avatar
         profile={firstProfile}
         tappable={false}
-        size={size / k}
+        size={size}
         hideDot
         style={{marginRight: stackSize > 1 ? size * 0.75 : 0}}
         fontSize={size > 30 ? 'large' : 'small'}
