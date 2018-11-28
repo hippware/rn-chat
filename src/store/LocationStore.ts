@@ -3,7 +3,7 @@ import {when, autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import {settings} from '../globals'
-import {Location} from 'wocky-client'
+import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 
 export const BG_STATE_PROPS = [
@@ -181,7 +181,7 @@ const LocationStore = types
   }))
   .actions(self => {
     const {logger, analytics} = getEnv(self)
-    const {wocky} = getParent(self)
+    const wocky: IWocky = (getParent(self) as any).wocky
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -323,7 +323,7 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    const {wocky} = getParent(self)
+    const wocky: IWocky = (getParent(self) as any).wocky
     let reactions: IReactionDisposer[] = []
 
     const start = flow(function*() {
