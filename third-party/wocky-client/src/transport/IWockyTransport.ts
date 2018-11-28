@@ -38,11 +38,11 @@ export interface IWockyTransport {
     data: any,
     host?: string,
     providerName?: string
-  ): Promise<{username: string; password: string; host: string}>
+  ): Promise<{username?: string; password: string; host?: string}>
   testRegister(
     {phoneNumber}: {phoneNumber: string},
     host: string
-  ): Promise<{username: string; password: string; host: string}>
+  ): Promise<{username?: string; password: string; host?: string}>
   disconnect(): Promise<void>
   setLocation(params: ILocationSnapshot): Promise<void>
   getLocationsVisited(limit?: number): Promise<object[]>

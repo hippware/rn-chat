@@ -6,6 +6,7 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
+const SERVER_NAME = 'staging'
 // tslint:disable:no-console
 
 const fs = require('fs')
@@ -35,6 +36,48 @@ export function expectedImage() {
   const fileNameThumbnail = `${__dirname}/../img/test-thumbnail.jpg`
   const expectedBuf = fs.readFileSync(fileNameThumbnail)
   return expectedBuf.toString()
+}
+export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
+  try {
+    const transport = new GraphQLTransport(SERVER_NAME)
+    const phoneNumber =
+      phoneNum ||
+      (num
+        ? `+1555000000${num.toString()}`
+        : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : `${SERVER_NAME}.dev.tinyrobot.com`
+    const service = Wocky.create(
+      {host},
+      {
+        transport,
+        fileService,
+        logger: console,
+      }
+    )
+    addMiddleware(service, simpleActionLogger)
+
+    await service.register(
+      {
+        version: '1.1.4',
+        os: 'ios',
+        deviceName: 'iPhone',
+        phoneNumber,
+      },
+      // {
+      //   version: '0.0.0',
+      //   os: 'web',
+      //   deviceName: 'Unit',
+      //   phoneNumber,
+      // },
+      host
+    )
+    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
+    await service.login()
+    return service
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
 }
 export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
   try {

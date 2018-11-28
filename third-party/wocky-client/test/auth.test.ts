@@ -4,40 +4,44 @@ import _ from 'lodash'
 
 const host = 'testing.dev.tinyrobot.com'
 
+// tslint:disable:no-console
 describe('GraphQL auth', () => {
-  let gqlToken
+  // let gqlToken
 
-  it('logs in new user via bypass', async () => {
-    const gql = new GraphQLTransport('testing')
-    const {userId, token} = await gql.loginGraphQL({
-      host,
-      version: '1.1.4',
-      os: 'ios',
-      deviceName: 'iPhone',
-      phoneNumber: '+15551234567',
-    })
-    expect(userId).toBeTruthy()
-    expect(token).toBeTruthy()
-    expect(gql.connected).toBe(true)
-    expect(gql.connecting).toBe(false)
-    gqlToken = token
-    // await gql.disconnect()
+  it('logs in new user via bypass', async done => {
+    try {
+      const gql = new GraphQLTransport('testing')
+      const {password} = await gql.register(
+        {
+          version: '1.1.4',
+          os: 'ios',
+          deviceName: 'iPhone',
+          phoneNumber: '+15551234567',
+        },
+        host
+      )
+      expect(password).toBeTruthy()
+      await gql.login(undefined, password)
+      console.log('CONNECTED:', gql.connected)
+      expect(gql.connected).toBe(true)
+      expect(gql.connecting).toBe(false)
+      // gqlToken = password
+      await gql.disconnect()
+      console.log('DISCONNECTED:', gql.connected)
+      done()
+    } catch (e) {
+      done(e)
+    }
+    // const gql2 = new GraphQLTransport('testing')
+    // await gql2.login(undefined, gqlToken)
+    // expect(gql2.connected).toBe(true)
+    // expect(gql2.connecting).toBe(false)
+    // await gql2.remove()
   })
 
-  it('logs in existing user with userId and token', async () => {
-    const gql = new GraphQLTransport('testing')
-    const {userId, token} = await gql.loginGraphQL({token: gqlToken, host})
-    expect(userId).toBeTruthy()
-    expect(token).toBeTruthy()
-    await gql.remove()
-  })
-
-  it('tests auth via HTTP header (not web sockets)', async () => {
-    // todo
-  })
-
+  // for some reason this allows console.log calls in tests to show up before exiting.
+  // I think if there are multiple tests in this file then console.logs show up without this afterAll hack.
   afterAll(async () => {
-    // allow time for the console logs to show up before exiting
-    await sleep(1000)
+    await sleep(500)
   })
 })
