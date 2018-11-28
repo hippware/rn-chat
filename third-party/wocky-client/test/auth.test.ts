@@ -27,6 +27,7 @@ describe('GraphQL auth', () => {
       expect(gql.connecting).toBe(false)
       // gqlToken = password
       await gql.disconnect()
+      console.log('DISCONNECTED:', gql.connected)
       done()
     } catch (e) {
       done(e)

@@ -676,39 +676,35 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
+  async socketDisconnect(socket) {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        socket.disconnect(() => {
+          // console.log('& graphql onDisconnect', something)
+          resolve()
+        })
+      } catch (err) {
+        // console.log('& graphql disconnect err', err)
+        reject(err)
+      }
+    })
+  }
+
   async disconnect(): Promise<void> {
     // console.log('& graphql disconnect')
     if (this.socket && this.socket.isConnected()) {
       this.unsubscribeContacts()
       this.unsubscribeBotVisitors()
       this.unsubscribeNotifications()
-      this.client2 = undefined
-      this.client = undefined
-      return new Promise<void>((resolve, reject) => {
-        try {
-          this.socket!.disconnect(() => {
-            // console.log('& graphql onDisconnect', something)
-            resolve()
-          })
-        } catch (err) {
-          // console.log('& graphql disconnect err', err)
-          reject(err)
-        }
-      })
+      await this.socketDisconnect(this.socket)
     }
     if (this.socket2 && this.socket2.isConnected()) {
-      return new Promise<void>((resolve, reject) => {
-        try {
-          this.socket2!.disconnect(() => {
-            // console.log('& graphql onDisconnect', something)
-            resolve()
-          })
-        } catch (err) {
-          // console.log('& graphql disconnect err', err)
-          reject(err)
-        }
-      })
+      await this.socketDisconnect(this.socket2)
     }
+    this.socket = undefined
+    this.socket2 = undefined
+    this.client2 = undefined
+    this.client = undefined
   }
 
   async requestProfiles(): Promise<any> {
