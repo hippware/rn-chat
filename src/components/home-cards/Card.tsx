@@ -15,7 +15,7 @@ const Card = ({profile, children, onPress}: Props) => (
   <TouchableWithoutFeedback onPress={onPress}>
     <View style={styles.card}>
       {profile && (
-        <Avatar profile={profile} size={40} style={styles.avatar} hideDot fontSize="large" />
+        <Avatar profile={profile} size={40} style={styles.avatar} hideDot fontFamily="regular" />
       )}
       {children}
     </View>

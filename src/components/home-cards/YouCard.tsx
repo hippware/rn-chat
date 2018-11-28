@@ -26,6 +26,7 @@ const YouCard = inject('wocky')(
             hideDot
             borderColor={colors.PINK}
             fontSize="large"
+            fontFamily="regular"
             tappable={false}
             style={styles.avatar}
           />

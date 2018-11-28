@@ -8,6 +8,7 @@ import {ProfileHandle} from '../common'
 import ProfileAvatar from '../ProfileAvatar'
 import {ILocationStore} from '../../store/LocationStore'
 import {IProfile} from 'wocky-client'
+import {botProfileStyle} from '../styles'
 
 type Props = {
   // bot: IBot
@@ -44,11 +45,11 @@ class UserInfoRow extends React.Component<Props> {
         </View> */}
 
         <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={profile} size={40 * k} />
+          <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
           <ProfileHandle
-            style={{marginLeft: 10 * k, flex: 1}}
+            style={botProfileStyle.userInfoRow}
             onPress={() => Actions.profileDetails({item: profile.id})}
-            size={15}
+            size={16}
             profile={profile}
           />
 

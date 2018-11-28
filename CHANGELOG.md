@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Rework version info string. Swap native and js parts. (#3009, PR #3098)
+* Make messaging UI components stateless for (PR #3100)
+  * Messages: Text & Images sent are not appearing correctly (#3060)
+
 # 3.10.1 - 2018 Nov 26
 
 * Use two GraphQL connections (PR #3053)
