@@ -234,8 +234,8 @@ const LocationStore = types
       BackgroundGeolocation.on('activitychange', onActivityChange)
       BackgroundGeolocation.on('providerchange', onProviderChange)
 
-      yield BackgroundGeolocation.ready({})
-      logger.log(prefix, 'Ready')
+      const config = yield BackgroundGeolocation.ready({})
+      logger.log(prefix, 'Ready: ', config)
     })
 
     function willUnmount() {
@@ -270,8 +270,8 @@ const LocationStore = types
 
     const invalidateCredentials = flow(function*() {
       yield BackgroundGeolocation.setConfig({
-        headers: '',
-        params: '',
+        headers: {},
+        params: {},
         url: '',
       })
       logger.log(prefix, 'invalidateCredentials')
