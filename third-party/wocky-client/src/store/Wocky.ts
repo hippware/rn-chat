@@ -13,6 +13,7 @@ import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
+import _ from 'lodash'
 
 export const Wocky = types
   .compose(
@@ -534,6 +535,8 @@ export const Wocky = types
         if (!data) return
 
         try {
+          // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
+          data = _.cloneDeep(data)
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)
