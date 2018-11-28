@@ -1,9 +1,9 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {autorun, IReactionDisposer} from 'mobx'
+import {when, autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import {settings} from '../globals'
-import {Location, IWocky} from 'wocky-client'
+import {Location} from 'wocky-client'
 import _ from 'lodash'
 
 export const BG_STATE_PROPS = [
@@ -154,9 +154,34 @@ const LocationStore = types
     setState(value) {
       Object.assign(self, value)
     },
+
+    // Set reset to true to reset to defaults
+    configure: flow(function*(reset = false) {
+      const {logger} = getEnv(self)
+      let config = <any>{
+        startOnBoot: true,
+        stopOnTerminate: false,
+        disableLocationAuthorizationAlert: true,
+      }
+
+      // For non-Prod, don't configure settings which are user configurable
+      if (settings.isProduction) {
+        config.stopTimeout = 1
+        config.distanceFilter = 10
+      }
+
+      if (reset) {
+        yield BackgroundGeolocation.reset(config)
+        logger.log(prefix, 'Reset and configure')
+      } else {
+        yield BackgroundGeolocation.setConfig(config)
+        logger.log(prefix, 'Configure')
+      }
+    }),
   }))
   .actions(self => {
     const {logger, analytics} = getEnv(self)
+    const {wocky} = getParent(self)
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -198,8 +223,8 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === 3)
     }
 
-    const startBackground = flow(function*() {
-      const wocky: IWocky = (getParent(self) as any).wocky
+    const didMount = flow(function*() {
+      yield self.configure()
 
       BackgroundGeolocation.on('location', onLocation, onLocationError)
       BackgroundGeolocation.on('http', onHttp, onHttpError)
@@ -209,65 +234,51 @@ const LocationStore = types
       BackgroundGeolocation.on('activitychange', onActivityChange)
       BackgroundGeolocation.on('providerchange', onProviderChange)
 
-      const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-
-      const headers = {
-        Accept: 'application/json',
-        'X-Auth-User': wocky.username!,
-        'X-Auth-Token': wocky.password!,
-      }
-
-      logger.log(prefix, 'BACKGROUND LOCATION START')
-      logger.log(`LOCATION UPDATE URL: ${url}`)
-
-      const params = {
-        resource: wocky.transport.resource,
-      }
-
-      // initial config (only applies to first app boot without explicitly setting `reset: true`)
-      const state = yield BackgroundGeolocation.ready({
-        // reset: true,
-        desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-        elasticityMultiplier: 1,
-        preventSuspend: false,
-        useSignificantChangesOnly: false,
-        stationaryRadius: 25,
-        distanceFilter: 30,
-        stopTimeout: 0, // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-minutes-stoptimeout
-        debug: false,
-        // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
-        logLevel: BackgroundGeolocation.LOG_LEVEL_ERROR,
-        // stopOnTerminate: false,
-        // startOnBoot: true,
-        url,
-        autoSync: true,
-        params,
-        headers,
-      })
-
-      // .ready() doesn't always apply configuration.
-      // Here are some things that we have to configure everytime.
-      // Note: If any user-configurable/debug settings appear here,
-      //   they will be overwritten
-      yield BackgroundGeolocation.setConfig({
-        startOnBoot: true,
-        stopOnTerminate: false,
-        headers,
-        params,
-        url,
-      })
-
-      logger.log(prefix, 'is configured and ready: ', state)
-      self.updateBackgroundConfigSuccess(state)
-
-      // if (!state.enabled && self.alwaysOn) {
-      BackgroundGeolocation.start(() => {
-        logger.log(prefix, 'Start success')
-      })
-      // }
+      yield BackgroundGeolocation.ready({})
+      logger.log(prefix, 'Ready')
     })
 
-    function initialize() {}
+    function willUnmount() {
+      BackgroundGeolocation.removeListeners()
+    }
+
+    const refreshCredentials = flow(function*() {
+      if (wocky.username && wocky.password) {
+        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
+
+        const headers = {
+          Accept: 'application/json',
+          'X-Auth-User': wocky.username!,
+          'X-Auth-Token': wocky.password!,
+        }
+
+        const params = {
+          resource: wocky.transport.resource,
+        }
+
+        yield BackgroundGeolocation.setConfig({
+          headers,
+          params,
+          url,
+        })
+        logger.log(prefix, `refreshCredentials URL: ${url}`)
+
+        yield BackgroundGeolocation.start()
+        logger.log(prefix, 'Start')
+      }
+    })
+
+    const invalidateCredentials = flow(function*() {
+      yield BackgroundGeolocation.setConfig({
+        headers: '',
+        params: '',
+        url: '',
+      })
+      logger.log(prefix, 'invalidateCredentials')
+
+      yield BackgroundGeolocation.stop()
+      logger.log(prefix, 'Stop')
+    })
 
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
@@ -278,7 +289,6 @@ const LocationStore = types
         const position = yield BackgroundGeolocation.getCurrentPosition({
           timeout: 20,
           maximumAge: 1000,
-          enableHighAccuracy: false,
         })
         self.setPosition(position.coords)
       } catch (err) {
@@ -303,23 +313,18 @@ const LocationStore = types
     }
 
     return {
-      startBackground,
+      didMount,
+      willUnmount,
+      refreshCredentials,
+      invalidateCredentials,
       getCurrentPosition,
-      initialize,
       setBackgroundConfig,
       emailLog,
     }
   })
   .actions(self => {
-    // let wocky
+    const {wocky} = getParent(self)
     let reactions: IReactionDisposer[] = []
-
-    function afterAttach() {
-      self.initialize()
-      // ;({wocky} = getParent(self) as any)
-    }
-
-    function didMount() {}
 
     const start = flow(function*() {
       const resp1 = yield Permissions.check('location', {type: 'always'})
@@ -332,13 +337,10 @@ const LocationStore = types
         self.setState({enabled: resp2 !== 'denied'})
       }
 
-      self.startBackground().then(self.getCurrentPosition)
-
       reactions = [
-        /*
-        when(() => wocky.connected, () => self.startBackground().then(self.getCurrentPosition), {
+        when(() => wocky.connected, () => self.refreshCredentials().then(self.getCurrentPosition), {
           name: 'LocationStore: Start background after connected',
-        }),*/
+        }),
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
@@ -351,16 +353,9 @@ const LocationStore = types
       reactions = []
     }
 
-    function willUnmount() {
-      BackgroundGeolocation.removeListeners()
-    }
-
     return {
-      afterAttach,
-      didMount,
       start,
       finish,
-      willUnmount,
     }
   })
 
