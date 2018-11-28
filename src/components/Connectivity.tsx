@@ -52,7 +52,9 @@ export default class Connectivity extends React.Component<Props> {
     )
 
     this.props.locationStore!.didMount()
-    setTimeout(() => this._handleAppStateChange('active'))
+    setTimeout(() => {
+      if (AppState.currentState == 'active') this._handleAppStateChange('active')
+    })
   }
 
   componentWillUnmount() {
