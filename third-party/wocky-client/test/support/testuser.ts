@@ -37,7 +37,7 @@ export function expectedImage() {
   const expectedBuf = fs.readFileSync(fileNameThumbnail)
   return expectedBuf.toString()
 }
-export async function createGraphQL(num?: number, phoneNum?: string): Promise<IWocky> {
+export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
     const transport = new GraphQLTransport(SERVER_NAME)
     const phoneNumber =

@@ -1,18 +1,18 @@
-import {createGraphQL, waitFor, timestamp} from './support/testuser'
+import {createUser, waitFor, timestamp} from './support/testuser'
 import {IWocky} from '../src'
 
-let user, user2: IWocky
+let user: IWocky, user2: IWocky
 let user1phone: string
 
 describe('NewGraphQL tests', () => {
   it('get user1 credential via GraphQL', async () => {
     timestamp()
-    user = await createGraphQL()
+    user = await createUser()
   })
 
   it('get user2 credentials via GraphQL', async () => {
     timestamp()
-    user2 = await createGraphQL()
+    user2 = await createUser()
   })
 
   it('update profile', async () => {
