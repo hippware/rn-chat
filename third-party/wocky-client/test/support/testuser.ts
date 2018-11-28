@@ -6,7 +6,7 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
-const SERVER_NAME = 'staging'
+const SERVER_NAME = 'next'
 // tslint:disable:no-console
 
 const fs = require('fs')
