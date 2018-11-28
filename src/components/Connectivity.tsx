@@ -53,7 +53,7 @@ export default class Connectivity extends React.Component<Props> {
 
     this.props.locationStore!.didMount()
     setTimeout(() => {
-      if (AppState.currentState == 'active') this._handleAppStateChange('active')
+      if (AppState.currentState === 'active') this._handleAppStateChange('active')
     })
   }
 
