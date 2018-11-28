@@ -199,6 +199,10 @@ const LocationStore = types
         if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
         // analytics.track('location_bg_success', {location: self.location})
       } else {
+        if (response.status == 401 || response.status == 403) {
+          BackgroundGeolocation.stop()
+        }
+
         if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
         // analytics.track('location_bg_fail', {response})
       }
@@ -206,6 +210,11 @@ const LocationStore = types
 
     function onHttpError(err) {
       logger.log(prefix, 'on http error', err)
+
+      if (response.status == 401 || response.status == 403) {
+        BackgroundGeolocation.stop()
+      }
+
       if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
       analytics.track('location_bg_error', {error: err})
     }
