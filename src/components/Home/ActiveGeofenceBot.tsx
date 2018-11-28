@@ -65,6 +65,7 @@ class ActiveBot extends React.Component<Props> {
             style={{position: 'absolute', top: -15, right: -8}}
             firstProfile={bot.visitors.list[0]}
             stackSize={bot.visitorsSize}
+            fontFamily="bold"
           />
         </View>
       </View>

@@ -227,3 +227,11 @@ export const onboardingSlideStyle = StyleSheet.create({
     fontWeight: '100',
   },
 })
+
+export const botProfileStyle = StyleSheet.create({
+  userInfoRow: {
+    marginLeft: 10 * k,
+    flex: 1,
+    fontFamily: 'Roboto-Medium',
+  },
+})
