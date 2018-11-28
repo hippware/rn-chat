@@ -44,12 +44,11 @@ export default class BotDetails extends React.Component<Props> {
 
   _footerComponent: any = observer(() => {
     if (!this.bot) return null
-    return (
-      this.props.wocky!.connected &&
-      this.bot &&
-      isAlive(this.bot) &&
-      this.bot.posts.loading && <Loader />
-    )
+
+    if (this.props.wocky!.connected && this.bot && isAlive(this.bot) && this.bot.posts.loading)
+      return <Loader />
+
+    return <View style={{backgroundColor: 'white', height: 50 * k}} />
   })
 
   async componentDidMount() {
