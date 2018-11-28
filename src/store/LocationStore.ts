@@ -211,7 +211,7 @@ const LocationStore = types
     function onHttpError(err) {
       logger.log(prefix, 'on http error', err)
 
-      if (response.status == 401 || response.status == 403) {
+      if (err.status == 401 || err.status == 403) {
         BackgroundGeolocation.stop()
       }
 
