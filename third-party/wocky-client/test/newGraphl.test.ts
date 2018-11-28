@@ -1,5 +1,4 @@
-import {sleep} from './support/testuser'
-import {createUser, waitFor, timestamp} from './support/testuser'
+import {createGraphQL, waitFor, timestamp} from './support/testuser'
 import {IWocky} from '../src'
 
 let user, user2: IWocky
@@ -9,7 +8,7 @@ describe('NewGraphQL tests', () => {
   it('get user1 credential via GraphQL', async done => {
     try {
       timestamp()
-      user = await createUser()
+      user = await createGraphQL()
       done()
     } catch (e) {
       done(e)
@@ -19,7 +18,7 @@ describe('NewGraphQL tests', () => {
   it('get user2 credentials via GraphQL', async done => {
     try {
       timestamp()
-      user2 = await createUser()
+      user2 = await createGraphQL()
       done()
     } catch (e) {
       done(e)
@@ -58,8 +57,5 @@ describe('NewGraphQL tests', () => {
       console.log(e)
     }
     done()
-  })
-  afterAll(async () => {
-    await sleep(500)
   })
 })
