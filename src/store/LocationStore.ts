@@ -2,6 +2,7 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when, autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
+import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
@@ -201,6 +202,7 @@ const LocationStore = types
       } else {
         if (response.status == 401 || response.status == 403) {
           BackgroundGeolocation.stop()
+          BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
         }
 
         if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
@@ -213,6 +215,9 @@ const LocationStore = types
 
       if (err.status == 401 || err.status == 403) {
         BackgroundGeolocation.stop()
+        BackgroundGeolocation.logger.error(
+          `${prefix} BackgroundGeolocation.stop() due to http error`
+        )
       }
 
       if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
@@ -233,6 +238,7 @@ const LocationStore = types
     }
 
     const didMount = flow(function*() {
+      BackgroundGeolocation.logger.info(`${prefix} didMount`)
       yield self.configure()
 
       BackgroundGeolocation.on('location', onLocation, onLocationError)
@@ -248,6 +254,7 @@ const LocationStore = types
     })
 
     function willUnmount() {
+      BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
       BackgroundGeolocation.removeListeners()
     }
 
@@ -271,6 +278,7 @@ const LocationStore = types
           url,
         })
         logger.log(prefix, `refreshCredentials URL: ${url}`)
+        BackgroundGeolocation.logger.info(`${prefix} refreshCredentials`)
 
         yield BackgroundGeolocation.start()
         logger.log(prefix, 'Start')
@@ -284,6 +292,7 @@ const LocationStore = types
         url: '',
       })
       logger.log(prefix, 'invalidateCredentials')
+      BackgroundGeolocation.logger.info(`${prefix} invalidateCredentials`)
 
       yield BackgroundGeolocation.stop()
       logger.log(prefix, 'Stop')
@@ -318,7 +327,14 @@ const LocationStore = types
     }
 
     function emailLog(email) {
-      BackgroundGeolocation.emailLog(email)
+      // emailLog doesn't work in iOS simulator so fetch and dump instead
+      if (DeviceInfo.isEmulator()) {
+        BackgroundGeolocation.getLog(log => {
+          console.log(log)
+        })
+      } else {
+        BackgroundGeolocation.emailLog(email)
+      }
     }
 
     return {
