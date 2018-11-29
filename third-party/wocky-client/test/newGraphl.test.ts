@@ -11,7 +11,6 @@ const icon = '\u00A9\uFE0F\u00A9'
 
 describe('NewGraphQL tests', () => {
   beforeAll(async () => {
-    timestamp()
     user = await createUser()
     expect(user.username).toBeTruthy()
     timestamp()
@@ -34,7 +33,6 @@ describe('NewGraphQL tests', () => {
   })
 
   it('update profile', async () => {
-    timestamp()
     await waitFor(
       () => user.profile !== null && user.profile.phoneNumber !== null,
       `user profile failed to load with phone number. ${getSnapshot(user)}`
@@ -69,14 +67,12 @@ describe('NewGraphQL tests', () => {
   })
 
   it('create bot', async () => {
-    timestamp()
     bot = await user.createBot()
     expect(bot.icon).toBe('')
     expect(bot.isNew).toBe(true)
   })
 
   it('update bot', async () => {
-    timestamp()
     bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     await bot.update({
       icon,
@@ -92,7 +88,6 @@ describe('NewGraphQL tests', () => {
     expect(bot.location!.longitude).toBe(2.1)
   })
   it('update bot location', async () => {
-    timestamp()
     await bot.update({
       location: {latitude: 1.3, longitude: 2.3},
       title: 'Test bot!',
@@ -104,12 +99,10 @@ describe('NewGraphQL tests', () => {
   })
 
   it('update bot description', async () => {
-    timestamp()
     await bot.update({description: 'New description'})
     expect(bot.description).toBe('New description')
   })
   it('create bot posts', async () => {
-    timestamp()
     await bot.posts.load()
     expect(bot.posts.list.length).toBe(0)
     const botPost = bot.createPost('hello')
@@ -120,7 +113,6 @@ describe('NewGraphQL tests', () => {
   })
 
   it('list bots', async () => {
-    timestamp()
     bot.posts.refresh()
     expect(bot.posts.list.length).toBe(0)
     await bot.posts.load()
