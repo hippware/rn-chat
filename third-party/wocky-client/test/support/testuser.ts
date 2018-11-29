@@ -6,7 +6,7 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
-const SERVER_NAME = 'staging'
+const SERVER_NAME = 'next'
 // tslint:disable:no-console
 
 const fs = require('fs')
@@ -124,9 +124,12 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
-export async function waitFor(condition: () => boolean, message: string = '') {
-  console.log('wait for', message)
-  return new Promise((resolve, reject) => {
+export async function waitFor(
+  condition: () => boolean,
+  errorMessage: string = '',
+  timeout: number = 3000
+) {
+  const promise = new Promise((resolve, reject) => {
     when(
       () => {
         let res = false
@@ -142,6 +145,12 @@ export async function waitFor(condition: () => boolean, message: string = '') {
       }
     )
   })
+  const timeoutPromise = new Promise(reject => {
+    setTimeout(() => {
+      reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`)
+    }, timeout)
+  })
+  return Promise.race([promise, timeoutPromise])
 }
 export const homestreamTestData = {
   from: '3b6cc090-09b4-11e8-8634-0a580a0206c7@testing.dev.tinyrobot.com',

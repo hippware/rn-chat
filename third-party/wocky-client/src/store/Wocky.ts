@@ -13,6 +13,7 @@ import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
+import _ from 'lodash'
 
 export const Wocky = types
   .compose(
@@ -78,7 +79,7 @@ export const Wocky = types
         return self.profile
       }
       return self.profiles.get(id, data)
-    }),
+    }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
     return {
@@ -123,6 +124,7 @@ export const Wocky = types
           if (!self.username && self.transport.username) {
             self.username = self.transport.username
           }
+          // TODO: just use the returned profile in GraphQL authenticate payload to save a roundtrip here
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
@@ -386,15 +388,15 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
       }),
-      _shareBot: (
-        id: string,
-        server: string,
-        recepients: string[],
-        message: string,
-        action: string
-      ) => {
-        self.transport.shareBot(id, server, recepients, message, action)
-      },
+      // _shareBot: (
+      //   id: string,
+      //   server: string,
+      //   recepients: string[],
+      //   message: string,
+      //   action: string
+      // ) => {
+      //   self.transport.shareBot(id, server, recepients, message, action)
+      // },
       _inviteBot: flow(function*(botId: string, recepients: string[]) {
         yield self.transport.inviteBot(botId, recepients)
       }),
@@ -534,6 +536,8 @@ export const Wocky = types
         if (!data) return
 
         try {
+          // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
+          data = _.cloneDeep(data)
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)

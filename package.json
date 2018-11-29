@@ -10,7 +10,7 @@
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
-    "jestWocky": "jest --config jest.wocky.config.json --forceExit --detectOpenHandles",
+    "jestWocky": "jest --config jest.wocky.config.json",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
     "jest": "jest --config jest.config.json",
     "jestCI": "jest --config jest.config.json --verbose --runInBand",

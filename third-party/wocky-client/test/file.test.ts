@@ -40,7 +40,7 @@ describe('FileStore', () => {
       expect(user1.profile!.updated).toBe(true)
       const profile = await user1.loadProfile(user1.username!)
       expect(profile.avatar).toBeTruthy()
-      await profile.avatar.download()
+      await profile.avatar!.download()
       when(
         () =>
           user1.profile !== null &&
