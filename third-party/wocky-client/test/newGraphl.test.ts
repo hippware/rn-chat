@@ -18,7 +18,7 @@ describe('NewGraphQL tests', () => {
     user2 = await createUser()
     expect(user2.username).toBeTruthy()
     // not sure why they're the same
-    expect(user.username).not.toEqual(user2.username)
+    expect(user.username).not.toBe(user2.username)
   })
 
   it('update profile with invalid handle', async () => {
@@ -27,7 +27,7 @@ describe('NewGraphQL tests', () => {
       expect(await user.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})).toThrow()
     } catch (e) {
       expect(user.profile!.updated).toBe(false)
-      expect(e.message).toEqual(
+      expect(e.message).toBe(
         '[{"__typename":"ValidationMessage","message":"should be at least 3 character(s)"}]'
       )
     }
@@ -51,8 +51,8 @@ describe('NewGraphQL tests', () => {
   })
 
   it('make them friends', async () => {
-    expect(user.sortedRoster.length).toEqual(0)
-    expect(user2.sortedRoster.length).toEqual(0)
+    expect(user.sortedRoster.length).toBe(0)
+    expect(user2.sortedRoster.length).toBe(0)
     const user1user2Profile = await user.loadProfile(user2.username!)
     expect(user1user2Profile).toBeTruthy()
     await user1user2Profile.follow()
