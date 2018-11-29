@@ -1,18 +1,19 @@
 import {createUser, timestamp, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
+import {IBot} from '../src/model/Bot'
 
 let user: IWocky, user2: IWocky
 let user1phone: string
+let bot: IBot
+
+const icon = '\u00A9\uFE0F\u00A9'
 
 describe('NewGraphQL tests', () => {
-  it('get user1 credential via GraphQL', async () => {
+  beforeAll(async () => {
     timestamp()
     user = await createUser()
     expect(user.username).toBeTruthy()
-  })
-
-  it('get user2 credentials via GraphQL', async () => {
     timestamp()
     user2 = await createUser()
     expect(user2.username).toBeTruthy()
@@ -65,6 +66,76 @@ describe('NewGraphQL tests', () => {
     // expect(user2.sortedRoster[0].id).toEqual(user.username)
     // // check profile is online
     // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
+  })
+
+  it('create bot', async () => {
+    timestamp()
+    bot = await user.createBot()
+    expect(bot.icon).toBe('')
+    expect(bot.isNew).toBe(true)
+  })
+
+  it('update bot', async () => {
+    timestamp()
+    bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
+    await bot.update({
+      icon,
+      public: false,
+      location: {latitude: 1.1, longitude: 2.1},
+      title: 'Test bot',
+      addressData: {city: 'Koper', country: 'Slovenia'},
+    })
+    expect(bot.icon).toBe(icon)
+    expect(bot.isNew).toBe(false)
+    expect(bot.title).toBe('Test bot')
+    expect(bot.location!.latitude).toBe(1.1)
+    expect(bot.location!.longitude).toBe(2.1)
+  })
+  it('update bot location', async done => {
+    timestamp()
+    try {
+      await bot.update({
+        location: {latitude: 1.3, longitude: 2.3},
+        title: 'Test bot!',
+      })
+      expect(bot.isNew).toBe(false)
+      expect(bot.title).toBe('Test bot!')
+      expect(bot.location!.latitude).toBe(1.3)
+      expect(bot.location!.longitude).toBe(2.3)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('update bot description', async done => {
+    timestamp()
+    await bot.update({description: 'New description'})
+    expect(bot.description).toBe('New description')
+    done()
+  })
+  it('create bot posts', async done => {
+    timestamp()
+    await bot.posts.load()
+    expect(bot.posts.list.length).toBe(0)
+    const botPost = bot.createPost('hello')
+    await botPost.publish()
+    const botPost2 = bot.createPost('hello2')
+    await botPost2.publish()
+    expect(bot.posts.list.length).toBe(2)
+  })
+
+  it('list bots', async done => {
+    timestamp()
+    try {
+      bot.posts.refresh()
+      expect(bot.posts.list.length).toBe(0)
+      await bot.posts.load()
+      expect(bot.posts.list.length).toBe(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   afterAll(async () => {
