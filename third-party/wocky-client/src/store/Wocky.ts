@@ -79,7 +79,7 @@ export const Wocky = types
         return self.profile
       }
       return self.profiles.get(id, data)
-    }),
+    }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
     return {
@@ -124,6 +124,7 @@ export const Wocky = types
           if (!self.username && self.transport.username) {
             self.username = self.transport.username
           }
+          // TODO: just use the returned profile in GraphQL authenticate payload to save a roundtrip here
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true

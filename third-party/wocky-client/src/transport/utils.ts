@@ -453,25 +453,22 @@ export function generateWockyToken({
   phoneNumber,
 }: TokenParams) {
   try {
-    console.log('& generating wocky token', phoneNumber, accessToken)
     assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
     const payload = {
       jti: userId,
       iss: `TinyRobot/${version} (${os}; ${deviceName})`,
       typ: !!phoneNumber ? 'bypass' : 'firebase',
-      sub: accessToken || 'bypass',
+      // if there's no accessToken then we're doing a bypass login.
+      // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
+      // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
+      sub: accessToken || phoneNumber,
       aud: 'Wocky',
       phone_number: phoneNumber,
     }
-    // const signOptions = {
-    //   algorithm: 'HS512',
-    // }
     // TODO: store this with react-native-native-env
     const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
     const header = {alg: 'HS512', typ: 'JWT'}
     const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-    console.log('& user', userId)
-    console.log('& jwt', jwt)
     return jwt
   } catch (err) {
     console.error(err)

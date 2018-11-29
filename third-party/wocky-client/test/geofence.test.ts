@@ -119,7 +119,7 @@ describe('Geofence', () => {
   it('load own profile, check hasUsedGeofence', async done => {
     try {
       timestamp()
-      const profile1: IOwnProfile = await user1.loadProfile(user1.username!)
+      const profile1 = (await user1.loadProfile(user1.username!)) as IOwnProfile
       expect(profile1.hasUsedGeofence).toBe(true)
       done()
     } catch (e) {
