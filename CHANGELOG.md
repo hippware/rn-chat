@@ -7,6 +7,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Rework version info string. Swap native and js parts. (#3009, PR #3098)
 * Make messaging UI components stateless for (PR #3100)
   * Messages: Text & Images sent are not appearing correctly (#3060)
+* PR #3102
+  * Onboarding 1: Location Permissions (#3028)
+  * Onboarding 2: Accelerometer Permissions (#3029)
+* UI tweaks for bot profile (PR #3106)
+* Use new graphql auth as part of standard wocky interface (PR #3101)
 
 # 3.10.1 - 2018 Nov 26
 
