@@ -768,8 +768,23 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async follow(): Promise<void> {
-    throw new Error('Not supported')
+  async follow(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation follow($input: FollowInput!) {
+          follow(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.follow.successful) {
+      throw new Error(`GraphQL follow error:${JSON.stringify(data.data!.follow.messages)}`)
+    }
   }
 
   async unfollow(): Promise<void> {
