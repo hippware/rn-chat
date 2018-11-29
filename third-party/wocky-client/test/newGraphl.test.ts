@@ -91,30 +91,24 @@ describe('NewGraphQL tests', () => {
     expect(bot.location!.latitude).toBe(1.1)
     expect(bot.location!.longitude).toBe(2.1)
   })
-  it('update bot location', async done => {
+  it('update bot location', async () => {
     timestamp()
-    try {
-      await bot.update({
-        location: {latitude: 1.3, longitude: 2.3},
-        title: 'Test bot!',
-      })
-      expect(bot.isNew).toBe(false)
-      expect(bot.title).toBe('Test bot!')
-      expect(bot.location!.latitude).toBe(1.3)
-      expect(bot.location!.longitude).toBe(2.3)
-      done()
-    } catch (e) {
-      done(e)
-    }
+    await bot.update({
+      location: {latitude: 1.3, longitude: 2.3},
+      title: 'Test bot!',
+    })
+    expect(bot.isNew).toBe(false)
+    expect(bot.title).toBe('Test bot!')
+    expect(bot.location!.latitude).toBe(1.3)
+    expect(bot.location!.longitude).toBe(2.3)
   })
 
-  it('update bot description', async done => {
+  it('update bot description', async () => {
     timestamp()
     await bot.update({description: 'New description'})
     expect(bot.description).toBe('New description')
-    done()
   })
-  it('create bot posts', async done => {
+  it('create bot posts', async () => {
     timestamp()
     await bot.posts.load()
     expect(bot.posts.list.length).toBe(0)
@@ -125,17 +119,12 @@ describe('NewGraphQL tests', () => {
     expect(bot.posts.list.length).toBe(2)
   })
 
-  it('list bots', async done => {
+  it('list bots', async () => {
     timestamp()
-    try {
-      bot.posts.refresh()
-      expect(bot.posts.list.length).toBe(0)
-      await bot.posts.load()
-      expect(bot.posts.list.length).toBe(2)
-      done()
-    } catch (e) {
-      done(e)
-    }
+    bot.posts.refresh()
+    expect(bot.posts.list.length).toBe(0)
+    await bot.posts.load()
+    expect(bot.posts.list.length).toBe(2)
   })
 
   afterAll(async () => {
