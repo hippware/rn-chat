@@ -81,7 +81,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       throw new Error('Password is not defined')
     }
 
-    const res = await this.authenticate(this.password, this.username)
+    const res = await this.authenticate(this.password)
 
     if (res) {
       this.subscribeBotVisitors()
@@ -164,27 +164,9 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   @action
-  async authenticate(token: string, user?: string): Promise<boolean> {
+  async authenticate(token: string): Promise<boolean> {
     try {
-      let mutation
-      let res: any[]
-      if (!!user) {
-        // "old" auth mutation
-        mutation = {
-          mutation: gql`
-            mutation authenticate($user: String!, $token: String!) {
-              authenticate(input: {user: $user, token: $token}) {
-                user {
-                  id
-                }
-              }
-            }
-          `,
-          variables: {user, token},
-        }
-        res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-      } else {
-        mutation = {
+      const mutation = {
           mutation: gql`
             mutation authenticate($token: String!) {
               authenticate(input: {token: $token}) {
@@ -196,10 +178,9 @@ export class NextGraphQLTransport implements IWockyTransport {
           `,
           variables: {token},
         }
-        res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
         // set the username based on what's returned in the mutation
         this.username = (res[0] as any).data.authenticate.user.id
-      }
       // console.log('& got responses', res.map(r => r.data!.authenticate))
       this.connected = res.reduce<boolean>(
         (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
