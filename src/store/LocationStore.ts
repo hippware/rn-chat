@@ -138,9 +138,9 @@ const LocationStore = types
       // @TODO: how do we handle timeout or other error?
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
     },
-    setAlwaysOn: flow(function*(value: boolean) {
+    setAlwaysOn(value: boolean) {
       self.alwaysOn = value
-    }),
+    },
     updateBackgroundConfigSuccess(state) {
       const options = _.pick(state, BG_STATE_PROPS)
       Object.assign(self, {
