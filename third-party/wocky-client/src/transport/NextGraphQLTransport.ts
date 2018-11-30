@@ -18,8 +18,8 @@ import {
   convertNotification,
   convertNotifications,
   generateWockyToken,
+  processRosterItem,
 } from './utils'
-import * as Utils from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 import {IBotPostData} from '../model/BotPost'
@@ -1042,6 +1042,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async geosearch(): Promise<void> {
+    // Not used
     throw new Error('Not supported')
   }
 
@@ -1054,6 +1055,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   subscribeToHomestream(): void {
+    // Not used
     // Available via the HomeStream subscription
     throw new Error('Not supported')
   }
@@ -1067,10 +1069,12 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
+    // Not used
     throw new Error('Not supported')
   }
 
   async loadHomestream(): Promise<IPagingList<any>> {
+    // Not used
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
@@ -1231,16 +1235,4 @@ export class NextGraphQLTransport implements IWockyTransport {
       count,
     }
   }
-}
-
-function processRosterItem(user, relationship, createdAt) {
-  const createdTime = Utils.iso8601toDate(createdAt).getTime()
-  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
-
-  return convertProfile({
-    isNew: days <= 7,
-    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
-    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
-    ...user,
-  })
 }
