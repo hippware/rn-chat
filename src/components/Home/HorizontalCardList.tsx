@@ -1,6 +1,6 @@
 import React from 'react'
 import {Animated, StyleSheet, View, TouchableOpacity, Image} from 'react-native'
-import {width, k} from '../Global'
+import {width, k, minHeight, s} from '../Global'
 import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
@@ -88,7 +88,7 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
         <View
           style={{
             position: 'absolute',
-            top: -150 * k, // TODO: make this styling more device-specific
+            top: -150 * minHeight, // TODO: make this styling more device-specific
             right: 10,
           }}
         >
@@ -135,7 +135,12 @@ const dotWidth = 13
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'flex-end',
-    height: 115 * k,
+    height: 115 * ((minHeight - 1) * 0.4 + 1),
+    marginBottom: 14 * s,
+    shadowColor: colors.GREY,
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    shadowOffset: {height: 0, width: 0},
   },
   button: {
     marginTop: 15 * k,

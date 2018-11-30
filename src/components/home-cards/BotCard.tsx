@@ -19,15 +19,34 @@ const BotCard = observer(({bot, isSelected}: Props) => (
     profile={isSelected && bot.owner ? bot.owner! : undefined}
     onPress={() => Actions.botDetails({botId: bot.id})}
   >
-    <View style={{flex: 1, flexDirection: 'row', zIndex: -1}}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        zIndex: -1,
+        borderBottomLeftRadius: 3,
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 0,
+        overflow: 'hidden',
+      }}
+    >
       {bot.image ? (
         <Image
           style={styles.thumb as ImageStyle}
           source={bot.image.thumbnail! as ImageSourcePropType}
         />
       ) : (
-        <View style={{height: '100%', width: 70, alignItems: 'center', justifyContent: 'center'}}>
-          <BotIcon size={30} icon={bot.icon} textStyle={{fontSize: 45}} />
+        <View
+          style={{
+            height: '100%',
+            width: 70,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: 10,
+          }}
+        >
+          <BotIcon size={30} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
         </View>
       )}
       <View style={[styles.textContainer, bot.image && {marginLeft: 18 * k}]}>
@@ -57,12 +76,6 @@ const styles = StyleSheet.create({
     paddingVertical: 18 * k,
     paddingRight: 18 * k,
     justifyContent: 'center',
-  },
-  avatar: {
-    position: 'absolute',
-    top: -20 * k,
-    left: -20 * k,
-    zIndex: 2,
   },
   icon: {
     fontSize: 45,
