@@ -134,7 +134,7 @@ describe('NewGraphQL tests', () => {
       try {
         await user.removeBot(bot.id)
       } catch (e) {
-        console.warn('error removing bot', e)
+        // console.warn('error removing bot', e)
       }
     })
   })
@@ -144,12 +144,12 @@ describe('NewGraphQL tests', () => {
     try {
       await user.remove()
     } catch (e) {
-      console.warn('error removing user 1', e)
+      // console.warn('error removing user 1', e)
     }
     try {
       await user2.remove()
     } catch (e) {
-      console.warn('error removing user 2', e)
+      // console.warn('error removing user 2', e)
     }
   })
 })
