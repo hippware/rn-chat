@@ -162,6 +162,7 @@ const NavTitle = ({bot, onLongPress}) => {
         size={16}
         color={colors.DARK_PURPLE}
         style={[titleStyle, {textAlign: 'center'}]}
+        numberOfLines={1}
       >
         {bot.error ? 'Bot Unavailable' : bot.title}
       </RText>
