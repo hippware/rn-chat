@@ -17,9 +17,13 @@ type Props = {
   size?: number
   triangleColor?: string
   gradient?: boolean
+  radius?: number
+  borderWidth?: number
 }
 
 const defaultSize = 58
+const defaultRadius = 5
+const defaultBorderWidth = 1.5
 
 const Bubble = observer(
   ({
@@ -33,18 +37,33 @@ const Bubble = observer(
     triangleColor,
     outerStyle,
     gradient,
+    radius,
+    borderWidth,
   }: Props) => {
     const theSize = size || defaultSize
+    const setRadius = radius || defaultRadius
+    const setBorderWidth = borderWidth || defaultBorderWidth
     return (
       <View style={[{alignItems: 'center', padding: 3}, outerStyle]}>
-        <Wrapper gradient={gradient} size={theSize} style={style}>
+        <Wrapper
+          gradient={gradient}
+          size={theSize}
+          style={style}
+          setRadius={setRadius}
+          setBorderWidth={setBorderWidth}
+        >
           {showLoader ? (
             <View
-              style={{width: '100%', height: '100%', borderRadius: 5, backgroundColor: colors.GREY}}
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: setRadius,
+                backgroundColor: colors.GREY,
+              }}
             />
           ) : image ? (
             <Image
-              style={[{width: '100%', height: '100%', borderRadius: 5}, imageStyle]}
+              style={[{width: '100%', height: '100%', borderRadius: setRadius - 1}, imageStyle]}
               resizeMode="contain"
               source={image}
             />
@@ -71,7 +90,7 @@ const Bubble = observer(
   }
 )
 
-const Wrapper = ({gradient, children, size, style}) =>
+const Wrapper = ({gradient, children, size, style, setRadius, setBorderWidth}) =>
   gradient ? (
     <LinearGradient
       start={{x: 0, y: 1}}
@@ -89,6 +108,8 @@ const Wrapper = ({gradient, children, size, style}) =>
         {
           width: size,
           height: size,
+          borderRadius: setRadius,
+          borderWidth: setBorderWidth,
         },
         style,
       ]}
@@ -103,11 +124,9 @@ const styles = StyleSheet.create({
   common: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
   },
   bubble: {
     backgroundColor: colors.PINK,
-    borderWidth: 1.5,
     borderColor: colors.PINK,
   },
 })

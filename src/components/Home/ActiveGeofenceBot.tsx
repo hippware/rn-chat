@@ -36,7 +36,7 @@ class ActiveBot extends React.Component<Props> {
     return bot && isAlive(bot) ? (
       <View style={outerStyle}>
         <View style={innerStyle}>
-          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot}>
+          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot} radius={11}>
             {bot.visitor ? (
               <View style={styles.youreHere}>
                 <RText size={13} color="white" style={{textAlign: 'center'}}>
@@ -77,6 +77,7 @@ export default ActiveBot
 
 const styles = StyleSheet.create({
   youreHere: {
+    borderRadius: 10,
     backgroundColor: 'rgba(0,0,0,0.3)',
     position: 'absolute',
     top: 0,

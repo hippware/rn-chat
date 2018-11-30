@@ -173,7 +173,6 @@ exports[`Home renders with no data 1`] = `
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 5,
                         "justifyContent": "center",
                       },
                       Object {
@@ -194,7 +193,7 @@ exports[`Home renders with no data 1`] = `
                     style={
                       Array [
                         Object {
-                          "borderRadius": 5,
+                          "borderRadius": 4,
                           "height": "100%",
                           "width": "100%",
                         },
@@ -303,15 +302,15 @@ exports[`Home renders with no data 1`] = `
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 5,
                         "justifyContent": "center",
                       },
                       Object {
                         "backgroundColor": "rgb(253,95,108)",
                         "borderColor": "rgb(253,95,108)",
-                        "borderWidth": 1.5,
                       },
                       Object {
+                        "borderRadius": 5,
+                        "borderWidth": 1.5,
                         "height": 50,
                         "width": 50,
                       },
@@ -385,15 +384,15 @@ exports[`Home renders with no data 1`] = `
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 5,
                         "justifyContent": "center",
                       },
                       Object {
                         "backgroundColor": "rgb(253,95,108)",
                         "borderColor": "rgb(253,95,108)",
-                        "borderWidth": 1.5,
                       },
                       Object {
+                        "borderRadius": 5,
+                        "borderWidth": 1.5,
                         "height": 50,
                         "width": 50,
                       },
@@ -467,15 +466,15 @@ exports[`Home renders with no data 1`] = `
                     Array [
                       Object {
                         "alignItems": "center",
-                        "borderRadius": 5,
                         "justifyContent": "center",
                       },
                       Object {
                         "backgroundColor": "rgb(253,95,108)",
                         "borderColor": "rgb(253,95,108)",
-                        "borderWidth": 1.5,
                       },
                       Object {
+                        "borderRadius": 5,
+                        "borderWidth": 1.5,
                         "height": 50,
                         "width": 50,
                       },
