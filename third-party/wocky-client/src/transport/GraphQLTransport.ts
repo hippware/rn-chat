@@ -539,10 +539,10 @@ export class GraphQLTransport implements IWockyTransport {
     userId: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
-  async loadGeofenceBots(): Promise<IPagingList> {
+  async loadGeofenceBots(): Promise<IPagingList<any>> {
     // load all guest bots
     const res = await this.client!.query<any>({
       query: gql`
@@ -582,16 +582,20 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotSubscribers(
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<any>> {
     return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
   }
-  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('GUEST', true, id, lastId, max)
   }
-  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
-  async loadBotPosts(): Promise<IPagingList> {
+  async loadBotPosts(): Promise<IPagingList<any>> {
     // This is supported via the Bot.Items connection
     throw new Error('Not supported')
   }
@@ -893,7 +897,7 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadRelations(): Promise<IPagingList> {
+  async loadRelations(): Promise<IPagingList<any>> {
     throw new Error('Not supported')
   }
 
@@ -930,7 +934,7 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async loadHomestream(): Promise<IPagingList> {
+  async loadHomestream(): Promise<IPagingList<any>> {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
@@ -1049,7 +1053,7 @@ export class GraphQLTransport implements IWockyTransport {
     id: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     const res = await this.client!.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {

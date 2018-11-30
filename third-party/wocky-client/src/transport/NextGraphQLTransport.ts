@@ -22,6 +22,7 @@ import {
 import * as Utils from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
+import {IBotPostData} from '../model/BotPost'
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
@@ -520,10 +521,10 @@ export class NextGraphQLTransport implements IWockyTransport {
     userId: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
-  async loadGeofenceBots(): Promise<IPagingList> {
+  async loadGeofenceBots(): Promise<IPagingList<any>> {
     // load all guest bots
     const res = await this.client!.query<any>({
       query: gql`
@@ -563,18 +564,20 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotSubscribers(
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<any>> {
     return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
   }
-  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('GUEST', true, id, lastId, max)
   }
-  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
-  async loadBotPosts(id: string, before?: string): Promise<IPagingList> {
-    // This is supported via the Bot.Items connection
-    console.log('load bot posts id', id)
+  async loadBotPosts(id: string, before?: string): Promise<IPagingList<IBotPostData>> {
     const res = await this.client!.query<any>({
       query: gql`
         query loadBot($id: UUID!) {
@@ -592,7 +595,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                     trosUrl
                   }
                   owner {
-                    id
+                    ${PROFILE_PROPS}
                   }
                 }
               }
@@ -602,34 +605,23 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {id},
     })
-    console.log('res', res.data.bot.items)
-    // return {
-    //   count: parseInt(data.query.set.count),
-    //   list: res.map((x: any) => {
-    //     const post = {...x, ...x.entry}
-    //     const profile = {
-    //       id: Utils.getNodeJid(x.author)!,
-    //       handle: post.author_handle,
-    //       firstName: post.author_first_name,
-    //       lastName: post.author_last_name,
-    //       avatar: post.author_avatar,
-    //     }
-    //     return {
-    //       id: post.id,
-    //       content: post.content,
-    //       image: post.image,
-    //       time: Utils.iso8601toDate(post.updated).getTime(),
-    //       profile,
-    //     }
-    //   }),
-    // }
+    // console.log('res', res.data.bot.items)
 
-    const {items} = res.data.bot
+    const {totalCount, edges} = res.data.bot.items
+    const list: IBotPostData[] = (edges as any[]).map(
+      ({node: {id: postId, image, media, owner, stanza}}) => ({
+        id: postId,
+        content: stanza,
+        title: '', // do we need title?
+        image: media,
+        // todo: need date/time?
+        profile: convertProfile(owner),
+      })
+    )
+    // console.log('list after conversion: ', list)
     return {
-      count: items.totalCount,
-      // list: items.map(),
-      // todo: convert bot posts
-      list: [],
+      count: totalCount,
+      list,
     }
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
@@ -927,7 +919,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadRelations(): Promise<IPagingList> {
+  async loadRelations(): Promise<IPagingList<any>> {
     throw new Error('Not supported')
   }
 
@@ -988,7 +980,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async loadHomestream(): Promise<IPagingList> {
+  async loadHomestream(): Promise<IPagingList<any>> {
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
@@ -1107,7 +1099,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     id: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     const res = await this.client!.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {

@@ -8,6 +8,15 @@ import {Timeable} from './Timeable'
 import {Profile} from './Profile'
 
 const BotPostProfileRef = types.late('LazyProfileRef', (): IAnyModelType => Profile)
+
+const BotPostData = types.model('BotPostData', {
+  id: types.identifier,
+  content: '',
+  title: '',
+  image: FileRef,
+  profile: types.reference(BotPostProfileRef),
+})
+
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
@@ -16,13 +25,7 @@ export const BotPost = types
       (self: any) =>
         `redirect:${self.service.host}/bot/${(getParent(getParent(getParent(self))) as any).id}`
     ),
-    types.model('BotPost', {
-      id: types.identifier,
-      content: '',
-      title: '',
-      image: FileRef,
-      profile: types.reference(BotPostProfileRef),
-    })
+    BotPostData
   )
   .named('BotPost')
   .actions(self => ({
@@ -37,10 +40,4 @@ export interface IBotPost extends Instance<typeof BotPost> {}
 
 export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
 
-export interface IBotPostData {
-  id: string
-  content?: string
-  title?: string
-  image?: any
-  profile: string
-}
+export interface IBotPostData extends Instance<typeof BotPostData> {}

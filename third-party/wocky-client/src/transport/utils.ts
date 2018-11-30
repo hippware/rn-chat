@@ -386,6 +386,9 @@ export function convertNotification(edge: any): IEventData | null {
         post: {
           id: data.botItem.id,
           profile: data.botItem.owner.id,
+          title: '',
+          content: '',
+          image: null,
         },
         bot,
       }
