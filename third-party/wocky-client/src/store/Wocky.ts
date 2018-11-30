@@ -155,10 +155,10 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        // lookup: flow<string>(function*(handle: string) {
-        //   const profile = yield self.transport.lookup(handle)
-        //   return self.profiles.get(profile.id, profile)
-        // }),
+        lookup: flow<string>(function*(handle: string) {
+          const profile = yield self.transport.lookup(handle)
+          return self.profiles.get(profile.id, profile)
+        }),
         createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id})),
       },
     }
