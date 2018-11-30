@@ -11,7 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Onboarding 1: Location Permissions (#3028)
   * Onboarding 2: Accelerometer Permissions (#3029)
 * UI tweaks for bot profile (PR #3106)
-* Use new graphql auth as part of standard wocky interface (PR #3101)
+* GraphQL login; Other changes (#3059, PR #3101)
+* GraphQL user follow; Other changes (PR #3108, #3112)
 
 # 3.10.1 - 2018 Nov 26
 
