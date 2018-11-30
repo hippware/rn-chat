@@ -577,18 +577,22 @@ export class NextGraphQLTransport implements IWockyTransport {
   async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
-  async loadBotPosts(id: string, before?: string): Promise<IPagingList<IBotPostData>> {
+  async loadBotPosts(
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<IBotPostData>> {
     const res = await this.client!.query<any>({
       query: gql`
-        query loadBot($id: UUID!) {
+        query loadBot($id: UUID!, $limit: Int, $cursor: String) {
           bot(id: $id) {
-            items(first: 10) {
+            items(after: $cursor, first: $limit) {
               totalCount
               edges {
                 cursor
                 node {
                   id
-                  image
+                  stanza
                   media {
                     fullUrl
                     thumbnailUrl
@@ -603,25 +607,19 @@ export class NextGraphQLTransport implements IWockyTransport {
           }
         }
       `,
-      variables: {id},
+      variables: {id, limit: max, cursor: lastId},
     })
-    // console.log('res', res.data.bot.items)
-
     const {totalCount, edges} = res.data.bot.items
-    const list: IBotPostData[] = (edges as any[]).map(
-      ({node: {id: postId, image, media, owner, stanza}}) => ({
+    return {
+      count: totalCount,
+      cursor: edges.length ? edges[edges.length - 1].cursor : null,
+      list: edges.map(({node: {id: postId, media, owner, stanza}}) => ({
         id: postId,
         content: stanza,
-        title: '', // do we need title?
         image: media,
         // todo: need date/time?
         profile: convertProfile(owner),
-      })
-    )
-    // console.log('list after conversion: ', list)
-    return {
-      count: totalCount,
-      list,
+      })),
     }
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
@@ -945,7 +943,6 @@ export class NextGraphQLTransport implements IWockyTransport {
         },
       },
     })
-    // console.log('publishBotPost res', res)
     if (!res.data!.botItemPublish.successful) {
       throw new Error('Error during bot save')
     }
