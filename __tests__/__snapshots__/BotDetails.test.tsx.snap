@@ -444,7 +444,7 @@ exports[`BotDetails renders with no data 1`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "white",
-            "borderBottomWidth": 1,
+            "borderBottomWidth": 0.5,
             "borderColor": "rgb(212,212,212)",
             "elevation": 1,
             "flex": 1,
@@ -620,7 +620,7 @@ exports[`BotDetails renders with no data 1`] = `
         Object {
           "backgroundColor": "rgb(255,255,255)",
           "borderColor": "rgb(212,212,212)",
-          "borderTopWidth": 1,
+          "borderTopWidth": 0.5,
           "bottom": 0,
           "left": 0,
           "paddingBottom": 60.00000000000001,

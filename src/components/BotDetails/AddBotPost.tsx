@@ -95,7 +95,7 @@ class AddBotPost extends React.Component<Props> {
       <View
         style={{
           backgroundColor: colors.WHITE,
-          borderTopWidth: 1,
+          borderTopWidth: StyleSheet.hairlineWidth,
           borderColor: colors.GREY,
           position: 'absolute',
           bottom: 0,
