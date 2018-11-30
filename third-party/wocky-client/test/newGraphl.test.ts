@@ -67,6 +67,18 @@ describe('NewGraphQL tests', () => {
     // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
   })
 
+  it('unfollow and refollow', async () => {
+    const user1user2Profile = await user.loadProfile(user2.username!)
+    expect(user1user2Profile).toBeTruthy()
+    await user1user2Profile.unfollow()
+    await waitFor(
+      () => user.sortedRoster.length === 0 && user2.sortedRoster.length === 0,
+      'user1 and user2 rosters didnt update in time after unfollow'
+    )
+    // todo: add negative tests for after an unfollow? For example, sending a chat message should fail, right?
+    await user1user2Profile.follow()
+  })
+
   describe('bot stuff', () => {
     beforeAll(async () => {
       bot = await user.createBot()

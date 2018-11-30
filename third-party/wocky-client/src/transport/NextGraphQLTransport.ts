@@ -811,8 +811,23 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async unfollow(): Promise<void> {
-    throw new Error('Not supported')
+  async unfollow(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation unfollow($input: UnfollowInput!) {
+          unfollow(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.unfollow.successful) {
+      throw new Error(`GraphQL unfollow error:${JSON.stringify(data.data!.unfollow.messages)}`)
+    }
   }
 
   async block(): Promise<void> {
