@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
     color: PINK,
+    textAlign: 'center',
   },
 })

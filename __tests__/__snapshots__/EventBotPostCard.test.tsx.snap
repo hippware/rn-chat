@@ -48,8 +48,8 @@ exports[`EventBotPostCard renders 1`] = `
           Array [
             undefined,
             Object {
-              "height": 188,
-              "width": 188,
+              "height": 84.60000000000001,
+              "width": 84.60000000000001,
             },
           ]
         }
@@ -76,7 +76,7 @@ exports[`EventBotPostCard renders 1`] = `
           }
           style={
             Object {
-              "borderRadius": 94,
+              "borderRadius": 42.300000000000004,
             }
           }
         >
@@ -85,11 +85,11 @@ exports[`EventBotPostCard renders 1`] = `
               Array [
                 Object {
                   "borderColor": "rgb(255,255,255)",
-                  "borderRadius": 94,
-                  "borderWidth": 4,
-                  "height": 188,
+                  "borderRadius": 42.300000000000004,
+                  "borderWidth": 3.6,
+                  "height": 84.60000000000001,
                   "overflow": "hidden",
-                  "width": 188,
+                  "width": 84.60000000000001,
                 },
                 Object {
                   "alignItems": "center",
@@ -151,9 +151,11 @@ exports[`EventBotPostCard renders 1`] = `
           Object {
             "color": undefined,
             "fontFamily": "Roboto-Regular",
-            "fontSize": 13,
+            "fontSize": 14,
           },
-          undefined,
+          Object {
+            "lineHeight": 10,
+          },
         ]
       }
     >
@@ -201,7 +203,7 @@ exports[`EventBotPostCard renders 1`] = `
           Object {
             "color": "rgb(155,155,155)",
             "fontFamily": "Roboto-Light",
-            "fontSize": 12,
+            "fontSize": 13,
           },
           undefined,
         ]

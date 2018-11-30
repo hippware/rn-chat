@@ -7,7 +7,7 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k, width, isIphoneX} from '../Global'
+import {k, width, isIphoneX, minHeight} from '../Global'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     padding: 15,
     width: width / 4,
     alignItems: 'center',
+    marginTop: 6 * minHeight,
   },
   inner: {
     width: 75,

@@ -5,7 +5,7 @@ import {observable, action} from 'mobx'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
 import {showImagePicker} from '../ImagePicker'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {IWocky, IBot, IBotPost} from 'wocky-client'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 
@@ -95,12 +95,13 @@ class AddBotPost extends React.Component<Props> {
       <View
         style={{
           backgroundColor: colors.WHITE,
-          borderTopWidth: 1,
+          borderTopWidth: StyleSheet.hairlineWidth,
           borderColor: colors.GREY,
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
+          paddingBottom: (minHeight - 1) * 50,
         }}
       >
         <View style={[styles.textInputContainer]}>
@@ -172,7 +173,13 @@ const ImagePost = ({imageURI, deleteImage}) => {
     <View style={styles.imageContainer}>
       <Image
         source={{uri: imageURI}}
-        style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k}}
+        style={{
+          height: IMAGE_HEIGHT,
+          width: IMAGE_HEIGHT,
+          marginLeft: 60,
+          marginTop: 10 * minHeight,
+          marginBottom: 10 * minHeight,
+        }}
       />
       <TouchableOpacity onPress={deleteImage}>
         <Image
@@ -198,8 +205,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     alignSelf: 'center',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 14,
+    fontFamily: 'Roboto-Light',
+    fontSize: 17,
     flex: 1,
     margin: 0,
     paddingTop: 0,

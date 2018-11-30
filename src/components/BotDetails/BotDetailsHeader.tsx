@@ -10,7 +10,7 @@ import {
   Text,
 } from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {k, width} from '../Global'
+import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {when} from 'mobx'
@@ -292,9 +292,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   invite: {
-    height: 40 * k,
-    width: 120 * k,
-    borderRadius: 20 * k,
+    height: 40 * minHeight,
+    width: 120 * minHeight,
+    borderRadius: 20 * minHeight,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: colors.PINK,

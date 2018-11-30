@@ -28,7 +28,10 @@ const BotPostCard = observer(({bot, item: post}: Props) => {
         </View>
       )}
       {!!post.image && (
-        <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode="contain" />
+        <View>
+          {!!post.content && <View style={{height: 15 * k}} />}
+          <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode="contain" />
+        </View>
       )}
     </View>
   )

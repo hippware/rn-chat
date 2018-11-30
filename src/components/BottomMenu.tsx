@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   menuItem: {
-    width: 75 * k,
+    width: 75,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -48,6 +48,8 @@ const BotMarker = inject('homeStore')(
             shadowOpacity: 0.12,
           }}
           size={isSelected ? 48 : 35}
+          radius={isSelected ? 8 : 5}
+          borderWidth={1.5}
         >
           <BotIcon icon={bot.icon} size={20} />
         </Bubble>

@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
@@ -115,7 +115,7 @@ class AddressBar extends React.Component<Props> {
           />
           <RText
             color={colors.DARK_PURPLE}
-            style={{flex: 1, paddingLeft: 8.4 * k}}
+            style={{flex: 1, paddingLeft: 5 * k}}
             size={16}
             numberOfLines={2}
           >
@@ -203,7 +203,7 @@ export default AddressBar
 const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
-    height: 44 * k,
+    height: 44 * minHeight,
     backgroundColor: 'white',
     paddingTop: 11 * k,
     paddingBottom: 13 * k,
@@ -220,10 +220,10 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: 8.4 * k,
-    height: 20 * k,
+    height: 20 * minHeight,
     fontFamily: 'Roboto-Regular',
     color: colors.DARK_PURPLE,
-    fontSize: 15 * k,
+    fontSize: 16,
   },
   suggestionRow: {
     flexDirection: 'row',
@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     paddingLeft: 14 * k,
     paddingTop: 13 * k,
     paddingBottom: 13 * k,
+    paddingRight: 16 * k,
     backgroundColor: 'white',
   },
   searchToggleButton: {

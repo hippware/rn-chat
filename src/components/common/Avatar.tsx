@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, Text, TouchableOpacity, StyleSheet, ViewStyle} from 'react-native'
-import {k} from '../Global'
+import {avatarScale} from '../Global'
 import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
@@ -46,10 +46,10 @@ const Avatar = observer(
     const title = profile.displayName || ' '
     const Clazz = tappable ? TouchableOpacity : View
     const sharedStyle = {
-      width: size * k,
-      height: size * k,
-      borderRadius: size * k / 2,
-      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+      width: size * avatarScale,
+      height: size * avatarScale,
+      borderRadius: size * avatarScale / 2,
+      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * avatarScale,
       borderColor: showMask ? colors.DARK_GREY : borderColor || colors.WHITE,
       overflow: 'hidden',
     }
@@ -58,7 +58,7 @@ const Avatar = observer(
         style={{justifyContent: 'flex-end'}}
         onPress={() => Actions.profileDetails({item: profile.id})}
       >
-        <View style={[style, {height: size * k, width: size * k}]}>
+        <View style={[style, {height: size * avatarScale, width: size * avatarScale}]}>
           {!!profile.avatar ? (
             <AvatarImage
               avatar={profile.avatar}
@@ -80,7 +80,7 @@ const Avatar = observer(
             <View style={[styles.absolute, styles.frameOuter]}>
               <Image
                 source={require('../../../images/avatarFrame.png')}
-                style={{width: size * k, height: size * k}}
+                style={{width: size * avatarScale, height: size * avatarScale}}
               />
             </View>
           )}
@@ -111,7 +111,12 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontF
     ? ['rgb(166,166,166)', 'rgb(74,74,74)']
     : ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
   return (
-    <LinearGradient start={start} end={end} colors={theColors} style={{borderRadius: size * k / 2}}>
+    <LinearGradient
+      start={start}
+      end={end}
+      colors={theColors}
+      style={{borderRadius: size * avatarScale / 2}}
+    >
       <View style={[style, styles.avatarContainer]}>
         {showMask ? (
           <Mask size={size * 0.65} />
