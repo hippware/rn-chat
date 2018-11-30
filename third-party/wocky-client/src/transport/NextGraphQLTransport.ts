@@ -767,7 +767,21 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async remove(): Promise<void> {
-    // TODO: remove user
+    const data: any = await this.client!.mutate({
+      mutation: gql`
+        mutation userDelete {
+          userDelete {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+    })
+    if (!data.data.userDelete.successful) {
+      throw new Error(JSON.stringify(data.data.userDelete.messages))
+    }
     return this.disconnect()
   }
 

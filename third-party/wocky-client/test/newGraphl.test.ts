@@ -107,6 +107,13 @@ describe('NewGraphQL tests', () => {
     jest.setTimeout(5000)
   })
 
+  it('remove/delete user', async () => {
+    const user3 = await createUser()
+    expect(user3).toBeTruthy()
+    await user3.remove()
+    // todo: any way to verify (other than no errors?)
+  })
+
   describe('bot stuff', () => {
     beforeAll(async () => {
       bot = await user.createBot()
