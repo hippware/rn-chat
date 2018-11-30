@@ -127,11 +127,11 @@ describe('NewGraphQL tests', () => {
       }
     })
     afterAll(async () => {
-      // try {
-      //   await user.removeBot(bot.id)
-      // } catch (e) {
-      //   console.warn('error removing bot', e)
-      // }
+      try {
+        await user.removeBot(bot.id)
+      } catch (e) {
+        console.warn('error removing bot', e)
+      }
     })
   })
 
