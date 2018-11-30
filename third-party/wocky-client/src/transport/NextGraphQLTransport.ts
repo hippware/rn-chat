@@ -763,6 +763,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async lookup(): Promise<any> {
+    // NOTE: lookup isn't current in use in rn-chat so we don't need to implement it here (and should remove from IWockyTransport eventually)
     throw new Error('Not supported')
   }
 
