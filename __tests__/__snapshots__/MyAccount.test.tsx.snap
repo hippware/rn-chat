@@ -146,7 +146,7 @@ exports[`MyAccount renders 1`] = `
                     },
                     Object {
                       "borderRadius": 9,
-                      "borderWidth": 2,
+                      "borderWidth": 1.8,
                       "bottom": 5,
                       "height": 18,
                       "left": undefined,

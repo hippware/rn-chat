@@ -2,7 +2,6 @@ import React from 'react'
 import {View, StyleSheet, TouchableWithoutFeedback} from 'react-native'
 import {IProfile} from 'wocky-client'
 import {Avatar} from '../common'
-import {colors} from '../../constants'
 import {k} from '../Global'
 
 type Props = {

@@ -1,7 +1,7 @@
 import React, {ReactElement} from 'react'
 import {View, Image, ImageRequireSource, TouchableWithoutFeedback} from 'react-native'
 import {Avatar, RText} from '../common'
-import {k, avatarScale} from '../Global'
+import {k} from '../Global'
 import {colors} from '../../constants'
 import {IProfile} from 'wocky-client'
 import {observer} from 'mobx-react/native'

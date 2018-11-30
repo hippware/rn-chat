@@ -357,7 +357,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "backgroundColor": "rgb(222,222,222)",
-                              "height": 1,
+                              "height": 0.5,
                               "marginHorizontal": 40,
                               "marginVertical": 40,
                             },
@@ -397,7 +397,7 @@ exports[`BotDetails renders with no data 1`] = `
                         Array [
                           Object {
                             "backgroundColor": "rgb(222,222,222)",
-                            "height": 1,
+                            "height": 0.5,
                             "marginHorizontal": 40,
                             "marginVertical": 40,
                           },
@@ -416,7 +416,16 @@ exports[`BotDetails renders with no data 1`] = `
         <View
           onLayout={[Function]}
           style={null}
-        />
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "white",
+                "height": 100,
+              }
+            }
+          />
+        </View>
       </View>
     </RCTScrollView>
     <View

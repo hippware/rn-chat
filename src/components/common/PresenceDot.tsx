@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
-import {k, avatarScale} from '../Global'
+import {avatarScale} from '../Global'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {IProfile} from 'wocky-client'

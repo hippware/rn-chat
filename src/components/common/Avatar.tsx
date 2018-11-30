@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, Text, TouchableOpacity, StyleSheet, ViewStyle} from 'react-native'
-import {k, avatarScale} from '../Global'
+import {avatarScale} from '../Global'
 import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'

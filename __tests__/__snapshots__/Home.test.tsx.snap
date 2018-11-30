@@ -131,6 +131,7 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginTop": 13.200000000000001,
                   "opacity": 1,
                   "padding": 15,
                   "width": 187.5,
@@ -280,6 +281,7 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginTop": 13.200000000000001,
                   "padding": 15,
                   "width": 187.5,
                 }
@@ -361,6 +363,7 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginTop": 13.200000000000001,
                   "padding": 15,
                   "width": 187.5,
                 }
@@ -442,6 +445,7 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginTop": 13.200000000000001,
                   "padding": 15,
                   "width": 187.5,
                 }
