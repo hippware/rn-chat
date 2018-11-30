@@ -14,7 +14,7 @@
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
     "jest": "jest --config jest.config.json",
     "jestCI": "jest --config jest.config.json --verbose --runInBand",
-    "lint": "tslint -p . -c tslint.json  'src/**/*.tsx'",
+    "lint": "tslint -p . -c tslint.json  'src/**/*.ts' 'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "bash ./scripts/codepush.sh",
