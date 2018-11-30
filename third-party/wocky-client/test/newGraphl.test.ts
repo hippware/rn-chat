@@ -102,7 +102,9 @@ describe('NewGraphQL tests', () => {
     await bot.update({description: 'New description'})
     expect(bot.description).toBe('New description')
   })
+
   it('create bot posts', async () => {
+    // await (bot.posts as IBotPaginableList).load()
     await bot.posts.load()
     expect(bot.posts.list.length).toBe(0)
     const botPost = bot.createPost('hello')
@@ -112,12 +114,12 @@ describe('NewGraphQL tests', () => {
     expect(bot.posts.list.length).toBe(2)
   })
 
-  it('list bots', async () => {
-    bot.posts.refresh()
-    expect(bot.posts.list.length).toBe(0)
-    await bot.posts.load()
-    expect(bot.posts.list.length).toBe(2)
-  })
+  // it('loads bot posts after refresh', async () => {
+  //   bot.posts.refresh()
+  //   expect(bot.posts.list.length).toBe(0)
+  //   await bot.posts.load()
+  //   expect(bot.posts.list.length).toBe(2)
+  // })
 
   afterAll(async () => {
     try {

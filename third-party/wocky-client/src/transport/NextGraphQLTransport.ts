@@ -7,7 +7,7 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot} from '..'
+import {ILocationSnapshot, IBotPost} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
@@ -167,20 +167,20 @@ export class NextGraphQLTransport implements IWockyTransport {
   async authenticate(token: string): Promise<boolean> {
     try {
       const mutation = {
-          mutation: gql`
-            mutation authenticate($token: String!) {
-              authenticate(input: {token: $token}) {
-                user {
-                  id
-                }
+        mutation: gql`
+          mutation authenticate($token: String!) {
+            authenticate(input: {token: $token}) {
+              user {
+                id
               }
             }
-          `,
-          variables: {token},
-        }
+          }
+        `,
+        variables: {token},
+      }
       const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-        // set the username based on what's returned in the mutation
-        this.username = (res[0] as any).data.authenticate.user.id
+      // set the username based on what's returned in the mutation
+      this.username = (res[0] as any).data.authenticate.user.id
       // console.log('& got responses', res.map(r => r.data!.authenticate))
       this.connected = res.reduce<boolean>(
         (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
@@ -572,13 +572,66 @@ export class NextGraphQLTransport implements IWockyTransport {
   async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
-  async loadBotPosts(): Promise<IPagingList> {
+  async loadBotPosts(id: string, before?: string): Promise<IPagingList> {
     // This is supported via the Bot.Items connection
-    throw new Error('Not supported')
+    console.log('load bot posts id', id)
+    const res = await this.client!.query<any>({
+      query: gql`
+        query loadBot($id: UUID!) {
+          bot(id: $id) {
+            items(first: 10) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  id
+                  image
+                  media {
+                    fullUrl
+                    thumbnailUrl
+                    trosUrl
+                  }
+                  owner {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {id},
+    })
+    console.log('res', res.data.bot.items)
+    // return {
+    //   count: parseInt(data.query.set.count),
+    //   list: res.map((x: any) => {
+    //     const post = {...x, ...x.entry}
+    //     const profile = {
+    //       id: Utils.getNodeJid(x.author)!,
+    //       handle: post.author_handle,
+    //       firstName: post.author_first_name,
+    //       lastName: post.author_last_name,
+    //       avatar: post.author_avatar,
+    //     }
+    //     return {
+    //       id: post.id,
+    //       content: post.content,
+    //       image: post.image,
+    //       time: Utils.iso8601toDate(post.updated).getTime(),
+    //       profile,
+    //     }
+    //   }),
+    // }
+
+    const {items} = res.data.bot
+    return {
+      count: items.totalCount,
+      // list: items.map(),
+      // todo: convert bot posts
+      list: [],
+    }
   }
-  // shareBot() {
-  //   throw new Error('Not supported')
-  // }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
     await this.client!.mutate({
       mutation: gql`
@@ -878,12 +931,12 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async publishBotPost(botId: string, post: any): Promise<void> {
+  async publishBotPost(botId: string, post: IBotPost): Promise<void> {
     // TODO add post.image support?
     const res = await this.client!.mutate({
       mutation: gql`
-        mutation botItemPublish($botId: string!, $content: string!) {
-          botItemPublish(input: {botId: $botId, stanza: $content}) {
+        mutation botItemPublish($botId: UUID!, $values: BotItemParams!) {
+          botItemPublish(input: {botId: $botId, values: $values}) {
             successful
             messages {
               message
@@ -894,10 +947,14 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {
         botId,
-        content: post.content,
+        values: {
+          id: post.id,
+          stanza: post.content,
+        },
       },
     })
-    if (!res.data!.botUpdate.successful) {
+    // console.log('publishBotPost res', res)
+    if (!res.data!.botItemPublish.successful) {
       throw new Error('Error during bot save')
     }
   }
