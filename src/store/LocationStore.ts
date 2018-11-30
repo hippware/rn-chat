@@ -139,6 +139,7 @@ const LocationStore = types
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
     },
     setAlwaysOn(value: boolean) {
+      BackgroundGeolocation.logger.info(`${prefix} setAlwaysOn(${value})`)
       self.alwaysOn = value
     },
     updateBackgroundConfigSuccess(state) {
@@ -234,6 +235,8 @@ const LocationStore = types
 
     function onProviderChange(provider) {
       logger.log(prefix, 'Location provider changed:', provider)
+      const info = JSON.stringify(provider)
+      BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
       self.setAlwaysOn(provider.status === 3)
     }
 
