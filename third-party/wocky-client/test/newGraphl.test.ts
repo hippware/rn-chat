@@ -114,12 +114,13 @@ describe('NewGraphQL tests', () => {
     expect(bot.posts.list.length).toBe(2)
   })
 
-  // it('loads bot posts after refresh', async () => {
-  //   bot.posts.refresh()
-  //   expect(bot.posts.list.length).toBe(0)
-  //   await bot.posts.load()
-  //   expect(bot.posts.list.length).toBe(2)
-  // })
+  it('loads bot posts after refresh', async () => {
+    bot.posts.refresh()
+    expect(bot.posts.list.length).toBe(0)
+    await bot.posts.load()
+    expect(bot.posts.list.length).toBe(2)
+    // TODO: check post properties
+  })
 
   afterAll(async () => {
     try {
