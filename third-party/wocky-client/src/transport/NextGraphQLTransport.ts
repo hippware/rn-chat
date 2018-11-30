@@ -858,8 +858,25 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async removeBotPost(): Promise<void> {
-    throw new Error('Not supported')
+  async removeBotPost(botId: string, postId: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation botItemDelete($input: BotItemDeleteInput!) {
+          botItemDelete(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {botId, id: postId}},
+    })
+    if (!res.data!.botItemDelete.successful) {
+      throw new Error(
+        `GraphQL removeBotPost error:${JSON.stringify(res.data!.botItemDelete.messages)}`
+      )
+    }
   }
 
   async updateBot(

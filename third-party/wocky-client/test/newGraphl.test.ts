@@ -126,6 +126,10 @@ describe('NewGraphQL tests', () => {
         expect(bot.posts.list[i].content).toBe('hello' + (11 - i))
       }
     })
+    it('removes a bot post', async () => {
+      await bot.removePost(bot.posts.list[0].id)
+      expect(bot.posts.list.length).toBe(11)
+    })
     afterAll(async () => {
       try {
         await user.removeBot(bot.id)

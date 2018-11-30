@@ -87,7 +87,7 @@ export const Bot = types
         self.posts.remove(postId)
         self.totalItems -= 1
       }
-    }),
+    }) as (postId: string) => Promise<void>,
     subscribe: flow(function*() {
       self.isSubscribed = true
       self.guest = true
