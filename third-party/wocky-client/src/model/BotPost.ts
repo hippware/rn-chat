@@ -1,4 +1,4 @@
-import {types, flow, getParent, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, getParent, IAnyModelType, Instance} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -6,7 +6,6 @@ import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {Profile} from './Profile'
-// import {ProfileRef} from './Profile'
 
 const BotPostProfileRef = types.late('LazyProfileRef', (): IAnyModelType => Profile)
 export const BotPost = types
@@ -34,7 +33,8 @@ export const BotPost = types
     }),
   }))
 
-export type IBotPost = typeof BotPost.Type
+export interface IBotPost extends Instance<typeof BotPost> {}
+
 export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
 
 export interface IBotPostData {

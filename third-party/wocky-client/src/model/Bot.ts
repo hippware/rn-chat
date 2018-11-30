@@ -1,4 +1,4 @@
-import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType, Instance} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
@@ -186,11 +186,7 @@ export const Bot = types
     },
   }))
 
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-// export type __IPaginable = IPaginable
-
-export type IBotType = typeof Bot.Type
-export interface IBot extends IBotType {}
+export interface IBot extends Instance<typeof Bot> {}
 
 export interface IBotData {
   id: string
@@ -224,7 +220,7 @@ export interface IBotData {
 }
 
 export const BotPaginableList = createPaginable<IBot>(types.reference(Bot))
-export type IBotPaginableList = typeof BotPaginableList.Type
+
 export const BotRef = types.reference(Bot, {
   get(id: string, parent: any) {
     return (
