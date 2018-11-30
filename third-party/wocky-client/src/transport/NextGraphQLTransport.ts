@@ -792,6 +792,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
+  // TODO: DRY up follow, unfollow, block, unblock...lots of repetitive code
   async follow(userId: string): Promise<void> {
     const data = await this.client!.mutate({
       mutation: gql`
@@ -830,12 +831,42 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async block(): Promise<void> {
-    throw new Error('Not supported')
+  async block(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation userBlock($input: UserBlockInput!) {
+          userBlock(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.userBlock.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userBlock.messages)}`)
+    }
   }
 
-  async unblock(): Promise<void> {
-    throw new Error('Not supported')
+  async unblock(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation userUnblock($input: UserUnblockInput!) {
+          userUnblock(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.userUnblock.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userUnblock.messages)}`)
+    }
   }
 
   async subscribeBot(): Promise<number> {

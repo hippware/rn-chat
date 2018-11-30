@@ -68,6 +68,8 @@ describe('NewGraphQL tests', () => {
   })
 
   it('unfollow and refollow', async () => {
+    // NOTE: the roster updates tend to require a bit more time to complete
+    jest.setTimeout(10000)
     const user1user2Profile = await user.loadProfile(user2.username!)
     expect(user1user2Profile).toBeTruthy()
     await user1user2Profile.unfollow()
@@ -77,6 +79,32 @@ describe('NewGraphQL tests', () => {
     )
     // todo: add negative tests for after an unfollow? For example, sending a chat message should fail, right?
     await user1user2Profile.follow()
+    await waitFor(
+      () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
+      'user1 and user2 rosters didnt update in time after unblock'
+    )
+    // restore default timeout
+    jest.setTimeout(5000)
+  })
+
+  it('block and unblock', async () => {
+    // NOTE: the roster updates tend to require a bit more time to complete
+    jest.setTimeout(10000)
+    const user1user2Profile = await user.loadProfile(user2.username!)
+    expect(user1user2Profile).toBeTruthy()
+    await user1user2Profile.block()
+    await waitFor(
+      () => user.sortedRoster.length === 0 && user2.sortedRoster.length === 0,
+      'user1 and user2 rosters didnt update in time after block'
+    )
+    // todo: add negative tests for after a block?
+    await user1user2Profile.unblock()
+    await waitFor(
+      () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
+      'user1 and user2 rosters didnt update in time after unblock'
+    )
+    // restore default timeout
+    jest.setTimeout(5000)
   })
 
   describe('bot stuff', () => {
