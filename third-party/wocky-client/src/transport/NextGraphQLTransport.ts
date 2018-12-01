@@ -218,7 +218,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
     return convertProfile(res.data.user)
   }
-  async requestRoster(): Promise<[any]> {
+  async requestRoster(): Promise<any[]> {
     // This is supported via the User.Contacts connection
     const res = await this.client!.query<any>({
       query: gql`
