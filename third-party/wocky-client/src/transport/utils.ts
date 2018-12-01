@@ -439,12 +439,11 @@ type TokenParams = {
   version: string
   os: string
   deviceName: string
+  deviceId: string
   bypass?: boolean
   accessToken?: string
   phoneNumber?: string
 }
-
-// tslint:disable:no-console
 
 export function generateWockyToken({
   userId,
@@ -452,7 +451,7 @@ export function generateWockyToken({
   version,
   os,
   deviceName,
-  // bypass,
+  deviceId,
   phoneNumber,
 }: TokenParams) {
   try {
@@ -467,6 +466,7 @@ export function generateWockyToken({
       sub: accessToken || phoneNumber,
       aud: 'Wocky',
       phone_number: phoneNumber,
+      dvc: deviceId,
     }
     // TODO: store this with react-native-native-env
     const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
@@ -474,6 +474,7 @@ export function generateWockyToken({
     const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
     return jwt
   } catch (err) {
+    // tslint:disable-next-line
     console.error(err)
     throw err
   }

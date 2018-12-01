@@ -684,14 +684,14 @@ export class NextGraphQLTransport implements IWockyTransport {
     const password =
       token ||
       generateWockyToken({
-        // bypass: !!phoneNumber,
         phoneNumber,
         accessToken,
-        // TODO: username might already be embedded in token, so the uuid generated below may be different from what's returned in the `authenticate` mutation
+        // NOTE: the uuid generated below may be different from what's returned in the `authenticate` mutation
         userId: this.username || uuid(),
         version: version!,
         os: os!,
         deviceName: deviceName!,
+        deviceId: this.resource,
       })
     return {password}
   }
