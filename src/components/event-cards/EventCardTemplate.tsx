@@ -28,12 +28,12 @@ const EventCardTemplate = observer(
             backgroundColor: 'white',
           }}
         >
-          <View style={{paddingRight: 10 * k, marginLeft: 5 * k, marginRight: 10 * k}}>
+          <View style={{paddingRight: 13 * k, marginLeft: 5 * k, marginRight: 10 * k}}>
             <Avatar size={47} profile={profile} hideDot />
             <Image source={icon} style={{position: 'absolute', right: 0, bottom: 5 * k}} />
           </View>
 
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, marginRight: 5 * k}}>
             <RText size={14} style={{lineHeight: 10}}>
               <RText weight="Medium">{`@${profile.handle} `}</RText>
               <RText color={colors.PURPLISH_GREY}>{action}</RText>

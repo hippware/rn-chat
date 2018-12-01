@@ -92,7 +92,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <RText
             size={21}
             color={colors.DARK_PURPLE}
-            style={{width: '75%', textAlign: 'center'}}
+            style={{width: '75%', textAlign: 'center', fontFamily: 'Roboto-Medium'}}
             numberOfLines={2}
             ellipsizeMode="tail"
           >

@@ -79,6 +79,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
             }
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
+            style={{paddingLeft: 8}}
           />
           {!wocky!.connected && <View style={styles.overlay} />}
           <HeaderLocationOverlay />
@@ -174,8 +175,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.addAlpha(colors.WHITE, 0.7),
   },
   outer: {
-    padding: 15,
-    width: width / 4,
+    marginHorizontal: 7 * k,
+    paddingVertical: 15,
+    width: 71,
     alignItems: 'center',
     marginTop: 6 * minHeight,
   },

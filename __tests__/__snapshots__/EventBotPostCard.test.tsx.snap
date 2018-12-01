@@ -23,7 +23,7 @@ exports[`EventBotPostCard renders 1`] = `
       Object {
         "marginLeft": 10,
         "marginRight": 20,
-        "paddingRight": 20,
+        "paddingRight": 26,
       }
     }
   >
@@ -139,6 +139,7 @@ exports[`EventBotPostCard renders 1`] = `
     style={
       Object {
         "flex": 1,
+        "marginRight": 10,
       }
     }
   >
