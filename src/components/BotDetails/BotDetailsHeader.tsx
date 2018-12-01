@@ -312,5 +312,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15 * k,
   },
-  botImage: {width, height: width, marginHorizontal: -20 * k},
+  botImage: {width, height: width, marginHorizontal: -20 * k, marginTop: 15 * minHeight},
 })
