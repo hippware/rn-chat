@@ -240,33 +240,6 @@ const LocationStore = types
       self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
-    const didMount = flow(function*() {
-      BackgroundGeolocation.logger.info(`${prefix} didMount`)
-      yield self.configure()
-
-      BackgroundGeolocation.on('location', onLocation, onLocationError)
-      BackgroundGeolocation.on('http', onHttp, onHttpError)
-      // TODO: figure out how to track RNBGL errors in new version
-      // backgroundGeolocation.on('error', self.positionError)
-      BackgroundGeolocation.on('motionchange', onMotionChange)
-      BackgroundGeolocation.on('activitychange', onActivityChange)
-      BackgroundGeolocation.on('providerchange', onProviderChange)
-
-      const config = yield BackgroundGeolocation.ready({})
-      logger.log(prefix, 'Ready: ', config)
-    })
-
-    function willUnmount() {
-      BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
-
-      BackgroundGeolocation.un('location', onLocation)
-      BackgroundGeolocation.un('http', onHttp)
-      // backgroundGeolocation.un('error', ??)
-      BackgroundGeolocation.un('motionchange', onMotionChange)
-      BackgroundGeolocation.un('activitychange', onActivityChange)
-      BackgroundGeolocation.un('providerchange', onProviderChange)
-    }
-
     const refreshCredentials = flow(function*() {
       if (wocky.username && wocky.password) {
         const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
@@ -348,8 +321,13 @@ const LocationStore = types
     }
 
     return {
-      didMount,
-      willUnmount,
+      onLocation,
+      onLocationError,
+      onHttp,
+      onHttpError,
+      onMotionChange,
+      onActivityChange,
+      onProviderChange,
       refreshCredentials,
       invalidateCredentials,
       getCurrentPosition,
@@ -388,9 +366,38 @@ const LocationStore = types
       reactions = []
     }
 
+    const didMount = flow(function*() {
+      BackgroundGeolocation.logger.info(`${prefix} didMount`)
+      yield self.configure()
+
+      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
+      BackgroundGeolocation.on('http', self.onHttp, self.onHttpError)
+      // TODO: figure out how to track RNBGL errors in new version
+      // backgroundGeolocation.on('error', self.positionError)
+      BackgroundGeolocation.on('motionchange', self.onMotionChange)
+      BackgroundGeolocation.on('activitychange', self.onActivityChange)
+      BackgroundGeolocation.on('providerchange', self.onProviderChange)
+
+      const config = yield BackgroundGeolocation.ready({})
+      getEnv(self).logger.log(prefix, 'Ready: ', config)
+    })
+
+    function willUnmount() {
+      BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
+
+      BackgroundGeolocation.un('location', self.onLocation)
+      BackgroundGeolocation.un('http', self.onHttp)
+      // backgroundGeolocation.un('error', ??)
+      BackgroundGeolocation.un('motionchange', self.onMotionChange)
+      BackgroundGeolocation.un('activitychange', self.onActivityChange)
+      BackgroundGeolocation.un('providerchange', self.onProviderChange)
+    }
+
     return {
       start,
       finish,
+      didMount,
+      willUnmount,
     }
   })
 
