@@ -23,7 +23,8 @@ const EventCardTemplate = observer(
         <View
           style={{
             flexDirection: 'row',
-            padding: 15,
+            paddingHorizontal: 15,
+            marginTop: 20,
             alignItems: 'center',
             backgroundColor: 'white',
           }}

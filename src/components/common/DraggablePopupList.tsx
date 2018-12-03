@@ -28,6 +28,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
           ref={r => (this.list = r)}
           bounces={false}
           keyboardDismissMode="on-drag"
+          ListFooterComponent={<View style={{backgroundColor: 'white', height: 50 * k}} />}
           {...listProps}
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
           style={[{flex: 1}, style]}
