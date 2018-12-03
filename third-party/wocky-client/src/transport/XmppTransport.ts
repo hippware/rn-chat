@@ -788,8 +788,8 @@ export class XmppTransport implements IWockyTransport {
     }
     await this.sendIQ(iq)
   }
-  async loadBot(id: string, server: any) {
-    const iq = $iq({type: 'get', to: server || this.host}).c('bot', {
+  async loadBot(id: string) {
+    const iq = $iq({type: 'get', to: this.host}).c('bot', {
       xmlns: BOT_NS,
       node: `bot/${id}`,
     })

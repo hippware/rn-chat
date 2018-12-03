@@ -103,7 +103,7 @@ describe('GraphQL Notifications', () => {
       timestamp()
 
       // bob comments on alice's bot
-      bobsAliceBot = await bob.loadBot(aliceBot.id, null)
+      bobsAliceBot = await bob.loadBot(aliceBot.id)
       const post = bobsAliceBot.createPost('cool bot!')
       await post.publish()
 

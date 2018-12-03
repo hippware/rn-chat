@@ -177,6 +177,16 @@ describe('NewGraphQL tests', () => {
       await bot.removePost(bot.posts.list[0].id)
       expect(bot.posts.list.length).toBe(11)
     })
+    it('invite', async () => {
+      await bot.invite([user2.username!])
+    })
+    it('load bot for user2', async () => {
+      const bot2 = await user2.loadBot(bot.id)
+      expect(bot2).toBeTruthy()
+      await bot2.acceptInvitation({latitude: 1, longitude: 2, accuracy: 1})
+      expect(bot2.guests.list.length).toBe(1)
+      expect(bot2.posts.list.length).toBe(10) // only first page should be loaded, not all
+    })
     afterAll(async () => {
       try {
         await user.removeBot(bot.id)

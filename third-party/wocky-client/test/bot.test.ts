@@ -188,24 +188,19 @@ describe('BotStore', () => {
     }
   })
 
-  it('load bot', async done => {
-    try {
-      timestamp()
-      const loaded = await user2.loadBot(bot.id, bot.server)
-      await waitFor(() => !loaded.loading, 'bot to finish loading')
-      expect(loaded.icon).toBe(icon)
-      expect(loaded.isNew).toBe(false)
-      expect(loaded.title).toBe('Test bot!')
-      expect(loaded.isSubscribed).toBe(false)
-      expect(loaded.guest).toBe(false)
-      expect(loaded.visitor).toBe(false)
-      expect(loaded.location!.latitude).toBe(1.3)
-      expect(loaded.location!.longitude).toBe(2.3)
-      expect(loaded.error).toBe('')
-      done()
-    } catch (e) {
-      done(e)
-    }
+  it('load bot', async () => {
+    timestamp()
+    const loaded = await user2.loadBot(bot.id)
+    await waitFor(() => !loaded.loading, 'bot to finish loading')
+    expect(loaded.icon).toBe(icon)
+    expect(loaded.isNew).toBe(false)
+    expect(loaded.title).toBe('Test bot!')
+    expect(loaded.isSubscribed).toBe(false)
+    expect(loaded.guest).toBe(false)
+    expect(loaded.visitor).toBe(false)
+    expect(loaded.location!.latitude).toBe(1.3)
+    expect(loaded.location!.longitude).toBe(2.3)
+    expect(loaded.error).toBe('')
   })
 
   it('re-login user2', async done => {
@@ -223,7 +218,7 @@ describe('BotStore', () => {
     try {
       timestamp()
       await user2._subscribeBot(bot.id)
-      const loaded = await user2.loadBot(bot.id, bot.server)
+      const loaded = await user2.loadBot(bot.id)
       await waitFor(() => !loaded.loading, 'bot to finish loading')
       expect(loaded.owner).toBeTruthy()
       expect(loaded.owner.id).toBe(user1.profile!.id)

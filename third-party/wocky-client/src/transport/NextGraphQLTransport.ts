@@ -19,6 +19,7 @@ import {
   convertNotifications,
   generateWockyToken,
   processRosterItem,
+  convertBotPost,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
@@ -277,6 +278,43 @@ export class NextGraphQLTransport implements IWockyTransport {
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
             ${BOT_PROPS}
+            guests: subscribers(first: 10, type: SUBSCRIBER) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+            visitors: subscribers(first: 10, type: VISITOR) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+            posts: items(first: 10) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  id
+                  stanza
+                  media {
+                    fullUrl
+                    thumbnailUrl
+                    trosUrl
+                  }
+                  owner {
+                    ${PROFILE_PROPS}
+                  }
+                }
+              }
+            }
+
           }
         }
       `,
@@ -613,13 +651,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return {
       count: totalCount,
       cursor: edges.length ? edges[edges.length - 1].cursor : null,
-      list: edges.map(({node: {id: postId, media, owner, stanza}}) => ({
-        id: postId,
-        content: stanza,
-        image: media,
-        // todo: need date/time?
-        profile: convertProfile(owner),
-      })),
+      list: edges.map(convertBotPost),
     }
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
@@ -664,7 +696,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         input: {
           invitationId,
           accept,
-          userLocation: {accuracy, lat: latitude, lon: longitude, resource: this.resource},
+          userLocation: {accuracy, lat: latitude, lon: longitude, device: this.resource},
         },
       },
     })
