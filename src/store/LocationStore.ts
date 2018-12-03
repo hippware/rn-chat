@@ -160,11 +160,11 @@ const LocationStore = types
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
       const {logger} = getEnv(self)
-      let config = <any>{
+      const config = {
         startOnBoot: true,
         stopOnTerminate: false,
         disableLocationAuthorizationAlert: true,
-      }
+      } as any
 
       // For non-Prod, don't configure settings which are user configurable
       if (settings.isProduction) {
@@ -201,7 +201,7 @@ const LocationStore = types
         if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
         // analytics.track('location_bg_success', {location: self.location})
       } else {
-        if (response.status == 401 || response.status == 403) {
+        if (response.status === 401 || response.status === 403) {
           BackgroundGeolocation.stop()
           BackgroundGeolocation.logger.error(`${prefix} BackgroundGeolocation.stop() due to error`)
         }
@@ -214,7 +214,7 @@ const LocationStore = types
     function onHttpError(err) {
       logger.log(prefix, 'on http error', err)
 
-      if (err.status == 401 || err.status == 403) {
+      if (err.status === 401 || err.status === 403) {
         BackgroundGeolocation.stop()
         BackgroundGeolocation.logger.error(
           `${prefix} BackgroundGeolocation.stop() due to http error`
@@ -333,6 +333,7 @@ const LocationStore = types
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (DeviceInfo.isEmulator()) {
         BackgroundGeolocation.getLog(log => {
+          // tslint:disable-next-line
           console.log(log)
         })
       } else {
