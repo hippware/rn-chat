@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * UI tweaks for bot profile (PR #3106)
 * GraphQL login; Other changes (#3059, PR #3101)
 * GraphQL user follow; Other changes (PR #3108, #3112)
+* More UI Tweaks (PR #3114)
 
 # 3.10.1 - 2018 Nov 26
 
