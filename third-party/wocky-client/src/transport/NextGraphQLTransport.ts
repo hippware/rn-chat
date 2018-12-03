@@ -7,7 +7,7 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot} from '..'
+import {ILocationSnapshot, IBotPost} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
@@ -22,8 +22,9 @@ import {
 import * as Utils from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
+import {IBotPostData} from '../model/BotPost'
 
-export class GraphQLTransport implements IWockyTransport {
+export class NextGraphQLTransport implements IWockyTransport {
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -81,7 +82,7 @@ export class GraphQLTransport implements IWockyTransport {
       throw new Error('Password is not defined')
     }
 
-    const res = await this.authenticate(this.password, this.username)
+    const res = await this.authenticate(this.password)
 
     if (res) {
       this.subscribeBotVisitors()
@@ -164,42 +165,23 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   @action
-  async authenticate(token: string, user?: string): Promise<boolean> {
+  async authenticate(token: string): Promise<boolean> {
     try {
-      let mutation
-      let res: any[]
-      if (!!user) {
-        // "old" auth mutation
-        mutation = {
-          mutation: gql`
-            mutation authenticate($user: String!, $token: String!) {
-              authenticate(input: {user: $user, token: $token}) {
-                user {
-                  id
-                }
+      const mutation = {
+        mutation: gql`
+          mutation authenticate($token: String!) {
+            authenticate(input: {token: $token}) {
+              user {
+                id
               }
             }
-          `,
-          variables: {user, token},
-        }
-        res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-      } else {
-        mutation = {
-          mutation: gql`
-            mutation authenticate($token: String!) {
-              authenticate(input: {token: $token}) {
-                user {
-                  id
-                }
-              }
-            }
-          `,
-          variables: {token},
-        }
-        res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
-        // set the username based on what's returned in the mutation
-        this.username = (res[0] as any).data.authenticate.user.id
+          }
+        `,
+        variables: {token},
       }
+      const res = await Promise.all([this.client!.mutate(mutation), this.client2!.mutate(mutation)])
+      // set the username based on what's returned in the mutation
+      this.username = (res[0] as any).data.authenticate.user.id
       // console.log('& got responses', res.map(r => r.data!.authenticate))
       this.connected = res.reduce<boolean>(
         (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
@@ -595,13 +577,51 @@ export class GraphQLTransport implements IWockyTransport {
   async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
   }
-  async loadBotPosts(): Promise<IPagingList<any>> {
-    // This is supported via the Bot.Items connection
-    throw new Error('Not supported')
+  async loadBotPosts(
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<IBotPostData>> {
+    const res = await this.client!.query<any>({
+      query: gql`
+        query loadBot($id: UUID!, $limit: Int, $cursor: String) {
+          bot(id: $id) {
+            items(after: $cursor, first: $limit) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  id
+                  stanza
+                  media {
+                    fullUrl
+                    thumbnailUrl
+                    trosUrl
+                  }
+                  owner {
+                    ${PROFILE_PROPS}
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {id, limit: max, cursor: lastId},
+    })
+    const {totalCount, edges} = res.data.bot.items
+    return {
+      count: totalCount,
+      cursor: edges.length ? edges[edges.length - 1].cursor : null,
+      list: edges.map(({node: {id: postId, media, owner, stanza}}) => ({
+        id: postId,
+        content: stanza,
+        image: media,
+        // todo: need date/time?
+        profile: convertProfile(owner),
+      })),
+    }
   }
-  // shareBot() {
-  //   throw new Error('Not supported')
-  // }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
     await this.client!.mutate({
       mutation: gql`
@@ -819,12 +839,44 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async removeBot(): Promise<void> {
-    throw new Error('Not supported')
+  async removeBot(botId: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation botDelete($input: BotDeleteInput!) {
+          botDelete(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {id: botId}},
+    })
+    if (!res.data!.botDelete.successful) {
+      throw new Error(`GraphQL removeBot error:${JSON.stringify(res.data!.botDelete.messages)}`)
+    }
   }
 
-  async removeBotPost(): Promise<void> {
-    throw new Error('Not supported')
+  async removeBotPost(botId: string, postId: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation botItemDelete($input: BotItemDeleteInput!) {
+          botItemDelete(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {botId, id: postId}},
+    })
+    if (!res.data!.botItemDelete.successful) {
+      throw new Error(
+        `GraphQL removeBotPost error:${JSON.stringify(res.data!.botItemDelete.messages)}`
+      )
+    }
   }
 
   async updateBot(
@@ -883,7 +935,7 @@ export class GraphQLTransport implements IWockyTransport {
         ...(userLocation
           ? {
               userLocation: {
-                resource: this.resource,
+                device: this.resource,
                 lon: userLocation.longitude,
                 lat: userLocation.latitude,
                 accuracy: userLocation.accuracy,
@@ -901,8 +953,31 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async publishBotPost(): Promise<void> {
-    throw new Error('Not supported')
+  async publishBotPost(botId: string, post: IBotPost): Promise<void> {
+    // TODO add post.image support?
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation botItemPublish($botId: UUID!, $values: BotItemParams!) {
+          botItemPublish(input: {botId: $botId, values: $values}) {
+            successful
+            messages {
+              message
+              field
+            }
+          }
+        }
+      `,
+      variables: {
+        botId,
+        values: {
+          id: post.id,
+          stanza: post.content,
+        },
+      },
+    })
+    if (!res.data!.botItemPublish.successful) {
+      throw new Error('Error during bot save')
+    }
   }
 
   async geosearch(): Promise<void> {

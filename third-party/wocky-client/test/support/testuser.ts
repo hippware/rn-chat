@@ -1,5 +1,12 @@
 import XmppStropheV2 from '../../src/transport/XmppStropheV2'
-import {Wocky, XmppTransport, IWocky, HybridTransport, GraphQLTransport} from '../../src'
+import {
+  Wocky,
+  XmppTransport,
+  IWocky,
+  HybridTransport,
+  GraphQLTransport,
+  NextGraphQLTransport,
+} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
@@ -39,7 +46,7 @@ export function expectedImage() {
 }
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new GraphQLTransport(SERVER_NAME)
+    const transport = new NextGraphQLTransport(SERVER_NAME)
     const phoneNumber =
       phoneNum ||
       (num

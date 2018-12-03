@@ -212,7 +212,7 @@ export class HybridTransport implements IWockyTransport {
     relation: string,
     lastId?: string,
     max?: number
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     return this._xmpp.loadRelations(userId, relation, lastId, max)
   }
 
@@ -253,33 +253,37 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.loadNotifications(params)
   }
 
-  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     return this._gql.loadOwnBots(userId, lastId, max)
   }
 
-  loadGeofenceBots(): Promise<IPagingList> {
+  loadGeofenceBots(): Promise<IPagingList<any>> {
     return this._gql.loadGeofenceBots()
   }
-  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotSubscribers(id, lastId, max)
     return this._gql.loadBotSubscribers(id, lastId, max)
   }
 
-  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotGuests(id, lastId, max)
     return this._gql.loadBotGuests(id, lastId, max)
   }
 
-  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotVisitors(id, lastId, max)
     return this._gql.loadBotVisitors(id, lastId, max)
   }
 
-  loadBotPosts(id: string, lastId?: string): Promise<IPagingList> {
+  loadBotPosts(id: string, lastId?: string): Promise<IPagingList<any>> {
     return this._xmpp.loadBotPosts(id, lastId)
   }
 
-  async loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+  async loadSubscribedBots(
+    userId: string,
+    lastId?: string,
+    max?: number
+  ): Promise<IPagingList<any>> {
     return await this._gql.loadSubscribedBots(userId, lastId, max)
   }
 

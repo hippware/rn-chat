@@ -66,30 +66,12 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
               self.result.splice(index, 1)
             }
           },
-          // // TODO fix code duplicate here, was not able to pass optional param because of generics
-          // loadPage: flow<number>(function*(max: number) {
-          //   if (self.loading || self.finished) {
-          //     return self.result
-          //   }
-          //   self.loading = true
-          //   try {
-          //     const {list, count, cursor, ...data} = yield request(self.cursor, max)
-          //     self.count = count
-          //     self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
-          //     Object.assign(self, data)
-          //     list.forEach((el: any) => self.add(el))
-          //     self.finished = list.length === 0
-          //   } finally {
-          //     self.loading = false
-          //   }
-          //   return self.result
-          // }),
           refresh: () => {
             self.result.clear()
             self.cursor = null
             self.finished = false
           },
-          load: flow<any[]>(function* load({force}: {force?: boolean} = {}) {
+          load: flow(function* load({force}: {force?: boolean} = {}) {
             if (self.loading || (self.finished && !force)) {
               return self.result
             }
@@ -112,7 +94,7 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
               self.loading = false
             }
             return self.result
-          }),
+          }) as ({force}: {force: boolean}) => Promise<any>,
         },
       }
     }) as IPaginable<T> // TODO: better workaround to fix error?
