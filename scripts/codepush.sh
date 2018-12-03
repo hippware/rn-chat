@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: ./codepush.sh [deployment name] [description] [bugsnag unique id] 
+# Usage: ./codepush.sh [deployment name] [description]
 
 DEPLOYMENT_NAME=$1
 DESCRIPTION=$2
