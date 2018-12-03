@@ -2,8 +2,8 @@ import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 
-export interface IPagingList {
-  list: any[]
+export interface IPagingList<T> {
+  list: T[]
   cursor?: string
   count: number
 }
@@ -81,7 +81,7 @@ export interface IWockyTransport {
     relation: string,
     lastId?: string,
     max?: number
-  ): Promise<IPagingList>
+  ): Promise<IPagingList<any>>
   publishBotPost(botId: string, post: any): Promise<void>
   sendMessage(msg: any): void
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
@@ -92,13 +92,13 @@ export interface IWockyTransport {
     beforeId?: string
     afterId?: string
   }): Promise<{list: any[]; count: number}>
-  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
-  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotPosts(id: string, lastId?: string): Promise<IPagingList>
-  loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
+  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotPosts(id: string, lastId?: string): Promise<IPagingList<any>>
+  loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>>
   loadLocalBots(props: {
     latitude: number
     longitude: number
