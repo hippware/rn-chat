@@ -237,7 +237,7 @@ const LocationStore = types
       logger.log(prefix, 'Location provider changed:', provider)
       const info = JSON.stringify(provider)
       BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
-      self.setAlwaysOn(provider.status === 3)
+      self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
     }
 
     const didMount = flow(function*() {
