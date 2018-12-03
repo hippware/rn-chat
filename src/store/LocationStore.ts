@@ -258,7 +258,13 @@ const LocationStore = types
 
     function willUnmount() {
       BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
-      BackgroundGeolocation.removeListeners()
+
+      BackgroundGeolocation.un('location', onLocation)
+      BackgroundGeolocation.un('http', onHttp)
+      // backgroundGeolocation.un('error', ??)
+      BackgroundGeolocation.un('motionchange', onMotionChange)
+      BackgroundGeolocation.un('activitychange', onActivityChange)
+      BackgroundGeolocation.un('providerchange', onProviderChange)
     }
 
     const refreshCredentials = flow(function*() {
