@@ -220,7 +220,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<any[]> {
-    // This is supported via the User.Contacts connection
     const res = await this.client!.query<any>({
       query: gql`
         query requestRoster {
@@ -1042,8 +1041,48 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadRelations(): Promise<IPagingList<any>> {
-    throw new Error('Not supported')
+  async loadRelations(
+    userId: string,
+    // TODO: use more specific typing when we can change IWockyTransport
+    // relation: 'FOLLOWER' | 'FOLLOWING' | 'FRIEND' | 'NONE' = 'FOLLOWING',
+    relation: string = 'FOLLOWING',
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<any>> {
+    // TODO: remove this after IWockyTransport change
+    relation = relation.toUpperCase()
+    const res = await this.client!.query<any>({
+      query: gql`
+        query user($userId: UUID!, $relation: UserContactRelationship, $lastId: String, $max: Int) {
+          user(id: $userId) {
+            id
+            contacts(first: $max, relationship: $relation, after: $lastId) {
+              totalCount
+              edges {
+                relationship
+                createdAt
+                node {
+                  id
+                  roles
+                  firstName
+                  lastName
+                  handle
+                  avatar {
+                    thumbnailUrl
+                    trosUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {userId, relation, lastId, max},
+    })
+    // console.log('& res', res.data!.user!.contacts)
+    const {totalCount, edges} = res.data.user!.contacts
+    const list = edges.map(e => convertProfile(e.node))
+    return {list, count: totalCount}
   }
 
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
