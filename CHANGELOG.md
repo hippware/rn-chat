@@ -7,13 +7,18 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Rework version info string. Swap native and js parts. (#3009, PR #3098)
 * Make messaging UI components stateless for (PR #3100)
   * Messages: Text & Images sent are not appearing correctly (#3060)
-* PR #3102
+* PR #3102, PR #3124
   * Onboarding 1: Location Permissions (#3028)
   * Onboarding 2: Accelerometer Permissions (#3029)
 * UI tweaks for bot profile (PR #3106)
 * GraphQL login; Other changes (#3059, PR #3101)
 * GraphQL user follow; Other changes (PR #3108, #3112)
 * More UI Tweaks (PR #3114)
+* Set up Codepush channel for Alan (#3115)
+* GraphQL Bot posts; removeBot; Other stuff (#3109, PR #3110)
+* GraphQL unfollow (#3119, PR #3120)
+* GraphQL block/unblock (#3121, PR #3120)
+* Add device ID to client JWTs (#3111)
 
 # 3.10.1 - 2018 Nov 26
 
