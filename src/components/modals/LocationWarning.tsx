@@ -8,7 +8,6 @@ import globalStyles from '../styles'
 import {GradientButton, RText} from '../common'
 import {WHITE} from 'src/constants/colors'
 
-// TODO: test - does requiring rnbgl here trigger all permissions requests?
 import backgroundGeolocation from 'react-native-background-geolocation'
 
 type Props = {
@@ -17,25 +16,17 @@ type Props = {
 
 @observer
 class LocationWarning extends React.Component<Props> {
-  listenerDisposer: any
-
   componentDidMount() {
-    this.listenerDisposer = backgroundGeolocation.on(
-      'providerchange',
-      this.onLocationPermissionChanged
-    )
+    backgroundGeolocation.on('providerchange', this.onLocationPermissionChanged)
   }
 
   componentWillUnmount() {
-    if (this.listenerDisposer) {
-      this.listenerDisposer()
-    }
+    backgroundGeolocation.un('providerchange', this.onLocationPermissionChanged)
   }
 
   onLocationPermissionChanged = ({status}) => {
     // console.log('& perms changed', status)
-    if (status === 3) {
-      // 3 = always on
+    if (status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS) {
       this.props.afterLocationAlwaysOn()
     }
   }
