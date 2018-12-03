@@ -161,7 +161,7 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unsubscribeBot(id)
   }
 
-  requestRoster(): Promise<[any]> {
+  requestRoster(): Promise<any[]> {
     return this._gql.requestRoster()
   }
 

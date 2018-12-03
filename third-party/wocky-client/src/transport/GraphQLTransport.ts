@@ -672,6 +672,7 @@ export class GraphQLTransport implements IWockyTransport {
         version: version!,
         os: os!,
         deviceName: deviceName!,
+        deviceId: this.resource,
       })
     return {password}
   }

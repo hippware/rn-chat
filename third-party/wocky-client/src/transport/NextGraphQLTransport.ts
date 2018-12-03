@@ -18,8 +18,8 @@ import {
   convertNotification,
   convertNotifications,
   generateWockyToken,
+  processRosterItem,
 } from './utils'
-import * as Utils from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 import {IBotPostData} from '../model/BotPost'
@@ -218,7 +218,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
     return convertProfile(res.data.user)
   }
-  async requestRoster(): Promise<[any]> {
+  async requestRoster(): Promise<any[]> {
     // This is supported via the User.Contacts connection
     const res = await this.client!.query<any>({
       query: gql`
@@ -684,14 +684,14 @@ export class NextGraphQLTransport implements IWockyTransport {
     const password =
       token ||
       generateWockyToken({
-        // bypass: !!phoneNumber,
         phoneNumber,
         accessToken,
-        // TODO: username might already be embedded in token, so the uuid generated below may be different from what's returned in the `authenticate` mutation
+        // NOTE: the uuid generated below may be different from what's returned in the `authenticate` mutation
         userId: this.username || uuid(),
         version: version!,
         os: os!,
         deviceName: deviceName!,
+        deviceId: this.resource,
       })
     return {password}
   }
@@ -763,11 +763,26 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async lookup(): Promise<any> {
+    // NOTE: lookup isn't current in use in rn-chat so we don't need to implement it here (and should remove from IWockyTransport eventually)
     throw new Error('Not supported')
   }
 
   async remove(): Promise<void> {
-    // TODO: remove user
+    const data: any = await this.client!.mutate({
+      mutation: gql`
+        mutation userDelete {
+          userDelete {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+    })
+    if (!data.data.userDelete.successful) {
+      throw new Error(JSON.stringify(data.data.userDelete.messages))
+    }
     return this.disconnect()
   }
 
@@ -792,6 +807,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
+  // TODO: DRY up follow, unfollow, block, unblock...lots of repetitive code
   async follow(userId: string): Promise<void> {
     const data = await this.client!.mutate({
       mutation: gql`
@@ -811,16 +827,61 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async unfollow(): Promise<void> {
-    throw new Error('Not supported')
+  async unfollow(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation unfollow($input: UnfollowInput!) {
+          unfollow(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.unfollow.successful) {
+      throw new Error(`GraphQL unfollow error:${JSON.stringify(data.data!.unfollow.messages)}`)
+    }
   }
 
-  async block(): Promise<void> {
-    throw new Error('Not supported')
+  async block(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation userBlock($input: UserBlockInput!) {
+          userBlock(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.userBlock.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userBlock.messages)}`)
+    }
   }
 
-  async unblock(): Promise<void> {
-    throw new Error('Not supported')
+  async unblock(userId: string): Promise<void> {
+    const data = await this.client!.mutate({
+      mutation: gql`
+        mutation userUnblock($input: UserUnblockInput!) {
+          userUnblock(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {userId}},
+    })
+    if (!data.data!.userUnblock.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userUnblock.messages)}`)
+    }
   }
 
   async subscribeBot(): Promise<number> {
@@ -981,6 +1042,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async geosearch(): Promise<void> {
+    // Not used
     throw new Error('Not supported')
   }
 
@@ -993,6 +1055,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   subscribeToHomestream(): void {
+    // Not used
     // Available via the HomeStream subscription
     throw new Error('Not supported')
   }
@@ -1006,10 +1069,12 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
+    // Not used
     throw new Error('Not supported')
   }
 
   async loadHomestream(): Promise<IPagingList<any>> {
+    // Not used
     // Available through the CurrentUser.HomeStream connection
     throw new Error('Not supported')
   }
@@ -1170,16 +1235,4 @@ export class NextGraphQLTransport implements IWockyTransport {
       count,
     }
   }
-}
-
-function processRosterItem(user, relationship, createdAt) {
-  const createdTime = Utils.iso8601toDate(createdAt).getTime()
-  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
-
-  return convertProfile({
-    isNew: days <= 7,
-    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
-    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
-    ...user,
-  })
 }
