@@ -96,7 +96,7 @@ const Store = types
   .actions(self => ({
     logout: flow(function*() {
       self.homeStore.logout()
-      self.locationStore.invalidateCredentials()
+      self.locationStore.logout()
       return yield self.firebaseStore.logout()
     }),
     afterCreate() {

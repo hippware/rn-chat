@@ -261,9 +261,6 @@ const LocationStore = types
         })
         logger.log(prefix, `refreshCredentials URL: ${url}`)
         BackgroundGeolocation.logger.info(`${prefix} refreshCredentials`)
-
-        yield BackgroundGeolocation.start()
-        logger.log(prefix, 'Start')
       }
     })
 
@@ -275,9 +272,6 @@ const LocationStore = types
       })
       logger.log(prefix, 'invalidateCredentials')
       BackgroundGeolocation.logger.info(`${prefix} invalidateCredentials`)
-
-      yield BackgroundGeolocation.stop()
-      logger.log(prefix, 'Stop')
     })
 
     const getCurrentPosition = flow(function*() {
@@ -338,6 +332,7 @@ const LocationStore = types
   .actions(self => {
     const wocky: IWocky = (getParent(self) as any).wocky
     let reactions: IReactionDisposer[] = []
+    const {logger} = getEnv(self)
 
     const start = flow(function*() {
       const resp1 = yield Permissions.check('location', {type: 'always'})
@@ -351,9 +346,21 @@ const LocationStore = types
       }
 
       reactions = [
-        when(() => wocky.connected, () => self.refreshCredentials().then(self.getCurrentPosition), {
-          name: 'LocationStore: Start background after connected',
-        }),
+        when(
+          () => wocky.connected,
+          async () => {
+            try {
+              await self.refreshCredentials()
+              await self.getCurrentPosition()
+              await BackgroundGeolocation.start()
+              logger.log(prefix, 'Start')
+            } catch (err) {
+              // prevent unhandled promise rejection
+              logger.log(prefix, 'Start onConnected reaction error', err)
+            }
+          },
+          {name: 'LocationStore: Start background after connected'}
+        ),
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
@@ -379,7 +386,7 @@ const LocationStore = types
       BackgroundGeolocation.on('providerchange', self.onProviderChange)
 
       const config = yield BackgroundGeolocation.ready({})
-      getEnv(self).logger.log(prefix, 'Ready: ', config)
+      logger.log(prefix, 'Ready: ', config)
     })
 
     function willUnmount() {
@@ -393,11 +400,18 @@ const LocationStore = types
       BackgroundGeolocation.un('providerchange', self.onProviderChange)
     }
 
+    const logout = flow(function*() {
+      yield self.invalidateCredentials()
+      yield BackgroundGeolocation.stop()
+      logger.log(prefix, 'Stop')
+    })
+
     return {
       start,
       finish,
       didMount,
       willUnmount,
+      logout,
     }
   })
 
