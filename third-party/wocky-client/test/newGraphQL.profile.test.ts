@@ -67,6 +67,21 @@ describe('NewGraphQL tests', () => {
     // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
   })
 
+  // it('load followers', async () => {
+  //   console.log('user1 id', user.username!)
+  //   console.log('user2 id', user2.username!)
+  //   const steve = await createUser()
+  //   const user1steve = await user.loadProfile(steve.username!)
+  //   expect(user1steve).toBeTruthy()
+  //   // await user1steve.followers.load()
+  //   // expect(user1steve.followers.length).toEqual(0)
+  //   const user2steve = await user2.loadProfile(steve.username!)
+  //   await user2steve.follow()
+  //   await user1steve.followers.load({force: true})
+  //   expect(user1steve.followers.length).toEqual(1)
+  //   await steve.remove()
+  // })
+
   it('unfollow and refollow', async () => {
     // NOTE: the roster updates tend to require a bit more time to complete
     jest.setTimeout(10000)
