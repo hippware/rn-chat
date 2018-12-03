@@ -181,7 +181,7 @@ describe('Geofence', () => {
   it('loads own bot', async done => {
     try {
       timestamp()
-      const loadedBot2 = await user1.loadBot(bot.id, null)
+      const loadedBot2 = await user1.loadBot(bot.id)
       await waitFor(() => !loadedBot2.loading, 'bot to load')
       expect(loadedBot2.guestsSize).toEqual(1)
       expect(loadedBot2.guest).toEqual(true)
@@ -194,7 +194,7 @@ describe('Geofence', () => {
   it('loads bot', async done => {
     try {
       timestamp()
-      loadedBot = await user2.loadBot(bot.id, null)
+      loadedBot = await user2.loadBot(bot.id)
       await waitFor(() => !loadedBot.loading, 'bot to load')
       expect(loadedBot.guestsSize).toEqual(1)
       expect(loadedBot.guest).toEqual(false)
@@ -219,7 +219,7 @@ describe('Geofence', () => {
   it('loads bot again', async done => {
     try {
       timestamp()
-      loadedBot = await user2.loadBot(bot.id, null)
+      loadedBot = await user2.loadBot(bot.id)
       expect(loadedBot.guestsSize).toEqual(2)
       expect(loadedBot.guest).toEqual(true)
       done()
@@ -286,7 +286,7 @@ describe('Geofence', () => {
       })
       await bot.invite([user2!.username!])
       await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
-      loadedBot = await user2.loadBot(bot.id, null)
+      loadedBot = await user2.loadBot(bot.id)
       expect(loadedBot.visitorsSize).toEqual(1)
       await loadedBot.acceptInvitation(Location.create(insideBotLocation))
       expect(loadedBot.guest).toEqual(true)

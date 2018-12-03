@@ -1,26 +1,15 @@
-import {createXmpp, timestamp} from './support/testuser'
-import {GraphQLTransport, IWocky} from '../src'
+import {createUser, timestamp} from './support/testuser'
+import {IWocky} from '../src'
 import {when} from 'mobx'
-const host = 'testing.dev.tinyrobot.com'
 
 // tslint:disable:no-console
-
 describe('GraphQL Notifications Subscription', () => {
-  let alice: IWocky, bob: IWocky, gqlAlice: GraphQLTransport, gqlBob: GraphQLTransport
+  let alice: IWocky, bob: IWocky
 
   it('gets User Follow notification', async done => {
-    jest.setTimeout(20000)
     timestamp()
-    bob = await createXmpp()
-    alice = await createXmpp()
-    gqlBob = new GraphQLTransport('testing')
-    gqlAlice = new GraphQLTransport('testing')
-    await Promise.all([
-      gqlBob.login(bob.username!, bob.password!, host),
-      gqlAlice.login(alice.username!, alice.password!, host),
-    ])
-
-    gqlBob.subscribeNotifications()
+    bob = await createUser()
+    alice = await createUser()
 
     // alice follows bob
     const alicesBobProfile = await alice.loadProfile(bob.username!)
@@ -29,11 +18,11 @@ describe('GraphQL Notifications Subscription', () => {
     expect(alicesBobProfile.isFollowed).toBe(true)
 
     when(
-      () => !!gqlBob.notification,
+      () => bob.notifications.length > 0,
       () => {
         timestamp()
-        expect(gqlBob.notification.user.id).toBeTruthy()
-        // , alicesBobProfile.id)
+        console.log('NOTIFICATIONS:', JSON.stringify(bob.notifications))
+        expect(bob.notifications.list[0].user.id).toBeTruthy()
         done()
       }
     )

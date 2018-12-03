@@ -14,7 +14,7 @@ const Invitation = types.model('BotInvitation', {
   id: types.string,
   accepted: types.boolean,
 })
-
+const LazyProfileList = types.late('LazyProfileRef', (): IAnyModelType => ProfilePaginableList)
 export const Bot = types
   .compose(
     Base,
@@ -46,9 +46,9 @@ export const Bot = types
       visitorsSize: 0,
       totalItems: 0,
       addressData: types.optional(Address, {}),
-      subscribers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      guests: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      visitors: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
+      subscribers: types.optional(LazyProfileList, {}),
+      guests: types.optional(LazyProfileList, {}),
+      visitors: types.optional(LazyProfileList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
       invitation: types.maybeNull(Invitation),
@@ -137,11 +137,21 @@ export const Bot = types
         data.addressData = Address.create({})
       }
 
-      // load visitors
+      // load visitors/guests/subscribers
       if (data.visitors) {
         self.visitors.refresh()
         data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
         delete data.visitors
+      }
+      if (data.guests) {
+        self.guests.refresh()
+        data.guests.forEach(p => self.guests.add(self.service.profiles.get(p.id, p)))
+        delete data.guests
+      }
+      if (data.posts) {
+        self.posts.refresh()
+        data.posts.forEach(p => self.posts.add(self.service.create(BotPost, p)))
+        delete data.posts
       }
       Object.assign(self, data)
     },

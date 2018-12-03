@@ -60,16 +60,9 @@ export default class BotDetails extends React.Component<Props> {
       return
     }
 
-    // TODO: load all bot info in one GraphQL call
-    await Promise.all([
-      wocky!.loadBot(botId, undefined),
-      this.bot!.posts.load({force: true}),
-      this.bot!.guests.load({force: true}),
-      this.bot!.visitors.load({force: true}),
-    ])
-
     homeStore.selectBot(this.bot)
     homeStore.setFocusedLocation(this.bot.location)
+    await wocky!.loadBot(botId)
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))

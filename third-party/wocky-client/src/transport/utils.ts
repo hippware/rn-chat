@@ -322,7 +322,16 @@ export function convertProfile({
   } as IProfilePartial
 }
 
-// TODO: remove try/catch on this?
+export function convertBotPost({node: {id, media, owner, stanza}}) {
+  return {
+    id,
+    content: stanza,
+    image: media,
+    // todo: need date/time?
+    profile: convertProfile(owner),
+  }
+}
+
 export function convertBot({
   lat,
   lon,
@@ -335,28 +344,28 @@ export function convertBot({
   visitorCount,
   guestCount,
   subscribers,
+  posts,
+  guests,
   ...data
 }: any) {
-  try {
-    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
-    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
-    return {
-      ...data,
-      owner: convertProfile(owner),
-      image: convertImage(image),
-      addressData: addressData ? JSON.parse(addressData) : {},
-      totalItems: items ? items.totalCount : 0,
-      followersSize: subscriberCount.totalCount - 1,
-      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
-      visitorsSize: visitorCount.totalCount,
-      guestsSize: guestCount.totalCount,
-      location: {latitude: lat, longitude: lon},
-      guest: contains('GUEST'),
-      visitor: contains('VISITOR'),
-      isSubscribed: contains('SUBSCRIBED'),
-    }
-  } catch (e) {
-    // console.error('ERROR CONVERTING:', arguments[0], e)
+  const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+  const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+  return {
+    ...data,
+    owner: convertProfile(owner),
+    image: convertImage(image),
+    addressData: addressData ? JSON.parse(addressData) : {},
+    totalItems: items ? items.totalCount : 0,
+    followersSize: subscriberCount.totalCount - 1,
+    visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
+    guests: guests ? guests.edges.map(rec => convertProfile(rec.node)) : undefined,
+    posts: posts ? posts.edges.map(convertBotPost) : undefined,
+    visitorsSize: visitorCount.totalCount,
+    guestsSize: guestCount.totalCount,
+    location: {latitude: lat, longitude: lon},
+    guest: contains('GUEST'),
+    visitor: contains('VISITOR'),
+    isSubscribed: contains('SUBSCRIBED'),
   }
 }
 

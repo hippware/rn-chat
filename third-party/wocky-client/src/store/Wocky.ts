@@ -282,14 +282,13 @@ export const Wocky = types
         chat.addMessage(msg)
       })
     }) as (max?: number) => Promise<void>,
-    // TODO: make server an optional param
-    loadBot: flow(function*(id: string, server: any) {
+    loadBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
-      const bot = self.getBot({id, server})
+      const bot = self.getBot({id})
       if (!bot.loading) {
         try {
           bot.startLoading()
-          const data = yield self.transport.loadBot(id, server)
+          const data = yield self.transport.loadBot(id)
           self.load(bot, data)
         } catch (e) {
           // console.error(e) TODO
