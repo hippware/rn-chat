@@ -63,8 +63,6 @@ export interface IWockyTransport {
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>
   unblock(username: string): Promise<void>
-  // TODO: remove/comment this (unnecessary with invite/accept flow)
-  subscribeBot(id: string): Promise<boolean>
   unsubscribeBot(id: string): Promise<void>
   requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>

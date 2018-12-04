@@ -88,13 +88,6 @@ export const Bot = types
         self.totalItems -= 1
       }
     }) as (postId: string) => Promise<void>,
-    // subscribe: flow(function*() {
-    //   self.isSubscribed = true
-    //   self.guest = true
-    //   self.service.profile!.subscribedBots.addToTop(self)
-    //   self.service.geofenceBots.addToTop(self)
-    //   yield self.service._subscribeBot(self.id)
-    // }),
     acceptInvitation: flow(function*(userLocation: ILocation) {
       if (!self.invitation) {
         throw new Error('Invitation is not set for the bot')

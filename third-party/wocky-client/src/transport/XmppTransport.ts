@@ -861,14 +861,6 @@ export class XmppTransport implements IWockyTransport {
     }
     await this.sendIQ(iq)
   }
-  async subscribeBot(id: string) {
-    const iq = $iq({type: 'set', to: this.host}).c('subscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`,
-    })
-    const data = await this.sendIQ(iq)
-    return !!parseInt(data['subscriber_count'])
-  }
   async unsubscribeBot(id: string) {
     const iq = $iq({type: 'set', to: this.host}).c('unsubscribe', {
       xmlns: BOT_NS,

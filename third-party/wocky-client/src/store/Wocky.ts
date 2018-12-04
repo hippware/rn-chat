@@ -402,11 +402,6 @@ export const Wocky = types
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
       }),
-      // TODO: remove/comment this (unnecessary with invite/accept flow)
-      _subscribeBot: flow(function*(id: string) {
-        yield waitFor(() => self.connected)
-        return yield self.transport.subscribeBot(id)
-      }),
       _unsubscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)
         return yield self.transport.unsubscribeBot(id)
