@@ -47,7 +47,7 @@ export interface IWockyTransport {
   setLocation(params: ILocationSnapshot): Promise<void>
   getLocationsVisited(limit?: number): Promise<object[]>
   loadProfile(user: string): Promise<IProfilePartial | null>
-  requestProfiles(users: string[]): Promise<any>
+  // requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
   remove(): Promise<void>
   downloadURL(tros: string): Promise<any>
@@ -63,8 +63,9 @@ export interface IWockyTransport {
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>
   unblock(username: string): Promise<void>
-  subscribeBot(id: string): Promise<number>
-  unsubscribeBot(id: string): Promise<number>
+  // TODO: remove/comment this (unnecessary with invite/accept flow)
+  subscribeBot(id: string): Promise<boolean>
+  unsubscribeBot(id: string): Promise<void>
   requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>
   loadBot(id: string): Promise<any> // TODO define inteface for bot

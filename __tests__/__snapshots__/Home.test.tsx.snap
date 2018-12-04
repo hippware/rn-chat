@@ -103,6 +103,11 @@ exports[`Home renders with no data 1`] = `
         scrollEventThrottle={50}
         showsHorizontalScrollIndicator={false}
         stickyHeaderIndices={Array []}
+        style={
+          Object {
+            "paddingLeft": 16,
+          }
+        }
         updateCellsBatchingPeriod={50}
         viewabilityConfigCallbackPairs={Array []}
         windowSize={21}
@@ -131,10 +136,11 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginHorizontal": 15,
                   "marginTop": 13.200000000000001,
                   "opacity": 1,
-                  "padding": 15,
-                  "width": 187.5,
+                  "paddingVertical": 15,
+                  "width": 71,
                 }
               }
             >
@@ -280,9 +286,10 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginHorizontal": 15,
                   "marginTop": 13.200000000000001,
-                  "padding": 15,
-                  "width": 187.5,
+                  "paddingVertical": 15,
+                  "width": 71,
                 }
               }
             >
@@ -362,9 +369,10 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginHorizontal": 15,
                   "marginTop": 13.200000000000001,
-                  "padding": 15,
-                  "width": 187.5,
+                  "paddingVertical": 15,
+                  "width": 71,
                 }
               }
             >
@@ -444,9 +452,10 @@ exports[`Home renders with no data 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "marginHorizontal": 15,
                   "marginTop": 13.200000000000001,
-                  "padding": 15,
-                  "width": 187.5,
+                  "paddingVertical": 15,
+                  "width": 71,
                 }
               }
             >

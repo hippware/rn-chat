@@ -148,10 +148,10 @@ export const Wocky = types
           Object.assign(self, res)
           return true
         }),
-        _requestProfiles: flow(function*(users: string[]) {
-          const arr = yield self.transport.requestProfiles(users)
-          return arr.map((user: any) => self.profiles.get(user.id, user))
-        }),
+        // _requestProfiles: flow(function*(users: string[]) {
+        //   const arr = yield self.transport.requestProfiles(users)
+        //   return arr.map((user: any) => self.profiles.get(user.id, user))
+        // }),
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
@@ -294,7 +294,7 @@ export const Wocky = types
         }
       }
       return bot
-    }),
+    }) as (id: string) => Promise<IBot>,
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
@@ -402,6 +402,7 @@ export const Wocky = types
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
       }),
+      // TODO: remove/comment this (unnecessary with invite/accept flow)
       _subscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)
         return yield self.transport.subscribeBot(id)

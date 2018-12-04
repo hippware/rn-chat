@@ -46,7 +46,7 @@ const BotCard = observer(({bot, isSelected}: Props) => (
             marginLeft: 10,
           }}
         >
-          <BotIcon size={30} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
+          <BotIcon size={40} icon={bot.icon} textStyle={{fontSize: 45, textAlign: 'center'}} />
         </View>
       )}
       <View style={[styles.textContainer, bot.image && {marginLeft: 18 * k}]}>

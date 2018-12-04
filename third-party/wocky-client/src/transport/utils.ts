@@ -8,6 +8,7 @@ import {IEventUserFollowData} from '../model/EventUserFollow'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
+import {ILocation} from '../model/Location'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -509,4 +510,13 @@ export function processRosterItem(user, relationship, createdAt) {
     isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
     ...user,
   })
+}
+
+export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {
+  return {
+    device,
+    lon: longitude,
+    lat: latitude,
+    accuracy,
+  }
 }

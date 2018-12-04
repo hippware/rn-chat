@@ -1,15 +1,11 @@
 import {createUser, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
-import {IBot} from '../src/model/Bot'
 
 let user: IWocky, user2: IWocky
 let user1phone: string
-let bot: IBot
 
-const icon = '\u00A9\uFE0F\u00A9'
-
-describe('NewGraphQL tests', () => {
+describe('New GraphQL profile tests', () => {
   beforeAll(async () => {
     user = await createUser()
     user2 = await createUser()
@@ -67,6 +63,41 @@ describe('NewGraphQL tests', () => {
     // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
   })
 
+  it('load followers', async () => {
+    await user2.profile!.update({
+      handle: 'bob' + user2.profile!.phoneNumber!.replace('+', ''),
+      firstName: 'bob',
+      lastName: 'bobertson',
+      email: 'b@bb.com',
+    })
+    const steve = await createUser()
+    await steve.profile!.update({
+      handle: 'steve' + steve.profile!.phoneNumber!.replace('+', ''),
+      firstName: 'steve',
+      lastName: 'stevenson',
+      email: 's@ss.com',
+    })
+
+    // verify that all 3 profiles have handles
+    // this is a back-end requirement for users to return in 'followers' or 'following' query
+    expect([!!user.profile!.handle, !!user2.profile!.handle, !!steve.profile!.handle]).toEqual([
+      true,
+      true,
+      true,
+    ])
+
+    const user1steve = await user.loadProfile(steve.username!)
+    expect(user1steve).toBeTruthy()
+    await user1steve.followers.load()
+    expect(user1steve.followers.length).toEqual(0)
+    const user2steve = await user2.loadProfile(steve.username!)
+    await user2steve.follow()
+    await user1steve.followers.load({force: true})
+    await steve.remove()
+    expect(user1steve.followers.length).toEqual(1)
+    expect(user1steve.followers.list[0].handle).toEqual(user2.profile!.handle)
+  })
+
   it('unfollow and refollow', async () => {
     // NOTE: the roster updates tend to require a bit more time to complete
     jest.setTimeout(10000)
@@ -114,90 +145,7 @@ describe('NewGraphQL tests', () => {
     // todo: any way to verify (other than no errors?)
   })
 
-  describe('bot stuff', () => {
-    beforeAll(async () => {
-      bot = await user.createBot()
-      // expect(bot.icon).toBe('')
-      // expect(bot.isNew).toBe(true)
-      bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
-      await bot.update({
-        icon,
-        public: false,
-        location: {latitude: 1.1, longitude: 2.1},
-        title: 'Test bot',
-        addressData: {city: 'Koper', country: 'Slovenia'},
-      })
-    })
-    it('checks the bot', () => {
-      expect(bot.icon).toBe(icon)
-      expect(bot.isNew).toBe(false)
-      expect(bot.title).toBe('Test bot')
-      expect(bot.location!.latitude).toBe(1.1)
-      expect(bot.location!.longitude).toBe(2.1)
-    })
-    it('update bot location', async () => {
-      await bot.update({
-        location: {latitude: 1.3, longitude: 2.3},
-        title: 'Test bot!',
-      })
-      expect(bot.isNew).toBe(false)
-      expect(bot.title).toBe('Test bot!')
-      expect(bot.location!.latitude).toBe(1.3)
-      expect(bot.location!.longitude).toBe(2.3)
-    })
-
-    it('update bot description', async () => {
-      await bot.update({description: 'New description'})
-      expect(bot.description).toBe('New description')
-    })
-
-    it('create bot posts + load with paging', async () => {
-      await bot.posts.load()
-      expect(bot.posts.list.length).toBe(0)
-      for (let i = 0; i < 12; i += 1) {
-        const botPost = bot.createPost('hello' + i)
-        await botPost.publish()
-      }
-      expect(bot.posts.list.length).toBe(12)
-      // load bot posts
-      bot.posts.refresh()
-      expect(bot.posts.list.length).toBe(0)
-      // load first page (10 records)
-      await bot.posts.load()
-      expect(bot.posts.list.length).toBe(10)
-      // verify paging
-      await bot.posts.load()
-      expect(bot.posts.list.length).toBe(12)
-      // we have reversed order of posts here
-      for (let i = 0; i < 12; i += 1) {
-        expect(bot.posts.list[i].content).toBe('hello' + (11 - i))
-      }
-    })
-    it('removes a bot post', async () => {
-      await bot.removePost(bot.posts.list[0].id)
-      expect(bot.posts.list.length).toBe(11)
-    })
-    it('invite', async () => {
-      await bot.invite([user2.username!])
-    })
-    it('load bot for user2', async () => {
-      const bot2 = await user2.loadBot(bot.id)
-      expect(bot2).toBeTruthy()
-      await bot2.acceptInvitation({latitude: 1, longitude: 2, accuracy: 1})
-      expect(bot2.guests.list.length).toBe(1)
-      expect(bot2.posts.list.length).toBe(10) // only first page should be loaded, not all
-    })
-    afterAll(async () => {
-      try {
-        await user.removeBot(bot.id)
-      } catch (e) {
-        // console.warn('error removing bot', e)
-      }
-    })
-  })
-
   afterAll(async () => {
-    // await sleep(1000) // we need it now to see debug console.log statements
     try {
       await user.remove()
     } catch (e) {
