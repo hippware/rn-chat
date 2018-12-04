@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, Image} from 'react-native'
 import Avatar from '../common/Avatar'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {observer} from 'mobx-react/native'
 import {ProfileHandle} from '../common'
 
@@ -42,10 +42,8 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
         </Text>
       </View>
       {selected !== undefined && (
-        <View style={{width: 40 * k, padding: 10 * k}}>
-          {selected && (
-            <Image style={{right: 20 * k}} source={require('../../../images/contactSelect.png')} />
-          )}
+        <View style={{width: 25}}>
+          {selected && <Image source={require('../../../images/contactSelect.png')} />}
         </View>
       )}
       {children}

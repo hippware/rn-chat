@@ -12,8 +12,8 @@ const ActiveBannerPlaceholder = () => {
     <View
       style={{
         backgroundColor: 'white',
+        paddingVertical: 12 * k,
         paddingLeft: 25 * k,
-        paddingBottom: 15 * k,
         flex: 0,
         alignSelf: 'flex-start',
       }}

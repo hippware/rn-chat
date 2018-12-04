@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, View, Image, TouchableOpacity, Share} from 'react-native'
 
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import {inject, observer} from 'mobx-react/native'
@@ -34,8 +34,8 @@ class InviteFriendsRow extends React.Component<Props> {
             flexDirection: 'row',
             borderTopWidth: StyleSheet.hairlineWidth,
             borderColor: colors.DARK_GREY,
-            padding: 13 * k,
-            paddingVertical: 20 * k,
+            paddingHorizontal: 15 * minHeight,
+            paddingVertical: 20,
             alignItems: 'center',
           },
           style,
@@ -44,7 +44,7 @@ class InviteFriendsRow extends React.Component<Props> {
       >
         <Image
           source={require('../../../images/iconBot.png')}
-          style={{height: 37 * k, width: 37 * k}}
+          style={{height: 37, width: 37}}
           resizeMode="contain"
         />
         <View style={{flex: 1, marginLeft: 13 * k}}>

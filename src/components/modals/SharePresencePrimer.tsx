@@ -30,7 +30,7 @@ class SharePresencePrimer extends React.Component<Props> {
         <View style={styles.inner} pointerEvents="box-none">
           <Image source={icon} style={{alignSelf: 'center', marginBottom: 10}} />
           <RText style={styles.title} weight="Light" size={28} color={colors.PINK}>
-            {'Know when friends\r\narrive and depart'}
+            {'Know when friends arrive and depart'}
           </RText>
           <RText style={styles.muted} color={colors.WARM_GREY_2} size={15} weight="Light">
             {"Invite to share each other's\r\npresence at this location!"}
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginVertical: 15 * k,
-    lineHeight: 32 * k,
+    lineHeight: 36,
     textAlign: 'center',
   },
   muted: {
