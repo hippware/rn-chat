@@ -3,7 +3,7 @@ import {Alert, TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-n
 import {observer, inject} from 'mobx-react/native'
 import {observable, action} from 'mobx'
 import {Actions} from 'react-native-router-flux'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {AutoExpandingTextInput} from '../common'
 import Screen from '../Screen'
 import {colors} from '../../constants'
@@ -77,7 +77,7 @@ class BotShareSelectFriends extends React.Component<Props, State> {
         <FriendMultiSelect selection={selection} botTitle={this.bot ? this.bot!.title! : ''} />
         {!!selection.selected.length && (
           <View style={styles.container}>
-            <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
+            <View style={{padding: 20 * k, paddingTop: 15, paddingBottom: 10}}>
               <AutoExpandingTextInput
                 style={styles.input}
                 placeholderTextColor={colors.DARK_GREY}
@@ -111,21 +111,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.11,
   },
   shareButton: {
-    height: 50 * k,
+    height: 50 * minHeight,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 0,
     backgroundColor: colors.PINK,
   },
   shareText: {
-    fontSize: 15 * k,
+    fontSize: 16,
     fontFamily: 'Roboto-Regular',
     color: colors.WHITE,
     letterSpacing: 0.8,
   },
   input: {
     fontFamily: 'Roboto-Regular',
-    fontSize: 15 * k,
+    fontSize: 16,
     color: colors.PURPLE,
   },
 })

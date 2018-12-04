@@ -70,7 +70,7 @@ class GeofenceShare extends React.Component<Props> {
         />
         <BottomButton isDisabled={!selected} onPress={this.share}>
           <RText size={15} color="white" style={styles.shareText}>
-            Share Presence
+            Invite to Follow Location
           </RText>
         </BottomButton>
       </Screen>

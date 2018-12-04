@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
 import {INavStore} from '../../store/NavStore'
+import {k} from '../Global'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -121,7 +122,7 @@ export default class MapHome extends React.Component<IProps> {
     }
     const {latitude, longitude} = location
     return (
-      <View style={[commonStyles.absolute, {bottom: -30}]}>
+      <View style={[commonStyles.absolute, {bottom: -50 * k}]}>
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}

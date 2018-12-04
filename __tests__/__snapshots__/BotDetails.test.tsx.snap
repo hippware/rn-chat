@@ -536,7 +536,7 @@ exports[`BotDetails renders with no data 1`] = `
                     Object {
                       "color": "rgb(63,50,77)",
                       "fontFamily": "Roboto-Regular",
-                      "fontSize": 32,
+                      "fontSize": 17,
                       "fontWeight": undefined,
                       "letterSpacing": 0.5,
                     },

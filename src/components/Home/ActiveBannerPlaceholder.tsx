@@ -12,13 +12,13 @@ const ActiveBannerPlaceholder = () => {
     <View
       style={{
         backgroundColor: 'white',
+        paddingVertical: 12 * k,
         paddingLeft: 25 * k,
-        paddingBottom: 15 * k,
         flex: 0,
         alignSelf: 'flex-start',
       }}
     >
-      <Image source={placeholderImg} style={{width: 72 * k, height: 79 * k}} resizeMode="contain" />
+      <Image source={placeholderImg} style={{width: 72, height: 79}} resizeMode="contain" />
       <RText
         size={13}
         style={{textAlign: 'center', left: -5 * k}}
