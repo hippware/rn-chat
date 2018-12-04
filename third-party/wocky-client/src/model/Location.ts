@@ -1,4 +1,4 @@
-import {types} from 'mobx-state-tree'
+import {types, Instance} from 'mobx-state-tree'
 
 export const Location = types
   .model('Location', {
@@ -15,5 +15,5 @@ export const Location = types
     },
   }))
 
-export type ILocation = typeof Location.Type
+export interface ILocation extends Instance<typeof Location> {}
 export type ILocationSnapshot = typeof Location.SnapshotType

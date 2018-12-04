@@ -804,12 +804,12 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async subscribeBot(): Promise<number> {
+  async subscribeBot(): Promise<boolean> {
     // Supported via the BotSubscribe mutation
     throw new Error('Not supported')
   }
 
-  async unsubscribeBot(): Promise<number> {
+  async unsubscribeBot(): Promise<void> {
     // Supported via the BotUnsubscribe mutation
     throw new Error('Not supported')
   }

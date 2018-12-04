@@ -20,6 +20,7 @@ import {
   generateWockyToken,
   processRosterItem,
   convertBotPost,
+  convertLocation,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
@@ -220,7 +221,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<any[]> {
-    // This is supported via the User.Contacts connection
     const res = await this.client!.query<any>({
       query: gql`
         query requestRoster {
@@ -763,11 +763,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     this.client = undefined
   }
 
-  async requestProfiles(): Promise<any> {
-    // This is supported through the User query
-    throw new Error('Not supported')
-  }
-
   async updateProfile(d: any): Promise<void> {
     const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
     const values = {}
@@ -916,14 +911,49 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async subscribeBot(): Promise<number> {
-    // Supported via the BotSubscribe mutation
-    throw new Error('Not supported')
+  // TODO: do we even need this with new invite/accept flow?
+  async subscribeBot(id: string): Promise<boolean> {
+    // const data = await this.client!.mutate({
+    //   mutation: gql`
+    //     mutation subscribeBot($input: BotSubscribeInput!) {
+    //       botSubscribe(input: $input) {
+    //         successful
+    //         messages {
+    //           message
+    //         }
+    //       }
+    //     }
+    //   `,
+    //   variables: {
+    //     input: {id, userLocation: userLocation ? convertLocation(userLocation, this.resource) : {}},
+    //   },
+    // })
+    // console.log('& subscribe bot', data.data!.subscribeBot)
+    // if (!data.data!.subscribeBot.successful) {
+    //   throw new Error(`GraphQL block error:${JSON.stringify(data.data!.subscribeBot.messages)}`)
+    // }
+    throw new Error('not supported')
   }
 
-  async unsubscribeBot(): Promise<number> {
-    // Supported via the BotUnsubscribe mutation
-    throw new Error('Not supported')
+  async unsubscribeBot(id: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation unsubscribeBot($input: BotUnsubscribeInput!) {
+          botUnsubscribe(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {id},
+      },
+    })
+    if (!res.data!.botUnsubscribe.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(res.data!.botUnsubscribe.messages)}`)
+    }
   }
 
   async loadChats(): Promise<Array<{id: string; message: any}>> {
@@ -1025,16 +1055,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           title,
           type,
         },
-        ...(userLocation
-          ? {
-              userLocation: {
-                device: this.resource,
-                lon: userLocation.longitude,
-                lat: userLocation.latitude,
-                accuracy: userLocation.accuracy,
-              },
-            }
-          : {}),
+        userLocation: userLocation ? convertLocation(userLocation, this.resource) : {},
       },
     })
     if (!res.data!.botUpdate.successful) {
@@ -1042,8 +1063,47 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async loadRelations(): Promise<IPagingList<any>> {
-    throw new Error('Not supported')
+  async loadRelations(
+    userId: string,
+    // TODO: use more specific typing when we can change IWockyTransport
+    // relation: 'FOLLOWER' | 'FOLLOWING' | 'FRIEND' | 'NONE' = 'FOLLOWING',
+    relation: string = 'FOLLOWING',
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<any>> {
+    // TODO: remove this after IWockyTransport change
+    relation = relation.toUpperCase()
+    const res = await this.client!.query<any>({
+      query: gql`
+        query user($userId: UUID!, $relation: UserContactRelationship, $lastId: String, $max: Int) {
+          user(id: $userId) {
+            id
+            contacts(first: $max, relationship: $relation, after: $lastId) {
+              totalCount
+              edges {
+                relationship
+                createdAt
+                node {
+                  id
+                  roles
+                  firstName
+                  lastName
+                  handle
+                  avatar {
+                    thumbnailUrl
+                    trosUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {userId, relation, lastId, max},
+    })
+    const {totalCount, edges} = res.data.user!.contacts
+    const list = edges.map(e => convertProfile(e.node))
+    return {list, count: totalCount}
   }
 
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
