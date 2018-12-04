@@ -1,5 +1,5 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
-import {when, autorun, IReactionDisposer} from 'mobx'
+import {autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
@@ -346,20 +346,25 @@ const LocationStore = types
       }
 
       reactions = [
-        when(
-          () => wocky.connected,
+        autorun(
           async () => {
-            try {
-              await self.refreshCredentials()
-              await self.getCurrentPosition()
-              await BackgroundGeolocation.start()
-              logger.log(prefix, 'Start')
-            } catch (err) {
-              // prevent unhandled promise rejection
-              logger.log(prefix, 'Start onConnected reaction error', err)
+            if (wocky.connected) {
+              try {
+                await self.refreshCredentials()
+                await self.getCurrentPosition()
+                await BackgroundGeolocation.start()
+                logger.log(prefix, 'Start')
+              } catch (err) {
+                // prevent unhandled promise rejection
+                logger.log(prefix, 'Start onConnected reaction error', err)
+                const errInfo = JSON.stringify(err)
+                BackgroundGeolocation.logger.error(
+                  `${prefix} Start onConnected reaction error ${errInfo}`
+                )
+              }
             }
           },
-          {name: 'LocationStore: Start background after connected'}
+          {name: 'LocationStore: Start RNBGL after connected'}
         ),
         autorun(() => !self.location && self.getCurrentPosition(), {
           delay: 500,
