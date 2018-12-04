@@ -938,10 +938,6 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async geosearch(): Promise<void> {
-    throw new Error('Not supported')
-  }
-
   sendMessage(): void {
     throw new Error('Not supported')
   }

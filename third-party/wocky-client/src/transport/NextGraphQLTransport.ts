@@ -1128,11 +1128,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async geosearch(): Promise<void> {
-    // Not used
-    throw new Error('Not supported')
-  }
-
   sendMessage(): void {
     throw new Error('Not supported')
   }
