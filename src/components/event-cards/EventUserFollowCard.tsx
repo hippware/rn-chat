@@ -50,7 +50,7 @@ const FollowButton = inject('analytics')(
           }
         }}
       >
-        <RText size={10.5} color={isFollowed ? 'white' : colors.PINK}>
+        <RText size={10.5} weight="Medium" color={isFollowed ? 'white' : colors.PINK}>
           {isFollowed ? 'FOLLOWING' : 'FOLLOW'}
         </RText>
       </GradientButton>
@@ -76,9 +76,9 @@ const unfollow = async (profile: any) => {
 
 const styles = StyleSheet.create({
   button: {
-    marginRight: 10 * k,
-    width: 71 * k,
-    height: 27 * k,
+    marginRight: 10,
+    width: 71,
+    height: 27,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3.6,
