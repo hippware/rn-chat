@@ -230,7 +230,7 @@ describe('Geofence', () => {
   it('load bot guests', async done => {
     try {
       timestamp()
-      expect(bot.guests.length).toEqual(0)
+      expect(bot.guests.length).toEqual(1)
       await bot.guests.load()
       expect(bot.guests.length).toEqual(2)
       done()

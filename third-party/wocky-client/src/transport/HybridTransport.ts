@@ -114,10 +114,6 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.updateProfile(d)
   }
 
-  lookup(handle: string): Promise<any> {
-    return this._xmpp.lookup(handle)
-  }
-
   async remove(): Promise<void> {
     await this._gql.remove()
     await this._xmpp.remove()
@@ -151,11 +147,6 @@ export class HybridTransport implements IWockyTransport {
 
   unblock(username: string): Promise<void> {
     return this._xmpp.unblock(username)
-  }
-
-  // TODO: remove/comment this (unnecessary with invite/accept flow)
-  subscribeBot(id: string) {
-    return this._xmpp.subscribeBot(id)
   }
 
   unsubscribeBot(id: string) {

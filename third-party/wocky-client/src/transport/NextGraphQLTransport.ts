@@ -789,11 +789,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async lookup(): Promise<any> {
-    // NOTE: lookup isn't current in use in rn-chat so we don't need to implement it here (and should remove from IWockyTransport eventually)
-    throw new Error('Not supported')
-  }
-
   async remove(): Promise<void> {
     const data: any = await this.client!.mutate({
       mutation: gql`
@@ -909,30 +904,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     if (!data.data!.userUnblock.successful) {
       throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userUnblock.messages)}`)
     }
-  }
-
-  // TODO: do we even need this with new invite/accept flow?
-  async subscribeBot(id: string): Promise<boolean> {
-    // const data = await this.client!.mutate({
-    //   mutation: gql`
-    //     mutation subscribeBot($input: BotSubscribeInput!) {
-    //       botSubscribe(input: $input) {
-    //         successful
-    //         messages {
-    //           message
-    //         }
-    //       }
-    //     }
-    //   `,
-    //   variables: {
-    //     input: {id, userLocation: userLocation ? convertLocation(userLocation, this.resource) : {}},
-    //   },
-    // })
-    // console.log('& subscribe bot', data.data!.subscribeBot)
-    // if (!data.data!.subscribeBot.successful) {
-    //   throw new Error(`GraphQL block error:${JSON.stringify(data.data!.subscribeBot.messages)}`)
-    // }
-    throw new Error('not supported')
   }
 
   async unsubscribeBot(id: string): Promise<void> {
@@ -1133,22 +1104,11 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async geosearch(): Promise<void> {
-    // Not used
-    throw new Error('Not supported')
-  }
-
   sendMessage(): void {
     throw new Error('Not supported')
   }
 
   async loadChat(): Promise<void> {
-    throw new Error('Not supported')
-  }
-
-  subscribeToHomestream(): void {
-    // Not used
-    // Available via the HomeStream subscription
     throw new Error('Not supported')
   }
 
@@ -1160,16 +1120,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
-    // Not used
-    throw new Error('Not supported')
-  }
-
-  async loadHomestream(): Promise<IPagingList<any>> {
-    // Not used
-    // Available through the CurrentUser.HomeStream connection
-    throw new Error('Not supported')
-  }
   async removeUpload(tros: string) {
     await this.client!.mutate({
       mutation: gql`

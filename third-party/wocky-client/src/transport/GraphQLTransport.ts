@@ -295,6 +295,42 @@ export class GraphQLTransport implements IWockyTransport {
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
             ${BOT_PROPS}
+            guests: subscribers(first: 10, type: SUBSCRIBER) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+            visitors: subscribers(first: 10, type: VISITOR) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  ${PROFILE_PROPS}
+                }
+              }
+            }
+            posts: items(first: 10) {
+              totalCount
+              edges {
+                cursor
+                node {
+                  id
+                  stanza
+                  media {
+                    fullUrl
+                    thumbnailUrl
+                    trosUrl
+                  }
+                  owner {
+                    ${PROFILE_PROPS}
+                  }
+                }
+              }
+            }
           }
         }
       `,
@@ -743,10 +779,6 @@ export class GraphQLTransport implements IWockyTransport {
     }
   }
 
-  async lookup(): Promise<any> {
-    throw new Error('Not supported')
-  }
-
   async remove(): Promise<void> {
     // TODO: remove user
     return this.disconnect()
@@ -801,11 +833,6 @@ export class GraphQLTransport implements IWockyTransport {
   }
 
   async unblock(): Promise<void> {
-    throw new Error('Not supported')
-  }
-
-  async subscribeBot(): Promise<boolean> {
-    // Supported via the BotSubscribe mutation
     throw new Error('Not supported')
   }
 
@@ -906,20 +933,11 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async geosearch(): Promise<void> {
-    throw new Error('Not supported')
-  }
-
   sendMessage(): void {
     throw new Error('Not supported')
   }
 
   async loadChat(): Promise<void> {
-    throw new Error('Not supported')
-  }
-
-  subscribeToHomestream(): void {
-    // Available via the HomeStream subscription
     throw new Error('Not supported')
   }
 
@@ -931,14 +949,6 @@ export class GraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
-    throw new Error('Not supported')
-  }
-
-  async loadHomestream(): Promise<IPagingList<any>> {
-    // Available through the CurrentUser.HomeStream connection
-    throw new Error('Not supported')
-  }
   async removeUpload(tros: string) {
     await this.client!.mutate({
       mutation: gql`

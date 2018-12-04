@@ -155,10 +155,6 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        lookup: flow<string>(function*(handle: string) {
-          const profile = yield self.transport.lookup(handle)
-          return self.profiles.get(profile.id, profile)
-        }),
         createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id})),
       },
     }
@@ -405,11 +401,6 @@ export const Wocky = types
         while (!parent.id) parent = getParent(parent)
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
-      }),
-      // TODO: remove/comment this (unnecessary with invite/accept flow)
-      _subscribeBot: flow(function*(id: string) {
-        yield waitFor(() => self.connected)
-        return yield self.transport.subscribeBot(id)
       }),
       _unsubscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)

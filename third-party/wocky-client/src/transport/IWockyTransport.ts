@@ -49,7 +49,6 @@ export interface IWockyTransport {
   loadProfile(user: string): Promise<IProfilePartial | null>
   // requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
-  lookup(handle: string): Promise<any>
   remove(): Promise<void>
   downloadURL(tros: string): Promise<any>
   requestUpload(params: {
@@ -64,8 +63,6 @@ export interface IWockyTransport {
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>
   unblock(username: string): Promise<void>
-  // TODO: remove/comment this (unnecessary with invite/accept flow)
-  subscribeBot(id: string): Promise<boolean>
   unsubscribeBot(id: string): Promise<void>
   requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>
