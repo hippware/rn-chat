@@ -1112,12 +1112,46 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async enablePush(): Promise<void> {
-    throw new Error('Not supported')
+  async enablePush(token: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation pushNotificationsEnable($input: PushNotificationsEnableInput!) {
+          pushNotificationsEnable(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {device: this.resource, token}},
+    })
+    if (!res.data!.pushNotificationsEnable.successful) {
+      throw new Error(
+        `GraphQL enablePush error:${JSON.stringify(res.data!.pushNotificationsEnable.messages)}`
+      )
+    }
   }
 
   async disablePush(): Promise<void> {
-    throw new Error('Not supported')
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation pushNotificationsDisable($input: PushNotificationsDisableInput!) {
+          pushNotificationsDisable(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {input: {device: this.resource}},
+    })
+    if (!res.data!.pushNotificationsDisable.successful) {
+      throw new Error(
+        `GraphQL disablePush error:${JSON.stringify(res.data!.pushNotificationsDisable.messages)}`
+      )
+    }
   }
 
   async removeUpload(tros: string) {

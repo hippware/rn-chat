@@ -138,6 +138,11 @@ describe('New GraphQL profile tests', () => {
     jest.setTimeout(5000)
   })
 
+  it('enable/disable push notifications', async () => {
+    await user.enablePush('randomToken')
+    await user.disablePush()
+  })
+
   it('remove/delete user', async () => {
     const user3 = await createUser()
     expect(user3).toBeTruthy()
