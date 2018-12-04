@@ -7,7 +7,7 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot, IBotPost} from '..'
+import {ILocationSnapshot, IBotPost, IMessage} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
@@ -923,14 +923,40 @@ export class NextGraphQLTransport implements IWockyTransport {
       },
     })
     if (!res.data!.botUnsubscribe.successful) {
-      throw new Error(`GraphQL block error:${JSON.stringify(res.data!.botUnsubscribe.messages)}`)
+      throw new Error(`GraphQL block error: ${JSON.stringify(res.data!.botUnsubscribe.messages)}`)
     }
   }
 
-  async loadChats(): Promise<Array<{id: string; message: any}>> {
-    // Assuming this is what we call "conversations" on the server, this
-    // is avaialble via the CurrentUser.Conversations connection
+  async sendMessage({to, body}: IMessage): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation sendMessage($input: SendMessageInput!) {
+          sendMessage(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {message: body, recipientId: to},
+      },
+    })
+    console.log('& res', res)
+    if (!res.data!.sendMessage.successful) {
+      throw new Error(
+        `GraphQL sendMessage error: ${JSON.stringify(res.data!.sendMessage.messages)}`
+      )
+    }
+  }
+
+  async loadChat(): Promise<void> {
     throw new Error('Not supported')
+  }
+
+  async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
+    return [{id: '1', message: 'hello'}]
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -1102,14 +1128,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     if (!res.data!.botItemPublish.successful) {
       throw new Error('Error during bot save')
     }
-  }
-
-  sendMessage(): void {
-    throw new Error('Not supported')
-  }
-
-  async loadChat(): Promise<void> {
-    throw new Error('Not supported')
   }
 
   async enablePush(token: string): Promise<void> {
