@@ -912,32 +912,48 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   // TODO: do we even need this with new invite/accept flow?
-  async subscribeBot(id: string, userLocation: ILocation | null): Promise<boolean> {
-    //   // const data = await this.client!.mutate({
-    //   //   mutation: gql`
-    //   //     mutation subscribeBot($input: BotSubscribeInput!) {
-    //   //       botSubscribe(input: $input) {
-    //   //         successful
-    //   //         messages {
-    //   //           message
-    //   //         }
-    //   //       }
-    //   //     }
-    //   //   `,
-    //   //   variables: {
-    //   //     input: {id, userLocation: userLocation ? convertLocation(userLocation, this.resource) : {}},
-    //   //   },
-    //   // })
-    //   // console.log('& subscribe bot', data.data!.subscribeBot)
-    //   // if (!data.data!.subscribeBot.successful) {
-    //   //   throw new Error(`GraphQL block error:${JSON.stringify(data.data!.subscribeBot.messages)}`)
-    //   // }
+  async subscribeBot(id: string): Promise<boolean> {
+    // const data = await this.client!.mutate({
+    //   mutation: gql`
+    //     mutation subscribeBot($input: BotSubscribeInput!) {
+    //       botSubscribe(input: $input) {
+    //         successful
+    //         messages {
+    //           message
+    //         }
+    //       }
+    //     }
+    //   `,
+    //   variables: {
+    //     input: {id, userLocation: userLocation ? convertLocation(userLocation, this.resource) : {}},
+    //   },
+    // })
+    // console.log('& subscribe bot', data.data!.subscribeBot)
+    // if (!data.data!.subscribeBot.successful) {
+    //   throw new Error(`GraphQL block error:${JSON.stringify(data.data!.subscribeBot.messages)}`)
+    // }
     throw new Error('not supported')
   }
 
-  async unsubscribeBot(): Promise<boolean> {
-    // Supported via the BotUnsubscribe mutation
-    throw new Error('Not supported')
+  async unsubscribeBot(id: string): Promise<void> {
+    const res = await this.client!.mutate({
+      mutation: gql`
+        mutation unsubscribeBot($input: BotUnsubscribeInput!) {
+          botUnsubscribe(input: $input) {
+            successful
+            messages {
+              message
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {id},
+      },
+    })
+    if (!res.data!.botUnsubscribe.successful) {
+      throw new Error(`GraphQL block error:${JSON.stringify(res.data!.botUnsubscribe.messages)}`)
+    }
   }
 
   async loadChats(): Promise<Array<{id: string; message: any}>> {

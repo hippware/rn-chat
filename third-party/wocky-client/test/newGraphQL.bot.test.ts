@@ -1,6 +1,7 @@
-import {createUser} from './support/testuser'
+import {createUser, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
+import {Location} from '../src/model/Location'
 
 let user: IWocky, user2: IWocky
 let bot: IBot
@@ -74,6 +75,16 @@ describe('NewGraphQL tests', () => {
   it('removes a bot post', async () => {
     await bot.removePost(bot.posts.list[0].id)
     expect(bot.posts.list.length).toBe(11)
+  })
+
+  it('invite, accept bot invitation, unsubscribe', async () => {
+    await bot.invite([user2!.username!])
+    await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
+    const loadedBot = await user2.loadBot(bot.id)
+    expect(loadedBot.visitorsSize).toEqual(0)
+    await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
+    await waitFor(() => loadedBot.visitorsSize === 1, 'visitors size to increment')
+    await loadedBot.unsubscribe()
   })
 
   afterAll(async () => {

@@ -298,7 +298,7 @@ export const Wocky = types
         }
       }
       return bot
-    }),
+    }) as (id: string) => Promise<IBot>,
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
