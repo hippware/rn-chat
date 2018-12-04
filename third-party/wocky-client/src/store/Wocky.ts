@@ -148,10 +148,10 @@ export const Wocky = types
           Object.assign(self, res)
           return true
         }),
-        _requestProfiles: flow(function*(users: string[]) {
-          const arr = yield self.transport.requestProfiles(users)
-          return arr.map((user: any) => self.profiles.get(user.id, user))
-        }),
+        // _requestProfiles: flow(function*(users: string[]) {
+        //   const arr = yield self.transport.requestProfiles(users)
+        //   return arr.map((user: any) => self.profiles.get(user.id, user))
+        // }),
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),

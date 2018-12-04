@@ -106,9 +106,9 @@ export class HybridTransport implements IWockyTransport {
     // return this._xmpp.loadProfile(user)
   }
 
-  requestProfiles(users: string[]): Promise<any> {
-    return this._xmpp.requestProfiles(users)
-  }
+  // requestProfiles(users: string[]): Promise<any> {
+  //   return this._xmpp.requestProfiles(users)
+  // }
 
   updateProfile(d: any): Promise<void> {
     return this._gql.updateProfile(d)

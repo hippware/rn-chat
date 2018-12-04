@@ -762,11 +762,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     this.client = undefined
   }
 
-  async requestProfiles(): Promise<any> {
-    // This is supported through the User query
-    throw new Error('Not supported')
-  }
-
   async updateProfile(d: any): Promise<void> {
     const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
     const values = {}
@@ -1079,7 +1074,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {userId, relation, lastId, max},
     })
-    // console.log('& res', res.data!.user!.contacts)
     const {totalCount, edges} = res.data.user!.contacts
     const list = edges.map(e => convertProfile(e.node))
     return {list, count: totalCount}
