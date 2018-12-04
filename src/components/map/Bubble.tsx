@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bubble: {
-    backgroundColor: colors.PINK,
+    backgroundColor: colors.WHITE,
     borderColor: colors.PINK,
   },
 })
