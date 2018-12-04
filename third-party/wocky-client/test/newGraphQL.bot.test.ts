@@ -31,6 +31,7 @@ describe('NewGraphQL tests', () => {
     expect(bot.location!.latitude).toBe(1.1)
     expect(bot.location!.longitude).toBe(2.1)
   })
+
   it('update bot location', async () => {
     await bot.update({
       location: {latitude: 1.3, longitude: 2.3},

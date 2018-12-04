@@ -20,6 +20,7 @@ import {
   generateWockyToken,
   processRosterItem,
   convertBotPost,
+  convertLocation,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
@@ -910,12 +911,31 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async subscribeBot(): Promise<number> {
-    // Supported via the BotSubscribe mutation
-    throw new Error('Not supported')
+  // TODO: do we even need this with new invite/accept flow?
+  async subscribeBot(id: string, userLocation: ILocation | null): Promise<boolean> {
+    //   // const data = await this.client!.mutate({
+    //   //   mutation: gql`
+    //   //     mutation subscribeBot($input: BotSubscribeInput!) {
+    //   //       botSubscribe(input: $input) {
+    //   //         successful
+    //   //         messages {
+    //   //           message
+    //   //         }
+    //   //       }
+    //   //     }
+    //   //   `,
+    //   //   variables: {
+    //   //     input: {id, userLocation: userLocation ? convertLocation(userLocation, this.resource) : {}},
+    //   //   },
+    //   // })
+    //   // console.log('& subscribe bot', data.data!.subscribeBot)
+    //   // if (!data.data!.subscribeBot.successful) {
+    //   //   throw new Error(`GraphQL block error:${JSON.stringify(data.data!.subscribeBot.messages)}`)
+    //   // }
+    throw new Error('not supported')
   }
 
-  async unsubscribeBot(): Promise<number> {
+  async unsubscribeBot(): Promise<boolean> {
     // Supported via the BotUnsubscribe mutation
     throw new Error('Not supported')
   }
@@ -1019,16 +1039,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           title,
           type,
         },
-        ...(userLocation
-          ? {
-              userLocation: {
-                device: this.resource,
-                lon: userLocation.longitude,
-                lat: userLocation.latitude,
-                accuracy: userLocation.accuracy,
-              },
-            }
-          : {}),
+        userLocation: userLocation ? convertLocation(userLocation, this.resource) : {},
       },
     })
     if (!res.data!.botUpdate.successful) {

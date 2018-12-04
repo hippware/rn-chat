@@ -153,6 +153,7 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unblock(username)
   }
 
+  // TODO: remove/comment this (unnecessary with invite/accept flow)
   subscribeBot(id: string) {
     return this._xmpp.subscribeBot(id)
   }
