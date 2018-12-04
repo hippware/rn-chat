@@ -1,4 +1,4 @@
-import {ApolloClient} from 'apollo-client'
+import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList, LoginParams} from './IWockyTransport'
@@ -11,7 +11,7 @@ import {ILocationSnapshot, IBotPost, IMessage} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
+import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS, VOID_PROPS} from './constants'
 import {
   convertProfile,
   convertBot,
@@ -21,10 +21,12 @@ import {
   processRosterItem,
   convertBotPost,
   convertLocation,
+  waitFor,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 import {IBotPostData} from '../model/BotPost'
+import {OperationDefinitionNode} from 'graphql'
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
@@ -91,79 +93,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
     return res
     // return true
-  }
-
-  prepConnection() {
-    if (this.client && this.client2) {
-      return
-    }
-    const socketEndpoint = process.env.WOCKY_LOCAL
-      ? 'ws://localhost:8080/graphql'
-      : `wss://${this.host}/graphql`
-
-    this.socket = new PhoenixSocket(socketEndpoint, {
-      reconnectAfterMs: () => 100000000, // disable auto-reconnect
-      // uncomment to see all graphql messages!
-      // logger: (kind, msg, data) => {
-      //   if (msg !== 'close') {
-      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
-      //   } else {
-      //     console.log('close')
-      //   }
-      // },
-    })
-    this.socket2 = new PhoenixSocket(socketEndpoint, {
-      reconnectAfterMs: () => 100000000, // disable auto-reconnect
-      // uncomment to see all graphql messages!
-      // logger: (kind, msg, data) => {
-      //   if (msg !== 'close') {
-      //     console.log('& socket2:' + `${kind}: ${msg}`, JSON.stringify(data))
-      //   } else {
-      //     console.log('close2')
-      //   }
-      // },
-    })
-    const fragmentMatcher = new IntrospectionFragmentMatcher({
-      introspectionQueryResultData,
-    })
-    const defaultOptions: any = {
-      watchQuery: {
-        fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
-      },
-      query: {
-        fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
-      },
-    }
-    this.client = new ApolloClient({
-      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
-      cache: new InMemoryCache({fragmentMatcher}),
-      defaultOptions,
-    })
-    this.client2 = new ApolloClient({
-      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket2)),
-      cache: new InMemoryCache({fragmentMatcher}),
-      defaultOptions,
-    })
-    this.socket.onError(() => {
-      // console.log('& graphql Phoenix socket error', err)
-      this.connected = false
-    })
-    this.socket.onClose(() => {
-      // console.log('& graphql Phoenix socket closed')
-      // this.unsubscribeBotVisitors()
-      this.connected = false
-    })
-    this.socket.onOpen(() => {
-      // console.log('& graphql open')
-    })
-    this.socket2.onError(() => {
-      // console.log('& graphql Phoenix socket error2')
-    })
-    this.socket2.onClose(() => {
-      // console.log('& graphql Phoenix socket closed')
-    })
   }
 
   @action
@@ -359,7 +288,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
   async setLocation(params: ILocationSnapshot): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation setLocation(
           $latitude: Float!
@@ -370,14 +299,12 @@ export class NextGraphQLTransport implements IWockyTransport {
           userLocationUpdate(
             input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}
           ) {
-            result
-            successful
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {...params, resource: this.resource},
     })
-    return res.data!.userLocationUpdate && res.data!.userLocationUpdate.successful
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
     const res = await this.client!.query<any>({
@@ -659,13 +586,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
-            successful
-            result {
-              id
-            }
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
@@ -771,40 +692,28 @@ export class NextGraphQLTransport implements IWockyTransport {
         values[field] = d[field]
       }
     })
-    const data: any = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
           userUpdate(input: {values: $values}) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}            
           }
         }
       `,
       variables: {values},
     })
-    if (!data.data.userUpdate.successful) {
-      throw new Error(JSON.stringify(data.data.userUpdate.messages))
-    }
   }
 
   async remove(): Promise<void> {
-    const data: any = await this.client!.mutate({
+    await this.voidMutation({
       mutation: gql`
         mutation userDelete {
           userDelete {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}            
           }
         }
       `,
     })
-    if (!data.data.userDelete.successful) {
-      throw new Error(JSON.stringify(data.data.userDelete.messages))
-    }
     return this.disconnect()
   }
 
@@ -829,92 +738,64 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  // TODO: DRY up follow, unfollow, block, unblock...lots of repetitive code
   async follow(userId: string): Promise<void> {
-    const data = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation follow($input: FollowInput!) {
           follow(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}            
           }
         }
       `,
       variables: {input: {userId}},
     })
-    if (!data.data!.follow.successful) {
-      throw new Error(`GraphQL follow error:${JSON.stringify(data.data!.follow.messages)}`)
-    }
   }
 
   async unfollow(userId: string): Promise<void> {
-    const data = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation unfollow($input: UnfollowInput!) {
           unfollow(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}            
           }
         }
       `,
       variables: {input: {userId}},
     })
-    if (!data.data!.unfollow.successful) {
-      throw new Error(`GraphQL unfollow error:${JSON.stringify(data.data!.unfollow.messages)}`)
-    }
   }
 
   async block(userId: string): Promise<void> {
-    const data = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation userBlock($input: UserBlockInput!) {
           userBlock(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {userId}},
     })
-    if (!data.data!.userBlock.successful) {
-      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userBlock.messages)}`)
-    }
   }
 
   async unblock(userId: string): Promise<void> {
-    const data = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation userUnblock($input: UserUnblockInput!) {
           userUnblock(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {userId}},
     })
-    if (!data.data!.userUnblock.successful) {
-      throw new Error(`GraphQL block error:${JSON.stringify(data.data!.userUnblock.messages)}`)
-    }
   }
 
   async unsubscribeBot(id: string): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
-        mutation unsubscribeBot($input: BotUnsubscribeInput!) {
+        mutation botUnsubscribe($input: BotUnsubscribeInput!) {
           botUnsubscribe(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
@@ -922,20 +803,14 @@ export class NextGraphQLTransport implements IWockyTransport {
         input: {id},
       },
     })
-    if (!res.data!.botUnsubscribe.successful) {
-      throw new Error(`GraphQL block error: ${JSON.stringify(res.data!.botUnsubscribe.messages)}`)
-    }
   }
 
   async sendMessage({to, body}: IMessage): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
           sendMessage(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
@@ -943,12 +818,6 @@ export class NextGraphQLTransport implements IWockyTransport {
         input: {message: body, recipientId: to},
       },
     })
-    console.log('& res', res)
-    if (!res.data!.sendMessage.successful) {
-      throw new Error(
-        `GraphQL sendMessage error: ${JSON.stringify(res.data!.sendMessage.messages)}`
-      )
-    }
   }
 
   async loadChat(): Promise<void> {
@@ -960,43 +829,29 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async removeBot(botId: string): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation botDelete($input: BotDeleteInput!) {
           botDelete(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {id: botId}},
     })
-    if (!res.data!.botDelete.successful) {
-      throw new Error(`GraphQL removeBot error:${JSON.stringify(res.data!.botDelete.messages)}`)
-    }
   }
 
   async removeBotPost(botId: string, postId: string): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation botItemDelete($input: BotItemDeleteInput!) {
           botItemDelete(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {botId, id: postId}},
     })
-    if (!res.data!.botItemDelete.successful) {
-      throw new Error(
-        `GraphQL removeBotPost error:${JSON.stringify(res.data!.botItemDelete.messages)}`
-      )
-    }
   }
 
   async updateBot(
@@ -1019,7 +874,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }: any,
     userLocation: ILocation | undefined
   ): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation botUpdate(
           $id: String!
@@ -1027,11 +882,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           $values: BotParams
         ) {
           botUpdate(input: {id: $id, userLocation: $userLocation, values: $values}) {
-            successful
-            messages {
-              message
-              field
-            }
+            ${VOID_PROPS}
           }
         }
       `,
@@ -1055,9 +906,6 @@ export class NextGraphQLTransport implements IWockyTransport {
         userLocation: userLocation ? convertLocation(userLocation, this.resource) : {},
       },
     })
-    if (!res.data!.botUpdate.successful) {
-      throw new Error('Error during bot save')
-    }
   }
 
   async loadRelations(
@@ -1105,15 +953,11 @@ export class NextGraphQLTransport implements IWockyTransport {
 
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
     // TODO add post.image support?
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation botItemPublish($botId: UUID!, $values: BotItemParams!) {
           botItemPublish(input: {botId: $botId, values: $values}) {
-            successful
-            messages {
-              message
-              field
-            }
+            ${VOID_PROPS}
           }
         }
       `,
@@ -1125,65 +969,47 @@ export class NextGraphQLTransport implements IWockyTransport {
         },
       },
     })
-    if (!res.data!.botItemPublish.successful) {
-      throw new Error('Error during bot save')
-    }
   }
 
   async enablePush(token: string): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation pushNotificationsEnable($input: PushNotificationsEnableInput!) {
           pushNotificationsEnable(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {device: this.resource, token}},
     })
-    if (!res.data!.pushNotificationsEnable.successful) {
-      throw new Error(
-        `GraphQL enablePush error:${JSON.stringify(res.data!.pushNotificationsEnable.messages)}`
-      )
-    }
   }
 
   async disablePush(): Promise<void> {
-    const res = await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation pushNotificationsDisable($input: PushNotificationsDisableInput!) {
           pushNotificationsDisable(input: $input) {
-            successful
-            messages {
-              message
-            }
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {input: {device: this.resource}},
     })
-    if (!res.data!.pushNotificationsDisable.successful) {
-      throw new Error(
-        `GraphQL disablePush error:${JSON.stringify(res.data!.pushNotificationsDisable.messages)}`
-      )
-    }
   }
 
-  async removeUpload(tros: string) {
-    await this.client!.mutate({
+  async removeUpload(tros: string): Promise<void> {
+    return this.voidMutation({
       mutation: gql`
         mutation mediaDelete($tros: String!) {
           mediaDelete(input: {url: $tros}) {
-            successful
+            ${VOID_PROPS}
           }
         }
       `,
       variables: {tros},
     })
   }
+
   async loadLocalBots({
     latitude,
     longitude,
@@ -1216,11 +1042,11 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
-    await this.client!.mutate({
+    return this.voidMutation({
       mutation: gql`
         mutation userHide($enable: Boolean!, $expire: DateTime) {
           userHide(input: {enable: $enable, expire: $expire}) {
-            successful
+            ${VOID_PROPS}
           }
         }
       `,
@@ -1257,28 +1083,29 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async userInviteRedeemCode(code: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      // need `when` because if code is redeemed immediately on an app load then `this.client` might be null
-      when(
-        () => this.connected,
-        async () => {
-          const res = await this.client!.mutate({
-            mutation: gql`
-              mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
-                userInviteRedeemCode(input: $code) {
-                  successful
-                }
-              }
-            `,
-            variables: {code: {code}},
-          })
-          if (!res.data!.userInviteRedeemCode.successful) {
-            reject(new Error('error redeeming invite code'))
+    await waitFor(() => this.connected)
+    return this.voidMutation({
+      mutation: gql`
+        mutation userInviteRedeemCode($code: UserInviteRedeemCodeInput!) {
+          userInviteRedeemCode(input: $code) {
+            ${VOID_PROPS}
           }
-          resolve()
         }
-      )
+      `,
+      variables: {code: {code}},
     })
+  }
+
+  /**
+   * Reduce boilerplate for pass/fail gql mutations.
+   */
+  private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
+    const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
+    const res = await this.client!.mutate({mutation, variables})
+    if (res.data && !res.data![name].successful) {
+      // console.error('voidMutation error with ', name, JSON.stringify(res.data[name]))
+      throw new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`)
+    }
   }
 
   private async getBotProfiles(
@@ -1328,5 +1155,78 @@ export class NextGraphQLTransport implements IWockyTransport {
       cursor: list.length ? list[list.length - 1].cursor : null,
       count,
     }
+  }
+
+  private prepConnection() {
+    if (this.client && this.client2) {
+      return
+    }
+    const socketEndpoint = process.env.WOCKY_LOCAL
+      ? 'ws://localhost:8080/graphql'
+      : `wss://${this.host}/graphql`
+
+    this.socket = new PhoenixSocket(socketEndpoint, {
+      reconnectAfterMs: () => 100000000, // disable auto-reconnect
+      // uncomment to see all graphql messages!
+      // logger: (kind, msg, data) => {
+      //   if (msg !== 'close') {
+      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   } else {
+      //     console.log('close')
+      //   }
+      // },
+    })
+    this.socket2 = new PhoenixSocket(socketEndpoint, {
+      reconnectAfterMs: () => 100000000, // disable auto-reconnect
+      // uncomment to see all graphql messages!
+      // logger: (kind, msg, data) => {
+      //   if (msg !== 'close') {
+      //     console.log('& socket2:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //   } else {
+      //     console.log('close2')
+      //   }
+      // },
+    })
+    const fragmentMatcher = new IntrospectionFragmentMatcher({
+      introspectionQueryResultData,
+    })
+    const defaultOptions: any = {
+      watchQuery: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'network-only',
+        errorPolicy: 'ignore',
+      },
+    }
+    this.client = new ApolloClient({
+      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket)),
+      cache: new InMemoryCache({fragmentMatcher}),
+      defaultOptions,
+    })
+    this.client2 = new ApolloClient({
+      link: createAbsintheSocketLink(AbsintheSocket.create(this.socket2)),
+      cache: new InMemoryCache({fragmentMatcher}),
+      defaultOptions,
+    })
+    this.socket.onError(() => {
+      // console.log('& graphql Phoenix socket error', err)
+      this.connected = false
+    })
+    this.socket.onClose(() => {
+      // console.log('& graphql Phoenix socket closed')
+      // this.unsubscribeBotVisitors()
+      this.connected = false
+    })
+    this.socket.onOpen(() => {
+      // console.log('& graphql open')
+    })
+    this.socket2.onError(() => {
+      // console.log('& graphql Phoenix socket error2')
+    })
+    this.socket2.onClose(() => {
+      // console.log('& graphql Phoenix socket closed')
+    })
   }
 }
