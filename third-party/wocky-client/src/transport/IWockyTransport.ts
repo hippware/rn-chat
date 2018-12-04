@@ -49,7 +49,6 @@ export interface IWockyTransport {
   loadProfile(user: string): Promise<IProfilePartial | null>
   requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
-  lookup(handle: string): Promise<any>
   remove(): Promise<void>
   downloadURL(tros: string): Promise<any>
   requestUpload(params: {

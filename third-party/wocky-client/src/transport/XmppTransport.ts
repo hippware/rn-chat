@@ -22,7 +22,6 @@ const RSM_NS = 'http://jabber.org/protocol/rsm'
 const MAM_NS = 'urn:xmpp:mam:1'
 const MAXINT = 1000
 const USER = 'hippware.com/hxep/user'
-const HANDLE = 'hippware.com/hxep/handle'
 
 export class XmppTransport implements IWockyTransport {
   provider: any
@@ -261,18 +260,6 @@ export class XmppTransport implements IWockyTransport {
       }
     })
     await this.sendIQ(iq)
-  }
-  async lookup(handle: string) {
-    const iq = $iq({type: 'get'})
-      .c('lookup', {xmlns: HANDLE})
-      .c('item', {id: handle})
-    const stanza = await this.sendIQ(iq)
-    const {jid, error} = stanza.results.item
-    if (error) {
-      throw error
-    }
-    const user = Strophe.getNodeFromJid(jid)
-    return {id: user, ...processMap(stanza.results.item)}
   }
   async remove() {
     await this.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))

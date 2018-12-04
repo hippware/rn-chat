@@ -794,11 +794,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
 
-  async lookup(): Promise<any> {
-    // NOTE: lookup isn't current in use in rn-chat so we don't need to implement it here (and should remove from IWockyTransport eventually)
-    throw new Error('Not supported')
-  }
-
   async remove(): Promise<void> {
     const data: any = await this.client!.mutate({
       mutation: gql`
@@ -1086,12 +1081,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  subscribeToHomestream(): void {
-    // Not used
-    // Available via the HomeStream subscription
-    throw new Error('Not supported')
-  }
-
   async enablePush(): Promise<void> {
     throw new Error('Not supported')
   }
@@ -1100,16 +1089,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async loadUpdates(): Promise<{list: [any]; version: string; bots: [any]}> {
-    // Not used
-    throw new Error('Not supported')
-  }
-
-  async loadHomestream(): Promise<IPagingList<any>> {
-    // Not used
-    // Available through the CurrentUser.HomeStream connection
-    throw new Error('Not supported')
-  }
   async removeUpload(tros: string) {
     await this.client!.mutate({
       mutation: gql`

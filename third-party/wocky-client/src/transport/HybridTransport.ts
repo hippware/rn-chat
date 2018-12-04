@@ -114,10 +114,6 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.updateProfile(d)
   }
 
-  lookup(handle: string): Promise<any> {
-    return this._xmpp.lookup(handle)
-  }
-
   async remove(): Promise<void> {
     await this._gql.remove()
     await this._xmpp.remove()

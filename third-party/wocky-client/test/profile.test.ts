@@ -126,18 +126,6 @@ describe('ProfileStore', () => {
       done(e)
     }
   })
-  it('test lookup', async done => {
-    try {
-      const profile = await user1.lookup('abc12')
-      expect(profile.id).toEqual(user1.username)
-      expect(profile.handle).toEqual('abc12')
-      expect(profile.firstName).toEqual('name1')
-      expect(profile.lastName).toEqual('lname1')
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
   it('profile details', async done => {
     try {
       const profile = await user1.loadProfile(user2.username!)
