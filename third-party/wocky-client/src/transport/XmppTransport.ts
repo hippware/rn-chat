@@ -880,7 +880,7 @@ export class XmppTransport implements IWockyTransport {
       node: `bot/${id}`,
     })
     const data = await this.sendIQ(iq)
-    return parseInt(data['subscriber_count'])
+    return !!parseInt(data['subscriber_count'])
   }
   async unsubscribeBot(id: string) {
     const iq = $iq({type: 'set', to: this.host}).c('unsubscribe', {
@@ -888,7 +888,7 @@ export class XmppTransport implements IWockyTransport {
       node: `bot/${id}`,
     })
     const data = await this.sendIQ(iq)
-    return parseInt(data['subscriber_count'])
+    return !!parseInt(data['subscriber_count'])
   }
   async loadNotifications(params): Promise<any> {
     throw new Error('Not supported')

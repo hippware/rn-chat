@@ -93,7 +93,7 @@ export const Bot = types
       self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
       self.service.geofenceBots.addToTop(self)
-      self.followersSize = yield self.service._subscribeBot(self.id)
+      yield self.service._subscribeBot(self.id)
     }),
     acceptInvitation: flow(function*(userLocation: ILocation) {
       if (!self.invitation) {
@@ -111,7 +111,7 @@ export const Bot = types
       self.isSubscribed = false
       self.service.profile!.subscribedBots.remove(self.id)
       self.service.geofenceBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeBot(self.id)
+      yield self.service._unsubscribeBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', action: string = 'share') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)

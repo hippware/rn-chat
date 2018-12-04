@@ -64,8 +64,8 @@ export interface IWockyTransport {
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>
   unblock(username: string): Promise<void>
-  subscribeBot(id: string): Promise<number>
-  unsubscribeBot(id: string): Promise<number>
+  subscribeBot(id: string): Promise<boolean>
+  unsubscribeBot(id: string): Promise<boolean>
   requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>
   loadBot(id: string): Promise<any> // TODO define inteface for bot

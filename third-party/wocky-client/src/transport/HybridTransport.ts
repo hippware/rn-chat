@@ -153,11 +153,11 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unblock(username)
   }
 
-  subscribeBot(id: string): Promise<number> {
+  subscribeBot(id: string) {
     return this._xmpp.subscribeBot(id)
   }
 
-  unsubscribeBot(id: string): Promise<number> {
+  unsubscribeBot(id: string) {
     return this._xmpp.unsubscribeBot(id)
   }
 
