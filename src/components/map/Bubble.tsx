@@ -19,6 +19,7 @@ type Props = {
   gradient?: boolean
   radius?: number
   borderWidth?: number
+  textSize?: number
 }
 
 const defaultSize = 58
@@ -38,10 +39,12 @@ const Bubble = observer(
     outerStyle,
     gradient,
     radius,
+    textSize,
     borderWidth,
   }: Props) => {
     const theSize = size || defaultSize
     const setRadius = radius || defaultRadius
+    const setTextSize = textSize || 13
     const setBorderWidth = borderWidth || defaultBorderWidth
     return (
       <View style={[{alignItems: 'center', padding: 3}, outerStyle]}>
@@ -73,7 +76,7 @@ const Bubble = observer(
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <RText
                 color={colors.WHITE}
-                size={13}
+                size={setTextSize}
                 style={{padding: 2}}
                 numberOfLines={1}
                 ellipsizeMode="middle"

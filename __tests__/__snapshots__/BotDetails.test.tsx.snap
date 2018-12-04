@@ -228,6 +228,7 @@ exports[`BotDetails renders with no data 1`] = `
                             "fontSize": 21,
                           },
                           Object {
+                            "fontFamily": "Roboto-Medium",
                             "textAlign": "center",
                             "width": "75%",
                           },

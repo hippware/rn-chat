@@ -14,7 +14,7 @@ const defaultIcon = require('../../../images/mapIcons/question.png')
 
 const BotIcon = ({icon, size, imageStyle, textStyle}: Props) =>
   icon && !oldIcons.includes(icon) ? (
-    <Text style={[styles.icon, textStyle]}>{icon}</Text>
+    <Text style={[styles.icon, textStyle, {fontSize: size}]}>{icon}</Text>
   ) : (
     <Image
       style={[{width: size, height: size, borderRadius: 5}, imageStyle]}
@@ -27,7 +27,6 @@ export default BotIcon
 
 const styles = StyleSheet.create({
   icon: {
-    fontSize: 20,
     color: PINK,
     textAlign: 'center',
   },
