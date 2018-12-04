@@ -57,6 +57,7 @@ class FriendList extends React.Component<Props> {
             flexDirection: 'row',
             marginTop: 20,
             justifyContent: 'space-between',
+            marginBottom: 5,
           }}
         >
           <FriendCount count={wocky!.friends.length} />

@@ -21,13 +21,13 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
           flex: 1,
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: 18,
+          marginVertical: 10,
         },
         style,
       ]}
     >
       <View style={{marginRight: 13}}>
-        <Avatar size={48} profile={profile} tappable={tappable !== false} />
+        <Avatar size={44} profile={profile} tappable={tappable !== false} />
       </View>
       <View style={{flex: 1}}>
         <ProfileHandle size={16} profile={profile} />
@@ -35,7 +35,7 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
           style={{
             color: '#757575',
             fontFamily: 'Roboto-Regular',
-            fontSize: 15,
+            fontSize: 16,
           }}
         >
           {profile.displayName}
