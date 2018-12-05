@@ -32,21 +32,16 @@ export class NextGraphQLTransport implements IWockyTransport {
   resource: string
   clients?: [ApolloClient<any>, ApolloClient<any>]
   sockets?: [PhoenixSocket, PhoenixSocket]
-  botGuestVisitorsSubscription?: ZenObservable.Subscription
-  contactsSubscription?: ZenObservable.Subscription
-  notificationsSubscription?: ZenObservable.Subscription
-  @observable connected: boolean = false
-  @observable connecting: boolean = false
+  subscriptions: ZenObservable.Subscription[] = []
   username?: string
   password?: string
   token?: string
   host?: string
-  // @observable geoBot: any
+
+  @observable connected: boolean = false
+  @observable connecting: boolean = false
   @observable message: any
-
-  // TODO: reuse `notification` or create new property specific to GraphQL?
   @observable notification: any
-
   @observable presence: any
   @observable rosterItem: any
   @observable botVisitor: any
@@ -292,16 +287,8 @@ export class NextGraphQLTransport implements IWockyTransport {
       return {createdAt, lat, lon, accuracy}
     })
   }
-  @action
-  unsubscribeBotVisitors() {
-    if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
-    this.botGuestVisitorsSubscription = undefined
-  }
   subscribeBotVisitors() {
-    if (this.botGuestVisitorsSubscription) {
-      return
-    }
-    this.botGuestVisitorsSubscription = this.clients![0].subscribe({
+    const subscription = this.clients![0].subscribe({
       query: gql`
           subscription subscribeBotVisitors($ownUsername: String!){
             botGuestVisitors {
@@ -336,17 +323,11 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       }),
     })
+    this.subscriptions.push(subscription)
   }
 
-  unsubscribeContacts() {
-    if (this.contactsSubscription) this.contactsSubscription.unsubscribe()
-    this.contactsSubscription = undefined
-  }
   subscribeContacts() {
-    if (this.contactsSubscription) {
-      return
-    }
-    this.contactsSubscription = this.clients![0].subscribe({
+    const subscription = this.clients![0].subscribe({
       query: gql`
         subscription subscribeContacts {
           contacts {
@@ -372,6 +353,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         this.rosterItem = processRosterItem(user, relationship, createdAt)
       }),
     })
+    this.subscriptions.push(subscription)
   }
 
   async loadNotifications(params: {
@@ -410,10 +392,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   subscribeNotifications() {
-    if (this.notificationsSubscription) {
-      return
-    }
-    this.notificationsSubscription = this.clients![0].subscribe({
+    const subscription = this.clients![0].subscribe({
       query: gql`
           subscription notifications($ownUsername: String!) {
             notifications {
@@ -429,11 +408,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         this.notification = convertNotification({node: result.data.notifications})
       }),
     })
-  }
-  @action
-  unsubscribeNotifications() {
-    if (this.notificationsSubscription) this.notificationsSubscription.unsubscribe()
-    this.notificationsSubscription = undefined
+    this.subscriptions.push(subscription)
   }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this.loadBots('OWNED', id, lastId, max)
@@ -612,13 +587,12 @@ export class NextGraphQLTransport implements IWockyTransport {
   async disconnect(): Promise<void> {
     this.connected = false
     this.connecting = false
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
+    this.subscriptions = []
     if (this.sockets) {
       await Promise.all(
         this.sockets.map(socket => {
           if (socket.isConnected()) {
-            this.unsubscribeContacts()
-            this.unsubscribeBotVisitors()
-            this.unsubscribeNotifications()
             return this.socketDisconnect(socket)
           }
         })
