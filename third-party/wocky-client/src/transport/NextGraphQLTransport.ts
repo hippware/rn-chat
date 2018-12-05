@@ -2,7 +2,7 @@ import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList, LoginParams} from './IWockyTransport'
-import {observable, action, when} from 'mobx'
+import {observable, action} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
@@ -84,7 +84,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       this.subscribeBotVisitors()
     }
     return res
-    // return true
   }
 
   @action
@@ -108,7 +107,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       ])
       // set the username based on what's returned in the mutation
       this.username = (res[0] as any).data.authenticate.user.id
-      // console.log('& got responses', res.map(r => r.data!.authenticate))
       this.connected = res.reduce<boolean>(
         (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
         true
@@ -116,8 +114,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       return this.connected
     } catch (err) {
       this.connected = false
-      // console.warn('GraphQL authenticate error with user', user, 'and token', token)
-      // console.warn(err)
       return false
     } finally {
       this.connecting = false
@@ -250,38 +246,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     return convertBot(res.data.bot)
   }
 
-  async _loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.clients![0].query<any>({
-      query: gql`
-          query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
-            user(id: $userId) {
-              id
-              bots(first: $max after: $after relationship: $relationship) {
-                totalCount
-                edges {
-                  cursor
-                  node {
-                    ${BOT_PROPS}
-                  }
-                }
-              }
-            }
-          }
-        `,
-      variables: {userId, after, max, ownUsername: this.username, relationship},
-    })
-    // return empty list for non-existed user
-    if (!res.data.user) {
-      return {list: [], count: 0}
-    }
-    const bots = res.data.user.bots
-    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    return {
-      list,
-      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-      count: bots.totalCount,
-    }
-  }
   async setLocation(params: ILocationSnapshot): Promise<void> {
     return this.voidMutation({
       mutation: gql`
@@ -330,8 +294,6 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
   @action
   unsubscribeBotVisitors() {
-    this.connected = false
-    this.connecting = false
     if (this.botGuestVisitorsSubscription) this.botGuestVisitorsSubscription.unsubscribe()
     this.botGuestVisitorsSubscription = undefined
   }
@@ -376,7 +338,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
-  @action
   unsubscribeContacts() {
     if (this.contactsSubscription) this.contactsSubscription.unsubscribe()
     this.contactsSubscription = undefined
@@ -475,14 +436,14 @@ export class NextGraphQLTransport implements IWockyTransport {
     this.notificationsSubscription = undefined
   }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
-    return await this._loadBots('OWNED', id, lastId, max)
+    return await this.loadBots('OWNED', id, lastId, max)
   }
   async loadSubscribedBots(
     userId: string,
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList<any>> {
-    return await this._loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
+    return await this.loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
   async loadGeofenceBots(): Promise<IPagingList<any>> {
     // load all guest bots
@@ -649,15 +610,19 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async disconnect(): Promise<void> {
-    // console.log('& graphql disconnect')
-    if (this.sockets && this.sockets[0].isConnected()) {
-      this.unsubscribeContacts()
-      this.unsubscribeBotVisitors()
-      this.unsubscribeNotifications()
-      await this.socketDisconnect(this.sockets[0])
-    }
-    if (this.sockets && this.sockets[1].isConnected()) {
-      await this.socketDisconnect(this.sockets[1])
+    this.connected = false
+    this.connecting = false
+    if (this.sockets) {
+      await Promise.all(
+        this.sockets.map(socket => {
+          if (socket.isConnected()) {
+            this.unsubscribeContacts()
+            this.unsubscribeBotVisitors()
+            this.unsubscribeNotifications()
+            return this.socketDisconnect(socket)
+          }
+        })
+      )
     }
     this.sockets = undefined
     this.clients = undefined
@@ -1075,6 +1040,39 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
+  private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
+    const res = await this.clients![0].query<any>({
+      query: gql`
+          query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
+            user(id: $userId) {
+              id
+              bots(first: $max after: $after relationship: $relationship) {
+                totalCount
+                edges {
+                  cursor
+                  node {
+                    ${BOT_PROPS}
+                  }
+                }
+              }
+            }
+          }
+        `,
+      variables: {userId, after, max, ownUsername: this.username, relationship},
+    })
+    // return empty list for non-existed user
+    if (!res.data.user) {
+      return {list: [], count: 0}
+    }
+    const bots = res.data.user.bots
+    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
+    return {
+      list,
+      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
+      count: bots.totalCount,
+    }
+  }
+
   /**
    * Reduce boilerplate for pass/fail gql mutations.
    */
@@ -1165,7 +1163,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
-      // this.unsubscribeBotVisitors()
       this.connected = false
     })
     socket.onOpen(() => {
