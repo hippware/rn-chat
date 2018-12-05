@@ -59,14 +59,8 @@ export class NextGraphQLTransport implements IWockyTransport {
   async login(user?: string, password?: string, host?: string): Promise<boolean> {
     if (this.connecting) {
       // prevent duplicate login
-      return new Promise<boolean>(resolve => {
-        when(
-          () => !this.connecting,
-          () => {
-            resolve(this.connected)
-          }
-        )
-      })
+      await waitFor(() => !this.connecting)
+      return this.connected
     }
     this.connecting = true
     if (user) {
