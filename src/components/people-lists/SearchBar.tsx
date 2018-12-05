@@ -13,7 +13,7 @@ const SearchBar = (props: any) => {
     <View style={styles.searchBar}>
       <Image
         source={props.image || require('../../../images/iconFriendsSearch.png')}
-        style={{margin: 5 * k, height: 12 * k}}
+        style={{margin: 5, height: 12}}
         resizeMode="contain"
       />
       <TextInput
@@ -39,5 +39,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  text: {fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k, flex: 1},
+  text: {fontFamily: 'Roboto-Light', fontSize: 14, margin: 5 * k, flex: 1},
 })

@@ -5,6 +5,7 @@ import {IProfile} from 'wocky-client'
 
 import {Avatar, RText} from '../common'
 import {colors} from '../../constants'
+import {avatarScale} from '../Global'
 
 type Props = {
   firstProfile: IProfile
@@ -23,9 +24,9 @@ const ProfileStack = observer(
         {stackSize > 1 && (
           <View
             style={{
-              height: size,
-              width: size,
-              borderRadius: size / 2,
+              height: size * avatarScale,
+              width: size * avatarScale,
+              borderRadius: size * avatarScale / 2,
               backgroundColor: colors.PINK,
               position: 'absolute',
               right: 0,
@@ -35,7 +36,7 @@ const ProfileStack = observer(
               justifyContent: 'center',
             }}
           >
-            <RText size={textSize || 12} color={colors.WHITE} weight="Bold">
+            <RText size={textSize || 13} color={colors.WHITE} weight="Bold">
               {`+${stackSize - 1}`}
             </RText>
           </View>
@@ -45,7 +46,7 @@ const ProfileStack = observer(
           tappable={false}
           size={size}
           hideDot
-          style={{marginRight: stackSize > 1 ? size * 0.75 : 0}}
+          style={{marginRight: stackSize > 1 ? size * avatarScale * 0.75 : 0}}
           fontSize={size > 30 ? 'large' : 'small'}
           fontFamily={fontFamily}
         />

@@ -141,6 +141,8 @@ exports[`EventBotPostCard renders 1`] = `
   <View
     style={
       Object {
+        "alignItems": "flex-start",
+        "alignSelf": "center",
         "flex": 1,
         "marginRight": 14,
       }
@@ -157,9 +159,7 @@ exports[`EventBotPostCard renders 1`] = `
             "fontFamily": "Roboto-Regular",
             "fontSize": 12,
           },
-          Object {
-            "lineHeight": 10,
-          },
+          undefined,
         ]
       }
     >
@@ -222,7 +222,7 @@ exports[`EventBotPostCard renders 1`] = `
       Object {
         "height": 40,
         "justifyContent": "center",
-        "width": 142,
+        "width": 71,
       }
     }
   />

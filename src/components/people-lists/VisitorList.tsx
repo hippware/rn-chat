@@ -59,7 +59,7 @@ export default class VisitorList extends React.Component<Props> {
       size={16}
       color={colors.PURPLE}
       weight="Medium"
-      style={{marginLeft: 30 * k, marginBottom: 5 * k}}
+      style={{width: '90%', alignSelf: 'center', marginBottom: 5 * k}}
     >
       {"Who's Here"}
     </RText>

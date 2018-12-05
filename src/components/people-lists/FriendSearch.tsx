@@ -2,7 +2,6 @@ import React from 'react'
 import {View, TextInput, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
-import {k} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -54,20 +53,21 @@ class FriendSearch extends React.Component<Props> {
     return (
       <View
         style={{
-          width: 300 * k,
+          width: '90%',
           alignSelf: 'center',
           borderColor: colors.LIGHT_GREY,
           borderBottomWidth: 1,
           flexDirection: 'row',
           alignItems: 'center',
           paddingBottom: 10,
+          marginBottom: 10,
         }}
       >
         <Image source={searchIcon} style={{marginRight: 10}} />
         <TextInput
           style={{
             flex: 1,
-            fontSize: 16 * k,
+            fontSize: 16,
             fontFamily: 'Roboto-Regular',
             color: colors.PURPLE,
           }}

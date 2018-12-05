@@ -17,7 +17,7 @@ export const navBarStyle = {
   navBarFontFamily: 'Roboto-Regular',
   backButtonImage: require('../../images/iconBackGrayNew.png'),
   titleStyle: {
-    fontSize: 16 * k,
+    fontSize: 17,
     fontWeight: undefined,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
