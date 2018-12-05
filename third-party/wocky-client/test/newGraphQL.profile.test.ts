@@ -24,7 +24,7 @@ describe('New GraphQL profile tests', () => {
     } catch (e) {
       expect(user.profile!.updated).toBe(false)
       expect(e.message).toBe(
-        '[{"__typename":"ValidationMessage","message":"should be at least 3 character(s)"}]'
+        'GraphQL userUpdate error: {"__typename":"UserUpdatePayload","messages":[{"__typename":"ValidationMessage","message":"should be at least 3 character(s)"}],"successful":false}'
       )
     }
   })
@@ -136,6 +136,11 @@ describe('New GraphQL profile tests', () => {
     )
     // restore default timeout
     jest.setTimeout(5000)
+  })
+
+  it('enable/disable push notifications', async () => {
+    await user.enablePush('randomToken')
+    await user.disablePush()
   })
 
   it('remove/delete user', async () => {

@@ -66,3 +66,10 @@ export const NOTIFICATIONS_PROPS = `
     }
   }
   `
+
+export const VOID_PROPS = `
+  successful
+  messages {
+    message
+  }
+`

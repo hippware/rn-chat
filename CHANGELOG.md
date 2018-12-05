@@ -20,7 +20,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [GraphQL] unfollow (#3119, PR #3120)
 * [GraphQL] block/unblock (#3121, PR #3120)
 * Add device ID to client JWTs (#3111)
-* [GraphQL] Optimize bot details loading #3126
+* [GraphQL] Optimize bot details loading (#3126)
+* Friends List Adjustments (#2876)
+* Missing empty friend list messaging and layout (#3118)
+* [GraphQL] Remove loadRelations; Other stuff (PR #3131)
+* [GraphQL] remove bot subscribe/unsubscribe code and UI (#3132)
 
 # 3.10.1 - 2018 Nov 26
 

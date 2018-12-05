@@ -1,14 +1,8 @@
-import {types, flow, getEnv} from 'mobx-state-tree'
-import {IObservableArray} from 'mobx'
+import {types, flow, getEnv, Instance} from 'mobx-state-tree'
 import {Profile, IProfile} from './Profile'
 import {Message, IMessage} from './Message'
 import {Base} from './Base'
-import {IBot} from './Bot'
 const moment = require('moment')
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IObservableArray = IObservableArray<any>
-export type __IBot = IBot
 
 export const Chat = types
   .compose(
@@ -110,5 +104,4 @@ export const Chat = types
     },
   }))
 
-export type IChatType = typeof Chat.Type
-export interface IChat extends IChatType {}
+export interface IChat extends Instance<typeof Chat> {}
