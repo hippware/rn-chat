@@ -11,13 +11,20 @@ type Props = {
   style?: any
   wrapperStyle?: any
   fontSize?: 'large' | 'small'
+  fontFamily?: any
 }
 
 const ProfileAvatar = (props: Props) => {
-  const {size = 65, tappable = true, wrapperStyle} = props
+  const {size = 65, tappable = true, wrapperStyle, fontSize, fontFamily} = props
   return (
     <View style={[{alignItems: 'center', height: size * k}, wrapperStyle]}>
-      <Avatar {...props} tappable={tappable} size={size} />
+      <Avatar
+        {...props}
+        tappable={tappable}
+        size={size}
+        fontSize={fontSize}
+        fontFamily={fontFamily}
+      />
     </View>
   )
 }

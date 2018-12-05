@@ -13,6 +13,7 @@ import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
+import _ from 'lodash'
 
 export const Wocky = types
   .compose(
@@ -78,7 +79,7 @@ export const Wocky = types
         return self.profile
       }
       return self.profiles.get(id, data)
-    }),
+    }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
     return {
@@ -111,7 +112,7 @@ export const Wocky = types
           if (host) {
             self.host = host
           }
-          if (!self.username || !self.password || !self.host) {
+          if (!self.password || !self.host) {
             throw new Error(
               `Cannot login without username/password/host:${self.username},${self.password},${
                 self.host
@@ -119,8 +120,12 @@ export const Wocky = types
             )
           }
           yield self.transport.login(self.username!, self.password!, self.host)
-          yield self.loadProfile(self.username)
-
+          // set username
+          if (!self.username && self.transport.username) {
+            self.username = self.transport.username
+          }
+          // TODO: just use the returned profile in GraphQL authenticate payload to save a roundtrip here
+          yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
         }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
@@ -143,16 +148,12 @@ export const Wocky = types
           Object.assign(self, res)
           return true
         }),
-        _requestProfiles: flow(function*(users: string[]) {
-          const arr = yield self.transport.requestProfiles(users)
-          return arr.map((user: any) => self.profiles.get(user.id, user))
-        }),
+        // _requestProfiles: flow(function*(users: string[]) {
+        //   const arr = yield self.transport.requestProfiles(users)
+        //   return arr.map((user: any) => self.profiles.get(user.id, user))
+        // }),
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
-        }),
-        lookup: flow<string>(function*(handle: string) {
-          const profile = yield self.transport.lookup(handle)
-          return self.profiles.get(profile.id, profile)
         }),
         createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id})),
       },
@@ -277,14 +278,13 @@ export const Wocky = types
         chat.addMessage(msg)
       })
     }) as (max?: number) => Promise<void>,
-    // TODO: make server an optional param
-    loadBot: flow(function*(id: string, server: any) {
+    loadBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
-      const bot = self.getBot({id, server})
+      const bot = self.getBot({id})
       if (!bot.loading) {
         try {
           bot.startLoading()
-          const data = yield self.transport.loadBot(id, server)
+          const data = yield self.transport.loadBot(id)
           self.load(bot, data)
         } catch (e) {
           // console.error(e) TODO
@@ -294,7 +294,7 @@ export const Wocky = types
         }
       }
       return bot
-    }),
+    }) as (id: string) => Promise<IBot>,
     removeBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       yield self.transport.removeBot(id)
@@ -383,15 +383,15 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
       }),
-      _shareBot: (
-        id: string,
-        server: string,
-        recepients: string[],
-        message: string,
-        action: string
-      ) => {
-        self.transport.shareBot(id, server, recepients, message, action)
-      },
+      // _shareBot: (
+      //   id: string,
+      //   server: string,
+      //   recepients: string[],
+      //   message: string,
+      //   action: string
+      // ) => {
+      //   self.transport.shareBot(id, server, recepients, message, action)
+      // },
       _inviteBot: flow(function*(botId: string, recepients: string[]) {
         yield self.transport.inviteBot(botId, recepients)
       }),
@@ -401,10 +401,6 @@ export const Wocky = types
         while (!parent.id) parent = getParent(parent)
         const botId = parent.id
         yield self.transport.publishBotPost(botId, post)
-      }),
-      _subscribeBot: flow(function*(id: string) {
-        yield waitFor(() => self.connected)
-        return yield self.transport.subscribeBot(id)
       }),
       _unsubscribeBot: flow(function*(id: string) {
         yield waitFor(() => self.connected)
@@ -531,6 +527,8 @@ export const Wocky = types
         if (!data) return
 
         try {
+          // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
+          data = _.cloneDeep(data)
           const item: any = self.create(EventEntity, data)
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)

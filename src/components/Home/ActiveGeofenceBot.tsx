@@ -11,6 +11,7 @@ import {isAlive} from 'mobx-state-tree'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
 import {IHomeStore} from '../../store/HomeStore'
+import {minHeight} from '../Global'
 
 type Props = {
   wocky?: IWocky
@@ -36,13 +37,21 @@ class ActiveBot extends React.Component<Props> {
     return bot && isAlive(bot) ? (
       <View style={outerStyle}>
         <View style={innerStyle}>
-          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot}>
+          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot} radius={11}>
             {bot.visitor ? (
               <View style={styles.youreHere}>
-                <RText size={13} color="white" style={{textAlign: 'center'}}>
+                <RText
+                  size={13}
+                  color="white"
+                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
+                >
                   You're
                 </RText>
-                <RText size={13} color="white" style={{textAlign: 'center'}}>
+                <RText
+                  size={13}
+                  color="white"
+                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
+                >
                   Here
                 </RText>
               </View>
@@ -50,11 +59,12 @@ class ActiveBot extends React.Component<Props> {
           </BotBubble>
           <TouchableOpacity onPress={this.goToBot}>
             <RText
-              size={12}
-              style={{textAlign: 'center'}}
+              size={13}
+              style={{textAlign: 'center', marginTop: 2 * minHeight}}
               numberOfLines={1}
               ellipsizeMode="tail"
               color={colors.DARK_GREY}
+              weight={'Medium'}
             >
               {bot.title}
             </RText>
@@ -65,6 +75,7 @@ class ActiveBot extends React.Component<Props> {
             style={{position: 'absolute', top: -15, right: -8}}
             firstProfile={bot.visitors.list[0]}
             stackSize={bot.visitorsSize}
+            fontFamily="bold"
           />
         </View>
       </View>
@@ -76,6 +87,7 @@ export default ActiveBot
 
 const styles = StyleSheet.create({
   youreHere: {
+    borderRadius: 10,
     backgroundColor: 'rgba(0,0,0,0.3)',
     position: 'absolute',
     top: 0,

@@ -77,14 +77,14 @@ export class HybridTransport implements IWockyTransport {
     data: any,
     host?: string,
     providerName?: string
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     return this._xmpp.register(data, host, providerName)
   }
 
   testRegister(
     {phoneNumber}: {phoneNumber: string},
     host: string
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     return this._xmpp.testRegister({phoneNumber}, host)
   }
 
@@ -106,16 +106,12 @@ export class HybridTransport implements IWockyTransport {
     // return this._xmpp.loadProfile(user)
   }
 
-  requestProfiles(users: string[]): Promise<any> {
-    return this._xmpp.requestProfiles(users)
-  }
+  // requestProfiles(users: string[]): Promise<any> {
+  //   return this._xmpp.requestProfiles(users)
+  // }
 
   updateProfile(d: any): Promise<void> {
     return this._gql.updateProfile(d)
-  }
-
-  lookup(handle: string): Promise<any> {
-    return this._xmpp.lookup(handle)
   }
 
   async remove(): Promise<void> {
@@ -153,15 +149,11 @@ export class HybridTransport implements IWockyTransport {
     return this._xmpp.unblock(username)
   }
 
-  subscribeBot(id: string): Promise<number> {
-    return this._xmpp.subscribeBot(id)
-  }
-
-  unsubscribeBot(id: string): Promise<number> {
+  unsubscribeBot(id: string) {
     return this._xmpp.unsubscribeBot(id)
   }
 
-  requestRoster(): Promise<[any]> {
+  requestRoster(): Promise<any[]> {
     return this._gql.requestRoster()
   }
 
@@ -189,15 +181,15 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.updateBot(bot, userLocation)
   }
 
-  shareBot(
-    id: string,
-    server: string,
-    recepients: string[],
-    message: string,
-    action: string
-  ): void {
-    this._xmpp.shareBot(id, server, recepients, message, action)
-  }
+  // shareBot(
+  //   id: string,
+  //   server: string,
+  //   recepients: string[],
+  //   message: string,
+  //   action: string
+  // ): void {
+  //   this._xmpp.shareBot(id, server, recepients, message, action)
+  // }
 
   async inviteBot(id: string, recipients: string[]): Promise<void> {
     return this._gql.inviteBot(id, recipients)
@@ -212,7 +204,7 @@ export class HybridTransport implements IWockyTransport {
     relation: string,
     lastId?: string,
     max?: number
-  ): Promise<IPagingList> {
+  ): Promise<IPagingList<any>> {
     return this._xmpp.loadRelations(userId, relation, lastId, max)
   }
 
@@ -253,33 +245,37 @@ export class HybridTransport implements IWockyTransport {
     return this._gql.loadNotifications(params)
   }
 
-  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     return this._gql.loadOwnBots(userId, lastId, max)
   }
 
-  loadGeofenceBots(): Promise<IPagingList> {
+  loadGeofenceBots(): Promise<IPagingList<any>> {
     return this._gql.loadGeofenceBots()
   }
-  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotSubscribers(id, lastId, max)
     return this._gql.loadBotSubscribers(id, lastId, max)
   }
 
-  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotGuests(id, lastId, max)
     return this._gql.loadBotGuests(id, lastId, max)
   }
 
-  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList> {
+  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList<any>> {
     // return this._xmpp.loadBotVisitors(id, lastId, max)
     return this._gql.loadBotVisitors(id, lastId, max)
   }
 
-  loadBotPosts(id: string, lastId?: string): Promise<IPagingList> {
+  loadBotPosts(id: string, lastId?: string): Promise<IPagingList<any>> {
     return this._xmpp.loadBotPosts(id, lastId)
   }
 
-  async loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList> {
+  async loadSubscribedBots(
+    userId: string,
+    lastId?: string,
+    max?: number
+  ): Promise<IPagingList<any>> {
     return await this._gql.loadSubscribedBots(userId, lastId, max)
   }
 

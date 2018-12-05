@@ -10,7 +10,7 @@ import {
   Text,
 } from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {k, width} from '../Global'
+import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {when} from 'mobx'
@@ -24,6 +24,7 @@ import {Actions} from 'react-native-router-flux'
 import ProfileAvatar from '../ProfileAvatar'
 import LinearGradient from 'react-native-linear-gradient'
 import {GREY} from 'src/constants/colors'
+import {botProfileStyle} from '../styles'
 
 type Props = {
   bot: IBot
@@ -89,9 +90,9 @@ class BotDetailsHeader extends React.Component<Props, State> {
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <RText
-            size={20}
+            size={21}
             color={colors.DARK_PURPLE}
-            style={{width: '75%', textAlign: 'center'}}
+            style={{width: '75%', textAlign: 'center', fontFamily: 'Roboto-Medium'}}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
@@ -118,12 +119,12 @@ class BotDetailsHeader extends React.Component<Props, State> {
             <VisitorsArea bot={bot} />
 
             <View style={styles.userInfoRow}>
-              <ProfileAvatar profile={bot.owner!} size={40 * k} />
+              <ProfileAvatar profile={bot.owner!} size={40} />
               {bot.owner && (
                 <ProfileHandle
-                  style={{marginLeft: 10 * k, flex: 1}}
+                  style={botProfileStyle.userInfoRow}
                   onPress={() => Actions.profileDetails({item: bot.owner!.id})}
-                  size={15}
+                  size={16}
                   profile={bot.owner}
                 />
               )}
@@ -132,7 +133,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
             </View>
             {!!bot.description && (
               <View style={styles.descriptionContainer}>
-                <RText numberOfLines={0} size={16} weight="Light" color={colors.DARK_PURPLE}>
+                <RText size={17} weight="Light" color={colors.DARK_PURPLE}>
                   {bot.description}
                 </RText>
               </View>
@@ -187,11 +188,14 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
         <ProfileStack
           firstProfile={list[0]}
           stackSize={list.length}
-          circleSize={50}
+          circleSize={45}
           textSize={16.5}
-          style={{marginBottom: 10 * k}}
+          fontFamily="bold"
+          style={{marginBottom: 5 * k}}
         />
-        <RText size={14}>{text!}</RText>
+        <RText weight="Regular" size={15}>
+          {text!}
+        </RText>
       </TouchableOpacity>,
     ]
   }
@@ -234,7 +238,7 @@ const Pill = ({children}) => (
       marginRight: 5 * k,
     }}
   >
-    <RText size={12} weight="Medium" color={colors.WHITE}>
+    <RText size={13} weight="Medium" color={colors.WHITE}>
       {children}
     </RText>
   </LinearGradient>
@@ -272,9 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20 * k,
   },
-  descriptionContainer: {
-    paddingBottom: 15 * k,
-  },
+  descriptionContainer: {},
   botAddedContainer: {
     height: width,
     position: 'absolute',
@@ -290,9 +292,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   invite: {
-    height: 40 * k,
-    width: 120 * k,
-    borderRadius: 20 * k,
+    height: 40 * minHeight,
+    width: 120 * minHeight,
+    borderRadius: 20 * minHeight,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: colors.PINK,
@@ -310,5 +312,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15 * k,
   },
-  botImage: {width, height: width, marginHorizontal: -20 * k},
+  botImage: {width, height: width, marginHorizontal: -20 * k, marginTop: 15 * minHeight},
 })

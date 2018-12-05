@@ -1,4 +1,4 @@
-import {types, flow, getParent, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, getParent, IAnyModelType, Instance} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -6,9 +6,17 @@ import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {Profile} from './Profile'
-// import {ProfileRef} from './Profile'
 
 const BotPostProfileRef = types.late('LazyProfileRef', (): IAnyModelType => Profile)
+
+const BotPostData = types.model('BotPostData', {
+  id: types.identifier,
+  content: '',
+  title: '',
+  image: FileRef,
+  profile: types.reference(BotPostProfileRef),
+})
+
 export const BotPost = types
   .compose(
     types.compose(Base, Timeable, Loadable),
@@ -17,13 +25,7 @@ export const BotPost = types
       (self: any) =>
         `redirect:${self.service.host}/bot/${(getParent(getParent(getParent(self))) as any).id}`
     ),
-    types.model('BotPost', {
-      id: types.identifier,
-      content: '',
-      title: '',
-      image: FileRef,
-      profile: types.reference(BotPostProfileRef),
-    })
+    BotPostData
   )
   .named('BotPost')
   .actions(self => ({
@@ -34,13 +36,8 @@ export const BotPost = types
     }),
   }))
 
-export type IBotPost = typeof BotPost.Type
+export interface IBotPost extends Instance<typeof BotPost> {}
+
 export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
 
-export interface IBotPostData {
-  id: string
-  content?: string
-  title?: string
-  image?: any
-  profile: string
-}
+export interface IBotPostData extends Instance<typeof BotPostData> {}

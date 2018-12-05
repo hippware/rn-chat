@@ -1,4 +1,4 @@
-import {types, getEnv, addMiddleware, flow} from 'mobx-state-tree'
+import {types, getEnv, addMiddleware, flow, Instance} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
@@ -31,6 +31,7 @@ import PushStore from './PushStore'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
+import OnceStore from './OnceStore'
 
 const provider = new XmppIOS()
 const xmppTransport = new XmppTransport(provider, DeviceInfo.getUniqueID())
@@ -83,10 +84,8 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
+    onceStore: OnceStore,
     version: types.string,
-    locationPrimed: false,
-    sharePresencePrimed: false,
-    guestOnce: false,
   })
   .views(self => ({
     get getImageSize() {
@@ -102,18 +101,11 @@ const Store = types
     afterCreate() {
       analytics.identify(self.wocky)
     },
-    dismissLocationPrimer: () => {
-      self.locationPrimed = true
-    },
-    dismissSharePresencePrimer: () => {
-      self.sharePresencePrimed = true
-    },
-    dismissFirstTimeGuestPrimer: () => {
-      self.guestOnce = true
-    },
   }))
 
 const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
+
+export interface IStore extends Instance<typeof Store> {}
 
 const theStore = PersistableStore.create(
   {

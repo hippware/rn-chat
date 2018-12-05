@@ -1,21 +1,22 @@
 {
   "name": "tinyrobot",
-  "version": "3.10.0",
+  "version": "3.10.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
-    "test": "npm run testLocal && npm run jestWocky",
+    "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
-    "jestWocky": "jest --config jest.wocky.config.json --forceExit --detectOpenHandles",
+    "jestWocky": "jest --config jest.wocky.config.json",
+    "jestWockyCI": "jest --config jest.wocky.config.json --no-cache --i --detectOpenHandles --forceExit",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
     "jest": "jest --config jest.config.json",
     "jestCI": "jest --config jest.config.json --verbose --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.ts' 'src/**/*.tsx'",
-    "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/**/*.ts'",
+    "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "bash ./scripts/codepush.sh",
     "version:bump": "babel-node ./scripts/version-increment.js",
@@ -36,13 +37,22 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
     ],
-    "modulePaths": ["<rootDir>","<rootDir>/third-party/wocky-client/src"],
+    "modulePaths": [
+      "<rootDir>",
+      "<rootDir>/third-party/wocky-client/src"
+    ],
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
     "moduleNameMapper": {
       "wocky-client": "third-party/wocky-client/src"
     }
@@ -78,6 +88,7 @@
     "bugsnag-react-native": "^2.9.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "jsrsasign": "^8.0.12",
     "libphonenumber-js": "^1.6.4",
     "lodash": "^4.17.11",
     "mobx": "^5.5.2",
@@ -128,6 +139,11 @@
     "@absinthe/socket": "github:aksonov/absinthe-socket#6b14cd8ecb18068a4bea95c80e75b23790926da4"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@storybook/addon-actions": "^4.0.7",
+    "@storybook/addon-links": "^4.0.7",
+    "@storybook/addons": "^4.0.7",
+    "@storybook/react-native": "^4.0.7",
     "@types/graphql": "^14.0.3",
     "@types/jest": "^23.3.9",
     "@types/lodash": "^4.14.118",
@@ -152,6 +168,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "^4.0.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.26.0",
     "bugsnag-sourcemaps": "^1.0.4",
     "chalk": "^2.4.1",
     "denodeify": "^1.2.1",
@@ -178,12 +195,7 @@
     "tsutils": "^3.2.0",
     "typescript": "3.0.3",
     "websocket": "^1.0.28",
-    "xmlhttprequest": "^1.8.0",
-    "@storybook/react-native": "^4.0.7",
-    "@storybook/addon-actions": "^4.0.7",
-    "@storybook/addon-links": "^4.0.7",
-    "@storybook/addons": "^4.0.7",
-    "babel-runtime": "^6.26.0"
+    "xmlhttprequest": "^1.8.0"
   },
   "husky": {
     "hooks": {

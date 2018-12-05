@@ -13,6 +13,8 @@ type Props = {
   onImagePress?: () => void
   image?: ImageRequireSource
   showLoader?: boolean
+  radius?: number
+  borderWidth?: number
 }
 
 @observer

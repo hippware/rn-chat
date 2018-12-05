@@ -1,4 +1,4 @@
-import {types, getEnv, flow, getParent} from 'mobx-state-tree'
+import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree'
 import {autorun, IReactionDisposer} from 'mobx'
 import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
@@ -6,6 +6,7 @@ import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
+import {IStore} from '.'
 
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
@@ -330,7 +331,7 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    const wocky: IWocky = (getParent(self) as any).wocky
+    const {wocky, onceStore} = getRoot<IStore>(self)
     let reactions: IReactionDisposer[] = []
     const {logger} = getEnv(self)
 
@@ -348,7 +349,7 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected) {
+            if (wocky.connected && onceStore.onboarded) {
               try {
                 await self.refreshCredentials()
                 await self.getCurrentPosition()
@@ -366,7 +367,7 @@ const LocationStore = types
           },
           {name: 'LocationStore: Start RNBGL after connected'}
         ),
-        autorun(() => !self.location && self.getCurrentPosition(), {
+        autorun(() => !self.location && onceStore.onboarded && self.getCurrentPosition(), {
           delay: 500,
           name: 'LocationStore: Get current location after cache reset',
         }),

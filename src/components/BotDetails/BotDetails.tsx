@@ -44,12 +44,11 @@ export default class BotDetails extends React.Component<Props> {
 
   _footerComponent: any = observer(() => {
     if (!this.bot) return null
-    return (
-      this.props.wocky!.connected &&
-      this.bot &&
-      isAlive(this.bot) &&
-      this.bot.posts.loading && <Loader />
-    )
+
+    if (this.props.wocky!.connected && this.bot && isAlive(this.bot) && this.bot.posts.loading)
+      return <Loader />
+
+    return <View style={{backgroundColor: 'white', height: 50 * k}} />
   })
 
   async componentDidMount() {
@@ -61,16 +60,9 @@ export default class BotDetails extends React.Component<Props> {
       return
     }
 
-    // TODO: load all bot info in one GraphQL call
-    await Promise.all([
-      wocky!.loadBot(botId, undefined),
-      this.bot!.posts.load({force: true}),
-      this.bot!.guests.load({force: true}),
-      this.bot!.visitors.load({force: true}),
-    ])
-
     homeStore.selectBot(this.bot)
     homeStore.setFocusedLocation(this.bot.location)
+    await wocky!.loadBot(botId)
 
     this.viewTimeout = setTimeout(() => {
       if (this.bot && isAlive(this.bot))
@@ -163,6 +155,7 @@ const NavTitle = ({bot, onLongPress}) => {
         size={16}
         color={colors.DARK_PURPLE}
         style={[titleStyle, {textAlign: 'center'}]}
+        numberOfLines={1}
       >
         {bot.error ? 'Bot Unavailable' : bot.title}
       </RText>

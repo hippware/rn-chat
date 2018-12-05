@@ -69,6 +69,8 @@ export default class BottomMenu extends React.Component<Props> {
         >
           <Avatar
             size={74}
+            fontSize="large"
+            fontFamily="regular"
             profile={profile}
             style={{borderWidth: 0}}
             borderColor={colors.PINK}
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   menuItem: {
-    width: 75 * k,
+    width: 75,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,11 +1,19 @@
 import XmppStropheV2 from '../../src/transport/XmppStropheV2'
-import {Wocky, XmppTransport, IWocky, HybridTransport, GraphQLTransport} from '../../src'
+import {
+  Wocky,
+  XmppTransport,
+  IWocky,
+  HybridTransport,
+  GraphQLTransport,
+  NextGraphQLTransport,
+} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
+const SERVER_NAME = 'next'
 // tslint:disable:no-console
 
 const fs = require('fs')
@@ -35,6 +43,48 @@ export function expectedImage() {
   const fileNameThumbnail = `${__dirname}/../img/test-thumbnail.jpg`
   const expectedBuf = fs.readFileSync(fileNameThumbnail)
   return expectedBuf.toString()
+}
+export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
+  try {
+    const transport = new NextGraphQLTransport(SERVER_NAME)
+    const phoneNumber =
+      phoneNum ||
+      (num
+        ? `+1555000000${num.toString()}`
+        : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
+    const host = process.env.WOCKY_LOCAL ? 'localhost' : `${SERVER_NAME}.dev.tinyrobot.com`
+    const service = Wocky.create(
+      {host},
+      {
+        transport,
+        fileService,
+        logger: console,
+      }
+    )
+    addMiddleware(service, simpleActionLogger)
+
+    await service.register(
+      {
+        version: '1.1.4',
+        os: 'ios',
+        deviceName: 'iPhone',
+        phoneNumber,
+      },
+      // {
+      //   version: '0.0.0',
+      //   os: 'web',
+      //   deviceName: 'Unit',
+      //   phoneNumber,
+      // },
+      host
+    )
+    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
+    await service.login()
+    return service
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
 }
 export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
@@ -81,9 +131,12 @@ export async function createXmpp(num?: number, phoneNum?: string): Promise<IWock
   }
 }
 
-export async function waitFor(condition: () => boolean, message: string = '') {
-  console.log('wait for', message)
-  return new Promise((resolve, reject) => {
+export async function waitFor(
+  condition: () => boolean,
+  errorMessage: string = '',
+  timeout: number = 3000
+) {
+  const promise = new Promise((resolve, reject) => {
     when(
       () => {
         let res = false
@@ -99,6 +152,12 @@ export async function waitFor(condition: () => boolean, message: string = '') {
       }
     )
   })
+  const timeoutPromise = new Promise(reject => {
+    setTimeout(() => {
+      reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`)
+    }, timeout)
+  })
+  return Promise.race([promise, timeoutPromise])
 }
 export const homestreamTestData = {
   from: '3b6cc090-09b4-11e8-8634-0a580a0206c7@testing.dev.tinyrobot.com',

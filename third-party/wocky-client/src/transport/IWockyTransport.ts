@@ -2,10 +2,22 @@ import {ILocationSnapshot, ILocation} from '../model/Location'
 import {IProfilePartial} from '../model/Profile'
 import {IBot} from '../model/Bot'
 
-export interface IPagingList {
-  list: any[]
+export interface IPagingList<T> {
+  list: T[]
   cursor?: string
   count: number
+}
+
+export type LoginParams = {
+  userId?: string
+  token?: string
+  password?: string
+  accessToken?: string
+  host?: string
+  version?: string
+  os?: string
+  deviceName?: string
+  phoneNumber?: string
 }
 
 export interface IWockyTransport {
@@ -26,18 +38,17 @@ export interface IWockyTransport {
     data: any,
     host?: string,
     providerName?: string
-  ): Promise<{username: string; password: string; host: string}>
+  ): Promise<{username?: string; password: string; host?: string}>
   testRegister(
     {phoneNumber}: {phoneNumber: string},
     host: string
-  ): Promise<{username: string; password: string; host: string}>
+  ): Promise<{username?: string; password: string; host?: string}>
   disconnect(): Promise<void>
   setLocation(params: ILocationSnapshot): Promise<void>
   getLocationsVisited(limit?: number): Promise<object[]>
   loadProfile(user: string): Promise<IProfilePartial | null>
-  requestProfiles(users: string[]): Promise<any>
+  // requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
-  lookup(handle: string): Promise<any>
   remove(): Promise<void>
   downloadURL(tros: string): Promise<any>
   requestUpload(params: {
@@ -52,16 +63,15 @@ export interface IWockyTransport {
   unfollow(username: string): Promise<void>
   block(username: string): Promise<void>
   unblock(username: string): Promise<void>
-  subscribeBot(id: string): Promise<number>
-  unsubscribeBot(id: string): Promise<number>
-  requestRoster(): Promise<[any]>
+  unsubscribeBot(id: string): Promise<void>
+  requestRoster(): Promise<any[]>
   loadChats(max?: number): Promise<Array<{id: string; message: any}>>
-  loadBot(id: string, server: any): Promise<any> // TODO define inteface for bot
+  loadBot(id: string): Promise<any> // TODO define inteface for bot
   removeBot(id: string): Promise<void>
   removeBotPost(id: string, postId: string): Promise<void>
   generateId(): Promise<string>
   updateBot(bot: any, userLocation?: ILocation): Promise<void>
-  shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
+  // shareBot(id: string, server: string, recepients: string[], message: string, action: string): void
   inviteBot(id: string, recepients: string[]): Promise<void>
   inviteBotReply(invitationId: string, userLocation: ILocation, accept?: boolean): Promise<void>
   loadRelations(
@@ -69,7 +79,7 @@ export interface IWockyTransport {
     relation: string,
     lastId?: string,
     max?: number
-  ): Promise<IPagingList>
+  ): Promise<IPagingList<any>>
   publishBotPost(botId: string, post: any): Promise<void>
   sendMessage(msg: any): void
   loadChat(userId: string, lastId?: string, max?: number): Promise<void>
@@ -80,13 +90,13 @@ export interface IWockyTransport {
     beforeId?: string
     afterId?: string
   }): Promise<{list: any[]; count: number}>
-  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList>
-  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList>
-  loadBotPosts(id: string, lastId?: string): Promise<IPagingList>
-  loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList>
+  loadOwnBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadGeofenceBots(lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotSubscribers(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotGuests(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotVisitors(id: string, lastId?: string, max?: number): Promise<IPagingList<any>>
+  loadBotPosts(id: string, lastId?: string): Promise<IPagingList<any>>
+  loadSubscribedBots(userId: string, lastId?: string, max?: number): Promise<IPagingList<any>>
   loadLocalBots(props: {
     latitude: number
     longitude: number

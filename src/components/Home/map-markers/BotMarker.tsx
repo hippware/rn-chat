@@ -1,20 +1,19 @@
 import React from 'react'
-import {StyleSheet, Text} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import Bubble from '../../map/Bubble'
-import {colors} from '../../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
+import BotIcon from 'src/components/common/BotIcon'
+import {IBotCard, IHomeStore} from '../../../store/HomeStore'
 
-// interface ICardProps extends IProps {
-//   card: ISelectableCard
-// }
-
-const defaultIcon = require('../../../../images/mapIcons/question.png')
+type Props = {
+  card: IBotCard
+  homeStore?: IHomeStore
+}
 
 const BotMarker = inject('homeStore')(
-  observer(({homeStore, card}) => {
+  observer(({homeStore, card}: Props) => {
     const {isSelected} = card
     let bot: IBot
     // dirty workaround for #3013 (until we will not found the real case)
@@ -27,7 +26,7 @@ const BotMarker = inject('homeStore')(
       return null
     }
     // don't show marker for 'details' mode (when bot details page is shown)
-    if (homeStore.detailsMode && !isSelected) {
+    if (homeStore!.detailsMode && !isSelected) {
       return null
     }
     const {latitude, longitude} = bot.location
@@ -40,7 +39,6 @@ const BotMarker = inject('homeStore')(
         stopPropagation
       >
         <Bubble
-          image={!bot.icon && defaultIcon}
           style={{
             backgroundColor: 'white',
           }}
@@ -49,10 +47,12 @@ const BotMarker = inject('homeStore')(
             shadowRadius: 3,
             shadowOpacity: 0.12,
           }}
-          imageStyle={{width: 20, height: 20}}
           size={isSelected ? 48 : 35}
+          radius={isSelected ? 8 : 5}
+          textSize={isSelected ? 16 : 13}
+          borderWidth={1.5}
         >
-          {bot.icon && <Text style={styles.icon}>{bot.icon}</Text>}
+          <BotIcon icon={bot.icon} size={isSelected ? 30 : 20} />
         </Bubble>
       </HackMarker>
     )
@@ -60,11 +60,3 @@ const BotMarker = inject('homeStore')(
 )
 
 export default BotMarker
-
-const styles = StyleSheet.create({
-  icon: {
-    fontFamily: 'fontello',
-    fontSize: 20,
-    color: colors.PINK,
-  },
-})

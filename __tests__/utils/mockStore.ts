@@ -87,6 +87,7 @@ export default {
   iconStore: {
     setIcon: jest.fn(),
     iconList: [],
+    setEmoji: jest.fn(),
   },
   notificationStore: {},
 }

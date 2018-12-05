@@ -64,3 +64,5 @@ android/app/libs
 .project 
 yarn-error.log
 ios/tinyrobot.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+coverage/

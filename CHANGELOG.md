@@ -4,6 +4,30 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Rework version info string. Swap native and js parts. (#3009, PR #3098)
+* Make messaging UI components stateless for (PR #3100)
+  * Messages: Text & Images sent are not appearing correctly (#3060)
+* PR #3102, PR #3124
+  * Onboarding 1: Location Permissions (#3028)
+  * Onboarding 2: Accelerometer Permissions (#3029)
+* UI tweaks for bot profile (PR #3106)
+* [GraphQL] login; Other changes (#3059, PR #3101)
+* [GraphQL] user follow; Other changes (PR #3108, #3112)
+* More UI Tweaks (PR #3114)
+  * Border is rounder on pins in the presence bar than mocks (#3105)
+* Set up Codepush channel for Alan (#3115)
+* [GraphQL] Bot posts; removeBot; Other stuff (#3109, PR #3110)
+* [GraphQL] unfollow (#3119, PR #3120)
+* [GraphQL] block/unblock (#3121, PR #3120)
+* Add device ID to client JWTs (#3111)
+* [GraphQL] Optimize bot details loading (#3126)
+* Friends List Adjustments (#2876)
+* Missing empty friend list messaging and layout (#3118)
+* [GraphQL] Remove loadRelations; Other stuff (PR #3131)
+* [GraphQL] remove bot subscribe/unsubscribe code and UI (#3132)
+
+# 3.10.1 - 2018 Nov 26
+
 * Use two GraphQL connections (PR #3053)
   * Fix: Next button missing during creation flow (#3005)
 * [dev] Fix prettier handling of decorators and line breaks (#3054)
@@ -14,6 +38,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add storybook tool (PR #3079)
   * Added onboarding Accelerometer / Location page UI (PR #3080)
 * Presence widget is visible when user is in invisible mode (#3016)
+* Users incorrectly showing at locations (#3007)
+  * Showing visitors list with no visitors causes infinite spinner (#3043)
+* Add "new" login flow to GraphQLTransport with tests (PR #3077)
+* Polish Emoji Selector (#3027)
+* Crash while deleting bots (#3069, PR #3089)
 
 # 3.10.0 - 2018 Nov 5
 

@@ -21,14 +21,17 @@ const BotPostCard = observer(({bot, item: post}: Props) => {
     <View style={{backgroundColor: 'white'}}>
       <UserInfoRow profile={post.profile!} style={{paddingHorizontal: 20 * k}} />
       {!!post.content && (
-        <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
-          <RText size={14} color={colors.DARK_PURPLE}>
+        <View style={{flex: 1, paddingLeft: 20 * k, paddingRight: 20 * k}}>
+          <RText weight="Light" size={17} color={colors.DARK_PURPLE}>
             {post.content}
           </RText>
         </View>
       )}
       {!!post.image && (
-        <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode="contain" />
+        <View>
+          {!!post.content && <View style={{height: 15 * k}} />}
+          <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode="contain" />
+        </View>
       )}
     </View>
   )

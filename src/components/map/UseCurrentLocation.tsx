@@ -1,6 +1,6 @@
 import React from 'react'
 import {Animated, View, Image, TouchableOpacity} from 'react-native'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
 import {observer, inject} from 'mobx-react/native'
@@ -75,7 +75,7 @@ class CurrentLocation extends React.Component<Props, State> {
           paddingHorizontal: 20 * k,
           borderColor: colors.LIGHT_GREY,
           borderBottomWidth: 1,
-          paddingVertical: 10 * k,
+          paddingVertical: 12 * minHeight,
           backgroundColor: colors.WHITE,
           zIndex: -1,
           // transform: [{translateY: this.state.marginTop}],
@@ -90,8 +90,8 @@ class CurrentLocation extends React.Component<Props, State> {
             style={{marginRight: 20 * k}}
           />
           <View style={{flex: 1}}>
-            <RText weight="Bold" size={15}>
-              Use Current Location
+            <RText weight="Bold" size={16}>
+              Use current location
             </RText>
             <RText size={15} numberOfLines={1}>
               {this.state.address}

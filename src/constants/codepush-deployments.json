@@ -38,6 +38,12 @@
       "key": "3otAS0kRJnLvsHaUC9PGJCLSfYRFBkZTXAmmX",
       "displayName": "Staging-Beng",
       "description": "Beng's channel"
+    },
+    {
+      "name": "StagingAlan",
+      "key": "PkIOp95ZUz2-qPlwMgiEXgLZOBr3ryvg5UkJN",
+      "displayName": "Staging-Alan",
+      "description": "Alan's channel"
     }
   ],
   "local": [

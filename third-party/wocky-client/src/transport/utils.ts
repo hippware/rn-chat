@@ -7,6 +7,8 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventUserFollowData} from '../model/EventUserFollow'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
+import jsrsasign from 'jsrsasign'
+import {ILocation} from '../model/Location'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -321,7 +323,16 @@ export function convertProfile({
   } as IProfilePartial
 }
 
-// TODO: remove try/catch on this?
+export function convertBotPost({node: {id, media, owner, stanza}}) {
+  return {
+    id,
+    content: stanza,
+    image: media,
+    // todo: need date/time?
+    profile: convertProfile(owner),
+  }
+}
+
 export function convertBot({
   lat,
   lon,
@@ -334,28 +345,28 @@ export function convertBot({
   visitorCount,
   guestCount,
   subscribers,
+  posts,
+  guests,
   ...data
 }: any) {
-  try {
-    const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
-    const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
-    return {
-      ...data,
-      owner: convertProfile(owner),
-      image: convertImage(image),
-      addressData: addressData ? JSON.parse(addressData) : {},
-      totalItems: items ? items.totalCount : 0,
-      followersSize: subscriberCount.totalCount - 1,
-      visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
-      visitorsSize: visitorCount.totalCount,
-      guestsSize: guestCount.totalCount,
-      location: {latitude: lat, longitude: lon},
-      guest: contains('GUEST'),
-      visitor: contains('VISITOR'),
-      isSubscribed: contains('SUBSCRIBED'),
-    }
-  } catch (e) {
-    // console.error('ERROR CONVERTING:', arguments[0], e)
+  const relationships = subscribers.edges.length ? subscribers.edges[0].relationships : []
+  const contains = (relationship: string): boolean => relationships.indexOf(relationship) !== -1
+  return {
+    ...data,
+    owner: convertProfile(owner),
+    image: convertImage(image),
+    addressData: addressData ? JSON.parse(addressData) : {},
+    totalItems: items ? items.totalCount : 0,
+    followersSize: subscriberCount.totalCount - 1,
+    visitors: visitors ? visitors.edges.map(rec => convertProfile(rec.node)) : undefined,
+    guests: guests ? guests.edges.map(rec => convertProfile(rec.node)) : undefined,
+    posts: posts ? posts.edges.map(convertBotPost) : undefined,
+    visitorsSize: visitorCount.totalCount,
+    guestsSize: guestCount.totalCount,
+    location: {latitude: lat, longitude: lon},
+    guest: contains('GUEST'),
+    visitor: contains('VISITOR'),
+    isSubscribed: contains('SUBSCRIBED'),
   }
 }
 
@@ -385,6 +396,9 @@ export function convertNotification(edge: any): IEventData | null {
         post: {
           id: data.botItem.id,
           profile: data.botItem.owner.id,
+          title: '',
+          content: '',
+          image: null,
         },
         bot,
       }
@@ -428,4 +442,81 @@ export function convertNotification(edge: any): IEventData | null {
 
 export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
+}
+
+type TokenParams = {
+  userId: string
+  version: string
+  os: string
+  deviceName: string
+  deviceId: string
+  bypass?: boolean
+  accessToken?: string
+  phoneNumber?: string
+}
+
+export function generateWockyToken({
+  userId,
+  accessToken,
+  version,
+  os,
+  deviceName,
+  deviceId,
+  phoneNumber,
+}: TokenParams) {
+  try {
+    assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
+    const payload = {
+      jti: userId,
+      iss: `TinyRobot/${version} (${os}; ${deviceName})`,
+      typ: !!phoneNumber ? 'bypass' : 'firebase',
+      // if there's no accessToken then we're doing a bypass login.
+      // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
+      // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
+      sub: accessToken || phoneNumber,
+      aud: 'Wocky',
+      phone_number: phoneNumber,
+      dvc: deviceId,
+    }
+    // TODO: store this with react-native-native-env
+    const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+    const header = {alg: 'HS512', typ: 'JWT'}
+    const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
+    return jwt
+  } catch (err) {
+    // tslint:disable-next-line
+    console.error(err)
+    throw err
+  }
+}
+
+export function assert(condition, message) {
+  if (!condition) {
+    message = message || 'Assertion failed'
+    if (typeof Error !== 'undefined') {
+      throw new Error(message)
+    }
+    throw message // Fallback
+  }
+}
+
+export function processRosterItem(user, relationship, createdAt) {
+  const createdTime = iso8601toDate(createdAt).getTime()
+  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
+
+  return convertProfile({
+    isNew: days <= 7,
+    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
+    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
+    ...user,
+  })
+}
+
+export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {
+  return {
+    device,
+    lon: longitude,
+    lat: latitude,
+    accuracy,
+  }
 }

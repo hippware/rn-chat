@@ -2,7 +2,7 @@ import React from 'react'
 import {View, TouchableOpacity, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
-import {k} from '../Global'
+import {s} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -50,7 +50,7 @@ class FriendList extends React.Component<Props> {
   renderHeader = () => {
     const {wocky} = this.props
     return (
-      <View style={{width: 300 * k, alignSelf: 'center'}}>
+      <View style={{width: '90%', alignSelf: 'center'}}>
         <InviteFriendsRowNew />
         <View
           style={{
@@ -64,14 +64,25 @@ class FriendList extends React.Component<Props> {
             <Image source={searchIcon} />
           </TouchableOpacity>
         </View>
+        {wocky!.friends.length <= 0 ? (
+          <View>
+            <RText
+              weight="Regular"
+              color={colors.GREY}
+              style={{textAlign: 'center', fontSize: 16, marginTop: 70 * s}}
+            >
+              Start Adding Friends!
+            </RText>
+          </View>
+        ) : null}
       </View>
     )
   }
 }
 
 const FriendCount = ({count}) =>
-  count > 0 ? (
-    <RText size={16} weight="Bold">
+  count >= 0 ? (
+    <RText size={17} weight="Medium">
       {count}
       {` ${count === 1 ? 'Friend' : 'Friends'}`}
     </RText>

@@ -22,7 +22,6 @@ const RSM_NS = 'http://jabber.org/protocol/rsm'
 const MAM_NS = 'urn:xmpp:mam:1'
 const MAXINT = 1000
 const USER = 'hippware.com/hxep/user'
-const HANDLE = 'hippware.com/hxep/handle'
 
 export class XmppTransport implements IWockyTransport {
   provider: any
@@ -106,7 +105,7 @@ export class XmppTransport implements IWockyTransport {
     data: any,
     host?: string,
     providerName = 'digits'
-  ): Promise<{username: string; password: string; host: string}> {
+  ): Promise<{username?: string; password: string; host?: string}> {
     if (host) {
       this.host = host
     }
@@ -261,18 +260,6 @@ export class XmppTransport implements IWockyTransport {
       }
     })
     await this.sendIQ(iq)
-  }
-  async lookup(handle: string) {
-    const iq = $iq({type: 'get'})
-      .c('lookup', {xmlns: HANDLE})
-      .c('item', {id: handle})
-    const stanza = await this.sendIQ(iq)
-    const {jid, error} = stanza.results.item
-    if (error) {
-      throw error
-    }
-    const user = Strophe.getNodeFromJid(jid)
-    return {id: user, ...processMap(stanza.results.item)}
   }
   async remove() {
     await this.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))
@@ -537,7 +524,7 @@ export class XmppTransport implements IWockyTransport {
     const iq = $iq({type: 'set', to: this.host}).c('delete', {xmlns: BOT_NS, node: `bot/${id}`})
     await this.sendIQ(iq)
   }
-  async loadGeofenceBots(): Promise<IPagingList> {
+  async loadGeofenceBots(): Promise<IPagingList<any>> {
     throw new Error('Not supported')
   }
   async loadOwnBots(userId: string, lastId?: string, max: number = 10) {
@@ -571,7 +558,11 @@ export class XmppTransport implements IWockyTransport {
       count: parseInt(data.bots.set.count),
     }
   }
-  async loadBotSubscribers(id: string, lastId?: string, max: number = 10): Promise<IPagingList> {
+  async loadBotSubscribers(
+    id: string,
+    lastId?: string,
+    max: number = 10
+  ): Promise<IPagingList<any>> {
     const iq = $iq({type: 'get', to: this.host})
       .c('subscribers', {
         xmlns: BOT_NS,
@@ -784,8 +775,8 @@ export class XmppTransport implements IWockyTransport {
     }
     await this.sendIQ(iq)
   }
-  async loadBot(id: string, server: any) {
-    const iq = $iq({type: 'get', to: server || this.host}).c('bot', {
+  async loadBot(id: string) {
+    const iq = $iq({type: 'get', to: this.host}).c('bot', {
       xmlns: BOT_NS,
       node: `bot/${id}`,
     })
@@ -798,43 +789,43 @@ export class XmppTransport implements IWockyTransport {
       .c('item', {id: postId})
     await this.sendIQ(iq)
   }
-  shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string) {
-    const msg = $msg({
-      from: this.username + '@' + this.host,
-      type: 'headline',
-      to: this.host,
-    }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
+  // shareBot(id: string, server: string, recepients: string[], message: string, shareAction: string) {
+  //   const msg = $msg({
+  //     from: this.username + '@' + this.host,
+  //     type: 'headline',
+  //     to: this.host,
+  //   }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
 
-    recepients.forEach(user => {
-      if (user === 'friends') {
-        msg.c('address', {type: 'friends'}).up()
-      } else if (user === 'followers') {
-        msg.c('address', {type: 'followers'}).up()
-      } else {
-        msg.c('address', {type: 'to', jid: `${user}@${this.host}`}).up()
-      }
-    })
-    msg.up()
-    msg
-      .c('body')
-      .t(message)
-      .up()
-    msg
-      .c('bot', {xmlns: BOT_NS})
-      .c('jid')
-      .t(`${server}/bot/${id}`)
-      .up()
-      .c('id')
-      .t(id)
-      .up()
-      .c('server')
-      .t(server)
-      .up()
-      .c('action')
-      .t(shareAction)
+  //   recepients.forEach(user => {
+  //     if (user === 'friends') {
+  //       msg.c('address', {type: 'friends'}).up()
+  //     } else if (user === 'followers') {
+  //       msg.c('address', {type: 'followers'}).up()
+  //     } else {
+  //       msg.c('address', {type: 'to', jid: `${user}@${this.host}`}).up()
+  //     }
+  //   })
+  //   msg.up()
+  //   msg
+  //     .c('body')
+  //     .t(message)
+  //     .up()
+  //   msg
+  //     .c('bot', {xmlns: BOT_NS})
+  //     .c('jid')
+  //     .t(`${server}/bot/${id}`)
+  //     .up()
+  //     .c('id')
+  //     .t(id)
+  //     .up()
+  //     .c('server')
+  //     .t(server)
+  //     .up()
+  //     .c('action')
+  //     .t(shareAction)
 
-    this.sendStanza(msg)
-  }
+  //   this.sendStanza(msg)
+  // }
 
   async inviteBot(id: string, recepients: string[]) {
     throw new Error('Not supported')
@@ -870,21 +861,13 @@ export class XmppTransport implements IWockyTransport {
     }
     await this.sendIQ(iq)
   }
-  async subscribeBot(id: string) {
-    const iq = $iq({type: 'set', to: this.host}).c('subscribe', {
-      xmlns: BOT_NS,
-      node: `bot/${id}`,
-    })
-    const data = await this.sendIQ(iq)
-    return parseInt(data['subscriber_count'])
-  }
   async unsubscribeBot(id: string) {
     const iq = $iq({type: 'set', to: this.host}).c('unsubscribe', {
       xmlns: BOT_NS,
       node: `bot/${id}`,
     })
-    const data = await this.sendIQ(iq)
-    return parseInt(data['subscriber_count'])
+    await this.sendIQ(iq)
+    // return !!parseInt(data['subscriber_count'])
   }
   async loadNotifications(params): Promise<any> {
     throw new Error('Not supported')

@@ -7,7 +7,7 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k, width, isIphoneX} from '../Global'
+import {k, isIphoneX, minHeight} from '../Global'
 import {RText} from '../common'
 import Bubble from '../map/Bubble'
 import {addAlpha} from '../../constants/colors'
@@ -79,6 +79,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
             }
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
+            style={{paddingLeft: 8 * k}}
           />
           {!wocky!.connected && <View style={styles.overlay} />}
           <HeaderLocationOverlay />
@@ -174,9 +175,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.addAlpha(colors.WHITE, 0.7),
   },
   outer: {
-    padding: 15,
-    width: width / 4,
+    marginHorizontal: 7.5 * k,
+    paddingVertical: 15,
+    width: 71,
     alignItems: 'center',
+    marginTop: 6 * minHeight,
   },
   inner: {
     width: 75,

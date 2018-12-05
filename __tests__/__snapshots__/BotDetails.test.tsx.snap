@@ -225,9 +225,10 @@ exports[`BotDetails renders with no data 1`] = `
                           Object {
                             "color": "rgb(63,50,77)",
                             "fontFamily": "Roboto-Regular",
-                            "fontSize": 20,
+                            "fontSize": 21,
                           },
                           Object {
+                            "fontFamily": "Roboto-Medium",
                             "textAlign": "center",
                             "width": "75%",
                           },
@@ -282,7 +283,7 @@ exports[`BotDetails renders with no data 1`] = `
                             Object {
                               "color": "rgb(255,255,255)",
                               "fontFamily": "Roboto-Medium",
-                              "fontSize": 12,
+                              "fontSize": 13,
                             },
                             undefined,
                           ]
@@ -329,7 +330,7 @@ exports[`BotDetails renders with no data 1`] = `
                             Object {
                               "color": "rgb(255,255,255)",
                               "fontFamily": "Roboto-Medium",
-                              "fontSize": 12,
+                              "fontSize": 13,
                             },
                             undefined,
                           ]
@@ -357,8 +358,8 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "backgroundColor": "rgb(222,222,222)",
-                              "height": 2,
-                              "marginHorizontal": 50,
+                              "height": 0.5,
+                              "marginHorizontal": 40,
                               "marginVertical": 40,
                             },
                             Object {
@@ -385,7 +386,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "alignItems": "center",
-                              "height": 160,
+                              "height": 80,
                             },
                             undefined,
                           ]
@@ -397,8 +398,8 @@ exports[`BotDetails renders with no data 1`] = `
                         Array [
                           Object {
                             "backgroundColor": "rgb(222,222,222)",
-                            "height": 2,
-                            "marginHorizontal": 50,
+                            "height": 0.5,
+                            "marginHorizontal": 40,
                             "marginVertical": 40,
                           },
                           Object {
@@ -416,7 +417,16 @@ exports[`BotDetails renders with no data 1`] = `
         <View
           onLayout={[Function]}
           style={null}
-        />
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "white",
+                "height": 100,
+              }
+            }
+          />
+        </View>
       </View>
     </RCTScrollView>
     <View
@@ -435,15 +445,15 @@ exports[`BotDetails renders with no data 1`] = `
           Object {
             "alignItems": "center",
             "backgroundColor": "white",
-            "borderBottomWidth": 1,
+            "borderBottomWidth": 0.5,
             "borderColor": "rgb(212,212,212)",
             "elevation": 1,
             "flex": 1,
             "flexDirection": "row",
-            "height": 64,
+            "height": 140.8,
             "justifyContent": "space-between",
             "paddingHorizontal": 10,
-            "paddingTop": 20,
+            "paddingTop": 44,
           }
         }
       >
@@ -515,6 +525,7 @@ exports[`BotDetails renders with no data 1`] = `
               accessible={true}
               allowFontScaling={true}
               ellipsizeMode="tail"
+              numberOfLines={1}
               style={
                 Array [
                   Object {
@@ -610,9 +621,10 @@ exports[`BotDetails renders with no data 1`] = `
         Object {
           "backgroundColor": "rgb(255,255,255)",
           "borderColor": "rgb(212,212,212)",
-          "borderTopWidth": 1,
+          "borderTopWidth": 0.5,
           "bottom": 0,
           "left": 0,
+          "paddingBottom": 60.00000000000001,
           "position": "absolute",
           "right": 0,
         }
@@ -685,8 +697,8 @@ exports[`BotDetails renders with no data 1`] = `
               Object {
                 "alignSelf": "center",
                 "flex": 1,
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 14,
+                "fontFamily": "Roboto-Light",
+                "fontSize": 17,
                 "margin": 0,
                 "paddingHorizontal": 11,
                 "paddingTop": 0,

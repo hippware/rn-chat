@@ -19,7 +19,7 @@ const FriendCard = observer(({profile, children}: Props) => {
     <View style={{backgroundColor: 'white'}}>
       <TouchableOpacity
         onPress={() => Actions.profileDetails({item: profile.id})}
-        style={{width: 300 * k, alignSelf: 'center'}}
+        style={{width: '90%', paddingHorizontal: 15 * k, alignSelf: 'center'}}
       >
         <ProfileItem profile={profile} style={{backgroundColor}}>
           {children}

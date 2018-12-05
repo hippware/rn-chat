@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {navBarStyle} from '../styles'
@@ -45,16 +45,16 @@ export default NavBarHeader
 
 const styles = StyleSheet.create({
   header: {
-    height: 64,
+    height: 64 * minHeight,
     flex: 1,
     backgroundColor: 'white',
     elevation: 1,
-    paddingTop: 20,
+    paddingTop: 20 * minHeight,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: 10,
     borderColor: colors.GREY,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 })

@@ -1,4 +1,4 @@
-import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType, Instance} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
@@ -14,7 +14,7 @@ const Invitation = types.model('BotInvitation', {
   id: types.string,
   accepted: types.boolean,
 })
-
+const LazyProfileList = types.late('LazyProfileRef', (): IAnyModelType => ProfilePaginableList)
 export const Bot = types
   .compose(
     Base,
@@ -46,9 +46,9 @@ export const Bot = types
       visitorsSize: 0,
       totalItems: 0,
       addressData: types.optional(Address, {}),
-      subscribers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      guests: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      visitors: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
+      subscribers: types.optional(LazyProfileList, {}),
+      guests: types.optional(LazyProfileList, {}),
+      visitors: types.optional(LazyProfileList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
       invitation: types.maybeNull(Invitation),
@@ -87,14 +87,7 @@ export const Bot = types
         self.posts.remove(postId)
         self.totalItems -= 1
       }
-    }),
-    subscribe: flow(function*() {
-      self.isSubscribed = true
-      self.guest = true
-      self.service.profile!.subscribedBots.addToTop(self)
-      self.service.geofenceBots.addToTop(self)
-      self.followersSize = yield self.service._subscribeBot(self.id)
-    }),
+    }) as (postId: string) => Promise<void>,
     acceptInvitation: flow(function*(userLocation: ILocation) {
       if (!self.invitation) {
         throw new Error('Invitation is not set for the bot')
@@ -111,7 +104,7 @@ export const Bot = types
       self.isSubscribed = false
       self.service.profile!.subscribedBots.remove(self.id)
       self.service.geofenceBots.remove(self.id)
-      self.followersSize = yield self.service._unsubscribeBot(self.id)
+      yield self.service._unsubscribeBot(self.id)
     }),
     share: (userIDs: string[], message: string = '', action: string = 'share') => {
       self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
@@ -137,11 +130,21 @@ export const Bot = types
         data.addressData = Address.create({})
       }
 
-      // load visitors
+      // load visitors/guests/subscribers
       if (data.visitors) {
         self.visitors.refresh()
         data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
         delete data.visitors
+      }
+      if (data.guests) {
+        self.guests.refresh()
+        data.guests.forEach(p => self.guests.add(self.service.profiles.get(p.id, p)))
+        delete data.guests
+      }
+      if (data.posts) {
+        self.posts.refresh()
+        data.posts.forEach(p => self.posts.add(self.service.create(BotPost, p)))
+        delete data.posts
       }
       Object.assign(self, data)
     },
@@ -186,11 +189,7 @@ export const Bot = types
     },
   }))
 
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-// export type __IPaginable = IPaginable
-
-export type IBotType = typeof Bot.Type
-export interface IBot extends IBotType {}
+export interface IBot extends Instance<typeof Bot> {}
 
 export interface IBotData {
   id: string
@@ -224,7 +223,7 @@ export interface IBotData {
 }
 
 export const BotPaginableList = createPaginable<IBot>(types.reference(Bot))
-export type IBotPaginableList = typeof BotPaginableList.Type
+
 export const BotRef = types.reference(Bot, {
   get(id: string, parent: any) {
     return (
