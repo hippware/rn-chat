@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, Text, Image} from 'react-native'
 import Avatar from '../common/Avatar'
-import {k, minHeight} from '../Global'
 import {observer} from 'mobx-react/native'
 import {ProfileHandle} from '../common'
 

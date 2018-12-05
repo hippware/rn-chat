@@ -312,7 +312,7 @@ exports[`Home renders with no data 1`] = `
                         "justifyContent": "center",
                       },
                       Object {
-                        "backgroundColor": "rgb(253,95,108)",
+                        "backgroundColor": "rgb(255,255,255)",
                         "borderColor": "rgb(253,95,108)",
                       },
                       Object {
@@ -395,7 +395,7 @@ exports[`Home renders with no data 1`] = `
                         "justifyContent": "center",
                       },
                       Object {
-                        "backgroundColor": "rgb(253,95,108)",
+                        "backgroundColor": "rgb(255,255,255)",
                         "borderColor": "rgb(253,95,108)",
                       },
                       Object {
@@ -478,7 +478,7 @@ exports[`Home renders with no data 1`] = `
                         "justifyContent": "center",
                       },
                       Object {
-                        "backgroundColor": "rgb(253,95,108)",
+                        "backgroundColor": "rgb(255,255,255)",
                         "borderColor": "rgb(253,95,108)",
                       },
                       Object {

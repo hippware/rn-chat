@@ -6,7 +6,6 @@ import alert from '../../utils/alert'
 import {inject, observer} from 'mobx-react/native'
 import {RText} from '../common'
 import {colors} from '../../constants'
-import {k} from '../Global'
 import GradientButton from '../common/GradientButton'
 
 const geoIcon = require('../../../images/notificationFollow.png')
