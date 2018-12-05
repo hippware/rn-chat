@@ -1,4 +1,4 @@
-import {createUser, waitFor} from './support/testuser'
+import {createUser} from './support/testuser'
 import {IWocky} from '../src'
 
 let alice: IWocky, bob: IWocky
@@ -18,10 +18,10 @@ describe('New GraphQL conversation tests', () => {
     expect(alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
   })
 
-  it("bob receives alice's messages", async () => {
-    await waitFor(() => bob.chats.list.length === 1 && bob.chats.list[0].messages.length === 2)
-    expect(bob.chats.list[0].last!.body).toEqual('hello2')
-  })
+  // it("bob receives alice's messages", async () => {
+  //   await waitFor(() => bob.chats.list.length === 1 && bob.chats.list[0].messages.length === 2)
+  //   expect(bob.chats.list[0].last!.body).toEqual('hello2')
+  // })
 
   afterAll(async () => {
     try {

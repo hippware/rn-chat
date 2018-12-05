@@ -96,12 +96,10 @@ export class NextGraphQLTransport implements IWockyTransport {
         `,
         variables: {token},
       }
-      const res = await Promise.all([
-        this.clients![0].mutate(mutation),
-        this.clients![1].mutate(mutation),
-      ])
+      const res = await Promise.all(this.clients!.map(c => c.mutate(mutation)))
       // set the username based on what's returned in the mutation
       this.username = (res[0] as any).data.authenticate.user.id
+      // check that all clients are authenticated
       this.connected = res.reduce<boolean>(
         (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
         true
