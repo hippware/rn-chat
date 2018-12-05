@@ -43,8 +43,15 @@ const EventCardTemplate = observer(
             />
           </View>
 
-          <View style={{flex: 1, marginRight: 7 * k}}>
-            <RText style={{lineHeight: 10}}>
+          <View
+            style={{
+              flex: 1,
+              marginRight: 7 * k,
+              alignSelf: 'center',
+              alignItems: 'flex-start',
+            }}
+          >
+            <RText>
               <RText size={13} weight="Medium">{`@${profile.handle} `}</RText>
               <RText size={13} color={colors.PURPLISH_GREY}>
                 {action}{' '}
@@ -54,19 +61,19 @@ const EventCardTemplate = observer(
                   {timestamp}
                 </RText>
               )}
-            </RText>
-            {line2 && (
-              <RText style={{marginBottom: 5}} size={15} color={colors.DARK_PURPLE}>
-                {line2}
-                {'. '}
-                <RText size={13} weight="Light" color={colors.DARK_GREY}>
-                  {timestamp}
+              {line2 && (
+                <RText size={15} weight="Medium" color={colors.DARK_PURPLE}>
+                  {line2}
+                  {'. '}
+                  <RText size={13} weight="Light" color={colors.DARK_GREY}>
+                    {timestamp}
+                  </RText>
                 </RText>
-              </RText>
-            )}
+              )}
+            </RText>
           </View>
 
-          <View style={{width: 71 * k, height: 40, justifyContent: 'center'}}>
+          <View style={{width: 71, height: 40, justifyContent: 'center'}}>
             {rightColumnElement}
           </View>
         </View>

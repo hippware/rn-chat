@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType} from 'react-native'
+import {View, Image, StyleSheet, ViewStyle, ImageStyle} from 'react-native'
 import Triangle from './Triangle'
 import {RText} from '../common'
 import {colors} from '../../constants'
@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient'
 
 type Props = {
   text?: string
-  image?: ImageSourcePropType
+  image?: any
   showLoader?: boolean | null
   children?: any
   style?: ViewStyle
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bubble: {
-    backgroundColor: colors.PINK,
+    backgroundColor: colors.WHITE,
     borderColor: colors.PINK,
   },
 })

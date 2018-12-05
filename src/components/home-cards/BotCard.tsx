@@ -50,7 +50,7 @@ const BotCard = observer(({bot, isSelected}: Props) => (
         </View>
       )}
       <View style={[styles.textContainer, bot.image && {marginLeft: 18 * k}]}>
-        <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
+        <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={2}>
           {bot.title}
         </RText>
         <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>

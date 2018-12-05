@@ -60,6 +60,7 @@ const SelectableProfileItem = observer(props => {
         key={row.profile.id}
         profile={row.profile}
         selected={onSelect ? undefined : row.selected}
+        style={{marginHorizontal: 15}}
       />
     </TouchableOpacity>
   )
