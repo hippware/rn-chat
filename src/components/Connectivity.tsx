@@ -50,6 +50,8 @@ export default class Connectivity extends React.Component<Props> {
       () => !this.props.wocky!.connected,
       () => (this.lastDisconnected = Date.now())
     )
+
+    this.props.locationStore!.didMount()
     setTimeout(() => this._handleAppStateChange('active'))
   }
 
@@ -58,6 +60,8 @@ export default class Connectivity extends React.Component<Props> {
     if (this.handler) this.handler()
     AppState.removeEventListener('change', this._handleAppStateChange)
     NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange)
+
+    this.props.locationStore!.willUnmount()
   }
 
   // reason: A string indicating why tryReconnect() was called.
