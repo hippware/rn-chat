@@ -1,15 +1,10 @@
-import {types} from 'mobx-state-tree'
+import {types, Instance} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
 import * as utils from '../transport/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
-import {IBot} from './Bot'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IBot = IBot
-
 const moment = require('moment')
 
 export const Message = types
@@ -23,7 +18,7 @@ export const Message = types
       id: types.optional(types.string, utils.generateID),
       archiveId: '',
       from: types.maybeNull(types.reference(Profile)),
-      to: '',
+      to: '', // todo: should this be a profile ref?
       media: FileRef,
       unread: false,
       body: '',
@@ -58,4 +53,4 @@ export const Message = types
       self.clear()
     },
   }))
-export type IMessage = typeof Message.Type
+export interface IMessage extends Instance<typeof Message> {}
