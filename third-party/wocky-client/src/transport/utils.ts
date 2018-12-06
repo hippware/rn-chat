@@ -9,6 +9,7 @@ import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
+import {IBotPostIn} from '../model/BotPost'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -323,10 +324,10 @@ export function convertProfile({
   } as IProfilePartial
 }
 
-export function convertBotPost({node: {id, media, owner, stanza}}) {
+export function convertBotPost({node: {id, media, owner, content}}): IBotPostIn {
   return {
     id,
-    content: stanza,
+    content,
     image: media,
     // todo: need date/time?
     profile: convertProfile(owner),

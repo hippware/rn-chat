@@ -1,6 +1,6 @@
 import {types, Instance} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
-import {BotPost, IBotPostData} from './BotPost'
+import {BotPost, IBotPostIn} from './BotPost'
 
 export const EventBotPost = types
   .compose(
@@ -14,5 +14,5 @@ export const EventBotPost = types
 export interface IEventBotPost extends Instance<typeof EventBotPost> {}
 
 export interface IEventBotPostData extends IEventBotData {
-  post: IBotPostData
+  post: IBotPostIn
 }
