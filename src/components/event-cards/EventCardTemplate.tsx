@@ -23,13 +23,13 @@ const EventCardTemplate = observer(
         <View
           style={{
             flexDirection: 'row',
-            paddingHorizontal: 15,
-            marginTop: 20,
+            paddingHorizontal: '5.5%',
+            paddingTop: 25,
             alignItems: 'center',
             backgroundColor: 'white',
           }}
         >
-          <View style={{paddingRight: 13 * k, marginLeft: 5 * k, marginRight: 10 * k}}>
+          <View style={{paddingRight: 13 * k, marginRight: '3%'}}>
             <Avatar size={47} profile={profile} hideDot />
             <Image
               source={icon}
@@ -52,21 +52,20 @@ const EventCardTemplate = observer(
             }}
           >
             <RText>
-              <RText size={13} weight="Medium">{`@${profile.handle} `}</RText>
-              <RText size={13} color={colors.PURPLISH_GREY}>
+              <RText size={14} weight="Medium">{`@${profile.handle} `}</RText>
+              <RText size={14} color={colors.PURPLISH_GREY}>
                 {action}{' '}
               </RText>
               {line2 == null && (
-                <RText size={13} weight="Light" color={colors.DARK_GREY}>
+                <RText size={14} weight="Light" color={colors.DARK_GREY}>
                   {timestamp}
                 </RText>
               )}
               {line2 && (
                 <RText size={15} weight="Medium" color={colors.DARK_PURPLE}>
-                  {'\r\n'}
                   {line2}
                   {'. '}
-                  <RText size={13} weight="Light" color={colors.DARK_GREY}>
+                  <RText size={14} weight="Light" color={colors.DARK_GREY}>
                     {timestamp}
                   </RText>
                 </RText>
