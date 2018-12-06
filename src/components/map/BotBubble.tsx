@@ -30,12 +30,10 @@ class BotBubble extends React.Component<Props> {
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
-    const coverImage = image || (bot.image ? bot.image.thumbnail : null)
     const text = bot.icon
     const bubble = (
       <Bubble
         text={text}
-        image={coverImage}
         textSize={35}
         showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
         {...rest}

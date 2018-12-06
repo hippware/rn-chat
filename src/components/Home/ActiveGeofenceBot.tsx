@@ -39,22 +39,17 @@ class ActiveBot extends React.Component<Props> {
         <View style={innerStyle}>
           <BotBubble bot={bot} scale={0} onImagePress={this.goToBot} radius={11}>
             {bot.visitor ? (
-              <View
-                style={[
-                  styles.youreHere,
-                  bot.image ? {backgroundColor: 'rgba(0,0,0,0.3)'} : {backgroundColor: 'white'},
-                ]}
-              >
+              <View style={[styles.youreHere, {backgroundColor: 'white'}]}>
                 <RText
                   size={13}
-                  color={bot.image ? colors.WHITE : colors.PINK}
+                  color={colors.PINK}
                   style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
                 >
                   You're
                 </RText>
                 <RText
                   size={13}
-                  color={bot.image ? colors.WHITE : colors.PINK}
+                  color={colors.PINK}
                   style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
                 >
                   Here
