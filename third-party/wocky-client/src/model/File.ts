@@ -33,21 +33,6 @@ export const File = types
       return self.thumbnail !== null // self.source !== null
     },
   }))
-  .actions(self => ({
-    download: flow(function*() {
-      if (!self.source && !self.loading) {
-        try {
-          self.error = ''
-          self.loading = true
-          self.thumbnail = self.source = yield self.service.downloadTROS(self.id)
-        } catch (e) {
-          self.error = e
-        } finally {
-          self.loading = false
-        }
-      }
-    }),
-  }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
     delete res.source
@@ -76,8 +61,6 @@ export const File = types
             self.error = e
             self.url = ''
             self.loading = false
-            // try to load tros
-            yield self.download()
           }
         }
       }),

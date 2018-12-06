@@ -31,11 +31,6 @@ export const Message = types
     },
   }))
   .actions(self => ({
-    afterAttach: () => {
-      if (self.media && !self.media.source) {
-        self.media.download()
-      }
-    },
     read: () => (self.unread = false),
     clear: () => {
       self.media = null
