@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 # DEBUG
 
 * Enable debug screens on Prod.
+* Display more version info for codepushes (#3009, PR #3072, PR #3098)
 
 # 3.9.3 - 2018 Oct 23
 
