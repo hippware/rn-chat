@@ -15,10 +15,9 @@ import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
 import Screen from './Screen'
-import {PINK} from '../constants/colors'
 import {settings} from '../globals'
-import Version from './Version'
 import {phoneFormat} from '../utils/misc'
+import Version from './Version'
 
 type Props = {
   wocky?: IWocky
@@ -207,7 +206,7 @@ const LinkButton = ({
   style?: any
 }) => (
   <TouchableOpacity onPress={onPress}>
-    <RText size={15} color={PINK} style={[styles.text, style]}>
+    <RText size={15} color={colors.PINK} style={[styles.text, style]}>
       {children}
     </RText>
   </TouchableOpacity>
