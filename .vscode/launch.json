@@ -5,25 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug tinyrobotStaging",
-      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-      "type": "reactnative",
-      "request": "launch",
-      "platform": "ios",
-      "sourceMaps": true,
-      "outDir": "${workspaceRoot}/.vscode/.react",
-      "scheme": "tinyrobotStaging"
-    },
-    {
-      "name": "Debug tinyrobot",
-      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
-      "type": "reactnative",
-      "request": "launch",
-      "platform": "ios",
-      "sourceMaps": true,
-      "outDir": "${workspaceRoot}/.vscode/.react"
-    },
-    {
       "name": "Attach to packager",
       "program": "${workspaceRoot}/.vscode/launchReactNative.js",
       "type": "reactnative",
@@ -36,7 +17,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["${relativeFile}"],
+      "args": ["--detectOpenHandles", "--forceExit", "${relativeFile}"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "windows": {
@@ -54,6 +35,25 @@
       "windows": {
         "program": "${workspaceFolder}/node_modules/jest/bin/jest"
       }
+    },
+    {
+      "name": "Debug tinyrobotStaging",
+      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "ios",
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/.vscode/.react",
+      "scheme": "tinyrobotStaging"
+    },
+    {
+      "name": "Debug tinyrobot",
+      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "type": "reactnative",
+      "request": "launch",
+      "platform": "ios",
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/.vscode/.react"
     }
   ]
 }
