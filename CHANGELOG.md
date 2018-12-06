@@ -25,6 +25,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Missing empty friend list messaging and layout (#3118)
 * [GraphQL] Remove loadRelations; Other stuff (PR #3131)
 * [GraphQL] remove bot subscribe/unsubscribe code and UI (#3132)
+* [GraphQL] enable/disable push notifications (#3134)
+* Rework Location Store and RNBGL (#3071, PR #3107)
+  * Speculative fix: App not updating users location with app closed (#2508)
+* Remove google logo, other ui changes (#3130, PR #3136)
 
 # 3.10.1 - 2018 Nov 26
 
