@@ -83,6 +83,7 @@ export class NextGraphQLTransport implements IWockyTransport {
 
     if (res) {
       this.subscribeBotVisitors()
+      this.subscribeNotifications()
     }
     return res
   }
@@ -276,74 +277,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       return {createdAt, lat, lon, accuracy}
     })
   }
-  subscribeBotVisitors() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-          subscription subscribeBotVisitors($ownUsername: String!){
-            botGuestVisitors {
-              action
-              bot {
-                ${BOT_PROPS}
-                visitors: subscribers(first: 1, type: VISITOR) {
-                    edges {
-                      cursor
-                      node {
-                        ${PROFILE_PROPS}
-                      }
-                    }
-                  }
-              }
-              visitor {
-                id
-              }
-            }
-          }
-        `,
-      variables: {
-        ownUsername: this.username,
-      },
-    }).subscribe({
-      next: action((result: any) => {
-        const update = result.data.botGuestVisitors
-        this.botVisitor = {
-          visitor: {id: update.visitor.id},
-          bot: convertBot(update.bot),
-          action: update.action,
-        }
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
-
-  subscribeContacts() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-        subscription subscribeContacts {
-          contacts {
-            createdAt
-            relationship
-            user {
-              id
-              roles
-              firstName
-              lastName
-              handle
-              media {
-                thumbnailUrl
-                trosUrl
-              }
-            }
-          }
-        }
-      `,
-    }).subscribe({
-      next: action((result: any) => {
-        const {user, relationship, createdAt} = result.data.contacts
-        this.rosterItem = processRosterItem(user, relationship, createdAt)
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
 
   async loadNotifications(params: {
     limit?: number
@@ -380,25 +313,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     return {count: 0, list: []}
   }
 
-  subscribeNotifications() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-          subscription notifications($ownUsername: String!) {
-            notifications {
-              ${NOTIFICATIONS_PROPS}
-            }
-          }
-        `,
-      variables: {
-        ownUsername: this.username,
-      },
-    }).subscribe({
-      next: action((result: any) => {
-        this.notification = convertNotification({node: result.data.notifications})
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this.loadBots('OWNED', id, lastId, max)
   }
@@ -1016,6 +930,120 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {code: {code}},
     })
+  }
+
+  /******************************** SUBSCRIPTIONS ********************************/
+
+  private subscribeNotifications() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+          subscription notifications($ownUsername: String!) {
+            notifications {
+              ${NOTIFICATIONS_PROPS}
+            }
+          }
+        `,
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        this.notification = convertNotification({node: result.data.notifications})
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeContacts() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+        subscription subscribeContacts {
+          contacts {
+            createdAt
+            relationship
+            user {
+              id
+              roles
+              firstName
+              lastName
+              handle
+              avatar {
+                thumbnailUrl
+                trosUrl
+              }
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        const {user, relationship, createdAt} = result.data.contacts
+        this.rosterItem = processRosterItem(user, relationship, createdAt)
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeBotVisitors() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+          subscription subscribeBotVisitors($ownUsername: String!){
+            botGuestVisitors {
+              action
+              bot {
+                ${BOT_PROPS}
+                visitors: subscribers(first: 1, type: VISITOR) {
+                    edges {
+                      cursor
+                      node {
+                        ${PROFILE_PROPS}
+                      }
+                    }
+                  }
+              }
+              visitor {
+                id
+              }
+            }
+          }
+        `,
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        const update = result.data.botGuestVisitors
+        this.botVisitor = {
+          visitor: {id: update.visitor.id},
+          bot: convertBot(update.bot),
+          action: update.action,
+        }
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeMessages() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+        subscription messages {
+          messages {
+            createdAt
+            direction
+            message
+            otherUser {
+              id
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        console.log('& new message!', result.data.messages)
+        this.message = convertMessage({node: result.data.messages})
+      }),
+    })
+    this.subscriptions.push(subscription)
   }
 
   private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
