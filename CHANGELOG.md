@@ -9,7 +9,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Enable debug screens on Prod.
 * Configure startOnBoot,stopOnTerminate with setConfig().
 * Display more version info for codepushes (#3009, PR #3072, PR #3098)
-* Display err.code in FirebaseStore errorMessage.
+* Display err.code, err.message in FirebaseStore errorMessage.
 
 # 3.9.3 - 2018 Oct 23
 
