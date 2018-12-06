@@ -151,7 +151,7 @@ const FirebaseStore = types
           default:
             // message = err.message;
             self.errorMessage =
-              'Error verifying phone number. Please check the number and try again.'
+              `Error verifying phone number. Please check the number and try again. ${err.code}`
         }
       }
     })
