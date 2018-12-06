@@ -63,6 +63,7 @@ const EventCardTemplate = observer(
               )}
               {line2 && (
                 <RText size={15} weight="Medium" color={colors.DARK_PURPLE}>
+                  {'\r\n'}
                   {line2}
                   {'. '}
                   <RText size={13} weight="Light" color={colors.DARK_GREY}>
@@ -73,7 +74,12 @@ const EventCardTemplate = observer(
             </RText>
           </View>
 
-          <View style={{width: 71, height: 40, justifyContent: 'center'}}>
+          <View
+            style={[
+              rightColumnElement ? {width: 71} : {width: 0},
+              {height: 40, justifyContent: 'center'},
+            ]}
+          >
             {rightColumnElement}
           </View>
         </View>
