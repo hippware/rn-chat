@@ -4,9 +4,14 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import Card from './Card'
+import {Actions} from 'react-native-router-flux'
 
 const TutorialCard = () => (
-  <Card>
+  <Card
+    onPress={() => {
+      Actions.createBot()
+    }}
+  >
     <View style={styles.textContainer}>
       <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
         Map Your Favorite Spots

@@ -125,7 +125,6 @@ exports[`BotDetails renders with no data 1`] = `
       contentContainerStyle={
         Object {
           "flexGrow": 1,
-          "paddingBottom": 50,
         }
       }
       data={Array []}
@@ -422,7 +421,7 @@ exports[`BotDetails renders with no data 1`] = `
             style={
               Object {
                 "backgroundColor": "white",
-                "height": 100,
+                "height": 200,
               }
             }
           />
@@ -536,7 +535,7 @@ exports[`BotDetails renders with no data 1`] = `
                   Array [
                     Object {
                       "color": "rgb(63,50,77)",
-                      "fontFamily": "Roboto-Regular",
+                      "fontFamily": "Roboto-Medium",
                       "fontSize": 17,
                       "fontWeight": undefined,
                       "letterSpacing": 0.5,

@@ -45,7 +45,8 @@ const UberMarker = inject('iconStore', 'homeStore')(
           >
             <BotIcon icon={emoji || '❔'} size={24} />
           </Bubble>
-          {isIconEditable && <Image source={tapToChange} style={styles.changeCTA as any} />}
+          {isIconEditable &&
+            !isEmojiKeyboardShown && <Image source={tapToChange} style={styles.changeCTA as any} />}
         </Wrapper>
         {!isEmojiKeyboardShown && <Image source={dragTheMap} />}
       </View>
