@@ -652,8 +652,8 @@ export class NextGraphQLTransport implements IWockyTransport {
         input: {access, size, mimeType: file!.type, filename: file!.name},
       },
     })
-    const {headers, method, referenceUrl, uploadUrl} = res.data!.result
-    return {method, headers, url: uploadUrl, reference_url: referenceUrl, file}
+    const {headers, method, referenceUrl, uploadUrl} = res.data!.mediaUpload.result
+    return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
   async follow(userId: string): Promise<void> {
