@@ -625,9 +625,35 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async requestUpload(): Promise<string> {
-    // This is now supported through the MediaUpload mutation
-    throw new Error('Not supported')
+  async requestUpload({file, size, access}: any): Promise<any> {
+    const res = await this.clients![0].mutate({
+      mutation: gql`
+        mutation mediaUpload($input: MediaUploadParams!) {
+          mediaUpload(input: $input) {
+            messages {
+              field
+              message
+            }
+            successful
+            result {
+              id
+              headers {
+                name
+                value
+              }
+              method
+              referenceUrl
+              uploadUrl
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {access, size, mimeType: file!.type, filename: file!.name},
+      },
+    })
+    const {headers, method, referenceUrl, uploadUrl} = res.data!.mediaUpload.result
+    return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
   async follow(userId: string): Promise<void> {

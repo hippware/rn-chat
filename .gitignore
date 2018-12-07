@@ -66,3 +66,4 @@ yarn-error.log
 ios/tinyrobot.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 
 coverage/
+.vscode/launch.json

@@ -445,9 +445,6 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.loadChat(userId, lastId, max)
       }),
-      downloadURL: flow(function*(tros: string) {
-        return yield self.transport.downloadURL(tros)
-      }),
       setLocation: flow(function*(location: ILocationSnapshot) {
         return yield self.transport.setLocation(location)
       }),
@@ -622,16 +619,7 @@ export const Wocky = types
           cached = yield fs.fileExists(fileName)
         }
         if (!cached) {
-          yield waitFor(() => self.connected)
-          let url = sourceUrl
-          let headers = {}
-          // request S3 URL if it is not passed
-          if (!url) {
-            const data = yield self.downloadURL(tros)
-            url = data.url
-            headers = data.headers
-          }
-          yield fs.downloadHttpFile(url, fileName, headers)
+          yield fs.downloadHttpFile(sourceUrl, fileName, {})
         }
         const {width, height} = yield fs.getImageSize(fileName)
         return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
@@ -647,9 +635,6 @@ export const Wocky = types
   .actions(self => ({
     downloadThumbnail: flow(function*(url: string, tros: string) {
       return yield self.downloadFile(tros, 'thumbnail', url)
-    }),
-    downloadTROS: flow(function*(tros: string) {
-      return yield self.downloadFile(tros, 'main', '')
     }),
   }))
   .actions(self => {

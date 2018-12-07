@@ -50,7 +50,6 @@ export interface IWockyTransport {
   // requestProfiles(users: string[]): Promise<any>
   updateProfile(d: any): Promise<void>
   remove(): Promise<void>
-  downloadURL(tros: string): Promise<any>
   requestUpload(params: {
     file: any
     size: number
