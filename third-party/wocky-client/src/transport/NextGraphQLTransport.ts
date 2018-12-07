@@ -155,7 +155,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }
@@ -328,7 +328,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               firstName
               lastName
               handle
-              avatar {
+              media {
                 thumbnailUrl
                 trosUrl
               }
@@ -577,13 +577,17 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
-    const values = {}
+    const fields = ['handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values: any = {}
     fields.forEach(field => {
       if (d[field]) {
         values[field] = d[field]
       }
     })
+    if (d.avatar) {
+      values.imageUrl = d.avatar
+    }
+
     return this.voidMutation({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
@@ -811,7 +815,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           addressData: JSON.stringify(addressData),
           description,
           icon,
-          image,
+          imageUrl: image,
           geofence: true,
           lat: bot.location.latitude,
           lon: bot.location.longitude,
@@ -852,7 +856,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }

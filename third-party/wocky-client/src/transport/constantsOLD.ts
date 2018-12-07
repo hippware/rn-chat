@@ -1,12 +1,13 @@
+// TODO: delete this file after switch-over to all GraphQL
+
 export const PROFILE_PROPS = `id firstName lastName handle
-  media { thumbnailUrl fullUrl trosUrl }
+  avatar { thumbnailUrl fullUrl trosUrl }
   bots(first:0, relationship: OWNED) { totalCount }
   followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
   followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 `
-
 export const BOT_PROPS = `id icon title address addressData description radius server shortname 
-  media { thumbnailUrl fullUrl trosUrl }
+  image { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
   guestCount: subscribers(first:0 type:GUEST){ totalCount }
