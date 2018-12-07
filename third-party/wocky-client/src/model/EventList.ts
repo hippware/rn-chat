@@ -1,4 +1,4 @@
-import {types} from 'mobx-state-tree'
+import {types, Instance} from 'mobx-state-tree'
 import {EventBotCreate} from './EventBotCreate'
 import {EventBotPost} from './EventBotPost'
 import {EventBotNote} from './EventBotNote'
@@ -32,5 +32,4 @@ export const EventList: IPaginable<IEventEntity> = createPaginable<IEventEntity>
   return snapshot
 })
 
-export type IEventListType = typeof EventList.Type
-export interface IEventList extends IEventListType {}
+export interface IEventList extends Instance<typeof EventList> {}
