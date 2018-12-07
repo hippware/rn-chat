@@ -1,4 +1,4 @@
-import {types, flow, getParent, IAnyModelType, Instance} from 'mobx-state-tree'
+import {types, flow, getParent, IAnyModelType, Instance, SnapshotIn} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -40,4 +40,4 @@ export interface IBotPost extends Instance<typeof BotPost> {}
 
 export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
 
-export interface IBotPostData extends Instance<typeof BotPostData> {}
+export interface IBotPostIn extends SnapshotIn<typeof BotPostData> {}

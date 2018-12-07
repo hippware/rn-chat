@@ -11,7 +11,13 @@ import {ILocationSnapshot, IBotPost, IMessage} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS, VOID_PROPS} from './constants'
+import {
+  PROFILE_PROPS,
+  BOT_PROPS,
+  NOTIFICATIONS_PROPS,
+  VOID_PROPS,
+  BOT_POST_LIST_PROPS,
+} from './constants'
 import {
   convertProfile,
   convertBot,
@@ -25,7 +31,7 @@ import {
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
-import {IBotPostData} from '../model/BotPost'
+import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
 
 export class NextGraphQLTransport implements IWockyTransport {
@@ -210,22 +216,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               }
             }
             posts: items(first: 10) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  id
-                  stanza
-                  media {
-                    fullUrl
-                    thumbnailUrl
-                    trosUrl
-                  }
-                  owner {
-                    ${PROFILE_PROPS}
-                  }
-                }
-              }
+              ${BOT_POST_LIST_PROPS}
             }
 
           }
@@ -475,28 +466,13 @@ export class NextGraphQLTransport implements IWockyTransport {
     id: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList<IBotPostData>> {
+  ): Promise<IPagingList<IBotPostIn>> {
     const res = await this.clients![0].query<any>({
       query: gql`
         query loadBot($id: UUID!, $limit: Int, $cursor: String) {
           bot(id: $id) {
             items(after: $cursor, first: $limit) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  id
-                  stanza
-                  media {
-                    fullUrl
-                    thumbnailUrl
-                    trosUrl
-                  }
-                  owner {
-                    ${PROFILE_PROPS}
-                  }
-                }
-              }
+              ${BOT_POST_LIST_PROPS}
             }
           }
         }
@@ -894,20 +870,20 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
-    // TODO add post.image support?
     return this.voidMutation({
       mutation: gql`
-        mutation botItemPublish($botId: UUID!, $values: BotItemParams!) {
-          botItemPublish(input: {botId: $botId, values: $values}) {
+        mutation botItemPublish($input: BotItemPublishInput!) {
+          botItemPublish(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
       variables: {
-        botId,
-        values: {
+        input: {
+          botId,
+          content: post.content,
           id: post.id,
-          stanza: post.content,
+          imageUrl: post.image && post.image.url,
         },
       },
     })
