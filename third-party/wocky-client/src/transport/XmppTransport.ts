@@ -835,9 +835,9 @@ export class XmppTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async subscribeNotifications() {
-    throw new Error('Not supported')
-  }
+  // async subscribeNotifications() {
+  //   throw new Error('Not supported')
+  // }
 
   async publishBotPost(botId: string, post: any) {
     const iq = $iq({type: 'set', to: this.host})

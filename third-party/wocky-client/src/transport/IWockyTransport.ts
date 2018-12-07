@@ -28,7 +28,7 @@ export interface IWockyTransport {
   host?: string
   resource?: string
   // geoBot: any // TODO inteface for bot
-  message: any // TODO interface for message
+  message?: any // TODO interface for message
   presence: any // TODO interface for presence
   rosterItem: any // TODO interface for roster
   notification: any // TODO interface for notification
@@ -103,7 +103,7 @@ export interface IWockyTransport {
     longitudeDelta: number
   }): Promise<IBot[]>
   hideUser(enable: boolean, expire?: Date): Promise<void>
-  subscribeNotifications()
+  // subscribeNotifications()
   searchUsers(text: string): Promise<IProfilePartial[]>
   userInviteMakeCode(): Promise<string>
   userInviteRedeemCode(code: string): Promise<void>
