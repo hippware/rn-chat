@@ -12,6 +12,8 @@ type Props = {
   wrapperStyle?: any
   fontSize?: 'large' | 'small'
   fontFamily?: any
+  borderColor?: any
+  hideDot?: any
 }
 
 const ProfileAvatar = (props: Props) => {
