@@ -10,6 +10,7 @@ import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
 import {IBotPostIn} from '../model/BotPost'
+import {IMessageIn} from '../model/Message'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -519,5 +520,28 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
     lon: longitude,
     lat: latitude,
     accuracy,
+  }
+}
+
+export function convertMessage(
+  {createdAt, direction, content, otherUser},
+  myProfileId: string
+): IMessageIn {
+  let from: string, to: string
+  if (direction === 'INCOMING') {
+    from = otherUser.id
+    to = myProfileId
+  } else {
+    from = myProfileId
+    to = otherUser.id
+  }
+  return {
+    id: undefined,
+    archiveId: '',
+    from,
+    to,
+    media: undefined,
+    unread: true,
+    body: content,
   }
 }

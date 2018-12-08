@@ -28,11 +28,13 @@ import {
   convertBotPost,
   convertLocation,
   waitFor,
+  convertMessage,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
+import {IMessageIn} from '../model/Message'
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
@@ -46,7 +48,7 @@ export class NextGraphQLTransport implements IWockyTransport {
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
-  @observable message: any
+  @observable message?: IMessageIn
   @observable notification: any
   @observable presence: any
   @observable rosterItem: any
@@ -84,6 +86,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     if (res) {
       this.subscribeBotVisitors()
       this.subscribeNotifications()
+      this.subscribeMessages()
     }
     return res
   }
@@ -642,6 +645,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async sendMessage({to, body}: IMessage): Promise<void> {
+    console.log('gql send message', to, body)
     return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
@@ -967,7 +971,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               firstName
               lastName
               handle
-              avatar {
+              media {
                 thumbnailUrl
                 trosUrl
               }
@@ -1028,23 +1032,31 @@ export class NextGraphQLTransport implements IWockyTransport {
       query: gql`
         subscription messages {
           messages {
+            content
             createdAt
             direction
-            message
+            media {
+              fullUrl
+              thumbnailUrl
+              trosUrl
+            }
             otherUser {
-              id
+              ${PROFILE_PROPS}
             }
           }
         }
       `,
     }).subscribe({
       next: action((result: any) => {
-        console.log('& new message!', result.data.messages)
-        this.message = convertMessage({node: result.data.messages})
+        console.log('& new message via subscription!')
+        console.log(result.data.messages)
+        this.message = convertMessage(result.data.messages, this.username!)
       }),
     })
     this.subscriptions.push(subscription)
   }
+
+  /******************************** END SUBSCRIPTIONS ********************************/
 
   private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
     const res = await this.clients![0].query<any>({

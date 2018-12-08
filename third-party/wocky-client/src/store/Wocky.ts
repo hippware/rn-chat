@@ -439,7 +439,7 @@ export const Wocky = types
       }),
       _sendMessage: (msg: IMessage) => {
         self.transport.sendMessage(msg)
-        self._addMessage({id: msg.to, message: msg})
+        self._addMessage({id: msg.to!, message: msg})
       },
       loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)

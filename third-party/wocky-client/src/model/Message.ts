@@ -1,4 +1,4 @@
-import {types, Instance} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
 import * as utils from '../transport/utils'
@@ -49,3 +49,4 @@ export const Message = types
     },
   }))
 export interface IMessage extends Instance<typeof Message> {}
+export interface IMessageIn extends SnapshotIn<typeof Message> {}
