@@ -30,7 +30,9 @@ describe('GraphQL Notifications Subscription', () => {
 
   afterAll(async () => {
     try {
-      await Promise.all([alice.remove(), bob.remove()])
+      // don't do these in parallel because of https://github.com/hippware/wocky/issues/2083
+      await alice.remove()
+      await bob.remove()
     } catch (e) {
       console.log(e)
     }

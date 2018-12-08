@@ -37,26 +37,31 @@ class BlockReport extends React.Component<Props> {
   }
 
   render() {
-    return (
-      <TouchableOpacity
-        onPress={() => this.actionSheet.show()}
-        style={{
-          marginLeft: 15,
-          width: 24,
-          height: 24,
-          justifyContent: 'center',
-        }}
-      >
-        <Image source={require('../../../images/ellipsis.png')} />
-        <ActionSheet
-          ref={o => (this.actionSheet = o)}
-          options={['Report', 'Block', 'Cancel']}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={1}
-          onPress={this.onTap}
-        />
-      </TouchableOpacity>
-    )
+    if (this.props.profile && this.props.profile.isOwn === false) {
+      return (
+        <TouchableOpacity
+          onPress={() => this.actionSheet.show()}
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            width: 24,
+            height: 24,
+            marginRight: '4%',
+            justifyContent: 'center',
+          }}
+        >
+          <Image source={require('../../../images/ellipsis.png')} />
+          <ActionSheet
+            ref={o => (this.actionSheet = o)}
+            options={['Report', 'Block', 'Cancel']}
+            cancelButtonIndex={2}
+            destructiveButtonIndex={1}
+            onPress={this.onTap}
+          />
+        </TouchableOpacity>
+      )
+    } else return null
   }
 }
 

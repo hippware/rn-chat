@@ -19,23 +19,15 @@ type Props = {
 
 @observer
 class BotBubble extends React.Component<Props> {
-  componentDidMount() {
-    const {bot} = this.props
-    if (bot && isAlive(bot) && bot.image && !bot.image.thumbnail) {
-      bot.image.download()
-    }
-  }
   render() {
     const {bot, showLoader, image, onImagePress, ...rest} = this.props
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
-    const coverImage = image || (bot.image ? bot.image.thumbnail : null)
     const text = bot.icon
     const bubble = (
       <Bubble
         text={text}
-        image={coverImage}
         textSize={35}
         showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
         {...rest}

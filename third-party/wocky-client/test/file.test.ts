@@ -1,85 +1,55 @@
-import {createXmpp, waitFor} from './support/testuser'
-import {when} from 'mobx'
+import {createUser, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
-// const fs = require('fs')
-import fs from 'fs'
+const fs = require('fs')
+const fileName = `${__dirname}/img/test.jpg`
 let user1: IWocky
-let expectBuf: any
-
-// tslint:disable:no-console
+let user1phone: string
 
 describe('FileStore', () => {
   beforeAll(async done => {
-    user1 = await createXmpp(25)
+    jest.setTimeout(15000)
+    user1 = await createUser()
+    user1phone = user1.profile!.phoneNumber!
     done()
   })
-
-  it('upload avatar', async done => {
-    jest.setTimeout(30000)
-    try {
-      const fileName = `${__dirname}/img/test.jpg`
-      const fileNameThumbnail = `${__dirname}/img/test-thumbnail.jpg`
-      try {
-        const file = {
-          name: fileName.substring(fileName.lastIndexOf('/') + 1),
-          body: fs.readFileSync(fileName),
-          type: 'image/jpeg',
-        }
-        const data = {height: 300, width: 300, size: 3801, file}
-        await waitFor(() => user1.profile !== null, 'user1 profile to load')
-        expect(user1.profile!.avatar).toBe(null)
-        await user1.profile!.upload(data)
-        expect(user1.profile!.avatar).toBeTruthy()
-        expect(user1.profile!.uploaded).toBe(true)
-        expect(user1.profile!.uploading).toBe(false)
-      } catch (e) {
-        console.error(e)
-      }
-      expect(user1.profile!.updated).toBe(false)
-      await user1.profile!.save()
-      expect(user1.profile!.updated).toBe(true)
-      const profile = await user1.loadProfile(user1.username!)
-      expect(profile.avatar).toBeTruthy()
-      await profile.avatar!.download()
-      when(
-        () =>
-          user1.profile !== null &&
-          user1.profile.avatar !== null &&
-          user1.profile.avatar.thumbnail !== null,
-        () => {
-          try {
-            expectBuf = fs.readFileSync(fileNameThumbnail)
-            const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)
-            expect(expectBuf.toString()).toEqual(testBuf.toString())
-            done()
-          } catch (e) {
-            console.error(e)
-          }
-        }
-      )
-    } catch (e) {
-      done(e)
+  it('upload avatar', async () => {
+    const file = {
+      name: fileName.substring(fileName.lastIndexOf('/') + 1),
+      fileName,
+      body: fs.readFileSync(fileName),
+      type: 'image/jpeg',
     }
+    const data = {height: 300, width: 300, size: 3801, file}
+    await waitFor(() => user1.profile !== null, 'user1 profile to load')
+    expect(user1.profile!.avatar).toBe(null)
+    await user1.profile!.upload(data)
+    expect(user1.profile!.avatar).toBeTruthy()
+    expect(user1.profile!.uploaded).toBe(true)
+    expect(user1.profile!.uploading).toBe(false)
+    expect(user1.profile!.updated).toBe(false)
+    await user1.profile!.save()
+    expect(user1.profile!.updated).toBe(true)
+    const profile = await user1.loadProfile(user1.username!)
+    expect(profile.avatar).toBeTruthy()
+    await waitFor(
+      () => profile !== null && profile.avatar !== null && profile.avatar.thumbnail !== null
+    )
+    expect(user1.profile!.avatar!.thumbnail!.uri).toBe(fileName)
   })
 
-  it('logout, load profile and verify thumbnail', async done => {
-    try {
-      await user1.logout()
-      expect(user1.profile).toBe(null)
-      user1 = await createXmpp(25)
-      await waitFor(() => user1.profile !== null, 'user1 profile to load')
-      expect(user1.profile!.avatar!.url).toBeTruthy()
-      expect(user1.profile!.avatar!.thumbnail).toBe(null)
-      // check how thumbnails are automatically loaded
-      await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
-      expect(user1.profile!.avatar!.url).toBe('')
-      await user1.profile!.avatar!.download()
-      const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)
-      expect(expectBuf.toString()).toEqual(testBuf.toString())
-      done()
-    } catch (e) {
-      done(e)
-    }
+  it('logout, load profile and verify thumbnail', async () => {
+    await user1.logout()
+    expect(user1.profile).toBe(null)
+    user1 = await createUser(undefined, user1phone)
+    await waitFor(
+      () => !!user1.profile && !!user1.profile!.avatar && !!user1.profile!.avatar!.url,
+      'user1 profile to load'
+    )
+    expect(user1.profile!.avatar!.thumbnail).toBe(null)
+    // check how thumbnails are automatically loaded
+    await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
+    expect(user1.profile!.avatar!.url).toBe('')
+    expect(user1.profile!.avatar!.thumbnail!.uri).toBeTruthy()
   })
 
   it('remove upload', async done => {

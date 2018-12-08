@@ -11,7 +11,7 @@ import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS} from './constants'
+import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS_OLD} from './constantsOLD'
 import {
   convertProfile,
   convertBot,
@@ -521,7 +521,7 @@ export class GraphQLTransport implements IWockyTransport {
             totalCount
             edges {
               node {
-                ${NOTIFICATIONS_PROPS}
+                ${NOTIFICATIONS_PROPS_OLD}
               }
             }
           }
@@ -550,7 +550,7 @@ export class GraphQLTransport implements IWockyTransport {
       query: gql`
           subscription notifications($ownUsername: String!) {
             notifications {
-              ${NOTIFICATIONS_PROPS}
+              ${NOTIFICATIONS_PROPS_OLD}
             }
           }
         `,

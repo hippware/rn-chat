@@ -22,9 +22,9 @@ import {ILocationStore} from '../../store/LocationStore'
 import Separator from './Separator'
 import {Actions} from 'react-native-router-flux'
 import ProfileAvatar from '../ProfileAvatar'
-import LinearGradient from 'react-native-linear-gradient'
 import {GREY} from 'src/constants/colors'
 import {botProfileStyle} from '../styles'
+import Pill from '../common/Pill'
 
 type Props = {
   bot: IBot
@@ -224,24 +224,6 @@ const VisitorsWrapper = ({children}) => (
     {children}
     <Separator style={{width: '100%', marginHorizontal: 5, marginTop: 0}} />
   </View>
-)
-
-const Pill = ({children}) => (
-  <LinearGradient
-    start={{x: 0, y: 0.5}}
-    end={{x: 1, y: 0.5}}
-    colors={['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']}
-    style={{
-      paddingHorizontal: 10 * k,
-      paddingVertical: 3 * k,
-      borderRadius: 5,
-      marginRight: 5 * k,
-    }}
-  >
-    <RText size={13} weight="Medium" color={colors.WHITE}>
-      {children}
-    </RText>
-  </LinearGradient>
 )
 
 const FollowLocationView = ({onFollow}) => (

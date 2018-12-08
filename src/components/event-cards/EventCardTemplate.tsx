@@ -23,13 +23,13 @@ const EventCardTemplate = observer(
         <View
           style={{
             flexDirection: 'row',
-            paddingHorizontal: 15,
-            marginTop: 20,
+            paddingHorizontal: '6%',
+            paddingTop: 25,
             alignItems: 'center',
             backgroundColor: 'white',
           }}
         >
-          <View style={{paddingRight: 13 * k, marginLeft: 5 * k, marginRight: 10 * k}}>
+          <View style={{paddingRight: 13 * k, marginRight: '3%'}}>
             <Avatar size={47} profile={profile} hideDot />
             <Image
               source={icon}
@@ -52,12 +52,12 @@ const EventCardTemplate = observer(
             }}
           >
             <RText>
-              <RText size={13} weight="Medium">{`@${profile.handle} `}</RText>
-              <RText size={13} color={colors.PURPLISH_GREY}>
+              <RText size={14} weight="Medium">{`@${profile.handle} `}</RText>
+              <RText size={14} color={colors.PURPLISH_GREY}>
                 {action}{' '}
               </RText>
               {line2 == null && (
-                <RText size={13} weight="Light" color={colors.DARK_GREY}>
+                <RText size={14} weight="Light" color={colors.DARK_GREY}>
                   {timestamp}
                 </RText>
               )}
@@ -65,7 +65,7 @@ const EventCardTemplate = observer(
                 <RText size={15} weight="Medium" color={colors.DARK_PURPLE}>
                   {line2}
                   {'. '}
-                  <RText size={13} weight="Light" color={colors.DARK_GREY}>
+                  <RText size={14} weight="Light" color={colors.DARK_GREY}>
                     {timestamp}
                   </RText>
                 </RText>
@@ -73,7 +73,12 @@ const EventCardTemplate = observer(
             </RText>
           </View>
 
-          <View style={{width: 71, height: 40, justifyContent: 'center'}}>
+          <View
+            style={[
+              rightColumnElement ? {width: 71} : {width: 0},
+              {height: 40, justifyContent: 'center'},
+            ]}
+          >
             {rightColumnElement}
           </View>
         </View>

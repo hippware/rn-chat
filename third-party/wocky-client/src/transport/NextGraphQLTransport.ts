@@ -11,7 +11,13 @@ import {ILocationSnapshot, IBotPost, IMessage} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS, VOID_PROPS} from './constants'
+import {
+  PROFILE_PROPS,
+  BOT_PROPS,
+  NOTIFICATIONS_PROPS,
+  VOID_PROPS,
+  BOT_POST_LIST_PROPS,
+} from './constants'
 import {
   convertProfile,
   convertBot,
@@ -25,7 +31,7 @@ import {
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
-import {IBotPostData} from '../model/BotPost'
+import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
 
 export class NextGraphQLTransport implements IWockyTransport {
@@ -149,7 +155,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }
@@ -210,22 +216,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               }
             }
             posts: items(first: 10) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  id
-                  stanza
-                  media {
-                    fullUrl
-                    thumbnailUrl
-                    trosUrl
-                  }
-                  owner {
-                    ${PROFILE_PROPS}
-                  }
-                }
-              }
+              ${BOT_POST_LIST_PROPS}
             }
 
           }
@@ -242,20 +233,20 @@ export class NextGraphQLTransport implements IWockyTransport {
   async setLocation(params: ILocationSnapshot): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation setLocation(
+        mutation userLocationUpdate(
           $latitude: Float!
           $longitude: Float!
           $accuracy: Float!
-          $resource: String!
+          $device: String!
         ) {
           userLocationUpdate(
-            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}
+            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, device: $device}
           ) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {...params, resource: this.resource},
+      variables: {...params, device: this.resource},
     })
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
@@ -337,7 +328,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               firstName
               lastName
               handle
-              avatar {
+              media {
                 thumbnailUrl
                 trosUrl
               }
@@ -475,28 +466,13 @@ export class NextGraphQLTransport implements IWockyTransport {
     id: string,
     lastId?: string,
     max: number = 10
-  ): Promise<IPagingList<IBotPostData>> {
+  ): Promise<IPagingList<IBotPostIn>> {
     const res = await this.clients![0].query<any>({
       query: gql`
         query loadBot($id: UUID!, $limit: Int, $cursor: String) {
           bot(id: $id) {
             items(after: $cursor, first: $limit) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  id
-                  stanza
-                  media {
-                    fullUrl
-                    thumbnailUrl
-                    trosUrl
-                  }
-                  owner {
-                    ${PROFILE_PROPS}
-                  }
-                }
-              }
+              ${BOT_POST_LIST_PROPS}
             }
           }
         }
@@ -601,13 +577,17 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
-    const values = {}
+    const fields = ['handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values: any = {}
     fields.forEach(field => {
       if (d[field]) {
         values[field] = d[field]
       }
     })
+    if (d.avatar) {
+      values.imageUrl = d.avatar
+    }
+
     return this.voidMutation({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
@@ -649,9 +629,35 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async requestUpload(): Promise<string> {
-    // This is now supported through the MediaUpload mutation
-    throw new Error('Not supported')
+  async requestUpload({file, size, access}: any): Promise<any> {
+    const res = await this.clients![0].mutate({
+      mutation: gql`
+        mutation mediaUpload($input: MediaUploadParams!) {
+          mediaUpload(input: $input) {
+            messages {
+              field
+              message
+            }
+            successful
+            result {
+              id
+              headers {
+                name
+                value
+              }
+              method
+              referenceUrl
+              uploadUrl
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {access, size, mimeType: file!.type, filename: file!.name},
+      },
+    })
+    const {headers, method, referenceUrl, uploadUrl} = res.data!.mediaUpload.result
+    return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
   async follow(userId: string): Promise<void> {
@@ -809,7 +815,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           addressData: JSON.stringify(addressData),
           description,
           icon,
-          image,
+          imageUrl: image,
           geofence: true,
           lat: bot.location.latitude,
           lon: bot.location.longitude,
@@ -850,7 +856,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }
@@ -868,20 +874,20 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async publishBotPost(botId: string, post: IBotPost): Promise<void> {
-    // TODO add post.image support?
     return this.voidMutation({
       mutation: gql`
-        mutation botItemPublish($botId: UUID!, $values: BotItemParams!) {
-          botItemPublish(input: {botId: $botId, values: $values}) {
+        mutation botItemPublish($input: BotItemPublishInput!) {
+          botItemPublish(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
       variables: {
-        botId,
-        values: {
+        input: {
+          botId,
+          content: post.content,
           id: post.id,
-          stanza: post.content,
+          imageUrl: post.image && post.image.url,
         },
       },
     })
@@ -1049,6 +1055,7 @@ export class NextGraphQLTransport implements IWockyTransport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
+    // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
     const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
     const res = await this.clients![0].mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {

@@ -1,14 +1,16 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
-import {IProfile, IWocky} from 'wocky-client'
-import Screen from '../Screen'
-import BotListView from '../BotListView'
-import BotButton from '../BotButton'
-import Header from './Header'
-import Right from './RightNavButton'
-import Title from './Title'
+import {IWocky, IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
+import BottomPopup from '../BottomPopup'
+import {RText, Pill} from '../common'
+import {colors} from 'src/constants'
+import {View, StyleSheet} from 'react-native'
+import {observable} from 'mobx'
+import ConnectButton from './ConnectButton'
+import ProfileAvatar from '../ProfileAvatar'
+import {minHeight} from '../Global'
+import BlockReport from './BlockReport'
 
 type Props = {
   item: string
@@ -18,10 +20,7 @@ type Props = {
 
 @inject('wocky')
 @observer
-class ProfileDetail extends React.Component<Props> {
-  static rightButton = ({item}) => <Right item={item} />
-  static renderTitle = ({item}) => <Title item={item} />
-
+export default class ProfileDetail extends React.Component<Props> {
   handler: any
   list: any
   @observable profile?: IProfile
@@ -41,19 +40,58 @@ class ProfileDetail extends React.Component<Props> {
     this.props.wocky!.loadProfile(this.props.item)
   }
 
-  _header = () => <Header profile={this.profile!} />
-
   render() {
+    const {wocky} = this.props
+    const {profile} = wocky!
     if (!this.profile || !isAlive(this.profile)) {
       return null
     }
     return (
-      <Screen testID="profileDetail">
-        <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} header={this._header} />
-        <BotButton />
-      </Screen>
+      <BottomPopup>
+        <View
+          style={{
+            flex: 1,
+            alignContent: 'center',
+            alignItems: 'center',
+            paddingBottom: 46 * minHeight,
+            paddingTop: 20,
+          }}
+        >
+          <BlockReport profile={this.profile} />
+          <ProfileAvatar
+            size={74}
+            style={{borderWidth: 0}}
+            borderColor={colors.PINK}
+            profile={this.profile}
+            tappable={false}
+            fontFamily="regular"
+            fontSize="large"
+            hideDot
+          />
+          <RText
+            color={colors.PINK}
+            weight="Bold"
+            size={20}
+            style={styles.displayName}
+            numberOfLines={1}
+          >
+            @{this.profile.handle}
+          </RText>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Pill>{this.profile.botsSize} Locations</Pill>
+          </View>
+          <ConnectButton profile={this.profile!} myProfile={profile!} />
+        </View>
+      </BottomPopup>
     )
   }
 }
 
-export default ProfileDetail
+const styles = StyleSheet.create({
+  displayName: {
+    padding: 10,
+    marginBottom: 10,
+    width: '80%',
+    textAlign: 'center',
+  },
+})
