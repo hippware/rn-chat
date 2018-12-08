@@ -85,6 +85,7 @@ export class GraphQLTransport implements IWockyTransport {
 
     if (res) {
       this.subscribeBotVisitors()
+      this.subscribeNotifications()
     }
     return res
     // return true

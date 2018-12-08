@@ -655,7 +655,6 @@ export const Wocky = types
           (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
-              self.transport.subscribeNotifications()
               self.requestRoster()
               self._loadNewNotifications()
             } else {
