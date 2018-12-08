@@ -304,7 +304,7 @@ export function convertImage(image) {
 }
 
 export function convertProfile({
-  avatar,
+  media,
   bots,
   followers,
   followed,
@@ -316,7 +316,7 @@ export function convertProfile({
     hidden: hidden
       ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
       : null,
-    avatar: convertImage(avatar),
+    avatar: convertImage(media),
     botsSize: bots ? bots.totalCount : undefined,
     followersSize: followers ? followers.totalCount : undefined,
     followedSize: followed ? followed.totalCount : undefined,
@@ -337,7 +337,7 @@ export function convertBotPost({node: {id, media, owner, content}}): IBotPostIn 
 export function convertBot({
   lat,
   lon,
-  image,
+  media,
   addressData,
   owner,
   items,
@@ -355,7 +355,7 @@ export function convertBot({
   return {
     ...data,
     owner: convertProfile(owner),
-    image: convertImage(image),
+    image: convertImage(media),
     addressData: addressData ? JSON.parse(addressData) : {},
     totalItems: items ? items.totalCount : 0,
     followersSize: subscriberCount.totalCount - 1,
