@@ -10,6 +10,7 @@ import {observable} from 'mobx'
 import ConnectButton from './ConnectButton'
 import ProfileAvatar from '../ProfileAvatar'
 import {minHeight} from '../Global'
+import BlockReport from './BlockReport'
 
 type Props = {
   item: string
@@ -56,6 +57,7 @@ export default class ProfileDetail extends React.Component<Props> {
             paddingTop: 20,
           }}
         >
+          <BlockReport profile={this.profile} />
           <ProfileAvatar
             size={74}
             style={{borderWidth: 0}}
@@ -77,7 +79,6 @@ export default class ProfileDetail extends React.Component<Props> {
           </RText>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Pill>{this.profile.botsSize} Locations</Pill>
-            <Pill>Los Angeles, CA</Pill>
           </View>
           <ConnectButton profile={this.profile!} myProfile={profile!} />
         </View>

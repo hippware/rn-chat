@@ -386,7 +386,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "alignItems": "center",
-                              "height": 80,
+                              "height": 40,
                             },
                             undefined,
                           ]
