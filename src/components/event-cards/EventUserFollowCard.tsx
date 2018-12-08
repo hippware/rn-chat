@@ -18,7 +18,7 @@ type Props = {
 const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
   <EventCardTemplate
     timestamp={relativeDateAsString}
-    action={'started following you.'}
+    action={'wants to connect with you.'}
     icon={geoIcon}
     profile={user}
     rightColumnElement={<FollowButton profile={user} />}
@@ -59,10 +59,10 @@ const FollowButton = inject('analytics')(
 
 const unfollow = async (profile: any) => {
   return new Promise(resolve => {
-    alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
+    alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
-        text: 'Unfollow',
+        text: 'Unfriend',
         style: 'destructive',
         onPress: async () => {
           await profile.unfollow()

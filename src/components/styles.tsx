@@ -21,7 +21,7 @@ export const navBarStyle = {
     fontWeight: undefined,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Medium',
   },
   leftButtonIconStyle: {
     marginLeft: 10 * k,

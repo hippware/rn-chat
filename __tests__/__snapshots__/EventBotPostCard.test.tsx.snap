@@ -14,16 +14,15 @@ exports[`EventBotPostCard renders 1`] = `
       "alignItems": "center",
       "backgroundColor": "white",
       "flexDirection": "row",
-      "paddingHorizontal": 15,
-      "paddingTop": 20,
+      "paddingHorizontal": "6%",
+      "paddingTop": 25,
     }
   }
 >
   <View
     style={
       Object {
-        "marginLeft": 10,
-        "marginRight": 20,
+        "marginRight": "3%",
         "paddingRight": 26,
       }
     }
@@ -172,7 +171,7 @@ exports[`EventBotPostCard renders 1`] = `
             Object {
               "color": undefined,
               "fontFamily": "Roboto-Medium",
-              "fontSize": 13,
+              "fontSize": 14,
             },
             undefined,
           ]
@@ -189,7 +188,7 @@ exports[`EventBotPostCard renders 1`] = `
             Object {
               "color": "rgb(114,100,109)",
               "fontFamily": "Roboto-Regular",
-              "fontSize": 13,
+              "fontSize": 14,
             },
             undefined,
           ]
@@ -207,7 +206,7 @@ exports[`EventBotPostCard renders 1`] = `
             Object {
               "color": "rgb(155,155,155)",
               "fontFamily": "Roboto-Light",
-              "fontSize": 13,
+              "fontSize": 14,
             },
             undefined,
           ]
@@ -219,11 +218,15 @@ exports[`EventBotPostCard renders 1`] = `
   </View>
   <View
     style={
-      Object {
-        "height": 40,
-        "justifyContent": "center",
-        "width": 71,
-      }
+      Array [
+        Object {
+          "width": 0,
+        },
+        Object {
+          "height": 40,
+          "justifyContent": "center",
+        },
+      ]
     }
   />
 </View>

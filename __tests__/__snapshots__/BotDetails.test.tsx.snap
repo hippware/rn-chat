@@ -385,7 +385,7 @@ exports[`BotDetails renders with no data 1`] = `
                           Array [
                             Object {
                               "alignItems": "center",
-                              "height": 80,
+                              "height": 40,
                             },
                             undefined,
                           ]
@@ -535,7 +535,7 @@ exports[`BotDetails renders with no data 1`] = `
                   Array [
                     Object {
                       "color": "rgb(63,50,77)",
-                      "fontFamily": "Roboto-Regular",
+                      "fontFamily": "Roboto-Medium",
                       "fontSize": 17,
                       "fontWeight": undefined,
                       "letterSpacing": 0.5,
