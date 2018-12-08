@@ -137,8 +137,7 @@ export async function waitFor(
   timeout: number = 3000
 ) {
   const promise = new Promise((resolve, reject) => {
-    when(
-      () => {
+    when(() => {
         let res = false
         try {
           res = condition()
@@ -146,16 +145,13 @@ export async function waitFor(
           reject(e)
         }
         return res
-      },
-      () => {
-        resolve()
-      }
-    )
+    }, resolve)
   })
-  const timeoutPromise = new Promise(reject => {
-    setTimeout(() => {
-      reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`)
-    }, timeout)
+  const timeoutPromise = new Promise((resolve, reject) => {
+    setTimeout(
+      () => reject(`waitFor timed out in ${timeout} milliseconds.\r\n${errorMessage}`),
+      timeout
+    )
   })
   return Promise.race([promise, timeoutPromise])
 }
