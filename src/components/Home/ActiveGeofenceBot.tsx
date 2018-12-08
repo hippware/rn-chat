@@ -45,13 +45,7 @@ class ActiveBot extends React.Component<Props> {
                   color={colors.PINK}
                   style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
                 >
-                  You're
-                </RText>
-                <RText
-                  size={13}
-                  color={colors.PINK}
-                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
-                >
+                  You're{'\r\n'}
                   Here
                 </RText>
               </View>
