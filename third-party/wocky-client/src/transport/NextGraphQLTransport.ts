@@ -155,7 +155,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }
@@ -233,20 +233,20 @@ export class NextGraphQLTransport implements IWockyTransport {
   async setLocation(params: ILocationSnapshot): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation setLocation(
+        mutation userLocationUpdate(
           $latitude: Float!
           $longitude: Float!
           $accuracy: Float!
-          $resource: String!
+          $device: String!
         ) {
           userLocationUpdate(
-            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, resource: $resource}
+            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, device: $device}
           ) {
             ${VOID_PROPS}
           }
         }
       `,
-      variables: {...params, resource: this.resource},
+      variables: {...params, device: this.resource},
     })
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
@@ -328,7 +328,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               firstName
               lastName
               handle
-              avatar {
+              media {
                 thumbnailUrl
                 trosUrl
               }
@@ -577,13 +577,17 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    const fields = ['avatar', 'handle', 'email', 'firstName', 'tagline', 'lastName']
-    const values = {}
+    const fields = ['handle', 'email', 'firstName', 'tagline', 'lastName']
+    const values: any = {}
     fields.forEach(field => {
       if (d[field]) {
         values[field] = d[field]
       }
     })
+    if (d.avatar) {
+      values.imageUrl = d.avatar
+    }
+
     return this.voidMutation({
       mutation: gql`
         mutation userUpdate($values: UserParams!) {
@@ -811,7 +815,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           addressData: JSON.stringify(addressData),
           description,
           icon,
-          image,
+          imageUrl: image,
           geofence: true,
           lat: bot.location.latitude,
           lon: bot.location.longitude,
@@ -852,7 +856,7 @@ export class NextGraphQLTransport implements IWockyTransport {
                   firstName
                   lastName
                   handle
-                  avatar {
+                  media {
                     thumbnailUrl
                     trosUrl
                   }
@@ -1051,6 +1055,7 @@ export class NextGraphQLTransport implements IWockyTransport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
+    // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
     const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
     const res = await this.clients![0].mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {

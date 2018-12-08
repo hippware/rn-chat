@@ -11,7 +11,7 @@ import {ILocationSnapshot} from '..'
 import {IBot} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS_OLD} from './constants'
+import {PROFILE_PROPS, BOT_PROPS, NOTIFICATIONS_PROPS_OLD} from './constantsOLD'
 import {
   convertProfile,
   convertBot,
