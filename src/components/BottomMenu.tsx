@@ -171,13 +171,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 40 * k,
   },
 })
-
-// {profile.hidden.enabled ? (
-//   <RText size={12} color={colors.DARK_GREY} style={{marginTop: 3}}>
-//     {profile.hidden.expires ? moment(profile.hidden.expires).fromNow(true) : 'On'}
-//   </RText>
-// ) : (
-//   <RText size={12} color={colors.DARK_GREY} style={{marginTop: 3}}>
-//     Off
-//   </RText>
-// )}

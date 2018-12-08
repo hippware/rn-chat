@@ -18,7 +18,7 @@ const imgFollowing = require('../../../images/button_friends.png')
 
 @inject('analytics')
 @observer
-class FollowButton extends React.Component<Props> {
+class ConnectButton extends React.Component<Props> {
   @observable pendingFollowChange: boolean = false
 
   toggleFollow = async () => {
@@ -87,7 +87,7 @@ class FollowButton extends React.Component<Props> {
   }
 }
 
-export default FollowButton
+export default ConnectButton
 
 const styles = StyleSheet.create({
   followButton: {
