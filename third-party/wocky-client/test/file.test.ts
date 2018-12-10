@@ -43,19 +43,10 @@ describe('FileStore', () => {
     expect(user1.profile).toBe(null)
     user1 = await createUser(undefined, user1phone)
     const profile = await user1.loadProfile(user1.username!)
-    expect(profile.avatar).toBeTruthy()
-    await waitFor(() => profile!.avatar!.thumbnail !== null)
+    await waitFor(() => !!profile!.avatar && profile!.avatar!.thumbnail !== null)
     expect(profile!.avatar!.url).toBe('')
     expect(profile!.avatar!.thumbnail!.uri).toBeTruthy()
-  })
-
-  it('remove upload', async done => {
-    try {
-      await user1._removeUpload(user1.profile!.avatar!.id)
-      done()
-    } catch (e) {
-      done(e)
-    }
+    await user1._removeUpload(profile!.avatar!.id)
   })
 
   afterAll(async () => {

@@ -1,5 +1,5 @@
-import {createXmpp, waitFor, timestamp} from './support/testuser'
-import {IBot, GraphQLTransport, IWocky} from '../src'
+import {createUser, waitFor, timestamp} from './support/testuser'
+import {IBot, NextGraphQLTransport, IWocky} from '../src'
 import {when} from 'mobx'
 // use http link for now but need websockets for subscriptions later? https://www.apollographql.com/docs/link/links/ws.html
 
@@ -9,8 +9,8 @@ import {when} from 'mobx'
 // const userId = 'e51c7f0a-18cc-11e8-b1e9-0a580a0206dc'
 // const token = '$T$AFNkdiDaQHC/lI4o2xzmmf4pQ+LaHF39STooScbv6E4='
 
-const host = 'testing.dev.tinyrobot.com'
-let gql: GraphQLTransport, user, user2: IWocky
+const host = 'next.dev.tinyrobot.com'
+let gql: NextGraphQLTransport, user, user2: IWocky
 let bot, bot2: IBot
 let date: Date
 let user1phone: string
@@ -20,7 +20,7 @@ describe('GraphQL', () => {
   it('get user1 credential via XMPP', async done => {
     try {
       timestamp()
-      user = await createXmpp()
+      user = await createUser()
       done()
     } catch (e) {
       done(e)
@@ -30,7 +30,7 @@ describe('GraphQL', () => {
   it('get user2 credentials via XMPP', async done => {
     try {
       timestamp()
-      user2 = await createXmpp()
+      user2 = await createUser()
       done()
     } catch (e) {
       done(e)
@@ -60,7 +60,7 @@ describe('GraphQL', () => {
   it('login via graphql and set user location', async done => {
     try {
       timestamp()
-      gql = new GraphQLTransport('testing')
+      gql = new NextGraphQLTransport('next')
       await gql.login(user.username!, user.password!, host)
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
       await gql.setLocation({latitude: 0, longitude: 0, accuracy: 1})
@@ -222,25 +222,25 @@ describe('GraphQL', () => {
       timestamp()
       const loaded = await gql.loadBot(bot.id)
       expect(loaded.title).toEqual(bot.title)
-      expect(loaded.guest).toEqual(true)
       expect(loaded.id).toEqual(bot.id)
       done()
     } catch (e) {
       done(e)
     }
   })
-  it('searches users', async done => {
-    try {
-      timestamp()
-      await gql.login(user.username!, user.password!, host)
-      await gql.searchUsers('abc')
-      // NOTE: results for newly created users don't show up in the results which makes expected values
-      // on the return from `searchUsers` difficult here
-      done()
-    } catch (e) {
-      done(e)
-    }
-  })
+  // TODO deal with verification of search?
+  // it('searches users', async done => {
+  //   try {
+  //     timestamp()
+  //     await gql.login(user.username!, user.password!, host)
+  //     await gql.searchUsers('abc')
+  //     // NOTE: results for newly created users don't show up in the results which makes expected values
+  //     // on the return from `searchUsers` difficult here
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
 
   afterAll(async done => {
     try {

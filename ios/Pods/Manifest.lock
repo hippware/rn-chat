@@ -11,9 +11,6 @@ PODS:
     - React
   - BVLinearGradient (2.4.3):
     - React
-  - CocoaAsyncSocket (7.5.1):
-    - CocoaAsyncSocket/GCD (= 7.5.1)
-  - CocoaAsyncSocket/GCD (7.5.1)
   - CocoaLumberjack (3.4.2):
     - CocoaLumberjack/Default (= 3.4.2)
     - CocoaLumberjack/Extensions (= 3.4.2)
@@ -116,9 +113,6 @@ PODS:
   - GTMSessionFetcher/Core (1.2.0)
   - JWT (3.0.0-beta.11):
     - Base64 (~> 1.1.2)
-  - KissXML (5.1.4):
-    - KissXML/Core (= 5.1.4)
-  - KissXML/Core (5.1.4)
   - Mixpanel (3.3.6)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -204,172 +198,8 @@ PODS:
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
-  - RNXMPP (1.1.2):
-    - React
-    - XMPPFramework
   - RSKImageCropper (2.2.1)
   - SSZipArchive (2.1.4)
-  - XMPPFramework (3.7.6):
-    - XMPPFramework/All (= 3.7.6)
-  - XMPPFramework/All (3.7.6):
-    - XMPPFramework/BandwidthMonitor
-    - XMPPFramework/Core
-    - XMPPFramework/CoreDataStorage
-    - XMPPFramework/FileTransfer
-    - XMPPFramework/GoogleSharedStatus
-    - XMPPFramework/ProcessOne
-    - XMPPFramework/Reconnect
-    - XMPPFramework/Roster
-    - XMPPFramework/SystemInputActivityMonitor
-    - XMPPFramework/XEP-0009
-    - XMPPFramework/XEP-0012
-    - XMPPFramework/XEP-0016
-    - XMPPFramework/XEP-0045
-    - XMPPFramework/XEP-0054
-    - XMPPFramework/XEP-0059
-    - XMPPFramework/XEP-0060
-    - XMPPFramework/XEP-0065
-    - XMPPFramework/XEP-0066
-    - XMPPFramework/XEP-0077
-    - XMPPFramework/XEP-0082
-    - XMPPFramework/XEP-0085
-    - XMPPFramework/XEP-0092
-    - XMPPFramework/XEP-0100
-    - XMPPFramework/XEP-0106
-    - XMPPFramework/XEP-0115
-    - XMPPFramework/XEP-0136
-    - XMPPFramework/XEP-0147
-    - XMPPFramework/XEP-0153
-    - XMPPFramework/XEP-0172
-    - XMPPFramework/XEP-0184
-    - XMPPFramework/XEP-0191
-    - XMPPFramework/XEP-0198
-    - XMPPFramework/XEP-0199
-    - XMPPFramework/XEP-0202
-    - XMPPFramework/XEP-0203
-    - XMPPFramework/XEP-0223
-    - XMPPFramework/XEP-0224
-    - XMPPFramework/XEP-0280
-    - XMPPFramework/XEP-0297
-    - XMPPFramework/XEP-0308
-    - XMPPFramework/XEP-0313
-    - XMPPFramework/XEP-0333
-    - XMPPFramework/XEP-0334
-    - XMPPFramework/XEP-0335
-    - XMPPFramework/XEP-0352
-    - XMPPFramework/XEP-0357
-    - XMPPFramework/XEP-0363
-    - XMPPFramework/XMPPMUCLight
-  - XMPPFramework/BandwidthMonitor (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/Core (3.7.6):
-    - CocoaAsyncSocket (~> 7.5.0)
-    - CocoaLumberjack (~> 3.0)
-    - KissXML
-  - XMPPFramework/CoreDataStorage (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/FileTransfer (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/GoogleSharedStatus (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/ProcessOne (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/Reconnect (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/Roster (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/CoreDataStorage
-  - XMPPFramework/XEP-0009 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0012 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0016 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0045 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/CoreDataStorage
-    - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0054 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/Roster
-  - XMPPFramework/XEP-0059 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0060 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0065 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0066 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0077 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0082 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0085 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0092 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0100 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0106 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0115 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/CoreDataStorage
-  - XMPPFramework/XEP-0136 (3.7.6):
-    - XMPPFramework/CoreDataStorage
-    - XMPPFramework/XEP-0085
-    - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0147 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0153 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0054
-  - XMPPFramework/XEP-0172 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0184 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0191 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0198 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0199 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0202 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0082
-  - XMPPFramework/XEP-0203 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0082
-  - XMPPFramework/XEP-0223 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0224 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0280 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0297 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0203
-  - XMPPFramework/XEP-0308 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0313 (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/XEP-0059
-  - XMPPFramework/XEP-0333 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0334 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0335 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0352 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0357 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XEP-0363 (3.7.6):
-    - XMPPFramework/Core
-  - XMPPFramework/XMPPMUCLight (3.7.6):
-    - XMPPFramework/Core
-    - XMPPFramework/CoreDataStorage
-    - XMPPFramework/XEP-0203
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
@@ -384,7 +214,6 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - GoogleMaps
-  - KissXML (from `https://github.com/aksonov/KissXML.git`, branch `5.1.4`)
   - QBImagePickerController
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
@@ -411,9 +240,7 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
-  - RNXMPP (from `../node_modules/react-native-xmpp`)
   - RSKImageCropper
-  - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.6`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -422,7 +249,6 @@ SPEC REPOS:
     - AppCenterReactNativeShared
     - Base64
     - boost-for-react-native
-    - CocoaAsyncSocket
     - CocoaLumberjack
     - Firebase
     - FirebaseAnalytics
@@ -457,9 +283,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  KissXML:
-    :branch: 5.1.4
-    :git: https://github.com/aksonov/KissXML.git
   React:
     :path: "../node_modules/react-native"
   react-native-blur:
@@ -484,21 +307,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
-  RNXMPP:
-    :path: "../node_modules/react-native-xmpp"
-  XMPPFramework:
-    :branch: 3.7.6
-    :git: https://github.com/aksonov/XMPPFramework.git
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
-
-CHECKOUT OPTIONS:
-  KissXML:
-    :commit: aa9efa0baab626a10e75418cb35f8bea9b77adae
-    :git: https://github.com/aksonov/KissXML.git
-  XMPPFramework:
-    :commit: 1dbd16cc3aa5913b2cdb3243493054bbef9456f5
-    :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
   AppCenter: 2d196f6547d274ab86836f9082cfdbd3d397e7b6
@@ -507,7 +317,6 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
   BVLinearGradient: 6d8909e3fc6b089defa4b89d967441fa6827a2ee
-  CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
   DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
@@ -527,7 +336,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: abb092d2c12e817fa3e0e7b274987dd72fb86ec3
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
-  KissXML: f0cb6444b28b650f569a5d5deea964cc6f81ec9e
   Mixpanel: 801ed99810d6bfc80762f91d472ad95c15e45f37
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
@@ -543,12 +351,10 @@ SPEC CHECKSUMS:
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
-  RNXMPP: 35d3b4bcb771147e18246c4aac3d6733b1c66754
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
-  XMPPFramework: 0fa055bc94f72ddab3162c9ec20d46bf70c36b66
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: c7e0b660f01cf84b290a3efac52a89a5c1466ed3
+PODFILE CHECKSUM: 48be381988a7884802014a8f830228a476e74f9d
 
 COCOAPODS: 1.5.3

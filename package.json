@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "3.10.1",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -125,13 +125,10 @@
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-touch-through-view": "^0.1.4",
-    "react-native-xmpp": "github:hippware/react-native-xmpp#73deb74834989ae39a06fcaa0b413370b3f1cd23",
     "react-navigation": "^2.x",
     "remotedev": "^0.2.7",
-    "strophejs": "github:hippware/strophejs",
     "tcomb-form-native": "^0.6.20",
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "xmldom": "^0.1.27",
     "xregexp": "^4.1.1"
   },
   "resolutions": {
