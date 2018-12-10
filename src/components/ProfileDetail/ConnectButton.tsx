@@ -23,7 +23,7 @@ class ConnectButton extends React.Component<Props> {
 
   toggleFollow = async () => {
     const {profile} = this.props
-    if (profile.isFollower) {
+    if (profile.isFollowed) {
       alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
         {
           text: 'Cancel',
@@ -62,7 +62,7 @@ class ConnectButton extends React.Component<Props> {
           <Spinner color="pink" />
         ) : profile.isMutual ? (
           <Image source={imgFollowing} />
-        ) : profile.isFollower ? (
+        ) : profile.isFollowed ? (
           <View style={[styles.profileButton, styles.requestedButton]}>
             <RText size={15} color={colors.GREY} weight={'Medium'}>
               Request Sent
