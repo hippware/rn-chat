@@ -41,15 +41,11 @@ describe('FileStore', () => {
     await user1.logout()
     expect(user1.profile).toBe(null)
     user1 = await createUser(undefined, user1phone)
-    await waitFor(
-      () => !!user1.profile && !!user1.profile!.avatar && !!user1.profile!.avatar!.url,
-      'user1 profile to load'
-    )
-    expect(user1.profile!.avatar!.thumbnail).toBe(null)
-    // check how thumbnails are automatically loaded
-    await waitFor(() => user1.profile!.avatar!.thumbnail !== null)
-    expect(user1.profile!.avatar!.url).toBe('')
-    expect(user1.profile!.avatar!.thumbnail!.uri).toBeTruthy()
+    const profile = await user1.loadProfile(user1.username!)
+    expect(profile.avatar).toBeTruthy()
+    await waitFor(() => profile!.avatar!.thumbnail !== null)
+    expect(profile!.avatar!.url).toBe('')
+    expect(profile!.avatar!.thumbnail!.uri).toBeTruthy()
   })
 
   it('remove upload', async done => {
