@@ -224,7 +224,7 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
-      const wocky: IWocky = getParent(self).wocky
+      const wocky: IWocky = (getParent(self) as any).wocky
       // don't run background service if user doesn't enable alwaysOn
       if (!self.alwaysOn) {
         return
@@ -366,7 +366,7 @@ const LocationStore = types
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self))
+      ;({wocky} = getParent(self) as any)
     }
 
     const start = flow(function*() {
