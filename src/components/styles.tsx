@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native'
-import {k} from './Global'
+import {k, s} from './Global'
 import {colors} from '../constants'
 import {settings} from '../globals'
 import {WARM_GREY_2, PINK} from 'src/constants/colors'
@@ -233,4 +233,8 @@ export const botProfileStyle = StyleSheet.create({
     marginLeft: 10 * k,
     flex: 1,
   },
+})
+
+export const placeholderStyle = StyleSheet.create({
+  placeholderText: {textAlign: 'center', fontSize: 16, marginTop: 70 * s},
 })

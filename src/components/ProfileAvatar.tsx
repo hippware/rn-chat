@@ -14,10 +14,19 @@ type Props = {
   fontFamily?: any
   borderColor?: any
   hideDot?: any
+  messageBtn?: boolean
 }
 
 const ProfileAvatar = (props: Props) => {
-  const {size = 65, tappable = true, wrapperStyle, fontSize, fontFamily, profile} = props
+  const {
+    size = 65,
+    tappable = true,
+    wrapperStyle,
+    fontSize,
+    fontFamily,
+    profile,
+    messageBtn = false,
+  } = props
   return (
     <View style={[{alignItems: 'center', height: size}, wrapperStyle]}>
       <Avatar
@@ -27,7 +36,7 @@ const ProfileAvatar = (props: Props) => {
         fontSize={fontSize}
         fontFamily={fontFamily}
       />
-      <MessageButton profile={profile} />
+      {messageBtn && <MessageButton profile={profile} />}
     </View>
   )
 }

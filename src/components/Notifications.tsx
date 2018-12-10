@@ -6,7 +6,9 @@ import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'
 import EventCard from './event-cards/EventCard'
 import ListFooter from './ListFooter'
-import {navBarStyle} from './styles'
+import {navBarStyle, placeholderStyle} from './styles'
+import {colors} from 'src/constants'
+import {View} from 'react-native'
 
 type Props = {
   wocky?: IWocky
@@ -41,7 +43,24 @@ class Notifications extends React.Component<Props> {
         onEndReachedThreshold={0.5}
         onEndReached={notifications.load}
         ListFooterComponent={observer(() => (
-          <ListFooter style={{backgroundColor: 'white'}} finished={notifications.finished} />
+          <View>
+            {notifications.length === 0 ? (
+              <View>
+                <RText
+                  weight="Regular"
+                  color={colors.GREY}
+                  style={placeholderStyle.placeholderText}
+                >
+                  No new updates
+                </RText>
+              </View>
+            ) : (
+              <ListFooter
+                style={{backgroundColor: 'white'}}
+                finished={notifications.finished || notifications.length === 0}
+              />
+            )}
+          </View>
         ))}
       />
     )

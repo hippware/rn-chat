@@ -11,7 +11,7 @@ import OnboardingNotifications from './OnboardingNotifications'
 import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject} from 'mobx-react/native'
-import {s} from '../Global'
+import {minHeight} from '../Global'
 import {IOnceStore} from 'src/store/OnceStore'
 
 type Props = {
@@ -26,7 +26,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <RText style={{width: '100%', textAlign: 'center', marginTop: 30 * s}} size={18}>
+        <RText style={{width: '100%', textAlign: 'center', marginTop: 30 * minHeight}} size={18}>
           almost done!
         </RText>
         <Swiper
