@@ -23,7 +23,7 @@ class ConnectButton extends React.Component<Props> {
 
   toggleFollow = async () => {
     const {profile} = this.props
-    if (profile.isFollowed) {
+    if (profile.isFollower) {
       alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
         {
           text: 'Cancel',
@@ -60,10 +60,16 @@ class ConnectButton extends React.Component<Props> {
       >
         {this.pendingFollowChange ? (
           <Spinner color="pink" />
-        ) : profile.isFollowed ? (
+        ) : profile.isMutual ? (
           <Image source={imgFollowing} />
+        ) : profile.isFollower ? (
+          <View style={[styles.profileButton, styles.requestedButton]}>
+            <RText size={15} color={colors.GREY} weight={'Medium'}>
+              Request Sent
+            </RText>
+          </View>
         ) : (
-          <View style={styles.connectButton}>
+          <View style={[styles.profileButton, styles.connectButton]}>
             <RText size={15} color={colors.PINK} weight={'Medium'}>
               Connect
             </RText>
@@ -77,7 +83,7 @@ class ConnectButton extends React.Component<Props> {
           marginTop: 15,
         }}
       >
-        <View style={styles.editProfileButton}>
+        <View style={[styles.profileButton, styles.editProfileButton]}>
           <RText size={15} color={'#757575'} weight={'Medium'}>
             Edit Profile
           </RText>
@@ -93,22 +99,21 @@ const styles = StyleSheet.create({
   followButton: {
     marginTop: 15,
   },
-  editProfileButton: {
+  profileButton: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 150,
     height: 40,
-    borderColor: '#DEDEDE',
     borderRadius: 5,
     borderWidth: 1,
   },
+  editProfileButton: {
+    borderColor: '#DEDEDE',
+  },
   connectButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 150,
-    height: 40,
     borderColor: colors.PINK,
-    borderRadius: 5,
-    borderWidth: 1,
+  },
+  requestedButton: {
+    borderColor: colors.GREY,
   },
 })

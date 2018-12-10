@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
-import {RText, Avatar} from '../common'
+import {RText, Avatar, Pill} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import Card from './Card'
@@ -32,12 +32,16 @@ const YouCard = inject('wocky')(
           />
         </View>
         <View style={styles.textContainer}>
-          <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
+          <RText
+            size={17}
+            weight="Bold"
+            color={colors.DARK_PURPLE}
+            numberOfLines={1}
+            style={{paddingBottom: 3}}
+          >
             {`@${wocky!.profile!.handle}`}
           </RText>
-          <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-            {`${wocky!.profile!.ownBots.length} spots • ${wocky!.profile!.followersSize} followers`}
-          </RText>
+          <Pill>{wocky!.profile!.botsSize} Locations</Pill>
         </View>
       </Card>
     )

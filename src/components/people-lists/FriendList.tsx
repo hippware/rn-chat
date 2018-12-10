@@ -2,7 +2,6 @@ import React from 'react'
 import {View, TouchableOpacity, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 
-import {s} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -10,6 +9,7 @@ import DraggablePopupList from '../common/DraggablePopupList'
 import InviteFriendsRowNew from './InviteFriendsRowNew'
 import {IWocky} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
+import {placeholderStyle} from '../styles'
 
 type Props = {
   wocky?: IWocky
@@ -67,11 +67,7 @@ class FriendList extends React.Component<Props> {
         </View>
         {wocky!.friends.length <= 0 ? (
           <View>
-            <RText
-              weight="Regular"
-              color={colors.GREY}
-              style={{textAlign: 'center', fontSize: 16, marginTop: 70 * s}}
-            >
+            <RText weight="Regular" color={colors.GREY} style={placeholderStyle.placeholderText}>
               Start Adding Friends!
             </RText>
           </View>

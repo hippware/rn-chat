@@ -67,6 +67,7 @@ export default class ProfileDetail extends React.Component<Props> {
             fontFamily="regular"
             fontSize="large"
             hideDot
+            messageBtn={true}
           />
           <RText
             color={colors.PINK}
