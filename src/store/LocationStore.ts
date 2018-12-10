@@ -99,12 +99,15 @@ const LocationStore = types
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
       const R = 6371000 // Radius of the earth in m
-      const dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
-      const dLon = (lon2 - lon1) * Math.PI / 180
+      const dLat = ((lat2 - lat1) * Math.PI) / 180 // deg2rad below
+      const dLon = ((lon2 - lon1) * Math.PI) / 180
       const a =
         0.5 -
         Math.cos(dLat) / 2 +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2
+        (Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          (1 - Math.cos(dLon))) /
+          2
 
       const res = R * 2 * Math.asin(Math.sqrt(a))
       const result = self.isMetric ? res : res * 3.2808399
@@ -233,7 +236,8 @@ const LocationStore = types
         backgroundGeolocation = require('react-native-background-geolocation').default
         backgroundGeolocation.on('location', onLocation, onLocationError)
         backgroundGeolocation.on('http', onHttp, onHttpError)
-        backgroundGeolocation.on('error', self.positionError)
+        // TODO: figure out how to track RNBGL errors in new version
+        // backgroundGeolocation.on('error', self.positionError)
         backgroundGeolocation.on('motionchange', onMotionChange)
         backgroundGeolocation.on('activitychange', onActivityChange)
         backgroundGeolocation.on('providerchange', onProviderChange)
