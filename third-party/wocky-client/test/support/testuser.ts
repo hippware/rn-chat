@@ -1,12 +1,4 @@
-import XmppStropheV2 from '../../src/transport/XmppStropheV2'
-import {
-  Wocky,
-  XmppTransport,
-  IWocky,
-  HybridTransport,
-  GraphQLTransport,
-  NextGraphQLTransport,
-} from '../../src'
+import {Wocky, IWocky, NextGraphQLTransport} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
@@ -86,51 +78,6 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     throw e
   }
 }
-export async function createXmpp(num?: number, phoneNum?: string): Promise<IWocky> {
-  try {
-    const provider = new XmppStropheV2()
-    const xmppTransport = new XmppTransport(provider, 'testing')
-    const gql = new GraphQLTransport('testing')
-    const transport = new HybridTransport(xmppTransport, gql)
-
-    // const provider = new XmppStropheV2(console.log)
-    const phoneNumber =
-      phoneNum ||
-      (num
-        ? `+1555000000${num.toString()}`
-        : _.padStart(`+1555${Math.trunc(Math.random() * 10000000).toString()}`, 7, '0'))
-    const host = process.env.WOCKY_LOCAL ? 'localhost' : 'testing.dev.tinyrobot.com'
-    const service = Wocky.create(
-      {host},
-      {
-        transport,
-        fileService,
-        logger: console,
-      }
-    )
-    addMiddleware(service, simpleActionLogger)
-    await service.register(
-      {
-        userID: `000000${phoneNumber.replace('+1555', '')}`,
-        phoneNumber,
-        authTokenSecret: '',
-        authToken: '',
-        emailAddressIsVerified: false,
-        'X-Auth-Service-Provider': 'http://localhost:9999',
-        emailAddress: '',
-        'X-Verify-Credentials-Authorization': '',
-      },
-      'digits'
-    )
-    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
-    await service.login()
-    return service
-  } catch (e) {
-    console.error(e)
-    throw e
-  }
-}
-
 export async function waitFor(
   condition: () => boolean,
   errorMessage: string = '',

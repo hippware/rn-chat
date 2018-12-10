@@ -1,8 +1,9 @@
 import {log} from './constants'
 
-const DEV_HOST = 'testing.dev.tinyrobot.com'
-const PROD_HOST = 'us1.prod.tinyrobot.com'
-const STAGING_HOST = 'staging.dev.tinyrobot.com'
+const DEV_HOST = 'next.dev.tinyrobot.com'
+// TODO add PROD/STAGING for next server
+const PROD_HOST = 'next.prod.tinyrobot.com'
+const STAGING_HOST = 'next.dev.tinyrobot.com'
 // coefficient for scaling for smaller devices like iPhone 5S
 
 class Settings {

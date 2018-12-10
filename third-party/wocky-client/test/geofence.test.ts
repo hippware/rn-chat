@@ -1,4 +1,4 @@
-import {createXmpp, sleep, waitFor, timestamp} from './support/testuser'
+import {createUser, sleep, waitFor, timestamp} from './support/testuser'
 import {IWocky, IOwnProfile} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -30,7 +30,7 @@ describe('Geofence', () => {
   it('create user1', async done => {
     try {
       timestamp()
-      user1 = await createXmpp()
+      user1 = await createUser()
       console.log('user1 credentials', user1.username, user1.password)
       done()
     } catch (e) {
@@ -41,7 +41,7 @@ describe('Geofence', () => {
   it('create user2', async done => {
     try {
       timestamp()
-      user2 = await createXmpp()
+      user2 = await createUser()
       console.log('user2 credentials', user2.username, user2.password)
       timestamp()
       await waitFor(() => user1.profile !== null, 'user1 profile to load')
@@ -184,7 +184,6 @@ describe('Geofence', () => {
       const loadedBot2 = await user1.loadBot(bot.id)
       await waitFor(() => !loadedBot2.loading, 'bot to load')
       expect(loadedBot2.guestsSize).toEqual(1)
-      expect(loadedBot2.guest).toEqual(true)
       done()
     } catch (e) {
       done(e)
@@ -221,7 +220,6 @@ describe('Geofence', () => {
       timestamp()
       loadedBot = await user2.loadBot(bot.id)
       expect(loadedBot.guestsSize).toEqual(2)
-      expect(loadedBot.guest).toEqual(true)
       done()
     } catch (e) {
       done(e)

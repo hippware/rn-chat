@@ -1,4 +1,4 @@
-import {GraphQLTransport} from '../src/transport/GraphQLTransport'
+import {NextGraphQLTransport} from '../src/transport/NextGraphQLTransport'
 import _ from 'lodash'
 
 const host = 'next.dev.tinyrobot.com'
@@ -8,7 +8,7 @@ describe('GraphQL auth', () => {
   let userId1: string, userId2: string
 
   it('logs in new user via bypass', async () => {
-    const gql = new GraphQLTransport('testing')
+    const gql = new NextGraphQLTransport('next')
     const {password} = await gql.register(
       {
         version: '1.1.4',
@@ -31,7 +31,7 @@ describe('GraphQL auth', () => {
 
   // Check for this mistake: https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
   it('logs in a different user via bypass', async () => {
-    const gql = new GraphQLTransport('testing')
+    const gql = new NextGraphQLTransport('next')
     const {password} = await gql.register(
       {
         version: '1.1.4',
