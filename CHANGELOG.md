@@ -4,12 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 3.9.3.1 - 2018 Dec 10
+
 * Show firebase errors on Verify Phone screen (#2988)
 * Backport as many LocationStore.ts changes as possible.
   * Configure RNBGL startOnBoot,stopOnTerminate more robustly (PR #3025)
 * Rework Location Store and RNBGL (#3071, PR #3107)
-* Display more version info for codepushes (#3009)
-  * Rework version info string. Swap native and js parts. (PR #3098)
+* Display more version info for codepushes (#3009, PR #3072, PR #3098)
 * Submit bugsnag for any mixpanel tracking failures (PR #3145)
 
 # 3.9.3 - 2018 Oct 23
