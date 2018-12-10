@@ -29,6 +29,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Rework Location Store and RNBGL (#3071, PR #3107)
   * Speculative fix: App not updating users location with app closed (#2508)
 * Remove google logo, other ui changes (#3130, PR #3136)
+* [dev] use new Bot Post GraphQL API (#3147)
+* [GraphQL] Image download/upload via GraphQL, code cleanup (#3138)
+* Replace images with emojis on presence bar (#3143)
+* Notifications tests refactor (PR #3150)
+* [GraphQL] Change GraphQL image naming (#3160)
+* New User Profile (#3148)
 
 # 3.10.1 - 2018 Nov 26
 
