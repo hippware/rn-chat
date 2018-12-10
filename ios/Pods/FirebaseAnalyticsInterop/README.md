@@ -17,9 +17,9 @@ monetize your app. More information about Firebase can be found at
 
 See the three subsections for details about three different installation methods.
 
-1. [Standard pod install](README.md#standard-pod-install)
-1. [Installing from the GitHub repo](README.md#installing-from-github)
-1. [Experimental Carthage](README.md#carthage-ios-only)
+1.  [Standard pod install](README.md#standard-pod-install)
+1.  [Installing from the GitHub repo](README.md#installing-from-github)
+1.  [Experimental Carthage](README.md#carthage-ios-only)
 
 ### Standard pod install
 
@@ -92,12 +92,12 @@ In order to run the sample apps and integration tests, you'll need valid
 files without real values, but can be replaced with real plist files. To get your own
 `GoogleService-Info.plist` files:
 
-1. Go to the [Firebase Console](https://console.firebase.google.com/)
-2. Create a new Firebase project, if you don't already have one
-3. For each sample app you want to test, create a new Firebase app with the sample app's bundle
-   identifier (e.g. `com.google.Database-Example`)
-4. Download the resulting `GoogleService-Info.plist` and replace the appropriate dummy plist file
-   (e.g. in [Example/Database/App/](Example/Database/App/));
+1.  Go to the [Firebase Console](https://console.firebase.google.com/)
+2.  Create a new Firebase project, if you don't already have one
+3.  For each sample app you want to test, create a new Firebase app with the sample app's bundle
+    identifier (e.g. `com.google.Database-Example`)
+4.  Download the resulting `GoogleService-Info.plist` and replace the appropriate dummy plist file
+    (e.g. in [Example/Database/App/](Example/Database/App/));
 
 Some sample apps like Firebase Messaging ([Example/Messaging/App](Example/Messaging/App)) require
 special Apple capabilities, and you will have to change the sample app to use a unique bundle
@@ -128,12 +128,12 @@ To run the Storage Integration tests, follow the instructions in
 Push notifications can only be delivered to specially provisioned App IDs in the developer portal.
 In order to actually test receiving push notifications, you will need to:
 
-1. Change the bundle identifier of the sample app to something you own in your Apple Developer
-   account, and enable that App ID for push notifications.
-2. You'll also need to
-   [upload your APNs Provider Authentication Key or certificate to the Firebase Console](https://firebase.google.com/docs/cloud-messaging/ios/certs)
-   at **Project Settings > Cloud Messaging > [Your Firebase App]**.
-3. Ensure your iOS device is added to your Apple Developer portal as a test device.
+1.  Change the bundle identifier of the sample app to something you own in your Apple Developer
+    account, and enable that App ID for push notifications.
+2.  You'll also need to
+    [upload your APNs Provider Authentication Key or certificate to the Firebase Console](https://firebase.google.com/docs/cloud-messaging/ios/certs)
+    at **Project Settings > Cloud Messaging > [Your Firebase App]**.
+3.  Ensure your iOS device is added to your Apple Developer portal as a test device.
 
 #### iOS Simulator
 
