@@ -8,6 +8,7 @@ export const STAGING_HOST = 'staging.dev.tinyrobot.com'
 class Settings {
   isTesting: boolean = false
   isStaging: boolean = false
+  isProduction: boolean = true
   logLevel: number = log.logLevels.VERBOSE
   logCategory = null
   version: string
@@ -23,6 +24,8 @@ class Settings {
       this.isStaging = NativeEnv.get('STAGING')
       this.version = NativeEnv.get('VERSION_NAME')
     }
+
+    this.isProduction = !this.isStaging && !this.isTesting
   }
 
   getDomain() {
