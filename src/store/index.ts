@@ -3,17 +3,10 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {
-  Wocky,
-  XmppTransport,
-  HybridTransport,
-  GraphQLTransport,
-  IWockyTransport,
-} from 'wocky-client'
+import {Wocky, NextGraphQLTransport, IWockyTransport} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
-import XmppIOS from './xmpp/XmppIOS'
 import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
@@ -33,11 +26,7 @@ import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import OnceStore from './OnceStore'
 
-const provider = new XmppIOS()
-const xmppTransport = new XmppTransport(provider, DeviceInfo.getUniqueID())
-const graphqlTransport = new GraphQLTransport(DeviceInfo.getUniqueID())
-const transport = new HybridTransport(xmppTransport, graphqlTransport)
-
+const transport = new NextGraphQLTransport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
