@@ -1,11 +1,7 @@
-import {types, getSnapshot, flow} from 'mobx-state-tree'
+import {types, getSnapshot, flow, Instance} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
-import {IBot} from './Bot'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IBot = IBot
 
 const Hidden = types
   .model('HiddenType', {
@@ -58,5 +54,4 @@ export const OwnProfile = types
   }))
   .named('OwnProfile')
 
-export type IOwnProfileType = typeof OwnProfile.Type
-export interface IOwnProfile extends IOwnProfileType {}
+export interface IOwnProfile extends Instance<typeof OwnProfile> {}
