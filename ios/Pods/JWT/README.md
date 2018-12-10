@@ -17,11 +17,11 @@ Nothing here.
 
 # What's new in Version 3.0
 
-- Fluent style expanded.
-- Coding result types added.
-- Algorithms and data holders.
-- Algorithms and data holders chain.
-- Keys loaded from Pem files.
+* Fluent style expanded.
+* Coding result types added.
+* Algorithms and data holders.
+* Algorithms and data holders chain.
+* Keys loaded from Pem files.
 
 ## Introduction to Algorithms data holders and chain.
 
@@ -222,8 +222,8 @@ else {
 
 # What's new in Version 2.0
 
-- Old plain style deprecated.
-- Use modern fluent style instead.
+* Old plain style deprecated.
+* Use modern fluent style instead.
 
 ```objective-c
 NSDictionary *payload = @{@"foo" : @"bar"};
@@ -441,10 +441,10 @@ NSDictionary *payload = [JWTBuilder decodeMessage:jwtToken].secretData(secretDat
 
 The following algorithms are supported:
 
-- RS256
-- HS512 - HMAC using SHA-512.
-- HS256 / HS384 / HS512
-- None
+* RS256
+* HS512 - HMAC using SHA-512.
+* HS256 / HS384 / HS512
+* None
 
 ## RS256 usage.
 

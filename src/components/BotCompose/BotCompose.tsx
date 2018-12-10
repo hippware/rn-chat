@@ -3,7 +3,7 @@ import {StyleSheet, Keyboard, View, TextInput, TouchableOpacity, Image, Alert} f
 import {RText, Spinner} from '../common'
 import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
-import {k} from '../Global'
+import {k, height} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {observable, reaction, computed} from 'mobx'
@@ -14,6 +14,7 @@ import {showImagePicker} from '../ImagePicker'
 import EmojiSelector from 'react-native-emoji-selector'
 import LinearGradient from 'react-native-linear-gradient'
 import {IHomeStore} from '../../store/HomeStore'
+import {BlurView} from 'react-native-blur'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -38,7 +39,7 @@ type Props = {
   keyboardShowing?: boolean
 }
 
-const emojiKeyboardHeight = 305
+const emojiKeyboardHeight = height / 2
 
 @inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log', 'locationStore')
 @observer
@@ -106,17 +107,31 @@ export class BotCompose extends React.Component<Props> {
       <View>
         <View
           style={{
-            height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
-            backgroundColor: 'white',
-            overflow: 'hidden',
+            shadowColor: 'rgba(254, 92, 108, 0.3)',
+            shadowOffset: {
+              width: 0,
+              height: 0,
+            },
+            shadowRadius: 12,
+            shadowOpacity: 1,
           }}
         >
-          <EmojiSelector
-            showHistory
-            onEmojiSelected={this.onEmojiSelected}
-            showSearchBar={false}
-            columns={8}
-          />
+          <BlurView
+            blurType="light"
+            blurAmount={5}
+            style={{
+              height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
+              backgroundColor: 'rgba(255,255,255,0.5)',
+              overflow: 'hidden',
+            }}
+          >
+            <EmojiSelector
+              showHistory
+              onEmojiSelected={this.onEmojiSelected}
+              showSearchBar={false}
+              columns={8}
+            />
+          </BlurView>
         </View>
         {!this.props.iconStore!.isEmojiKeyboardShown && (
           <View>

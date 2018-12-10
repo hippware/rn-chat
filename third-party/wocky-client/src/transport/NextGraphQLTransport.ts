@@ -471,8 +471,20 @@ export class NextGraphQLTransport implements IWockyTransport {
     return {password}
   }
 
-  async testRegister(): Promise<{username: string; password: string; host: string}> {
-    throw new Error('Not supported')
+  async testRegister(
+    {phoneNumber},
+    host: string
+  ): Promise<{username?: string; password: string; host?: string}> {
+    // TODO pass real version/os/deviceName here?
+    return this.register(
+      {
+        version: '1.1.4',
+        os: 'ios',
+        deviceName: 'iPhone',
+        phoneNumber: `+1555${phoneNumber}`,
+      },
+      host
+    )
   }
 
   async disconnect(): Promise<void> {

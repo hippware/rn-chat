@@ -6,16 +6,16 @@ import {isAlive} from 'mobx-state-tree'
 import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import Avatar from './common/Avatar'
-import {k} from './Global'
+import {k, minHeight, avatarScale} from './Global'
 import {IWocky, IOwnProfile} from 'wocky-client'
 import {RText} from './common'
-import moment from 'moment'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
   image?: object
   innerStyle?: any
   children?: any
+  imageStyle?: any
 }
 
 interface IMenuItemWrapperProps extends TouchableOpacityProps {
@@ -39,10 +39,12 @@ const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
   return <Wrapper {...rest}>{children}</Wrapper>
 }
 
-const MenuItem = ({style, image, innerStyle, children, ...rest}: IMenuItemProps) => (
+const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMenuItemProps) => (
   <MenuItemWrapper {...rest}>
     <View style={[styles.menuItem, style]}>
-      {image && <Image source={image} resizeMode="contain" style={styles.menuImage} />}
+      {image && (
+        <Image source={image} resizeMode="contain" style={[styles.menuImage, imageStyle]} />
+      )}
       <View style={[{flex: 1, alignItems: 'center'}, innerStyle]}>{children}</View>
     </View>
   </MenuItemWrapper>
@@ -90,6 +92,7 @@ export default class BottomMenu extends React.Component<Props> {
           <MenuItem
             onPress={() => Actions.friends()}
             image={require('../../images/menuFriends.png')}
+            imageStyle={{width: 34 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
           >
             <RText style={styles.text}>Friends</RText>
           </MenuItem>
@@ -99,23 +102,20 @@ export default class BottomMenu extends React.Component<Props> {
               Actions.chats()
             }}
             image={require('../../images/menuMessages.png')}
+            imageStyle={{width: 30 * avatarScale, height: 27 * avatarScale, marginVertical: 15}}
           >
             <RText style={styles.text}>Messages</RText>
           </MenuItem>
           <MenuItem
             image={profile.hidden.enabled ? invisibleOn : invisibleOff}
             onPress={this.toggleInvisible}
+            imageStyle={{
+              width: 55 * avatarScale,
+              height: 41 * avatarScale,
+              marginLeft: 25 * avatarScale,
+            }}
           >
             <RText style={styles.text}>Invisible</RText>
-            {profile.hidden.enabled ? (
-              <RText size={12} color={colors.DARK_GREY} style={{marginTop: 3}}>
-                {profile.hidden.expires ? moment(profile.hidden.expires).fromNow(true) : 'On'}
-              </RText>
-            ) : (
-              <RText size={12} color={colors.DARK_GREY} style={{marginTop: 3}}>
-                Off
-              </RText>
-            )}
           </MenuItem>
         </View>
       </BottomPopup>
@@ -136,8 +136,8 @@ export default class BottomMenu extends React.Component<Props> {
   }
 }
 
-const invisibleOn = require('../../images/menuInvisible.png')
-const invisibleOff = require('../../images/menuInvisibleOff.png')
+const invisibleOn = require('../../images/InvisibleOn.png')
+const invisibleOff = require('../../images/InvisibleOff.png')
 
 const styles = StyleSheet.create({
   text: {
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
   },
   optionsWrapper: {
     flexDirection: 'row',
-    marginTop: 30 * k,
-    marginBottom: 50 * k,
+    marginTop: 15 * minHeight,
+    marginBottom: 50 * minHeight,
     justifyContent: 'space-between',
     marginHorizontal: 40 * k,
   },

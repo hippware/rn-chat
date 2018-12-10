@@ -4,6 +4,7 @@ import {when} from 'mobx'
 import * as log from '../utils/log'
 import {IWocky} from 'wocky-client'
 import Mixpanel from 'react-native-mixpanel'
+import bsClient from './bugsnagConfig'
 
 export const analyticsGeoWidgetTap = 'geofence_widget_tap'
 
@@ -52,6 +53,10 @@ export class Analytics {
       }
     } catch (err) {
       log.log('Mixpanel tracking error', err)
+      bsClient.notify(err, report => {
+        // metadata gets discarded like in https://github.com/bugsnag/bugsnag-react-native/issues/132
+        report.metadata = err
+      })
     }
   }
 

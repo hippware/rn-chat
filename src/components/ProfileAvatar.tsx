@@ -1,8 +1,8 @@
 import React from 'react'
 import {View} from 'react-native'
 import Avatar from './common/Avatar'
-import {k} from './Global'
 import {IProfile} from 'wocky-client'
+import MessageButton from './ProfileDetail/MessagProfileCTA'
 
 type Props = {
   profile: IProfile
@@ -12,12 +12,14 @@ type Props = {
   wrapperStyle?: any
   fontSize?: 'large' | 'small'
   fontFamily?: any
+  borderColor?: any
+  hideDot?: any
 }
 
 const ProfileAvatar = (props: Props) => {
-  const {size = 65, tappable = true, wrapperStyle, fontSize, fontFamily} = props
+  const {size = 65, tappable = true, wrapperStyle, fontSize, fontFamily, profile} = props
   return (
-    <View style={[{alignItems: 'center', height: size * k}, wrapperStyle]}>
+    <View style={[{alignItems: 'center', height: size}, wrapperStyle]}>
       <Avatar
         {...props}
         tappable={tappable}
@@ -25,6 +27,7 @@ const ProfileAvatar = (props: Props) => {
         fontSize={fontSize}
         fontFamily={fontFamily}
       />
+      <MessageButton profile={profile} />
     </View>
   )
 }

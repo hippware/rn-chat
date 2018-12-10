@@ -48,7 +48,7 @@ export default class BotDetails extends React.Component<Props> {
     if (this.props.wocky!.connected && this.bot && isAlive(this.bot) && this.bot.posts.loading)
       return <Loader />
 
-    return <View style={{backgroundColor: 'white', height: 50 * k}} />
+    return <View style={{backgroundColor: 'white', height: 100 * k}} />
   })
 
   async componentDidMount() {
@@ -112,7 +112,6 @@ export default class BotDetails extends React.Component<Props> {
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 50, // leave room for absolute positioned comment input
           }}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}

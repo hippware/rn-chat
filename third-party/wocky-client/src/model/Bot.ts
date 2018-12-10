@@ -30,7 +30,7 @@ export const Bot = types
     types.model('Bot', {
       id: types.identifier,
       isSubscribed: false,
-      guest: false,
+      guest: false, // TODO remove it, because next server doesn't support it?
       visitor: false,
       icon: '',
       title: types.maybeNull(types.string),
