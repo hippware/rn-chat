@@ -44,7 +44,7 @@ class Notifications extends React.Component<Props> {
         onEndReached={notifications.load}
         ListFooterComponent={observer(() => (
           <View>
-            {notifications.length === 0 && (
+            {notifications.length === 0 ? (
               <View>
                 <RText
                   weight="Regular"
@@ -54,11 +54,12 @@ class Notifications extends React.Component<Props> {
                   No new updates
                 </RText>
               </View>
+            ) : (
+              <ListFooter
+                style={{backgroundColor: 'white'}}
+                finished={notifications.finished || notifications.length === 0}
+              />
             )}
-            <ListFooter
-              style={{backgroundColor: 'white'}}
-              finished={notifications.finished || notifications.length === 0}
-            />
           </View>
         ))}
       />
