@@ -1,4 +1,4 @@
-import {createUser, waitFor} from './support/testuser'
+import {createUser, sleep, waitFor} from './support/testuser'
 import {IWocky} from '../src/store/Wocky'
 const fs = require('fs')
 const fileName = `${__dirname}/img/test.jpg`
@@ -29,6 +29,7 @@ describe('FileStore', () => {
     expect(user1.profile!.updated).toBe(false)
     await user1.profile!.save()
     expect(user1.profile!.updated).toBe(true)
+    await sleep(3000)
     const profile = await user1.loadProfile(user1.username!)
     expect(profile.avatar).toBeTruthy()
     await waitFor(
