@@ -224,7 +224,7 @@ const LocationStore = types
     }
 
     const startBackground = flow(function*() {
-      const wocky: IWocky = getParent(self).wocky
+      const wocky: IWocky = (getParent(self) as any).wocky
       // don't run background service if user doesn't enable alwaysOn
       if (!self.alwaysOn) {
         return
@@ -233,7 +233,8 @@ const LocationStore = types
         backgroundGeolocation = require('react-native-background-geolocation').default
         backgroundGeolocation.on('location', onLocation, onLocationError)
         backgroundGeolocation.on('http', onHttp, onHttpError)
-        backgroundGeolocation.on('error', self.positionError)
+        // TODO: figure out how to track RNBGL errors in new version
+        // backgroundGeolocation.on('error', self.positionError)
         backgroundGeolocation.on('motionchange', onMotionChange)
         backgroundGeolocation.on('activitychange', onActivityChange)
         backgroundGeolocation.on('providerchange', onProviderChange)
@@ -268,15 +269,26 @@ const LocationStore = types
         debug: false,
         // logLevel: backgroundGeolocation.LOG_LEVEL_VERBOSE,
         logLevel: backgroundGeolocation.LOG_LEVEL_ERROR,
-        stopOnTerminate: false,
-        startOnBoot: true,
+        // stopOnTerminate: false,
+        // startOnBoot: true,
         url,
         autoSync: true,
         params,
         headers,
       })
-      // apply this change every load to prevent stale auth headers
-      yield backgroundGeolocation.setConfig({headers, params, url})
+
+      // .ready() doesn't always apply configuration.
+      // Here are some things that we have to configure everytime.
+      // Note: If any user-configurable/debug settings appear here,
+      //   they will be overwritten
+      yield backgroundGeolocation.setConfig({
+        startOnBoot: true,
+        stopOnTerminate: false,
+        headers,
+        params,
+        url,
+      })
+
       logger.log(prefix, 'is configured and ready: ', state)
       self.updateBackgroundConfigSuccess(state)
 
@@ -366,7 +378,7 @@ const LocationStore = types
 
     function afterAttach() {
       self.initialize()
-      ;({wocky} = getParent(self))
+      ;({wocky} = getParent(self) as any)
     }
 
     const start = flow(function*() {
