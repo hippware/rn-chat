@@ -28,11 +28,13 @@ import {
   convertBotPost,
   convertLocation,
   waitFor,
+  convertMessage,
 } from './utils'
 import _ from 'lodash'
 import uuid from 'uuid/v1'
 import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
+import {IMessageIn} from '../model/Message'
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
@@ -46,7 +48,7 @@ export class NextGraphQLTransport implements IWockyTransport {
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
-  @observable message: any
+  @observable message?: IMessageIn
   @observable notification: any
   @observable presence: any
   @observable rosterItem: any
@@ -83,6 +85,8 @@ export class NextGraphQLTransport implements IWockyTransport {
 
     if (res) {
       this.subscribeBotVisitors()
+      this.subscribeNotifications()
+      this.subscribeMessages()
     }
     return res
   }
@@ -276,74 +280,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       return {createdAt, lat, lon, accuracy}
     })
   }
-  subscribeBotVisitors() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-          subscription subscribeBotVisitors($ownUsername: String!){
-            botGuestVisitors {
-              action
-              bot {
-                ${BOT_PROPS}
-                visitors: subscribers(first: 1, type: VISITOR) {
-                    edges {
-                      cursor
-                      node {
-                        ${PROFILE_PROPS}
-                      }
-                    }
-                  }
-              }
-              visitor {
-                id
-              }
-            }
-          }
-        `,
-      variables: {
-        ownUsername: this.username,
-      },
-    }).subscribe({
-      next: action((result: any) => {
-        const update = result.data.botGuestVisitors
-        this.botVisitor = {
-          visitor: {id: update.visitor.id},
-          bot: convertBot(update.bot),
-          action: update.action,
-        }
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
-
-  subscribeContacts() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-        subscription subscribeContacts {
-          contacts {
-            createdAt
-            relationship
-            user {
-              id
-              roles
-              firstName
-              lastName
-              handle
-              media {
-                thumbnailUrl
-                trosUrl
-              }
-            }
-          }
-        }
-      `,
-    }).subscribe({
-      next: action((result: any) => {
-        const {user, relationship, createdAt} = result.data.contacts
-        this.rosterItem = processRosterItem(user, relationship, createdAt)
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
 
   async loadNotifications(params: {
     limit?: number
@@ -380,25 +316,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     return {count: 0, list: []}
   }
 
-  subscribeNotifications() {
-    const subscription = this.clients![0].subscribe({
-      query: gql`
-          subscription notifications($ownUsername: String!) {
-            notifications {
-              ${NOTIFICATIONS_PROPS}
-            }
-          }
-        `,
-      variables: {
-        ownUsername: this.username,
-      },
-    }).subscribe({
-      next: action((result: any) => {
-        this.notification = convertNotification({node: result.data.notifications})
-      }),
-    })
-    this.subscriptions.push(subscription)
-  }
   async loadOwnBots(id: string, lastId?: string, max: number = 10) {
     return await this.loadBots('OWNED', id, lastId, max)
   }
@@ -749,17 +666,18 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        input: {message: body, recipientId: to},
+        // TODO: add imageURL
+        input: {content: body, recipientId: to!.id},
       },
     })
   }
 
-  async loadChat(): Promise<void> {
+  async loadChat(userId, lastId, max): Promise<void> {
     throw new Error('Not supported')
   }
 
   async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
-    return [{id: '1', message: 'hello'}]
+    throw new Error('Not supported')
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -1029,6 +947,127 @@ export class NextGraphQLTransport implements IWockyTransport {
       variables: {code: {code}},
     })
   }
+
+  /******************************** SUBSCRIPTIONS ********************************/
+
+  private subscribeNotifications() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+          subscription notifications($ownUsername: String!) {
+            notifications {
+              ${NOTIFICATIONS_PROPS}
+            }
+          }
+        `,
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        this.notification = convertNotification({node: result.data.notifications})
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeContacts() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+        subscription subscribeContacts {
+          contacts {
+            createdAt
+            relationship
+            user {
+              id
+              roles
+              firstName
+              lastName
+              handle
+              media {
+                thumbnailUrl
+                trosUrl
+              }
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        // console.log('& contact', result)
+        const {user, relationship, createdAt} = result.data.contacts
+        this.rosterItem = processRosterItem(user, relationship, createdAt)
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeBotVisitors() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+          subscription subscribeBotVisitors($ownUsername: String!){
+            botGuestVisitors {
+              action
+              bot {
+                ${BOT_PROPS}
+                visitors: subscribers(first: 1, type: VISITOR) {
+                    edges {
+                      cursor
+                      node {
+                        ${PROFILE_PROPS}
+                      }
+                    }
+                  }
+              }
+              visitor {
+                id
+              }
+            }
+          }
+        `,
+      variables: {
+        ownUsername: this.username,
+      },
+    }).subscribe({
+      next: action((result: any) => {
+        const update = result.data.botGuestVisitors
+        this.botVisitor = {
+          visitor: {id: update.visitor.id},
+          bot: convertBot(update.bot),
+          action: update.action,
+        }
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  private subscribeMessages() {
+    const subscription = this.clients![0].subscribe({
+      query: gql`
+        subscription messages {
+          messages {
+            content
+            createdAt
+            direction
+            media {
+              fullUrl
+              thumbnailUrl
+              trosUrl
+            }
+            otherUser {
+              ${PROFILE_PROPS}
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        this.message = convertMessage(result.data.messages, this.username!)
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  /******************************** END SUBSCRIPTIONS ********************************/
 
   private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
     const res = await this.clients![0].query<any>({

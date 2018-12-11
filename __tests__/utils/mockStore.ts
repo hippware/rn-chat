@@ -39,16 +39,10 @@ export default {
     followed: {},
     getProfile: jest.fn(),
     getBot: () => Bot.create({id: '1234'}),
-    // createChat: () => ({
-    //   load: () => ({
-    //     then: jest.fn(),
-    //   }),
-    //   readAll: jest.fn(),
-    //   setActive: jest.fn(),
-    // }),
     createChat: () =>
       Chat.create({
         id: '1234',
+        otherUser: '1234',
       }),
     loadChats: jest.fn(),
   } as any,

@@ -1,4 +1,4 @@
-import {types, flow, getEnv, Instance} from 'mobx-state-tree'
+import {types, flow, getEnv, Instance, SnapshotIn} from 'mobx-state-tree'
 import {Profile, IProfile} from './Profile'
 import {Message, IMessage} from './Message'
 import {Base} from './Base'
@@ -8,20 +8,19 @@ export const Chat = types
   .compose(
     Base,
     types.model('Chat', {
-      id: types.identifier,
+      id: types.string, // HACK: id of `otherUser`
       active: false,
       loaded: false,
       requestedId: types.maybeNull(types.string),
       isPrivate: true,
-      participants: types.optional(types.array(types.reference(Profile)), []),
+      otherUser: types.reference(Profile),
       _messages: types.optional(types.array(Message), []),
-      message: types.optional(Message, {}),
+      message: types.maybeNull(Message),
     })
   )
   .volatile(() => ({
     loading: false,
   }))
-  // .named('Chat')
   .views(self => ({
     get messages() {
       return self._messages.slice().sort((a, b) => a.time - b.time)
@@ -32,8 +31,9 @@ export const Chat = types
         0
       )
     },
-    get followedParticipants() {
-      return self.participants.filter((p: any) => p.isFollowed)
+    // TODO: possibly remove this?
+    get followedParticipants(): IProfile[] {
+      return [self.otherUser]
     },
   }))
   .views(self => ({
@@ -90,18 +90,13 @@ export const Chat = types
           self._messages.push(msg)
         }
       },
-      addParticipant: (profile: IProfile) => {
-        if (!self.participants.find(el => el.id === profile.id)) {
-          self.participants.push(profile)
-        }
-      },
     }
   })
   .actions(self => ({
     afterAttach: () => {
       self.message = self.service.create(Message, {to: self.id, from: self.service.username!})
-      self.addParticipant(self.service.profiles.get(self.id))
     },
   }))
 
 export interface IChat extends Instance<typeof Chat> {}
+export interface IChatIn extends SnapshotIn<typeof Chat> {}
