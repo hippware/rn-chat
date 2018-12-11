@@ -216,13 +216,13 @@ export default StyleSheet.create({
 export const onboardingSlideStyle = StyleSheet.create({
   onboardingH1: {
     color: PINK,
-    fontSize: 30,
+    fontSize: 31,
     fontWeight: '100',
     textAlign: 'center',
   },
   onboardingSubtext: {
     color: WARM_GREY_2,
-    fontSize: 18,
+    fontSize: 19,
     textAlign: 'center',
     fontWeight: '100',
   },

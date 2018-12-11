@@ -17,8 +17,8 @@ class OnboardingFindFriends extends React.Component<Props> {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-start',
-          marginTop: 40 * minHeight,
+          justifyContent: 'center',
+          marginTop: 30,
         }}
       >
         <View style={{width: '80%', marginBottom: 33 * s}}>
@@ -41,14 +41,14 @@ class OnboardingFindFriends extends React.Component<Props> {
           style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26 * s}}
           onPress={this.props.onPress}
         >
-          <RText color={WHITE} size={17.5}>
+          <RText color={WHITE} size={18.5}>
             Find Friends
           </RText>
         </GradientButton>
 
-        <TouchableOpacity onPress={this.props.onSkip} style={{marginBottom: 34 * s}}>
+        <TouchableOpacity onPress={this.props.onSkip} style={{marginBottom: 34 * minHeight}}>
           <View>
-            <RText color={PINK} size={17.5}>
+            <RText color={PINK} size={18.5}>
               Skip
             </RText>
           </View>

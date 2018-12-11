@@ -15,7 +15,7 @@ class OnboardingFindFriendsList extends React.Component<Props> {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-start',
+          justifyContent: 'center',
         }}
       >
         <View
@@ -44,7 +44,7 @@ class OnboardingFindFriendsList extends React.Component<Props> {
           style={{height: 50 * minHeight, width: '100%', position: 'absolute', bottom: 0}}
           onPress={this.props.onPress}
         >
-          <RText size={17.5} color="white" style={{letterSpacing: 0.8}}>
+          <RText size={18.5} color="white" style={{letterSpacing: 0.8}}>
             Done
           </RText>
         </GradientButton>

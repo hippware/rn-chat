@@ -16,12 +16,12 @@ class OnboardingAccelerometer extends React.Component<Props> {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-start',
-          marginTop: 40 * minHeight,
+          justifyContent: 'center',
+          marginVertical: 40,
         }}
       >
         <View style={{width: '80%', marginBottom: 33 * s}}>
-          <RText style={styles.onboardingH1}>Allow Accelerometer</RText>
+          <RText style={styles.onboardingH1}>Allow{'\r\n'} Accelerometer</RText>
         </View>
 
         <View style={{width: '70%', marginBottom: 42 * s}}>
@@ -40,7 +40,7 @@ class OnboardingAccelerometer extends React.Component<Props> {
           style={{height: 50, width: '80%', borderRadius: 4}}
           onPress={this.props.onPress}
         >
-          <RText color={WHITE} size={17.5}>
+          <RText color={WHITE} size={18.5}>
             Allow Accelerometer
           </RText>
         </GradientButton>

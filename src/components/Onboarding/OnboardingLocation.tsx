@@ -16,12 +16,12 @@ class OnboardingLocation extends React.Component<Props> {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-start',
-          marginTop: 40 * minHeight,
+          justifyContent: 'center',
+          marginVertical: 40,
         }}
       >
         <View style={{width: '80%', marginBottom: 32 * s}}>
-          <RText style={styles.onboardingH1}>Allow Location Access</RText>
+          <RText style={styles.onboardingH1}>Allow Location{'\r\n'} Access</RText>
         </View>
 
         <View style={{width: '70%', marginBottom: 67 * s}}>
@@ -44,7 +44,7 @@ class OnboardingLocation extends React.Component<Props> {
           style={{height: 50, width: '80%', borderRadius: 4}}
           onPress={this.props.onPress}
         >
-          <RText color={WHITE} size={17.5}>
+          <RText color={WHITE} size={18.5}>
             Always Allow Location
           </RText>
         </GradientButton>

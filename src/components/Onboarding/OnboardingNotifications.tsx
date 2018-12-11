@@ -16,12 +16,12 @@ class OnboardingNotifications extends React.Component<Props> {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-start',
-          marginTop: 40 * minHeight,
+          justifyContent: 'center',
+          marginVertical: 40,
         }}
       >
         <View style={{width: '80%', marginBottom: 33 * s}}>
-          <RText style={styles.onboardingH1}>Turn On Notifications</RText>
+          <RText style={styles.onboardingH1}>Turn On{'\r\n'} Notifications</RText>
         </View>
 
         <View style={{width: '70%', marginBottom: 72 * s}}>
@@ -39,7 +39,7 @@ class OnboardingNotifications extends React.Component<Props> {
           style={{height: 50, width: '80%', borderRadius: 4}}
           onPress={this.props.onPress}
         >
-          <RText color={WHITE} size={17.5}>
+          <RText color={WHITE} size={18.5}>
             Allow Notifications
           </RText>
         </GradientButton>
