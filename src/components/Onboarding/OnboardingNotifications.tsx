@@ -26,7 +26,7 @@ class OnboardingNotifications extends React.Component<Props> {
 
         <View style={{width: '70%', marginBottom: 72 * s}}>
           <RText style={styles.onboardingSubtext}>
-            Know instanly when friends visit your locations or share new locations with you.
+            Know instantly when friends visit your locations or share new locations with you.
           </RText>
         </View>
 
