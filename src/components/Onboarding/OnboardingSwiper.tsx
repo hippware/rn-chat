@@ -26,7 +26,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <RText style={{width: '100%', textAlign: 'center', marginTop: 30 * minHeight}} size={18}>
+        <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
           almost done!
         </RText>
         <Swiper

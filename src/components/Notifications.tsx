@@ -36,7 +36,11 @@ class Notifications extends React.Component<Props> {
           back: true,
           title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
         }}
-        headerInner={<RText size={16}>Updates</RText>}
+        headerInner={
+          <RText size={17} weight={'Medium'}>
+            Updates
+          </RText>
+        }
         data={notifications.length > 0 ? notifications.list.slice() : []}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
