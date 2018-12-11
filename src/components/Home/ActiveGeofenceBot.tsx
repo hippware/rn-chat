@@ -43,7 +43,7 @@ class ActiveBot extends React.Component<Props> {
                 <RText
                   size={13}
                   color={colors.PINK}
-                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold'}}
+                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold', height: 'auto'}}
                 >
                   You're{'\r\n'}
                   Here
