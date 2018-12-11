@@ -1,4 +1,4 @@
-import {types, getParent, getEnv, flow} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -8,8 +8,8 @@ import {Base, SERVICE_NAME} from '../model/Base'
 import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
-import {Chat, IChat} from '../model/Chat'
-import {Message, IMessage} from '../model/Message'
+import {IChat} from '../model/Chat'
+import {Message, IMessage, IMessageIn} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
 import {NextGraphQLTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
@@ -70,7 +70,7 @@ export const Wocky = types
             loaded: true,
             status: 'available',
           })
-          self.profile = profile
+          self.profile = profile!
         } else {
           self.load(self.profile, data)
         }
@@ -156,7 +156,8 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id})),
+        createChat: (otherUserId: string): IChat =>
+          self.chats.get(otherUserId) || self.chats.add({id: otherUserId, otherUser: otherUserId}),
       },
     }
   })
@@ -216,17 +217,18 @@ export const Wocky = types
       }
       return bot
     },
-    _addMessage: ({id, message}: {id: string; message: any}) => {
-      const existingChat = self.chats.get(id)
+    _addMessage: (message: IMessageIn) => {
+      const {to} = message
+      const existingChat = self.chats.get(to.toString())
       const msg = self.create(Message, message)
       if (existingChat) {
-        existingChat.addMessage(msg)
+        existingChat.addMessage(msg!)
         if (existingChat.active) {
-          msg.read()
+          msg!.read()
         }
       } else {
-        const chat = self.createChat(id)
-        chat.addMessage(msg)
+        const chat = self.createChat(to.toString())
+        chat.addMessage(msg!)
       }
     },
     deleteBot: (id: string) => {
@@ -327,7 +329,7 @@ export const Wocky = types
       }),
       _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
-        const {list, cursor, count} = yield self.transport.loadGeofenceBots(lastId, max)
+        const {list, cursor, count} = yield self.transport.loadGeofenceBots()
         if (list.length) {
           self.profile!.setHasUsedGeofence(true)
         }
@@ -438,10 +440,10 @@ export const Wocky = types
         }
         return {list: res, count}
       }),
-      _sendMessage: (msg: IMessage) => {
-        self.transport.sendMessage(msg)
-        self._addMessage({id: msg.to, message: msg})
-      },
+      _sendMessage: flow(function*(msg: IMessage) {
+        yield self.transport.sendMessage(msg)
+        self._addMessage(msg)
+      }),
       loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
         yield self.transport.loadChat(userId, lastId, max)
@@ -656,7 +658,6 @@ export const Wocky = types
           (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
-              self.transport.subscribeNotifications()
               self.requestRoster()
               self._loadNewNotifications()
             } else {
@@ -681,7 +682,7 @@ export const Wocky = types
           }
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
-        reaction(() => self.transport.message, self._addMessage),
+        reaction(() => self.transport.message, message => self._addMessage(message!)),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
@@ -712,5 +713,4 @@ export const Wocky = types
     }
   })
 
-export type IWockyType = typeof Wocky.Type
-export interface IWocky extends IWockyType {}
+export interface IWocky extends Instance<typeof Wocky> {}

@@ -7,6 +7,7 @@ let user1phone: string
 
 describe('New GraphQL profile tests', () => {
   beforeAll(async () => {
+    jest.setTimeout(10000)
     user = await createUser()
     user2 = await createUser()
   })
@@ -29,7 +30,7 @@ describe('New GraphQL profile tests', () => {
     }
   })
 
-  it('update profile', async () => {
+  it('update profiles with handles', async () => {
     await waitFor(
       () => user.profile !== null && user.profile.phoneNumber !== null,
       `user profile failed to load with phone number. ${getSnapshot(user)}`
@@ -43,6 +44,14 @@ describe('New GraphQL profile tests', () => {
       lastName: 'lname1',
       email: 'a@aa.com',
     })
+    await user.profile!.save()
+    await user2.profile!.update({
+      handle: 'b' + user1phone.replace('+', ''),
+      firstName: 'name2',
+      lastName: 'lname2',
+      email: 'b@bb.com',
+    })
+    await user2.profile!.save()
   })
 
   it('make them friends', async () => {
@@ -55,21 +64,13 @@ describe('New GraphQL profile tests', () => {
       () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
       'user1 and user2 rosters didnt update in time'
     )
-
-    // TODO: continue with roster expects
-    // expect(user.sortedRoster[0].id).toEqual(user2.username)
-    // expect(user2.sortedRoster[0].id).toEqual(user.username)
-    // // check profile is online
+    expect(user.sortedRoster[0].id).toEqual(user2.username)
+    expect(user2.sortedRoster[0].id).toEqual(user.username)
+    // TODO: check profile is online after presence enabled
     // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
   })
 
   it('load followers', async () => {
-    await user2.profile!.update({
-      handle: 'bob' + user2.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'bob',
-      lastName: 'bobertson',
-      email: 'b@bb.com',
-    })
     const steve = await createUser()
     await steve.profile!.update({
       handle: 'steve' + steve.profile!.phoneNumber!.replace('+', ''),
@@ -77,6 +78,7 @@ describe('New GraphQL profile tests', () => {
       lastName: 'stevenson',
       email: 's@ss.com',
     })
+    await steve.profile!.save()
 
     // verify that all 3 profiles have handles
     // this is a back-end requirement for users to return in 'followers' or 'following' query
@@ -85,6 +87,7 @@ describe('New GraphQL profile tests', () => {
       true,
       true,
     ])
+    // TODO: verify that these profile updates exist on the server (via `save`)
 
     const user1steve = await user.loadProfile(steve.username!)
     expect(user1steve).toBeTruthy()
@@ -99,43 +102,25 @@ describe('New GraphQL profile tests', () => {
   })
 
   it('unfollow and refollow', async () => {
-    // NOTE: the roster updates tend to require a bit more time to complete
-    jest.setTimeout(10000)
     const user1user2Profile = await user.loadProfile(user2.username!)
     expect(user1user2Profile).toBeTruthy()
+    expect(user.followed.length).toBe(1)
     await user1user2Profile.unfollow()
-    await waitFor(
-      () => user.sortedRoster.length === 0 && user2.sortedRoster.length === 0,
-      'user1 and user2 rosters didnt update in time after unfollow'
-    )
-    // todo: add negative tests for after an unfollow? For example, sending a chat message should fail, right?
+    expect(user1user2Profile.isFollowed).toBe(false)
+    expect(user.followed.length).toBe(0)
     await user1user2Profile.follow()
-    await waitFor(
-      () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
-      'user1 and user2 rosters didnt update in time after unblock'
-    )
-    // restore default timeout
-    jest.setTimeout(5000)
   })
 
   it('block and unblock', async () => {
-    // NOTE: the roster updates tend to require a bit more time to complete
-    jest.setTimeout(10000)
     const user1user2Profile = await user.loadProfile(user2.username!)
     expect(user1user2Profile).toBeTruthy()
+    expect(user.blocked.length).toBe(0)
     await user1user2Profile.block()
-    await waitFor(
-      () => user.sortedRoster.length === 0 && user2.sortedRoster.length === 0,
-      'user1 and user2 rosters didnt update in time after block'
-    )
-    // todo: add negative tests for after a block?
+    expect(user.blocked.length).toBe(1)
+    expect(user.followed.length).toBe(0)
     await user1user2Profile.unblock()
-    await waitFor(
-      () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
-      'user1 and user2 rosters didnt update in time after unblock'
-    )
-    // restore default timeout
-    jest.setTimeout(5000)
+    expect(user.blocked.length).toBe(0)
+    expect(user.followed.length).toBe(0)
   })
 
   it('enable/disable push notifications', async () => {

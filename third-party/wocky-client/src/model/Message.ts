@@ -1,4 +1,4 @@
-import {types, Instance} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
 import * as utils from '../transport/utils'
@@ -17,8 +17,8 @@ export const Message = types
     types.model('Message', {
       id: types.optional(types.string, utils.generateID),
       archiveId: '',
-      from: types.maybeNull(types.reference(Profile)),
-      to: '', // todo: should this be a profile ref?
+      from: types.reference(Profile),
+      to: types.reference(Profile),
       media: FileRef,
       unread: false,
       body: '',
@@ -42,10 +42,11 @@ export const Message = types
     },
   }))
   .actions(self => ({
-    send: () => {
+    send: flow(function*() {
       self.time = Date.now()
-      self.service._sendMessage(self)
+      yield self.service._sendMessage(self)
       self.clear()
-    },
+    }),
   }))
 export interface IMessage extends Instance<typeof Message> {}
+export interface IMessageIn extends SnapshotIn<typeof Message> {}

@@ -201,7 +201,7 @@ class ChatScreen extends React.Component<Props, State> {
 // separating text input here prevents unnecessary re-renders of the entire list when user enters text
 const InputArea = inject('wocky')(
   observer(({wocky, chat, onSend}) => {
-    return (
+    return chat.message ? (
       <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
         <AttachButton message={chat.message} />
         <AutoExpandingTextInput
@@ -212,7 +212,7 @@ const InputArea = inject('wocky')(
           autoFocus
           returnKeyType="default"
           enablesReturnKeyAutomatically
-          onChangeText={chat.message.setBody}
+          onChangeText={t => chat.message && chat.message.setBody(t)}
           value={chat.message.body}
           blurOnSubmit={false}
           maxHeight={100}
@@ -228,7 +228,7 @@ const InputArea = inject('wocky')(
           />
         </TouchableOpacity>
       </View>
-    )
+    ) : null
   })
 )
 

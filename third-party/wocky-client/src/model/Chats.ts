@@ -1,11 +1,5 @@
-import {types} from 'mobx-state-tree'
-import {Chat, IChat} from './Chat'
-import {IProfile} from './Profile'
-import {IBot} from './Bot'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IProfile = IProfile
-export type __IBot = IBot
+import {types, Instance} from 'mobx-state-tree'
+import {Chat, IChat, IChatIn} from './Chat'
 
 export const Chats = types
   .model('Chats', {
@@ -24,14 +18,21 @@ export const Chats = types
     get unread() {
       return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)
     },
-    get(id: string): IChat | undefined {
+    get(id?: string): IChat | undefined {
       return self._list.find(el => el.id === id)
     },
   }))
   .actions(self => ({
     clear: () => self._list.splice(0),
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
-    add: (chat: IChat): IChat => self.get(chat.id) || ((self._list.push(chat) && chat) as IChat),
+    add: (chat: IChatIn): IChat => {
+      let toReturn = self.get(chat.id)
+      if (!toReturn) {
+        self._list.push(Chat.create(chat))
+        toReturn = self.get(chat.id)
+      }
+      return toReturn!
+    },
   }))
 
-export type IChats = typeof Chats.Type
+export interface IChats extends Instance<typeof Chats> {}

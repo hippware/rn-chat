@@ -10,8 +10,8 @@ import {when} from 'mobx'
 // const token = '$T$AFNkdiDaQHC/lI4o2xzmmf4pQ+LaHF39STooScbv6E4='
 
 const host = 'next.dev.tinyrobot.com'
-let gql: NextGraphQLTransport, user, user2: IWocky
-let bot, bot2: IBot
+let gql: NextGraphQLTransport, user: IWocky, user2: IWocky
+let bot: IBot, bot2: IBot
 let date: Date
 let user1phone: string
 // const GQL = new GraphQLTransport('testing', 'testing.dev.tinyrobot.com', userId, token)
@@ -44,7 +44,7 @@ describe('GraphQL', () => {
         () => user.profile !== null && user.profile.phoneNumber !== null,
         'user1 profile to load'
       )
-      user1phone = user.profile.phoneNumber
+      user1phone = user.profile!.phoneNumber!
       await user.profile!.update({
         handle: 'a' + user1phone.replace('+', ''),
         firstName: 'name1',
@@ -179,18 +179,17 @@ describe('GraphQL', () => {
   it('check subscription arrive', async done => {
     try {
       timestamp()
-      await gql.subscribeBotVisitors()
       await gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1})
       gql.setLocation({latitude: 1.1, longitude: 2.1, accuracy: 1})
       when(
         () => !!gql.botVisitor && gql.botVisitor.action === 'ARRIVE',
         () => {
           expect(gql.botVisitor.bot.id).toEqual(bot.id)
-          expect(gql.botVisitor.visitor.id).toEqual(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].id).toEqual(user.profile.id)
-          expect(gql.botVisitor.bot.visitors[0].handle).toEqual(user.profile.handle)
-          expect(gql.botVisitor.bot.visitors[0].firstName).toEqual(user.profile.firstName)
-          expect(gql.botVisitor.bot.visitors[0].lastName).toEqual(user.profile.lastName)
+          expect(gql.botVisitor.visitor.id).toEqual(user.profile!.id)
+          expect(gql.botVisitor.bot.visitors[0].id).toEqual(user.profile!.id)
+          expect(gql.botVisitor.bot.visitors[0].handle).toEqual(user.profile!.handle)
+          expect(gql.botVisitor.bot.visitors[0].firstName).toEqual(user.profile!.firstName)
+          expect(gql.botVisitor.bot.visitors[0].lastName).toEqual(user.profile!.lastName)
           expect(gql.botVisitor.action).toEqual('ARRIVE')
           done()
         }
@@ -208,7 +207,7 @@ describe('GraphQL', () => {
         () => !!gql.botVisitor && gql.botVisitor.action === 'DEPART',
         () => {
           expect(gql.botVisitor.bot.id).toEqual(bot.id)
-          expect(gql.botVisitor.visitor.id).toEqual(user.profile.id)
+          expect(gql.botVisitor.visitor.id).toEqual(user.profile!.id)
           expect(gql.botVisitor.action).toEqual('DEPART')
           done()
         }
@@ -244,7 +243,11 @@ describe('GraphQL', () => {
 
   afterAll(async done => {
     try {
+      await gql.disconnect()
+      await user.removeBot(bot.id)
+      await user.removeBot(bot2.id)
       await user.remove()
+      await user2.remove()
     } catch (e) {
       console.log(e)
     }
