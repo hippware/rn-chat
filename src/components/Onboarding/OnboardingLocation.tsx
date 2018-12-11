@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Image, Text} from 'react-native'
 import {RText, GradientButton} from '../common'
 import {WHITE} from 'src/constants/colors'
-import {s, minHeight} from '../Global'
+import {s} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
 
 type Props = {
