@@ -657,7 +657,6 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async sendMessage({to, body}: IMessage): Promise<void> {
-    console.log('gql send message', to, body)
     return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
@@ -667,17 +666,18 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        input: {message: body, recipientId: to},
+        // TODO: add imageURL
+        input: {content: body, recipientId: to!.id},
       },
     })
   }
 
-  async loadChat(): Promise<void> {
+  async loadChat(userId, lastId, max): Promise<void> {
     throw new Error('Not supported')
   }
 
   async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
-    return [{id: '1', message: 'hello'}]
+    throw new Error('Not supported')
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -993,6 +993,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
     }).subscribe({
       next: action((result: any) => {
+        // console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = processRosterItem(user, relationship, createdAt)
       }),
@@ -1060,8 +1061,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        console.log('& new message via subscription!')
-        console.log(result.data.messages)
         this.message = convertMessage(result.data.messages, this.username!)
       }),
     })

@@ -523,10 +523,7 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage(
-  {createdAt, direction, content, otherUser},
-  myProfileId: string
-): IMessageIn {
+export function convertMessage({direction, content, otherUser}, myProfileId: string): IMessageIn {
   let from: string, to: string
   if (direction === 'INCOMING') {
     from = otherUser.id
@@ -536,7 +533,6 @@ export function convertMessage(
     to = otherUser.id
   }
   return {
-    id: undefined,
     archiveId: '',
     from,
     to,

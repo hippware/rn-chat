@@ -1,5 +1,5 @@
 import {types, Instance} from 'mobx-state-tree'
-import {Chat, IChat} from './Chat'
+import {Chat, IChat, IChatIn} from './Chat'
 
 export const Chats = types
   .model('Chats', {
@@ -18,17 +18,17 @@ export const Chats = types
     get unread() {
       return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)
     },
-    get(id: string): IChat | undefined {
+    get(id?: string): IChat | undefined {
       return self._list.find(el => el.id === id)
     },
   }))
   .actions(self => ({
     clear: () => self._list.splice(0),
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
-    add: (chat: IChat): IChat => {
+    add: (chat: IChatIn): IChat => {
       let toReturn = self.get(chat.id)
       if (!toReturn) {
-        self._list.push(chat)
+        self._list.push(Chat.create(chat))
         toReturn = self.get(chat.id)
       }
       return toReturn!

@@ -1,5 +1,5 @@
 import {IFirebaseStore} from 'src/store/FirebaseStore'
-import {Bot, Chat} from 'wocky-client'
+import {Bot} from 'wocky-client'
 
 export default {
   wocky: {
@@ -46,10 +46,11 @@ export default {
     //   readAll: jest.fn(),
     //   setActive: jest.fn(),
     // }),
-    createChat: () =>
-      Chat.create({
-        id: '1234',
-      }),
+    // createChat: () =>
+    //   Chat.create({
+    //     id: '1234',
+
+    //   }),
     loadChats: jest.fn(),
   } as any,
   analytics: {
