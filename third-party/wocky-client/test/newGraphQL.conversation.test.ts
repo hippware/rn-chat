@@ -75,7 +75,16 @@ describe('New GraphQL conversation tests', () => {
     expect(bob.chats.list[0].last!.body).toBe('hello2')
   })
 
-  // TODO: test paging
+  // TODO: paging
+  // it('bob can load chat messages with paging', async () => {
+  //   bob.chats.clear()
+  //   expect(bob.chats.list.length).toBe(0)
+  //   await bob.loadChat(alice.username!, undefined, 1)
+  //   expect(bob.chats.list.length).toBe(1)
+  //   expect(bob.chats.list[0].messages.length).toBe(1)
+  //   expect(bob.chats.list[0].last!.body).toBe('hello2')
+  //   await bob.loadChat(alice.username!, bob.chats.list[0].last!.id, 1)
+  // })
 
   afterAll(async () => {
     try {
