@@ -59,27 +59,28 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   @action
-  async login(user?: string, password?: string, host?: string): Promise<boolean> {
+  async login(data: LoginParams, host: string): Promise<boolean> {
+    this.host = host
+    const {token, accessToken, version, os, deviceName, phoneNumber} = data
+    this.password =
+      token ||
+      generateWockyToken({
+        phoneNumber,
+        accessToken,
+        // NOTE: the uuid generated below may be different from what's returned in the `authenticate` mutation
+        userId: this.username || uuid(),
+        version: version!,
+        os: os!,
+        deviceName: deviceName!,
+        deviceId: this.resource,
+      })
     if (this.connecting) {
       // prevent duplicate login
       await waitFor(() => !this.connecting)
       return this.connected
     }
     this.connecting = true
-    if (user) {
-      this.username = user
-    }
-    if (password) {
-      this.password = password
-    }
-    if (host) {
-      this.host = host
-    }
     this.prepConnection()
-
-    if (!this.password) {
-      throw new Error('Password is not defined')
-    }
 
     const res = await this.authenticate(this.password)
 
@@ -444,46 +445,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       },
     })
     // TODO: handle error?
-  }
-
-  @action
-  async register(
-    data: LoginParams,
-    host?: string
-  ): Promise<{username?: string; password: string; host?: string}> {
-    const {token, accessToken, version, os, deviceName, phoneNumber} = data
-    if (host) {
-      this.host = host
-    }
-    this.prepConnection()
-    const password =
-      token ||
-      generateWockyToken({
-        phoneNumber,
-        accessToken,
-        // NOTE: the uuid generated below may be different from what's returned in the `authenticate` mutation
-        userId: this.username || uuid(),
-        version: version!,
-        os: os!,
-        deviceName: deviceName!,
-        deviceId: this.resource,
-      })
-    return {password}
-  }
-
-  async testRegister(
-    {phoneNumber, version, os, deviceName}: LoginParams,
-    host: string
-  ): Promise<{username?: string; password: string; host?: string}> {
-    return this.register(
-      {
-        version,
-        os,
-        deviceName,
-        phoneNumber: `+1555${phoneNumber}`,
-      },
-      host
-    )
   }
 
   async disconnect(): Promise<void> {

@@ -56,21 +56,12 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     )
     addMiddleware(service, simpleActionLogger)
 
-    await service.register(
-      {
-        version: '1.1.4',
-        os: 'ios',
-        deviceName: 'iPhone',
-        phoneNumber,
-      },
-      // {
-      //   version: '0.0.0',
-      //   os: 'web',
-      //   deviceName: 'Unit',
-      //   phoneNumber,
-      // },
-      host
-    )
+    await service.register({
+      version: '1.0.0',
+      os: 'ios',
+      deviceName: 'iPhone',
+      phoneNumber,
+    })
     console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
     await service.login()
     return service

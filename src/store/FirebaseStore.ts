@@ -18,6 +18,7 @@ const codeUrlString = '?inviteCode='
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
+    version: '',
     token: types.maybeNull(types.string),
     resource: types.maybeNull(types.string),
     inviteCode: types.maybeNull(types.string),
@@ -38,6 +39,9 @@ const FirebaseStore = types
     },
     setInviteCode: code => {
       self.inviteCode = code
+    },
+    setVersion(version: string) {
+      self.version = version
     },
   }))
   .actions(self => {
@@ -196,7 +200,7 @@ const FirebaseStore = types
 
     const registerWithToken = flow(function*() {
       try {
-        yield wocky!.register({jwt: self.token}, 'firebase')
+        yield wocky!.register({jwt: self.token})
         self.setState({buttonText: 'Connecting...'})
         yield wocky.login(undefined, undefined, undefined)
         self.setState({buttonText: 'Verify', registered: true})

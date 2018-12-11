@@ -139,16 +139,6 @@ export const Wocky = types
         remove: flow(function*() {
           yield self.transport.remove()
         }),
-        register: flow(function*(data: LoginParams) {
-          const res = yield self.transport.register(data, self.host)
-          Object.assign(self, res)
-          return true
-        }),
-        testRegister: flow(function*(data: LoginParams) {
-          const res = yield self.transport.testRegister(data, self.host)
-          Object.assign(self, res)
-          return true
-        }),
         // _requestProfiles: flow(function*(users: string[]) {
         //   const arr = yield self.transport.requestProfiles(users)
         //   return arr.map((user: any) => self.profiles.get(user.id, user))
