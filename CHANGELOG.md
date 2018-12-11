@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* User profile, user avatar bugfixes (PR #3168)
+* Onboarding style tweaks (PR #3169)
+
+# 4.0.0 - 2018 Dec 10
+
 * Rework version info string. Swap native and js parts. (#3009, PR #3098)
 * Make messaging UI components stateless for (PR #3100)
   * Messages: Text & Images sent are not appearing correctly (#3060)
@@ -35,6 +40,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Notifications tests refactor (PR #3150)
 * [GraphQL] Change GraphQL image naming (#3160)
 * New User Profile (#3148)
+* Submit bugsnag for any mixpanel tracking failures (PR #3145)
+* Remove XMPP from iOS app (#3163)
+  * Switch our app to NextGraphQLTransport (PR #3164)
 
 # 3.10.1 - 2018 Nov 26
 
