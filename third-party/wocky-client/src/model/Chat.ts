@@ -14,6 +14,7 @@ export const Chat = types
       requestedId: types.maybeNull(types.string),
       isPrivate: true,
       otherUser: types.reference(Profile),
+      // TODO: convert messages to PaginableList
       _messages: types.optional(types.array(Message), []),
       message: types.maybeNull(Message),
     })
