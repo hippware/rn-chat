@@ -555,15 +555,14 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async testRegister(
-    {phoneNumber},
+    {phoneNumber, version, os, deviceName}: LoginParams,
     host: string
   ): Promise<{username?: string; password: string; host?: string}> {
-    // TODO pass real version/os/deviceName here?
     return this.register(
       {
-        version: '1.1.4',
-        os: 'ios',
-        deviceName: 'iPhone',
+        version,
+        os,
+        deviceName,
         phoneNumber: `+1555${phoneNumber}`,
       },
       host

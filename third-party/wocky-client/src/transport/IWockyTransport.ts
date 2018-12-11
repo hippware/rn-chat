@@ -14,6 +14,7 @@ export type LoginParams = {
   password?: string
   accessToken?: string
   host?: string
+  iss?: string
   version?: string
   os?: string
   deviceName?: string

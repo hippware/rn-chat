@@ -3,7 +3,7 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Wocky, NextGraphQLTransport, IWockyTransport} from 'wocky-client'
+import {Wocky, NextGraphQLTransport} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
@@ -38,7 +38,7 @@ const {geolocation} = navigator
 const auth = firebase.auth()
 
 export type IEnv = {
-  transport: IWockyTransport
+  transport: NextGraphQLTransport
   storage: AsyncStorage
   auth: RNFirebase.auth.Auth
   firebase: Firebase

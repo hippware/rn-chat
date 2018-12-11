@@ -11,9 +11,10 @@ import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import {processMap, waitFor} from '../transport/utils'
-import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
+import {NextGraphQLTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
 import _ from 'lodash'
+import {LoginParams} from '../transport/IWockyTransport'
 
 export const Wocky = types
   .compose(
@@ -42,12 +43,12 @@ export const Wocky = types
     return data
   })
   .views(self => {
-    const transport: IWockyTransport = getEnv(self).transport
+    const transport: NextGraphQLTransport = getEnv(self).transport
     if (!transport) {
       throw new Error('Server transport is not defined')
     }
     return {
-      get transport(): IWockyTransport {
+      get transport(): NextGraphQLTransport {
         return transport
       },
       get connected() {
@@ -138,12 +139,12 @@ export const Wocky = types
         remove: flow(function*() {
           yield self.transport.remove()
         }),
-        register: flow(function*(data: any, providerName: string) {
-          const res = yield self.transport.register(data, self.host, providerName)
+        register: flow(function*(data: LoginParams) {
+          const res = yield self.transport.register(data, self.host)
           Object.assign(self, res)
           return true
         }),
-        testRegister: flow(function*(data: any) {
+        testRegister: flow(function*(data: LoginParams) {
           const res = yield self.transport.testRegister(data, self.host)
           Object.assign(self, res)
           return true
