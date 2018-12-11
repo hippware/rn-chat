@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import {Actions} from 'react-native-router-flux'
 import ProfileItem from './ProfileItem'
-import {RText} from '../common'
+import {RText, GradientButton} from '../common'
 import {k} from '../Global'
 import alert from '../../utils/alert'
 
@@ -38,14 +38,6 @@ const FollowingButton = inject('analytics')(({profile, analytics}) => (
     </RText>
   </TouchableOpacity>
 ))
-
-const BlockedButton = ({profile}) => (
-  <TouchableOpacity style={[styles.button, styles.following]} onPress={() => unblock(profile)}>
-    <RText size={10} color={colors.WHITE}>
-      UNBLOCK
-    </RText>
-  </TouchableOpacity>
-)
 
 const unfollow = async (profile: any) => {
   return new Promise(resolve => {
@@ -92,18 +84,27 @@ export const FollowableProfileItem = observer(({profile}: Props) => (
 ))
 
 export const BlockableProfileItem = ({profile}: Props) => (
-  <ProfileItem profile={profile} tappable={false}>
-    <BlockedButton profile={profile} />
+  <ProfileItem profile={profile} tappable={false} style={{paddingHorizontal: 15}}>
+    <GradientButton
+      style={[styles.button, styles.following]}
+      isPink
+      onPress={() => unblock(profile)}
+    >
+      <RText size={13} color={colors.WHITE} weight={'Medium'}>
+        UNBLOCK
+      </RText>
+    </GradientButton>
   </ProfileItem>
 )
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 10 * k,
-    marginRight: 10 * k,
-    width: 100 * k,
+    height: 31,
+    width: 94,
     alignItems: 'center',
-    borderRadius: 2 * k,
+    justifyContent: 'center',
+    backgroundColor: colors.PINK,
+    borderRadius: 4,
   },
   follow: {
     backgroundColor: colors.WHITE,

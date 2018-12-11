@@ -20,7 +20,6 @@ class PeopleList extends React.Component<Props> {
     const SL = SectionList as any
     return this.props.sections.length ? (
       <SL
-        style={{backgroundColor: 'white'}}
         keyExtractor={item => item.id}
         SectionSeparatorComponent={() => (
           <View style={{height: k, backgroundColor: colors.WARM_GREY}} />
@@ -39,7 +38,7 @@ class PeopleList extends React.Component<Props> {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'transparent',
+          backgroundColor: '#f1f2f4',
         }}
       >
         <RText size={18} color={colors.PINKISH_GREY}>

@@ -116,7 +116,7 @@ exports[`Signup renders 1`] = `
       >
         <View>
           <Image
-            resizeMode="cover"
+            resizeMode="contain"
             source={
               Object {
                 "testUri": "../../../images/addPhoto.png",
@@ -125,10 +125,11 @@ exports[`Signup renders 1`] = `
             style={
               Array [
                 Object {
-                  "borderRadius": 80,
-                  "height": 160,
-                  "width": 160,
+                  "borderRadius": 72,
+                  "height": 144,
+                  "width": 144,
                 },
+                undefined,
                 undefined,
               ]
             }
@@ -153,10 +154,10 @@ exports[`Signup renders 1`] = `
               Object {
                 "color": "rgb(253,95,108)",
                 "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
+                "fontSize": 12,
               },
               Object {
-                "marginLeft": 80,
+                "marginLeft": 50,
                 "marginTop": 10,
               },
             ]
@@ -170,30 +171,22 @@ exports[`Signup renders 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "padding": 30,
+                "paddingBottom": 15,
+                "paddingHorizontal": 10,
+                "paddingTop": 11,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 4,
+                "paddingTop": 0,
               },
             ]
           }
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
-                },
-                Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+              }
             }
           >
             <Image
@@ -201,6 +194,15 @@ exports[`Signup renders 1`] = `
                 Object {
                   "testUri": "../../../images/iconUsernameNew.png",
                 }
+              }
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 13,
+                  },
+                  undefined,
+                ]
               }
             />
           </View>
@@ -263,7 +265,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
+                  "fontSize": 19,
                 }
               }
               testID="signUpUsername"
@@ -283,11 +285,13 @@ exports[`Signup renders 1`] = `
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
           }
         />
       </View>
@@ -301,10 +305,10 @@ exports[`Signup renders 1`] = `
               Object {
                 "color": "rgb(253,95,108)",
                 "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
+                "fontSize": 12,
               },
               Object {
-                "marginLeft": 80,
+                "marginLeft": 50,
                 "marginTop": 10,
               },
             ]
@@ -318,30 +322,22 @@ exports[`Signup renders 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "padding": 30,
+                "paddingBottom": 15,
+                "paddingHorizontal": 10,
+                "paddingTop": 11,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 4,
+                "paddingTop": 0,
               },
             ]
           }
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
-                },
-                Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+              }
             }
           >
             <Image
@@ -349,6 +345,15 @@ exports[`Signup renders 1`] = `
                 Object {
                   "testUri": "../../../images/iconSubsNew.png",
                 }
+              }
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 13,
+                  },
+                  undefined,
+                ]
               }
             />
           </View>
@@ -410,7 +415,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
+                  "fontSize": 19,
                 }
               }
               testID="signUpFirstName"
@@ -430,11 +435,13 @@ exports[`Signup renders 1`] = `
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
           }
         />
       </View>
@@ -448,10 +455,10 @@ exports[`Signup renders 1`] = `
               Object {
                 "color": "rgb(253,95,108)",
                 "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
+                "fontSize": 12,
               },
               Object {
-                "marginLeft": 80,
+                "marginLeft": 50,
                 "marginTop": 10,
               },
             ]
@@ -465,11 +472,13 @@ exports[`Signup renders 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "padding": 30,
+                "paddingBottom": 15,
+                "paddingHorizontal": 10,
+                "paddingTop": 11,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 4,
+                "paddingTop": 0,
               },
             ]
           }
@@ -487,7 +496,7 @@ exports[`Signup renders 1`] = `
             <View
               style={
                 Object {
-                  "width": 60,
+                  "width": 40,
                 }
               }
             />
@@ -534,7 +543,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
+                  "fontSize": 19,
                 }
               }
               testID="signUpLastName"
@@ -554,11 +563,13 @@ exports[`Signup renders 1`] = `
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
           }
         />
       </View>
@@ -572,10 +583,10 @@ exports[`Signup renders 1`] = `
               Object {
                 "color": "rgb(253,95,108)",
                 "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
+                "fontSize": 12,
               },
               Object {
-                "marginLeft": 80,
+                "marginLeft": 50,
                 "marginTop": 10,
               },
             ]
@@ -589,30 +600,22 @@ exports[`Signup renders 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "padding": 30,
+                "paddingBottom": 15,
+                "paddingHorizontal": 10,
+                "paddingTop": 11,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 4,
+                "paddingTop": 0,
               },
             ]
           }
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
-                },
-                Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+              }
             }
           >
             <Image
@@ -620,6 +623,15 @@ exports[`Signup renders 1`] = `
                 Object {
                   "testUri": "../../../images/iconEmailNew.png",
                 }
+              }
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 13,
+                  },
+                  undefined,
+                ]
               }
             />
           </View>
@@ -683,7 +695,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
+                  "fontSize": 19,
                 }
               }
               testID="signUpEmail"
@@ -703,11 +715,13 @@ exports[`Signup renders 1`] = `
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
           }
         />
       </View>

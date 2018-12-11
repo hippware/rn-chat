@@ -26,7 +26,7 @@ const Version = inject('codePushStore')(
     }
 
     return (
-      <RText size={15} color={colors.DARK_GREY} style={{marginBottom: 15}}>
+      <RText size={16} color={colors.DARK_GREY} style={{marginBottom: 15}}>
         {`Version ${versionString}`}
       </RText>
     )

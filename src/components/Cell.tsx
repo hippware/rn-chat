@@ -1,6 +1,5 @@
 import React from 'react'
 import {Image, View, TouchableOpacity} from 'react-native'
-import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react/native'
 import {RText} from './common'
@@ -20,20 +19,21 @@ const Cell = observer(
     // const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
     const color = colors.navBarTextColorDay
     const cell = (
-      <View style={[{flexDirection: 'row', alignItems: 'center', padding: 15 * k}, style]}>
+      <View
+        style={[
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingBottom: 15,
+            paddingTop: 11,
+            paddingHorizontal: 10,
+          },
+          style,
+        ]}
+      >
         {image && (
-          <View
-            style={[
-              {
-                width: 15 * k,
-                paddingLeft: 5 * k,
-                paddingRight: 15 * k,
-                alignItems: 'center',
-              },
-              imageStyle,
-            ]}
-          >
-            <Image source={image} />
+          <View style={{alignItems: 'center'}}>
+            <Image source={image} style={imageStyle} />
           </View>
         )}
         <View
@@ -45,7 +45,7 @@ const Cell = observer(
           }}
         >
           {typeof children === 'string' ? (
-            <RText numberOfLines={1} size={15} style={[{flex: 1, color}, textStyle]}>
+            <RText numberOfLines={1} style={[{flex: 1, color}, textStyle]}>
               {children}
             </RText>
           ) : (

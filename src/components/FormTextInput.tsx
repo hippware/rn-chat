@@ -4,13 +4,14 @@ import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react/native'
 import {ValidateItem} from '../utils/formValidation'
-import {RText} from './common'
+import {RText, Separator} from './common'
 import Cell from './Cell'
 
 interface IProps extends TextInputProperties {
   icon?: any
   label: string
   store?: ValidateItem
+  imageStyle?: any
 }
 
 @observer
@@ -26,30 +27,30 @@ export default class FormTextInput extends React.Component<IProps> {
   }
 
   render() {
-    const {icon, label, store} = this.props
+    const {icon, label, store, imageStyle} = this.props
 
     return (
       <View>
         {store ? (
-          <RText size={11} color={colors.PINK} style={{marginLeft: 40 * k, marginTop: 5 * k}}>
+          <RText size={12} color={colors.PINK} style={{marginLeft: 50, marginTop: 10}}>
             {store.errorMessage}
           </RText>
         ) : (
-          <View style={{height: 11 * k}} />
+          <View style={{height: 12}} />
         )}
 
         <Cell
           image={icon}
-          style={{justifyContent: 'center', paddingTop: 2 * k}}
-          imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}
+          style={{justifyContent: 'center', paddingTop: 0}}
+          imageStyle={[{marginRight: 13, marginLeft: 8 * k}, imageStyle]}
         >
-          {icon ? null : <View style={{width: 30 * k}} />}
+          {icon ? null : <View style={{width: 40}} />}
           <TextInput
             style={{
               flex: 1,
               color: colors.DARK_PURPLE,
               fontFamily: 'Roboto-Regular',
-              fontSize: 18 * k,
+              fontSize: 19,
             }}
             placeholder={label}
             clearButtonMode="while-editing"
@@ -74,7 +75,7 @@ export default class FormTextInput extends React.Component<IProps> {
             ) : null}
           </View>
         </Cell>
-        <View style={{height: 1, backgroundColor: colors.DARK_PURPLE, opacity: 0.2}} />
+        <Separator backgroundColor={'rgba(63, 50, 77, .2)'} />
       </View>
     )
   }

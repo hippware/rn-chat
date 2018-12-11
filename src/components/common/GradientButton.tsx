@@ -11,10 +11,19 @@ interface IProps extends TouchableOpacityProps {
   offColor?: string
   children: any
   innerStyle?: ViewStyle
+  onPress?: any
 }
 
-const GradientButton = ({isPink, offColor, children, style, innerStyle, ...rest}: IProps) => (
-  <TouchableOpacity style={[{overflow: 'hidden'}, style]} {...rest}>
+const GradientButton = ({
+  isPink,
+  offColor,
+  children,
+  style,
+  innerStyle,
+  onPress,
+  ...rest
+}: IProps) => (
+  <TouchableOpacity style={[{overflow: 'hidden'}, style]} onPress={onPress} {...rest}>
     <LinearGradient
       start={{x: 0, y: 0.5}}
       end={{x: 1, y: 0.5}}
