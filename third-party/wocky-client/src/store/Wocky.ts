@@ -273,10 +273,12 @@ export const Wocky = types
     }),
     loadChats: flow(function*(max: number = 50) {
       yield waitFor(() => self.connected)
-      const items = yield self.transport.loadChats(max)
-      items.forEach((item: {id: string; message: any}) => {
+      const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
+        max
+      )
+      items.forEach(item => {
         const msg = self.create(Message, item.message)
-        const chat = self.createChat(item.id)
+        const chat = self.createChat(item.chatId)
         chat.addMessage(msg)
       })
     }) as (max?: number) => Promise<void>,

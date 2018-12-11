@@ -23,7 +23,7 @@ export const Chats = types
     },
   }))
   .actions(self => ({
-    clear: () => self._list.splice(0),
+    clear: () => self._list.clear(),
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
     add: (chat: IChatIn): IChat => {
       let toReturn = self.get(chat.id)

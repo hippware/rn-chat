@@ -697,30 +697,31 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
-  async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
-    console.log('& loadChats', max)
-    try {
-      const res = await this.clients![0].query<any>({
-        query: gql`
+  async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
+    const res = await this.clients![0].query<any>({
+      query: gql`
           query loadChats($max: Int) {
             currentUser {
               id
               conversations(first: $max) {
                 totalCount
+                edges {
+                  cursor
+                  node {
+                    ${MESSAGE_PROPS}
+                  }
+                }
               }
             }
           }
         `,
-        variables: {max},
-      })
-      console.log('& loadChats result', res)
+      variables: {max},
+    })
 
-      // TODO: should I just send all of these directly to the subscription channel?
-    } catch (err) {
-      console.warn(err)
-    }
-
-    return [{id: '1', message: 'blah'}]
+    return (res.data.currentUser.conversations.edges as any[]).map<{
+      chatId: string
+      message: IMessageIn
+    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node, this.username!)}))
   }
 
   async removeBot(botId: string): Promise<void> {
