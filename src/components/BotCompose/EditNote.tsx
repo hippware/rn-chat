@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, View, TextInput} from 'react-native'
 import RText from '../common/RText'
-import {k, width} from '../Global'
+import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {observer, inject} from 'mobx-react/native'
 import {IWocky, IBot} from 'wocky-client'
@@ -58,7 +58,7 @@ class EditNote extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   textStyle: {
-    height: 50 * k,
+    height: 50 * minHeight,
     left: 0,
     right: 0,
     borderBottomColor: colors.GREY,
@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
     borderTopColor: colors.GREY,
     borderTopWidth: 1,
     backgroundColor: 'white',
-    padding: 10 * k,
+    padding: 13,
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',
-    fontSize: 16 * k,
+    fontSize: 17,
   },
 })
 

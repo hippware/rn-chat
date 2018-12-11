@@ -43,7 +43,7 @@ const UberMarker = inject('iconStore', 'homeStore')(
             imageStyle={{width: 20, height: 20}}
             size={48}
           >
-            <BotIcon icon={emoji || '❔'} size={24} />
+            <BotIcon icon={emoji || '❔'} size={30} />
           </Bubble>
           {isIconEditable &&
             !isEmojiKeyboardShown && <Image source={tapToChange} style={styles.changeCTA as any} />}

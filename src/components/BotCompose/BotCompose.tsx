@@ -3,7 +3,7 @@ import {StyleSheet, Keyboard, View, TextInput, TouchableOpacity, Image, Alert} f
 import {RText, Spinner} from '../common'
 import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
-import {k, height} from '../Global'
+import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {observable, reaction, computed} from 'mobx'
@@ -257,7 +257,7 @@ const EditCTA = ({text, icon, onPress, pending}: any) => (
       <Image source={icon} />
     )}
 
-    <RText size={14} color={colors.PINK} style={{marginTop: 8 * k}}>
+    <RText size={15} color={colors.PINK}>
       {text}
     </RText>
   </TouchableOpacity>
@@ -267,19 +267,16 @@ export default withKeyboard(BotCompose)
 
 const styles = StyleSheet.create({
   textStyle: {
-    height: 50 * k,
-    left: 0,
-    right: 0,
+    height: 50 * minHeight,
     borderBottomColor: colors.GREY,
     borderBottomWidth: 1,
     borderTopColor: colors.GREY,
     borderTopWidth: 1,
     backgroundColor: 'white',
-    padding: 10 * k,
+    padding: 13,
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',
-    fontSize: 16 * k,
-    marginTop: 8 * k,
+    fontSize: 17,
   },
   absolute: {
     position: 'absolute',
