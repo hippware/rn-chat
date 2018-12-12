@@ -24,8 +24,8 @@ const Cell = observer(
           {
             flexDirection: 'row',
             alignItems: 'center',
-            paddingBottom: 15,
-            paddingTop: 11,
+            paddingBottom: 13,
+            paddingTop: 9,
             paddingHorizontal: 10,
           },
           style,

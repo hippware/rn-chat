@@ -101,7 +101,7 @@ class MyAccount extends React.Component<Props> {
             <RText
               size={17}
               weight="Medium"
-              style={{color: colors.navBarTextColorDay, marginTop: 40, marginBottom: 10}}
+              style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
               testID="profileInfo"
             >
               Info
@@ -125,7 +125,7 @@ class MyAccount extends React.Component<Props> {
             <RText
               size={17}
               weight="Medium"
-              style={{color: colors.navBarTextColorDay, marginTop: 40, marginBottom: 10}}
+              style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
               testID="profileInfo"
             >
               Settings

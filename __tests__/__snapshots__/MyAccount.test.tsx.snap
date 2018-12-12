@@ -121,39 +121,26 @@ exports[`MyAccount renders 1`] = `
           About
         </Text>
         <View>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 12,
-                },
-                Object {
-                  "marginLeft": 50,
-                  "marginTop": 10,
-                },
-              ]
+              Object {
+                "height": 10,
+              }
             }
-          >
-            
-          </Text>
+          />
           <View
             style={
               Array [
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "paddingBottom": 13,
                   "paddingHorizontal": 10,
-                  "paddingTop": 11,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 0,
+                  "paddingTop": 2,
                 },
               ]
             }
@@ -241,7 +228,7 @@ exports[`MyAccount renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 19,
+                    "fontSize": 18,
                   }
                 }
                 underlineColorAndroid="transparent"
@@ -271,39 +258,26 @@ exports[`MyAccount renders 1`] = `
           />
         </View>
         <View>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 12,
-                },
-                Object {
-                  "marginLeft": 50,
-                  "marginTop": 10,
-                },
-              ]
+              Object {
+                "height": 10,
+              }
             }
-          >
-            
-          </Text>
+          />
           <View
             style={
               Array [
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "paddingBottom": 13,
                   "paddingHorizontal": 10,
-                  "paddingTop": 11,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 0,
+                  "paddingTop": 2,
                 },
               ]
             }
@@ -390,7 +364,7 @@ exports[`MyAccount renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 19,
+                    "fontSize": 18,
                   }
                 }
                 underlineColorAndroid="transparent"
@@ -420,39 +394,26 @@ exports[`MyAccount renders 1`] = `
           />
         </View>
         <View>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 12,
-                },
-                Object {
-                  "marginLeft": 50,
-                  "marginTop": 10,
-                },
-              ]
+              Object {
+                "height": 10,
+              }
             }
-          >
-            
-          </Text>
+          />
           <View
             style={
               Array [
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "paddingBottom": 13,
                   "paddingHorizontal": 10,
-                  "paddingTop": 11,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 0,
+                  "paddingTop": 2,
                 },
               ]
             }
@@ -517,7 +478,7 @@ exports[`MyAccount renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 19,
+                    "fontSize": 18,
                   }
                 }
                 underlineColorAndroid="transparent"
@@ -559,8 +520,8 @@ exports[`MyAccount renders 1`] = `
               },
               Object {
                 "color": "rgb(63,50,77)",
-                "marginBottom": 10,
-                "marginTop": 40,
+                "marginBottom": 7,
+                "marginTop": 30,
               },
             ]
           }
@@ -572,7 +533,7 @@ exports[`MyAccount renders 1`] = `
           <View
             style={
               Object {
-                "height": 12,
+                "height": 10,
               }
             }
           />
@@ -582,13 +543,13 @@ exports[`MyAccount renders 1`] = `
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "paddingBottom": 13,
                   "paddingHorizontal": 10,
-                  "paddingTop": 11,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 0,
+                  "paddingTop": 2,
                 },
               ]
             }
@@ -647,7 +608,7 @@ exports[`MyAccount renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 19,
+                    "fontSize": 18,
                   }
                 }
                 underlineColorAndroid="transparent"
@@ -677,39 +638,26 @@ exports[`MyAccount renders 1`] = `
           />
         </View>
         <View>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 12,
-                },
-                Object {
-                  "marginLeft": 50,
-                  "marginTop": 10,
-                },
-              ]
+              Object {
+                "height": 10,
+              }
             }
-          >
-            
-          </Text>
+          />
           <View
             style={
               Array [
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "paddingBottom": 13,
                   "paddingHorizontal": 10,
-                  "paddingTop": 11,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 0,
+                  "paddingTop": 2,
                 },
               ]
             }
@@ -796,7 +744,7 @@ exports[`MyAccount renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 19,
+                    "fontSize": 18,
                   }
                 }
                 underlineColorAndroid="transparent"
@@ -838,8 +786,8 @@ exports[`MyAccount renders 1`] = `
               },
               Object {
                 "color": "rgb(63,50,77)",
-                "marginBottom": 10,
-                "marginTop": 40,
+                "marginBottom": 7,
+                "marginTop": 30,
               },
             ]
           }
@@ -853,9 +801,9 @@ exports[`MyAccount renders 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",

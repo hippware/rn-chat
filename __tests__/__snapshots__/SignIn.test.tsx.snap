@@ -145,7 +145,7 @@ your phone number.
             <View
               style={
                 Object {
-                  "height": 12,
+                  "height": 10,
                 }
               }
             />
@@ -155,13 +155,13 @@ your phone number.
                   Object {
                     "alignItems": "center",
                     "flexDirection": "row",
-                    "paddingBottom": 15,
+                    "paddingBottom": 13,
                     "paddingHorizontal": 10,
-                    "paddingTop": 11,
+                    "paddingTop": 9,
                   },
                   Object {
                     "justifyContent": "center",
-                    "paddingTop": 0,
+                    "paddingTop": 2,
                   },
                 ]
               }
@@ -221,7 +221,7 @@ your phone number.
                       "color": "rgb(63,50,77)",
                       "flex": 1,
                       "fontFamily": "Roboto-Regular",
-                      "fontSize": 19,
+                      "fontSize": 18,
                     }
                   }
                   underlineColorAndroid="transparent"
@@ -256,7 +256,7 @@ your phone number.
         <View
           style={
             Object {
-              "height": 12,
+              "height": 10,
             }
           }
         />
@@ -266,13 +266,13 @@ your phone number.
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 0,
+                "paddingTop": 2,
               },
             ]
           }
@@ -331,7 +331,7 @@ your phone number.
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 19,
+                  "fontSize": 18,
                 }
               }
               underlineColorAndroid="transparent"

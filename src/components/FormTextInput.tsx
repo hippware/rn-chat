@@ -31,17 +31,17 @@ export default class FormTextInput extends React.Component<IProps> {
 
     return (
       <View>
-        {store ? (
+        {store && store.errorMessage ? (
           <RText size={12} color={colors.PINK} style={{marginLeft: 50, marginTop: 10}}>
             {store.errorMessage}
           </RText>
         ) : (
-          <View style={{height: 12}} />
+          <View style={{height: 10}} />
         )}
 
         <Cell
           image={icon}
-          style={{justifyContent: 'center', paddingTop: 0}}
+          style={{justifyContent: 'center', paddingTop: 2}}
           imageStyle={[{marginRight: 13, marginLeft: 8 * k}, imageStyle]}
         >
           {icon ? null : <View style={{width: 40}} />}
@@ -50,7 +50,7 @@ export default class FormTextInput extends React.Component<IProps> {
               flex: 1,
               color: colors.DARK_PURPLE,
               fontFamily: 'Roboto-Regular',
-              fontSize: 19,
+              fontSize: 18,
             }}
             placeholder={label}
             clearButtonMode="while-editing"

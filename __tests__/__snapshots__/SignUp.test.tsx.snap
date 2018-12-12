@@ -145,39 +145,26 @@ exports[`Signup renders 1`] = `
       }
     >
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 12,
-              },
-              Object {
-                "marginLeft": 50,
-                "marginTop": 10,
-              },
-            ]
+            Object {
+              "height": 10,
+            }
           }
-        >
-          
-        </Text>
+        />
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 0,
+                "paddingTop": 2,
               },
             ]
           }
@@ -265,7 +252,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 19,
+                  "fontSize": 18,
                 }
               }
               testID="signUpUsername"
@@ -296,39 +283,26 @@ exports[`Signup renders 1`] = `
         />
       </View>
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 12,
-              },
-              Object {
-                "marginLeft": 50,
-                "marginTop": 10,
-              },
-            ]
+            Object {
+              "height": 10,
+            }
           }
-        >
-          
-        </Text>
+        />
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 0,
+                "paddingTop": 2,
               },
             ]
           }
@@ -415,7 +389,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 19,
+                  "fontSize": 18,
                 }
               }
               testID="signUpFirstName"
@@ -446,39 +420,26 @@ exports[`Signup renders 1`] = `
         />
       </View>
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 12,
-              },
-              Object {
-                "marginLeft": 50,
-                "marginTop": 10,
-              },
-            ]
+            Object {
+              "height": 10,
+            }
           }
-        >
-          
-        </Text>
+        />
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 0,
+                "paddingTop": 2,
               },
             ]
           }
@@ -543,7 +504,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 19,
+                  "fontSize": 18,
                 }
               }
               testID="signUpLastName"
@@ -574,39 +535,26 @@ exports[`Signup renders 1`] = `
         />
       </View>
       <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 12,
-              },
-              Object {
-                "marginLeft": 50,
-                "marginTop": 10,
-              },
-            ]
+            Object {
+              "height": 10,
+            }
           }
-        >
-          
-        </Text>
+        />
         <View
           style={
             Array [
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "paddingBottom": 15,
+                "paddingBottom": 13,
                 "paddingHorizontal": 10,
-                "paddingTop": 11,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 0,
+                "paddingTop": 2,
               },
             ]
           }
@@ -695,7 +643,7 @@ exports[`Signup renders 1`] = `
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 19,
+                  "fontSize": 18,
                 }
               }
               testID="signUpEmail"
