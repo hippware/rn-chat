@@ -6,6 +6,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * User profile, user avatar bugfixes (PR #3168)
 * Onboarding style tweaks (PR #3169)
+* [GraphQL] conversations/chats/messages (#3135, PR #3162)
+* Edit User Profile - Redesign (#3174)
+* New Sign Up Profile Page (#3178)
 
 # 4.0.0 - 2018 Dec 10
 
