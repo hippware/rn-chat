@@ -10,11 +10,13 @@ import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
 import {Message, IMessage, IMessageIn} from '../model/Message'
-import {processMap, waitFor} from '../transport/utils'
+import {processMap, waitFor, generateWockyToken} from '../transport/utils'
+import uuid from 'uuid/v1'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
 import _ from 'lodash'
 
+export type LoginParams = {phoneNumber?: string; accessToken?: string}
 export const Wocky = types
   .compose(
     Base,
@@ -23,6 +25,8 @@ export const Wocky = types
       id: 'wocky',
       username: types.maybeNull(types.string),
       password: types.maybeNull(types.string),
+      accessToken: types.maybe(types.string),
+      phoneNumber: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
       roster: types.optional(types.map(types.reference(Profile)), {}),
@@ -82,6 +86,7 @@ export const Wocky = types
     }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
+    const {appInfo} = getEnv(self)
     return {
       views: {
         get connecting() {
@@ -102,33 +107,33 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*(user?: string, password?: string, host?: string) {
-          if (user) {
-            self.username = user
+        login: flow<LoginParams>(function*({phoneNumber, accessToken}: LoginParams) {
+          if (phoneNumber) {
+            self.phoneNumber = phoneNumber
           }
-          if (password) {
-            self.password = password
+          if (accessToken) {
+            self.accessToken = accessToken
           }
-          if (host) {
-            self.host = host
+          self.password = generateWockyToken({
+            phoneNumber: self.phoneNumber,
+            accessToken: self.accessToken,
+            userId: (self.username = uuid()),
+            version: appInfo.version,
+            deviceId: appInfo.deviceId,
+          })
+          const res = yield self.transport.login(self.password, self.host)
+          if (!res) {
+            return false
           }
-          if (!self.password || !self.host) {
-            throw new Error(
-              `Cannot login without username/password/host:${self.username},${self.password},${
-                self.host
-              }`
-            )
-          }
-          yield self.transport.login(self.username!, self.password!, self.host)
           // set username
-          if (!self.username && self.transport.username) {
+          if (self.transport.username) {
             self.username = self.transport.username
           }
           // TODO: just use the returned profile in GraphQL authenticate payload to save a roundtrip here
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
-        }) as (user?: string, password?: string, host?: string) => Promise<boolean>,
+        }) as (params: LoginParams) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'
@@ -138,20 +143,6 @@ export const Wocky = types
         remove: flow(function*() {
           yield self.transport.remove()
         }),
-        register: flow(function*(data: any, providerName: string) {
-          const res = yield self.transport.register(data, self.host)
-          Object.assign(self, res)
-          return true
-        }),
-        testRegister: flow(function*(data: any) {
-          const res = yield self.transport.testRegister(data, self.host)
-          Object.assign(self, res)
-          return true
-        }),
-        // _requestProfiles: flow(function*(users: string[]) {
-        //   const arr = yield self.transport.requestProfiles(users)
-        //   return arr.map((user: any) => self.profiles.get(user.id, user))
-        // }),
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
@@ -700,6 +691,8 @@ export const Wocky = types
         self.sessionCount = 0
         self.username = null
         self.password = null
+        self.phoneNumber = undefined
+        self.accessToken = undefined
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)

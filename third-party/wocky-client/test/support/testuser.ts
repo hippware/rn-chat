@@ -1,4 +1,5 @@
 import {Wocky, IWocky, NextGraphQLTransport} from '../../src'
+import {AppInfo} from '../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
@@ -6,6 +7,13 @@ import {when} from 'mobx'
 import _ from 'lodash'
 
 const SERVER_NAME = 'next'
+const appInfo = AppInfo.create({
+  deviceId: 'test',
+  systemName: 'unitTest',
+  jsVersion: '9.9.9',
+  nativeVersion: '9.9.9',
+  systemVersion: '1.0',
+})
 // tslint:disable:no-console
 
 const fs = require('fs')
@@ -49,6 +57,7 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     const service = Wocky.create(
       {host},
       {
+        appInfo,
         transport,
         fileService,
         logger: console,
@@ -56,23 +65,9 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     )
     addMiddleware(service, simpleActionLogger)
 
-    await service.register(
-      {
-        version: '1.1.4',
-        os: 'ios',
-        deviceName: 'iPhone',
-        phoneNumber,
-      },
-      // {
-      //   version: '0.0.0',
-      //   os: 'web',
-      //   deviceName: 'Unit',
-      //   phoneNumber,
-      // },
-      host
-    )
-    console.log('credentials', service.username, service.password) // need it for debug with GraphiQL
-    await service.login()
+    await service.login({
+      phoneNumber,
+    })
     return service
   } catch (e) {
     console.error(e)

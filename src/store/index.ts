@@ -3,7 +3,7 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Wocky, NextGraphQLTransport, IWockyTransport} from 'wocky-client'
+import {Wocky, NextGraphQLTransport, IWockyTransport, AppInfo, IAppInfo} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
@@ -25,7 +25,7 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import OnceStore from './OnceStore'
-
+const jsVersion = require('../../package.json').version
 const transport = new NextGraphQLTransport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
 
@@ -36,7 +36,15 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
-
+const codePushStore = CodepushStore.create()
+export const appInfo = AppInfo.create({
+  nativeVersion: DeviceInfo.getVersion(),
+  systemName: DeviceInfo.getSystemName(),
+  systemVersion: DeviceInfo.getSystemVersion(),
+  deviceId: DeviceInfo.getDeviceId(),
+  jsVersion,
+  codepushVersion: codePushStore.updateInfo,
+})
 export type IEnv = {
   transport: IWockyTransport
   storage: AsyncStorage
@@ -48,6 +56,7 @@ export type IEnv = {
   geolocation: Geolocation
   analytics: Analytics
   nativeEnv: any
+  appInfo: IAppInfo
 }
 
 const env = {
@@ -61,6 +70,7 @@ const env = {
   geolocation,
   analytics,
   nativeEnv,
+  appInfo,
 }
 
 const Store = types
@@ -74,7 +84,6 @@ const Store = types
     codePushStore: CodepushStore,
     navStore: NavStore,
     onceStore: OnceStore,
-    version: types.string,
   })
   .views(self => ({
     get getImageSize() {
@@ -99,7 +108,7 @@ export interface IStore extends Instance<typeof Store> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
-    version: settings.version,
+    codePushStore,
     wocky: {host: settings.getDomain()},
   },
   env
@@ -109,7 +118,6 @@ export const reportStore = rs
 export const iconStore = new IconStore()
 export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
-
 // simple logging
 addMiddleware(theStore, simpleActionLogger)
 

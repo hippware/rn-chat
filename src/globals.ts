@@ -12,18 +12,15 @@ class Settings {
   isProduction: boolean = true
   logLevel: number = log.logLevels.VERBOSE
   logCategory = null
-  version: string
 
   constructor() {
     if (process.env.NODE_ENV === 'test') {
       this.isStaging = !!process.env.STAGING
       this.isTesting = !this.isStaging
-      this.version = '0.0.0'
     } else {
       const NativeEnv = require('react-native-native-env').default
       this.isTesting = NativeEnv.get('TESTING')
       this.isStaging = NativeEnv.get('STAGING')
-      this.version = NativeEnv.get('VERSION_NAME')
     }
 
     this.isProduction = !this.isStaging && !this.isTesting

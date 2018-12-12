@@ -1,7 +1,7 @@
 import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, IPagingList, LoginParams} from './IWockyTransport'
+import {IWockyTransport, IPagingList} from './IWockyTransport'
 import {observable, action, runInAction} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
@@ -24,7 +24,6 @@ import {
   convertBot,
   convertNotification,
   convertNotifications,
-  generateWockyToken,
   processRosterItem,
   convertBotPost,
   convertLocation,
@@ -32,7 +31,6 @@ import {
   convertMessage,
 } from './utils'
 import _ from 'lodash'
-import uuid from 'uuid/v1'
 import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
 import {IMessageIn} from '../model/Message'
@@ -60,29 +58,16 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   @action
-  async login(user?: string, password?: string, host?: string): Promise<boolean> {
+  async login(token: string, host: string): Promise<boolean> {
+    this.host = host
     if (this.connecting) {
       // prevent duplicate login
       await waitFor(() => !this.connecting)
       return this.connected
     }
     this.connecting = true
-    if (user) {
-      this.username = user
-    }
-    if (password) {
-      this.password = password
-    }
-    if (host) {
-      this.host = host
-    }
     this.prepConnection()
-
-    if (!this.password) {
-      throw new Error('Password is not defined')
-    }
-
-    const res = await this.authenticate(this.password)
+    const res = await this.authenticate(token)
 
     if (res) {
       this.subscribeBotVisitors()
@@ -116,9 +101,6 @@ export class NextGraphQLTransport implements IWockyTransport {
         true
       )
       return this.connected
-    } catch (err) {
-      this.connected = false
-      return false
     } finally {
       this.connecting = false
     }
@@ -445,47 +427,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       },
     })
     // TODO: handle error?
-  }
-
-  @action
-  async register(
-    data: LoginParams,
-    host?: string
-  ): Promise<{username?: string; password: string; host?: string}> {
-    const {token, accessToken, version, os, deviceName, phoneNumber} = data
-    if (host) {
-      this.host = host
-    }
-    this.prepConnection()
-    const password =
-      token ||
-      generateWockyToken({
-        phoneNumber,
-        accessToken,
-        // NOTE: the uuid generated below may be different from what's returned in the `authenticate` mutation
-        userId: this.username || uuid(),
-        version: version!,
-        os: os!,
-        deviceName: deviceName!,
-        deviceId: this.resource,
-      })
-    return {password}
-  }
-
-  async testRegister(
-    {phoneNumber},
-    host: string
-  ): Promise<{username?: string; password: string; host?: string}> {
-    // TODO pass real version/os/deviceName here?
-    return this.register(
-      {
-        version: '1.1.4',
-        os: 'ios',
-        deviceName: 'iPhone',
-        phoneNumber: `+1555${phoneNumber}`,
-      },
-      host
-    )
   }
 
   async disconnect(): Promise<void> {

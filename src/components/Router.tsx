@@ -213,9 +213,9 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   // TODO: Move it outside
-  login = async () => {
+  login = async (data = {}) => {
     try {
-      await this.props.wocky!.login(undefined, undefined, undefined) // Remove that after new typings for MST3
+      await this.props.wocky!.login(data) // Remove that after new typings for MST3
       return true
     } catch (error) {
       this.props.analytics.track('error_connection', {error})
