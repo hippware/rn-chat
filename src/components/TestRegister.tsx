@@ -30,13 +30,7 @@ class TestRegister extends React.Component<Props, State> {
     if (this.props.navStore!.scene !== this.props.name) {
       return
     }
-    try {
-      Actions.connect({phoneNumber: `+1555${this.state.text}`})
-    } catch (err) {
-      this.props.warn('Test Register error', err)
-      this.props.analytics.track('error_bypass_register', {error: err})
-      // TODO: notificationStore.showNotification with error message
-    }
+    Actions.connect({phoneNumber: `+1555${this.state.text}`})
   }
 
   render() {
