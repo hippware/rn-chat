@@ -148,7 +148,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                     <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
-                    <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked" back />
+                    <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                     <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={Actions.pop} />
                     {settings.isStaging && [
                       <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,

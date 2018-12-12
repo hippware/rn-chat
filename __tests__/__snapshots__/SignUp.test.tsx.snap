@@ -107,56 +107,35 @@ exports[`Signup renders 1`] = `
         }
       >
         <View>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 11,
-                },
-                Object {
-                  "marginLeft": 80,
-                  "marginTop": 10,
-                },
-              ]
+              Object {
+                "height": 10,
+              }
             }
-          >
-            
-          </Text>
+          />
           <View
             style={
               Array [
                 Object {
                   "alignItems": "center",
                   "flexDirection": "row",
-                  "padding": 30,
+                  "paddingBottom": 13,
+                  "paddingHorizontal": 10,
+                  "paddingTop": 9,
                 },
                 Object {
                   "justifyContent": "center",
-                  "paddingTop": 4,
+                  "paddingTop": 2,
                 },
               ]
             }
           >
             <View
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "paddingLeft": 10,
-                    "paddingRight": 30,
-                    "width": 30,
-                  },
-                  Object {
-                    "height": 40,
-                    "marginHorizontal": 10,
-                    "width": 40,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                }
               }
             >
               <Image
@@ -164,6 +143,15 @@ exports[`Signup renders 1`] = `
                   Object {
                     "testUri": "../../../images/iconUsernameNew.png",
                   }
+                }
+                style={
+                  Array [
+                    Object {
+                      "marginLeft": 16,
+                      "marginRight": 13,
+                    },
+                    undefined,
+                  ]
                 }
               />
             </View>
@@ -226,7 +214,7 @@ exports[`Signup renders 1`] = `
                     "color": "rgb(63,50,77)",
                     "flex": 1,
                     "fontFamily": "Roboto-Regular",
-                    "fontSize": 36,
+                    "fontSize": 18,
                   }
                 }
                 testID="signUpUsername"
@@ -246,11 +234,13 @@ exports[`Signup renders 1`] = `
           </View>
           <View
             style={
-              Object {
-                "backgroundColor": "rgb(63,50,77)",
-                "height": 1,
-                "opacity": 0.2,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "rgba(63, 50, 77, .2)",
+                  "height": 0.5,
+                },
+                undefined,
+              ]
             }
           />
         </View>

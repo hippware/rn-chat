@@ -145,7 +145,7 @@ your phone number.
             <View
               style={
                 Object {
-                  "height": 22,
+                  "height": 10,
                 }
               }
             />
@@ -155,30 +155,22 @@ your phone number.
                   Object {
                     "alignItems": "center",
                     "flexDirection": "row",
-                    "padding": 30,
+                    "paddingBottom": 13,
+                    "paddingHorizontal": 10,
+                    "paddingTop": 9,
                   },
                   Object {
                     "justifyContent": "center",
-                    "paddingTop": 4,
+                    "paddingTop": 2,
                   },
                 ]
               }
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "paddingLeft": 10,
-                      "paddingRight": 30,
-                      "width": 30,
-                    },
-                    Object {
-                      "height": 40,
-                      "marginHorizontal": 10,
-                      "width": 40,
-                    },
-                  ]
+                  Object {
+                    "alignItems": "center",
+                  }
                 }
               >
                 <Image
@@ -186,6 +178,15 @@ your phone number.
                     Object {
                       "testUri": "../../../images/globe.png",
                     }
+                  }
+                  style={
+                    Array [
+                      Object {
+                        "marginLeft": 16,
+                        "marginRight": 13,
+                      },
+                      undefined,
+                    ]
                   }
                 />
               </View>
@@ -220,7 +221,7 @@ your phone number.
                       "color": "rgb(63,50,77)",
                       "flex": 1,
                       "fontFamily": "Roboto-Regular",
-                      "fontSize": 36,
+                      "fontSize": 18,
                     }
                   }
                   underlineColorAndroid="transparent"
@@ -239,11 +240,13 @@ your phone number.
             </View>
             <View
               style={
-                Object {
-                  "backgroundColor": "rgb(63,50,77)",
-                  "height": 1,
-                  "opacity": 0.2,
-                }
+                Array [
+                  Object {
+                    "backgroundColor": "rgba(63, 50, 77, .2)",
+                    "height": 0.5,
+                  },
+                  undefined,
+                ]
               }
             />
           </View>
@@ -253,7 +256,7 @@ your phone number.
         <View
           style={
             Object {
-              "height": 22,
+              "height": 10,
             }
           }
         />
@@ -263,30 +266,22 @@ your phone number.
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "padding": 30,
+                "paddingBottom": 13,
+                "paddingHorizontal": 10,
+                "paddingTop": 9,
               },
               Object {
                 "justifyContent": "center",
-                "paddingTop": 4,
+                "paddingTop": 2,
               },
             ]
           }
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
-                },
-                Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+              }
             }
           >
             <Image
@@ -294,6 +289,15 @@ your phone number.
                 Object {
                   "testUri": "../../../images/phone.png",
                 }
+              }
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 13,
+                  },
+                  undefined,
+                ]
               }
             />
           </View>
@@ -327,7 +331,7 @@ your phone number.
                   "color": "rgb(63,50,77)",
                   "flex": 1,
                   "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
+                  "fontSize": 18,
                 }
               }
               underlineColorAndroid="transparent"
@@ -346,11 +350,13 @@ your phone number.
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
           }
         />
       </View>
