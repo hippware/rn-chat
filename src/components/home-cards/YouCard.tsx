@@ -41,7 +41,9 @@ const YouCard = inject('wocky')(
           >
             {`@${wocky!.profile!.handle}`}
           </RText>
-          <Pill>{wocky!.profile!.botsSize} Locations</Pill>
+          <Pill>
+            {wocky!.profile!.botsSize} Location{wocky!.profile!.botsSize !== 1 && 's'}
+          </Pill>
         </View>
       </Card>
     )
