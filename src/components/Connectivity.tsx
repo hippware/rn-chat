@@ -73,6 +73,7 @@ export default class Connectivity extends React.Component<Props> {
       AppState.currentState === 'active' &&
       !model.connected &&
       !model.connecting &&
+      (model.phoneNumber || model.accessToken) &&
       model.username &&
       model.password &&
       model.host
@@ -83,12 +84,12 @@ export default class Connectivity extends React.Component<Props> {
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        await model.login(undefined, undefined, undefined)
+        await model.login({})
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
         this.props.analytics.track('reconnect_fail', {...info, error: e})
-        if (e.toString().indexOf('not-authorized') !== -1) {
+        if (e.toString().indexOf('not-authorized') !== -1 || e.toString().indexOf('invalid')) {
           this.retryDelay = 1e9
           Actions.logout()
         } else {

@@ -5,9 +5,10 @@ import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
+import {IWocky} from 'wocky-client'
 
 type Props = {
-  wocky?: any
+  wocky?: IWocky
   analytics?: any
   navStore?: INavStore
   name: string
@@ -30,8 +31,7 @@ class TestRegister extends React.Component<Props, State> {
       return
     }
     try {
-      await this.props.wocky.testRegister({phoneNumber: this.state.text})
-      Actions.connect()
+      Actions.connect({phoneNumber: `+1555${this.state.text}`})
     } catch (err) {
       this.props.warn('Test Register error', err)
       this.props.analytics.track('error_bypass_register', {error: err})
