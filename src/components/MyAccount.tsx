@@ -2,11 +2,10 @@ import React from 'react'
 import {TouchableOpacity, View, StyleSheet, Linking, Alert} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
-import {k} from './Global'
+import {minHeight} from './Global'
 import SignUpAvatar from './SignUpAvatar'
 import {Actions} from 'react-native-router-flux'
 import * as log from '../utils/log'
-import Card from './Card'
 import Cell from './Cell'
 import FormTextInput from './FormTextInput'
 import {colors} from '../constants'
@@ -14,7 +13,6 @@ import {RText, Separator} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {IWocky} from 'wocky-client'
-import Screen from './Screen'
 import {settings} from '../globals'
 import {phoneFormat} from '../utils/misc'
 import Version from './Version'
@@ -63,29 +61,30 @@ class MyAccount extends React.Component<Props> {
       return <View style={{flex: 1, backgroundColor: 'white'}} />
     }
     return (
-      <Screen>
-        <KeyboardAwareScrollView testID="myAccountScrollView">
-          <View style={styles.headerOuter}>
-            <SignUpAvatar
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 50,
-              }}
-              showDot
-            />
-          </View>
+      <KeyboardAwareScrollView testID="myAccountScrollView">
+        <View style={styles.headerOuter}>
+          <SignUpAvatar />
+        </View>
 
-          <Card style={{opacity: 0.95}}>
+        <View style={styles.body}>
+          <View style={{width: '80%'}}>
             <RText
-              size={16}
+              size={17}
               weight="Medium"
-              style={{padding: 15, color: colors.navBarTextColorDay}}
+              style={{color: colors.navBarTextColorDay}}
               testID="profileInfo"
             >
               About
             </RText>
-            <Separator />
+
+            <FormTextInput
+              ref={r => (this.handle = r)}
+              label="Username"
+              store={this.vProfile && this.vProfile.handle}
+              autoCapitalize="none"
+              icon={require('../../images/iconUsernameNew.png')}
+              onSubmitEditing={() => this.email.focus()}
+            />
             <FormTextInput
               label="First Name"
               store={this.vProfile && this.vProfile.firstName}
@@ -98,14 +97,16 @@ class MyAccount extends React.Component<Props> {
               store={this.vProfile && this.vProfile.lastName}
               onSubmitEditing={() => this.handle.focus()}
             />
-            <FormTextInput
-              ref={r => (this.handle = r)}
-              label="Username"
-              store={this.vProfile && this.vProfile.handle}
-              autoCapitalize="none"
-              icon={require('../../images/iconUsernameNew.png')}
-              onSubmitEditing={() => this.email.focus()}
-            />
+
+            <RText
+              size={17}
+              weight="Medium"
+              style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
+              testID="profileInfo"
+            >
+              Info
+            </RText>
+
             <FormTextInput
               label="Phone"
               icon={require('../../images/phone.png')}
@@ -120,70 +121,81 @@ class MyAccount extends React.Component<Props> {
               icon={require('../../images/iconEmailNew.png')}
               onSubmitEditing={() => MyAccount.submit(this.props.profileValidationStore)}
             />
+
+            <RText
+              size={17}
+              weight="Medium"
+              style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
+              testID="profileInfo"
+            >
+              Settings
+            </RText>
+
             <Cell
               image={require('../../images/blocked.png')}
               onPress={Actions.blocked}
-              imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}
-              style={{marginTop: 0}}
+              style={{justifyContent: 'center'}}
+              imageStyle={{marginHorizontal: 10}}
             >
               <RText numberOfLines={1} size={18} style={{flex: 1, color: colors.DARK_PURPLE}}>
                 Blocked Users
               </RText>
             </Cell>
+            <Separator backgroundColor={'rgba(63, 50, 77, .2)'} />
             {/* <Cell image={icon} style={{justifyContent: 'center'}} imageStyle={{height: 20 * k, width: 20 * k, marginHorizontal: 5 * k}}> */}
-          </Card>
+          </View>
+        </View>
 
-          {/* <LogoutButton /> */}
+        {/* <LogoutButton /> */}
 
-          <View style={{marginVertical: 30, alignItems: 'center'}}>
-            <Version />
-            <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}>
-              Terms of Service
-            </LinkButton>
-            <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}>
-              Privacy Policy
-            </LinkButton>
+        <View style={[styles.body, {paddingVertical: 38.5 * minHeight}]}>
+          <Version />
+          <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}>
+            Terms of Service
+          </LinkButton>
+          <LinkButton onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}>
+            Privacy Policy
+          </LinkButton>
+          <LinkButton
+            onPress={() => {
+              Alert.alert('Log Out', `Are you sure you want to log out?`, [
+                {text: 'Cancel', style: 'cancel'},
+                {
+                  text: 'Log Out',
+                  style: 'destructive',
+                  onPress: Actions.logout,
+                },
+              ])
+            }}
+          >
+            Logout
+          </LinkButton>
+          {settings.isStaging && (
             <LinkButton
+              style={{marginTop: 50}}
               onPress={() => {
-                Alert.alert('Log Out', `Are you sure you want to log out?`, [
-                  {text: 'Cancel', style: 'cancel'},
-                  {
-                    text: 'Log Out',
-                    style: 'destructive',
-                    onPress: Actions.logout,
-                  },
-                ])
+                Alert.alert(
+                  'Delete Profile',
+                  `Are you reeeeally sure you want to remove this profile? This action cannot be reversed.`,
+                  [
+                    {text: 'Cancel', style: 'cancel'},
+                    {
+                      text: 'Delete Profile',
+                      style: 'destructive',
+                      onPress: async () => {
+                        Actions.logout()
+                        wocky!.remove()
+                      },
+                    },
+                  ]
+                )
               }}
             >
-              Logout
+              Delete Profile
             </LinkButton>
-            {settings.isStaging && (
-              <LinkButton
-                style={{marginTop: 50}}
-                onPress={() => {
-                  Alert.alert(
-                    'Delete Profile',
-                    `Are you reeeeally sure you want to remove this profile? This action cannot be reversed.`,
-                    [
-                      {text: 'Cancel', style: 'cancel'},
-                      {
-                        text: 'Delete Profile',
-                        style: 'destructive',
-                        onPress: async () => {
-                          Actions.logout()
-                          wocky!.remove()
-                        },
-                      },
-                    ]
-                  )
-                }}
-              >
-                Delete Profile
-              </LinkButton>
-            )}
-          </View>
-        </KeyboardAwareScrollView>
-      </Screen>
+          )}
+        </View>
+      </KeyboardAwareScrollView>
     )
   }
 }
@@ -200,7 +212,7 @@ const LinkButton = ({
   style?: any
 }) => (
   <TouchableOpacity onPress={onPress}>
-    <RText size={15} color={colors.PINK} style={[styles.text, style]}>
+    <RText size={16} color={colors.PINK} style={[styles.text, style]}>
       {children}
     </RText>
   </TouchableOpacity>
@@ -211,13 +223,13 @@ const Title = inject('wocky')(
     ({wocky}) =>
       wocky.profile ? (
         <RText
-          size={16}
+          size={18}
           style={{
             letterSpacing: 0.5,
             color: colors.DARK_PURPLE,
           }}
         >
-          {`@${wocky.profile.handle}`}
+          Edit Profile
         </RText>
       ) : null
   )
@@ -239,7 +251,7 @@ const Right = inject('profileValidationStore', 'wocky')(
         <RText
           size={16}
           style={{
-            marginRight: 10 * k,
+            marginRight: 15 * minHeight,
             color: disabled ? colors.GREY : colors.PINK,
             opacity: profile.updating ? 0.5 : 1,
           }}
@@ -259,6 +271,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  body: {
+    width: '100%',
+    backgroundColor: 'white',
+    alignItems: 'center',
   },
   text: {
     marginBottom: 15,

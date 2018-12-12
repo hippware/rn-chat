@@ -79,7 +79,9 @@ export default class ProfileDetail extends React.Component<Props> {
             @{this.profile.handle}
           </RText>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <Pill>{this.profile.botsSize} Locations</Pill>
+            <Pill>
+              {this.profile.botsSize} Location{this.profile.botsSize !== 1 && 's'}
+            </Pill>
           </View>
           <ConnectButton profile={this.profile!} myProfile={profile!} />
         </View>
