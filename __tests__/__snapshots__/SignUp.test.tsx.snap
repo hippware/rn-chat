@@ -27,11 +27,6 @@ exports[`Signup renders 1`] = `
   scrollToFocusedInput={[Function]}
   scrollToPosition={[Function]}
   showsVerticalScrollIndicator={true}
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
   update={[Function]}
   viewIsInsideTabBar={false}
 >
@@ -39,807 +34,376 @@ exports[`Signup renders 1`] = `
     <View
       style={
         Object {
-          "flexDirection": "row",
-          "marginLeft": 140,
-          "marginRight": 140,
-          "marginTop": 95,
-        }
-      }
-      testID="signUpTopRow"
-    >
-      <Image
-        source={
-          Object {
-            "testUri": "../../../images/pink.png",
-          }
-        }
-        style={
-          Object {
-            "height": 138,
-            "width": 120,
-          }
-        }
-      />
-      <View
-        style={
-          Object {
-            "paddingLeft": 40,
-          }
-        }
-      >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Light",
-                "fontSize": 30,
-              },
-              Object {
-                "lineHeight": 70,
-              },
-            ]
-          }
-        >
-          Let's create your profile!
-        </Text>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
           "alignItems": "center",
-          "marginBottom": 30,
-          "marginTop": 30,
+          "flex": 1,
+          "height": 1334,
+          "justifyContent": "center",
         }
       }
     >
       <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
             "alignItems": "center",
+            "flexDirection": "row",
             "justifyContent": "center",
-            "opacity": 1,
+            "marginTop": 110.00000000000001,
+          }
+        }
+        testID="signUpTopRow"
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/pink.png",
+            }
+          }
+          style={
+            Object {
+              "height": 124.2,
+              "width": 108,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "paddingLeft": 40,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {
+                  "color": "rgb(253,95,108)",
+                  "fontFamily": "Roboto-Light",
+                  "fontSize": 30,
+                },
+                Object {
+                  "height": 80,
+                },
+              ]
+            }
+          >
+            Let's get
+            
+
+            started!
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+            "justifyContent": "center",
+            "marginVertical": 176,
+            "width": "80%",
           }
         }
       >
         <View>
-          <Image
-            resizeMode="cover"
-            source={
-              Object {
-                "testUri": "../../../images/addPhoto.png",
-              }
-            }
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
             style={
               Array [
                 Object {
-                  "borderRadius": 80,
-                  "height": 160,
-                  "width": 160,
+                  "color": "rgb(253,95,108)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 11,
                 },
-                undefined,
+                Object {
+                  "marginLeft": 80,
+                  "marginTop": 10,
+                },
               ]
+            }
+          >
+            
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "padding": 30,
+                },
+                Object {
+                  "justifyContent": "center",
+                  "paddingTop": 4,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "paddingLeft": 10,
+                    "paddingRight": 30,
+                    "width": 30,
+                  },
+                  Object {
+                    "height": 40,
+                    "marginHorizontal": 10,
+                    "width": 40,
+                  },
+                ]
+              }
+            >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/iconUsernameNew.png",
+                  }
+                }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                autoCapitalize="none"
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                icon={
+                  Object {
+                    "testUri": "../../../images/iconUsernameNew.png",
+                  }
+                }
+                label="Username"
+                onChangeText={[Function]}
+                onSubmitEditing={[Function]}
+                placeholder="Username"
+                placeholderTextColor="rgb(212,212,212)"
+                returnKeyType="next"
+                store={
+                  ValidateItem {
+                    "errorMessage": "",
+                    "isValid": undefined,
+                    "key": "handle",
+                    "value": "southerneer",
+                    Symbol(mobx did run lazy initializers): true,
+                    Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                      "defaultEnhancer": [Function],
+                      "keysAtom": Atom$$1 {
+                        "diffValue": 0,
+                        "isBeingObserved": false,
+                        "isPendingUnobservation": false,
+                        "lastAccessedBy": 0,
+                        "lowestObserverState": 2,
+                        "name": "ValidateItem@5.keys",
+                        "observers": Set {},
+                      },
+                      "name": "ValidateItem@5",
+                      "target": [Circular],
+                      "values": Map {
+                        "errorMessage" => "",
+                        "value" => "southerneer",
+                        "isValid" => undefined,
+                      },
+                    },
+                  }
+                }
+                style={
+                  Object {
+                    "color": "rgb(63,50,77)",
+                    "flex": 1,
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 36,
+                  }
+                }
+                testID="signUpUsername"
+                underlineColorAndroid="transparent"
+                value="southerneer"
+              />
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "width": 30,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgb(63,50,77)",
+                "height": 1,
+                "opacity": 0.2,
+              }
             }
           />
         </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginHorizontal": 72,
-        }
-      }
-    >
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
-              },
-              Object {
-                "marginLeft": 80,
-                "marginTop": 10,
-              },
-            ]
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
           }
-        >
-          
-        </Text>
+        }
+      >
         <View
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "padding": 30,
-              },
-              Object {
-                "justifyContent": "center",
-                "paddingTop": 4,
-              },
-            ]
+            Object {
+              "alignSelf": "center",
+              "width": "80%",
+            }
           }
         >
-          <View
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
             style={
               Array [
                 Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
+                  "color": "rgb(155,155,155)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 12.5,
                 },
                 Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
+                  "marginBottom": 70,
+                  "marginTop": 70,
+                  "textAlign": "center",
                 },
               ]
             }
           >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/iconUsernameNew.png",
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
-            }
-          >
-            <TextInput
+            By signing up you agree to our 
+            <Text
+              accessible={true}
               allowFontScaling={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-              clearButtonMode="while-editing"
-              icon={
-                Object {
-                  "testUri": "../../../images/iconUsernameNew.png",
-                }
-              }
-              label="Username"
-              onChangeText={[Function]}
-              onSubmitEditing={[Function]}
-              placeholder="Username"
-              placeholderTextColor="rgb(212,212,212)"
-              returnKeyType="next"
-              store={
-                ValidateItem {
-                  "errorMessage": "",
-                  "isValid": undefined,
-                  "key": "handle",
-                  "value": "southerneer",
-                  Symbol(mobx did run lazy initializers): true,
-                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                    "defaultEnhancer": [Function],
-                    "keysAtom": Atom$$1 {
-                      "diffValue": 0,
-                      "isBeingObserved": false,
-                      "isPendingUnobservation": false,
-                      "lastAccessedBy": 0,
-                      "lowestObserverState": 2,
-                      "name": "ValidateItem@13.keys",
-                      "observers": Set {},
-                    },
-                    "name": "ValidateItem@13",
-                    "target": [Circular],
-                    "values": Map {
-                      "errorMessage" => "",
-                      "value" => "southerneer",
-                      "isValid" => undefined,
-                    },
+              ellipsizeMode="tail"
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontFamily": "Roboto-Bold",
+                    "fontSize": 12.5,
                   },
-                }
+                  undefined,
+                ]
               }
+            >
+              Privacy Policy
+            </Text>
+            , 
+
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              onPress={[Function]}
               style={
-                Object {
-                  "color": "rgb(63,50,77)",
-                  "flex": 1,
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
-                }
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontFamily": "Roboto-Bold",
+                    "fontSize": 12.5,
+                  },
+                  undefined,
+                ]
               }
-              testID="signUpUsername"
-              underlineColorAndroid="transparent"
-              value="southerneer"
-            />
-            <View
+            >
+              Terms of Service
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
               style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "width": 30,
-                }
+                Array [
+                  Object {
+                    "color": "rgb(155,155,155)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 12.5,
+                  },
+                  Object {
+                    "marginBottom": 70,
+                    "marginTop": 70,
+                    "textAlign": "center",
+                  },
+                ]
               }
-            />
-          </View>
+            >
+              , and for us to contact you via email for updates and information.
+            </Text>
+          </Text>
         </View>
         <View
           style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
-          }
-        />
-      </View>
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
-              },
-              Object {
-                "marginLeft": 80,
-                "marginTop": 10,
-              },
-            ]
-          }
-        >
-          
-        </Text>
-        <View
-          style={
             Array [
               Object {
                 "alignItems": "center",
+                "alignSelf": "stretch",
+                "borderRadius": 8,
+                "borderWidth": 1,
                 "flexDirection": "row",
-                "padding": 30,
+                "height": 44,
+                "justifyContent": "center",
+                "marginBottom": 10,
               },
               Object {
-                "justifyContent": "center",
-                "paddingTop": 4,
+                "backgroundColor": "rgb(254,92,108)",
+                "borderRadius": 8,
+                "borderWidth": 0,
+                "height": 100,
+                "marginLeft": 75,
+                "marginRight": 75,
+                "width": "80%",
+              },
+              Object {
+                "opacity": 0.5,
               },
             ]
           }
         >
-          <View
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
             style={
               Array [
                 Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "textAlign": "center",
                 },
                 Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
+                  "color": "white",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 17.5,
+                  "letterSpacing": 0.8,
                 },
               ]
             }
           >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/iconSubsNew.png",
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
-            }
-          >
-            <TextInput
-              allowFontScaling={true}
-              autoCorrect={false}
-              clearButtonMode="while-editing"
-              icon={
-                Object {
-                  "testUri": "../../../images/iconSubsNew.png",
-                }
-              }
-              label="First Name"
-              onChangeText={[Function]}
-              onSubmitEditing={[Function]}
-              placeholder="First Name"
-              placeholderTextColor="rgb(212,212,212)"
-              returnKeyType="next"
-              store={
-                ValidateItem {
-                  "errorMessage": "",
-                  "isValid": undefined,
-                  "key": "firstName",
-                  "value": "eric",
-                  Symbol(mobx did run lazy initializers): true,
-                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                    "defaultEnhancer": [Function],
-                    "keysAtom": Atom$$1 {
-                      "diffValue": 0,
-                      "isBeingObserved": false,
-                      "isPendingUnobservation": false,
-                      "lastAccessedBy": 0,
-                      "lowestObserverState": 2,
-                      "name": "ValidateItem@18.keys",
-                      "observers": Set {},
-                    },
-                    "name": "ValidateItem@18",
-                    "target": [Circular],
-                    "values": Map {
-                      "errorMessage" => "",
-                      "value" => "eric",
-                      "isValid" => undefined,
-                    },
-                  },
-                }
-              }
-              style={
-                Object {
-                  "color": "rgb(63,50,77)",
-                  "flex": 1,
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
-                }
-              }
-              testID="signUpFirstName"
-              underlineColorAndroid="transparent"
-              value="eric"
-            />
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "width": 30,
-                }
-              }
-            />
-          </View>
+            Done
+          </Text>
         </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
-          }
-        />
       </View>
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
-              },
-              Object {
-                "marginLeft": 80,
-                "marginTop": 10,
-              },
-            ]
-          }
-        >
-          
-        </Text>
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "padding": 30,
-              },
-              Object {
-                "justifyContent": "center",
-                "paddingTop": 4,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
-            }
-          >
-            <View
-              style={
-                Object {
-                  "width": 60,
-                }
-              }
-            />
-            <TextInput
-              allowFontScaling={true}
-              autoCorrect={false}
-              clearButtonMode="while-editing"
-              label="Last Name"
-              onChangeText={[Function]}
-              onSubmitEditing={[Function]}
-              placeholder="Last Name"
-              placeholderTextColor="rgb(212,212,212)"
-              returnKeyType="next"
-              store={
-                ValidateItem {
-                  "errorMessage": "",
-                  "isValid": undefined,
-                  "key": "lastName",
-                  "value": "kirkham",
-                  Symbol(mobx did run lazy initializers): true,
-                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                    "defaultEnhancer": [Function],
-                    "keysAtom": Atom$$1 {
-                      "diffValue": 0,
-                      "isBeingObserved": false,
-                      "isPendingUnobservation": false,
-                      "lastAccessedBy": 0,
-                      "lowestObserverState": 2,
-                      "name": "ValidateItem@21.keys",
-                      "observers": Set {},
-                    },
-                    "name": "ValidateItem@21",
-                    "target": [Circular],
-                    "values": Map {
-                      "errorMessage" => "",
-                      "value" => "kirkham",
-                      "isValid" => undefined,
-                    },
-                  },
-                }
-              }
-              style={
-                Object {
-                  "color": "rgb(63,50,77)",
-                  "flex": 1,
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
-                }
-              }
-              testID="signUpLastName"
-              underlineColorAndroid="transparent"
-              value="kirkham"
-            />
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "width": 30,
-                }
-              }
-            />
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
-          }
-        />
-      </View>
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Array [
-              Object {
-                "color": "rgb(253,95,108)",
-                "fontFamily": "Roboto-Regular",
-                "fontSize": 11,
-              },
-              Object {
-                "marginLeft": 80,
-                "marginTop": 10,
-              },
-            ]
-          }
-        >
-          
-        </Text>
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "padding": 30,
-              },
-              Object {
-                "justifyContent": "center",
-                "paddingTop": 4,
-              },
-            ]
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "paddingLeft": 10,
-                  "paddingRight": 30,
-                  "width": 30,
-                },
-                Object {
-                  "height": 40,
-                  "marginHorizontal": 10,
-                  "width": 40,
-                },
-              ]
-            }
-          >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/iconEmailNew.png",
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
-            }
-          >
-            <TextInput
-              allowFontScaling={true}
-              autoCapitalize="none"
-              autoCorrect={false}
-              clearButtonMode="while-editing"
-              icon={
-                Object {
-                  "testUri": "../../../images/iconEmailNew.png",
-                }
-              }
-              keyboardType="email-address"
-              label="Email"
-              onChangeText={[Function]}
-              onSubmitEditing={[Function]}
-              placeholder="Email"
-              placeholderTextColor="rgb(212,212,212)"
-              returnKeyType="done"
-              store={
-                ValidateItem {
-                  "errorMessage": "",
-                  "isValid": undefined,
-                  "key": "email",
-                  "value": "eric@hippware.com",
-                  Symbol(mobx did run lazy initializers): true,
-                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                    "defaultEnhancer": [Function],
-                    "keysAtom": Atom$$1 {
-                      "diffValue": 0,
-                      "isBeingObserved": false,
-                      "isPendingUnobservation": false,
-                      "lastAccessedBy": 0,
-                      "lowestObserverState": 2,
-                      "name": "ValidateItem@24.keys",
-                      "observers": Set {},
-                    },
-                    "name": "ValidateItem@24",
-                    "target": [Circular],
-                    "values": Map {
-                      "errorMessage" => "",
-                      "value" => "eric@hippware.com",
-                      "isValid" => undefined,
-                    },
-                  },
-                }
-              }
-              style={
-                Object {
-                  "color": "rgb(63,50,77)",
-                  "flex": 1,
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 36,
-                }
-              }
-              testID="signUpEmail"
-              underlineColorAndroid="transparent"
-              value="eric@hippware.com"
-            />
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "width": 30,
-                }
-              }
-            />
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgb(63,50,77)",
-              "height": 1,
-              "opacity": 0.2,
-            }
-          }
-        />
-      </View>
-    </View>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Array [
-          Object {
-            "color": "rgb(155,155,155)",
-            "fontFamily": "Roboto-Regular",
-            "fontSize": 12.5,
-          },
-          Object {
-            "fontSize": 25,
-            "marginBottom": 70,
-            "marginTop": 70,
-            "textAlign": "center",
-          },
-        ]
-      }
-    >
-      By signing up you agree to our 
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontFamily": "Roboto-Bold",
-              "fontSize": 12,
-            },
-            undefined,
-          ]
-        }
-      >
-        Privacy Policy
-      </Text>
-      ,
- 
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontFamily": "Roboto-Bold",
-              "fontSize": 12,
-            },
-            undefined,
-          ]
-        }
-      >
-        Terms of Service
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Array [
-            Object {
-              "color": undefined,
-              "fontFamily": "Roboto-Regular",
-              "fontSize": 12,
-            },
-            undefined,
-          ]
-        }
-      >
-        , and for us to contact you via email
-for updates and information.
-      </Text>
-    </Text>
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "alignSelf": "stretch",
-            "borderRadius": 8,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "height": 44,
-            "justifyContent": "center",
-            "marginBottom": 10,
-          },
-          Object {
-            "backgroundColor": "rgb(254,92,108)",
-            "borderRadius": 8,
-            "borderWidth": 0,
-            "height": 100,
-            "marginLeft": 75,
-            "marginRight": 75,
-          },
-          Object {
-            "opacity": 0.5,
-          },
-        ]
-      }
-    >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "flex": 1,
-              "fontSize": 18,
-              "textAlign": "center",
-            },
-            Object {
-              "color": "white",
-              "fontFamily": "Roboto-Regular",
-              "fontSize": 35,
-              "letterSpacing": 0.8,
-            },
-          ]
-        }
-      >
-        Done
-      </Text>
     </View>
   </View>
 </RCTScrollView>
