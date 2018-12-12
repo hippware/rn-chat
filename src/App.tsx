@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {Provider} from 'mobx-react/native'
 import TinyRobotRouter from './components/Router'
 import analytics from './utils/analytics'
-import store, {iconStore, notificationStore, reportStore, pushStore} from './store'
+import store, {appInfo, iconStore, notificationStore, reportStore, pushStore} from './store'
 import NotificationBanner from './components/NotificationBanner'
 import Connectivity from './components/Connectivity'
 import * as logger from './utils/log'
@@ -16,6 +16,7 @@ const App = () => (
   <Provider
     store={store}
     {...store}
+    appInfo={appInfo}
     analytics={analytics}
     notificationStore={notificationStore}
     reportStore={reportStore}

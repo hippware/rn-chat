@@ -10,7 +10,6 @@ export const cleanState = {
   profileValidationStore: {},
   homeStore: {},
   navStore: {},
-  codePushStore: {},
   onceStore: {},
 }
 
@@ -22,7 +21,7 @@ const PersistableModel = types
     reloading: false,
   }))
   .actions(self => {
-    const {logger, storage, analytics} = getEnv(self)
+    const {logger, storage, analytics, appInfo} = getEnv(self)
 
     function loadFromStorage(key: string): Promise<string> {
       return new Promise((resolve, reject) => {
@@ -82,7 +81,8 @@ const PersistableModel = types
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
-        const newBinaryVersion = parsed && parsed.version && parsed.version !== settings.version
+        const newBinaryVersion =
+          parsed && parsed.version && parsed.version !== appInfo.nativeVersion
         if (pendingCodepush || newBinaryVersion) {
           parsed.codePushStore.pendingUpdate = false
           loadMinimal(parsed)
@@ -137,7 +137,6 @@ const PersistableModel = types
         // wipe out old state and apply clean
         applySnapshot(self as any, {
           ...cleanState,
-          version: settings.version,
           wocky: {host: settings.getDomain()},
         })
         self.wocky.startReactions()

@@ -8,15 +8,16 @@ import {
   ProgressViewIOS,
 } from 'react-native'
 import {colors} from '../constants'
-import {settings} from '../globals'
+import {IAppInfo} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {ICodePushStore} from '../store/CodePushStore'
 
 type Props = {
   codePushStore?: ICodePushStore
+  appInfo?: IAppInfo
 }
 
-@inject('codePushStore')
+@inject('codePushStore', 'appInfo')
 @observer
 class CodePushScene extends React.Component<Props> {
   componentWillMount() {
@@ -30,7 +31,7 @@ class CodePushScene extends React.Component<Props> {
         <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
             <Text style={styles.bold}>Version: </Text>
-            <Text>{settings.version}</Text>
+            <Text>{this.props.appInfo!.jsVersion}</Text>
           </Text>
 
           {/* TODO {displayCPInfo && (

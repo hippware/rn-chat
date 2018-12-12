@@ -34,6 +34,27 @@ const CodePushStore = types
       return deployments[self.flavor]
     },
   }))
+  .views(self => ({
+    get updateInfo(): string {
+      if (self.metadata) {
+        const {deploymentKey, label} = self.metadata
+
+        // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
+        if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
+          const deploymentInfo = self.channels.filter(
+            deployment => deployment.key === deploymentKey
+          )
+          const deploymentName = deploymentInfo.length > 0 ? deploymentInfo[0].name : deploymentKey
+
+          return `${deploymentName}-${label}`
+        } else {
+          return label
+        }
+      } else {
+        return ''
+      }
+    },
+  }))
   .actions(self => ({
     allowRestart() {
       self.syncing = false
