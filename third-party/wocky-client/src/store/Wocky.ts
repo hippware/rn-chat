@@ -273,10 +273,12 @@ export const Wocky = types
     }),
     loadChats: flow(function*(max: number = 50) {
       yield waitFor(() => self.connected)
-      const items = yield self.transport.loadChats(max)
-      items.forEach((item: {id: string; message: any}) => {
+      const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
+        max
+      )
+      items.forEach(item => {
         const msg = self.create(Message, item.message)
-        const chat = self.createChat(item.id)
+        const chat = self.createChat(item.chatId)
         chat.addMessage(msg)
       })
     }) as (max?: number) => Promise<void>,
@@ -445,8 +447,8 @@ export const Wocky = types
       }),
       loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
-        yield self.transport.loadChat(userId, lastId, max)
-      }),
+        return self.transport.loadChat(userId, lastId, max)
+      }) as (userId: string, lastId?: string, max?: number) => Promise<void>,
       setLocation: flow(function*(location: ILocationSnapshot) {
         return yield self.transport.setLocation(location)
       }),

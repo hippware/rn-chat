@@ -2,7 +2,7 @@ import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList, LoginParams} from './IWockyTransport'
-import {observable, action} from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
@@ -17,6 +17,7 @@ import {
   NOTIFICATIONS_PROPS,
   VOID_PROPS,
   BOT_POST_LIST_PROPS,
+  MESSAGE_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -673,11 +674,54 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadChat(userId, lastId, max): Promise<void> {
-    throw new Error('Not supported')
+    const res = await this.clients![0].query<any>({
+      query: gql`
+          query loadChat($otherUser: UUID, $after: String, $first: Int) {
+            currentUser {
+              id
+              messages(otherUser: $otherUser, after: $after, first: $first) {
+                totalCount
+                edges {
+                  node {
+                    ${MESSAGE_PROPS}
+                  }
+                }
+              }
+            }
+          }
+        `,
+      variables: {otherUser: userId, first: max, after: lastId},
+    })
+    res.data.currentUser.messages.edges.forEach(e => {
+      runInAction(() => (this.message = convertMessage(e.node, this.username!)))
+    })
   }
 
-  async loadChats(max: number = 50): Promise<Array<{id: string; message: any}>> {
-    throw new Error('Not supported')
+  async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
+    const res = await this.clients![0].query<any>({
+      query: gql`
+          query loadChats($max: Int) {
+            currentUser {
+              id
+              conversations(first: $max) {
+                totalCount
+                edges {
+                  cursor
+                  node {
+                    ${MESSAGE_PROPS}
+                  }
+                }
+              }
+            }
+          }
+        `,
+      variables: {max},
+    })
+
+    return (res.data.currentUser.conversations.edges as any[]).map<{
+      chatId: string
+      message: IMessageIn
+    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node, this.username!)}))
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -1045,17 +1089,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       query: gql`
         subscription messages {
           messages {
-            content
-            createdAt
-            direction
-            media {
-              fullUrl
-              thumbnailUrl
-              trosUrl
-            }
-            otherUser {
-              ${PROFILE_PROPS}
-            }
+            ${MESSAGE_PROPS}
           }
         }
       `,

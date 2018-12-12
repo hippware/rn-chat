@@ -9,7 +9,7 @@ describe('New GraphQL conversation tests', () => {
     bob = await createUser()
   })
 
-  it('update profiles with handles so they can do stuff like send messages', async () => {
+  it('update profiles with handles so they can send messages', async () => {
     await alice.profile!.update({
       handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
       firstName: 'alice',
@@ -48,7 +48,7 @@ describe('New GraphQL conversation tests', () => {
     expect(alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
   })
 
-  it("bob receives alice's messages via subsription", async () => {
+  it("bob receives alice's messages via subscription", async () => {
     await waitFor(
       () => bob.chats.list.length === 1 && bob.chats.list[0].messages.length === 2,
       "expected chat for bob doesn't load in time"
@@ -58,7 +58,33 @@ describe('New GraphQL conversation tests', () => {
     expect(bob.chats.list[0].last!.body).toBe('hello2')
   })
 
-  // todo: test `loadChats` and `loadChat`
+  it("bob can load alice's chat messages", async () => {
+    bob.chats.clear()
+    expect(bob.chats.list.length).toBe(0)
+    await bob.loadChat(alice.username!)
+    expect(bob.chats.list.length).toBe(1)
+    expect(bob.chats.list[0].messages.length).toBe(2)
+  })
+
+  it('bob can load all of his chats', async () => {
+    bob.chats.clear()
+    expect(bob.chats.list.length).toBe(0)
+    await bob.loadChats()
+    expect(bob.chats.list.length).toBe(1)
+    expect(bob.chats.list[0].messages.length).toBe(1)
+    expect(bob.chats.list[0].last!.body).toBe('hello2')
+  })
+
+  // TODO: paging
+  // it('bob can load chat messages with paging', async () => {
+  //   bob.chats.clear()
+  //   expect(bob.chats.list.length).toBe(0)
+  //   await bob.loadChat(alice.username!, undefined, 1)
+  //   expect(bob.chats.list.length).toBe(1)
+  //   expect(bob.chats.list[0].messages.length).toBe(1)
+  //   expect(bob.chats.list[0].last!.body).toBe('hello2')
+  //   await bob.loadChat(alice.username!, bob.chats.list[0].last!.id, 1)
+  // })
 
   afterAll(async () => {
     try {

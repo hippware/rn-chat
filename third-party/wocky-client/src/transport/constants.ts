@@ -144,3 +144,17 @@ export const VOID_PROPS = `
     message
   }
 `
+
+export const MESSAGE_PROPS = `
+  content
+  createdAt
+  direction
+  media {
+    fullUrl
+    thumbnailUrl
+    trosUrl
+  }
+  otherUser {
+    ${PROFILE_PROPS}
+  }
+`
