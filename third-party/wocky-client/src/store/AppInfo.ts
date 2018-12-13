@@ -10,12 +10,17 @@ export const AppInfo = types
     codepushVersion: '',
   })
   .views(self => ({
-    get version(): string {
+    get longVersion(): string {
+      return `${self.jsVersion}${
+        self.codepushVersion ? ` (${self.nativeVersion}-${self.codepushVersion})` : ''
+      }`
+    },
+    get uaString(): string {
       const extras: string[] = [`${self.systemName} ${self.systemVersion}`, self.deviceId]
       if (self.codepushVersion) {
         extras.push(`${self.nativeVersion}-${self.codepushVersion}`)
       }
-      return `${self.jsVersion} (${extras.join('; ')})`
+      return `TinyRobot/${self.jsVersion} (${extras.join('; ')})`
     },
   }))
 
