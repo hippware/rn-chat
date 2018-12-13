@@ -9,7 +9,6 @@ import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
-import {IBotPostIn} from '../model/BotPost'
 import {IMessageIn} from '../model/Message'
 
 export async function waitFor(condition: () => boolean) {
@@ -323,7 +322,7 @@ export function convertProfile({
   } as IProfilePartial
 }
 
-export function convertBotPost({node: {id, media, owner, content}}): IBotPostIn {
+export function convertBotPost({node: {id, media, owner, content}}) {
   return {
     id,
     content,
@@ -516,7 +515,7 @@ export function convertMessage({direction, content, otherUser}, myProfileId: str
     to = otherUser.id
   }
   return {
-    archiveId: '',
+    // archiveId: '',
     from,
     to,
     media: undefined,

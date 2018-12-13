@@ -5,6 +5,7 @@ import * as utils from '../transport/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
+import {createPaginable, IPaginable} from './PaginableList'
 const moment = require('moment')
 
 export const Message = types
@@ -16,7 +17,7 @@ export const Message = types
     ),
     types.model('Message', {
       id: types.optional(types.string, utils.generateID),
-      archiveId: '',
+      // archiveId: '',
       from: types.reference(Profile),
       to: types.reference(Profile),
       media: FileRef,
@@ -50,3 +51,6 @@ export const Message = types
   }))
 export interface IMessage extends Instance<typeof Message> {}
 export interface IMessageIn extends SnapshotIn<typeof Message> {}
+
+export const MessagePaginableList = createPaginable<IMessage>(Message)
+export interface IMessageList extends IPaginable<IMessage> {}

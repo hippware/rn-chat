@@ -9,12 +9,15 @@ import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
-import {Message, IMessage, IMessageIn} from '../model/Message'
+import {Message, IMessage, IMessageIn, IMessageList} from '../model/Message'
 import {processMap, waitFor, generateWockyToken} from '../transport/utils'
 import uuid from 'uuid/v1'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
 import {EventList, EventEntity} from '../model/EventList'
 import _ from 'lodash'
+import {RequestType} from '../model/PaginableList'
+import {IEventData} from '../model/Event'
+import {PaginableLoadType, PaginableLoadPromise} from '../transport/NextGraphQLTransport'
 
 export type LoginParams = {phoneNumber?: string; accessToken?: string}
 export const Wocky = types
@@ -207,18 +210,19 @@ export const Wocky = types
       }
       return bot
     },
-    _addMessage: (message: IMessageIn) => {
+    _addMessage: (message?: IMessageIn): void => {
+      if (!message) return
       const {to} = message
       const existingChat = self.chats.get(to.toString())
       const msg = self.create(Message, message)
       if (existingChat) {
-        existingChat.addMessage(msg!)
+        ;(existingChat.messages as IMessageList).add(msg)
         if (existingChat.active) {
           msg!.read()
         }
       } else {
         const chat = self.createChat(to.toString())
-        chat.addMessage(msg!)
+        ;(chat.messages as IMessageList).add(msg)
       }
     },
     deleteBot: (id: string) => {
@@ -270,7 +274,7 @@ export const Wocky = types
       items.forEach(item => {
         const msg = self.create(Message, item.message)
         const chat = self.createChat(item.chatId)
-        chat.addMessage(msg)
+        ;(chat.messages as IMessageList).add(msg as IMessage)
       })
     }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
@@ -341,12 +345,12 @@ export const Wocky = types
           count,
           cursor,
         }
-      }),
+      }) as RequestType,
       _loadBotPosts: flow(function*(id: string, before?: string) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
         return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
-      }),
+      }) as RequestType,
       _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadSubscribedBots(userId, lastId, max)
@@ -423,10 +427,10 @@ export const Wocky = types
         yield self.transport.sendMessage(msg)
         self._addMessage(msg)
       }),
-      loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
+      _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
-        return self.transport.loadChat(userId, lastId, max)
-      }) as (userId: string, lastId?: string, max?: number) => Promise<void>,
+        return self.transport.loadChatMessages(userId, lastId, max)
+      }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
       getLocationUploadToken: flow(function*() {
         return yield self.transport.getLocationUploadToken()
       }),
@@ -451,16 +455,16 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)
       }),
-      _loadNotifications: flow(function*(lastId: any, max: number = 20) {
-        // console.log('& load', lastId)
+      _loadNotifications: flow(function*(lastId: string, max: number = 20) {
         yield waitFor(() => self.connected)
-        const {list, count} = yield self.transport.loadNotifications({
-          beforeId: lastId,
-          limit: max,
-        })
-        // console.log('& load notifications list', list)
+        const {list, count}: PaginableLoadType<IEventData> = yield self.transport.loadNotifications(
+          {
+            beforeId: lastId,
+            limit: max,
+          }
+        )
         return {list: list.map((data: any) => self.create(EventEntity, data)), count}
-      }),
+      }) as RequestType,
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
@@ -664,7 +668,7 @@ export const Wocky = types
           }
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
-        reaction(() => self.transport.message, message => self._addMessage(message!)),
+        reaction(() => self.transport.message, self._addMessage),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]

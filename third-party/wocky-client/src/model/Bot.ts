@@ -1,4 +1,13 @@
-import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType, Instance} from 'mobx-state-tree'
+import {
+  types,
+  flow,
+  getSnapshot,
+  getEnv,
+  isAlive,
+  IAnyModelType,
+  Instance,
+  SnapshotIn,
+} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
@@ -179,6 +188,7 @@ export const Bot = types
   }))
 
 export interface IBot extends Instance<typeof Bot> {}
+export interface IBotIn extends SnapshotIn<typeof Bot> {}
 
 export interface IBotData {
   id: string
