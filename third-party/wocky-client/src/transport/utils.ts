@@ -462,30 +462,24 @@ export function generateWockyToken({
   deviceId,
   phoneNumber,
 }: TokenParams): string {
-  try {
-    assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
-    const payload = {
-      jti: userId,
-      iss: uaString,
-      typ: !!phoneNumber ? 'bypass' : 'firebase',
-      // if there's no accessToken then we're doing a bypass login.
-      // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
-      // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
-      sub: accessToken || phoneNumber,
-      aud: 'Wocky',
-      phone_number: phoneNumber,
-      dvc: deviceId,
-    }
-    // TODO: store this with react-native-native-env
-    const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
-    const header = {alg: 'HS512', typ: 'JWT'}
-    const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-    return jwt
-  } catch (err) {
-    // tslint:disable-next-line
-    console.error(err)
-    throw err
+  assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
+  const payload = {
+    jti: userId,
+    iss: uaString,
+    typ: !!phoneNumber ? 'bypass' : 'firebase',
+    // if there's no accessToken then we're doing a bypass login.
+    // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
+    // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
+    sub: accessToken || phoneNumber,
+    aud: 'Wocky',
+    phone_number: phoneNumber,
+    dvc: deviceId,
   }
+  // TODO: store this with react-native-native-env
+  const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+  const header = {alg: 'HS512', typ: 'JWT'}
+  const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
+  return jwt
 }
 
 export function assert(condition, message) {
