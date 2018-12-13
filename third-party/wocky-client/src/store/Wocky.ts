@@ -118,8 +118,8 @@ export const Wocky = types
             phoneNumber: self.phoneNumber,
             accessToken: self.accessToken,
             userId: (self.username = uuid()),
-            version: appInfo.version,
-            deviceId: appInfo.deviceId,
+            uaString: appInfo.uaString,
+            deviceId: appInfo.uniqueId,
           })
           const res = yield self.transport.login(self.password, self.host)
           if (!res) {

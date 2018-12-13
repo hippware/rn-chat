@@ -7,7 +7,7 @@ const Version = inject('appInfo')(
   observer(({appInfo}) => {
     return (
       <RText size={16} color={colors.DARK_GREY} style={{marginBottom: 15}}>
-        {`Version ${appInfo.version}`}
+        {`Version ${appInfo.longVersion}`}
       </RText>
     )
   })

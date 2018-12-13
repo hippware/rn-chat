@@ -448,7 +448,7 @@ export function convertNotifications(notifications: any[]): IEventData[] {
 
 type TokenParams = {
   userId: string
-  version: string
+  uaString: string
   deviceId: string
   bypass?: boolean
   accessToken?: string
@@ -458,7 +458,7 @@ type TokenParams = {
 export function generateWockyToken({
   userId,
   accessToken,
-  version,
+  uaString,
   deviceId,
   phoneNumber,
 }: TokenParams): string {
@@ -466,7 +466,7 @@ export function generateWockyToken({
     assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
     const payload = {
       jti: userId,
-      iss: `TinyRobot/${version}`,
+      iss: uaString,
       typ: !!phoneNumber ? 'bypass' : 'firebase',
       // if there's no accessToken then we're doing a bypass login.
       // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login

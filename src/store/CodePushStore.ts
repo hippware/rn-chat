@@ -36,8 +36,11 @@ const CodePushStore = types
   }))
   .views(self => ({
     get updateInfo(): string {
-      if (self.metadata) {
-        const {deploymentKey, label} = self.metadata
+      // To easily test, toggle comments in the following 4 lines
+      if (/* true || */ self.metadata) {
+        /* */ const {deploymentKey, label} = self.metadata
+        // const deploymentKey = 'StagingXYZ'
+        // const label = 'vN'
 
         // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
         if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
