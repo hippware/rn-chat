@@ -35,23 +35,6 @@ type State = {
   height: number
 }
 
-const ChatTitle = inject('wocky')(
-  observer(({item, wocky}) => {
-    return wocky.chats.get(item)
-      ? wocky.chats.get(item).participants.map((profile, ind) => (
-          <TouchableOpacity
-            key={`${ind}${profile.id}touch`} // eslint-disable-line
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName})
-            }}
-          >
-            <Avatar size={40} profile={profile} />
-          </TouchableOpacity>
-        ))
-      : null
-  })
-)
-
 @inject('wocky')
 @observer
 class ChatScreen extends React.Component<Props, State> {
@@ -258,6 +241,23 @@ const AttachButton = inject('notificationStore')(({notificationStore, message}) 
     <Image source={require('../../../images/iconAttach.png')} />
   </Button>
 ))
+
+const ChatTitle = inject('wocky')(
+  observer(({item, wocky}) => {
+    return wocky.chats.get(item)
+      ? wocky.chats.get(item).participants.map((profile, ind) => (
+          <TouchableOpacity
+            key={`${ind}${profile.id}touch`} // eslint-disable-line
+            onPress={() => {
+              Actions.profileDetail({item: profile, title: profile.displayName})
+            }}
+          >
+            <Avatar size={40} profile={profile} />
+          </TouchableOpacity>
+        ))
+      : null
+  })
+)
 
 export default ChatScreen
 

@@ -10,7 +10,7 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import {IWocky} from 'wocky-client'
 
-const footerImage = require('../../images/graphicEndMsgs.png')
+const footerImage = require('../../../images/graphicEndMsgs.png')
 
 type Props = {
   wocky?: IWocky

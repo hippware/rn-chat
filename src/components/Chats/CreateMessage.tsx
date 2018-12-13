@@ -5,17 +5,17 @@ import {
   Image,
   StyleSheet,
   View,
-  Text,
-  InteractionManager,
+  // Text,
+  // InteractionManager,
 } from 'react-native'
-import Screen from './Screen'
-import {k} from './Global'
-import {ProfileList} from './people-lists'
+import Screen from '../Screen'
+import {k} from '../Global'
+import {ProfileList} from '../people-lists'
 import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
-import {ISearchStore} from '../store/SearchStore'
+import {ISearchStore} from '../../store/SearchStore'
 
 type Props = {
   wocky: IWocky
@@ -25,14 +25,14 @@ type Props = {
 @inject('wocky', 'searchStore')
 @observer
 class CreateMessage extends React.Component<Props> {
-  static backButton = ({state, style, textButtonStyle}) => (
-    <TouchableOpacity
-      onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
-      style={style}
-    >
-      <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>
-  )
+  // static backButton = ({state, style, textButtonStyle}) => (
+  //   <TouchableOpacity
+  //     onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
+  //     style={style}
+  //   >
+  //     <Text style={textButtonStyle}>Cancel</Text>
+  //   </TouchableOpacity>
+  // )
 
   componentDidMount() {
     this.props.searchStore!.localResult.setList(this.props.wocky.friends.map(f => ({profile: f})))
@@ -52,7 +52,7 @@ class CreateMessage extends React.Component<Props> {
           }}
         >
           <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}>
-            <Image source={require('../../images/iconSearchHome.png')} />
+            <Image source={require('../../../images/iconSearchHome.png')} />
           </View>
           <TextInput
             autoCorrect={false}
@@ -70,7 +70,7 @@ class CreateMessage extends React.Component<Props> {
           />
           <TouchableOpacity onPress={() => selection.setFilter('')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
-              <Image source={require('../../images/iconClose.png')} />
+              <Image source={require('../../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
         </View>
