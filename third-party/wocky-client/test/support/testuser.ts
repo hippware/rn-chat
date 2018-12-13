@@ -9,6 +9,7 @@ import _ from 'lodash'
 const SERVER_NAME = 'next'
 const appInfo = AppInfo.create({
   deviceId: 'test',
+  uniqueId: 'test',
   systemName: 'unitTest',
   jsVersion: '9.9.9',
   nativeVersion: '9.9.9',

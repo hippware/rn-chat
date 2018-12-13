@@ -7,6 +7,7 @@ export const AppInfo = types
     systemName: types.string,
     systemVersion: types.string,
     deviceId: types.string,
+    uniqueId: types.string,
     codepushVersion: '',
   })
   .views(self => ({

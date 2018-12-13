@@ -42,6 +42,7 @@ export const appInfo = AppInfo.create({
   systemName: DeviceInfo.getSystemName(),
   systemVersion: DeviceInfo.getSystemVersion(),
   deviceId: DeviceInfo.getDeviceId(),
+  uniqueId: DeviceInfo.getUniqueID(),
   jsVersion,
   codepushVersion: codePushStore.updateInfo,
 })
