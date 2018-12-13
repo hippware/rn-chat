@@ -10,9 +10,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Edit User Profile - Redesign (#3174)
 * New Sign Up Profile Page (#3178)
 * Fix file test (PR #3180)
-* GraphQL auth refactoring, firebase/bypass fixes (PR #3183)
+* GraphQL auth refactoring, firebase/bypass fixes (PR #3183, PR #3188)
   * Fix firebase login (with real phone number) with 4.0.0 version (#3172)
   * Expand `iss` field in JWT auth token (#3097)
+* Update LocationStore to use new location token (#3170)
 
 # 4.0.0 - 2018 Dec 10
 
