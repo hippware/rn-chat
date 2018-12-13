@@ -242,26 +242,22 @@ const LocationStore = types
     }
 
     const refreshCredentials = flow(function*() {
-      if (wocky.username && wocky.password) {
-        const url = `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`
-
-        const headers = {
-          Accept: 'application/json',
-          'X-Auth-User': wocky.username!,
-          'X-Auth-Token': wocky.password!,
-        }
-
-        const params = {
-          resource: wocky.transport.resource,
-        }
-
+      try {
+        const token = yield getEnv(self).transport.getLocationUpdateToken()
         yield BackgroundGeolocation.setConfig({
-          headers,
-          params,
-          url,
+          url: `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`,
+          headers: {
+            Accept: 'application/json',
+            Authentication: `Bearer ${token}`,
+          },
+          params: {
+            device: wocky.transport.resource,
+          },
         })
-        logger.log(prefix, `refreshCredentials URL: ${url}`)
+        logger.log(prefix, `refreshCredentials token: ${token}`)
         BackgroundGeolocation.logger.info(`${prefix} refreshCredentials`)
+      } catch (err) {
+        logger.log(prefix, 'refreshCredentials error', err)
       }
     })
 
