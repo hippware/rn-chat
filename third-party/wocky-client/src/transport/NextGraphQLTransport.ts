@@ -18,6 +18,7 @@ import {
   VOID_PROPS,
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
+  AREA_TOO_LARGE,
 } from './constants'
 import {
   convertProfile,
@@ -882,7 +883,10 @@ export class NextGraphQLTransport implements IWockyTransport {
       query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
-            ${BOT_PROPS}
+            areaTooLarge
+            bots {
+              ${BOT_PROPS}
+            }
           }
         }
       `,
@@ -892,7 +896,10 @@ export class NextGraphQLTransport implements IWockyTransport {
         ownUsername: this.username,
       },
     })
-    return res.data.localBots.map(convertBot)
+    if (res.data.localBots.areaTooLarge) {
+      throw new Error(AREA_TOO_LARGE)
+    }
+    return res.data.localBots.bots.map(convertBot)
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {

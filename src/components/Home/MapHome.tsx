@@ -39,6 +39,7 @@ export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
+  @observable areaTooLarge = false
 
   @observable
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
@@ -84,8 +85,14 @@ export default class MapHome extends React.Component<IProps> {
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
-      const bots = await this.props.wocky!.loadLocalBots(region)
-      addBotsToList(bots)
+      try {
+        const bots = await this.props.wocky!.loadLocalBots(region)
+        this.areaTooLarge = false
+        addBotsToList(bots)
+      } catch (e) {
+        // TODO display UI for area too large
+        this.areaTooLarge = true
+      }
     }
   }
   // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
