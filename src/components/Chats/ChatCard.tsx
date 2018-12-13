@@ -1,12 +1,11 @@
 import React from 'react'
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react/native'
-import Card from './Card'
-import {CardText} from './common'
-import Avatar from './common/Avatar'
-import {k} from './Global'
+import Card from '../Card'
+import {CardText, Avatar} from '../common'
+import {k} from '../Global'
 import ResizedImage from './ResizedImage'
-import {colors} from '../constants'
+import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 
 type Props = {
@@ -98,7 +97,7 @@ export default class ChatCard extends React.Component<Props> {
               paddingTop: 10,
             }}
           >
-            <Image source={require('../../images/iconLocation.png')} />
+            <Image source={require('../../../images/iconLocation.png')} />
             <Text style={styles.smallText}> {this.props.item.location}</Text>
           </View>
         )}
@@ -117,7 +116,7 @@ export default class ChatCard extends React.Component<Props> {
         )}
         {chat.unread > 0 && (
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
-            <Image source={require('../../images/iconNewPriority.png')} />
+            <Image source={require('../../../images/iconNewPriority.png')} />
           </View>
         )}
       </Card>
@@ -129,7 +128,7 @@ const Date = ({onPostOptions, children}: any) =>
   onPostOptions ? (
     <TouchableOpacity onPress={e => onPostOptions(e, e.nativeEvent.target)} style={styles.date}>
       {children}
-      <Image style={{marginLeft: 5 * k}} source={require('../../images/iconPostOptions.png')} />
+      <Image style={{marginLeft: 5 * k}} source={require('../../../images/iconPostOptions.png')} />
     </TouchableOpacity>
   ) : (
     <View

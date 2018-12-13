@@ -2,12 +2,12 @@ import React from 'react'
 import {View, StyleSheet, FlatList, Image} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
-import Screen from './Screen'
-import MessageButton from './MessageButton'
+import Screen from '../Screen'
+import MessageButton from '../MessageButton'
 import ChatCard from './ChatCard'
-import ListFooter from './ListFooter'
-import {RText} from './common'
-import {colors} from '../constants'
+import ListFooter from '../ListFooter'
+import {RText} from '../common'
+import {colors} from '../../constants'
 import {IWocky} from 'wocky-client'
 
 const footerImage = require('../../images/graphicEndMsgs.png')
@@ -78,7 +78,7 @@ const EmptyComponent = () => (
     <RText size={18} color={colors.PINKISH_GREY} style={{textAlign: 'center'}}>
       {'No messages yet\r\nWhy not start a conversation?'}
     </RText>
-    <Image source={require('../../images/botGray.png')} style={{marginTop: 20}} />
+    <Image source={require('../../../images/botGray.png')} style={{marginTop: 20}} />
   </View>
 )
 

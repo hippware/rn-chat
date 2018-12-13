@@ -15,13 +15,12 @@ import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
-import Screen from './Screen'
-import Avatar from './common/Avatar'
-import {showImagePicker} from './ImagePicker'
+import Screen from '../Screen'
+import {showImagePicker} from '../ImagePicker'
 import ChatBubble from './ChatBubble'
 import ChatMessage from './ChatMessage'
-import {AutoExpandingTextInput} from './common'
-import {colors} from '../constants'
+import {AutoExpandingTextInput, Avatar} from '../common'
+import {colors} from '../../constants'
 import {IWocky} from 'wocky-client'
 
 const Button = require('apsl-react-native-button')
@@ -222,8 +221,8 @@ const InputArea = inject('wocky')(
           <Image
             source={
               chat.message.body.trim() && wocky.connected
-                ? require('../../images/iconSendActive.png')
-                : require('../../images/iconSendInactive.png')
+                ? require('../../../images/iconSendActive.png')
+                : require('../../../images/iconSendInactive.png')
             }
           />
         </TouchableOpacity>
@@ -256,7 +255,7 @@ const AttachButton = inject('notificationStore')(({notificationStore, message}) 
     style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}}
     onPress={() => onAttach(message, notificationStore)}
   >
-    <Image source={require('../../images/iconAttach.png')} />
+    <Image source={require('../../../images/iconAttach.png')} />
   </Button>
 ))
 

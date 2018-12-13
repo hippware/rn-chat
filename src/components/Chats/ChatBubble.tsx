@@ -1,12 +1,12 @@
 import React from 'react'
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native'
 import ResizedImage from './ResizedImage'
-import {k} from './Global'
+import {k} from '../Global'
 import ParsedText from 'react-native-parsed-text'
 
 const {width} = Dimensions.get('window')
 import {observer} from 'mobx-react/native'
-import {colors} from '../constants'
+import {colors} from '../../constants'
 
 const defaultStyles = StyleSheet.create({
   bubble: {
@@ -169,13 +169,13 @@ const ChatBubble = props => {
       {position === 'left' && (
         <Image
           style={{position: 'absolute', bottom: 12, left: -4}}
-          source={require('../../images/triangleWhite.png')}
+          source={require('../../../images/triangleWhite.png')}
         />
       )}
       {position === 'right' && (
         <Image
           style={{position: 'absolute', bottom: 5, right: 2}}
-          source={require('../../images/triangleYellow.png')}
+          source={require('../../../images/triangleYellow.png')}
         />
       )}
     </View>
