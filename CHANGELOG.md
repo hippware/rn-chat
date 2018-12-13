@@ -6,9 +6,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * User profile, user avatar bugfixes (PR #3168)
 * Onboarding style tweaks (PR #3169)
-* [GraphQL] conversations/chats/messages (#3135, PR #3162)
+* [GraphQL] conversations/chats/messages (#3135, PR #3162, PR #3175)
 * Edit User Profile - Redesign (#3174)
 * New Sign Up Profile Page (#3178)
+* Fix file test (PR #3180)
+* GraphQL auth refactoring, firebase/bypass fixes (PR #3183)
+  * Fix firebase login (with real phone number) with 4.0.0 version (#3172)
+  * Expand `iss` field in JWT auth token (#3097)
 
 # 4.0.0 - 2018 Dec 10
 
