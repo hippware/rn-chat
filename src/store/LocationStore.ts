@@ -243,7 +243,7 @@ const LocationStore = types
 
     const refreshCredentials = flow(function*() {
       try {
-        const token = yield getEnv(self).transport.getLocationUpdateToken()
+        const token = yield wocky.getLocationUploadToken()
         yield BackgroundGeolocation.setConfig({
           url: `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`,
           headers: {

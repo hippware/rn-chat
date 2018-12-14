@@ -440,6 +440,9 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         return self.transport.loadChat(userId, lastId, max)
       }) as (userId: string, lastId?: string, max?: number) => Promise<void>,
+      getLocationUploadToken: flow(function*() {
+        return yield self.transport.getLocationUploadToken()
+      }),
       setLocation: flow(function*(location: ILocationSnapshot) {
         return yield self.transport.setLocation(location)
       }),
