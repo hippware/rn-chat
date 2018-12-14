@@ -43,7 +43,7 @@ export const OwnProfile = types
     })
   )
   .views(self => ({
-    hasUsedGeofence() {
+    get hasUsedGeofence() {
       return self.ownBots.list.length > 0
     },
   }))

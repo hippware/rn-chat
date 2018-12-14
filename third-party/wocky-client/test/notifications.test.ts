@@ -62,8 +62,8 @@ describe('Notifications (static)', () => {
     expect(alice.notifications.list[0]).toHaveProperty('sender')
     expect(alice.notifications.list[0].sender.id).toEqual(bob.username)
     expect(alice.notifications.list[0].bot.invitation.accepted).toEqual(true)
-    await aliceBot.guests.load()
-    expect(aliceBot.guestsSize).toEqual(2) // bob is now a guest
+    await aliceBot.subscribers.load()
+    expect(aliceBot.subscribers.list.length).toEqual(1) // bob is now a subscriber
   })
 
   it('gets User Comment notification', async () => {

@@ -11,7 +11,6 @@ export const BOT_PROPS = `id icon title address addressData description radius s
   media { thumbnailUrl fullUrl trosUrl }
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
-  guestCount: subscribers(first:0 type:GUEST){ totalCount }
   visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
   subscribers(first:1 id: $ownUsername) { edges { relationships } }

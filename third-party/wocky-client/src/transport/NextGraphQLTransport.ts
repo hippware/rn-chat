@@ -183,7 +183,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
             ${BOT_PROPS}
-            guests: subscribers(first: 10, type: SUBSCRIBER) {
+            subscribers: subscribers(first: 10, type: SUBSCRIBER) {
               totalCount
               edges {
                 cursor
@@ -371,9 +371,6 @@ export class NextGraphQLTransport implements IWockyTransport {
     max: number = 10
   ): Promise<IPagingList<any>> {
     return this.getBotProfiles('SUBSCRIBER', false, id, lastId, max)
-  }
-  async loadBotGuests(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
-    return this.getBotProfiles('GUEST', true, id, lastId, max)
   }
   async loadBotVisitors(id: string, lastId?: string, max: number = 10): Promise<IPagingList<any>> {
     return this.getBotProfiles('VISITOR', true, id, lastId, max)
@@ -712,7 +709,6 @@ export class NextGraphQLTransport implements IWockyTransport {
       lat,
       lon,
       radius,
-      server,
       shortname,
       title,
       type,
@@ -741,11 +737,9 @@ export class NextGraphQLTransport implements IWockyTransport {
           description,
           icon,
           imageUrl: image,
-          geofence: true,
           lat: bot.location.latitude,
           lon: bot.location.longitude,
           radius: Math.round(radius),
-          server,
           shortname,
           title,
           type,
@@ -1107,7 +1101,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   private async getBotProfiles(
-    relationship: 'SUBSCRIBER' | 'GUEST' | 'VISITOR',
+    relationship: 'SUBSCRIBER' | 'VISITOR',
     includeCurrentUser: boolean,
     id: string,
     lastId?: string,
@@ -1179,7 +1173,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       // },
     })
     socket.onError(() => {
-      // console.log('& graphql Phoenix socket error', err)
+      // console.warn('& graphql Phoenix socket error', err)
       this.connected = false
     })
     socket.onClose(() => {
