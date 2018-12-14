@@ -1,8 +1,8 @@
 import {createUser, waitFor} from './support/testuser'
-import {IWocky} from '../src'
+import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
-let user: IWocky, user2: IWocky
+let user: IWocky, user2: IWocky, user1user2Profile: IProfile
 let user1phone: string
 
 describe('New GraphQL profile tests', () => {
@@ -54,21 +54,26 @@ describe('New GraphQL profile tests', () => {
     await user2.profile!.save()
   })
 
-  it('make them friends', async () => {
+  it('user1 follows user2', async () => {
     expect(user.sortedRoster.length).toBe(0)
     expect(user2.sortedRoster.length).toBe(0)
-    const user1user2Profile = await user.loadProfile(user2.username!)
+    user1user2Profile = await user.loadProfile(user2.username!)
+    const user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
+    expect(user2user1Profile).toBeTruthy()
     await user1user2Profile.follow()
     await waitFor(
       () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
       'user1 and user2 rosters didnt update in time'
     )
-    expect(user.sortedRoster[0].id).toEqual(user2.username)
-    expect(user2.sortedRoster[0].id).toEqual(user.username)
-    // TODO: check profile is online after presence enabled
-    // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
+    expect(user.sortedRoster[0].id).toBe(user2.username)
+    expect(user2.sortedRoster[0].id).toBe(user.username)
+    expect(user1user2Profile.isFollowed).toBe(true)
+    expect(user2user1Profile.isFollower).toBe(true)
   })
+
+  // TODO: check profile is online after presence enabled
+  // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
 
   it('load followers', async () => {
     const steve = await createUser()
@@ -102,8 +107,6 @@ describe('New GraphQL profile tests', () => {
   })
 
   it('unfollow and refollow', async () => {
-    const user1user2Profile = await user.loadProfile(user2.username!)
-    expect(user1user2Profile).toBeTruthy()
     expect(user.followed.length).toBe(1)
     await user1user2Profile.unfollow()
     expect(user1user2Profile.isFollowed).toBe(false)
@@ -112,8 +115,6 @@ describe('New GraphQL profile tests', () => {
   })
 
   it('block and unblock', async () => {
-    const user1user2Profile = await user.loadProfile(user2.username!)
-    expect(user1user2Profile).toBeTruthy()
     expect(user.blocked.length).toBe(0)
     await user1user2Profile.block()
     expect(user.blocked.length).toBe(1)
