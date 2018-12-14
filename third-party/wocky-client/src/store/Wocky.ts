@@ -198,10 +198,10 @@ export const Wocky = types
     createProfile: (id: string, data: {[key: string]: any} = {}) => {
       return self.profiles.get(id, processMap(data))
     },
-    getBot: ({id, server, ...data}: {id: string; server?: string; owner?: string | null}): IBot => {
+    getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
       const bot = self.bots.storage.get(id)
         ? self.bots.get(id, data)
-        : self.bots.get(id, {server, owner: data.owner})
+        : self.bots.get(id, {owner: data.owner})
       if (data && Object.keys(data).length) {
         self.load(bot, data)
       }

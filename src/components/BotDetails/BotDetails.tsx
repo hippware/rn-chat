@@ -17,7 +17,7 @@ import {navBarStyle} from '../styles'
 
 type Props = {
   botId: string
-  server?: string
+  // server?: string
   isNew: boolean
   params?: any
   wocky?: IWocky
