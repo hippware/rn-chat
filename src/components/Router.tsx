@@ -169,6 +169,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   />
                   <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                   <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+
                 </Modal>
               </Stack>
             </Stack>

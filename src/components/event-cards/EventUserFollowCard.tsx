@@ -50,7 +50,7 @@ const FollowButton = inject('analytics')(
         }}
       >
         <RText size={10.5} weight="Medium" color={isFollowed ? 'white' : colors.PINK}>
-          {isFollowed ? 'FOLLOWING' : 'FOLLOW'}
+          {isFollowed ? 'FRIENDS' : 'CONNECT'}
         </RText>
       </GradientButton>
     )
