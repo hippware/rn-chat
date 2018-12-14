@@ -1,10 +1,10 @@
-import {createUser, waitFor} from './support/testuser'
+import {createUser, timestamp, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
 
 let user: IWocky, user2: IWocky
-let bot: IBot
+let bot, bot2: IBot
 
 const icon = '\u00A9\uFE0F\u00A9'
 
@@ -35,13 +35,61 @@ describe('NewGraphQL tests', () => {
 
   it('update bot location', async () => {
     await bot.update({
-      location: {latitude: 1.3, longitude: 2.3},
+      location: {latitude: 1.21, longitude: 2.21},
       title: 'Test bot!',
     })
     expect(bot.isNew).toBe(false)
     expect(bot.title).toBe('Test bot!')
-    expect(bot.location!.latitude).toBe(1.3)
-    expect(bot.location!.longitude).toBe(2.3)
+    expect(bot.location!.latitude).toBe(1.21)
+    expect(bot.location!.longitude).toBe(2.21)
+  })
+
+  it('create bot2', async () => {
+    timestamp()
+    bot2 = await user.createBot()
+    bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
+    expect(bot2.isNew).toBe(true)
+    await bot2.update({
+      location: {latitude: 1.2, longitude: 2.2},
+      title: 'Test bot2',
+    })
+    expect(bot2.title).toBe('Test bot2')
+    expect(bot2.location!.latitude).toBe(1.2)
+    expect(bot2.location!.longitude).toBe(2.2)
+  })
+
+  it('get local bots 0', async () => {
+    timestamp()
+    const res = await user.loadLocalBots({
+      latitude: 1.2,
+      longitude: 2.2,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    })
+    expect(res.length).toBe(2)
+  })
+  it('get local bots 1 - expect area too large', async done => {
+    timestamp()
+    try {
+      await user.loadLocalBots({
+        latitude: 1.2,
+        longitude: 2.2,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5,
+      })
+    } catch (e) {
+      done()
+    }
+  })
+  it('get local bots 2', async () => {
+    timestamp()
+    const res = await user.loadLocalBots({
+      latitude: 3.2,
+      longitude: 4.2,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    })
+    expect(res.length).toBe(0)
   })
 
   it('update bot description', async () => {

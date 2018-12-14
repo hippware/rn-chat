@@ -1,6 +1,6 @@
 import React from 'react'
 import MapView from 'react-native-maps'
-import {StyleSheet, View, MapViewRegion} from 'react-native'
+import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
 import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
@@ -39,6 +39,7 @@ export default class MapHome extends React.Component<IProps> {
   static defaultProps = {
     autoZoom: true,
   }
+  @observable areaTooLarge = false
 
   @observable
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
@@ -84,8 +85,14 @@ export default class MapHome extends React.Component<IProps> {
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
-      const bots = await this.props.wocky!.loadLocalBots(region)
-      addBotsToList(bots)
+      try {
+        const bots = await this.props.wocky!.loadLocalBots(region)
+        this.areaTooLarge = false
+        addBotsToList(bots)
+      } catch (e) {
+        // TODO display UI for area too large
+        this.areaTooLarge = true
+      }
     }
   }
   // TODO MapView typing doesn't work for latest version - (value: { coordinate: LatLng, position: Point }) => void;
@@ -111,7 +118,7 @@ export default class MapHome extends React.Component<IProps> {
 
   render() {
     const {locationStore, homeStore} = this.props
-    const {list, detailsMode, creationMode} = homeStore!
+    const {list, detailsMode, creationMode, fullScreenMode} = homeStore!
     const {location} = locationStore!
     if (!location) {
       return (
@@ -150,6 +157,12 @@ export default class MapHome extends React.Component<IProps> {
           })}
         </MapView>
         {creationMode && <UberMarker />}
+        {this.areaTooLarge && (
+          <View style={[styles.areaTooLargeView, {bottom: fullScreenMode ? 40 : 160 * k}]}>
+            <Image source={require('../../../images/areaTooLarge.png')} />
+            <Text style={styles.areaTooLargeText}>Zoom In To See Locations</Text>
+          </View>
+        )}
       </View>
     )
   }
@@ -160,5 +173,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  areaTooLargeView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 100,
+  },
+  areaTooLargeText: {
+    fontFamily: 'Roboto-Medium',
+    color: 'white',
+    fontSize: 14,
+    position: 'absolute',
   },
 })

@@ -18,6 +18,7 @@ import {
   VOID_PROPS,
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
+  AREA_TOO_LARGE,
 } from './constants'
 import {
   convertProfile,
@@ -37,8 +38,8 @@ import {IMessageIn} from '../model/Message'
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
-  clients?: [ApolloClient<any>, ApolloClient<any>]
-  sockets?: [PhoenixSocket, PhoenixSocket]
+  client?: ApolloClient<any>
+  socket?: PhoenixSocket
   subscriptions: ZenObservable.Subscription[] = []
   username?: string
   password?: string
@@ -92,14 +93,12 @@ export class NextGraphQLTransport implements IWockyTransport {
         `,
         variables: {token},
       }
-      const res = await Promise.all(this.clients!.map(c => c.mutate(mutation)))
+      const res = await this.client!.mutate(mutation)
       // set the username based on what's returned in the mutation
-      this.username = (res[0] as any).data.authenticate.user.id
-      // check that all clients are authenticated
-      this.connected = res.reduce<boolean>(
-        (accumulated: boolean, current) => accumulated && current.data!.authenticate !== null,
-        true
-      )
+      this.connected = res.data!.authenticate !== null
+      if (this.connected) {
+        this.username = res.data!.authenticate.user.id
+      }
       return this.connected
     } finally {
       this.connecting = false
@@ -107,7 +106,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadProfile(user: string): Promise<IProfilePartial | null> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {
             user(id: "${user}") {
@@ -127,7 +126,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return convertProfile(res.data.user)
   }
   async requestRoster(): Promise<any[]> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query requestRoster {
           currentUser {
@@ -160,7 +159,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async generateId(): Promise<string> {
-    const res = await this.clients![0].mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation botCreate {
           botCreate {
@@ -179,7 +178,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return res.data!.botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
@@ -218,7 +217,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async getLocationUploadToken(): Promise<string> {
-    const res = await this.clients![0].mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation userLocationGetToken {
           userLocationGetToken {
@@ -254,7 +253,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
       query: gql`
         query getLocationsVisited($limit: Int!, $ownResource: String!) {
@@ -288,7 +287,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }): Promise<{list: any[]; count: number}> {
     const {limit, beforeId, afterId} = params
     // console.log('& gql load', beforeId, afterId, limit)
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
           notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
@@ -328,7 +327,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
   async loadGeofenceBots(): Promise<IPagingList<any>> {
     // load all guest bots
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query getActiveBots($ownUsername: String!) {
           currentUser {
@@ -384,7 +383,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList<IBotPostIn>> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query loadBot($id: UUID!, $limit: Int, $cursor: String) {
           bot(id: $id) {
@@ -404,7 +403,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     }
   }
   async inviteBot(botId: string, userIds: string[]): Promise<void> {
-    await this.clients![0].mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation botInvite($input: BotInviteInput!) {
           botInvite(input: $input) {
@@ -421,7 +420,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     {latitude, longitude, accuracy},
     accept: boolean = true
   ) {
-    await this.clients![0].mutate({
+    await this.client!.mutate({
       mutation: gql`
         mutation botInvitationRespond($input: BotInvitationRespondInput!) {
           botInvitationRespond(input: $input) {
@@ -451,17 +450,11 @@ export class NextGraphQLTransport implements IWockyTransport {
     this.connecting = false
     this.subscriptions.forEach(subscription => subscription.unsubscribe())
     this.subscriptions = []
-    if (this.sockets) {
-      await Promise.all(
-        this.sockets.map(socket => {
-          if (socket.isConnected()) {
-            return this.socketDisconnect(socket)
-          }
-        })
-      )
+    if (this.socket && this.socket.isConnected()) {
+      await this.socketDisconnect(this.socket)
     }
-    this.sockets = undefined
-    this.clients = undefined
+    this.socket = undefined
+    this.client = undefined
   }
 
   async updateProfile(d: any): Promise<void> {
@@ -518,7 +511,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async requestUpload({file, size, access}: any): Promise<any> {
-    const res = await this.clients![0].mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
           mediaUpload(input: $input) {
@@ -632,7 +625,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadChat(userId, lastId, max): Promise<void> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query loadChat($otherUser: UUID, $after: String, $first: Int) {
             currentUser {
@@ -656,7 +649,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query loadChats($max: Int) {
             currentUser {
@@ -772,7 +765,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   ): Promise<IPagingList<any>> {
     // TODO: remove this after IWockyTransport change
     relation = relation.toUpperCase()
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query user($userId: UUID!, $relation: UserContactRelationship, $lastId: String, $max: Int) {
           user(id: $userId) {
@@ -878,11 +871,14 @@ export class NextGraphQLTransport implements IWockyTransport {
     if (latitudeDelta > 100 || longitudeDelta > 100) {
       return [] as any
     }
-    const res = await this.clients![1].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query loadLocalBots($pointA: Point!, $pointB: Point!, $ownUsername: String!){
           localBots(pointA: $pointA, pointB: $pointB) {
-            ${BOT_PROPS}
+            areaTooLarge
+            bots {
+              ${BOT_PROPS}
+            }
           }
         }
       `,
@@ -892,7 +888,10 @@ export class NextGraphQLTransport implements IWockyTransport {
         ownUsername: this.username,
       },
     })
-    return res.data.localBots.map(convertBot)
+    if (res.data.localBots.areaTooLarge) {
+      throw new Error(AREA_TOO_LARGE)
+    }
+    return res.data.localBots.bots.map(convertBot)
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
@@ -909,7 +908,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async searchUsers(text: string): Promise<IProfilePartial[]> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query searchUsers($text: String!){
           users(limit: 20, searchTerm: $text) {
@@ -923,7 +922,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   async userInviteMakeCode(): Promise<string> {
-    const res = await this.clients![0].mutate({
+    const res = await this.client!.mutate({
       mutation: gql`
         mutation userInviteMakeCode {
           userInviteMakeCode {
@@ -953,7 +952,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   /******************************** SUBSCRIPTIONS ********************************/
 
   private subscribeNotifications() {
-    const subscription = this.clients![0].subscribe({
+    const subscription = this.client!.subscribe({
       query: gql`
           subscription notifications($ownUsername: String!) {
             notifications {
@@ -973,7 +972,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   private subscribeContacts() {
-    const subscription = this.clients![0].subscribe({
+    const subscription = this.client!.subscribe({
       query: gql`
         subscription subscribeContacts {
           contacts {
@@ -1004,7 +1003,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   private subscribeBotVisitors() {
-    const subscription = this.clients![0].subscribe({
+    const subscription = this.client!.subscribe({
       query: gql`
           subscription subscribeBotVisitors($ownUsername: String!){
             botGuestVisitors {
@@ -1043,7 +1042,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   private subscribeMessages() {
-    const subscription = this.clients![0].subscribe({
+    const subscription = this.client!.subscribe({
       query: gql`
         subscription messages {
           messages {
@@ -1062,7 +1061,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   /******************************** END SUBSCRIPTIONS ********************************/
 
   private async loadBots(relationship: string, userId: string, after?: string, max: number = 10) {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
           query loadBots($max: Int!, $ownUsername: String!, $userId: String!, $after: String, $relationship: String!) {
             user(id: $userId) {
@@ -1100,7 +1099,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
     const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
-    const res = await this.clients![0].mutate({mutation, variables})
+    const res = await this.client!.mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {
       // console.error('voidMutation error with ', name, JSON.stringify(res.data[name]))
       throw new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`)
@@ -1114,7 +1113,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     lastId?: string,
     max: number = 10
   ): Promise<IPagingList<any>> {
-    const res = await this.clients![0].query<any>({
+    const res = await this.client!.query<any>({
       query: gql`
         query getBotProfiles($botId: UUID!, $cursor: String, $limit: Int) {
           bot(id: $botId) {
@@ -1157,11 +1156,11 @@ export class NextGraphQLTransport implements IWockyTransport {
   }
 
   private prepConnection() {
-    if (this.clients) {
+    if (this.client) {
       return
     }
-    this.sockets = [this.makeSocket(), this.makeSocket()]
-    this.clients = [this.makeClient(this.sockets[0]), this.makeClient(this.sockets[1])]
+    this.socket = this.makeSocket()
+    this.client = this.makeClient(this.socket)
   }
 
   private makeSocket() {
