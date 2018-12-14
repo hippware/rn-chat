@@ -243,7 +243,7 @@ const LocationStore = types
 
     const refreshCredentials = flow(function*() {
       try {
-        const token = yield getEnv(self).transport.getLocationUpdateToken()
+        const token = yield wocky.getLocationUploadToken()
         yield BackgroundGeolocation.setConfig({
           url: `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`,
           headers: {
@@ -258,6 +258,7 @@ const LocationStore = types
         BackgroundGeolocation.logger.info(`${prefix} refreshCredentials`)
       } catch (err) {
         logger.log(prefix, 'refreshCredentials error', err)
+        BackgroundGeolocation.logger.error(`${prefix} refreshCredentials ${err}`)
       }
     })
 
@@ -354,9 +355,8 @@ const LocationStore = types
               } catch (err) {
                 // prevent unhandled promise rejection
                 logger.log(prefix, 'Start onConnected reaction error', err)
-                const errInfo = JSON.stringify(err)
                 BackgroundGeolocation.logger.error(
-                  `${prefix} Start onConnected reaction error ${errInfo}`
+                  `${prefix} Start onConnected reaction error ${err}`
                 )
               }
             }
