@@ -6,7 +6,7 @@ import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
 
-const SERVER_NAME = 'next'
+const SERVER_NAME = 'testing'
 const appInfo = AppInfo.create({
   deviceId: 'test',
   systemName: 'unitTest',
