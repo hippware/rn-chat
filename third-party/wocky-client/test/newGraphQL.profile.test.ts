@@ -123,6 +123,30 @@ describe('New GraphQL profile tests', () => {
     expect(user.followed.length).toBe(0)
   })
 
+  it('hide and unhide', async () => {
+    const date = new Date(Date.now() + 1000)
+    await user.profile!.hide(true, date)
+    expect(user.profile!.hidden!.expires!.getTime()).toEqual(date.getTime())
+    expect(user.profile!.hidden!.enabled).toEqual(true)
+    await user.profile!.hide(false, undefined)
+    expect(user.profile!.hidden!.expires).toBe(null)
+    expect(user.profile!.hidden!.enabled).toEqual(false)
+  })
+
+  // TODO deal with verification of search?
+  // it('searches users', async done => {
+  //   try {
+  //     timestamp()
+  //     await gql.login(user.username!, user.password!, host)
+  //     await gql.searchUsers('abc')
+  //     // NOTE: results for newly created users don't show up in the results which makes expected values
+  //     // on the return from `searchUsers` difficult here
+  //     done()
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // })
+
   it('enable/disable push notifications', async () => {
     await user.enablePush('randomToken')
     await user.disablePush()
