@@ -39,14 +39,15 @@ export const OwnProfile = types
     types.model('OwnProfile', {
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
-      hasUsedGeofence: false,
       hidden: types.optional(Hidden, {}),
     })
   )
-  .actions(self => ({
-    setHasUsedGeofence: value => {
-      self.hasUsedGeofence = value
+  .views(self => ({
+    hasUsedGeofence() {
+      return self.ownBots.list.length > 0
     },
+  }))
+  .actions(self => ({
     hide: flow(function*(value: boolean, expires: Date | undefined) {
       yield self.service._hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})

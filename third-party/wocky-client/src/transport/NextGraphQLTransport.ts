@@ -113,7 +113,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               ${PROFILE_PROPS}
               ${
                 user === this.username
-                  ? `... on CurrentUser { email phoneNumber hasUsedGeofence hidden {enabled expires} }`
+                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} }`
                   : ''
               }
             }
