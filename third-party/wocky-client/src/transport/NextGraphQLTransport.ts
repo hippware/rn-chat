@@ -218,7 +218,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return convertBot(res.data.bot)
   }
 
-  async getLocationUpdateToken(): Promise<string> {
+  async getLocationUploadToken(): Promise<string> {
     const res = await this.clients![0].mutate({
       mutation: gql`
         mutation userLocationGetToken {

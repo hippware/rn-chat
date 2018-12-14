@@ -1,6 +1,6 @@
 import {log} from './constants'
 
-const DEV_HOST = 'next.dev.tinyrobot.com'
+const DEV_HOST = 'testing.dev.tinyrobot.com'
 // TODO add PROD/STAGING for next server
 const PROD_HOST = 'next.prod.tinyrobot.com'
 const STAGING_HOST = 'next.dev.tinyrobot.com'
