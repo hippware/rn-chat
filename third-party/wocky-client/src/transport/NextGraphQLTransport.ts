@@ -1100,7 +1100,6 @@ export class NextGraphQLTransport implements IWockyTransport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
-    if (!this.clients || !this.clients[0]) return
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
     const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
     const res = await this.client!.mutate({mutation, variables})

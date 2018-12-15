@@ -25,8 +25,8 @@ export const Chat = types
     get sortedMessages() {
       return (self.messages as IMessageList).list!.sort((a, b) => a.time - b.time)
     },
-    get unread(): number {
-      return (self.messages as IMessageList).list.reduce(
+    get unreadCount(): number {
+      return (self.messages as IMessageList).list!.reduce(
         (prev, current) => prev + (current.unread ? 1 : 0),
         0
       )

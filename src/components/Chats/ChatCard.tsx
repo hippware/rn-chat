@@ -7,9 +7,10 @@ import {k} from '../Global'
 import ResizedImage from './ResizedImage'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
+import {IChat} from 'wocky-client'
 
 type Props = {
-  item: any
+  chat: IChat
   onPostOptions?: any
   onPress: any
   style?: any
@@ -21,10 +22,10 @@ export default class ChatCard extends React.Component<Props> {
 
   render() {
     const isDay = true
-    const chat = this.props.item
+    const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg = chat.last
-    const {participants} = chat
+    const msg = chat.messages.last
+    const {otherUser} = chat
     let media: any = null
     try {
       media = msg.media && msg.media.source ? msg.media : null
@@ -47,9 +48,7 @@ export default class ChatCard extends React.Component<Props> {
             }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => (
-                <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} />
-              ))}
+              <Avatar key={`${otherUser.id}avatar`} size={40 * k} profile={otherUser} />
             </View>
 
             <Date {...this.props}>
@@ -87,34 +86,7 @@ export default class ChatCard extends React.Component<Props> {
             <ResizedImage image={media.source} />
           </View>
         )}
-        {!!this.props.item.location && (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingLeft: 15 * k,
-              paddingRight: 15 * k,
-              paddingTop: 10,
-            }}
-          >
-            <Image source={require('../../../images/iconLocation.png')} />
-            <Text style={styles.smallText}> {this.props.item.location}</Text>
-          </View>
-        )}
-        {!!this.props.item.channel && (
-          <Text
-            style={[
-              {
-                paddingLeft: 15 * k,
-                paddingRight: 15 * k,
-              },
-              styles.smallText,
-            ]}
-          >
-            #{this.props.item.channel}
-          </Text>
-        )}
-        {chat.unread > 0 && (
+        {chat.unreadCount > 0 && (
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
             <Image source={require('../../../images/iconNewPriority.png')} />
           </View>

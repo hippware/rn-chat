@@ -18,8 +18,8 @@ export const Chats = types
         (a, b) => (b.messages as IMessageList).last!.time - (a.messages as IMessageList).last!.time
       )
     },
-    get unread() {
-      return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)
+    get unreadCount(): number {
+      return self._filteredList.reduce((prev: number, current) => prev + current.unreadCount, 0)
     },
     get(id?: string): IChat | undefined {
       return self._list.find(el => el.id === id)

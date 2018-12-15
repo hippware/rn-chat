@@ -29,29 +29,35 @@ class ChatListScreen extends React.Component<Props> {
     this.props.wocky!.loadChats()
   }
 
-  renderItem = ({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />
+  renderItem = ({item}) => <ChatCard chat={item} onPress={i => Actions.chat({item: i.id})} />
 
   keyExtractor = item => `${item.id}`
 
   render() {
-    const {list: chats, unread: num} = this.props.wocky!.chats
+    const {chats} = this.props.wocky!
     return (
       <Screen>
         <FlatList
           style={{flex: 1, flexDirection: 'column'}}
           ref={l => (this.list = l)}
-          contentContainerStyle={{marginTop: num ? 47 : 10}}
-          data={chats}
+          contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
+          data={chats.list}
           initialNumToRender={6}
           ListFooterComponent={
-            chats.length ? <ListFooter footerImage={footerImage} finished /> : null
+            chats.list.length ? (
+              <ListFooter
+                footerImage={footerImage}
+                finished
+                style={{backgroundColor: 'transparent'}}
+              />
+            ) : null
           }
           ListEmptyComponent={EmptyComponent}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
         />
         <MessageButton />
-        {!!num && (
+        {chats.unreadCount > 0 && (
           <View style={styles.button}>
             <RText weight="Italic" color="white">
               New Messages
