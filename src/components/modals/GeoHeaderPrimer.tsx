@@ -12,14 +12,17 @@ const GeoHeaderPrimer = () => (
   <PopupBlur showCloseButton containerStyle={{paddingHorizontal: 20}}>
     <Image source={image} style={{marginBottom: 25 * k}} resizeMode="contain" />
     <RText style={styles.text} weight="Light" size={30} color={colors.PINK}>
-      {`See who visits\r\nyour favorite\r\nlocations!`}
+      {`Know when\r\n friends visit your\r\n favorite locations!`}
     </RText>
     <TouchableOpacity
-      onPress={Actions.botContainer}
+      onPress={() => {
+        Actions.pop()
+        Actions.createBot()
+      }}
       style={[styles.button, {backgroundColor: colors.PINK}]}
     >
       <RText size={17.5} color="white">
-        Set Up Location Alerts
+        Get Started
       </RText>
     </TouchableOpacity>
 
