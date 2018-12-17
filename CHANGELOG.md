@@ -13,7 +13,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * GraphQL auth refactoring, firebase/bypass fixes (PR #3183, PR #3188)
   * Fix firebase login (with real phone number) with 4.0.0 version (#3172)
   * Expand `iss` field in JWT auth token (#3097)
-* Update LocationStore to use new location token (#3170)
+* Update LocationStore to use new location token (#3170, PR #3189, PR #3195)
+* Properly process token exception
+* Point tests back to Testing. Some clean-up (PR #3193)
+* Change localBots API to be able to get 'too many bots' error (#3062)
+* Missing New! pin for new users #3026
 
 # 4.0.0 - 2018 Dec 10
 
