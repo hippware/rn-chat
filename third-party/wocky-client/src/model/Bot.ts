@@ -30,7 +30,6 @@ export const Bot = types
     types.model('Bot', {
       id: types.identifier,
       isSubscribed: false,
-      guest: false, // TODO remove it, because next server doesn't support it?
       visitor: false,
       icon: '',
       title: types.maybeNull(types.string),
@@ -42,12 +41,10 @@ export const Bot = types
       location: types.maybeNull(Location),
       address: '',
       followersSize: 0,
-      guestsSize: 0,
       visitorsSize: 0,
       totalItems: 0,
       addressData: types.optional(Address, {}),
       subscribers: types.optional(LazyProfileList, {}),
-      guests: types.optional(LazyProfileList, {}),
       visitors: types.optional(LazyProfileList, {}),
       posts: types.optional(BotPostPaginableList, {}),
       error: '',
@@ -95,12 +92,10 @@ export const Bot = types
       yield self.service._acceptBotInvitation(self.invitation.id, userLocation)
       self.invitation.accepted = true
       self.isSubscribed = true
-      self.guest = true
       self.service.profile!.subscribedBots.addToTop(self)
       self.service.geofenceBots.addToTop(self)
     }),
     unsubscribe: flow(function*() {
-      self.guest = false
       self.isSubscribed = false
       self.service.profile!.subscribedBots.remove(self.id)
       self.service.geofenceBots.remove(self.id)
@@ -117,6 +112,7 @@ export const Bot = types
     },
     load: (d: any = {}) => {
       const data = {...d}
+      // console.log('bot load', d)
       if (data.addressData && typeof data.addressData === 'string') {
         try {
           data.addressData = JSON.parse(data.addressData)
@@ -135,11 +131,6 @@ export const Bot = types
         self.visitors.refresh()
         data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
         delete data.visitors
-      }
-      if (data.guests) {
-        self.guests.refresh()
-        data.guests.forEach(p => self.guests.add(self.service.profiles.get(p.id, p)))
-        delete data.guests
       }
       if (data.posts) {
         self.posts.refresh()
@@ -162,7 +153,6 @@ export const Bot = types
     delete res.posts
     delete res.error
     delete res.subscribers
-    delete res.guests
     return res
   })
   .actions(self => {
@@ -177,7 +167,6 @@ export const Bot = types
       }),
       afterAttach: () => {
         self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-        self.guests.setRequest(self.service._loadBotGuests.bind(self.service, self.id))
         self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
         self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
       },
@@ -194,7 +183,6 @@ export interface IBot extends Instance<typeof Bot> {}
 export interface IBotData {
   id: string
   isSubscribed: boolean
-  guest: boolean
   visitor: boolean
   icon: string
   title?: string
@@ -207,12 +195,10 @@ export interface IBotData {
   location: any // TODO
   address?: string
   followersSize: number
-  guestsSize: number
   visitorsSize: number
   totalItems: number
   addressData?: any
   subscribers?: any
-  guests?: any
   visitors?: any
   posts?: any
   error?: string

@@ -198,10 +198,10 @@ export const Wocky = types
     createProfile: (id: string, data: {[key: string]: any} = {}) => {
       return self.profiles.get(id, processMap(data))
     },
-    getBot: ({id, server, ...data}: {id: string; server?: string; owner?: string | null}): IBot => {
+    getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
       const bot = self.bots.storage.get(id)
         ? self.bots.get(id, data)
-        : self.bots.get(id, {server, owner: data.owner})
+        : self.bots.get(id, {owner: data.owner})
       if (data && Object.keys(data).length) {
         self.load(bot, data)
       }
@@ -322,23 +322,11 @@ export const Wocky = types
       _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadGeofenceBots()
-        if (list.length) {
-          self.profile!.setHasUsedGeofence(true)
-        }
         return {list: list.map(self.getBot), count, cursor}
       }),
       _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotSubscribers(id, lastId, max)
-        return {
-          list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
-          count,
-          cursor,
-        }
-      }),
-      _loadBotGuests: flow(function*(id: string, lastId?: string, max: number = 10) {
-        yield waitFor(() => self.connected)
-        const {list, cursor, count} = yield self.transport.loadBotGuests(id, lastId, max)
         return {
           list: list.map((profile: any) => self.profiles.get(profile.id, profile)),
           count,
@@ -367,7 +355,6 @@ export const Wocky = types
       _updateBot: flow(function*(d: any, userLocation: ILocation) {
         yield waitFor(() => self.connected)
         yield self.transport.updateBot(d, userLocation)
-        self.profile!.setHasUsedGeofence(true) // all bots now are geofence
         // subscribe owner to his bot
         const bot = self.bots.storage.get(d.id)
         self.profile!.ownBots.addToTop(bot)

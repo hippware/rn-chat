@@ -1,4 +1,4 @@
-import {createUser, timestamp, waitFor} from './support/testuser'
+import {createUser, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -45,7 +45,6 @@ describe('NewGraphQL tests', () => {
   })
 
   it('create bot2', async () => {
-    timestamp()
     bot2 = await user.createBot()
     bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
     expect(bot2.isNew).toBe(true)
@@ -59,7 +58,6 @@ describe('NewGraphQL tests', () => {
   })
 
   it('get local bots 0', async () => {
-    timestamp()
     const res = await user.loadLocalBots({
       latitude: 1.2,
       longitude: 2.2,
@@ -68,21 +66,21 @@ describe('NewGraphQL tests', () => {
     })
     expect(res.length).toBe(2)
   })
-  it('get local bots 1 - expect area too large', async done => {
-    timestamp()
+  it('get local bots 1 - expect area too large', async () => {
     try {
-      await user.loadLocalBots({
-        latitude: 1.2,
-        longitude: 2.2,
-        latitudeDelta: 0.5,
-        longitudeDelta: 0.5,
-      })
-    } catch (e) {
-      done()
+      expect(
+        await user.loadLocalBots({
+          latitude: 1.2,
+          longitude: 2.2,
+          latitudeDelta: 0.5,
+          longitudeDelta: 0.5,
+        })
+      ).toThrow()
+    } catch (err) {
+      expect(err).toBeTruthy()
     }
   })
   it('get local bots 2', async () => {
-    timestamp()
     const res = await user.loadLocalBots({
       latitude: 3.2,
       longitude: 4.2,
@@ -130,8 +128,9 @@ describe('NewGraphQL tests', () => {
     await bot.invite([user2!.username!])
     await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
     const loadedBot = await user2.loadBot(bot.id)
-    expect(loadedBot.guestsSize).toEqual(1)
     await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
+    await user2.loadBot(bot.id)
+    expect(loadedBot.followersSize).toEqual(1)
     // TODO: figure out why guests not incrementing after accepted invitation
     // await waitFor(
     //   () => loadedBot.guestsSize === 2,
@@ -143,6 +142,7 @@ describe('NewGraphQL tests', () => {
   afterAll(async () => {
     try {
       await user.removeBot(bot.id)
+      await user.removeBot(bot2.id)
     } catch (e) {
       // console.warn('error removing bot', e)
     }

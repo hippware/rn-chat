@@ -31,7 +31,7 @@ class BotButtons extends React.Component<Props> {
   // TODO: why is this in BotButtons? Should probably move to BotDetailsHeader
   componentDidMount() {
     this.handler = autorun(() => {
-      if (this.props.wocky!.connected && this.props.bot.guest) {
+      if (this.props.wocky!.connected && this.props.bot.isSubscribed) {
         if (!this.props.locationStore!.alwaysOn) {
           Actions.geofenceWarning({bot: this.props.bot})
           this.props.bot.unsubscribe()

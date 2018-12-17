@@ -165,8 +165,8 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
     const prefix = list!.length > 1 ? 'are' : 'is'
     text = prefix + ' currently here!'
     onPress = () => Actions.visitors({botId: bot.id})
-  } else if (bot.guests.list.length > 1) {
-    list = bot.guests.list.filter((g: IProfile) => g.id !== bot.owner!.id)
+  } else if (bot.subscribers.list.length > 1) {
+    list = bot.subscribers.list.filter((g: IProfile) => g.id !== bot.owner!.id)
     text = 'accepted the invite!'
   }
   let inner: Array<ReactElement<any>> | null = null
