@@ -32,10 +32,7 @@ const BotCard = observer(({bot, isSelected}: Props) => (
       }}
     >
       {bot.image ? (
-        <Image
-          style={styles.thumb as ImageStyle}
-          source={bot.image.thumbnail! as ImageSourcePropType}
-        />
+        <Image style={styles.thumb as ImageStyle} source={bot.image! as ImageSourcePropType} />
       ) : (
         <View
           style={{

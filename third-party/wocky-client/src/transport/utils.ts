@@ -298,8 +298,8 @@ export function iso8601toDate(date: string) {
 
 export function convertImage(image) {
   return image && image.trosUrl && image.thumbnailUrl
-    ? {id: image.trosUrl, url: image.thumbnailUrl}
-    : null
+    ? {id: image.trosUrl, uri: image.thumbnailUrl}
+    : undefined
 }
 
 export function convertProfile({
@@ -393,7 +393,6 @@ export function convertNotification(edge: any): IEventData | null {
           profile: data.botItem.owner.id,
           title: '',
           content: '',
-          image: null,
         },
         bot,
       }

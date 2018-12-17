@@ -463,7 +463,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       }
     })
     if (d.avatar) {
-      values.imageUrl = d.avatar
+      values.imageUrl = d.avatar.id
     }
 
     return this.voidMutation({
@@ -806,7 +806,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           botId,
           content: post.content,
           id: post.id,
-          imageUrl: post.image && post.image.url,
+          imageUrl: post.image && post.image.uri,
         },
       },
     })

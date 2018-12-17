@@ -1,5 +1,5 @@
 import {types, flow, getParent, IAnyModelType, Instance, SnapshotIn} from 'mobx-state-tree'
-import {FileRef} from './File'
+import {File} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
@@ -13,7 +13,7 @@ const BotPostData = types.model('BotPostData', {
   id: types.identifier,
   content: '',
   title: '',
-  image: FileRef,
+  image: types.maybe(File),
   profile: types.reference(BotPostProfileRef),
 })
 

@@ -1,6 +1,6 @@
 import {types, flow, getSnapshot, getEnv, isAlive, IAnyModelType, Instance} from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
-import {FileRef} from './File'
+import {File} from './File'
 import {Location, ILocation} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
@@ -36,7 +36,7 @@ export const Bot = types
       server: types.maybeNull(types.string),
       radius: 100,
       owner: types.maybeNull(types.reference(types.late((): IAnyModelType => Profile))),
-      image: FileRef,
+      image: types.maybe(File),
       description: '',
       location: types.maybeNull(Location),
       address: '',

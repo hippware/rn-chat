@@ -1,5 +1,5 @@
 import {types, flow, IAnyModelType} from 'mobx-state-tree'
-import {FileRef} from './File'
+import {File} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
@@ -11,7 +11,7 @@ export const Profile = types
     Loadable,
     types.model('Profile', {
       id: types.identifier,
-      avatar: FileRef,
+      avatar: types.maybe(File),
       handle: types.maybeNull(types.string),
       status: 'unavailable',
       firstName: types.maybeNull(types.string),
@@ -55,9 +55,6 @@ export const Profile = types
             self.subscribedBots.setRequest(
               self.service._loadSubscribedBots.bind(self.service, self.id)
             )
-            if (!self.loaded) {
-              self.service.loadProfile(self.id)
-            }
           }
         },
         follow: flow(function*() {
@@ -149,6 +146,6 @@ export interface IProfilePartial {
   } | null
   avatar: {
     id: string
-    url: string
+    uri: string
   } | null
 }

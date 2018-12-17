@@ -25,14 +25,7 @@ class BotBubble extends React.Component<Props> {
       return null
     }
     const text = bot.icon
-    const bubble = (
-      <Bubble
-        text={text}
-        textSize={35}
-        showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
-        {...rest}
-      />
-    )
+    const bubble = <Bubble text={text} textSize={35} showLoader={showLoader} {...rest} />
 
     return onImagePress ? (
       <TouchableOpacity onPress={onImagePress}>{bubble}</TouchableOpacity>

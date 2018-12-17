@@ -1,6 +1,6 @@
 import {types, Instance, SnapshotIn, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
-import {FileRef} from './File'
+import {File} from './File'
 import * as utils from '../transport/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
@@ -19,7 +19,7 @@ export const Message = types
       archiveId: '',
       from: types.reference(Profile),
       to: types.reference(Profile),
-      media: FileRef,
+      media: types.maybe(File),
       unread: false,
       body: '',
     })
@@ -33,7 +33,7 @@ export const Message = types
   .actions(self => ({
     read: () => (self.unread = false),
     clear: () => {
-      self.media = null
+      self.media = undefined
       self.body = ''
       self.id = utils.generateID()
     },

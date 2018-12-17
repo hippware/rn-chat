@@ -21,9 +21,10 @@ describe('FileStore', () => {
     }
     const data = {height: 300, width: 300, size: 3801, file}
     await waitFor(() => user1.profile !== null, 'user1 profile to load')
-    expect(user1.profile!.avatar).toBe(null)
+    expect(user1.profile!.avatar).toBe(undefined)
     await user1.profile!.upload(data)
     expect(user1.profile!.avatar).toBeTruthy()
+    expect(user1.profile!.avatar!.uri).toBe(fileName)
     expect(user1.profile!.uploaded).toBe(true)
     expect(user1.profile!.uploading).toBe(false)
     expect(user1.profile!.updated).toBe(false)
@@ -32,10 +33,10 @@ describe('FileStore', () => {
     await sleep(3000)
     const profile = await user1.loadProfile(user1.username!)
     expect(profile.avatar).toBeTruthy()
-    await waitFor(
-      () => profile !== null && profile.avatar !== null && profile.avatar.thumbnail !== null
-    )
-    expect(user1.profile!.avatar!.thumbnail!.uri).toBe(fileName)
+    await waitFor(() => profile !== null && profile.avatar !== null)
+    expect(user1.profile!.avatar!.uri).toBeTruthy()
+    expect(user1.profile!.avatar!.id).toBeTruthy()
+    expect(user1.profile!.avatar!.uri).not.toBe(fileName) // should be s3 Url
   })
 
   it('logout, load profile and verify thumbnail', async () => {

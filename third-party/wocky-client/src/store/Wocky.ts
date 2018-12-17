@@ -66,16 +66,9 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          const profile = self.create(OwnProfile, {
-            id,
-            ...data,
-            ...self._registerReferences(Profile, data),
-            loaded: true,
-            status: 'available',
-          })
-          self.profile = profile!
+          self.profile = OwnProfile.create(data)
         } else {
-          self.load(self.profile, data)
+          self.profile.load(data)
         }
         // add own profile to the storage
         self.profiles.get(id, data)

@@ -34,26 +34,15 @@ export function createFactory(type: IType<any, any, any>) {
       get: (id: string, data?: {[key: string]: any}) => {
         // ensure that nothing inside data is observable (othwerise throws MST exception)
         data = _.cloneDeep(data)
-
-        try {
-          if (!self.storage.get(id)) {
-            const entity = (getParent(self) as IStorages).create(type, {
-              id,
-              ...data,
-              loaded: data && !!Object.keys(data).length,
-            })
-            self.storage.put(entity)
-          } else {
-            const entity: any = self.storage.get(id)!
-            if (entity.load && data && Object.keys(data).length) {
-              entity.load((getParent(self) as IStorages)._registerReferences(type, data))
-            }
+        if (!self.storage.get(id)) {
+          self.storage.put(data)
+        } else {
+          const entity: any = self.storage.get(id)!
+          if (entity.load && data && Object.keys(data).length) {
+            entity.load((getParent(self) as IStorages)._registerReferences(type, data))
           }
-          return self.storage.get(id)!
-        } catch (e) {
-          getEnv(self).logger.warn('Factory.ts get: Invalid data', e)
-          return null
         }
+        return self.storage.get(id)!
       },
     }))
 }
@@ -131,37 +120,38 @@ export const Storages = types
   })
   .actions(self => ({
     create: <T>(type: IType<any, any, T>, param: {[key: string]: any}) => {
-      const data = {...param}
-      // some workaround to create references on the fly (maybe recent MST can do it automatically?)
-      const arr = ['user', 'profile', 'owner']
-      arr.forEach(key => {
-        if (param[key] && typeof param[key] === 'object') {
-          // create reference to profile!
-          self.profiles.get(param[key].id, param[key])
-          data[key] = param[key].id
-        }
-      })
-      if (param.bot && typeof param.bot === 'object') {
-        // create reference to bot!
-        self.bots.get(param.bot.id, param.bot)
-        data.bot = param.bot.id
-      }
-      if (param.avatar && typeof param.avatar === 'object') {
-        // create reference to file!
-        self.files.get(param.avatar.id, param.avatar)
-        data.avatar = param.avatar.id
-      }
-      if (param.image && typeof param.image === 'object') {
-        // create reference to file!
-        self.files.get(param.image.id, param.image)
-        data.image = param.image.id
-      }
+      // const data = {...param}
+      // // some workaround to create references on the fly (maybe recent MST can do it automatically?)
+      // const arr = ['user', 'profile', 'owner']
+      // arr.forEach(key => {
+      //   if (param[key] && typeof param[key] === 'object') {
+      //     // create reference to profile!
+      //     self.profiles.get(param[key].id, param[key])
+      //     data[key] = param[key].id
+      //   }
+      // })
+      // if (param.bot && typeof param.bot === 'object') {
+      //   // create reference to bot!
+      //   self.bots.get(param.bot.id, param.bot)
+      //   data.bot = param.bot.id
+      // }
+      // if (param.avatar && typeof param.avatar === 'object') {
+      //   // create reference to file!
+      //   self.files.get(param.avatar.id, param.avatar)
+      //   data.avatar = param.avatar.id
+      // }
+      // if (param.image && typeof param.image === 'object') {
+      //   // create reference to file!
+      //   self.files.get(param.image.id, param.image)
+      //   data.image = param.image.id
+      // }
 
-      // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this
-      return type.create(self._registerReferences(type, data), getEnv(self))
+      // // TODO: add processing for `sender` and `owner` (for notifications) or figure out a better way of doing this
+      // return type.create(self._registerReferences(type, data), getEnv(self))
+      return type.create(param, getEnv(self))
     },
     load: (instance: any, data: {[key: string]: any}) => {
-      instance.load(self._registerReferences(getType(instance), data))
+      instance.load(data)
     },
   }))
 
