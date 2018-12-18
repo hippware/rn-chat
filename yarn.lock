@@ -2154,7 +2154,7 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-check-es2015-constants@6.22.0, babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@^6.8.0:
+babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
   dependencies:
@@ -9062,13 +9062,6 @@ react-native-mixpanel@^1.1.1:
 "react-native-native-env@github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6":
   version "0.0.7"
   resolved "https://codeload.github.com/aksonov/react-native-native-env/tar.gz/6e89ac8cd2dc26e4421b1d85a61529bd02643aa6"
-
-react-native-parsed-text@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.20.tgz#7bd35fec88c3ca0eb0e8250a98e24092b4ee7fef"
-  dependencies:
-    babel-plugin-check-es2015-constants "6.22.0"
-    prop-types "^15.5.10"
 
 react-native-permissions@^1.1.1:
   version "1.1.1"
