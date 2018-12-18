@@ -17,11 +17,10 @@ import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import {showImagePicker} from '../ImagePicker'
-import ChatBubble from './ChatBubble'
 import ChatMessage from './ChatMessage'
 import {AutoExpandingTextInput, Avatar} from '../common'
 import {colors} from '../../constants'
-import {IWocky} from 'wocky-client'
+import {IWocky, IChat, IMessage} from 'wocky-client'
 
 const Button = require('apsl-react-native-button')
 
@@ -45,18 +44,19 @@ class ChatScreen extends React.Component<Props, State> {
     height: 0,
   }
 
-  @observable messages: any[] = []
-  @observable chat: any
+  // @observable messages: any[] = []
+  @observable chat?: IChat
   mounted: boolean = false
   handler: any
-  list: any
 
-  componentDidMount() {
+  async componentDidMount() {
     const {item, wocky} = this.props
     this.chat = wocky!.createChat(item)
-    // load chat asynchronously
-    this.chat.load().then(() => this.chat.readAll())
+    // console.log('& this.chat', item, this.chat.messages.list.length)
+    await this.chat.messages.load()
+    this.chat.readAll()
     this.chat.setActive(true)
+    // TODO: use withKeyboardHOC here
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
     this.mounted = true
@@ -76,8 +76,8 @@ class ChatScreen extends React.Component<Props, State> {
   }
 
   onSend = () => {
-    if (this.chat.message.body.trim()) {
-      this.chat.message.send()
+    if (this.chat!.message!.body.trim()) {
+      this.chat!.message!.send()
     }
   }
 
@@ -89,39 +89,32 @@ class ChatScreen extends React.Component<Props, State> {
     if (this.mounted) this.setState({height: 0})
   }
 
-  // TODO: rework this so it's included in row render...inefficient this way
-  renderDate = (rowData: any = {}) => {
-    let diffMessage: any = null
-    diffMessage = this.getPreviousMessage(rowData)
-    if (rowData.date instanceof Date) {
+  renderDate = (message: IMessage, index: number) => {
+    const diffMessage = this.getPreviousMessage(index)
+    // TODO: need message date
+    if (message.date instanceof Date) {
       if (diffMessage === null) {
-        return <Text style={[styles.date]}>{moment(rowData.date).calendar()}</Text>
+        return <Text style={[styles.date]}>{moment(message.date).calendar()}</Text>
       } else if (diffMessage.date instanceof Date) {
-        const diff = moment(rowData.date).diff(diffMessage.date, 'minutes')
+        const diff = moment(message.date).diff(diffMessage.date, 'minutes')
         if (diff > 5) {
-          return <Text style={[styles.date]}>{moment(rowData.date).calendar()}</Text>
+          return <Text style={[styles.date]}>{moment(message.date).calendar()}</Text>
         }
       }
     }
     return null
   }
 
-  getPreviousMessage = message => {
-    const i = this.messages.findIndex(m => m.uniqueId === message.uniqueId)
-    return this.messages.length > i + 1 ? this.messages[i + 1] : null
+  getPreviousMessage = (index: number): IMessage | null => {
+    return this.chat!.messages.length > index + 1 ? this.chat!.messages[index + 1] : null
   }
 
-  renderItem = ({item}) =>
-    item ? (
-      <View>
-        {this.renderDate(item)}
-        <ChatMessage
-          rowData={item}
-          diffMessage={this.getPreviousMessage(item)}
-          position={item.position}
-        />
-      </View>
-    ) : null
+  renderItem = ({item, index}: {item: IMessage; index: number}) => (
+    <View>
+      {this.renderDate(item, index)}
+      <ChatMessage message={item} diffMessage={this.getPreviousMessage(index)} />
+    </View>
+  )
 
   _footerComponent: any = observer(
     () =>
@@ -133,41 +126,10 @@ class ChatScreen extends React.Component<Props, State> {
       <Screen>
         <FlatList
           inverted
-          data={this.chat.messages
-            .map(el => {
-              let media = null
-              try {
-                media = el.media
-              } catch (err) {
-                // console.log('TODO: fix Message.media reference error', err)
-              }
-              return el
-                ? {
-                    uniqueId: el.id,
-                    text: el.body || '',
-                    isDay: true,
-                    title: el.from.displayName,
-                    media,
-                    size: 40,
-                    position: el.from.isOwn ? 'right' : 'left',
-                    status: '',
-                    name: el.from.isOwn ? '' : el.from.displayName,
-                    image:
-                      el.from.isOwn || !el.from.avatar || !el.from.avatar.source
-                        ? null
-                        : el.from.avatar.source,
-                    profile: el.from,
-                    imageView: Avatar,
-                    view: ChatBubble,
-                    date: new Date(el.time),
-                  }
-                : null
-            })
-            .reverse()}
-          ref={l => (this.list = l)}
+          data={this.chat.messages.list.reverse()}
           renderItem={this.renderItem}
-          keyExtractor={i => i.uniqueId}
-          onEndReached={() => this.chat.load()}
+          keyExtractor={i => i.id}
+          onEndReached={() => this.chat!.messages.load()}
           onEndReachedThreshold={0.5}
           ListFooterComponent={this._footerComponent}
         />
@@ -184,10 +146,10 @@ class ChatScreen extends React.Component<Props, State> {
 const InputArea = inject('wocky')(
   observer(({wocky, chat, onSend}) => {
     return chat.message ? (
-      <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
+      <View style={styles.textInputContainer}>
         <AttachButton message={chat.message} />
         <AutoExpandingTextInput
-          style={[styles.textInput, styles.textInputDay]}
+          style={styles.textInput}
           placeholder="Write a message"
           placeholderTextColor={colors.DARK_GREY}
           multiline
@@ -243,39 +205,26 @@ const AttachButton = inject('notificationStore')(({notificationStore, message}) 
 ))
 
 const ChatTitle = inject('wocky')(
-  observer(({item, wocky}) => {
-    return wocky.chats.get(item)
-      ? wocky.chats.get(item).participants.map((profile, ind) => (
-          <TouchableOpacity
-            key={`${ind}${profile.id}touch`} // eslint-disable-line
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName})
-            }}
-          >
-            <Avatar size={40} profile={profile} />
-          </TouchableOpacity>
-        ))
-      : null
+  observer(({item, wocky}: {item: string; wocky?: IWocky}) => {
+    const chat = wocky!.chats.get(item)
+    return chat ? (
+      <TouchableOpacity
+        key={`${chat.otherUser.id}touch`}
+        onPress={() => {
+          Actions.profileDetail({item: chat.otherUser, title: chat.otherUser.displayName})
+        }}
+      >
+        <Avatar size={40} profile={chat.otherUser} />
+      </TouchableOpacity>
+    ) : null
   })
 )
 
 export default ChatScreen
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  listView: {
-    flex: 1,
-  },
-  textInputContainerDay: {
-    backgroundColor: 'white',
-  },
-  textInputContainerNight: {
-    backgroundColor: 'rgba(63,50,77,0.9)',
-  },
   textInputContainer: {
+    backgroundColor: 'white',
     flexDirection: 'row',
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -290,12 +239,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     fontSize: 15,
-  },
-  textInputDay: {
     color: colors.DARK_PURPLE,
-  },
-  textInputNight: {
-    color: 'white',
   },
   date: {
     color: '#aaaaaa',
@@ -303,23 +247,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     marginBottom: 8,
-  },
-  link: {
-    color: '#007aff',
-    textDecorationLine: 'underline',
-  },
-  linkLeft: {
-    color: '#000',
-  },
-  linkRight: {
-    color: '#fff',
-  },
-  loadEarlierMessages: {
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadEarlierMessagesButton: {
-    fontSize: 14,
   },
 })

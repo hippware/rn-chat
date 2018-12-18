@@ -1,185 +1,127 @@
 import React from 'react'
-import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native'
-import {observer} from 'mobx-react/native'
-import Bubble from './ChatBubble'
-import ErrorButton from './ChatErrorButton'
+import {View, StyleSheet, Image, Text} from 'react-native'
+import {observer, inject} from 'mobx-react/native'
+// import ChatBubble from './ChatBubble'
+import {IMessage, IWocky} from 'wocky-client'
+import ResizedImage from './ResizedImage'
+import {width, k} from '../Global'
+import {colors} from 'src/constants'
 
 type Props = {
-  rowData: any
-  diffMessage: any
-  position: any
-  displayNamesInsideBubble?: any
-  onErrorButtonPress?: any
-  displayNames?: any
-  forceRenderImage?: any
-  onImagePress?: any
-  onMessageLongPress?: any
-  renderCustomText?: any
-  parseText?: any
-  handlePhonePress?: any
-  handleUrlPress?: any
-  handleEmailPress?: any
+  message: IMessage
+  diffMessage: IMessage | null
+  wocky?: IWocky
 }
 
-function renderName(name, displayNames, diffMessage, displayNamesInsideBubble) {
-  if (displayNames === true) {
-    if (diffMessage === null || name !== diffMessage.name) {
-      return (
-        <Text style={[styles.name, displayNamesInsideBubble ? styles.nameInsideBubble : null]}>
-          {name}
-        </Text>
-      )
-    }
-  }
-  return null
-}
+const ChatMessage = inject('wocky')(
+  observer(({message, wocky}: Props) => {
+    const left = message.from && message.from.id !== wocky!.profile!.id
+    const right = !left
 
-function renderImage(rowData, diffMessage, forceRenderImage, onImagePress) {
-  const ImageView = rowData.imageView || Image
-  if (rowData.image) {
-    if (forceRenderImage) {
-      diffMessage = null // force rendering
-    }
-
-    if (
-      diffMessage === null ||
-      (diffMessage !== null &&
-        (rowData.name !== diffMessage.name || rowData.uniqueId !== diffMessage.uniqueId))
-    ) {
-      if (typeof onImagePress === 'function') {
-        return (
-          <TouchableHighlight underlayColor="transparent" onPress={() => onImagePress(rowData)}>
-            <ImageView
-              {...rowData}
-              source={rowData.image}
-              style={[
-                styles.imagePosition,
-                styles.image,
-                rowData.position === 'left' ? styles.imageLeft : styles.imageRight,
-              ]}
-            />
-          </TouchableHighlight>
-        )
-      }
-      return (
-        <ImageView
-          {...rowData}
-          source={rowData.image}
-          style={[
-            styles.imagePosition,
-            styles.image,
-            rowData.position === 'left' ? styles.imageLeft : styles.imageRight,
-          ]}
-        />
-      )
-    }
-    return <View style={styles.imagePosition} />
-  }
-  return <View style={styles.spacer} />
-}
-
-function renderErrorButton(rowData, onErrorButtonPress) {
-  if (rowData.status === 'ErrorButton') {
-    return <ErrorButton onErrorButtonPress={onErrorButtonPress} rowData={rowData} styles={styles} />
-  }
-  return null
-}
-
-function renderStatus(status) {
-  if (status !== 'ErrorButton' && typeof status === 'string') {
-    if (status.length > 0) {
-      return (
-        <View>
-          <Text style={styles.status}>{status}</Text>
-        </View>
-      )
-    }
-  }
-  return null
-}
-
-const ChatMessage = ({
-  rowData,
-  onErrorButtonPress,
-  position,
-  displayNames,
-  diffMessage,
-  forceRenderImage,
-  onImagePress,
-  onMessageLongPress,
-  displayNamesInsideBubble,
-  renderCustomText,
-  parseText,
-  handlePhonePress,
-  handleUrlPress,
-  handleEmailPress,
-}: Props) => {
-  const flexStyle: any = {}
-  let RowView = Bubble
-  if (rowData.text) {
-    if (rowData.text.length > 40) {
-      flexStyle.flex = 1
-    }
-  }
-
-  if (rowData.view) {
-    RowView = rowData.view
-  }
-  const messageView = (
-    <View>
-      {position === 'left' && !displayNamesInsideBubble
-        ? renderName(rowData.name, displayNames, diffMessage, displayNamesInsideBubble)
-        : null}
+    return (
       <View
         style={[
           styles.rowContainer,
           {
-            justifyContent:
-              position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
+            justifyContent: left ? 'flex-start' : 'flex-end',
           },
         ]}
       >
-        {position === 'left'
-          ? renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
-          : null}
-        {position === 'right' ? renderErrorButton(rowData, onErrorButtonPress) : null}
-        <RowView
-          {...rowData}
-          renderCustomText={renderCustomText}
-          styles={styles}
-          name={
-            position === 'left' && displayNamesInsideBubble
-              ? renderName(rowData.name, displayNames, diffMessage, displayNamesInsideBubble)
-              : null
-          }
-          parseText={parseText}
-          handlePhonePress={handlePhonePress}
-          handleUrlPress={handleUrlPress}
-          handleEmailPress={handleEmailPress}
-        />
-        {rowData.position === 'right'
-          ? renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
-          : null}
+        <View
+          style={[
+            message.media && message.media.source ? styles.mediaBubble : styles.bubble,
+            left ? styles.bubbleLeft : right ? styles.bubbleRight : styles.bubbleCenter,
+          ]}
+        >
+          {renderText(message.body, left, right)}
+          {message.media && message.media.source && renderMedia(message.media, left)}
+        </View>
+        {left && (
+          <Image
+            style={{position: 'absolute', bottom: 12, left: -4}}
+            source={require('../../../images/triangleWhite.png')}
+          />
+        )}
+        {right && (
+          <Image
+            style={{position: 'absolute', bottom: 5, right: 2}}
+            source={require('../../../images/triangleYellow.png')}
+          />
+        )}
       </View>
-      {rowData.position === 'right' ? renderStatus(rowData.status) : null}
+    )
+  })
+)
+
+function renderMedia(media, left) {
+  // if (!media.loaded) {}
+  const w = left ? width - 150 * k : width - 93
+  return (
+    <View style={{width: w, height: w * media.source.height / media.source.width}}>
+      <ResizedImage key={`${media.source.id}image`} image={media.source} />
     </View>
   )
-
-  if (typeof onMessageLongPress === 'function') {
-    return (
-      <TouchableHighlight
-        underlayColor="transparent"
-        onLongPress={() => onMessageLongPress(rowData)}
-      >
-        {messageView}
-      </TouchableHighlight>
-    )
-  }
-  return messageView
 }
-export default observer(ChatMessage)
+
+function renderText(text, left, right) {
+  return (
+    <Text
+      style={[styles.text, left ? styles.textLeft : right ? styles.textRight : styles.textCenter]}
+    >
+      {text}
+    </Text>
+  )
+}
+
+export default ChatMessage
 
 const styles = StyleSheet.create({
+  text: {
+    color: '#000',
+  },
+  textLeft: {
+    color: colors.DARK_PURPLE,
+    fontSize: 15,
+    fontFamily: 'Roboto-Regular',
+  },
+  textRight: {
+    color: colors.DARK_PURPLE,
+    fontSize: 15,
+    fontFamily: 'Roboto-Regular',
+  },
+  textCenter: {
+    textAlign: 'center',
+  },
+  bubbleLeft: {
+    marginLeft: 8,
+    marginRight: 70,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    alignSelf: 'flex-start',
+  },
+  bubbleRight: {
+    marginRight: 14,
+    marginLeft: 70,
+    backgroundColor: 'rgba(255,254,227,0.9)',
+    alignSelf: 'flex-end',
+  },
+  bubbleCenter: {
+    backgroundColor: '#007aff',
+    alignSelf: 'center',
+  },
+  mediaBubble: {
+    borderRadius: 2,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingTop: 0,
+  },
+  bubble: {
+    borderRadius: 2,
+    paddingLeft: 14,
+    paddingRight: 14,
+    paddingBottom: 12,
+    paddingTop: 5,
+  },
   errorButtonContainer: {
     marginLeft: 8,
     alignSelf: 'center',
