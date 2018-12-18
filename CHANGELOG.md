@@ -18,6 +18,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Point tests back to Testing. Some clean-up (PR #3193)
 * Change localBots API to be able to get 'too many bots' error (#3062)
 * Missing New! pin for new users #3026
+* Remove deprecated GraphQL calls and fix tests (PR #3198)
 
 # 4.0.0 - 2018 Dec 10
 
