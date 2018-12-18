@@ -1,4 +1,4 @@
-import {types, flow, isAlive, IAnyType, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, isAlive, IAnyType, IAnyModelType, getSnapshot} from 'mobx-state-tree'
 
 export interface IPaginable<T> extends IAnyModelType {
   result: T[]
@@ -73,6 +73,7 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
             self.result.clear()
             self.cursor = null
             self.finished = false
+            self.count = 0
           },
           load: flow(function* load({force}: {force?: boolean} = {}) {
             if (self.loading || (self.finished && !force)) {
