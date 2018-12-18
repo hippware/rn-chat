@@ -42,7 +42,7 @@ exports[`BotDetails renders with no data 1`] = `
                   "followersSize": 0,
                   "icon": "",
                   "id": "1234",
-                  "image": null,
+                  "image": undefined,
                   "invitation": null,
                   "isSubscribed": false,
                   "location": null,
