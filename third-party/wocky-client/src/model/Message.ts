@@ -23,6 +23,7 @@ export const Message = types
       media: FileRef,
       unread: false,
       body: '',
+      createdAt: types.maybe(types.Date),
     })
   )
   .named('Message')

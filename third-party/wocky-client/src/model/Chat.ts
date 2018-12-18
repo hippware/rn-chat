@@ -1,23 +1,20 @@
-import {types, Instance, SnapshotIn} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, getParentOfType} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {Message, MessagePaginableList, IMessageList} from './Message'
-import {Base} from './Base'
+import {Wocky} from '../store/Wocky'
 const moment = require('moment')
 
 export const Chat = types
-  .compose(
-    Base,
-    types.model('Chat', {
-      id: types.string, // HACK: id of `otherUser`
-      active: false,
-      loaded: false,
-      requestedId: types.maybeNull(types.string),
-      isPrivate: true,
-      otherUser: types.reference(Profile),
-      messages: types.optional(MessagePaginableList, {}),
-      message: types.maybeNull(Message),
-    })
-  )
+  .model('Chat', {
+    id: types.string, // NOTE: id === otherUser.id
+    active: false,
+    loaded: false,
+    requestedId: types.maybeNull(types.string),
+    isPrivate: true,
+    otherUser: types.reference(Profile),
+    messages: types.optional(MessagePaginableList, {}),
+    message: types.maybeNull(Message),
+  })
   .volatile(() => ({
     loading: false,
   }))
@@ -50,10 +47,13 @@ export const Chat = types
   })
   .actions(self => ({
     afterAttach: () => {
-      self.message = self.service.create(Message, {to: self.id, from: self.service.username!})
-      ;(self.messages as IMessageList).setRequest(
-        self.service._loadChatMessages.bind(self.service, self.id)
-      )
+      // todo: strong typing
+      const service: any = getParentOfType(self, Wocky)
+      self.message = service.create(Message, {
+        to: self.id,
+        from: service.username!,
+      })
+      ;(self.messages as IMessageList).setRequest(service._loadChatMessages.bind(service, self.id))
     },
   }))
 

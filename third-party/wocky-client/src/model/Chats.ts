@@ -21,7 +21,7 @@ export const Chats = types
     get unreadCount(): number {
       return self._filteredList.reduce((prev: number, current) => prev + current.unreadCount, 0)
     },
-    get(id?: string): IChat | undefined {
+    get(id: string): IChat | undefined {
       return self._list.find(el => el.id === id)
     },
   }))
@@ -29,10 +29,10 @@ export const Chats = types
     clear: () => self._list.clear(),
     remove: (id: string) => self._list.replace(self._list.filter(el => el.id !== id)),
     add: (chat: IChatIn): IChat => {
-      let toReturn = self.get(chat.id)
+      let toReturn = self.get(chat.otherUser as string)
       if (!toReturn) {
         self._list.push(Chat.create(chat))
-        toReturn = self.get(chat.id)
+        toReturn = self.get(chat.otherUser as string)
       }
       return toReturn!
     },

@@ -149,8 +149,13 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        createChat: (otherUserId: string): IChat =>
-          self.chats.get(otherUserId) || self.chats.add({id: otherUserId, otherUser: otherUserId}),
+        createChat: (otherUserId: string): IChat => {
+          let chat: IChat | undefined = self.chats.get(otherUserId)
+          if (!chat) {
+            chat = self.chats.add({id: otherUserId, otherUser: otherUserId})
+          }
+          return chat
+        },
       },
     }
   })
