@@ -1,7 +1,6 @@
 import {types, flow, getParent, IAnyModelType, Instance, SnapshotIn} from 'mobx-state-tree'
 import {File} from './File'
 import {Base} from './Base'
-import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
@@ -13,13 +12,13 @@ const BotPostData = types.model('BotPostData', {
   id: types.identifier,
   content: '',
   title: '',
-  image: types.maybe(File),
+  image: types.maybe(types.reference(File)),
   profile: types.reference(BotPostProfileRef),
 })
 
 export const BotPost = types
   .compose(
-    types.compose(Base, Timeable, Loadable),
+    types.compose(Base, Timeable),
     createUploadable(
       'image',
       (self: any) =>

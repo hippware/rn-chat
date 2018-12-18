@@ -1,6 +1,5 @@
 import React, {ReactElement} from 'react'
 import {Image} from 'react-native'
-import {observer} from 'mobx-react/native'
 import {IFile} from 'wocky-client'
 
 interface IProps {
@@ -10,10 +9,10 @@ interface IProps {
   imageProps: any
 }
 
-@observer
 export default class LazyImage extends React.Component<IProps> {
   render() {
     const {file, placeholder, imageProps} = this.props
+    // console.log('LAZY IMAGE:', JSON.stringify(file), imageProps)
     return file || !placeholder ? <Image source={file} {...imageProps} /> : placeholder
   }
 }

@@ -61,7 +61,7 @@ const Avatar = observer(
         <View style={[style, {height: size * avatarScale, width: size * avatarScale}]}>
           {!!profile.avatar ? (
             <AvatarImage
-              avatar={profile.avatar}
+              avatar={{...profile.avatar}}
               style={sharedStyle}
               size={size}
               showMask={showMask}
@@ -91,7 +91,7 @@ const Avatar = observer(
   }
 )
 
-const AvatarImage = observer(({avatar, style, size, showMask}) => (
+const AvatarImage = ({avatar, style, size, showMask}) => (
   <View style={[style, {borderWidth: 0}]}>
     <LazyImage
       file={avatar}
@@ -102,7 +102,7 @@ const AvatarImage = observer(({avatar, style, size, showMask}) => (
     />
     {showMask && <Mask size={size * 0.65} />}
   </View>
-))
+)
 
 const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontFamily}) => {
   const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}

@@ -19,7 +19,7 @@ export const Message = types
       archiveId: '',
       from: types.reference(Profile),
       to: types.reference(Profile),
-      media: types.maybe(File),
+      media: types.maybe(types.reference(File)),
       unread: false,
       body: '',
     })

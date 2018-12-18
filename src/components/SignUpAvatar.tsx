@@ -25,10 +25,7 @@ class SignUpAvatar extends React.Component<Props> {
   render() {
     const {wocky: {profile}, showDot, style} = this.props
     const {avatar} = profile
-    const theAvatar =
-      (avatar && avatar.loaded && avatar.thumbnail) ||
-      this.imgSrc ||
-      require('../../images/addPhoto.png')
+    const theAvatar = avatar || this.imgSrc || require('../../images/addPhoto.png')
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
@@ -50,9 +47,7 @@ class SignUpAvatar extends React.Component<Props> {
                   height: AVATAR_DIMENSION,
                   borderRadius: AVATAR_DIMENSION / 2,
                 },
-                avatar &&
-                  avatar.loaded &&
-                  avatar.thumbnail && {borderWidth: 1.5, borderColor: colors.PINK},
+                avatar && {borderWidth: 1.5, borderColor: colors.PINK},
                 style,
               ]}
               source={theAvatar}

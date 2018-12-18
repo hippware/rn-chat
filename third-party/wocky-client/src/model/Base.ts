@@ -8,6 +8,12 @@ export type __IModelType = IModelType<any, any>
 export const Base = types
   .model('Base', {id: types.identifier})
   .named('Base')
+  .actions(self => ({
+    // generic 'load' method to update data properties
+    load({id, ...data}: any) {
+      Object.assign(self, data)
+    },
+  }))
   .views(self => ({
     get service() {
       let target: any = self

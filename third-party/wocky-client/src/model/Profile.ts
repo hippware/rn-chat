@@ -1,17 +1,15 @@
 import {types, flow, IAnyModelType} from 'mobx-state-tree'
 import {File} from './File'
 import {Base} from './Base'
-import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 
 export const Profile = types
   .compose(
     Base,
-    Loadable,
     types.model('Profile', {
       id: types.identifier,
-      avatar: types.maybe(File),
+      avatar: types.maybe(types.reference(File)),
       handle: types.maybeNull(types.string),
       status: 'unavailable',
       firstName: types.maybeNull(types.string),
@@ -43,6 +41,17 @@ export const Profile = types
   .extend(self => {
     return {
       actions: {
+        load: flow(function*({avatar, ...data}: any) {
+          Object.assign(self, data)
+          if (avatar && avatar.id && avatar.uri) {
+            self.service.files.get(avatar.id, avatar)
+            self.avatar = avatar.id
+            // load of thumbnail
+            if (avatar.uri.startsWith('https://')) {
+              self.avatar!.load(yield self.service.downloadThumbnail(avatar.uri, avatar.id))
+            }
+          }
+        }),
         afterAttach: () => {
           if (self.service) {
             self.followers.setRequest(

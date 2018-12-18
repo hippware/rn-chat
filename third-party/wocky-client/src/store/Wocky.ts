@@ -39,12 +39,6 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
-  .postProcessSnapshot((snapshot: any) => {
-    const data = {...snapshot}
-    // delete data.geoBots
-    delete data.files
-    return data
-  })
   .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
@@ -66,10 +60,9 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          self.profile = OwnProfile.create(data)
-        } else {
-          self.profile.load(data)
+          self.profile = OwnProfile.create({id})
         }
+        self.profile.load(data)
         // add own profile to the storage
         self.profiles.get(id, data)
         if (self.profile!.handle) self.sessionCount = 3
@@ -196,14 +189,14 @@ export const Wocky = types
         ? self.bots.get(id, data)
         : self.bots.get(id, {owner: data.owner})
       if (data && Object.keys(data).length) {
-        self.load(bot, data)
+        bot.load(data)
       }
       return bot
     },
     _addMessage: (message: IMessageIn) => {
       const {to} = message
       const existingChat = self.chats.get(to.toString())
-      const msg = self.create(Message, message)
+      const msg = Message.create(message)
       if (existingChat) {
         existingChat.addMessage(msg!)
         if (existingChat.active) {
@@ -261,7 +254,7 @@ export const Wocky = types
         max
       )
       items.forEach(item => {
-        const msg = self.create(Message, item.message)
+        const msg = Message.create(item.message)
         const chat = self.createChat(item.chatId)
         chat.addMessage(msg)
       })
@@ -273,7 +266,7 @@ export const Wocky = types
         try {
           bot.startLoading()
           const data = yield self.transport.loadBot(id)
-          self.load(bot, data)
+          bot.load(data)
         } catch (e) {
           // console.error(e) TODO
           bot.setError(JSON.stringify(e))
@@ -338,7 +331,13 @@ export const Wocky = types
       _loadBotPosts: flow(function*(id: string, before?: string) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
-        return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
+        return {
+          list: list.map((post: any) => {
+            BotPost.create(post)
+          }),
+          count,
+          cursor,
+        }
       }),
       _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
@@ -452,7 +451,7 @@ export const Wocky = types
           limit: max,
         })
         // console.log('& load notifications list', list)
-        return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+        return {list: list.map((data: any) => EventEntity.create(data)), count}
       }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
@@ -504,7 +503,7 @@ export const Wocky = types
         try {
           // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
           data = _.cloneDeep(data)
-          const item: any = self.create(EventEntity, data)
+          const item: any = EventEntity.create(data)
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)
           self.hasUnreadNotifications = true
@@ -600,7 +599,7 @@ export const Wocky = types
           yield fs.downloadHttpFile(sourceUrl, fileName, {})
         }
         const {width, height} = yield fs.getImageSize(fileName)
-        return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
+        return {uri: fileName, width, height}
       }),
       userInviteMakeCode(): Promise<string> {
         return self.transport.userInviteMakeCode()

@@ -36,7 +36,7 @@ export const Bot = types
       server: types.maybeNull(types.string),
       radius: 100,
       owner: types.maybeNull(types.reference(types.late((): IAnyModelType => Profile))),
-      image: types.maybe(File),
+      image: types.maybe(types.reference(File)),
       description: '',
       location: types.maybeNull(Location),
       address: '',
