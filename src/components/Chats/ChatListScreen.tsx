@@ -41,7 +41,7 @@ class ChatListScreen extends React.Component<Props> {
           style={{flex: 1, flexDirection: 'column'}}
           ref={l => (this.list = l)}
           contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
-          data={chats.list}
+          data={chats.list.slice()}
           initialNumToRender={6}
           ListFooterComponent={
             chats.list.length ? (

@@ -1,5 +1,4 @@
 export {default as RText} from './RText'
-export {default as CardText} from './CardText'
 export {default as Avatar} from './Avatar'
 export {default as AutoExpandingTextInput} from './AutoExpandingTextInput'
 export {default as ProfileHandle} from './ProfileHandle'

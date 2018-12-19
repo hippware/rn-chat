@@ -2,12 +2,12 @@ import React from 'react'
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react/native'
 import Card from '../Card'
-import {CardText, Avatar} from '../common'
+import {Avatar, RText} from '../common'
 import {k} from '../Global'
 import ResizedImage from './ResizedImage'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
-import {IChat} from 'wocky-client'
+import {IChat, IMessage} from 'wocky-client'
 
 type Props = {
   chat: IChat
@@ -21,14 +21,13 @@ export default class ChatCard extends React.Component<Props> {
   button: any
 
   render() {
-    const isDay = true
     const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg = chat.messages.last
+    const msg: IMessage = chat.messages.last
     const {otherUser} = chat
     let media: any = null
     try {
-      media = msg.media && msg.media.source ? msg.media : null
+      media = msg.media && msg.media!.source ? msg.media : null
     } catch (err) {
       // console.log('TODO: Fix msg.media reference error', err)
     }
@@ -48,7 +47,7 @@ export default class ChatCard extends React.Component<Props> {
             }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              <Avatar key={`${otherUser.id}avatar`} size={40 * k} profile={otherUser} />
+              <Avatar size={40 * k} profile={otherUser} />
             </View>
 
             <Date {...this.props}>
@@ -59,28 +58,18 @@ export default class ChatCard extends React.Component<Props> {
                   color: colors.DARK_GREY,
                 }}
               >
-                {msg.date}
+                {msg!.dateAsString}
               </Text>
             </Date>
           </View>
         }
       >
-        {!!msg.body && (
-          <Text style={{padding: 15 * k}}>
-            {!!msg.from && (
-              <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`}: </CardText>
-            )}
-            <Text
-              style={{
-                fontFamily: 'Roboto-Light',
-                color: isDay ? 'rgb(81,67,96)' : 'white',
-                fontSize: 15,
-              }}
-            >
-              {msg.body}
-            </Text>
-          </Text>
-        )}
+        <Text style={{padding: 15 * k}}>
+          <CardText>{msg.isOutgoing ? 'you' : `@${msg.otherUser.handle}`}: </CardText>
+          <RText weight="Light" size={15} color="rgb(81,67,96)">
+            {msg.content}
+          </RText>
+        </Text>
         {media && (
           <View style={{paddingTop: 15 * k}}>
             <ResizedImage image={media.source} />
@@ -116,6 +105,12 @@ const Date = ({onPostOptions, children}: any) =>
       {children}
     </View>
   )
+
+const CardText = ({style, children}: {style?: any; children: any}) => (
+  <RText numberOfLines={0} size={15} style={[{color: 'rgb(81,67,96)'}, style]}>
+    {children}
+  </RText>
+)
 
 const styles = StyleSheet.create({
   smallText: {
