@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, StyleSheet, Image, Text} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
-// import ChatBubble from './ChatBubble'
+import {observer} from 'mobx-react/native'
 import {IMessage, IWocky} from 'wocky-client'
 import ResizedImage from './ResizedImage'
 import {width, k} from '../Global'
@@ -13,45 +12,43 @@ type Props = {
   wocky?: IWocky
 }
 
-const ChatMessage = inject('wocky')(
-  observer(({message, wocky}: Props) => {
-    const left = message.from && message.from.id !== wocky!.profile!.id
-    const right = !left
+const ChatMessage = observer(({message}: Props) => {
+  const left = !message.isOutgoing
+  const right = !left
 
-    return (
+  return (
+    <View
+      style={[
+        styles.rowContainer,
+        {
+          justifyContent: left ? 'flex-start' : 'flex-end',
+        },
+      ]}
+    >
       <View
         style={[
-          styles.rowContainer,
-          {
-            justifyContent: left ? 'flex-start' : 'flex-end',
-          },
+          message.media && message.media.source ? styles.mediaBubble : styles.bubble,
+          left ? styles.bubbleLeft : right ? styles.bubbleRight : styles.bubbleCenter,
         ]}
       >
-        <View
-          style={[
-            message.media && message.media.source ? styles.mediaBubble : styles.bubble,
-            left ? styles.bubbleLeft : right ? styles.bubbleRight : styles.bubbleCenter,
-          ]}
-        >
-          {renderText(message.body, left, right)}
-          {message.media && message.media.source && renderMedia(message.media, left)}
-        </View>
-        {left && (
-          <Image
-            style={{position: 'absolute', bottom: 12, left: -4}}
-            source={require('../../../images/triangleWhite.png')}
-          />
-        )}
-        {right && (
-          <Image
-            style={{position: 'absolute', bottom: 5, right: 2}}
-            source={require('../../../images/triangleYellow.png')}
-          />
-        )}
+        {renderText(message.content, left, right)}
+        {message.media && message.media.source && renderMedia(message.media, left)}
       </View>
-    )
-  })
-)
+      {left && (
+        <Image
+          style={{position: 'absolute', bottom: 12, left: -4}}
+          source={require('../../../images/triangleWhite.png')}
+        />
+      )}
+      {right && (
+        <Image
+          style={{position: 'absolute', bottom: 5, right: 2}}
+          source={require('../../../images/triangleYellow.png')}
+        />
+      )}
+    </View>
+  )
+})
 
 function renderMedia(media, left) {
   // if (!media.loaded) {}
@@ -122,32 +119,9 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 5,
   },
-  errorButtonContainer: {
-    marginLeft: 8,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#e6e6eb',
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-  },
-  errorButton: {
-    fontSize: 22,
-    textAlign: 'center',
-  },
   rowContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-  },
-  name: {
-    color: '#aaaaaa',
-    fontSize: 12,
-    marginLeft: 55,
-    marginBottom: 5,
-  },
-  nameInsideBubble: {
-    color: '#666666',
-    marginLeft: 0,
   },
   imagePosition: {
     height: 30,
@@ -159,18 +133,5 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: 'center',
     borderRadius: 15,
-  },
-  imageLeft: {},
-  imageRight: {},
-  spacer: {
-    width: 10,
-  },
-  status: {
-    color: '#aaaaaa',
-    fontSize: 12,
-    textAlign: 'right',
-    marginRight: 15,
-    marginBottom: 10,
-    marginTop: -5,
   },
 })

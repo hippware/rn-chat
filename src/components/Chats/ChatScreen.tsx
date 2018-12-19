@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native'
-
 import moment from 'moment'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
@@ -44,7 +43,6 @@ class ChatScreen extends React.Component<Props, State> {
     height: 0,
   }
 
-  // @observable messages: any[] = []
   @observable chat?: IChat
   mounted: boolean = false
   handler: any
@@ -52,10 +50,10 @@ class ChatScreen extends React.Component<Props, State> {
   async componentDidMount() {
     const {item, wocky} = this.props
     this.chat = wocky!.createChat(item)
-    // console.log('& this.chat', item, this.chat.messages.list.length)
-    await this.chat.messages.load()
-    this.chat.readAll()
-    this.chat.setActive(true)
+    this.chat.messages.list.refresh()
+    await this.chat!.messages.load()
+    this.chat!.readAll()
+    this.chat!.setActive(true)
     // TODO: use withKeyboardHOC here
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow)
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide)
@@ -76,7 +74,7 @@ class ChatScreen extends React.Component<Props, State> {
   }
 
   onSend = () => {
-    if (this.chat!.message!.body.trim()) {
+    if (this.chat!.message!.content.trim()) {
       this.chat!.message!.send()
     }
   }
@@ -126,7 +124,7 @@ class ChatScreen extends React.Component<Props, State> {
       <Screen>
         <FlatList
           inverted
-          data={this.chat.messages.list.reverse()}
+          data={this.chat.sortedMessages.reverse()}
           renderItem={this.renderItem}
           keyExtractor={i => i.id}
           onEndReached={() => this.chat!.messages.load()}
@@ -142,9 +140,14 @@ class ChatScreen extends React.Component<Props, State> {
   }
 }
 
-// separating text input here prevents unnecessary re-renders of the entire list when user enters text
+type InputProps = {
+  wocky?: IWocky
+  chat: IChat
+  onSend: () => void
+}
+
 const InputArea = inject('wocky')(
-  observer(({wocky, chat, onSend}) => {
+  observer(({wocky, chat, onSend}: InputProps) => {
     return chat.message ? (
       <View style={styles.textInputContainer}>
         <AttachButton message={chat.message} />
@@ -157,15 +160,18 @@ const InputArea = inject('wocky')(
           returnKeyType="default"
           enablesReturnKeyAutomatically
           onChangeText={t => chat.message && chat.message.setBody(t)}
-          value={chat.message.body}
+          value={chat.message.content}
           blurOnSubmit={false}
           maxHeight={100}
           maxLength={500}
         />
-        <TouchableOpacity disabled={!chat.message.body.trim() || !wocky.connected} onPress={onSend}>
+        <TouchableOpacity
+          disabled={!chat.message.content.trim() || !wocky!.connected}
+          onPress={onSend}
+        >
           <Image
             source={
-              chat.message.body.trim() && wocky.connected
+              chat.message.content.trim() && wocky!.connected
                 ? require('../../../images/iconSendActive.png')
                 : require('../../../images/iconSendInactive.png')
             }

@@ -1,30 +1,27 @@
-import {types, Instance, SnapshotIn, flow} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, flow, getParent} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
-import * as utils from '../transport/utils'
-import {Base} from './Base'
-import {createUploadable} from './Uploadable'
+// import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable, IPaginable} from './PaginableList'
 const moment = require('moment')
+import uuid from 'uuid/v1'
+
+const MessageBase = types.model('MessageBase', {
+  id: types.optional(types.string, () => uuid()),
+  otherUser: types.reference(Profile),
+  content: '',
+  media: FileRef,
+  unread: false,
+  isOutgoing: types.boolean,
+})
 
 export const Message = types
   .compose(
-    types.compose(
-      Base,
-      Timeable,
-      createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)
-    ),
-    types.model('Message', {
-      id: types.optional(types.string, utils.generateID),
-      // archiveId: '',
-      from: types.reference(Profile),
-      to: types.reference(Profile),
-      media: FileRef,
-      unread: false,
-      body: '',
-      createdAt: types.maybe(types.Date),
-    })
+    Timeable,
+    // todo: re-add uploadable when files/images are ready
+    // createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)
+    MessageBase
   )
   .named('Message')
   .views(self => ({
@@ -36,17 +33,18 @@ export const Message = types
     read: () => (self.unread = false),
     clear: () => {
       self.media = null
-      self.body = ''
-      self.id = utils.generateID()
+      self.content = ''
+      self.id = uuid()
     },
     setBody: (text: string) => {
-      self.body = text
+      self.content = text
     },
   }))
   .actions(self => ({
     send: flow(function*() {
       self.time = Date.now()
-      yield self.service._sendMessage(self)
+      const wocky: any = getParent(self, 4)
+      yield wocky._sendMessage(self)
       self.clear()
     }),
   }))

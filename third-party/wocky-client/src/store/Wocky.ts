@@ -217,8 +217,9 @@ export const Wocky = types
     },
     _addMessage: (message?: IMessageIn): void => {
       if (!message) return
-      const {to} = message
-      const existingChat = self.chats.get(to.toString())
+      const {otherUser} = message
+      const otherUserId = (otherUser as any).id || otherUser
+      const existingChat = self.chats.get(otherUserId)
       const msg = self.create(Message, message)
       if (existingChat) {
         ;(existingChat.messages as IMessageList).add(msg)
@@ -226,8 +227,8 @@ export const Wocky = types
           msg!.read()
         }
       } else {
-        const chat = self.createChat(to.toString())
-        ;(chat.messages as IMessageList).add(msg)
+        const chat = self.createChat(otherUserId)
+        ;(chat.messages as IMessageList).add({...message, otherUser: otherUserId} as IMessage)
       }
     },
     deleteBot: (id: string) => {
@@ -429,12 +430,17 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
-        yield self.transport.sendMessage(msg)
+        yield self.transport.sendMessage(msg.otherUser.id, msg.content)
         self._addMessage(msg)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
-        return self.transport.loadChatMessages(userId, lastId, max)
+        const {list, count, cursor} = yield self.transport.loadChatMessages(userId, lastId, max)
+        return {
+          count,
+          cursor,
+          list: list.map(m => self.create(Message, m)),
+        }
       }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
       getLocationUploadToken: flow(function*() {
         return yield self.transport.getLocationUploadToken()

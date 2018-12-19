@@ -58,7 +58,7 @@ describe('New GraphQL conversation tests', () => {
     )
     expect(bob.chats.list.length).toBe(1)
     expect((bob.chats.list[0].messages as IMessageList).list.length).toBe(2)
-    expect((bob.chats.list[0].messages as IMessageList).last!.body).toBe('hello2')
+    expect((bob.chats.list[0].messages as IMessageList).last!.content).toBe('hello2')
   })
 
   it("bob can load alice's chat messages", async () => {
@@ -78,7 +78,7 @@ describe('New GraphQL conversation tests', () => {
     await bob.chats.list[0].messages.load({force: true})
     expect(bob.chats.list[0].messages.list.length).toBe(2)
     expect(bob.chats.list[0].messages.count).toBe(2)
-    expect(bob.chats.list[0].messages.last!.body).toBe('hello')
+    expect(bob.chats.list[0].messages.last!.content).toBe('hello')
   })
 
   it('bob can load chat messages with paging', async () => {

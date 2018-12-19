@@ -1,7 +1,7 @@
 import {types, Instance, SnapshotIn, getParentOfType} from 'mobx-state-tree'
-import {Profile} from './Profile'
 import {Message, MessagePaginableList, IMessageList} from './Message'
 import {Wocky} from '../store/Wocky'
+import {Profile} from './Profile'
 const moment = require('moment')
 
 export const Chat = types
@@ -9,8 +9,6 @@ export const Chat = types
     id: types.string, // NOTE: id === otherUser.id
     active: false,
     loaded: false,
-    requestedId: types.maybeNull(types.string),
-    isPrivate: true,
     otherUser: types.reference(Profile),
     messages: types.optional(MessagePaginableList, {}),
     message: types.maybeNull(Message),
@@ -50,8 +48,8 @@ export const Chat = types
       // todo: strong typing
       const service: any = getParentOfType(self, Wocky)
       self.message = service.create(Message, {
-        to: self.id,
-        from: service.username!,
+        otherUser: self,
+        isOutgoing: true,
       })
       ;(self.messages as IMessageList).setRequest(service._loadChatMessages.bind(service, self.id))
     },

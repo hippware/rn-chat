@@ -505,24 +505,13 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage(
-  {direction, content, otherUser, createdAt},
-  myProfileId: string
-): IMessageIn {
-  let from: string, to: string
-  if (direction === 'INCOMING') {
-    from = otherUser.id
-    to = myProfileId
-  } else {
-    from = myProfileId
-    to = otherUser.id
-  }
+export function convertMessage({direction, content, otherUser, createdAt}): IMessageIn {
   return {
-    from,
-    to,
-    createdAt: new Date(createdAt),
+    otherUser,
+    time: new Date(createdAt).valueOf(),
     media: undefined,
     unread: true,
-    body: content,
+    content,
+    isOutgoing: direction === 'OUTGOING',
   }
 }

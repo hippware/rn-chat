@@ -7,7 +7,7 @@ import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot, IBotPost, IMessage} from '..'
+import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
@@ -609,7 +609,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
-  async sendMessage({to, body}: IMessage): Promise<void> {
+  async sendMessage(otherUserId: string, content: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
@@ -620,7 +620,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {
         // TODO: add imageURL
-        input: {content: body, recipientId: to!.id},
+        input: {content, recipientId: otherUserId},
       },
     })
   }
@@ -646,7 +646,7 @@ export class NextGraphQLTransport implements IWockyTransport {
       variables: {otherUser: userId, first: max, after: lastId},
     })
     const {edges, totalCount} = res.data.currentUser.messages
-    const messages = edges.map(e => convertMessage(e.node, this.username!))
+    const messages = edges.map(e => convertMessage(e.node))
     return {
       list: messages,
       count: totalCount,
@@ -678,7 +678,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return (res.data.currentUser.conversations.edges as any[]).map<{
       chatId: string
       message: IMessageIn
-    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node, this.username!)}))
+    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node)}))
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -1054,9 +1054,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
     }).subscribe({
-      next: action((result: any) => {
-        this.message = convertMessage(result.data.messages, this.username!)
-      }),
+      next: action((result: any) => (this.message = convertMessage(result.data.messages))),
     })
     this.subscriptions.push(subscription)
   }
