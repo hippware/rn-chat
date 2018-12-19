@@ -2,7 +2,7 @@ import {types, Instance} from 'mobx-state-tree'
 import {EventBotCreate} from './EventBotCreate'
 import {EventBotPost} from './EventBotPost'
 import {EventBotNote} from './EventBotNote'
-import {EventBotShare} from './EventBotShare'
+// import {EventBotShare} from './EventBotShare'
 import {EventBotGeofence} from './EventBotGeofence'
 import {EventDelete} from './EventDelete'
 import {EventUserFollow} from './EventUserFollow'
@@ -12,7 +12,7 @@ import {createPaginable} from './PaginableList'
 export const EventEntity = types.union(
   EventBotPost,
   EventBotNote,
-  EventBotShare,
+  // EventBotShare,
   EventBotCreate,
   EventBotGeofence,
   EventDelete,
