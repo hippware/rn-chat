@@ -38,7 +38,7 @@ class ChatListScreen extends React.Component<Props> {
     return (
       <Screen>
         <FlatList
-          style={{flex: 1, flexDirection: 'column'}}
+          style={{flex: 1}}
           ref={l => (this.list = l)}
           contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
           data={chats.list.slice()}

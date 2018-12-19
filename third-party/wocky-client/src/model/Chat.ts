@@ -7,7 +7,6 @@ const moment = require('moment')
 export const Chat = types
   .model('Chat', {
     id: types.string, // NOTE: id === otherUser.id
-    active: false,
     loaded: false,
     otherUser: types.reference(Profile),
     messages: types.optional(MessagePaginableList, {}),
@@ -39,7 +38,6 @@ export const Chat = types
   }))
   .actions(self => {
     return {
-      setActive: (active: boolean) => (self.active = active),
       readAll: () => (self.messages as IMessageList).list.forEach(msg => msg.read()),
     }
   })
