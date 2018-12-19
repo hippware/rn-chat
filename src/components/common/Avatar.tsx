@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
-import {isAlive} from 'mobx-state-tree'
+import {isAlive, getSnapshot} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
 import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
@@ -61,7 +61,7 @@ const Avatar = observer(
         <View style={[style, {height: size * avatarScale, width: size * avatarScale}]}>
           {!!profile.avatar ? (
             <AvatarImage
-              avatar={{...profile.avatar}}
+              avatar={getSnapshot(profile.avatar)}
               style={sharedStyle}
               size={size}
               showMask={showMask}

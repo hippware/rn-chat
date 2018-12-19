@@ -27,12 +27,12 @@ const ChatMessage = observer(({message}: Props) => {
     >
       <View
         style={[
-          message.media && message.media.source ? styles.mediaBubble : styles.bubble,
+          message.media && message.media ? styles.mediaBubble : styles.bubble,
           left ? styles.bubbleLeft : right ? styles.bubbleRight : styles.bubbleCenter,
         ]}
       >
         {renderText(message.content, left, right)}
-        {message.media && message.media.source && renderMedia(message.media, left)}
+        {message.media && message.media && renderMedia(message.media, left)}
       </View>
       {left && (
         <Image
@@ -54,8 +54,8 @@ function renderMedia(media, left) {
   // if (!media.loaded) {}
   const w = left ? width - 150 * k : width - 93
   return (
-    <View style={{width: w, height: w * media.source.height / media.source.width}}>
-      <ResizedImage key={`${media.source.id}image`} image={media.source} />
+    <View style={{width: w, height: w * media.height / media.width}}>
+      <ResizedImage key={`${media.id}image`} image={media} />
     </View>
   )
 }

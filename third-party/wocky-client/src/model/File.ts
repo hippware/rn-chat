@@ -7,8 +7,9 @@ export const File = types
     height: types.maybeNull(types.number),
   })
   .actions(self => ({
-    load({id, ...data}: any) {
-      Object.assign(self, data)
+    load({uri}: any) {
+      // Object.assign(self, data)
+      self.uri = uri
     },
   }))
   .named('File')

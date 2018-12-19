@@ -13,14 +13,18 @@ export function createUploadable(property: string, access: string | ((self) => v
           try {
             self.uploaded = false
             self.uploading = true
+            console.log('UPLOAD:', JSON.stringify(file))
             const id = yield self.service._requestUpload({
               file,
               size,
               access: typeof access === 'function' ? access(self) : access,
             })
+            console.log('UPLOADED:', id)
             self.uploaded = true
             // update image
             self.load({[property]: {id, uri: file.uri || file.fileName}})
+          } catch (e) {
+            console.error(e)
           } finally {
             self.uploading = false
           }

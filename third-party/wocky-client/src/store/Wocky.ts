@@ -61,11 +61,13 @@ export const Wocky = types
       yield waitFor(() => self.connected)
       const isOwn = id === self.username
       const data = yield self.transport.loadProfile(id)
+      console.log('LOAD PROFILE:', data)
       if (isOwn) {
         if (!self.profile) {
           self.profile = OwnProfile.create({id})
         }
         self.profile.load(data)
+        console.log('LOADED PROFILE:', JSON.stringify(self.profile))
         // add own profile to the storage
         self.profiles.get(id, data)
         if (self.profile!.handle) self.sessionCount = 3
@@ -133,6 +135,7 @@ export const Wocky = types
           yield self.transport.remove()
         }),
         _updateProfile: flow(function*(d: any) {
+          console.log('UPDATE PROFILE:', JSON.stringify(d))
           yield self.transport.updateProfile(d)
         }),
         createChat: (otherUserId: string): IChat => {
@@ -206,7 +209,8 @@ export const Wocky = types
       const {otherUser} = message
       const otherUserId = (otherUser as any).id || otherUser
       const existingChat = self.chats.get(otherUserId)
-      const msg = self.create(Message, message)
+      const msg = Message.create()
+      msg.load(message)
       if (existingChat) {
         ;(existingChat.messages as IMessageList).add(msg)
         if (existingChat.active) {
