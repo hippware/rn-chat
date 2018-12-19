@@ -254,11 +254,10 @@ const LocationStore = types
 
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
-      const position = yield BackgroundGeolocation.getCurrentPosition({
+      yield BackgroundGeolocation.getCurrentPosition({
         timeout: 20,
         maximumAge: 1000,
       })
-      self.setPosition(position.coords)
     })
 
     function setBackgroundConfig(config) {
