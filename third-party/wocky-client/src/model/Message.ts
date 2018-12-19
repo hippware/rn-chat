@@ -34,11 +34,6 @@ export const Message = types
     MessageBase
   )
   .named('Message')
-  .views(self => ({
-    get date() {
-      return moment(self.time).calendar()
-    },
-  }))
   .actions(self => ({
     read: () => (self.unread = false),
     clear: () => {

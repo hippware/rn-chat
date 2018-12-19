@@ -50,7 +50,7 @@ class ChatScreen extends React.Component<Props, State> {
   async componentDidMount() {
     const {item, wocky} = this.props
     this.chat = wocky!.createChat(item)
-    this.chat.messages.list.refresh()
+    this.chat.messages.refresh()
     await this.chat!.messages.load()
     this.chat!.readAll()
     this.chat!.setActive(true)
@@ -89,22 +89,20 @@ class ChatScreen extends React.Component<Props, State> {
 
   renderDate = (message: IMessage, index: number) => {
     const diffMessage = this.getPreviousMessage(index)
-    // TODO: need message date
-    if (message.date instanceof Date) {
-      if (diffMessage === null) {
-        return <Text style={[styles.date]}>{moment(message.date).calendar()}</Text>
-      } else if (diffMessage.date instanceof Date) {
-        const diff = moment(message.date).diff(diffMessage.date, 'minutes')
-        if (diff > 5) {
-          return <Text style={[styles.date]}>{moment(message.date).calendar()}</Text>
-        }
+    if (!diffMessage) {
+      return <Text style={[styles.date]}>{message.dateAsString}</Text>
+    } else if (diffMessage.date) {
+      const diff = moment(message.date).diff(diffMessage.date, 'minutes')
+      if (diff > 5) {
+        return <Text style={[styles.date]}>{message.dateAsString}</Text>
       }
     }
     return null
   }
 
   getPreviousMessage = (index: number): IMessage | null => {
-    return this.chat!.messages.length > index + 1 ? this.chat!.messages[index + 1] : null
+    const {sortedMessages: messages} = this.chat!
+    return messages.length > index + 1 ? messages[index + 1] : null
   }
 
   renderItem = ({item, index}: {item: IMessage; index: number}) => (
