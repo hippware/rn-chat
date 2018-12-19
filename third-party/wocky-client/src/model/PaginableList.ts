@@ -1,17 +1,20 @@
-import {types, flow, IModelType, isAlive, IAnyType} from 'mobx-state-tree'
+import {types, flow, isAlive, IAnyType, IAnyModelType} from 'mobx-state-tree'
 
-export interface IPaginable<T> extends IModelType<any, any> {
-  result?: T[]
-  list?: T[]
-  cursor?: string
-  count?: number
-  loading?: boolean
-  finished?: boolean
-  add?: (i: T) => any
-  refresh?: () => void
-  load?: (args?: {force?: boolean}) => Promise<any[]>
-  addToTop?: (i: T) => any
-  remove?: (id: string) => void
+export interface IPaginable<T> extends IAnyModelType {
+  result: T[]
+  list: T[]
+  first: T | null
+  last: T | null
+  cursor?: string | null
+  count: number
+  loading: boolean
+  finished: boolean
+  add: (i: T) => any
+  refresh: () => void
+  load: (args?: {force?: boolean}) => Promise<any[]>
+  addToTop: (i: T) => any
+  remove: (id: string) => void
+  setRequest: (req: RequestType) => void
 }
 
 export function createPaginable<T>(type: IAnyType): IPaginable<T> {
@@ -19,7 +22,7 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
       cursor: types.maybeNull(types.string),
-      count: types.maybeNull(types.number),
+      count: 0,
     })
     .named('PaginableList')
     .volatile(() => ({
@@ -39,10 +42,10 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
       },
     }))
     .extend(self => {
-      let request: (cursor: string | null, max?: number) => any
+      let request: RequestType
       return {
         views: {
-          get length() {
+          get length(): number {
             return self.result.length
           },
           get list(): any[] {
@@ -56,7 +59,7 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
           },
         },
         actions: {
-          setRequest: (req: (cursor, max) => any) => (request = req),
+          setRequest: (req: RequestType) => (request = req),
           exists: (id: string): boolean => {
             return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
           },
@@ -81,7 +84,7 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
             }
             self.loading = true
             try {
-              const {list, count, cursor, ...data} = yield request(self.cursor)
+              const {list, count, cursor, ...data}: any = yield request(self.cursor)
               self.count = count
               self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
               Object.assign(self, data)
@@ -94,8 +97,15 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
               self.loading = false
             }
             return self.result
-          }) as ({force}: {force: boolean}) => Promise<any>,
+          }) as ({force}: {force: boolean}) => Promise<T[]>,
         },
       }
     }) as IPaginable<T> // TODO: better workaround to fix error?
 }
+
+export type RequestPromise = Promise<RequestReturnType>
+
+// shape of data return from wocky
+export type RequestReturnType = {list: any[]; count: number; cursor: string}
+
+export type RequestType = (cursor: string | null, max?: number) => Promise<RequestReturnType>

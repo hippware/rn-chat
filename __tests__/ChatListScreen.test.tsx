@@ -1,7 +1,7 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import ChatListScreen from '../src/components/ChatListScreen'
+import ChatListScreen from '../src/components/Chats/ChatListScreen'
 import mockStore from './utils/mockStore'
 
 describe('ChatListScreen', () => {

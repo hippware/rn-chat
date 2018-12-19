@@ -1,7 +1,7 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import ChatScreen from '../src/components/ChatScreen'
+import ChatScreen from '../src/components/Chats/ChatScreen'
 import './utils/mockTextInput'
 import mockStore from './utils/mockStore'
 import {Provider} from 'mobx-react/native'

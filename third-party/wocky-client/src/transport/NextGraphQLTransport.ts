@@ -2,13 +2,13 @@ import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 import {IWockyTransport, IPagingList} from './IWockyTransport'
-import {observable, action, runInAction} from 'mobx'
+import {observable, action} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
-import {ILocationSnapshot, IBotPost, IMessage} from '..'
-import {IBot} from '../model/Bot'
+import {ILocationSnapshot, IBotPost} from '..'
+import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
 import {
@@ -35,6 +35,10 @@ import _ from 'lodash'
 import {IBotPostIn} from '../model/BotPost'
 import {OperationDefinitionNode} from 'graphql'
 import {IMessageIn} from '../model/Message'
+import {IEventData} from '../model/Event'
+
+export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
+export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
 
 export class NextGraphQLTransport implements IWockyTransport {
   resource: string
@@ -284,7 +288,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     limit?: number
     beforeId?: string
     afterId?: string
-  }): Promise<{list: any[]; count: number}> {
+  }): PaginableLoadPromise<IEventData> {
     const {limit, beforeId, afterId} = params
     // console.log('& gql load', beforeId, afterId, limit)
     const res = await this.client!.query<any>({
@@ -325,7 +329,7 @@ export class NextGraphQLTransport implements IWockyTransport {
   ): Promise<IPagingList<any>> {
     return await this.loadBots('SUBSCRIBED_NOT_OWNED', userId, lastId, max)
   }
-  async loadGeofenceBots(): Promise<IPagingList<any>> {
+  async loadGeofenceBots(): PaginableLoadPromise<IBotIn> {
     // load all guest bots
     const res = await this.client!.query<any>({
       query: gql`
@@ -605,7 +609,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
-  async sendMessage({to, body}: IMessage): Promise<void> {
+  async sendMessage(otherUserId: string, content: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
@@ -616,12 +620,12 @@ export class NextGraphQLTransport implements IWockyTransport {
       `,
       variables: {
         // TODO: add imageURL
-        input: {content: body, recipientId: to!.id},
+        input: {content, recipientId: otherUserId},
       },
     })
   }
 
-  async loadChat(userId, lastId, max): Promise<void> {
+  async loadChatMessages(userId, lastId, max): PaginableLoadPromise<IMessageIn> {
     const res = await this.client!.query<any>({
       query: gql`
           query loadChat($otherUser: UUID, $after: String, $first: Int) {
@@ -630,6 +634,7 @@ export class NextGraphQLTransport implements IWockyTransport {
               messages(otherUser: $otherUser, after: $after, first: $first) {
                 totalCount
                 edges {
+                  cursor
                   node {
                     ${MESSAGE_PROPS}
                   }
@@ -640,9 +645,13 @@ export class NextGraphQLTransport implements IWockyTransport {
         `,
       variables: {otherUser: userId, first: max, after: lastId},
     })
-    res.data.currentUser.messages.edges.forEach(e => {
-      runInAction(() => (this.message = convertMessage(e.node, this.username!)))
-    })
+    const {edges, totalCount} = res.data.currentUser.messages
+    const messages = edges.map(e => convertMessage(e.node))
+    return {
+      list: messages,
+      count: totalCount,
+      cursor: edges.length ? edges[edges.length - 1].cursor : null,
+    }
   }
 
   async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
@@ -669,7 +678,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     return (res.data.currentUser.conversations.edges as any[]).map<{
       chatId: string
       message: IMessageIn
-    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node, this.username!)}))
+    }>(e => ({chatId: e.node.otherUser.id, message: convertMessage(e.node)}))
   }
 
   async removeBot(botId: string): Promise<void> {
@@ -1045,9 +1054,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
     }).subscribe({
-      next: action((result: any) => {
-        this.message = convertMessage(result.data.messages, this.username!)
-      }),
+      next: action((result: any) => (this.message = convertMessage(result.data.messages))),
     })
     this.subscriptions.push(subscription)
   }

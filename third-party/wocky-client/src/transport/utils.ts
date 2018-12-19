@@ -9,7 +9,6 @@ import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
-import {IBotPostIn} from '../model/BotPost'
 import {IMessageIn} from '../model/Message'
 
 export async function waitFor(condition: () => boolean) {
@@ -323,7 +322,7 @@ export function convertProfile({
   } as IProfilePartial
 }
 
-export function convertBotPost({node: {id, media, owner, content}}): IBotPostIn {
+export function convertBotPost({node: {id, media, owner, content}}) {
   return {
     id,
     content,
@@ -506,21 +505,13 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage({direction, content, otherUser}, myProfileId: string): IMessageIn {
-  let from: string, to: string
-  if (direction === 'INCOMING') {
-    from = otherUser.id
-    to = myProfileId
-  } else {
-    from = myProfileId
-    to = otherUser.id
-  }
+export function convertMessage({direction, content, otherUser, createdAt}): IMessageIn {
   return {
-    archiveId: '',
-    from,
-    to,
+    otherUser,
+    time: new Date(createdAt).valueOf(),
     media: undefined,
     unread: true,
-    body: content,
+    content,
+    isOutgoing: direction === 'OUTGOING',
   }
 }
