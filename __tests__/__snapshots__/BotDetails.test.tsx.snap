@@ -53,7 +53,7 @@ exports[`BotDetails renders with no data 1`] = `
                   "totalItems": 0,
                   "visitor": false,
                   "visitors": Object {
-                    "count": null,
+                    "count": 0,
                     "cursor": null,
                     "result": Array [],
                   },
