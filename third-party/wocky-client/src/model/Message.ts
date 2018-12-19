@@ -5,7 +5,6 @@ import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable, IPaginable} from './PaginableList'
 import {IWocky} from '../index'
-const moment = require('moment')
 import uuid from 'uuid/v1'
 import _ from 'lodash'
 

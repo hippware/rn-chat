@@ -245,154 +245,132 @@ exports[`Signup renders 1`] = `
           />
         </View>
       </View>
-      <View
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
         style={
-          Object {
-            "alignSelf": "center",
-          }
+          Array [
+            Object {
+              "color": "rgb(155,155,155)",
+              "fontFamily": "Roboto-Regular",
+              "fontSize": 12.5,
+            },
+            Array [
+              Object {
+                "marginBottom": 70,
+                "marginTop": 70,
+                "textAlign": "center",
+              },
+              Object {
+                "paddingHorizontal": 35,
+              },
+            ],
+          ]
         }
       >
-        <View
-          style={
-            Object {
-              "alignSelf": "center",
-              "width": "80%",
-            }
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {
-                  "color": "rgb(155,155,155)",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 12.5,
-                },
-                Object {
-                  "marginBottom": 70,
-                  "marginTop": 70,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            By signing up you agree to our 
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontFamily": "Roboto-Bold",
-                    "fontSize": 12.5,
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Privacy Policy
-            </Text>
-            , 
-
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontFamily": "Roboto-Bold",
-                    "fontSize": 12.5,
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Terms of Service
-            </Text>
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Array [
-                  Object {
-                    "color": "rgb(155,155,155)",
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 12.5,
-                  },
-                  Object {
-                    "marginBottom": 70,
-                    "marginTop": 70,
-                    "textAlign": "center",
-                  },
-                ]
-              }
-            >
-              , and for us to contact you via email for updates and information.
-            </Text>
-          </Text>
-        </View>
-        <View
+        By signing up you agree to our 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "borderRadius": 8,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "height": 44,
-                "justifyContent": "center",
-                "marginBottom": 10,
+                "color": undefined,
+                "fontFamily": "Roboto-Bold",
+                "fontSize": 12.5,
+              },
+              undefined,
+            ]
+          }
+        >
+          Privacy Policy
+        </Text>
+        , 
+
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "color": undefined,
+                "fontFamily": "Roboto-Bold",
+                "fontSize": 12.5,
+              },
+              undefined,
+            ]
+          }
+        >
+          Terms of Service
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "rgb(155,155,155)",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 12.5,
               },
               Object {
-                "backgroundColor": "rgb(254,92,108)",
-                "borderRadius": 8,
-                "borderWidth": 0,
-                "height": 100,
-                "marginLeft": 75,
-                "marginRight": 75,
-                "width": "80%",
-              },
-              Object {
-                "opacity": 0.5,
+                "marginBottom": 70,
+                "marginTop": 70,
+                "textAlign": "center",
               },
             ]
           }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "textAlign": "center",
-                },
-                Object {
-                  "color": "white",
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 17.5,
-                  "letterSpacing": 0.8,
-                },
-              ]
-            }
-          >
-            Done
-          </Text>
-        </View>
+          , and for us to contact you via email for updates and information.
+        </Text>
+      </Text>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgb(254,92,108)",
+            "borderRadius": 6,
+            "height": 100,
+            "justifyContent": "center",
+            "opacity": 1,
+            "width": "80%",
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 17.5,
+              },
+              Object {
+                "letterSpacing": 0.8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Done
+        </Text>
       </View>
     </View>
   </View>

@@ -1,6 +1,5 @@
 import React from 'react'
-import {StyleSheet} from 'react-native'
-import ApslButton from 'apsl-react-native-button'
+import {StyleSheet, TouchableOpacity, Text} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 
@@ -8,21 +7,18 @@ type Props = {
   style?: any
   buttonStyle?: any
   textStyle?: any
-  disabledStyle?: any
   onPress?: any
   children?: any
 }
 
 export default (props: Props) => (
-  <ApslButton
+  <TouchableOpacity
     {...props}
     style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
     onPress={props.onPress}
-    disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
-    textStyle={[styles.textStyle, props.textStyle]}
   >
-    {props.children}
-  </ApslButton>
+    <Text style={props.textStyle}>{props.children}</Text>
+  </TouchableOpacity>
 )
 
 const styles = StyleSheet.create({

@@ -21,8 +21,6 @@ import {AutoExpandingTextInput, Avatar} from '../common'
 import {colors} from '../../constants'
 import {IWocky, IChat, IMessage} from 'wocky-client'
 
-const Button = require('apsl-react-native-button')
-
 type Props = {
   item: string
   wocky?: IWocky
@@ -200,12 +198,12 @@ const onAttach = (message, notificationStore) => {
 }
 
 const AttachButton = inject('notificationStore')(({notificationStore, message}) => (
-  <Button
-    style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}}
+  <TouchableOpacity
+    style={{borderWidth: 0, borderColor: 'transparent', paddingVertical: 15}}
     onPress={() => onAttach(message, notificationStore)}
   >
     <Image source={require('../../../images/iconAttach.png')} />
-  </Button>
+  </TouchableOpacity>
 ))
 
 const ChatTitle = inject('wocky')(
