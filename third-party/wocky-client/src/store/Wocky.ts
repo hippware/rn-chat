@@ -42,12 +42,6 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
-  .postProcessSnapshot((snapshot: any) => {
-    const data = {...snapshot}
-    // delete data.geoBots
-    delete data.files
-    return data
-  })
   .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
@@ -69,17 +63,9 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          const profile = self.create(OwnProfile, {
-            id,
-            ...data,
-            ...self._registerReferences(Profile, data),
-            loaded: true,
-            status: 'available',
-          })
-          self.profile = profile!
-        } else {
-          self.load(self.profile, data)
+          self.profile = OwnProfile.create({id})
         }
+        self.profile.load(data)
         // add own profile to the storage
         self.profiles.get(id, data)
         if (self.profile!.handle) self.sessionCount = 3

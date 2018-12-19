@@ -36,7 +36,7 @@ export default class ProfileDetail extends React.Component<Props> {
   }
 
   load = async () => {
-    this.profile = await this.props.wocky!.profiles.get(this.props.item)
+    this.profile = this.props.wocky!.profiles.get(this.props.item)
     this.props.wocky!.loadProfile(this.props.item)
   }
 

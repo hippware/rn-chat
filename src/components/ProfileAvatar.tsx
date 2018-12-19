@@ -3,6 +3,7 @@ import {View} from 'react-native'
 import Avatar from './common/Avatar'
 import {IProfile} from 'wocky-client'
 import MessageButton from './ProfileDetail/MessagProfileCTA'
+import {observer} from 'mobx-react/native'
 
 type Props = {
   profile: IProfile
@@ -17,7 +18,7 @@ type Props = {
   messageBtn?: boolean
 }
 
-const ProfileAvatar = (props: Props) => {
+const ProfileAvatar = observer((props: Props) => {
   const {
     size = 65,
     tappable = true,
@@ -39,6 +40,6 @@ const ProfileAvatar = (props: Props) => {
       {messageBtn && <MessageButton profile={profile} />}
     </View>
   )
-}
+})
 
 export default ProfileAvatar
