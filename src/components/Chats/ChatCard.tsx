@@ -1,16 +1,16 @@
 import React from 'react'
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react/native'
-import Card from './Card'
-import {CardText} from './common'
-import Avatar from './common/Avatar'
-import {k} from './Global'
+import Card from '../Card'
+import {Avatar, RText} from '../common'
+import {k} from '../Global'
 import ResizedImage from './ResizedImage'
-import {colors} from '../constants'
+import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
+import {IChat, IMessage} from 'wocky-client'
 
 type Props = {
-  item: any
+  chat: IChat
   onPostOptions?: any
   onPress: any
   style?: any
@@ -21,14 +21,13 @@ export default class ChatCard extends React.Component<Props> {
   button: any
 
   render() {
-    const isDay = true
-    const chat = this.props.item
+    const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg = chat.last
-    const {participants} = chat
+    const msg: IMessage = chat.messages.last
+    const {otherUser} = chat
     let media: any = null
     try {
-      media = msg.media && msg.media.source ? msg.media : null
+      media = msg.media && msg.media!.source ? msg.media : null
     } catch (err) {
       // console.log('TODO: Fix msg.media reference error', err)
     }
@@ -48,9 +47,7 @@ export default class ChatCard extends React.Component<Props> {
             }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => (
-                <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} />
-              ))}
+              <Avatar size={40 * k} profile={otherUser} />
             </View>
 
             <Date {...this.props}>
@@ -61,63 +58,26 @@ export default class ChatCard extends React.Component<Props> {
                   color: colors.DARK_GREY,
                 }}
               >
-                {msg.date}
+                {msg!.dateAsString}
               </Text>
             </Date>
           </View>
         }
       >
-        {!!msg.body && (
-          <Text style={{padding: 15 * k}}>
-            {!!msg.from && (
-              <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`}: </CardText>
-            )}
-            <Text
-              style={{
-                fontFamily: 'Roboto-Light',
-                color: isDay ? 'rgb(81,67,96)' : 'white',
-                fontSize: 15,
-              }}
-            >
-              {msg.body}
-            </Text>
-          </Text>
-        )}
+        <Text style={{padding: 15 * k}}>
+          <CardText>{msg.isOutgoing ? 'you' : `@${msg.otherUser.handle}`}: </CardText>
+          <RText weight="Light" size={15} color="rgb(81,67,96)">
+            {msg.content}
+          </RText>
+        </Text>
         {media && (
           <View style={{paddingTop: 15 * k}}>
             <ResizedImage image={media.source} />
           </View>
         )}
-        {!!this.props.item.location && (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingLeft: 15 * k,
-              paddingRight: 15 * k,
-              paddingTop: 10,
-            }}
-          >
-            <Image source={require('../../images/iconLocation.png')} />
-            <Text style={styles.smallText}> {this.props.item.location}</Text>
-          </View>
-        )}
-        {!!this.props.item.channel && (
-          <Text
-            style={[
-              {
-                paddingLeft: 15 * k,
-                paddingRight: 15 * k,
-              },
-              styles.smallText,
-            ]}
-          >
-            #{this.props.item.channel}
-          </Text>
-        )}
-        {chat.unread > 0 && (
+        {chat.unreadCount > 0 && (
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
-            <Image source={require('../../images/iconNewPriority.png')} />
+            <Image source={require('../../../images/iconNewPriority.png')} />
           </View>
         )}
       </Card>
@@ -129,7 +89,7 @@ const Date = ({onPostOptions, children}: any) =>
   onPostOptions ? (
     <TouchableOpacity onPress={e => onPostOptions(e, e.nativeEvent.target)} style={styles.date}>
       {children}
-      <Image style={{marginLeft: 5 * k}} source={require('../../images/iconPostOptions.png')} />
+      <Image style={{marginLeft: 5 * k}} source={require('../../../images/iconPostOptions.png')} />
     </TouchableOpacity>
   ) : (
     <View
@@ -145,6 +105,12 @@ const Date = ({onPostOptions, children}: any) =>
       {children}
     </View>
   )
+
+const CardText = ({style, children}: {style?: any; children: any}) => (
+  <RText numberOfLines={0} size={15} style={[{color: 'rgb(81,67,96)'}, style]}>
+    {children}
+  </RText>
+)
 
 const styles = StyleSheet.create({
   smallText: {

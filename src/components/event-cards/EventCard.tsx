@@ -1,5 +1,5 @@
 import React from 'react'
-import EventBotShareCard from './EventBotShareCard'
+// import EventBotShareCard from './EventBotShareCard'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventUserFollowCard from './EventUserFollowCard'
@@ -64,7 +64,7 @@ const EventBotGeofenceCard = observer(
 
 const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
-  EventBotShare: EventBotShareCard,
+  // EventBotShare: EventBotShareCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventUserFollow: EventUserFollowCard,
   EventBotInvite: EventBotInviteCard,

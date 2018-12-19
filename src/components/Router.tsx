@@ -8,14 +8,14 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 import Camera from './Camera'
-import CreateMessage from './CreateMessage'
+import CreateMessage from './Chats/CreateMessage'
 import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
 import MyAccount from './MyAccount'
 import ProfileDetail from './ProfileDetail/ProfileDetail'
-import ChatListScreen from './ChatListScreen'
-import ChatScreen from './ChatScreen'
+import ChatListScreen from './Chats/ChatListScreen'
+import ChatScreen from './Chats/ChatScreen'
 import BotDetails from './BotDetails/BotDetails'
 import TestRegister from './TestRegister'
 import CodePushScene from './CodePushScene'
@@ -157,7 +157,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     ]}
                     {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                   </Stack>
-                  <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
+                  <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} />
                   <Scene
                     key="searchUsers"
                     component={peopleLists.SearchUsers}

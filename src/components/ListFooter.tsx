@@ -11,13 +11,13 @@ type Props = {
 }
 
 const ListFooter = observer(({footerImage, finished, style}: Props) => (
-  <View style={[style, {alignItems: 'center', backgroundColor: 'white', height: 50 * k}]}>
+  <View style={[{alignItems: 'center', backgroundColor: 'white', height: 50 * k}, style]}>
     {finished ? (
       footerImage ? (
         <Image source={footerImage} style={styles.padding} />
       ) : null
     ) : (
-      <Spinner style={styles.padding} />
+      <Spinner style={styles.padding as any} />
     )}
   </View>
 ))
