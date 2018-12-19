@@ -208,22 +208,8 @@ const LocationStore = types
         }
 
         if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-        // analytics.track('location_bg_fail', {response})
+        analytics.track('location_bg_error', {error: response})
       }
-    }
-
-    function onHttpError(err) {
-      logger.log(prefix, 'on http error', err)
-
-      if (err.status === 401 || err.status === 403) {
-        BackgroundGeolocation.stop()
-        BackgroundGeolocation.logger.error(
-          `${prefix} BackgroundGeolocation.stop() due to http error`
-        )
-      }
-
-      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-      analytics.track('location_bg_error', {error: err})
     }
 
     function onMotionChange(location) {
@@ -316,7 +302,6 @@ const LocationStore = types
       onLocation,
       onLocationError,
       onHttp,
-      onHttpError,
       onMotionChange,
       onActivityChange,
       onProviderChange,
@@ -380,12 +365,12 @@ const LocationStore = types
       yield self.configure()
 
       BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-      BackgroundGeolocation.on('http', self.onHttp, self.onHttpError)
+      BackgroundGeolocation.onHttp(self.onHttp)
       // TODO: figure out how to track RNBGL errors in new version
       // backgroundGeolocation.on('error', self.positionError)
-      BackgroundGeolocation.on('motionchange', self.onMotionChange)
-      BackgroundGeolocation.on('activitychange', self.onActivityChange)
-      BackgroundGeolocation.on('providerchange', self.onProviderChange)
+      BackgroundGeolocation.onMotionChange(self.onMotionChange)
+      BackgroundGeolocation.onActivityChange(self.onActivityChange)
+      BackgroundGeolocation.onProviderChange(self.onProviderChange)
 
       const config = yield BackgroundGeolocation.ready({})
       logger.log(prefix, 'Ready: ', config)
