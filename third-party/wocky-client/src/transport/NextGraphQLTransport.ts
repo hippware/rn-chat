@@ -645,6 +645,9 @@ export class NextGraphQLTransport implements IWockyTransport {
         `,
       variables: {otherUser: userId, first: max, after: lastId},
     })
+    if (!res.data.currentUser.messages) {
+      return {list: [], count: 0}
+    }
     const {edges, totalCount} = res.data.currentUser.messages
     const messages = edges.map(e => convertMessage(e.node))
     return {
@@ -815,7 +818,7 @@ export class NextGraphQLTransport implements IWockyTransport {
           botId,
           content: post.content,
           id: post.id,
-          imageUrl: post.image && post.image.url,
+          imageUrl: post.image && post.image.id,
         },
       },
     })

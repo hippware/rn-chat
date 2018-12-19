@@ -1,11 +1,13 @@
 import {types, Instance, SnapshotIn, flow, getParent} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
-// import {createUploadable} from './Uploadable'
+import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable, IPaginable} from './PaginableList'
+import {IWocky} from '../index'
 const moment = require('moment')
 import uuid from 'uuid/v1'
+import _ from 'lodash'
 
 const MessageBase = types.model('MessageBase', {
   id: types.optional(types.string, () => uuid()),
@@ -15,12 +17,20 @@ const MessageBase = types.model('MessageBase', {
   unread: false,
   isOutgoing: types.boolean,
 })
-
+export function createMessage(params: any, service: IWocky) {
+  params = _.cloneDeep(params)
+  if (params.otherUser) {
+    params.otherUser = service.profiles.get(params.otherUser.id, params.otherUser)
+  }
+  if (params.media) {
+    params.media = service.files.get(params.media.id, params.media)
+  }
+  return Message.create(params)
+}
 export const Message = types
   .compose(
     Timeable,
-    // todo: re-add uploadable when files/images are ready
-    // createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)
+    createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`),
     MessageBase
   )
   .named('Message')

@@ -8,6 +8,7 @@ import {EventDelete} from './EventDelete'
 import {EventUserFollow} from './EventUserFollow'
 import {EventBotInvite} from './EventBotInvite'
 import {createPaginable} from './PaginableList'
+import {IWocky} from '../index'
 
 export const EventEntity = types.union(
   EventBotPost,
@@ -20,6 +21,19 @@ export const EventEntity = types.union(
   EventBotInvite
 )
 export type IEventEntity = typeof EventEntity.Type
+
+export function createEvent(params: any, service: IWocky) {
+  if (params.user) {
+    params.user = service.profiles.get(params.user.id, params.user)
+  }
+  if (params.bot) {
+    params.bot = service.bots.get(params.bot.id, params.bot)
+  }
+  if (params.image) {
+    params.image = service.files.get(params.image.id, params.image)
+  }
+  return EventEntity.create(params)
+}
 
 export const EventList = createPaginable<IEventEntity>(EventEntity).postProcessSnapshot(
   (snapshot: any) => {

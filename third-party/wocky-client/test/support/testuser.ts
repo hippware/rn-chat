@@ -2,9 +2,11 @@ import {Wocky, IWocky, NextGraphQLTransport} from '../../src'
 import {AppInfo} from '../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
-import {addMiddleware} from 'mobx-state-tree'
+import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
+
+setLivelynessChecking('error')
 
 const SERVER_NAME = 'testing'
 const appInfo = AppInfo.create({

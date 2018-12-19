@@ -14,7 +14,7 @@ const BotPostData = types.model('BotPostData', {
   content: '',
   title: '',
   image: FileRef,
-  profile: types.reference(BotPostProfileRef),
+  profile: types.maybe(types.reference(BotPostProfileRef)),
 })
 
 export const BotPost = types
@@ -29,6 +29,14 @@ export const BotPost = types
   )
   .named('BotPost')
   .actions(self => ({
+    load({id, service, profile, image, ...data}) {
+      self.profile = service.profiles.get(profile.id, profile)
+      if (image) {
+        self.image = service.files.get(image.id, image)
+      }
+      Object.assign(self, data)
+      return self
+    },
     setContent: (content: string) => (self.content = content),
     setTitle: (title: string) => (self.title = title),
     publish: flow(function*() {

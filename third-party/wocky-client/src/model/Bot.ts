@@ -122,6 +122,17 @@ export const Bot = types
     load: (d: any = {}) => {
       const data = {...d}
       // console.log('bot load', d)
+      if (data.owner) {
+        self.owner =
+          typeof data.owner === 'object'
+            ? self.service.profiles.get(data.owner.id, data.owner)
+            : self.service.profiles.get(data.owner)
+        delete data.owner
+      }
+      if (data.image) {
+        self.image = self.service.files.get(data.image.id, data.image)
+        delete data.image
+      }
       if (data.addressData && typeof data.addressData === 'string') {
         try {
           data.addressData = JSON.parse(data.addressData)
@@ -143,7 +154,9 @@ export const Bot = types
       }
       if (data.posts) {
         self.posts.refresh()
-        data.posts.forEach(p => self.posts.add(self.service.create(BotPost, p)))
+        data.posts.forEach((p: any) =>
+          self.posts.add(BotPost.create({id: p.id}).load({service: self.service, ...p}))
+        )
         delete data.posts
       }
       Object.assign(self, data)
