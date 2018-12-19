@@ -73,7 +73,6 @@ const LocationStore = types
   .volatile(() => ({
     enabled: true,
     alwaysOn: true,
-    loading: false,
     debugSounds: false,
   }))
   .views(self => ({
@@ -127,17 +126,6 @@ const LocationStore = types
       } else {
         self.location.load({latitude, longitude, accuracy})
       }
-      self.loading = false
-    },
-    positionError(error: any) {
-      if (error.code === 1) {
-        // user denied location permissions
-        self.enabled = false
-      }
-      self.loading = false
-      const logger = getEnv(self).logger
-      // @TODO: how do we handle timeout or other error?
-      logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR})
     },
     setAlwaysOn(value: boolean) {
       BackgroundGeolocation.logger.info(`${prefix} setAlwaysOn(${value})`)
@@ -192,7 +180,13 @@ const LocationStore = types
     }
 
     function onLocationError(err) {
+      if (err === 1) {
+        // user denied location permissions
+        self.enabled = false
+      }
+
       logger.warn(prefix, 'location error', err)
+      BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
       if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
     }
 
@@ -208,22 +202,8 @@ const LocationStore = types
         }
 
         if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-        // analytics.track('location_bg_fail', {response})
+        analytics.track('location_bg_error', {error: response})
       }
-    }
-
-    function onHttpError(err) {
-      logger.log(prefix, 'on http error', err)
-
-      if (err.status === 401 || err.status === 403) {
-        BackgroundGeolocation.stop()
-        BackgroundGeolocation.logger.error(
-          `${prefix} BackgroundGeolocation.stop() due to http error`
-        )
-      }
-
-      if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
-      analytics.track('location_bg_error', {error: err})
     }
 
     function onMotionChange(location) {
@@ -274,18 +254,10 @@ const LocationStore = types
 
     const getCurrentPosition = flow(function*() {
       logger.log(prefix, 'get current position')
-      if (self.loading) return self.location
-
-      self.loading = true
-      try {
-        const position = yield BackgroundGeolocation.getCurrentPosition({
-          timeout: 20,
-          maximumAge: 1000,
-        })
-        self.setPosition(position.coords)
-      } catch (err) {
-        self.positionError(err)
-      }
+      yield BackgroundGeolocation.getCurrentPosition({
+        timeout: 20,
+        maximumAge: 1000,
+      })
     })
 
     function setBackgroundConfig(config) {
@@ -316,7 +288,6 @@ const LocationStore = types
       onLocation,
       onLocationError,
       onHttp,
-      onHttpError,
       onMotionChange,
       onActivityChange,
       onProviderChange,
@@ -380,12 +351,10 @@ const LocationStore = types
       yield self.configure()
 
       BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-      BackgroundGeolocation.on('http', self.onHttp, self.onHttpError)
-      // TODO: figure out how to track RNBGL errors in new version
-      // backgroundGeolocation.on('error', self.positionError)
-      BackgroundGeolocation.on('motionchange', self.onMotionChange)
-      BackgroundGeolocation.on('activitychange', self.onActivityChange)
-      BackgroundGeolocation.on('providerchange', self.onProviderChange)
+      BackgroundGeolocation.onHttp(self.onHttp)
+      BackgroundGeolocation.onMotionChange(self.onMotionChange)
+      BackgroundGeolocation.onActivityChange(self.onActivityChange)
+      BackgroundGeolocation.onProviderChange(self.onProviderChange)
 
       const config = yield BackgroundGeolocation.ready({})
       logger.log(prefix, 'Ready: ', config)
