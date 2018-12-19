@@ -73,7 +73,7 @@ export default class ProfileDetail extends React.Component<Props> {
             color={colors.PINK}
             weight="Bold"
             size={20}
-            style={styles.displayName}
+            style={styles.displayName as any}
             numberOfLines={1}
           >
             @{this.profile.handle}
