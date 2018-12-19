@@ -8,9 +8,6 @@ import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {k, isIphoneX, minHeight} from '../Global'
-import {RText} from '../common'
-import Bubble from '../map/Bubble'
-import {addAlpha} from '../../constants/colors'
 import {Actions} from 'react-native-router-flux'
 import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
@@ -71,7 +68,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           }}
         >
           <FlatList
-            data={profile && profile.hasUsedGeofence ? activeBots.slice() : placeholderItems}
+            data={profile && profile.hasUsedGeofence ? activeBots.slice() : null}
             horizontal
             keyExtractor={this.keyExtractor}
             renderItem={
@@ -97,49 +94,13 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
   )
 
   renderPlaceholder = ({item}: {item: any}) => {
-    const Comp = item.render || Placeholder
+    const Comp = item.render || null
     return <Comp />
   }
 }
 
 const settingsImg = require('../../../images/settingsBtn.png')
 const infoImg = require('../../../images/info.png')
-
-const placeholderItems: ReadonlyArray<any> = [
-  {
-    id: '0',
-    render: () => <PlaceholderNew />,
-  },
-  {id: '1'},
-  {id: '2'},
-  {id: '3'},
-]
-
-const foot = require('../../../images/footIconWhite.png')
-const lightPink = addAlpha(colors.PINK, 0.15)
-
-const PlaceholderNew = () => {
-  return (
-    <TouchableOpacity style={styles.outer} onPress={() => Actions.geoHeaderPrimer()}>
-      <Bubble image={foot} imageStyle={{width: 20, height: 24}} size={50} gradient>
-        <View style={styles.newDot} />
-      </Bubble>
-      <RText color={colors.PINK} size={13} style={{textAlign: 'center'}}>
-        New!
-      </RText>
-    </TouchableOpacity>
-  )
-}
-
-const Placeholder = () => (
-  <View style={styles.outer}>
-    <Bubble
-      size={50}
-      style={{backgroundColor: 'white', borderColor: lightPink}}
-      triangleColor={lightPink}
-    />
-  </View>
-)
 
 const Buttons = () => (
   <View
