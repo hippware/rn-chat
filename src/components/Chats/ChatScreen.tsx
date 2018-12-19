@@ -15,11 +15,11 @@ import {observer, inject} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
-import {showImagePicker} from '../ImagePicker'
 import ChatMessage from './ChatMessage'
 import {AutoExpandingTextInput, Avatar} from '../common'
 import {colors} from '../../constants'
 import {IWocky, IChat, IMessage} from 'wocky-client'
+import AttachButton from './AttachButton'
 
 type Props = {
   item: string
@@ -155,7 +155,7 @@ const InputArea = inject('wocky')(
           autoFocus
           returnKeyType="default"
           enablesReturnKeyAutomatically
-          onChangeText={t => chat.message && chat.message.setBody(t)}
+          onChangeText={t => chat.message!.setBody(t)}
           value={chat.message.content}
           blurOnSubmit={false}
           maxHeight={100}
@@ -177,34 +177,6 @@ const InputArea = inject('wocky')(
     ) : null
   })
 )
-
-const onAttach = (message, notificationStore) => {
-  showImagePicker({
-    title: 'Select Image',
-    callback: async (source, response) => {
-      try {
-        await message.upload({
-          file: source,
-          width: response.width,
-          height: response.height,
-          size: response.size,
-        })
-        message.send()
-      } catch (e) {
-        notificationStore.flash(e.message)
-      }
-    },
-  })
-}
-
-const AttachButton = inject('notificationStore')(({notificationStore, message}) => (
-  <TouchableOpacity
-    style={{borderWidth: 0, borderColor: 'transparent', paddingVertical: 15}}
-    onPress={() => onAttach(message, notificationStore)}
-  >
-    <Image source={require('../../../images/iconAttach.png')} />
-  </TouchableOpacity>
-))
 
 const ChatTitle = inject('wocky')(
   observer(({item, wocky}: {item: string; wocky?: IWocky}) => {
