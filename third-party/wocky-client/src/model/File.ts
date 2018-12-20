@@ -1,20 +1,18 @@
 import {types, isAlive, flow, Instance} from 'mobx-state-tree'
 import {Base} from './Base'
 
-export const FileSource = types
-  .model('FileSource', {
-    uri: types.string,
-    contentType: types.maybeNull(types.string),
-    width: types.maybeNull(types.number),
-    height: types.maybeNull(types.number),
-    cached: false,
-  })
-  .named('FileSource')
+export const FileSource = types.model('FileSource', {
+  uri: types.string,
+  contentType: types.maybeNull(types.string),
+  width: types.maybeNull(types.number),
+  height: types.maybeNull(types.number),
+  cached: false,
+})
 
 export const File = types
   .compose(
     Base,
-    types.model('FileBase', {
+    types.model({
       id: types.identifier,
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),

@@ -1,4 +1,4 @@
-import {types} from 'mobx-state-tree'
+import {types, SnapshotIn} from 'mobx-state-tree'
 
 const moment = require('moment')
 
@@ -37,6 +37,4 @@ export const Timeable = types
     },
   }))
 
-export interface ITimeableData {
-  time?: number
-}
+export interface ITimeableData extends SnapshotIn<typeof Timeable> {}

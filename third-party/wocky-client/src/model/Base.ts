@@ -1,12 +1,10 @@
-// tslint:disable-next-line:no_unused-variable
-import {types, getEnv, getType, getParent, IModelType, hasParent} from 'mobx-state-tree'
+import {types, getEnv, getType, getParent, hasParent} from 'mobx-state-tree'
 
 export const SERVICE_NAME = 'WockyClient'
-export type __IModelType = IModelType<any, any>
 
 // Base class for entities that want access to parent wocky service
 export const Base = types
-  .model('Base', {id: types.identifier})
+  .model({})
   .named('Base')
   .views(self => ({
     get service() {

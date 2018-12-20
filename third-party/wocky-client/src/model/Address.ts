@@ -1,4 +1,3 @@
-// tslint:disable-next-line:no_unused-variable
 import {types, getParent} from 'mobx-state-tree'
 import {IBot} from './Bot'
 

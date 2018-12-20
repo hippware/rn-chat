@@ -32,6 +32,7 @@ export const Bot = types
       self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data}, self.userLocation)
     ),
     types.model({
+      id: types.identifier,
       isSubscribed: false,
       visitor: false,
       icon: '',
