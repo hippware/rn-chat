@@ -369,32 +369,26 @@ your phone number.
         }
       >
         <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "alignSelf": "stretch",
-                "borderRadius": 8,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "height": 44,
-                "justifyContent": "center",
-                "marginBottom": 10,
-              },
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "rgb(253,95,108)",
-                "borderRadius": 10,
-                "borderWidth": 0,
-                "flex": 1,
-                "height": 100,
-                "justifyContent": "center",
-                "marginHorizontal": 10,
-              },
-              Object {
-                "opacity": 0.5,
-              },
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "rgb(253,95,108)",
+              "borderRadius": 10,
+              "borderWidth": 0,
+              "flex": 1,
+              "height": 100,
+              "justifyContent": "center",
+              "marginHorizontal": 10,
+              "opacity": 1,
+            }
           }
         >
           <Text
@@ -404,10 +398,9 @@ your phone number.
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "textAlign": "center",
+                  "color": undefined,
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 12,
                 },
                 Object {
                   "color": "rgb(255,255,255)",

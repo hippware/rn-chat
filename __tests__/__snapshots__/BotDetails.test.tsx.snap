@@ -623,6 +623,7 @@ exports[`BotDetails renders with no data 1`] = `
     pointerEvents="box-none"
     style={
       Object {
+        "flex": 1,
         "transform": Array [
           Object {
             "translateY": 0,

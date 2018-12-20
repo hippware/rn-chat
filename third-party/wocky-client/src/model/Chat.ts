@@ -7,11 +7,11 @@ const moment = require('moment')
 export const Chat = types
   .model('Chat', {
     id: types.string, // NOTE: id === otherUser.id
-    active: false,
     loaded: false,
     otherUser: types.reference(Profile),
     messages: types.optional(MessagePaginableList, {}),
     message: types.maybeNull(Message),
+    active: false,
   })
   .volatile(() => ({
     loading: false,

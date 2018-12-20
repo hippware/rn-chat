@@ -1,7 +1,6 @@
-import {types, isAlive, flow, IModelType, IType} from 'mobx-state-tree'
+import {types, isAlive, flow, Instance} from 'mobx-state-tree'
 import {Base} from './Base'
-export type __IModelType = IModelType<any, any>
-export type __IType = IType<any, any, any>
+
 export const FileSource = types
   .model('FileSource', {
     uri: types.string,
@@ -11,11 +10,11 @@ export const FileSource = types
     cached: false,
   })
   .named('FileSource')
-export type IFileSource = typeof FileSource.Type
+
 export const File = types
   .compose(
     Base,
-    types.model('File', {
+    types.model('FileBase', {
       id: types.identifier,
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),
@@ -75,8 +74,8 @@ export const File = types
       }
     }),
   }))
-export type IFileType = typeof File.Type
-export interface IFile extends IFileType {}
+
+export interface IFile extends Instance<typeof File> {}
 
 export const FileRef = types.maybeNull(
   types.reference(File, {

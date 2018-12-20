@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, StyleSheet, Text, Linking} from 'react-native'
+import {View, Image, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native'
 import {observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
@@ -7,7 +7,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {k, avatarScale, minHeight, height} from './Global'
 import FormTextInput from './FormTextInput'
 import {colors} from '../constants'
-import Button from 'apsl-react-native-button'
 import {RText, Spinner} from './common'
 import {ValidatableProfile} from '../utils/formValidation'
 import {IWocky} from 'wocky-client'
@@ -131,39 +130,40 @@ class SignUp extends React.Component<Props> {
               testID="signUpUsername"
             />
           </View>
-          <View style={{alignSelf: 'center'}}>
-            <View style={{width: '80%', alignSelf: 'center'}}>
-              <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>
-                {'By signing up you agree to our '}
-                <RText
-                  size={12.5}
-                  weight="Bold"
-                  onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}
-                >
-                  Privacy Policy
-                </RText>
-                {', \r\n'}
-                <RText
-                  size={12.5}
-                  weight="Bold"
-                  onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}
-                >
-                  Terms of Service
-                </RText>
-                <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>
-                  {', and for us to contact you via email for updates and information.'}
-                </RText>
-              </RText>
-            </View>
-            <Button
-              isDisabled={buttonDisabled || !this.props.wocky!.connected}
-              onPress={this.done}
-              style={styles.submitButton}
-              textStyle={styles.text}
+          <RText
+            size={12.5}
+            color={colors.DARK_GREY}
+            style={[styles.agreeNote as any, {paddingHorizontal: 35}]}
+          >
+            {'By signing up you agree to our '}
+            <RText
+              size={12.5}
+              weight="Bold"
+              onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}
             >
+              Privacy Policy
+            </RText>
+            {', \r\n'}
+            <RText
+              size={12.5}
+              weight="Bold"
+              onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}
+            >
+              Terms of Service
+            </RText>
+            <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote as any}>
+              {', and for us to contact you via email for updates and information.'}
+            </RText>
+          </RText>
+          <TouchableOpacity
+            disabled={buttonDisabled || !this.props.wocky!.connected}
+            onPress={this.done}
+            style={styles.submitButton}
+          >
+            <RText size={17.5} color="white" style={{letterSpacing: 0.8, textAlign: 'center'}}>
               {profile.updating ? <Spinner color="white" size={22} /> : 'Done'}
-            </Button>
-          </View>
+            </RText>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     )
@@ -173,15 +173,13 @@ class SignUp extends React.Component<Props> {
 export default SignUp
 
 const styles = StyleSheet.create({
-  text: {fontSize: 17.5, letterSpacing: 0.8, fontFamily: 'Roboto-Regular', color: 'white'},
   submitButton: {
-    marginLeft: 37.5 * k,
-    marginRight: 37.5 * k,
-    borderRadius: 4 * k,
+    borderRadius: 6,
     height: 50 * k,
-    borderWidth: 0,
     backgroundColor: 'rgb(254,92,108)',
     width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   agreeNote: {
     marginTop: 35 * k,

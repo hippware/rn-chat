@@ -8,7 +8,6 @@ import {k} from './Global'
 import FormTextInput from './FormTextInput'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
-import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {parse, AsYouType as asYouType} from 'libphonenumber-js'
 import {IFirebaseStore} from 'src/store/FirebaseStore'
@@ -141,14 +140,15 @@ class SignIn extends React.Component<Props> {
                 {firebaseStore!.errorMessage}
               </RText>
             )}
-            <Button
+            <TouchableOpacity
               style={styles.button}
-              isDisabled={this.submitting || !this.phoneText || !this.phoneText.valid}
+              disabled={this.submitting || !this.phoneText || !this.phoneText.valid}
               onPress={this.submit}
-              textStyle={styles.text}
             >
-              {this.submitting ? 'Sending...' : 'Send Confirmation'}
-            </Button>
+              <RText style={styles.text}>
+                {this.submitting ? 'Sending...' : 'Send Confirmation'}
+              </RText>
+            </TouchableOpacity>
             <RText
               size={12.5}
               color={colors.DARK_GREY}
