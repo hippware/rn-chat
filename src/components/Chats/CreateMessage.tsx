@@ -1,17 +1,8 @@
 import React from 'react'
-import {
-  TouchableOpacity,
-  TextInput,
-  Image,
-  StyleSheet,
-  View,
-  // Text,
-  // InteractionManager,
-} from 'react-native'
+import {TouchableOpacity, TextInput, Image, View, Text} from 'react-native'
 import Screen from '../Screen'
 import {k} from '../Global'
 import {ProfileList} from '../people-lists'
-import Button from 'apsl-react-native-button'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
@@ -25,15 +16,6 @@ type Props = {
 @inject('wocky', 'searchStore')
 @observer
 class CreateMessage extends React.Component<Props> {
-  // static backButton = ({state, style, textButtonStyle}) => (
-  //   <TouchableOpacity
-  //     onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
-  //     style={style}
-  //   >
-  //     <Text style={textButtonStyle}>Cancel</Text>
-  //   </TouchableOpacity>
-  // )
-
   componentDidMount() {
     this.props.searchStore!.localResult.setList(this.props.wocky.friends.map(f => ({profile: f})))
   }
@@ -83,19 +65,22 @@ class CreateMessage extends React.Component<Props> {
           }}
         />
         {!!selection.selected.length && (
-          <Button
-            containerStyle={styles.button}
+          <TouchableOpacity
+            // containerStyle={styles.button}
             onPress={() => Actions.createMessage(selection.selected[0])}
-            style={{
-              color: 'white',
-              letterSpacing: 0.7,
-              fontSize: 15,
-              fontFamily: 'Roboto-Regular',
-              textAlign: 'center',
-            }}
           >
-            Send Message
-          </Button>
+            <Text
+              style={{
+                color: 'white',
+                letterSpacing: 0.7,
+                fontSize: 15,
+                fontFamily: 'Roboto-Regular',
+                textAlign: 'center',
+              }}
+            >
+              Send Message
+            </Text>
+          </TouchableOpacity>
         )}
       </Screen>
     )
@@ -104,19 +89,3 @@ class CreateMessage extends React.Component<Props> {
 }
 
 export default CreateMessage
-
-const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
-    height: 60 * k,
-    backgroundColor: 'rgb(254,92,108)',
-    shadowOpacity: 0.09,
-    shadowRadius: 6,
-    shadowOffset: {height: -2, width: 0},
-  },
-})

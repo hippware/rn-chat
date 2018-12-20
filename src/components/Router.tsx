@@ -12,7 +12,6 @@ import CreateMessage from './Chats/CreateMessage'
 import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
-import MyAccount from './MyAccount'
 import ProfileDetail from './ProfileDetail/ProfileDetail'
 import ChatListScreen from './Chats/ChatListScreen'
 import ChatScreen from './Chats/ChatScreen'
@@ -144,8 +143,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
                     <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
-                    {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
-                    <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                     <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                     <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
@@ -155,7 +152,6 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                       <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                     ]}
-                    {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                   </Stack>
                   <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={Actions.pop} />
                   <Scene

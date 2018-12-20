@@ -20,7 +20,12 @@ type Props = {
 }
 
 type ImageData = {
-  source: string
+  source: {
+    isStatic: boolean
+    name: string
+    type: string
+    uri: string
+  }
   size: number
   width: number
   height: number
@@ -52,7 +57,7 @@ class AddBotPost extends React.Component<Props> {
     try {
       this.post = bot.createPost(this.text.trim())
       if (this.image) {
-        await this.post!.upload({...this.image, file: this.image.source})
+        await this.post!.upload({size: this.image.size, file: this.image.source})
       }
       await this.post!.publish()
       this.post = null

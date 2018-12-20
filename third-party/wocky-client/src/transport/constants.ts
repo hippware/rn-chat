@@ -15,17 +15,20 @@ export const BOT_PROPS = `id icon title address addressData description radius s
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
   subscribers(first:1 id: $ownUsername) { edges { relationships } }
 `
+const MEDIA_PROPS = `
+  media {
+    fullUrl
+    thumbnailUrl
+    trosUrl
+}
+`
 
 export const BOT_POST_PROPS = `
   id
   content
   createdAt
   updatedAt
-  media {
-    fullUrl
-    thumbnailUrl
-    trosUrl
-  }
+  ${MEDIA_PROPS}
   owner {
     ${PROFILE_PROPS}
   }
@@ -121,11 +124,7 @@ export const NOTIFICATIONS_PROPS_OLD = `
         botItem {
           id
           image
-          media {
-            fullUrl
-            thumbnailUrl
-            trosUrl
-          }
+          ${MEDIA_PROPS}
           owner {${PROFILE_PROPS}}
           stanza
         }
@@ -150,11 +149,7 @@ export const MESSAGE_PROPS = `
   content
   createdAt
   direction
-  media {
-    fullUrl
-    thumbnailUrl
-    trosUrl
-  }
+  ${MEDIA_PROPS}
   otherUser {
     ${PROFILE_PROPS}
   }

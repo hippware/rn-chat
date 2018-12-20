@@ -53,6 +53,7 @@ export default (Component): any => {
         <Animated.View
           pointerEvents="box-none"
           style={{
+            flex: 1,
             transform: [
               {
                 translateY: this.keyboardHeight,

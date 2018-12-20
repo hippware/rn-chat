@@ -1,10 +1,8 @@
 import {types, IType} from 'mobx-state-tree'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
-import {Bot, IBot} from '../model/Bot'
+import {Bot} from '../model/Bot'
 import _ from 'lodash'
-
-export type __IBot = IBot
 
 export function createFactory<T>(type: IType<any, any, T>) {
   return types

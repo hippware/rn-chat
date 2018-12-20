@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native'
-import Button from 'apsl-react-native-button'
 import DeviceInfo from 'react-native-device-info'
 import {observer, inject} from 'mobx-react/native'
 import {observable, when} from 'mobx'
@@ -141,14 +140,13 @@ export default class VerifyCode extends React.Component<Props> {
               </Text>
             )}
           </TouchableOpacity>
-          <Button
+          <TouchableOpacity
             onPress={this.verify}
             style={styles.button}
-            textStyle={styles.verifyTxt}
-            isDisabled={this.hiddenCode.length < 6 || this.isConfirming}
+            disabled={this.hiddenCode.length < 6 || this.isConfirming}
           >
-            {firebaseStore!.buttonText}
-          </Button>
+            <Text style={styles.verifyTxt}>{firebaseStore!.buttonText}</Text>
+          </TouchableOpacity>
         </View>
         <TextInput
           value={this.hiddenCode}

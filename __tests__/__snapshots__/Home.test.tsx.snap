@@ -67,23 +67,7 @@ exports[`Home renders with no data 1`] = `
     >
       <RCTScrollView
         ListEmptyComponent={<ActiveBannerPlaceholder />}
-        data={
-          Array [
-            Object {
-              "id": "0",
-              "render": [Function],
-            },
-            Object {
-              "id": "1",
-            },
-            Object {
-              "id": "2",
-            },
-            Object {
-              "id": "3",
-            },
-          ]
-        }
+        data={null}
         disableVirtualization={false}
         getItem={[Function]}
         getItemCount={[Function]}
@@ -115,77 +99,43 @@ exports[`Home renders with no data 1`] = `
         <View>
           <View
             onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
+            style={null}
           >
             <View
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "marginHorizontal": 15,
-                  "marginTop": 13.200000000000001,
-                  "opacity": 1,
-                  "paddingVertical": 15,
-                  "width": 71,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                 }
               }
             >
               <View
+                accessible={true}
+                isTVSelectable={true}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "padding": 3,
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "opacity": 1,
+                  }
                 }
               >
-                <BVLinearGradient
-                  colors={
-                    Array [
-                      "rgb(242,68,191)",
-                      "rgb(254,110,98)",
-                      "rgb(254,92,108)",
-                    ]
-                  }
-                  end={
-                    Object {
-                      "x": 1,
-                      "y": 0,
-                    }
-                  }
-                  start={
-                    Object {
-                      "x": 0,
-                      "y": 1,
-                    }
-                  }
+                <View
                   style={
                     Array [
                       Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
+                        "alignSelf": "flex-start",
+                        "flex": 0,
+                        "paddingHorizontal": 16,
+                        "paddingVertical": 12,
                       },
                       Object {
-                        "height": 50,
-                        "width": 50,
+                        "marginLeft": 6,
                       },
-                      undefined,
                     ]
                   }
                 >
@@ -193,328 +143,112 @@ exports[`Home renders with no data 1`] = `
                     resizeMode="contain"
                     source={
                       Object {
-                        "testUri": "../../../images/footIconWhite.png",
+                        "testUri": "../../../images/NewPin.png",
                       }
                     }
+                    style={
+                      Object {
+                        "height": 62,
+                        "marginLeft": -6.6000000000000005,
+                        "width": 56,
+                      }
+                    }
+                  />
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    numberOfLines={2}
                     style={
                       Array [
                         Object {
-                          "borderRadius": 4,
-                          "height": "100%",
-                          "width": "100%",
+                          "color": "rgb(253,95,108)",
+                          "fontFamily": "Roboto-Regular",
+                          "fontSize": 13,
                         },
                         Object {
-                          "height": 24,
-                          "width": 20,
+                          "left": -10,
+                          "textAlign": "center",
                         },
                       ]
                     }
-                  />
-                  <View
-                    style={
-                      Object {
-                        "backgroundColor": "rgb(255,197,54)",
-                        "borderColor": "white",
-                        "borderRadius": 6,
-                        "borderWidth": 2,
-                        "height": 10,
-                        "position": "absolute",
-                        "right": -5,
-                        "top": -5,
-                        "width": 10,
-                      }
+                  >
+                    New!
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  Object {
+                    "alignSelf": "flex-start",
+                    "flex": 0,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Image
+                  source={
+                    Object {
+                      "testUri": "../../../images/PlaceholderPin.png",
                     }
-                  />
-                </BVLinearGradient>
-                <View
+                  }
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderStyle": "solid",
-                        "height": 0,
-                        "width": 0,
-                      },
-                      Object {
-                        "borderBottomColor": "transparent",
-                        "borderBottomWidth": 0,
-                        "borderLeftColor": "transparent",
-                        "borderLeftWidth": 5,
-                        "borderRightColor": "transparent",
-                        "borderRightWidth": 5,
-                        "borderTopColor": "rgb(253,95,108)",
-                        "borderTopWidth": 4,
-                      },
-                      undefined,
-                    ]
+                    Object {
+                      "height": 57,
+                      "marginTop": 5,
+                      "width": 51,
+                    }
                   }
                 />
               </View>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Array [
-                    Object {
-                      "color": "rgb(253,95,108)",
-                      "fontFamily": "Roboto-Regular",
-                      "fontSize": 13,
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ]
-                }
-              >
-                New!
-              </Text>
-            </View>
-          </View>
-          <View
-            onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "marginHorizontal": 15,
-                  "marginTop": 13.200000000000001,
-                  "paddingVertical": 15,
-                  "width": 71,
-                }
-              }
-            >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "padding": 3,
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "alignSelf": "flex-start",
+                    "flex": 0,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
+                  }
                 }
               >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      },
-                      Object {
-                        "backgroundColor": "rgb(255,255,255)",
-                        "borderColor": "rgb(253,95,108)",
-                      },
-                      Object {
-                        "borderRadius": 5,
-                        "borderWidth": 1.5,
-                        "height": 50,
-                        "width": 50,
-                      },
-                      Object {
-                        "backgroundColor": "white",
-                        "borderColor": "rgba(253,95,108, 0.15)",
-                      },
-                    ]
+                <Image
+                  source={
+                    Object {
+                      "testUri": "../../../images/PlaceholderPin.png",
+                    }
                   }
-                />
-                <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderStyle": "solid",
-                        "height": 0,
-                        "width": 0,
-                      },
-                      Object {
-                        "borderBottomColor": "transparent",
-                        "borderBottomWidth": 0,
-                        "borderLeftColor": "transparent",
-                        "borderLeftWidth": 5,
-                        "borderRightColor": "transparent",
-                        "borderRightWidth": 5,
-                        "borderTopColor": "rgba(253,95,108, 0.15)",
-                        "borderTopWidth": 4,
-                      },
-                      undefined,
-                    ]
+                    Object {
+                      "height": 57,
+                      "marginTop": 5,
+                      "width": 51,
+                    }
                   }
                 />
               </View>
-            </View>
-          </View>
-          <View
-            onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "marginHorizontal": 15,
-                  "marginTop": 13.200000000000001,
-                  "paddingVertical": 15,
-                  "width": 71,
-                }
-              }
-            >
               <View
                 style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "padding": 3,
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "alignSelf": "flex-start",
+                    "flex": 0,
+                    "paddingHorizontal": 16,
+                    "paddingVertical": 12,
+                  }
                 }
               >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      },
-                      Object {
-                        "backgroundColor": "rgb(255,255,255)",
-                        "borderColor": "rgb(253,95,108)",
-                      },
-                      Object {
-                        "borderRadius": 5,
-                        "borderWidth": 1.5,
-                        "height": 50,
-                        "width": 50,
-                      },
-                      Object {
-                        "backgroundColor": "white",
-                        "borderColor": "rgba(253,95,108, 0.15)",
-                      },
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderStyle": "solid",
-                        "height": 0,
-                        "width": 0,
-                      },
-                      Object {
-                        "borderBottomColor": "transparent",
-                        "borderBottomWidth": 0,
-                        "borderLeftColor": "transparent",
-                        "borderLeftWidth": 5,
-                        "borderRightColor": "transparent",
-                        "borderRightWidth": 5,
-                        "borderTopColor": "rgba(253,95,108, 0.15)",
-                        "borderTopWidth": 4,
-                      },
-                      undefined,
-                    ]
-                  }
-                />
-              </View>
-            </View>
-          </View>
-          <View
-            onLayout={[Function]}
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                },
-                null,
-              ]
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "marginHorizontal": 15,
-                  "marginTop": 13.200000000000001,
-                  "paddingVertical": 15,
-                  "width": 71,
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
+                <Image
+                  source={
                     Object {
-                      "alignItems": "center",
-                      "padding": 3,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                      },
-                      Object {
-                        "backgroundColor": "rgb(255,255,255)",
-                        "borderColor": "rgb(253,95,108)",
-                      },
-                      Object {
-                        "borderRadius": 5,
-                        "borderWidth": 1.5,
-                        "height": 50,
-                        "width": 50,
-                      },
-                      Object {
-                        "backgroundColor": "white",
-                        "borderColor": "rgba(253,95,108, 0.15)",
-                      },
-                    ]
+                      "testUri": "../../../images/PlaceholderPin.png",
+                    }
                   }
-                />
-                <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderStyle": "solid",
-                        "height": 0,
-                        "width": 0,
-                      },
-                      Object {
-                        "borderBottomColor": "transparent",
-                        "borderBottomWidth": 0,
-                        "borderLeftColor": "transparent",
-                        "borderLeftWidth": 5,
-                        "borderRightColor": "transparent",
-                        "borderRightWidth": 5,
-                        "borderTopColor": "rgba(253,95,108, 0.15)",
-                        "borderTopWidth": 4,
-                      },
-                      undefined,
-                    ]
+                    Object {
+                      "height": 57,
+                      "marginTop": 5,
+                      "width": 51,
+                    }
                   }
                 />
               </View>
