@@ -54,6 +54,8 @@ export default class MapHome extends React.Component<IProps> {
 
   componentDidMount() {
     const {homeStore} = this.props
+    Actions.chats()
+    // Actions.chat({item: 'cd233a4f-6b90-4928-bdc9-f8ed001a8d00'})
 
     this.reactions = [
       reaction(

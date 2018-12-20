@@ -4,7 +4,8 @@ import {observer} from 'mobx-react/native'
 import {IMessage, IWocky, IFile} from 'wocky-client'
 import ResizedImage from './ResizedImage'
 import {width, k} from '../Global'
-import {RText} from '../common'
+import {RText, ProgressiveImage} from '../common'
+import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   message: IMessage
@@ -14,6 +15,10 @@ type Props = {
 
 const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) => {
   const left = !isOutgoing
+  if (media) {
+    const {loaded, loading, error, thumbnail, source} = media
+    console.log('& media message', loaded, loading, error, thumbnail, source, getSnapshot(media))
+  }
   return (
     <View
       style={[
@@ -25,12 +30,12 @@ const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) =>
     >
       <View
         style={[
-          media && media.source ? styles.mediaBubble : styles.bubble,
+          media && media.thumbnail ? styles.mediaBubble : styles.bubble,
           left ? styles.bubbleLeft : styles.bubbleRight,
         ]}
       >
-        {content && <RText size={15}>{content}</RText>}
-        {media && <MessageMedia media={media} left={left} />}
+        {!!content && <RText size={15}>{content}</RText>}
+        {!!media && <MessageMedia media={media} left={left} />}
       </View>
       <Triangle left={left} />
     </View>
@@ -38,14 +43,13 @@ const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) =>
 })
 
 const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => {
-  if (!media.source || !media.loaded) {
-    return null
-  }
   const w = left ? width - 150 * k : width - 93
   // , height: w * media.source.height / media.source.width
+  console.log('& media', media)
   return (
     <View style={{width: w}}>
-      <ResizedImage image={media.source} />
+      <ResizedImage image={media.thumbnail} />
+      {/* <ProgressiveImage style={{height: width, width}} file={media} resizeMode="contain" /> */}
     </View>
   )
 })

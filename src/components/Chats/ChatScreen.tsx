@@ -25,6 +25,7 @@ class ChatScreen extends React.Component<Props> {
 
   async componentDidMount() {
     const {item, wocky} = this.props
+    // console.log('& chat', this.props.item)
     this.chat = wocky!.createChat(item)
     await this.chat!.messages.load({force: true})
     this.chat!.readAll()

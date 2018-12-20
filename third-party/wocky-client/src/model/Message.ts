@@ -17,7 +17,7 @@ const MessageBase = types.model('MessageBase', {
   isOutgoing: types.boolean,
 })
 
-export function createMessage(params: any, service: IWocky) {
+export function createMessage(params: any, service: IWocky): IMessage {
   params = _.cloneDeep(params)
   if (params.otherUser) {
     params.otherUser = service.profiles.get(params.otherUser.id, params.otherUser)

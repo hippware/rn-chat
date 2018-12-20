@@ -1,4 +1,4 @@
-import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, Instance, getSnapshot} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -198,20 +198,21 @@ export const Wocky = types
       return self.bots.get(id, data)
     },
     _addMessage: (message?: IMessageIn): void => {
+      console.log('& _addMessage', message)
       if (!message) return
       const {otherUser} = message
       const otherUserId = (otherUser as any).id || otherUser
-      const existingChat = self.chats.get(otherUserId)
+      let chat = self.chats.get(otherUserId)
       const msg = createMessage(message, self)
-      if (existingChat) {
-        ;(existingChat.messages as IMessageList).add(msg)
-        if (existingChat.active) {
+      console.log('& _addMessage after create', getSnapshot(msg))
+      if (chat) {
+        if (chat.active) {
           msg!.read()
         }
       } else {
-        const chat = self.createChat(otherUserId)
-        ;(chat.messages as IMessageList).add({...message, otherUser: otherUserId} as IMessage)
+        chat = self.createChat(otherUserId)
       }
+      ;(chat.messages as IMessageList).add(msg)
     },
     deleteBot: (id: string) => {
       self.notifications!.result.forEach((event: any) => {
@@ -417,11 +418,13 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
+        console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(
           (msg.otherUser!.id || msg.otherUser!) as string,
           msg.content.length ? msg.content : undefined,
           msg.media ? msg.media.id : undefined
         )
+        console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
         self._addMessage(msg)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
