@@ -190,7 +190,7 @@ export const Bot = types
       afterAttach: () => {
         self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
         self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
-        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
+        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id) as any)
       },
     }
   })
@@ -231,7 +231,7 @@ export interface IBotData {
   }
 }
 
-export const BotPaginableList = createPaginable<IBot>(types.reference(Bot))
+export const BotPaginableList = createPaginable<IBot>(types.reference(Bot), 'BotList')
 
 export const BotRef = types.reference(Bot, {
   get(id: string, parent: any) {

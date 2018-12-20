@@ -46,6 +46,6 @@ export const BotPost = types
 
 export interface IBotPost extends Instance<typeof BotPost> {}
 
-export const BotPostPaginableList = createPaginable<IBotPost>(BotPost)
+export const BotPostPaginableList = createPaginable<IBotPost>(BotPost, 'BotPostList')
 
 export interface IBotPostIn extends SnapshotIn<typeof BotPostData> {}

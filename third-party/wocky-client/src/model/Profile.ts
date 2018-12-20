@@ -119,7 +119,8 @@ export const Profile = types
   })
 
 export const ProfilePaginableList = createPaginable<IProfile>(
-  types.reference(types.late(() => Profile))
+  types.reference(types.late(() => Profile)),
+  'ProfileList'
 )
 export type IProfilePaginableListType = typeof ProfilePaginableList.Type
 export interface IProfilePaginableList extends IProfilePaginableListType {}

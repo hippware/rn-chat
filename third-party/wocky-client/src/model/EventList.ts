@@ -35,15 +35,16 @@ export function createEvent(params: any, service: IWocky) {
   return EventEntity.create(params)
 }
 
-export const EventList = createPaginable<IEventEntity>(EventEntity).postProcessSnapshot(
-  (snapshot: any) => {
-    if (snapshot.result.length > 20) {
-      const result = snapshot.result.slice(0, 20)
-      const cursor = result[result.length - 1].cursor
-      return {...snapshot, result, cursor}
-    }
-    return snapshot
+export const EventList = createPaginable<IEventEntity>(
+  EventEntity,
+  'EventList'
+).postProcessSnapshot(snapshot => {
+  if (snapshot.result.length > 20) {
+    const result = snapshot.result.slice(0, 20)
+    const cursor = result[result.length - 1].cursor
+    return {...snapshot, result, cursor}
   }
-)
+  return snapshot
+})
 
 export interface IEventList extends Instance<typeof EventList> {}
