@@ -12,12 +12,14 @@ import {IChat} from '../model/Chat'
 import {createMessage, IMessage, IMessageIn, IMessageList} from '../model/Message'
 import {processMap, waitFor, generateWockyToken} from '../transport/utils'
 import uuid from 'uuid/v1'
-import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
+import {IWockyTransport} from '../transport/NextGraphQLTransport'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {IEventData} from '../model/Event'
 import {PaginableLoadType, PaginableLoadPromise} from '../transport/NextGraphQLTransport'
+import {MediaUploadParams} from '../transport/IWockyTransport'
+import {ILocation, ILocationSnapshot} from '../model/Location'
 
 export type LoginParams = {phoneNumber?: string; accessToken?: string}
 export const Wocky = types
@@ -203,9 +205,9 @@ export const Wocky = types
       const msg = createMessage(message, self)
       if (existingChat) {
         ;(existingChat.messages as IMessageList).add(msg)
-        if (existingChat.active) {
-          msg!.read()
-        }
+        // if (existingChat.active) {
+        //   msg!.read()
+        // }
       } else {
         const chat = self.createChat(otherUserId)
         ;(chat.messages as IMessageList).add({...message, otherUser: otherUserId} as IMessage)
@@ -415,7 +417,11 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
-        yield self.transport.sendMessage(msg.otherUser!.id, msg.content)
+        yield self.transport.sendMessage(
+          (msg.otherUser!.id || msg.otherUser!) as string,
+          msg.content.length ? msg.content : undefined,
+          msg.media ? msg.media.id : undefined
+        )
         self._addMessage(msg)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
@@ -436,9 +442,9 @@ export const Wocky = types
       getLocationsVisited: (limit?: number): Promise<object[]> => {
         return self.transport.getLocationsVisited(limit)
       },
-      _requestUpload: flow(function*({file, size, width, height, access}: any) {
+      _requestUpload: flow(function*({file, size, access}) {
         yield waitFor(() => self.connected)
-        const data = yield self.transport.requestUpload({file, size, width, height, access})
+        const data = yield self.transport.requestUpload({file, size, access})
         try {
           yield upload(data)
           return data.reference_url
@@ -446,7 +452,7 @@ export const Wocky = types
           yield self.transport.removeUpload(data.reference_url)
           throw e
         }
-      }),
+      }) as ({file, size, access}: MediaUploadParams) => Promise<string>,
       _removeUpload: flow(function*(tros: string) {
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)

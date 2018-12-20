@@ -505,13 +505,13 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage({direction, content, otherUser, createdAt}): IMessageIn {
+export function convertMessage({direction, content, otherUser, createdAt, media}): IMessageIn {
   return {
     otherUser,
     time: new Date(createdAt).valueOf(),
-    media: undefined,
+    media: convertImage(media) as any,
     unread: true,
-    content,
+    content: content || undefined,
     isOutgoing: direction === 'OUTGOING',
   }
 }

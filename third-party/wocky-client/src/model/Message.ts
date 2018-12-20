@@ -16,6 +16,7 @@ const MessageBase = types.model('MessageBase', {
   unread: false,
   isOutgoing: types.boolean,
 })
+
 export function createMessage(params: any, service: IWocky) {
   params = _.cloneDeep(params)
   if (params.otherUser) {
@@ -26,10 +27,11 @@ export function createMessage(params: any, service: IWocky) {
   }
   return Message.create(params)
 }
+
 export const Message = types
   .compose(
     Timeable,
-    createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`),
+    createUploadable('media', (self: any) => `user:${self.otherUser.id}@${self.service.host}`),
     MessageBase
   )
   .named('Message')
@@ -52,6 +54,7 @@ export const Message = types
       self.clear()
     }),
   }))
+
 export interface IMessage extends Instance<typeof Message> {}
 export interface IMessageIn extends SnapshotIn<typeof Message> {}
 

@@ -1,15 +1,24 @@
-import {types, flow} from 'mobx-state-tree'
+import {flow} from 'mobx-state-tree'
 import {Base} from './Base'
 
+type UploadType = {
+  file: {
+    name: string
+    type: string
+    uri?: string
+    fileName?: string
+  }
+  size: number
+}
+
 export function createUploadable(property: string, access: string | ((self) => void)) {
-  return types
-    .compose(Base, types.model('Uploadable', {}))
+  return Base.named('Uploadable')
     .volatile(() => ({
       uploading: false,
       uploaded: false,
     }))
     .actions((self: any) => ({
-      upload: flow(function*({file, size}: any) {
+      upload: flow(function*({file, size}: UploadType) {
         if (!self.uploading) {
           try {
             self.uploaded = false
@@ -28,6 +37,6 @@ export function createUploadable(property: string, access: string | ((self) => v
             self.uploading = false
           }
         }
-      }),
+      }) as ({file, size}: UploadType) => Promise<void>,
     }))
 }

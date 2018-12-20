@@ -90,9 +90,8 @@ const ChatTitle = inject('wocky')(
     const chat = wocky!.chats.get(item)
     return chat ? (
       <TouchableOpacity
-        key={`${chat.otherUser.id}touch`}
         onPress={() => {
-          Actions.profileDetail({item: chat.otherUser, title: chat.otherUser.displayName})
+          Actions.profileDetail({item: chat.otherUser})
         }}
       >
         <Avatar size={40} profile={chat.otherUser} />

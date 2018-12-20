@@ -1,8 +1,10 @@
 import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {inject} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react/native'
 import {showImagePicker} from '../ImagePicker'
 import {IMessage} from 'wocky-client'
+import {observable} from 'mobx'
+import {Spinner} from '../common'
 
 type Props = {
   message: IMessage
@@ -10,14 +12,21 @@ type Props = {
 }
 
 @inject('notificationStore')
+@observer
 class AttachButton extends React.Component<Props> {
+  @observable uploading: boolean = false
+
   render() {
     return (
       <TouchableOpacity
         style={{borderWidth: 0, borderColor: 'transparent', paddingVertical: 15}}
         onPress={this.onAttach}
       >
-        <Image source={require('../../../images/iconAttach.png')} />
+        {this.uploading ? (
+          <Spinner />
+        ) : (
+          <Image source={require('../../../images/iconAttach.png')} />
+        )}
       </TouchableOpacity>
     )
   }
@@ -25,18 +34,18 @@ class AttachButton extends React.Component<Props> {
   onAttach = () => {
     const {message, notificationStore} = this.props
     showImagePicker({
-      title: 'Select Image',
       callback: async (source, response) => {
         try {
+          this.uploading = true
           await message.upload({
             file: source,
-            // width: response.width,
-            // height: response.height,
             size: response.size,
           })
           message.send()
         } catch (e) {
           notificationStore.flash(e.message)
+        } finally {
+          this.uploading = false
         }
       },
     })
