@@ -9,11 +9,11 @@ import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
-import {Message, IMessage, IMessageIn, IMessageList} from '../model/Message'
+import {createMessage, IMessage, IMessageIn, IMessageList} from '../model/Message'
 import {processMap, waitFor, generateWockyToken} from '../transport/utils'
 import uuid from 'uuid/v1'
 import {IWockyTransport, ILocation, ILocationSnapshot} from '..'
-import {EventList, EventEntity} from '../model/EventList'
+import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {IEventData} from '../model/Event'
@@ -42,12 +42,6 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
-  .postProcessSnapshot((snapshot: any) => {
-    const data = {...snapshot}
-    // delete data.geoBots
-    delete data.files
-    return data
-  })
   .views(self => {
     const transport: IWockyTransport = getEnv(self).transport
     if (!transport) {
@@ -69,17 +63,9 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          const profile = self.create(OwnProfile, {
-            id,
-            ...data,
-            ...self._registerReferences(Profile, data),
-            loaded: true,
-            status: 'available',
-          })
-          self.profile = profile!
-        } else {
-          self.load(self.profile, data)
+          self.profile = OwnProfile.create({id})
         }
+        self.profile.load(data)
         // add own profile to the storage
         self.profiles.get(id, data)
         if (self.profile!.handle) self.sessionCount = 3
@@ -207,20 +193,14 @@ export const Wocky = types
       return self.profiles.get(id, processMap(data))
     },
     getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
-      const bot = self.bots.storage.get(id)
-        ? self.bots.get(id, data)
-        : self.bots.get(id, {owner: data.owner})
-      if (data && Object.keys(data).length) {
-        self.load(bot, data)
-      }
-      return bot
+      return self.bots.get(id, data)
     },
     _addMessage: (message?: IMessageIn): void => {
       if (!message) return
       const {otherUser} = message
       const otherUserId = (otherUser as any).id || otherUser
       const existingChat = self.chats.get(otherUserId)
-      const msg = self.create(Message, message)
+      const msg = createMessage(message, self)
       if (existingChat) {
         ;(existingChat.messages as IMessageList).add(msg)
         if (existingChat.active) {
@@ -278,7 +258,7 @@ export const Wocky = types
         max
       )
       items.forEach(item => {
-        const msg = self.create(Message, item.message)
+        const msg = createMessage(item.message, self)
         const chat = self.createChat(item.chatId)
         ;(chat.messages as IMessageList).add(msg as IMessage)
       })
@@ -290,9 +270,8 @@ export const Wocky = types
         try {
           bot.startLoading()
           const data = yield self.transport.loadBot(id)
-          self.load(bot, data)
+          bot.load(data)
         } catch (e) {
-          // console.error(e) TODO
           bot.setError(JSON.stringify(e))
         } finally {
           bot.finishLoading()
@@ -355,7 +334,13 @@ export const Wocky = types
       _loadBotPosts: flow(function*(id: string, before?: string) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadBotPosts(id, before)
-        return {list: list.map((post: any) => self.create(BotPost, post)), count, cursor}
+        return {
+          list: list.map((post: any) =>
+            BotPost.create({id: post.id}).load({service: self, ...post})
+          ),
+          count,
+          cursor,
+        }
       }) as RequestType,
       _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
@@ -430,7 +415,7 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
-        yield self.transport.sendMessage(msg.otherUser.id, msg.content)
+        yield self.transport.sendMessage(msg.otherUser!.id, msg.content)
         self._addMessage(msg)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
@@ -439,7 +424,7 @@ export const Wocky = types
         return {
           count,
           cursor,
-          list: list.map(m => self.create(Message, m)),
+          list: list.map(m => createMessage(m, self)),
         }
       }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
       getLocationUploadToken: flow(function*() {
@@ -474,7 +459,7 @@ export const Wocky = types
             limit: max,
           }
         )
-        return {list: list.map((data: any) => self.create(EventEntity, data)), count}
+        return {list: list.map(data => createEvent(data, self)), count}
       }) as RequestType,
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
@@ -526,7 +511,7 @@ export const Wocky = types
         try {
           // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
           data = _.cloneDeep(data)
-          const item: any = self.create(EventEntity, data)
+          const item: any = createEvent(data, self)
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)
           self.hasUnreadNotifications = true
@@ -622,7 +607,7 @@ export const Wocky = types
           yield fs.downloadHttpFile(sourceUrl, fileName, {})
         }
         const {width, height} = yield fs.getImageSize(fileName)
-        return {uri: fileName, contentType: 'image/jpeg', cached, width, height}
+        return {uri: fileName, width, height}
       }),
       userInviteMakeCode(): Promise<string> {
         return self.transport.userInviteMakeCode()

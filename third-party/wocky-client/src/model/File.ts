@@ -35,8 +35,6 @@ export const File = types
   }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
-    delete res.source
-    delete res.thumbnail
     delete res.url
     return res
   })

@@ -43,12 +43,12 @@ export const Chat = types
       readAll: () => (self.messages as IMessageList).list.forEach(msg => msg.read()),
     }
   })
-  .actions(self => ({
+  .actions((self: any) => ({
     afterAttach: () => {
       // todo: strong typing
       const service: any = getParentOfType(self, Wocky)
-      self.message = service.create(Message, {
-        otherUser: self,
+      self.message = Message.create({
+        otherUser: self.id,
         isOutgoing: true,
       })
       ;(self.messages as IMessageList).setRequest(service._loadChatMessages.bind(service, self.id))

@@ -325,8 +325,8 @@ export function convertProfile({
 export function convertBotPost({node: {id, media, owner, content}}) {
   return {
     id,
-    content,
-    image: media,
+    content: content || '',
+    image: convertImage(media),
     // todo: need date/time?
     profile: convertProfile(owner),
   }

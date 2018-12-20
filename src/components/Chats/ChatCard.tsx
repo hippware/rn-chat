@@ -65,7 +65,7 @@ export default class ChatCard extends React.Component<Props> {
         }
       >
         <Text style={{padding: 15 * k}}>
-          <CardText>{msg.isOutgoing ? 'you' : `@${msg.otherUser.handle}`}: </CardText>
+          <CardText>{msg.isOutgoing ? 'you' : `@${msg.otherUser!.handle}`}: </CardText>
           <RText weight="Light" size={15} color="rgb(81,67,96)">
             {msg.content}
           </RText>
