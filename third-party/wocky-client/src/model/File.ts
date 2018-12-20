@@ -64,6 +64,12 @@ export const File = types
     }
   })
   .actions(self => ({
+    load({url}: any) {
+      // reset source, download thumbnail
+      self.setSource(undefined)
+      self.setURL(url)
+      self.downloadThumbnail()
+    },
     afterAttach: flow(function*() {
       if (self.url) {
         yield self.downloadThumbnail()

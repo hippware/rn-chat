@@ -81,13 +81,16 @@ class SignUpAvatar extends React.Component<Props> {
   }
 
   imageSelected = async (src, response) => {
+    const {profile, username, profiles} = this.props.wocky
     try {
-      await this.props.wocky.profile.upload({
+      await profile.upload({
         file: src,
         width: response.width,
         height: response.height,
         size: response.size,
       })
+      // change data within profiles cache!
+      profiles.get(username, {...profile})
       this.imgSrc = src
     } catch (err) {
       // TODO handle upload error
