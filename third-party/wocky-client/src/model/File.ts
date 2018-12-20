@@ -65,6 +65,10 @@ export const File = types
     }
   })
   .actions(self => ({
+    load({url}: any) {
+      self.setURL(url)
+      self.downloadThumbnail()
+    },
     afterAttach: flow(function*() {
       if (self.url) {
         yield self.downloadThumbnail()

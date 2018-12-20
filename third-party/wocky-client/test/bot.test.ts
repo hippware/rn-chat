@@ -10,6 +10,7 @@ const icon = '\u00A9\uFE0F\u00A9'
 
 describe('NewGraphQL tests', () => {
   beforeAll(async () => {
+    jest.setTimeout(10000)
     user = await createUser()
     user2 = await createUser()
     bot = await user.createBot()

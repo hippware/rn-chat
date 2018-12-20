@@ -83,7 +83,7 @@ export const Bot = types
     createPost: (content: string = '') => {
       const id = utils.generateID()
       const botPost = BotPost.create({id, content, profile: self.service.profile.id})
-      self.posts.add(botPost)
+      self.posts.addToTop(botPost) // because the server shows latest at the top
       self.totalItems += 1
       return botPost
     },
