@@ -11,6 +11,7 @@ export const Chat = types
     otherUser: types.reference(Profile),
     messages: types.optional(MessagePaginableList, {}),
     message: types.maybeNull(Message),
+    active: false,
   })
   .volatile(() => ({
     loading: false,
@@ -38,6 +39,7 @@ export const Chat = types
   }))
   .actions(self => {
     return {
+      setActive: (active: boolean) => (self.active = active),
       readAll: () => (self.messages as IMessageList).list.forEach(msg => msg.read()),
     }
   })

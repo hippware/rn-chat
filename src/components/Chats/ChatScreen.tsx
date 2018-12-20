@@ -28,6 +28,13 @@ class ChatScreen extends React.Component<Props> {
     this.chat = wocky!.createChat(item)
     await this.chat!.messages.load({force: true})
     this.chat!.readAll()
+    this.chat!.setActive(true)
+  }
+
+  componentWillUnmount() {
+    if (this.chat) {
+      this.chat.setActive(false)
+    }
   }
 
   onSend = () => {

@@ -205,9 +205,9 @@ export const Wocky = types
       const msg = createMessage(message, self)
       if (existingChat) {
         ;(existingChat.messages as IMessageList).add(msg)
-        // if (existingChat.active) {
-        //   msg!.read()
-        // }
+        if (existingChat.active) {
+          msg!.read()
+        }
       } else {
         const chat = self.createChat(otherUserId)
         ;(chat.messages as IMessageList).add({...message, otherUser: otherUserId} as IMessage)
