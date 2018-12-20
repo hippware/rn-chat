@@ -1,4 +1,4 @@
-import {NextGraphQLTransport} from './NextGraphQLTransport'
+// todo: create a proper type definition file
 
 export interface IPagingList<T> {
   list: T[]
@@ -18,4 +18,11 @@ export type LoginParams = {
   phoneNumber?: string
 }
 
-export interface IWockyTransport extends NextGraphQLTransport {}
+export type MediaUploadParams = {
+  access?: string
+  file: {
+    name: string
+    type: string
+  }
+  size: number
+}

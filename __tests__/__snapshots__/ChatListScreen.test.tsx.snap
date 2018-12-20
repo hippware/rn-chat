@@ -5,11 +5,7 @@ exports[`ChatListScreen renders with no data 1`] = `
   style={
     Array [
       Object {
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
+        "flex": 1,
       },
       undefined,
     ]
@@ -79,7 +75,6 @@ exports[`ChatListScreen renders with no data 1`] = `
       style={
         Object {
           "flex": 1,
-          "flexDirection": "column",
         }
       }
       updateCellsBatchingPeriod={50}

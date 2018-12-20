@@ -1,7 +1,7 @@
 import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IWockyTransport, IPagingList} from './IWockyTransport'
+import {IPagingList, MediaUploadParams} from './IWockyTransport'
 import {observable, action} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
@@ -40,7 +40,7 @@ import {IEventData} from '../model/Event'
 export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
 
-export class NextGraphQLTransport implements IWockyTransport {
+export class NextGraphQLTransport {
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -511,7 +511,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     throw new Error('Not supported')
   }
 
-  async requestUpload({file, size, access}: any): Promise<any> {
+  async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
     const res = await this.client!.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
@@ -535,7 +535,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        input: {access, size, mimeType: file!.type, filename: file!.name},
+        input: {access, size, mimeType: file.type, filename: file.name},
       },
     })
     const {headers, method, referenceUrl, uploadUrl} = res.data!.mediaUpload.result
@@ -609,7 +609,7 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 
-  async sendMessage(otherUserId: string, content: string): Promise<void> {
+  async sendMessage(otherUserId: string, content?: string, imageUrl?: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation sendMessage($input: SendMessageInput!) {
@@ -619,8 +619,7 @@ export class NextGraphQLTransport implements IWockyTransport {
         }
       `,
       variables: {
-        // TODO: add imageURL
-        input: {content, recipientId: otherUserId},
+        input: {content, recipientId: otherUserId, imageUrl},
       },
     })
   }
@@ -1101,9 +1100,11 @@ export class NextGraphQLTransport implements IWockyTransport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
+    let name: string = '',
+      res: any
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
-    const name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
-    const res = await this.client!.mutate({mutation, variables})
+    name = (mutation.definitions[0] as OperationDefinitionNode).name!.value
+    res = await this.client!.mutate({mutation, variables})
     if (res.data && !res.data![name].successful) {
       // console.error('voidMutation error with ', name, JSON.stringify(res.data[name]))
       throw new Error(`GraphQL ${name} error: ${JSON.stringify(res.data![name])}`)
@@ -1231,3 +1232,5 @@ export class NextGraphQLTransport implements IWockyTransport {
     })
   }
 }
+
+export interface IWockyTransport extends NextGraphQLTransport {}
