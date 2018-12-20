@@ -19,6 +19,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Change localBots API to be able to get 'too many bots' error (#3062)
 * Missing New! pin for new users #3026
 * Remove deprecated GraphQL calls and fix tests (PR #3198)
+* [dev] refactor Chats and Chat to use PaginableList (#3176, PR #3186)
+* New Pin is cropped on some devices (#3203)
+* Finish RNBGL upgrade to 2.14.x (#3153)
 
 # 4.0.0 - 2018 Dec 10
 
