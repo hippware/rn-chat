@@ -1,4 +1,4 @@
-import {Wocky, IWocky, NextGraphQLTransport} from '../../src'
+import {Wocky, IWocky, Transport} from '../../src'
 import {AppInfo} from '../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
@@ -50,7 +50,7 @@ export function expectedImage() {
 
 export async function createUser(num?: number, phoneNum?: string): Promise<IWocky> {
   try {
-    const transport = new NextGraphQLTransport(SERVER_NAME)
+    const transport = new Transport(SERVER_NAME)
     const phoneNumber =
       phoneNum ||
       (num

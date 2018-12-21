@@ -171,7 +171,7 @@ const LocationStore = types
     }),
   }))
   .actions(self => {
-    const {logger, analytics} = getEnv(self)
+    const {logger, analytics, transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
 
     function onLocation(position) {
@@ -231,7 +231,7 @@ const LocationStore = types
             Authentication: `Bearer ${token}`,
           },
           params: {
-            device: wocky.transport.resource,
+            device: transport.resource,
           },
         })
         logger.log(prefix, `refreshCredentials token: ${token}`)
