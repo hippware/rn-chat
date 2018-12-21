@@ -591,31 +591,7 @@ exports[`BotDetails renders with no data 1`] = `
               "marginRight": 20,
             }
           }
-        >
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/shareIcon.png",
-                }
-              }
-            />
-          </View>
-        </View>
+        />
       </View>
     </View>
   </R2RTouchThroughWrapper>

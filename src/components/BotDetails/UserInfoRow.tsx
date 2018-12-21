@@ -33,17 +33,6 @@ class UserInfoRow extends React.Component<Props> {
     // const {distanceToString, distance, location} = locationStore!
     return (
       <View style={[styles.container, style]}>
-        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
-          {!bot.isPublic && (
-            <Image
-              source={require('../../../images/iconPrivate.png')}
-              style={{marginHorizontal: 7 * k}}
-              resizeMode="contain"
-            />
-          )}
-        </View> */}
-
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
           <ProfileHandle
