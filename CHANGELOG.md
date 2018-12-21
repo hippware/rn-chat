@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Comments are visible before the user followed the location (#3211)
+
+# 4.0.1 - 2018 Dec 20
+
 * User profile, user avatar bugfixes (PR #3168)
 * Onboarding style tweaks (PR #3169)
 * [GraphQL] conversations/chats/messages (#3135, PR #3162, PR #3175)
@@ -22,6 +26,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] refactor Chats and Chat to use PaginableList (#3176, PR #3186)
 * New Pin is cropped on some devices (#3203)
 * Finish RNBGL upgrade to 2.14.x (#3153)
+* Factory refactoring and image processing fixes (PR #3207)
+  * [dev] Refactor Factory class (#3201)
+  * wocky-client and messaging improvements (PR #3208, PR #3209)
+  * Various improvements for images, bot posts (PR #3210)
 
 # 4.0.0 - 2018 Dec 10
 
