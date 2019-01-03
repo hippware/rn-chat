@@ -45,7 +45,7 @@ class Notifications extends React.Component<Props> {
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}
-        onEndReached={notifications.load}
+        onEndReached={() => notifications.load()}
         ListFooterComponent={observer(() => (
           <View>
             {notifications.length === 0 ? (
@@ -53,7 +53,7 @@ class Notifications extends React.Component<Props> {
                 <RText
                   weight="Regular"
                   color={colors.GREY}
-                  style={placeholderStyle.placeholderText}
+                  style={placeholderStyle.placeholderText as any}
                 >
                   No new updates
                 </RText>

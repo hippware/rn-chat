@@ -1,20 +1,18 @@
 import {types} from 'mobx-state-tree'
-import {Bot, IBot, IBotData} from './Bot'
+import {Bot, IBotData} from './Bot'
 import {Event, IEventData} from './Event'
-
-// known typescript issue: https://github.com/mobxjs/mobx-state-tree#known-typescript-issue-5938
-export type __IBot = IBot
 
 export const EventBot = types
   .compose(
     Event,
-    types.model('EventBot', {
+    types.model({
       bot: types.reference(Bot),
     })
   )
+  .named('EventBot')
   .views(self => ({
     get target() {
-      return self.bot.owner!
+      return self.bot!.owner!
     },
   }))
   .named('EventBot')

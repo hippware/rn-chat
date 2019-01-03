@@ -9,7 +9,7 @@ import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
-import {createMessage, IMessage, IMessageIn, IMessageList} from '../model/Message'
+import {createMessage, IMessage, IMessageIn} from '../model/Message'
 import {processMap, waitFor, generateWockyToken} from '../transport/utils'
 import uuid from 'uuid/v1'
 import {IWockyTransport} from '../transport/NextGraphQLTransport'
@@ -204,13 +204,13 @@ export const Wocky = types
       const existingChat = self.chats.get(otherUserId)
       const msg = createMessage(message, self)
       if (existingChat) {
-        ;(existingChat.messages as IMessageList).add(msg)
+        existingChat.messages.add(msg)
         if (existingChat.active) {
           msg!.read()
         }
       } else {
         const chat = self.createChat(otherUserId)
-        ;(chat.messages as IMessageList).add({...message, otherUser: otherUserId} as IMessage)
+        chat.messages.add({...message, otherUser: otherUserId})
       }
     },
     deleteBot: (id: string) => {
@@ -262,7 +262,7 @@ export const Wocky = types
       items.forEach(item => {
         const msg = createMessage(item.message, self)
         const chat = self.createChat(item.chatId)
-        ;(chat.messages as IMessageList).add(msg as IMessage)
+        chat.messages.add(msg)
       })
     }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
@@ -573,7 +573,7 @@ export const Wocky = types
         const mostRecentNotification = self.notifications.first
         const limit = 20
         const {list} = yield self.transport.loadNotifications({
-          afterId: mostRecentNotification && mostRecentNotification.id,
+          afterId: mostRecentNotification && (mostRecentNotification.id as any),
           limit,
         })
         if (list.length === limit) {
@@ -692,7 +692,7 @@ export const Wocky = types
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)
-        self.geofenceBots.setRequest(self._loadGeofenceBots)
+        self.geofenceBots.setRequest(self._loadGeofenceBots as any)
         startReactions()
       },
       startReactions,

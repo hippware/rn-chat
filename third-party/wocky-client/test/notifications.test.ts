@@ -1,5 +1,5 @@
 import {createUser, sleep} from './support/testuser'
-import {IWocky, IBot, ILocation} from '../src'
+import {IWocky, IBot, ILocation, IEventBotInvite, IEventBotGeofence} from '../src'
 
 describe('Notifications (static)', () => {
   let alice: IWocky, bob: IWocky, aliceBot: IBot, bobsAliceBot: IBot
@@ -44,9 +44,10 @@ describe('Notifications (static)', () => {
     await sleep(1000)
     await bob.notifications.load()
     expect(bob.notifications.count).toEqual(2)
-    expect(bob.notifications.list[0]).toHaveProperty('sender')
-    expect(bob.notifications.list[0].sender.id).toEqual(alice.username)
-    expect(bob.notifications.list[0].bot.invitation.accepted).toEqual(false)
+    const invite: IEventBotInvite = bob.notifications.list[0] as IEventBotInvite
+    expect(invite).toHaveProperty('sender')
+    expect(invite.sender.id).toEqual(alice.username)
+    expect(invite.bot!.invitation!.accepted).toEqual(false)
   })
 
   it('gets Location Invite Accept notification', async () => {
@@ -59,9 +60,10 @@ describe('Notifications (static)', () => {
     await sleep(1000)
     await alice.notifications.load()
     expect(alice.notifications.count).toEqual(1)
-    expect(alice.notifications.list[0]).toHaveProperty('sender')
-    expect(alice.notifications.list[0].sender.id).toEqual(bob.username)
-    expect(alice.notifications.list[0].bot.invitation.accepted).toEqual(true)
+    const acceptance: IEventBotInvite = alice.notifications.list[0] as IEventBotInvite
+    expect(acceptance).toHaveProperty('sender')
+    expect(acceptance.sender.id).toEqual(bob.username)
+    expect(acceptance.bot!.invitation!.accepted).toEqual(true)
     await aliceBot.subscribers.load()
     expect(aliceBot.subscribers.list.length).toEqual(1) // bob is now a subscriber
   })
@@ -85,8 +87,9 @@ describe('Notifications (static)', () => {
     await sleep(1000)
     await alice.notifications.load({force: true})
     expect(alice.notifications.count).toEqual(3)
-    expect(alice.notifications.list[0]).toHaveProperty('isEnter')
-    expect(alice.notifications.list[0].isEnter).toBe(true)
+    const enterNotification = alice.notifications.list[0] as IEventBotGeofence
+    expect(enterNotification).toHaveProperty('isEnter')
+    expect(enterNotification.isEnter).toBe(true)
     await bob.setLocation(theLocation)
     await bob.setLocation(theLocation)
   })
@@ -99,8 +102,9 @@ describe('Notifications (static)', () => {
     await sleep(1000)
     await alice.notifications.load({force: true})
     expect(alice.notifications.count).toEqual(4)
-    expect(alice.notifications.list[0]).toHaveProperty('isEnter')
-    expect(alice.notifications.list[0].isEnter).toBe(false)
+    const exitNotification: IEventBotGeofence = alice.notifications.list[0] as IEventBotGeofence
+    expect(exitNotification).toHaveProperty('isEnter')
+    expect(exitNotification.isEnter).toBe(false)
   })
 
   afterAll(async () => {

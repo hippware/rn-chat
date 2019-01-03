@@ -7,7 +7,7 @@ import {k} from '../Global'
 import ResizedImage from './ResizedImage'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
-import {IChat, IMessage} from 'wocky-client'
+import {IChat} from 'wocky-client'
 
 type Props = {
   chat: IChat
@@ -23,11 +23,11 @@ export default class ChatCard extends React.Component<Props> {
   render() {
     const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg: IMessage = chat.messages.last
+    const msg = chat.messages.last
     const {otherUser} = chat
     let media: any = null
     try {
-      media = msg.media && msg.media!.source ? msg.media : null
+      media = msg!.media && msg!.media!.source ? msg!.media : null
     } catch (err) {
       // console.log('TODO: Fix msg.media reference error', err)
     }
@@ -65,9 +65,9 @@ export default class ChatCard extends React.Component<Props> {
         }
       >
         <Text style={{padding: 15 * k}}>
-          <CardText>{msg.isOutgoing ? 'you' : `@${msg.otherUser!.handle}`}: </CardText>
+          <CardText>{msg!.isOutgoing ? 'you' : `@${msg!.otherUser!.handle}`}: </CardText>
           <RText weight="Light" size={15} color="rgb(81,67,96)">
-            {msg.content}
+            {msg!.content}
           </RText>
         </Text>
         {media && (

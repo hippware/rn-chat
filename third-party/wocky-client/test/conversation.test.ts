@@ -1,6 +1,5 @@
 import {createUser, waitFor, sleep} from './support/testuser'
 import {IWocky, IChat} from '../src'
-import {IMessageList} from '../src/model/Message'
 
 let alice: IWocky, bob: IWocky, chat: IChat
 
@@ -51,14 +50,12 @@ describe('New GraphQL conversation tests', () => {
 
   it("bob receives alice's messages via subscription", async () => {
     await waitFor(
-      () =>
-        bob.chats.list.length === 1 &&
-        (bob.chats.list[0].messages as IMessageList).list.length === 2,
+      () => bob.chats.list.length === 1 && bob.chats.list[0].messages.list.length === 2,
       "expected chat for bob doesn't load in time"
     )
     expect(bob.chats.list.length).toBe(1)
-    expect((bob.chats.list[0].messages as IMessageList).list.length).toBe(2)
-    expect((bob.chats.list[0].messages as IMessageList).last!.content).toBe('hello2')
+    expect(bob.chats.list[0].messages.list.length).toBe(2)
+    expect(bob.chats.list[0].messages.last!.content).toBe('hello2')
   })
 
   it("bob can load alice's chat messages", async () => {
@@ -67,7 +64,7 @@ describe('New GraphQL conversation tests', () => {
     await bob.loadChats()
     expect(bob.chats.list.length).toBe(1)
     // loadChats only loads the first message in each chat
-    expect((bob.chats.list[0].messages as IMessageList).list.length).toBe(1)
+    expect(bob.chats.list[0].messages.list.length).toBe(1)
   })
 
   it('bob can load all of his chats from alice', async () => {

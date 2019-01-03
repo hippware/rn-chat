@@ -1,4 +1,4 @@
-import {types, flow, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, IAnyModelType, Instance} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -9,7 +9,7 @@ export const Profile = types
   .compose(
     Base,
     Loadable,
-    types.model('Profile', {
+    types.model({
       id: types.identifier,
       avatar: FileRef,
       handle: types.maybeNull(types.string),
@@ -119,12 +119,11 @@ export const Profile = types
   })
 
 export const ProfilePaginableList = createPaginable<IProfile>(
-  types.reference(types.late(() => Profile))
+  types.reference(types.late(() => Profile)),
+  'ProfileList'
 )
-export type IProfilePaginableListType = typeof ProfilePaginableList.Type
-export interface IProfilePaginableList extends IProfilePaginableListType {}
-export type IProfileType = typeof Profile.Type
-export interface IProfile extends IProfileType {}
+
+export interface IProfile extends Instance<typeof Profile> {}
 
 // export const ProfileRef = types.reference(Profile, {
 //   get(id: string, parent: any) {

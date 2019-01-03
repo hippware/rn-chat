@@ -1,6 +1,5 @@
 import {types, Instance} from 'mobx-state-tree'
 import {Chat, IChat, IChatIn} from './Chat'
-import {IMessageList} from './Message'
 
 export const Chats = types
   .model('Chats', {
@@ -14,9 +13,7 @@ export const Chats = types
   }))
   .views(self => ({
     get list() {
-      return self._filteredList.sort(
-        (a, b) => (b.messages as IMessageList).last!.time - (a.messages as IMessageList).last!.time
-      )
+      return self._filteredList.sort((a, b) => b.messages.last!.time - a.messages.last!.time)
     },
     get unreadCount(): number {
       return self._filteredList.reduce((prev: number, current) => prev + current.unreadCount, 0)
