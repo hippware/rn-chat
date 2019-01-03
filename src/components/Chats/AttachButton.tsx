@@ -42,7 +42,6 @@ class AttachButton extends React.Component<Props> {
             file: source,
             size: response.size,
           })
-          console.log('& message after upload', getSnapshot(message))
           message.send()
         } catch (e) {
           notificationStore.flash(e.message)
