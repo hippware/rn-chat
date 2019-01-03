@@ -105,9 +105,6 @@ export const Bot = types
       self.service.geofenceBots.remove(self.id)
       yield self.service._unsubscribeBot(self.id)
     }),
-    share: (userIDs: string[], message: string = '', action: string = 'share') => {
-      self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
-    },
     invite: (userIDs: string[]): Promise<any> => {
       return self.service._inviteBot(self.id, userIDs)
     },
@@ -155,14 +152,6 @@ export const Bot = types
         delete data.posts
       }
       Object.assign(self, data)
-    },
-  }))
-  .actions(self => ({
-    shareToFriends: (message: string = '') => {
-      self.share(['friends'], message)
-    },
-    shareToFollowers: (message: string = '') => {
-      self.share(['followers'], message)
     },
   }))
   .postProcessSnapshot((snapshot: any) => {

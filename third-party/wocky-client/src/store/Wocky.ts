@@ -12,13 +12,12 @@ import {IChat} from '../model/Chat'
 import {createMessage, IMessage, IMessageIn} from '../model/Message'
 import {processMap, waitFor, generateWockyToken} from '../transport/utils'
 import uuid from 'uuid/v1'
-import {IWockyTransport} from '../transport/NextGraphQLTransport'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {IEventData} from '../model/Event'
-import {PaginableLoadType, PaginableLoadPromise} from '../transport/NextGraphQLTransport'
-import {MediaUploadParams} from '../transport/IWockyTransport'
+import {PaginableLoadType, PaginableLoadPromise, Transport} from '../transport/Transport'
+import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
 export type LoginParams = {phoneNumber?: string; accessToken?: string}
@@ -45,12 +44,12 @@ export const Wocky = types
   )
   .named(SERVICE_NAME)
   .views(self => {
-    const transport: IWockyTransport = getEnv(self).transport
+    const transport: Transport = getEnv(self).transport
     if (!transport) {
       throw new Error('Server transport is not defined')
     }
     return {
-      get transport(): IWockyTransport {
+      get transport(): Transport {
         return transport
       },
       get connected() {
@@ -290,12 +289,10 @@ export const Wocky = types
     }),
   }))
   .actions(self => {
-    // Typescript type for flow
-    // https://spectrum.chat/thread/eb6b60fb-9b1b-45d0-90e0-9559e5cb6ad2?m=MTUyNDA2MDkwNjA0Mw==
     const searchUsers = flow(function*(text: string) {
       const users: IProfilePartial[] = yield self.transport.searchUsers(text)
       return Promise.all(users.map(u => (self.getProfile as any)(u.id, u)))
-    }) as (a1: string) => Promise<IProfile[]>
+    }) as (text: string) => Promise<IProfile[]>
 
     return {
       createBot: flow<IBot>(function*() {
@@ -362,15 +359,6 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeBotPost(id, postId)
       }),
-      // _shareBot: (
-      //   id: string,
-      //   server: string,
-      //   recepients: string[],
-      //   message: string,
-      //   action: string
-      // ) => {
-      //   self.transport.shareBot(id, server, recepients, message, action)
-      // },
       _inviteBot: flow(function*(botId: string, recepients: string[]) {
         yield self.transport.inviteBot(botId, recepients)
       }),

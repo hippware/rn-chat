@@ -1,7 +1,7 @@
 import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
-import {IPagingList, MediaUploadParams} from './IWockyTransport'
+import {IPagingList, MediaUploadParams} from './types'
 import {observable, action} from 'mobx'
 import * as AbsintheSocket from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
@@ -40,7 +40,7 @@ import {IEventData} from '../model/Event'
 export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
 
-export class NextGraphQLTransport {
+export class Transport {
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -1232,5 +1232,3 @@ export class NextGraphQLTransport {
     })
   }
 }
-
-export interface IWockyTransport extends NextGraphQLTransport {}

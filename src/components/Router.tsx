@@ -142,7 +142,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     </Stack>
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                     <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
-                    <Scene key="botShareSelectFriends" component={peopleLists.BotShareSelectFriends} title="Share" back right={() => null} />
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                     {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                     <Scene key="myAccount" component={MyAccount} editMode back />
