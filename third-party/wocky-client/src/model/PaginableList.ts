@@ -1,30 +1,13 @@
-import {types, flow, isAlive, IAnyType, IAnyModelType} from 'mobx-state-tree'
+import {types, flow, isAlive, IType} from 'mobx-state-tree'
 
-export interface IPaginable<T> extends IAnyModelType {
-  result: T[]
-  list: T[]
-  first: T | null
-  last: T | null
-  cursor?: string | null
-  count: number
-  loading: boolean
-  finished: boolean
-  add: (i: T) => any
-  refresh: () => void
-  load: (args?: {force?: boolean}) => Promise<any[]>
-  addToTop: (i: T) => any
-  remove: (id: string) => void
-  setRequest: (req: RequestType) => void
-}
-
-export function createPaginable<T>(type: IAnyType): IPaginable<T> {
+export function createPaginable<T>(type: IType<any, any, T>, name: string) {
   return types
     .model('PaginableList', {
       result: types.optional(types.array(type), []),
       cursor: types.maybeNull(types.string),
       count: 0,
     })
-    .named('PaginableList')
+    .named(name)
     .volatile(() => ({
       loading: false,
       finished: false,
@@ -48,13 +31,13 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
           get length(): number {
             return self.result.length
           },
-          get list(): any[] {
+          get list(): T[] {
             return self.result.filter((x: any) => isAlive(x))
           },
-          get first(): any {
+          get first(): T | null {
             return self.result.length > 0 ? self.result[0] : null
           },
-          get last(): any {
+          get last(): T | null {
             return self.result.length > 0 ? self.result[self.result.length - 1] : null
           },
         },
@@ -97,10 +80,10 @@ export function createPaginable<T>(type: IAnyType): IPaginable<T> {
               self.loading = false
             }
             return self.result
-          }) as ({force}: {force: boolean}) => Promise<T[]>,
+          }) as (options?: {force: boolean}) => Promise<T[]>,
         },
       }
-    }) as IPaginable<T> // TODO: better workaround to fix error?
+    })
 }
 
 export type RequestPromise = Promise<RequestReturnType>

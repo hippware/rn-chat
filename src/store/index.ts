@@ -3,7 +3,7 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Wocky, NextGraphQLTransport, IWockyTransport, AppInfo, IAppInfo} from 'wocky-client'
+import {Wocky, Transport, AppInfo, IAppInfo} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
@@ -26,7 +26,7 @@ import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import OnceStore from './OnceStore'
 const jsVersion = require('../../package.json').version
-const transport = new NextGraphQLTransport(DeviceInfo.getUniqueID())
+const transport = new Transport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
@@ -47,7 +47,7 @@ export const appInfo = AppInfo.create({
   codepushVersion: codePushStore.updateInfo,
 })
 export type IEnv = {
-  transport: IWockyTransport
+  transport: Transport
   storage: AsyncStorage
   auth: RNFirebase.auth.Auth
   firebase: Firebase

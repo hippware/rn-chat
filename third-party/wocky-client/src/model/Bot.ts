@@ -27,16 +27,11 @@ const LazyProfileList = types.late('LazyProfileRef', (): IAnyModelType => Profil
 export const Bot = types
   .compose(
     Base,
-    types.compose(
-      createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
-      createUpdatable((self, data) =>
-        self.service._updateBot(
-          {...getSnapshot(self), isNew: self.isNew, ...data},
-          self.userLocation
-        )
-      )
+    createUploadable('image', (self: any) => `redirect:${self.service.host}/bot/${self.id}`),
+    createUpdatable((self, data) =>
+      self.service._updateBot({...getSnapshot(self), isNew: self.isNew, ...data}, self.userLocation)
     ),
-    types.model('Bot', {
+    types.model({
       id: types.identifier,
       isSubscribed: false,
       visitor: false,
@@ -110,9 +105,6 @@ export const Bot = types
       self.service.geofenceBots.remove(self.id)
       yield self.service._unsubscribeBot(self.id)
     }),
-    share: (userIDs: string[], message: string = '', action: string = 'share') => {
-      self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, action)
-    },
     invite: (userIDs: string[]): Promise<any> => {
       return self.service._inviteBot(self.id, userIDs)
     },
@@ -162,14 +154,6 @@ export const Bot = types
       Object.assign(self, data)
     },
   }))
-  .actions(self => ({
-    shareToFriends: (message: string = '') => {
-      self.share(['friends'], message)
-    },
-    shareToFollowers: (message: string = '') => {
-      self.share(['followers'], message)
-    },
-  }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
     delete res.posts
@@ -190,7 +174,7 @@ export const Bot = types
       afterAttach: () => {
         self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
         self.visitors.setRequest(self.service._loadBotVisitors.bind(self.service, self.id))
-        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
+        self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id) as any)
       },
     }
   })
@@ -231,7 +215,7 @@ export interface IBotData {
   }
 }
 
-export const BotPaginableList = createPaginable<IBot>(types.reference(Bot))
+export const BotPaginableList = createPaginable<IBot>(types.reference(Bot), 'BotList')
 
 export const BotRef = types.reference(Bot, {
   get(id: string, parent: any) {

@@ -1,5 +1,5 @@
 import {createUser, timestamp} from './support/testuser'
-import {IWocky} from '../src'
+import {IWocky, IEventUserFollow} from '../src'
 import {when} from 'mobx'
 
 // tslint:disable:no-console
@@ -22,7 +22,7 @@ describe('GraphQL Notifications Subscription', () => {
       () => {
         timestamp()
         console.log('NOTIFICATIONS:', JSON.stringify(bob.notifications))
-        expect(bob.notifications.list[0].user.id).toBeTruthy()
+        expect((bob.notifications.list[0] as IEventUserFollow).user.id).toBeTruthy()
         done()
       }
     )

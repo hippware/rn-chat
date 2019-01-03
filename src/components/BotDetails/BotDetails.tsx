@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Clipboard, TouchableOpacity} from 'react-native'
 import {when, observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
@@ -122,7 +122,6 @@ export default class BotDetails extends React.Component<Props> {
               ? () => Actions.popTo('home')
               : Actions.pop,
             title: <NavTitle bot={bot} onLongPress={this.onNavLongPress} />,
-            right: <ShareButton bot={bot} />,
           }}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
@@ -171,16 +170,6 @@ const NavTitle = ({bot, onLongPress}) => {
     </TouchableOpacity>
   )
 }
-
-const ShareButton = observer(({bot}) => {
-  if (!bot || !isAlive(bot) || bot.error || bot.loading) return null
-  const isOwn = !bot.owner || bot.owner.isOwn
-  return isOwn || bot.isPublic ? (
-    <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})}>
-      <Image source={require('../../../images/shareIcon.png')} />
-    </TouchableOpacity>
-  ) : null
-})
 
 const Loader = () => (
   <View

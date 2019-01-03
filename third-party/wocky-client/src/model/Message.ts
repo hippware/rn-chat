@@ -3,7 +3,7 @@ import {Profile} from './Profile'
 import {FileRef} from './File'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
-import {createPaginable, IPaginable} from './PaginableList'
+import {createPaginable} from './PaginableList'
 import {IWocky} from '../index'
 import uuid from 'uuid/v1'
 import _ from 'lodash'
@@ -58,5 +58,4 @@ export const Message = types
 export interface IMessage extends Instance<typeof Message> {}
 export interface IMessageIn extends SnapshotIn<typeof Message> {}
 
-export const MessagePaginableList = createPaginable<IMessage>(Message)
-export interface IMessageList extends IPaginable<IMessage> {}
+export const MessagePaginableList = createPaginable<IMessage>(Message, 'MessageList')
