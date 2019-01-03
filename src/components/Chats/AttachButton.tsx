@@ -5,7 +5,6 @@ import {showImagePicker} from '../ImagePicker'
 import {IMessage} from 'wocky-client'
 import {observable} from 'mobx'
 import {Spinner} from '../common'
-import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   message: IMessage
