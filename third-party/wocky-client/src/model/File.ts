@@ -62,11 +62,14 @@ export const File = types
     }
   })
   .actions(self => ({
-    load({url}: any) {
-      // reset source, download thumbnail
-      self.setSource(undefined)
-      self.setURL(url)
-      self.downloadThumbnail()
+    load({url, ...data}: any) {
+      if (url) {
+        self.setSource(undefined)
+        self.setURL(url)
+        self.downloadThumbnail()
+      } else {
+        Object.assign(self, data)
+      }
     },
     afterAttach: flow(function*() {
       if (self.url) {

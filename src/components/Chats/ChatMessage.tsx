@@ -4,8 +4,7 @@ import {observer} from 'mobx-react/native'
 import {IMessage, IWocky, IFile} from 'wocky-client'
 import ResizedImage from './ResizedImage'
 import {width, k} from '../Global'
-import {RText, ProgressiveImage} from '../common'
-import {getSnapshot} from 'mobx-state-tree'
+import {RText} from '../common'
 
 type Props = {
   message: IMessage
@@ -15,10 +14,6 @@ type Props = {
 
 const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) => {
   const left = !isOutgoing
-  if (media) {
-    const {loaded, loading, error, thumbnail, source} = media
-    console.log('& media message', loaded, loading, error, thumbnail, source, getSnapshot(media))
-  }
   return (
     <View
       style={[
@@ -45,7 +40,6 @@ const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) =>
 const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => {
   const w = left ? width - 150 * k : width - 93
   // , height: w * media.source.height / media.source.width
-  console.log('& media', media)
   return (
     <View style={{width: w}}>
       <ResizedImage image={media.thumbnail} />
