@@ -1,4 +1,4 @@
-import {types, getParent, getEnv, flow, Instance, getSnapshot} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -406,13 +406,13 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
-        console.log('& sendMessage', getSnapshot(msg))
+        // console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(
           (msg.otherUser!.id || msg.otherUser!) as string,
           msg.content.length ? msg.content : undefined,
           msg.media ? msg.media.id : undefined
         )
-        console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
+        // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
         self._addMessage(msg)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
