@@ -510,7 +510,6 @@ export function convertMessage({direction, content, otherUser, createdAt, media}
     otherUser,
     time: new Date(createdAt).valueOf(),
     media: convertImage(media) as any,
-    unread: true,
     content: content || undefined,
     isOutgoing: direction === 'OUTGOING',
   }

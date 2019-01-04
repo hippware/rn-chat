@@ -36,7 +36,7 @@ export const Message = types
   )
   .named('Message')
   .actions(self => ({
-    read: () => (self.unread = false),
+    setUnread: (unread: boolean) => (self.unread = unread),
     clear: () => {
       self.media = null
       self.content = ''

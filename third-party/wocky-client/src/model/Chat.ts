@@ -21,7 +21,7 @@ export const Chat = types
       return self.messages.list!.sort((a, b) => a.time - b.time)
     },
     get unreadCount(): number {
-      return self.messages.list!.reduce((prev, current) => prev + (current.unread ? 1 : 0), 0)
+      return self.messages.list.reduce((prev, current) => prev + (current.unread ? 1 : 0), 0)
     },
   }))
   .views(self => ({
@@ -37,7 +37,7 @@ export const Chat = types
   .actions(self => {
     return {
       setActive: (active: boolean) => (self.active = active),
-      readAll: () => self.messages.list.forEach(msg => msg.read()),
+      readAll: () => self.messages.list.forEach(msg => msg.setUnread(false)),
     }
   })
   .actions((self: any) => ({
