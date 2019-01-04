@@ -23,7 +23,7 @@ export default class ChatCard extends React.Component<Props> {
   render() {
     const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg = chat.messages.last
+    const msg = chat.messages.first
     const {otherUser} = chat
     let media: any = null
     try {

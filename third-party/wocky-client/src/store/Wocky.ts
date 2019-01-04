@@ -261,7 +261,7 @@ export const Wocky = types
       items.forEach(item => {
         const msg = createMessage(item.message, self)
         const chat = self.createChat(item.chatId)
-        chat.messages.add(msg)
+        chat.messages.addToTop(msg) // TODO replace existing message to avoid duplicates?
       })
     }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {

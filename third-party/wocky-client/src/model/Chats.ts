@@ -8,12 +8,12 @@ export const Chats = types
   .named('Chats')
   .views(self => ({
     get _filteredList() {
-      return self._list.filter(chat => chat.messages.last)
+      return self._list.filter(chat => chat.messages.first)
     },
   }))
   .views(self => ({
     get list() {
-      return self._filteredList.sort((a, b) => b.messages.last!.time - a.messages.last!.time)
+      return self._filteredList.sort((a, b) => b.messages.first!.time - a.messages.first!.time)
     },
     get unreadCount(): number {
       return self._filteredList.reduce((prev: number, current) => prev + current.unreadCount, 0)
