@@ -19,7 +19,7 @@ export default class extends React.Component<Props, State> {
         <Image
           style={{
             width: this.state.dwidth,
-            // height: this.props.image.height * this.state.dwidth / this.props.image.width,
+            height: this.props.image.height * this.state.dwidth / this.props.image.width,
           }}
           resizeMode="contain"
           source={this.props.image}

@@ -9,6 +9,8 @@ type UploadType = {
     fileName?: string
   }
   size: number
+  height?: number
+  width?: number
 }
 
 export function createUploadable(property: string, access: string | ((self) => void)) {
@@ -18,7 +20,7 @@ export function createUploadable(property: string, access: string | ((self) => v
       uploaded: false,
     }))
     .actions((self: any) => ({
-      upload: flow(function*({file, size}: UploadType) {
+      upload: flow(function*({file, size, height, width}: UploadType) {
         if (!self.uploading) {
           try {
             self.uploaded = false
@@ -31,7 +33,7 @@ export function createUploadable(property: string, access: string | ((self) => v
             self.uploaded = true
             const fileRef = self.service.files.get(url)
             // set source to local file (or test file)
-            fileRef.setSource({uri: file.uri || file.fileName})
+            fileRef.setSource({uri: file.uri || file.fileName, height, width})
             self[property] = fileRef
           } finally {
             self.uploading = false

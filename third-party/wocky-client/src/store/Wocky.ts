@@ -197,7 +197,6 @@ export const Wocky = types
       return self.bots.get(id, data)
     },
     _addMessage: (message?: IMessageIn): void => {
-      // console.log('& _addMessage', message)
       if (!message) return
       const {otherUser} = message
       const otherUserId = (otherUser as any).id || otherUser
@@ -615,9 +614,9 @@ export const Wocky = types
     }
   })
   .actions(self => ({
-    downloadThumbnail: flow(function*(url: string, tros: string) {
-      return yield self.downloadFile(tros, 'thumbnail', url)
-    }),
+    downloadThumbnail(url: string, tros: string) {
+      return self.downloadFile(tros, 'thumbnail', url)
+    },
   }))
   .actions(self => {
     function clearCache() {

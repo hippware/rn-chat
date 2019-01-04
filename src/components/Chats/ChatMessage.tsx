@@ -43,7 +43,6 @@ const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => 
   return (
     <View style={{width: w}}>
       <ResizedImage image={media.thumbnail} />
-      {/* <ProgressiveImage style={{height: width, width}} file={media} resizeMode="contain" /> */}
     </View>
   )
 })

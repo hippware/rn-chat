@@ -37,9 +37,12 @@ class AttachButton extends React.Component<Props> {
       callback: async (source, response) => {
         try {
           this.uploading = true
+          const {height, width} = response
           await message.upload({
             file: source,
             size: response.size,
+            height,
+            width,
           })
           message.send()
         } catch (e) {
