@@ -7,7 +7,7 @@ let user1phone: string
 
 describe('FileStore', () => {
   beforeAll(async done => {
-    jest.setTimeout(15000)
+    jest.setTimeout(20000)
     user1 = await createUser()
     user1phone = user1.profile!.phoneNumber!
     done()
@@ -35,8 +35,8 @@ describe('FileStore', () => {
     await waitFor(
       () => profile !== null && profile.avatar !== null && profile.avatar.thumbnail !== null
     )
-    expect(user1.profile!.avatar!.thumbnail!.uri).toBeTruthy()
-    expect(user1.profile!.avatar!.thumbnail!.uri).not.toBe(fileName) // TODO content should be the same
+    expect(profile!.avatar!.thumbnail!.uri).toBeTruthy()
+    expect(profile!.avatar!.thumbnail!.uri).not.toBe(fileName) // TODO content should be the same
   })
 
   it('logout, load profile and verify thumbnail', async () => {

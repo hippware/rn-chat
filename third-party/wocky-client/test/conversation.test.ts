@@ -7,6 +7,7 @@ describe('New GraphQL conversation tests', () => {
   beforeAll(async () => {
     alice = await createUser()
     bob = await createUser()
+    jest.setTimeout(10000)
   })
 
   it('update profiles with handles so they can send messages', async () => {
@@ -79,7 +80,6 @@ describe('New GraphQL conversation tests', () => {
   })
 
   it('bob can load chat messages with paging', async () => {
-    // jest.setTimeout(10000)
     for (let i = 0; i < 22; i += 1) {
       chat.message!.setBody('hello' + i)
       await chat.message!.send()
@@ -93,7 +93,6 @@ describe('New GraphQL conversation tests', () => {
     expect(bob.chats.list[0].messages.count).toBe(24)
     await bob.chats.list[0].messages.load()
     expect(bob.chats.list[0].messages.list.length).toBe(24)
-    // jest.setTimeout(5000)
   })
 
   it('messages count is the same after refresh', async () => {
