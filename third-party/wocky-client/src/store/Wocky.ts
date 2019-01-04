@@ -196,20 +196,20 @@ export const Wocky = types
     getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
       return self.bots.get(id, data)
     },
-    _addMessage: (message?: IMessageIn): void => {
+    _addMessage: (message?: IMessageIn, unread = false): void => {
       if (!message) return
       const {otherUser} = message
       const otherUserId = (otherUser as any).id || otherUser
-      const existingChat = self.chats.get(otherUserId)
+      let existingChat = self.chats.get(otherUserId)
       const msg = createMessage(message, self)
       if (existingChat) {
         existingChat.messages.add(msg)
-        if (existingChat.active) {
-          msg!.read()
-        }
       } else {
-        const chat = self.createChat(otherUserId)
-        chat.messages.add({...message, otherUser: otherUserId})
+        existingChat = self.createChat(otherUserId)
+        existingChat.messages.add({...message, otherUser: otherUserId})
+      }
+      if (!existingChat.active) {
+        msg!.setUnread(unread)
       }
     },
     deleteBot: (id: string) => {
@@ -261,7 +261,7 @@ export const Wocky = types
       items.forEach(item => {
         const msg = createMessage(item.message, self)
         const chat = self.createChat(item.chatId)
-        chat.messages.add(msg)
+        chat.messages.addToTop(msg) // TODO replace existing message to avoid duplicates?
       })
     }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
@@ -405,12 +405,14 @@ export const Wocky = types
         return {list: res, count}
       }),
       _sendMessage: flow(function*(msg: IMessage) {
+        // console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(
           (msg.otherUser!.id || msg.otherUser!) as string,
           msg.content.length ? msg.content : undefined,
           msg.media ? msg.media.id : undefined
         )
-        self._addMessage(msg)
+        // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
+        self._addMessage(msg, false)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
@@ -612,9 +614,9 @@ export const Wocky = types
     }
   })
   .actions(self => ({
-    downloadThumbnail: flow(function*(url: string, tros: string) {
-      return yield self.downloadFile(tros, 'thumbnail', url)
-    }),
+    downloadThumbnail(url: string, tros: string) {
+      return self.downloadFile(tros, 'thumbnail', url)
+    },
   }))
   .actions(self => {
     function clearCache() {
@@ -658,7 +660,7 @@ export const Wocky = types
           }
         ),
         reaction(() => self.transport.rosterItem, self.addRosterItem),
-        reaction(() => self.transport.message, self._addMessage),
+        reaction(() => self.transport.message, message => self._addMessage(message, true)),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]

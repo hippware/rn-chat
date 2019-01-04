@@ -2,16 +2,19 @@ import React from 'react'
 import {View, Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 
+type Props = {
+  image?: any
+}
 type State = {
   dwidth: number
 }
 
 @observer
-export default class extends React.Component<any, State> {
+export default class extends React.Component<Props, State> {
   state = {dwidth: 0}
 
   render() {
-    return (
+    return this.props.image ? (
       <View onLayout={({nativeEvent: {layout: {width}}}) => this.setState({dwidth: width})}>
         <Image
           style={{
@@ -22,13 +25,6 @@ export default class extends React.Component<any, State> {
           source={this.props.image}
         />
       </View>
-    )
-    // return (
-    //     <View onLayout={({nativeEvent: {layout: {x, y, width, height}}})=>this.setState({dwidth:width})}>
-    //         {this.state.width && <Image style={{width:this.state.dwidth, height:this.state.height*this.state.dwidth/this.state.width}}
-    //                                     resizeMode={Image.resizeMode.contain}
-    //                                     source={this.props.image}/>}
-    //     </View>
-    // );
+    ) : null
   }
 }

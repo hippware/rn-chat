@@ -25,12 +25,12 @@ const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) =>
     >
       <View
         style={[
-          media && media.source ? styles.mediaBubble : styles.bubble,
+          media && media.thumbnail ? styles.mediaBubble : styles.bubble,
           left ? styles.bubbleLeft : styles.bubbleRight,
         ]}
       >
-        {content && <RText size={15}>{content}</RText>}
-        {media && <MessageMedia media={media} left={left} />}
+        {!!content && <RText size={15}>{content}</RText>}
+        {!!media && <MessageMedia media={media} left={left} />}
       </View>
       <Triangle left={left} />
     </View>
@@ -38,14 +38,11 @@ const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) =>
 })
 
 const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => {
-  if (!media.source || !media.loaded) {
-    return null
-  }
   const w = left ? width - 150 * k : width - 93
   // , height: w * media.source.height / media.source.width
   return (
     <View style={{width: w}}>
-      <ResizedImage image={media.source} />
+      <ResizedImage image={media.thumbnail} />
     </View>
   )
 })

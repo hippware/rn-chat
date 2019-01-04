@@ -45,6 +45,7 @@ export const File = types
         self.thumbnail = source
       },
       downloadThumbnail: flow(function*() {
+        // todo: since self.url defaults to '' won't the last test always evaluate to true?
         if (!self.loading && !self.thumbnail && self.url) {
           try {
             self.error = ''
@@ -62,13 +63,17 @@ export const File = types
     }
   })
   .actions(self => ({
-    load({url}: any) {
-      // reset source, download thumbnail
-      self.setSource(undefined)
-      self.setURL(url)
-      self.downloadThumbnail()
+    load({url, ...data}: any) {
+      if (url) {
+        self.setSource(undefined)
+        self.setURL(url)
+        self.downloadThumbnail()
+      } else {
+        Object.assign(self, data)
+      }
     },
     afterAttach: flow(function*() {
+      // todo: since self.url defaults to '' won't this always evaluate to true?
       if (self.url) {
         yield self.downloadThumbnail()
       }

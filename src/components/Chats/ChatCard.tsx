@@ -23,11 +23,11 @@ export default class ChatCard extends React.Component<Props> {
   render() {
     const {chat} = this.props
     if (!chat || !isAlive(chat)) return null
-    const msg = chat.messages.last
+    const msg = chat.messages.first
     const {otherUser} = chat
     let media: any = null
     try {
-      media = msg!.media && msg!.media!.source ? msg!.media : null
+      media = msg!.media && msg!.media!.thumbnail ? msg!.media : null
     } catch (err) {
       // console.log('TODO: Fix msg.media reference error', err)
     }
@@ -72,7 +72,7 @@ export default class ChatCard extends React.Component<Props> {
         </Text>
         {media && (
           <View style={{paddingTop: 15 * k}}>
-            <ResizedImage image={media.source} />
+            <ResizedImage image={media.thumbnail} />
           </View>
         )}
         {chat.unreadCount > 0 && (
