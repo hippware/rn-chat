@@ -30,6 +30,8 @@ describe('FileStore', () => {
     await user1.profile!.save()
     expect(user1.profile!.updated).toBe(true)
     await sleep(5000)
+    await user1.logout()
+    user1 = await createUser(undefined, user1phone)
     const profile = await user1.loadProfile(user1.username!)
     expect(profile.avatar).toBeTruthy()
     await waitFor(
