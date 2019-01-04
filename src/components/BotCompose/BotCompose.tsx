@@ -166,7 +166,7 @@ export class BotCompose extends React.Component<Props> {
                 </View>
               )}
               <TouchableOpacity
-                style={{width: '100%'}}
+                style={{width: '100%', height: 50 * minHeight}}
                 disabled={!this.saveable}
                 onPress={this.save}
               >
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    paddingVertical: 15 * k,
+    paddingVertical: 15 * minHeight,
     alignItems: 'center',
   },
 })
