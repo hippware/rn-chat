@@ -11,7 +11,7 @@ type Props = {
 }
 
 const PopupBlur = ({children, containerStyle, showCloseButton}: Props) => (
-  <BlurView blurType="light" blurAmount={25} style={styles.absolute}>
+  <BlurView blurType="light" blurAmount={15} style={styles.absolute}>
     <View style={[styles.container, containerStyle]}>{children}</View>
     {showCloseButton && <CloseButton style={styles.closeButton} />}
   </BlurView>
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'stretch',
     justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.5)',
   },
   container: {
     backgroundColor: 'transparent',

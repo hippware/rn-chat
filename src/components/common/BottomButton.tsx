@@ -2,7 +2,8 @@ import React from 'react'
 import {Keyboard, Animated} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable, when} from 'mobx'
-import Button from '../Button'
+import GradientButton from './GradientButton'
+import {minHeight} from '../Global'
 
 type Props = {
   style?: any
@@ -44,7 +45,7 @@ class BottomButton extends React.Component<Props, State> {
         style={[
           {
             position: 'absolute',
-            bottom: Animated.add(this.state.height, -12),
+            bottom: Animated.add(this.state.height, 0),
             // bottom: Animated.add(this.state.height, -50),
             // bottom: 0,
             right: 0,
@@ -55,18 +56,14 @@ class BottomButton extends React.Component<Props, State> {
           style,
         ]}
       >
-        <Button
-          style={{
-            padding: 0,
-            margin: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
+        <GradientButton
+          isPink={!this.props.isDisabled}
+          style={{height: 50 * minHeight}}
           {...rest}
+          onPress={!this.props.isDisabled ? this.props.onPress : null}
         >
           {children}
-        </Button>
+        </GradientButton>
       </Animated.View>
     )
   }
