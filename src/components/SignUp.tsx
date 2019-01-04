@@ -125,7 +125,7 @@ class SignUp extends React.Component<Props> {
               ref={r => (this.handle = r)}
               label="Username"
               autoCapitalize="none"
-              onSubmitEditing={() => this.firstName.focus()}
+              onSubmitEditing={() => this.done()}
               store={this.vProfile ? this.vProfile.handle : undefined}
               testID="signUpUsername"
             />
