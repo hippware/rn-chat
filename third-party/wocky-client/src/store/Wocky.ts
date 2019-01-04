@@ -1,7 +1,7 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile, IProfile, IProfilePartial} from '../model/Profile'
+import {Profile, IProfile, IProfilePartial, IProfileIn} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
@@ -126,7 +126,7 @@ export const Wocky = types
         }) as (params: LoginParams) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
-            self.profile!.status = 'unavailable'
+            self.profile!.setStatus('OFFLINE')
           }
           yield self.transport.disconnect()
         }),
@@ -180,7 +180,7 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    addRosterItem: (profile: any) => {
+    addRosterItem: (profile: IProfileIn) => {
       self.roster.set(profile.id, self.profiles.get(profile.id, profile))
     },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
@@ -536,11 +536,6 @@ export const Wocky = types
       //   }
       //   self.updates.clear()
       // },
-      // _onGeoBot: (bot: any) => {
-      //   if (!self.geoBots.has(bot.id)) {
-      //     self.geoBots.set(bot.id, self.getBot(bot))
-      //   }
-      // },
       enablePush: flow(function*(token: string) {
         yield waitFor(() => self.connected)
         yield self.transport.enablePush(token)
@@ -639,23 +634,20 @@ export const Wocky = types
               self.requestRoster()
               self._loadNewNotifications()
             } else {
-              Array.from(self.profiles.storage.values()).forEach((profile: any) =>
-                profile.setStatus('unavailable')
+              Array.from(self.profiles.storage.values()).forEach((profile: IProfile) =>
+                profile.setStatus('OFFLINE')
               )
             }
           }
         ),
-        // reaction(() => self.transport.geoBot, self._onGeoBot),
         reaction(
           () => self.transport.presence,
-          ({id, status}) => {
+          payload => {
+            const {id, status} = payload!
             // no need to update own profile's status
             if (id !== self.username) {
               const profile = self.profiles.get(id)
               profile.setStatus(status)
-              if (profile.isOwn && self.profile) {
-                self.profile!.setStatus(status)
-              }
             }
           }
         ),

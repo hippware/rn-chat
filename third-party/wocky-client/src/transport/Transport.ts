@@ -19,6 +19,7 @@ import {
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
   AREA_TOO_LARGE,
+  MEDIA_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -54,7 +55,7 @@ export class Transport {
   @observable connecting: boolean = false
   @observable message?: IMessageIn
   @observable notification: any
-  @observable presence: any
+  @observable presence?: {id: string; status: 'ONLINE' | 'OFFLINE'}
   @observable rosterItem: any
   @observable botVisitor: any
 
@@ -145,10 +146,8 @@ export class Transport {
                   firstName
                   lastName
                   handle
-                  media {
-                    thumbnailUrl
-                    trosUrl
-                  }
+                  ${MEDIA_PROPS}
+                  presenceStatus
                 }
               }
             }
@@ -156,7 +155,8 @@ export class Transport {
         }
       `,
     })
-    this.subscribeContacts() // subscribe to contacts changes
+    this.subscribeContacts()
+    this.subscribePresence()
     return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) =>
       processRosterItem(node, relationship, createdAt)
     )
@@ -989,19 +989,38 @@ export class Transport {
               firstName
               lastName
               handle
-              media {
-                thumbnailUrl
-                trosUrl
-              }
+              ${MEDIA_PROPS}
+              presenceStatus
             }
           }
         }
       `,
     }).subscribe({
       next: action((result: any) => {
-        // console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = processRosterItem(user, relationship, createdAt)
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
+  /**
+   * Recieve an update when anything about a followee changes (either their user data or their presence status)
+   */
+  private subscribePresence() {
+    const subscription = this.client!.subscribe({
+      query: gql`
+        subscription followees {
+          followees {
+            id
+            presenceStatus
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        const {id, presenceStatus} = result.data.followees
+        this.presence = {id, status: presenceStatus}
       }),
     })
     this.subscriptions.push(subscription)

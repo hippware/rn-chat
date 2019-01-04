@@ -492,6 +492,7 @@ export function processRosterItem(user, relationship, createdAt) {
     isNew: days <= 7,
     isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
     isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
+    status: user.presenceStatus,
     ...user,
   })
 }

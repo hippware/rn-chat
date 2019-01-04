@@ -1,4 +1,4 @@
-import {types, flow, IAnyModelType, Instance} from 'mobx-state-tree'
+import {types, flow, IAnyModelType, Instance, SnapshotIn} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -13,7 +13,7 @@ export const Profile = types
       id: types.identifier,
       avatar: FileRef,
       handle: types.maybeNull(types.string),
-      status: 'unavailable',
+      status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       isBlocked: false,
@@ -85,7 +85,7 @@ export const Profile = types
           self.isBlocked = false
           self.isNew = false
         }),
-        setStatus: (status: string) => {
+        setStatus: (status: 'ONLINE' | 'OFFLINE') => {
           self.status = status
         },
       },
@@ -124,6 +124,7 @@ export const ProfilePaginableList = createPaginable<IProfile>(
 )
 
 export interface IProfile extends Instance<typeof Profile> {}
+export interface IProfileIn extends SnapshotIn<typeof Profile> {}
 
 // export const ProfileRef = types.reference(Profile, {
 //   get(id: string, parent: any) {
