@@ -7,7 +7,7 @@ let user1phone: string
 
 describe('FileStore', () => {
   beforeAll(async done => {
-    jest.setTimeout(20000)
+    jest.setTimeout(25000)
     user1 = await createUser()
     user1phone = user1.profile!.phoneNumber!
     done()
@@ -29,7 +29,7 @@ describe('FileStore', () => {
     expect(user1.profile!.updated).toBe(false)
     await user1.profile!.save()
     expect(user1.profile!.updated).toBe(true)
-    await sleep(3000)
+    await sleep(5000)
     const profile = await user1.loadProfile(user1.username!)
     expect(profile.avatar).toBeTruthy()
     await waitFor(
