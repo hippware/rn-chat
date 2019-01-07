@@ -7,7 +7,7 @@ let user1phone: string
 
 describe('New GraphQL profile tests', () => {
   beforeAll(async () => {
-    jest.setTimeout(10000)
+    jest.setTimeout(20000)
     user = await createUser()
     user2 = await createUser()
   })
