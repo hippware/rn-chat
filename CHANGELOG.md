@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Comments are visible before the user followed the location (#3211)
+* [dev] wocky-client typing improvements, cleanup (PR #3215, PR #3217)
+* Fix chat message images (PR #3214)
+* Bottom Button Style Update (PR #3225)
+  * "Invite to Follow" button too low; gradient added to button (#3220)
+* "Next" on the keyboard locks the app up and does not function (#3222)
 
 # 4.0.1 - 2018 Dec 20
 
