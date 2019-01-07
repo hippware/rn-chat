@@ -68,11 +68,11 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           }}
         >
           <FlatList
-            data={profile && profile.hasUsedGeofence ? activeBots.slice() : null}
+            data={profile && activeBots.length > 0 ? activeBots.slice() : null}
             horizontal
             keyExtractor={this.keyExtractor}
             renderItem={
-              profile && profile.hasUsedGeofence ? this.renderActiveBot : this.renderPlaceholder
+              profile && activeBots.length > 0 ? this.renderActiveBot : this.renderPlaceholder
             }
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
