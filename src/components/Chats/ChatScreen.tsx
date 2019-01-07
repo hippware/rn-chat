@@ -1,13 +1,12 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, FlatList} from 'react-native'
+import {View, Text, StyleSheet, ActivityIndicator, FlatList} from 'react-native'
 import moment from 'moment'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
-import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import ChatMessage from './ChatMessage'
-import {Avatar, withKeyboardHOC} from '../common'
+import {withKeyboardHOC} from '../common'
 import {IWocky, IChat, IMessage} from 'wocky-client'
 import InputArea from './InputArea'
 
@@ -19,8 +18,6 @@ type Props = {
 @inject('wocky')
 @observer
 class ChatScreen extends React.Component<Props> {
-  static renderTitle = ({item}) => <ChatTitle item={item} />
-
   @observable chat?: IChat
 
   async componentDidMount() {
@@ -92,21 +89,6 @@ class ChatScreen extends React.Component<Props> {
     )
   }
 }
-
-const ChatTitle = inject('wocky')(
-  observer(({item, wocky}: {item: string; wocky?: IWocky}) => {
-    const chat = wocky!.chats.get(item)
-    return chat ? (
-      <TouchableOpacity
-        onPress={() => {
-          Actions.profileDetail({item: chat.otherUser})
-        }}
-      >
-        <Avatar size={40} profile={chat.otherUser} />
-      </TouchableOpacity>
-    ) : null
-  })
-)
 
 export default withKeyboardHOC(ChatScreen)
 
