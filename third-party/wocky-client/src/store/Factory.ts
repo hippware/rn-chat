@@ -1,4 +1,4 @@
-import {types, IType} from 'mobx-state-tree'
+import {types, IType, getEnv} from 'mobx-state-tree'
 import {Profile} from '../model/Profile'
 import {File} from '../model/File'
 import {Bot} from '../model/Bot'
@@ -22,7 +22,7 @@ export function createFactory<T>(type: IType<any, any, T>) {
         data = _.cloneDeep(data)
 
         if (!self.storage.get(id)) {
-          self.storage.put(type.create({id}))
+          self.storage.put(type.create({id}, getEnv(self)))
         }
         const entity: any = self.storage.get(id)!
         if (entity.load && data && Object.keys(data).length) {
