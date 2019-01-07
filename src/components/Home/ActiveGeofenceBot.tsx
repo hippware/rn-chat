@@ -43,7 +43,11 @@ class ActiveBot extends React.Component<Props> {
                 <RText
                   size={13}
                   color={colors.PINK}
-                  style={{textAlign: 'center', fontFamily: 'Roboto-Bold', height: 'auto'}}
+                  style={{
+                    textAlign: 'center',
+                    fontFamily: 'Roboto-Bold',
+                    height: 38,
+                  }}
                 >
                   You're{'\r\n'}
                   Here
@@ -81,6 +85,7 @@ export default ActiveBot
 
 const styles = StyleSheet.create({
   youreHere: {
+    flex: 1,
     borderRadius: 10,
     position: 'absolute',
     top: 0,
