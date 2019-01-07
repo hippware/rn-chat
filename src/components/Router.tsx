@@ -49,7 +49,7 @@ import { IOnceStore } from 'src/store/OnceStore'
 import { IStore } from 'src/store'
 import { IPersistable } from 'src/store/PersistableModel'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
-
+import ChatTitle from './Chats/ChatTitle'
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
 
@@ -141,7 +141,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="profileDetails" component={ProfileDetail} />
                     </Stack>
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
-                    <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
+                    <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                     {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                     <Scene key="myAccount" component={MyAccount} editMode back />
