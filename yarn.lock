@@ -855,9 +855,9 @@
     fast-deep-equal "1.0.0"
     flow-static-land "0.2.8"
 
-"@jumpn/utils-graphql@0.6.0", "@jumpn/utils-graphql@github:hippware/utils-graphql#c096884ab6925cddc36447a997f951c5b1b54809":
+"@jumpn/utils-graphql@0.6.0", "@jumpn/utils-graphql@github:hippware/utils-graphql#eff846b":
   version "0.5.3"
-  resolved "https://codeload.github.com/hippware/utils-graphql/tar.gz/c096884ab6925cddc36447a997f951c5b1b54809"
+  resolved "https://codeload.github.com/hippware/utils-graphql/tar.gz/eff846b5eea7b4116b47e7b973b215c8256c47b1"
   dependencies:
     "@babel/runtime" "7.2.0"
     core-js "2.6.0"
@@ -8410,23 +8410,23 @@ mkdirp@0.5, mkdirp@0.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
-mobx-react@^5.3.6:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.4.3.tgz#6709b7dd89670c40e9815914ac2ca49cc02bfb47"
-  integrity sha512-WC8yFlwvJ91hy8j6CrydAuFteUafcuvdITFQeHl3LRIf5ayfT/4W3M/byhEYD2BcJWejeXr8y4Rh2H26RunCRQ==
+mobx-react@5.3.6:
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.3.6.tgz#0bead0173aed7d12ace4981b53c28db4d61de9ef"
+  integrity sha512-u0ehjkyMllnt+SQ/G5BACxwi4VkJOqDVauA7cL8UvDi4oLO1ID9Z5c/nudTdIAmtsDDhJSxW85mrgsA2Iv/56Q==
   dependencies:
     hoist-non-react-statics "^3.0.0"
     react-lifecycles-compat "^3.0.2"
 
-mobx-state-tree@^3.7.1:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.10.0.tgz#92b893e2c85339e246779d19928b6d69b798a813"
-  integrity sha512-CEOZRx8wOSwEI7cYiD+kvPrAtpDB5VNpWVWL11mCXljx8WE9Ec6nwL/xZRYMZVFRvxvAoSFS9VqmVDiUHAZ1LA==
+mobx-state-tree@3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.7.1.tgz#161fc1b46224d3defa28b482914d3aa8e1b80ed7"
+  integrity sha512-XJHT4ldB2eoHBOqTsNLOsJHNsClSkAUwNWQm9njat28Md0ymQIpVPpcKywz9I8tbu2RoWlEm1/U4v6SeQEk/sA==
 
-mobx@^5.5.2:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.8.0.tgz#cf59eae4baa2fde4387ffb6462b7ccf3b497b03c"
-  integrity sha512-NsZB+9bF5j+nv9Qwk6bNeE3np26a4TbTGkMpOLf6o1zXoM9BtHPQn/00px4uZ2AXJXtQML5P4MEWdMm6icMIfQ==
+mobx@5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.5.2.tgz#4f5d751b77807a88218caede92198679a0e18a4a"
+  integrity sha512-2/nZyxET6T2BvFDLYGSf5sMJ1N9wdV9zHtAkfkk+hzJL+kzQQ/vLdPS5UmwNNBqH1HF6FpIcZR+1BJ/jc3YrMQ==
 
 moment@^2.18.1, moment@^2.21.0:
   version "2.23.0"

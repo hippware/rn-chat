@@ -90,9 +90,9 @@
     "jsrsasign": "^8.0.12",
     "libphonenumber-js": "^1.6.4",
     "lodash": "^4.17.11",
-    "mobx": "^5.5.2",
-    "mobx-react": "^5.3.6",
-    "mobx-state-tree": "^3.7.1",
+    "mobx": "5.5.2",
+    "mobx-react": "5.3.6",
+    "mobx-state-tree": "3.7.1",
     "moment": "^2.18.1",
     "mst-middlewares": "^3.7.1",
     "phoneformat.js": "github:hippware/phoneformat.js",
@@ -130,7 +130,7 @@
     "xregexp": "^4.1.1"
   },
   "resolutions": {		
-    "@jumpn/utils-graphql": "github:hippware/utils-graphql#c096884ab6925cddc36447a997f951c5b1b54809"
+    "@jumpn/utils-graphql": "github:hippware/utils-graphql#eff846b"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
