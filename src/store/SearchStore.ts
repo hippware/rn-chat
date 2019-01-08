@@ -93,7 +93,7 @@ const SearchStore = types
       handler1()
       applySnapshot(self, {
         global: '',
-        globalResult: '',
+        globalResult: {},
       })
     }
 
