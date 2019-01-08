@@ -129,6 +129,9 @@
     "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
     "xregexp": "^4.1.1"
   },
+  "resolutions": {		
+    "utils-graphql": "github:hippware/utils-graphql#fcb2196b7faf2a735eff92c3015caaa6491933da"
+  },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@storybook/addon-actions": "^4.0.7",
