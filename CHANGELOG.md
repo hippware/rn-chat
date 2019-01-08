@@ -10,6 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bottom Button Style Update (PR #3225)
   * "Invite to Follow" button too low; gradient added to button (#3220)
 * "Next" on the keyboard locks the app up and does not function (#3222)
+* Missing Avatar on Chat Messages (#3224)
+* Pass environment for new objects (PR #3233)
+  * City, State field is blank after creation flow (#3221)
 
 # 4.0.1 - 2018 Dec 20
 
