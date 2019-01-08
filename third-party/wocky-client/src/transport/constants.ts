@@ -16,7 +16,7 @@ export const BOT_PROPS = `id icon title address addressData description radius s
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
   subscribers(first:1 id: $ownUsername) { edges { relationships } }
 `
-const MEDIA_PROPS = `
+export const MEDIA_PROPS = `
   media {
     fullUrl
     thumbnailUrl
