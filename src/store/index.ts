@@ -36,7 +36,7 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
-const codePushStore = CodepushStore.create()
+const codePushStore = CodepushStore.create({})
 export const appInfo = AppInfo.create({
   nativeVersion: DeviceInfo.getVersion(),
   systemName: DeviceInfo.getSystemName(),

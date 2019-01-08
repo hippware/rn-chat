@@ -47,7 +47,9 @@ const SelectableProfileList = types
     function replace(list: IProfile[]): void {
       self.list.forEach(p => self.selection.set(p.profile.id, p.selected))
       self.list.replace(
-        list.map(el => SelectableProfile.create({profile: el, selected: self.selection.get(el.id)}))
+        list.map(el =>
+          SelectableProfile.create({profile: el.id, selected: self.selection.has(el.id)})
+        )
       )
     }
 

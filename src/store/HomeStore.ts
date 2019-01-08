@@ -138,7 +138,7 @@ const HomeStore = types
         const list = self.homeBotList
         bots.forEach(bot => {
           if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
-            list.push(BotCard.create({bot}))
+            list.push(BotCard.create({bot: bot.id}))
           }
         })
       },

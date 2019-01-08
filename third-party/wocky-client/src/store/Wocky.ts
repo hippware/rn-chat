@@ -97,7 +97,7 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow<LoginParams>(function*({phoneNumber, accessToken}: LoginParams) {
+        login: flow(function*({phoneNumber, accessToken}: LoginParams) {
           if (phoneNumber) {
             self.phoneNumber = phoneNumber
           }
@@ -123,7 +123,7 @@ export const Wocky = types
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
-        }) as (params: LoginParams) => Promise<boolean>,
+        }),
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'
@@ -289,13 +289,8 @@ export const Wocky = types
     }),
   }))
   .actions(self => {
-    const searchUsers = flow(function*(text: string) {
-      const users: IProfilePartial[] = yield self.transport.searchUsers(text)
-      return Promise.all(users.map(u => (self.getProfile as any)(u.id, u)))
-    }) as (text: string) => Promise<IProfile[]>
-
     return {
-      createBot: flow<IBot>(function*() {
+      createBot: flow(function*() {
         yield waitFor(() => self.connected)
         const id = yield self.transport.generateId()
         const bot = self.getBot({id, owner: self.username})
@@ -412,7 +407,8 @@ export const Wocky = types
           msg.media ? msg.media.id : undefined
         )
         // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
-        self._addMessage(msg, false)
+        // TODO better IMessage to IMessageIn conversion?
+        self._addMessage(msg as any, false)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
@@ -552,7 +548,10 @@ export const Wocky = types
       setSessionCount: (value: number) => {
         self.sessionCount = value
       },
-      searchUsers,
+      searchUsers: flow(function*(text: string) {
+        const users: IProfilePartial[] = yield self.transport.searchUsers(text)
+        return users.map(profile => self.profiles.get(profile.id, profile))
+      }),
     }
   })
   .actions(self => {
