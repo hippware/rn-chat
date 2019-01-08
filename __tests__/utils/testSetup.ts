@@ -17,3 +17,6 @@ jest.mock('moment', () => ({
   updateLocale: jest.fn(),
   relativeTimeThreshold: jest.fn(),
 }))
+
+// prevent "window is undefined" error in @absinthe/socket
+;(global as any).window = global

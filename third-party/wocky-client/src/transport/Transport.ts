@@ -99,9 +99,9 @@ export class Transport {
       }
       const res = await this.client!.mutate(mutation)
       // set the username based on what's returned in the mutation
-      this.connected = res.data!.authenticate !== null
+      this.connected = (res.data as any).authenticate !== null
       if (this.connected) {
-        this.username = res.data!.authenticate.user.id
+        this.username = (res.data as any).authenticate.user.id
       }
       return this.connected
     } finally {
@@ -179,7 +179,7 @@ export class Transport {
         }
       `,
     })
-    return res.data!.botCreate!.result.id
+    return (res.data as any).botCreate!.result.id
   }
   async loadBot(id: string): Promise<any> {
     const res = await this.client!.query<any>({
@@ -234,7 +234,7 @@ export class Transport {
         }
       `,
     })
-    return res.data!.userLocationGetToken!.result
+    return (res.data as any).userLocationGetToken!.result
   }
 
   async setLocation(params: ILocationSnapshot): Promise<void> {
@@ -538,7 +538,7 @@ export class Transport {
         input: {access, size, mimeType: file.type, filename: file.name},
       },
     })
-    const {headers, method, referenceUrl, uploadUrl} = res.data!.mediaUpload.result
+    const {headers, method, referenceUrl, uploadUrl} = (res.data as any).mediaUpload.result
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
@@ -937,7 +937,7 @@ export class Transport {
         }
       `,
     })
-    return res.data!.userInviteMakeCode.result
+    return (res.data as any).userInviteMakeCode.result
   }
 
   async userInviteRedeemCode(code: string): Promise<void> {
