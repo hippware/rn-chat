@@ -374,7 +374,7 @@ export function convertNotification(edge: any): IEventData | null {
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
-    case 'UserFollowNotification':
+    case 'UserInvitationNotification':
       const followNotification: IEventUserFollowData = {
         id,
         time,
@@ -397,8 +397,8 @@ export function convertNotification(edge: any): IEventData | null {
         bot,
       }
       return botItemNotification
-    case 'InvitationNotification':
-    case 'InvitationResponseNotification':
+    case 'BotInvitationNotification':
+    case 'BotInvitationResponseNotification':
       // console.log('& invite notification', data.invitation)
       bot = {
         ...convertBot(data.bot),
