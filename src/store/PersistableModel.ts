@@ -5,6 +5,7 @@ import {settings} from '../globals'
 
 export const cleanState = {
   firebaseStore: {},
+  bypassStore: {},
   locationStore: {},
   searchStore: {},
   profileValidationStore: {},

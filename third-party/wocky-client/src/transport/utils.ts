@@ -438,35 +438,7 @@ export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
 }
 
-type TokenParams = {
-  userId: string
-  uaString: string
-  deviceId: string
-  bypass?: boolean
-  accessToken?: string
-  phoneNumber?: string
-}
-
-export function generateWockyToken({
-  userId,
-  accessToken,
-  uaString,
-  deviceId,
-  phoneNumber,
-}: TokenParams): string {
-  assert(!!phoneNumber || accessToken !== undefined, `Access token required for non-bypass auth.`)
-  const payload = {
-    jti: userId,
-    iss: uaString,
-    typ: !!phoneNumber ? 'bypass' : 'firebase',
-    // if there's no accessToken then we're doing a bypass login.
-    // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
-    // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
-    sub: accessToken || phoneNumber,
-    aud: 'Wocky',
-    phone_number: phoneNumber,
-    dvc: deviceId,
-  }
+export function generateWockyToken(payload): string {
   // TODO: store this with react-native-native-env
   const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
   const header = {alg: 'HS512', typ: 'JWT'}

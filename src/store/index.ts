@@ -11,6 +11,7 @@ import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
+import BypassStore from './BypassStore'
 import fileService from './fileService'
 import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
@@ -79,6 +80,7 @@ const Store = types
     wocky: Wocky,
     homeStore: HomeStore,
     firebaseStore: FirebaseStore,
+    bypassStore: BypassStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,

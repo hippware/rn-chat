@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
+import {IBypassStore} from '../store/BypassStore'
 import {IWocky} from 'wocky-client'
 
 type Props = {
@@ -13,13 +14,14 @@ type Props = {
   navStore?: INavStore
   name: string
   warn?: any
+  bypassStore?: IBypassStore
 }
 
 type State = {
   text: string
 }
 
-@inject('wocky', 'analytics', 'warn', 'navStore')
+@inject('wocky', 'analytics', 'warn', 'navStore', 'bypassStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -30,7 +32,9 @@ class TestRegister extends React.Component<Props, State> {
     if (this.props.navStore!.scene !== this.props.name) {
       return
     }
-    Actions.connect({phoneNumber: `+1555${this.state.text}`})
+
+    this.props.bypassStore!.setPhone(`+1555${this.state.text}`)
+    Actions.connect({providerName: this.props.bypassStore!.providerName})
   }
 
   render() {

@@ -1,4 +1,4 @@
-import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, Instance, getRoot} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -20,7 +20,6 @@ import {PaginableLoadType, PaginableLoadPromise, Transport} from '../transport/T
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
-export type LoginParams = {phoneNumber?: string; accessToken?: string}
 export const Wocky = types
   .compose(
     Base,
@@ -29,6 +28,7 @@ export const Wocky = types
       id: 'wocky',
       username: types.maybeNull(types.string),
       password: types.maybeNull(types.string),
+      providerName: types.maybeNull(types.string),
       accessToken: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
       host: types.string,
@@ -97,25 +97,26 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*({phoneNumber, accessToken}: LoginParams) {
-          if (phoneNumber) {
-            self.phoneNumber = phoneNumber
+        login: flow(function*(providerName: string) {
+          const provider = getRoot(self)[providerName]
+          if (!provider) return false
+
+          // Allow provider to override any default values
+          const payload = {
+            aud: 'Wocky',
+            jti: /*self.username = */ uuid(),
+            iss: appInfo.uaString,
+            dvc: appInfo.uniqueId,
+            ...provider.getLoginCredentials(),
           }
-          if (accessToken) {
-            self.accessToken = accessToken
-          }
-          self.password = generateWockyToken({
-            phoneNumber: self.phoneNumber,
-            accessToken: self.accessToken,
-            userId: (self.username = uuid()),
-            uaString: appInfo.uaString,
-            deviceId: appInfo.uniqueId,
-          })
+
+          self.password = generateWockyToken(payload)
           const res = yield self.transport.login(self.password, self.host)
           if (!res) {
             return false
           }
-          // set username
+
+          self.providerName = providerName
           if (self.transport.username) {
             self.username = self.transport.username
           }
