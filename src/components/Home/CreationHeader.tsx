@@ -15,6 +15,7 @@ type Props = {
   wocky?: IWocky
   analytics?: any
   iconStore: IconStore
+  focused: boolean
 }
 
 @inject('wocky', 'analytics', 'iconStore')
@@ -61,7 +62,7 @@ export default class CreationHeader extends React.Component<Props> {
             )}
           </View>
         </View>
-        <AddressBar bot={this.bot!} />
+        <AddressBar focused={this.props.focused} bot={this.bot!} />
       </View>
     )
   }
