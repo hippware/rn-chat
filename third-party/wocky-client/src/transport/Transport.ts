@@ -3,7 +3,7 @@ import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory
 import gql from 'graphql-tag'
 import {IPagingList, MediaUploadParams} from './types'
 import {observable, action} from 'mobx'
-import * as AbsintheSocket from '@absinthe/socket'
+import {create as createAbsintheSocket} from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
@@ -542,11 +542,12 @@ export class Transport {
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
+  // todo: rename this to friendInvite?
   async follow(userId: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation follow($input: FollowInput!) {
-          follow(input: $input) {
+        mutation friendInvite($input: FriendInviteInput!) {
+          friendInvite(input: $input) {
             ${VOID_PROPS}            
           }
         }
@@ -956,6 +957,34 @@ export class Transport {
 
   /******************************** SUBSCRIPTIONS ********************************/
 
+  // todo: call this eventually when the rest of the relationship model is fixed
+  subscribePresence() {
+    // console.log('& subscribe presence', this.username)
+    const subscription = this.client!.subscribe({
+      query: gql`
+        subscription presence {
+          presence {
+            id
+            presenceStatus
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        // console.log('& presence next', this.username, result.data.followees)
+        const {id, presenceStatus} = result.data.followees
+        this.presence = {id, status: presenceStatus}
+      }),
+      // error: error => {
+      //   console.warn('& subscribe presence error', this.username, error)
+      // },
+      // complete: () => {
+      //   console.log('& subscribe presence complete', this.username)
+      // },
+    })
+    this.subscriptions.push(subscription)
+  }
+
   private subscribeNotifications() {
     const subscription = this.client!.subscribe({
       query: gql`
@@ -970,6 +999,7 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
+        console.log('& notification', result)
         this.notification = convertNotification({node: result.data.notifications})
       }),
     })
@@ -999,7 +1029,7 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        // console.log('& contact', result)
+        console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = processRosterItem(user, relationship, createdAt)
       }),
@@ -1212,7 +1242,7 @@ export class Transport {
       },
     }
     return new ApolloClient({
-      link: createAbsintheSocketLink(AbsintheSocket.create(socket)),
+      link: createAbsintheSocketLink(createAbsintheSocket(socket)),
       cache: new InMemoryCache({fragmentMatcher}),
       defaultOptions,
     })
