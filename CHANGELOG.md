@@ -13,6 +13,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Missing Avatar on Chat Messages (#3224)
 * Pass environment for new objects (PR #3233)
   * City, State field is blank after creation flow (#3221)
+* Update: absinthe/socket-apollo-link, appcenter nodejs (PR #3237)
+  * utils-graphql, mobx, mobx-react, mobx-state-tree (PR #3242)
+* Presence widget fixes (PR #3236)
+  * New! Presence widget reappears after each kill/reload (#3219)
+  * "Here" missing on widget (You're Here) (#2933)
 
 # 4.0.1 - 2018 Dec 20
 
