@@ -684,6 +684,7 @@ exports[`BotDetails renders with no data 1`] = `
           placeholder="Add a comment"
           placeholderTextColor="rgb(155,155,155)"
           returnKeyType="default"
+          selectionColor="rgb(89, 176, 242)"
           style={
             Array [
               Object {

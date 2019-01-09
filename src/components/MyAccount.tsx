@@ -84,18 +84,21 @@ class MyAccount extends React.Component<Props> {
               autoCapitalize="none"
               icon={require('../../images/iconUsernameNew.png')}
               onSubmitEditing={() => this.email.focus()}
+              selectionColor={colors.COVER_BLUE}
             />
             <FormTextInput
               label="First Name"
               store={this.vProfile && this.vProfile.firstName}
               icon={require('../../images/iconSubsNew.png')}
               onSubmitEditing={() => this.lastName.focus()}
+              selectionColor={colors.COVER_BLUE}
             />
             <FormTextInput
               ref={r => (this.lastName = r)}
               label="Last Name"
               store={this.vProfile && this.vProfile.lastName}
               onSubmitEditing={() => this.handle.focus()}
+              selectionColor={colors.COVER_BLUE}
             />
 
             <RText
@@ -112,6 +115,7 @@ class MyAccount extends React.Component<Props> {
               icon={require('../../images/phone.png')}
               editable={false}
               value={phoneFormat(profile.phoneNumber!)}
+              selectionColor={colors.COVER_BLUE}
               // value={format({phone: profile.phoneNumber.replace('+', ''), country: 'US'}, 'E.164')}
             />
             <FormTextInput
@@ -120,6 +124,7 @@ class MyAccount extends React.Component<Props> {
               store={this.vProfile && this.vProfile.email}
               icon={require('../../images/iconEmailNew.png')}
               onSubmitEditing={() => MyAccount.submit(this.props.profileValidationStore)}
+              selectionColor={colors.COVER_BLUE}
             />
 
             <RText

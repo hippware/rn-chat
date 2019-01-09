@@ -139,6 +139,7 @@ class AddBotPost extends React.Component<Props> {
             enablesReturnKeyAutomatically
             value={this.text}
             maxLength={5000}
+            selectionColor={colors.COVER_BLUE}
           />
           <TouchableOpacity
             hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}

@@ -177,6 +177,7 @@ class AddressBar extends React.Component<Props> {
               onFocus={() => (this.searchEnabled = true)}
               returnKeyType="search"
               ref={r => (this.input = r)}
+              selectionColor={colors.COVER_BLUE}
             />
           </View>
           <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />

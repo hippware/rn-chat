@@ -36,6 +36,7 @@ class EditNote extends React.Component<Props> {
           autoFocus
           multiline
           onBlur={Actions.pop}
+          selectionColor={colors.COVER_BLUE}
         />
         <GradientButton
           innerStyle={{

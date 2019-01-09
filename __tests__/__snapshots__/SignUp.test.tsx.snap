@@ -181,6 +181,7 @@ exports[`Signup renders 1`] = `
                 placeholder="Username"
                 placeholderTextColor="rgb(212,212,212)"
                 returnKeyType="next"
+                selectionColor="rgb(89, 176, 242)"
                 store={
                   ValidateItem {
                     "errorMessage": "",
