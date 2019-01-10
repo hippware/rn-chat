@@ -148,7 +148,6 @@ class AddressBar extends React.Component<Props> {
     )
 
   blur = () => (this.searchEnabled = false)
-  focus = () => (this.searchEnabled = true)
 
   @computed
   get showList() {
