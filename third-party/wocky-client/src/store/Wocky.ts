@@ -30,7 +30,6 @@ export const Wocky = types
       username: types.maybeNull(types.string),
       password: types.maybeNull(types.string),
       providerName: types.maybeNull(types.string),
-      accessToken: types.maybe(types.string),
       phoneNumber: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
@@ -679,7 +678,6 @@ export const Wocky = types
       self.username = null
       self.password = null
       self.phoneNumber = undefined
-      self.accessToken = undefined
     })
 
     return {

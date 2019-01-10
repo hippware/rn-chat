@@ -73,7 +73,7 @@ export default class Connectivity extends React.Component<Props> {
       AppState.currentState === 'active' &&
       !model.connected &&
       !model.connecting &&
-      (model.phoneNumber || model.accessToken) &&
+      model.providerName &&
       model.username &&
       model.password &&
       model.host

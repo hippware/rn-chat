@@ -27,6 +27,15 @@ const FirebaseStore = types
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
   }))
+  .views(self => {
+    return {
+      get providerName() {
+        // This needs to match the member variable of getRoot/getParent that points to an instance of this object
+        // Is there a way to auto-discover this?
+        return 'firebaseStore'
+      },
+    }
+  })
   .actions(self => ({
     setState(state: State) {
       Object.assign(self, state)
@@ -110,7 +119,15 @@ const FirebaseStore = types
       }
     }
 
-    const logout = flow(function*() {
+    const getLoginCredentials = function() {
+      if (self.token) {
+        return {typ: 'firebase', sub: self.token}
+      } else {
+        return {}
+      }
+    }
+
+    const onLogout = flow(function*() {
       analytics.track('logout')
       if (self.token) {
         self.token = null
@@ -121,12 +138,7 @@ const FirebaseStore = types
           logger.warn('firebase logout error', err)
         }
       }
-      try {
-        yield wocky.logout()
-      } catch (err) {
-        analytics.track('error_wocky_logout', {error: err})
-        logger.warn('wocky logout error', err)
-      }
+
       self.reset()
       confirmResult = null
       return true
@@ -197,7 +209,7 @@ const FirebaseStore = types
     const registerWithToken = flow(function*() {
       try {
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login({accessToken: self.token!})
+        yield wocky.login(self.providerName)
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
@@ -249,7 +261,8 @@ const FirebaseStore = types
 
     return {
       afterAttach,
-      logout,
+      getLoginCredentials,
+      onLogout,
       beforeDestroy,
       verifyPhone,
       confirmCode,
