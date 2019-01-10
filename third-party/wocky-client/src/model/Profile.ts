@@ -26,8 +26,6 @@ export const Profile = types
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
-      followed: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      followers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
     })
   )
   .named('Profile')
@@ -36,8 +34,6 @@ export const Profile = types
     delete res.status
     delete res.ownBots
     delete res.subscribedBots
-    delete res.followed
-    delete res.followers
     return res
   })
   .extend(self => {
@@ -51,12 +47,6 @@ export const Profile = types
         },
         afterAttach: () => {
           if (self.service) {
-            self.followers.setRequest(
-              self.service._loadRelations.bind(self.service, self.id, 'follower')
-            )
-            self.followed.setRequest(
-              self.service._loadRelations.bind(self.service, self.id, 'following')
-            )
             self.ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             self.subscribedBots.setRequest(
               self.service._loadSubscribedBots.bind(self.service, self.id)

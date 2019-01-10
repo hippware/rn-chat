@@ -1,7 +1,7 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
-import {Profile, IProfile, IProfilePartial} from '../model/Profile'
+import {IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
@@ -16,7 +16,7 @@ import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {IEventData} from '../model/Event'
-import {PaginableLoadType, PaginableLoadPromise, Transport} from '../transport/Transport'
+import {PaginableLoadType, PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
@@ -33,7 +33,6 @@ export const Wocky = types
       phoneNumber: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
-      roster: types.optional(types.map(types.reference(Profile)), {}),
       profile: types.maybeNull(OwnProfile),
       notifications: types.optional(EventList, {}),
       hasUnreadNotifications: false,
@@ -43,20 +42,6 @@ export const Wocky = types
     })
   )
   .named(SERVICE_NAME)
-  .views(self => {
-    const transport: Transport = getEnv(self).transport
-    if (!transport) {
-      throw new Error('Server transport is not defined')
-    }
-    return {
-      get transport(): Transport {
-        return transport
-      },
-      get connected() {
-        return transport.connected
-      },
-    }
-  })
   .actions(self => ({
     loadProfile: flow(function*(id: string) {
       yield waitFor(() => self.connected)
@@ -64,7 +49,7 @@ export const Wocky = types
       const data = yield self.transport.loadProfile(id)
       if (isOwn) {
         if (!self.profile) {
-          self.profile = OwnProfile.create({id})
+          self.profile = OwnProfile.create({id}, getEnv(self))
         }
         self.profile.load(data)
         // add own profile to the storage
@@ -81,14 +66,6 @@ export const Wocky = types
       views: {
         get connecting() {
           return self.transport.connecting
-        },
-        get sortedRoster(): IProfile[] {
-          return (Array.from(self.roster.values()) as IProfile[])
-            .filter(x => x.handle)
-            .slice()
-            .sort((a, b) => {
-              return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
-            })
         },
         // get updatesToAdd(): IEventEntity[] {
         //   return self.updates.filter((e: IEventEntity) => {
@@ -160,29 +137,8 @@ export const Wocky = types
         })
         .map(rec => rec.data)
     },
-    get all() {
-      return self.sortedRoster.filter(x => !x.isBlocked)
-    },
-    get blocked() {
-      return self.sortedRoster.filter(x => x.isBlocked)
-    },
-    get friends() {
-      return self.sortedRoster.filter(x => x.isMutual)
-    },
-    get followers() {
-      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower)
-    },
-    get newFollowers() {
-      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower && x.isNew)
-    },
-    get followed() {
-      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollowed)
-    },
   }))
   .actions(self => ({
-    addRosterItem: (profile: any) => {
-      self.roster.set(profile.id, self.profiles.get(profile.id, profile))
-    },
     getProfile: flow(function*(id: string, data: {[key: string]: any} = {}) {
       const profile = self.profiles.get(id, processMap(data))
       if (!profile.handle) {
@@ -219,8 +175,6 @@ export const Wocky = types
         }
       })
       self.profile!.subscribedBots.remove(id)
-      self.profile!.ownBots.remove(id)
-      self.profiles.get(self.username!)!.ownBots.remove(id)
       self.profiles.get(self.username!)!.subscribedBots.remove(id)
       self.geofenceBots.remove(id)
       // self.geoBots.delete(id)
@@ -247,11 +201,6 @@ export const Wocky = types
     _hideUser: flow(function*(value: boolean, expire?: Date) {
       yield waitFor(() => self.connected)
       yield self.transport.hideUser(value, expire)
-    }),
-    requestRoster: flow(function*() {
-      yield waitFor(() => self.connected)
-      const roster = yield self.transport.requestRoster()
-      roster.forEach(self.addRosterItem)
     }),
     loadChats: flow(function*(max: number = 50) {
       yield waitFor(() => self.connected)
@@ -344,10 +293,6 @@ export const Wocky = types
       _updateBot: flow(function*(d: any, userLocation: ILocation) {
         yield waitFor(() => self.connected)
         yield self.transport.updateBot(d, userLocation)
-        // subscribe owner to his bot
-        const bot = self.bots.storage.get(d.id)
-        self.profile!.ownBots.addToTop(bot)
-        self.profiles.get(self.username!)!.ownBots.addToTop(bot)
         return {isNew: false}
       }) as (data: any, userLocation: ILocation) => Promise<{isNew: boolean}>,
       _removeBotPost: flow(function*(id: string, postId: string) {
@@ -624,7 +569,6 @@ export const Wocky = types
       // self.geoBots.clear()
       self.notifications.refresh()
       self.bots.clear()
-      self.roster.clear()
       self.profiles.clear()
     }
     let reactions: IReactionDisposer[] = []
@@ -635,7 +579,6 @@ export const Wocky = types
           (connected: boolean) => {
             if (connected) {
               self.geofenceBots.load({force: true})
-              self.requestRoster()
               self._loadNewNotifications()
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
@@ -658,7 +601,6 @@ export const Wocky = types
             }
           }
         ),
-        reaction(() => self.transport.rosterItem, self.addRosterItem),
         reaction(() => self.transport.message, message => self._addMessage(message, true)),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),

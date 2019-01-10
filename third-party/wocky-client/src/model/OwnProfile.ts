@@ -1,7 +1,9 @@
 import {types, getSnapshot, flow, Instance} from 'mobx-state-tree'
-import {Profile} from './Profile'
+import {Profile, IProfile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
+import {InvitationPaginableList} from './Invitation'
+import {ContactPaginableList} from './Contact'
 
 const Hidden = types
   .model('HiddenType', {
@@ -40,11 +42,20 @@ export const OwnProfile = types
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
       hidden: types.optional(Hidden, {}),
+      sendInvitations: types.optional(InvitationPaginableList, {}),
+      receivedInvitations: types.optional(InvitationPaginableList, {}),
+      friends: types.optional(ContactPaginableList, {}),
     })
   )
   .views(self => ({
-    get hasUsedGeofence() {
-      return self.ownBots.list.length > 0
+    get sortedFriends(): IProfile[] {
+      return self.friends.list
+        .map(contact => contact.user)
+        .filter(x => x.handle)
+        .slice()
+        .sort((a, b) => {
+          return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+        })
     },
   }))
   .actions(self => ({

@@ -55,25 +55,25 @@ describe('New GraphQL profile tests', () => {
   })
 
   it('user1 follows user2', async () => {
-    expect(user.sortedRoster.length).toBe(0)
-    expect(user2.sortedRoster.length).toBe(0)
+    expect(user.profile!.sortedFriends.length).toBe(0)
+    expect(user2.profile!.sortedFriends.length).toBe(0)
     user1user2Profile = await user.loadProfile(user2.username!)
     const user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
     expect(user2user1Profile).toBeTruthy()
     await user1user2Profile.follow()
     // await waitFor(
-    //   () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
+    //   () => user.profile.sortedFriends.length === 1 && user2.profile.sortedFriends.length === 1,
     //   'user1 and user2 rosters didnt update in time'
     // )
-    // expect(user.sortedRoster[0].id).toBe(user2.username)
-    // expect(user2.sortedRoster[0].id).toBe(user.username)
+    // expect(user.profile.sortedFriends[0].id).toBe(user2.username)
+    // expect(user2.profile.sortedFriends[0].id).toBe(user.username)
     // expect(user1user2Profile.isFollowed).toBe(true)
     // expect(user2user1Profile.isFollower).toBe(true)
   })
 
   // // TODO: check profile is online after presence enabled
-  // // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
+  // // await waitFor(() => user2.profile.sortedFriends[0].status === 'available', 'user2 not available in time')
 
   // it('load followers', async () => {
   //   const steve = await createUser()

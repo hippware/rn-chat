@@ -7,6 +7,7 @@ import {createPaginable} from './PaginableList'
 import {IWocky} from '../index'
 import uuid from 'uuid/v1'
 import _ from 'lodash'
+import {getEnv} from 'mobx-state-tree'
 
 const MessageBase = types.model('MessageBase', {
   id: types.optional(types.string, () => uuid()),
@@ -25,7 +26,7 @@ export function createMessage(params: any, service: IWocky): IMessage {
   if (params.media) {
     params.media = service.files.get(params.media.id, params.media)
   }
-  return Message.create(params)
+  return Message.create(params, getEnv(service))
 }
 
 export const Message = types

@@ -1,5 +1,5 @@
 import {createUser, sleep, waitFor} from './support/testuser'
-import {IWocky, IOwnProfile} from '../src'
+import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
 
@@ -71,11 +71,6 @@ describe('Geofence', () => {
       () => user2.notifications.length === 1,
       'user2 bot invitation notification didnt arrive'
     )
-  })
-
-  it('load own profile, check hasUsedGeofence', async () => {
-    const user1profile = (await user1.loadProfile(user1.username!)) as IOwnProfile
-    expect(user1profile.hasUsedGeofence).toBe(true)
   })
 
   it('user1 creates bot2', async () => {

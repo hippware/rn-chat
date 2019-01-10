@@ -999,6 +999,7 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
+        // tslint:disable-next-line
         console.log('& notification', result)
         this.notification = convertNotification({node: result.data.notifications})
       }),
@@ -1029,6 +1030,7 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
+        // tslint:disable-next-line
         console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = processRosterItem(user, relationship, createdAt)

@@ -17,7 +17,9 @@ type Props = {
 @observer
 class CreateMessage extends React.Component<Props> {
   componentDidMount() {
-    this.props.searchStore!.localResult.setList(this.props.wocky.friends.map(f => ({profile: f})))
+    this.props.searchStore!.localResult.setList(
+      this.props.wocky.profile!.friends.list.map(f => ({profile: f}))
+    )
   }
 
   render() {
