@@ -19,6 +19,7 @@ import {IEventData} from '../model/Event'
 import {PaginableLoadType, PaginableLoadPromise, Transport} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
+import {ILoginProvider} from './ILoginProvider'
 
 export const Wocky = types
   .compose(
@@ -98,7 +99,7 @@ export const Wocky = types
       },
       actions: {
         login: flow(function*(providerName: string) {
-          const provider = getRoot(self)[providerName]
+          const provider = getRoot(self)[providerName] as ILoginProvider
           if (!provider) return false
 
           // Allow provider to override any default values
