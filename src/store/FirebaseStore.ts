@@ -121,6 +121,16 @@ const FirebaseStore = types
 
     const getLoginCredentials = flow(function*() {
       if (self.token) {
+        // Refresh firebase token if less than 5 minutes from expiry
+        const tokenResult = yield auth.currentUser!.getIdTokenResult(false)
+        if (
+          tokenResult &&
+          tokenResult.claims.exp &&
+          tokenResult.claims.exp - Date.now() / 1000 < 300
+        ) {
+          self.token = yield auth.currentUser!.getIdToken(true)
+        }
+
         return {typ: 'firebase', sub: self.token}
       } else {
         return {}

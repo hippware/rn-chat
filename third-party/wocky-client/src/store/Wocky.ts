@@ -97,8 +97,16 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*(providerName: string) {
-          const provider = getRoot(self)[providerName] as ILoginProvider
+        login: flow(function*(providerName = '') {
+          let provider = null as ILoginProvider | null
+          if (providerName) {
+            provider = getRoot(self)[providerName] as ILoginProvider
+          } else if (self.providerName) {
+            // If providerName is not supplied, then reuse existing
+            //   provider if there is one
+            provider = getRoot(self)[self.providerName] as ILoginProvider
+          }
+
           if (!provider) return false
 
           // Allow provider to override any default values
@@ -116,7 +124,7 @@ export const Wocky = types
             return false
           }
 
-          self.providerName = providerName
+          self.providerName = provider.providerName
           if (self.transport.username) {
             self.username = self.transport.username
           }
