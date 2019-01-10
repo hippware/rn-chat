@@ -1,4 +1,4 @@
-import {types} from 'mobx-state-tree'
+import {types, flow} from 'mobx-state-tree'
 
 // This class implements ILoginProvider from 'wocky-client'
 //   but I don't think there's a way to declare this with MST stores?
@@ -26,14 +26,12 @@ const BypassStore = types
       return self.phone ? {typ: 'bypass', sub: self.phone, phone_number: self.phone} : {}
     }
 
-    function providerLogout() {
-      self.phone = ''
-    }
-
     return {
       setPhone,
       getLoginCredentials,
-      providerLogout,
+      onLogout: flow(function*() {
+        self.phone = ''
+      }),
     }
   })
 

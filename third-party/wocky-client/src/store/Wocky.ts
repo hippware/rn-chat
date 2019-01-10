@@ -673,6 +673,15 @@ export const Wocky = types
           yield self.disablePush()
           yield self.disconnect()
         }
+
+        if (self.providerName) {
+          const provider = getRoot(self)[self.providerName] as ILoginProvider
+          if (provider) {
+            yield provider.onLogout()
+          }
+          self.providerName = ''
+        }
+
         self.profile = null
         clearCache()
         self.sessionCount = 0

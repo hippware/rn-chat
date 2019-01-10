@@ -95,9 +95,9 @@ const Store = types
   }))
   .actions(self => ({
     logout: flow(function*() {
-      self.homeStore.logout()
-      self.locationStore.logout()
-      return yield self.firebaseStore.logout()
+      self.homeStore.onLogout()
+      self.locationStore.onLogout()
+      return yield self.wocky.logout()
     }),
     afterCreate() {
       analytics.identify(self.wocky)

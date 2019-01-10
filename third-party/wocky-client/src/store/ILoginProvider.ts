@@ -5,5 +5,5 @@ export interface ILoginProvider {
   getLoginCredentials(): {}
 
   // Notifies the provider of logout
-  providerLogout()
+  onLogout()
 }
