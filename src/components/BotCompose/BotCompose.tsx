@@ -141,6 +141,7 @@ export class BotCompose extends React.Component<Props> {
               ref={r => (this.botTitle = r)}
               onChangeText={text => (this.text = text)}
               value={this.text}
+              selectionColor={colors.COVER_BLUE}
             />
             <View>
               {!this.props.keyboardShowing && (
