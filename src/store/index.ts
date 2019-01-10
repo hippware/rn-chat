@@ -94,6 +94,15 @@ const Store = types
     },
   }))
   .actions(self => ({
+    login: flow(function*(data) {
+      try {
+        yield self.wocky.login(data.providerName)
+        return true
+      } catch (error) {
+        analytics.track('error_connection', {error})
+      }
+      return false
+    }),
     logout: flow(function*() {
       self.homeStore.onLogout()
       self.locationStore.onLogout()

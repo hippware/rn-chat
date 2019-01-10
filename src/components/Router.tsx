@@ -106,7 +106,7 @@ class TinyRobotRouter extends React.Component<Props> {
           <Stack hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
             <Scene key="checkCredentials" on={() => wocky!.username && wocky!.password && wocky!.host} success="checkProfile" failure="preConnection" />
-            <Scene key="connect" on={this.login} success="checkHandle" failure="preConnection" />
+            <Scene key="connect" on={store!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
             <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
@@ -210,17 +210,6 @@ class TinyRobotRouter extends React.Component<Props> {
   resetSearchStore = () => {
     this.props.store!.searchStore.setGlobal('')
     Actions.pop()
-  }
-
-  // TODO: Move it outside
-  login = async (data) => {
-    try {
-      await this.props.wocky!.login(data.providerName) // Remove that after new typings for MST3
-      return true
-    } catch (error) {
-      this.props.analytics.track('error_connection', {error})
-    }
-    return false
   }
 }
 
