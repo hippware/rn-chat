@@ -107,7 +107,7 @@ export const Wocky = types
             jti: /*self.username = */ uuid(),
             iss: appInfo.uaString,
             dvc: appInfo.uniqueId,
-            ...provider.getLoginCredentials(),
+            ...(yield provider.getLoginCredentials()),
           }
 
           self.password = generateWockyToken(payload)

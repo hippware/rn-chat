@@ -16,19 +16,15 @@ const BypassStore = types
     }
   })
   .actions(self => {
-    function setPhone(phone) {
-      self.phone = phone
-    }
-
-    function getLoginCredentials() {
-      // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
-      // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
-      return self.phone ? {typ: 'bypass', sub: self.phone, phone_number: self.phone} : {}
-    }
-
     return {
-      setPhone,
-      getLoginCredentials,
+      setPhone: phone => {
+        self.phone = phone
+      },
+      getLoginCredentials: flow(function*() {
+        // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
+        // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
+        return self.phone ? {typ: 'bypass', sub: self.phone, phone_number: self.phone} : {}
+      }),
       onLogout: flow(function*() {
         self.phone = ''
       }),

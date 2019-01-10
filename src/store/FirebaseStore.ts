@@ -119,13 +119,13 @@ const FirebaseStore = types
       }
     }
 
-    const getLoginCredentials = function() {
+    const getLoginCredentials = flow(function*() {
       if (self.token) {
         return {typ: 'firebase', sub: self.token}
       } else {
         return {}
       }
-    }
+    })
 
     const onLogout = flow(function*() {
       analytics.track('logout')
