@@ -23,7 +23,7 @@ export default function bugsnag(wocky: any) {
       }
       bsClient.notify(error)
       // TODO: figure out a more elegant way of "restarting" from scratch
-      await wocky.logout()
+      await wocky.restart()
       ErrorUtils.setGlobalHandler(originalGlobalErrorHandler)
       setTimeout(() => {
         throw error

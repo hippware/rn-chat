@@ -666,14 +666,26 @@ export const Wocky = types
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
+
+    const restart = flow(function*() {
+      if (self.connected) {
+        yield self.disablePush()
+        yield self.disconnect()
+      }
+
+      self.profile = null
+      clearCache()
+      self.sessionCount = 0
+      self.username = null
+      self.password = null
+      self.phoneNumber = undefined
+      self.accessToken = undefined
+    })
+
     return {
       clearCache,
+      restart,
       logout: flow(function* logout() {
-        if (self.connected) {
-          yield self.disablePush()
-          yield self.disconnect()
-        }
-
         if (self.providerName) {
           const provider = getRoot(self)[self.providerName] as ILoginProvider
           if (provider) {
@@ -681,14 +693,7 @@ export const Wocky = types
           }
           self.providerName = ''
         }
-
-        self.profile = null
-        clearCache()
-        self.sessionCount = 0
-        self.username = null
-        self.password = null
-        self.phoneNumber = undefined
-        self.accessToken = undefined
+        restart()
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)
