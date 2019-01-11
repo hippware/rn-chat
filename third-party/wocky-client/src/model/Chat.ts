@@ -1,4 +1,4 @@
-import {types, Instance, SnapshotIn, getParentOfType, getEnv} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, getParentOfType} from 'mobx-state-tree'
 import {Message, MessagePaginableList} from './Message'
 import {Wocky} from '../store/Wocky'
 import {Profile} from './Profile'
@@ -44,13 +44,10 @@ export const Chat = types
     afterAttach: () => {
       // todo: strong typing
       const service: any = getParentOfType(self, Wocky)
-      self.message = Message.create(
-        {
-          otherUser: self.id,
-          isOutgoing: true,
-        },
-        getEnv(self)
-      )
+      self.message = Message.create({
+        otherUser: self.id,
+        isOutgoing: true,
+      })
       self.messages.setRequest(service._loadChatMessages.bind(service, self.id))
     },
   }))

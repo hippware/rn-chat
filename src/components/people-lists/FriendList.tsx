@@ -38,7 +38,7 @@ class FriendList extends React.Component<Props> {
             </RText>
           ),
         }}
-        data={this.props.wocky!.profile!.friends.list}
+        data={this.props.wocky!.profile!.friends.list.slice()}
         keyboardShouldPersistTaps="handled"
         // keyboardDismissMode="interactive"
       />
