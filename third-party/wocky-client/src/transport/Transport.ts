@@ -542,8 +542,7 @@ export class Transport {
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
-  // todo: rename this to friendInvite?
-  async follow(userId: string): Promise<void> {
+  async friendInvite(userId: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation friendInvite($input: FriendInviteInput!) {
@@ -556,11 +555,11 @@ export class Transport {
     })
   }
 
-  async unfollow(userId: string): Promise<void> {
+  async friendDelete(userId: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation unfollow($input: UnfollowInput!) {
-          unfollow(input: $input) {
+        mutation friendDelete($input: FriendDeleteInput!) {
+          friendDelete(input: $input) {
             ${VOID_PROPS}            
           }
         }

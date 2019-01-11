@@ -31,8 +31,8 @@ const PresenceDot = observer(({profile, size, disableStatus, style}: Props) => {
   }
 
   if (profile) {
-    const {isOwn, isMutual} = profile
-    if ((isMutual || isOwn) && !disableStatus) {
+    const {isOwn, isFriend} = profile
+    if ((isFriend || isOwn) && !disableStatus) {
       return <View style={[styles.dot, theStyle, {backgroundColor}]} />
     } else {
       return <Image source={imgAnon} style={[styles.dot, theStyle]} />

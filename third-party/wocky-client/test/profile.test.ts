@@ -61,7 +61,9 @@ describe('New GraphQL profile tests', () => {
     const user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
     expect(user2user1Profile).toBeTruthy()
-    await user1user2Profile.follow()
+    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
+    await user1user2Profile.invite()
+    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
     // await waitFor(
     //   () => user.profile.sortedFriends.length === 1 && user2.profile.sortedFriends.length === 1,
     //   'user1 and user2 rosters didnt update in time'

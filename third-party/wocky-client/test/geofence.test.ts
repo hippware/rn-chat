@@ -51,7 +51,7 @@ describe('Geofence', () => {
 
   it('user2 follows user1', async () => {
     const profile1 = await user2.loadProfile(user1.username!)
-    await profile1.follow()
+    await profile1.invite()
   })
 
   it('user1 creates a geofence bot', async () => {

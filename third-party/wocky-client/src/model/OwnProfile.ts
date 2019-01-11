@@ -4,6 +4,7 @@ import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList} from './Invitation'
 import {ContactPaginableList} from './Contact'
+import {waitFor} from '../transport/utils'
 
 const Hidden = types
   .model('HiddenType', {
@@ -59,6 +60,10 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
+    frientDelete: flow(function*(username: string) {
+      yield waitFor(() => self.connected)
+      yield self.transport.friendDelete(username)
+    }),
     hide: flow(function*(value: boolean, expires: Date | undefined) {
       yield self.service._hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})

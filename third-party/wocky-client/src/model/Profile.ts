@@ -1,9 +1,10 @@
-import {types, flow, IAnyModelType, Instance} from 'mobx-state-tree'
+import {types, IAnyModelType, flow, Instance} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
+import {waitFor} from '../transport/utils'
 
 export const Profile = types
   .compose(
@@ -16,12 +17,6 @@ export const Profile = types
       status: 'unavailable',
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
-      isBlocked: false,
-      isFollowed: false,
-      isFollower: false,
-      isNew: false,
-      followersSize: 0,
-      followedSize: 0,
       botsSize: 0,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
@@ -45,6 +40,15 @@ export const Profile = types
             self.avatar = self.service.files.get(avatar.id, avatar)
           }
         },
+        invite: flow(function*() {
+          yield waitFor(() => self.connected)
+          self.service.profile.sendInvitations.addToTop({
+            id: self.id,
+            recipient: self.service.profiles.get(self.id),
+            sender: self.service.profiles.get(self.service.username),
+          })
+          yield self.transport.friendInvite(self.id)
+        }),
         afterAttach: () => {
           if (self.service) {
             self.ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
@@ -56,25 +60,6 @@ export const Profile = types
             }
           }
         },
-        follow: flow(function*() {
-          yield self.service._follow(self.id)
-          self.isFollowed = true
-        }),
-        unfollow: flow(function*() {
-          yield self.service._unfollow(self.id)
-          self.isFollowed = false
-        }),
-        block: flow(function*() {
-          yield self.service._block(self.id)
-          self.isFollowed = false
-          self.isBlocked = true
-          self.isNew = false
-        }),
-        unblock: flow(function*() {
-          yield self.service._unblock(self.id)
-          self.isBlocked = false
-          self.isNew = false
-        }),
         setStatus: (status: string) => {
           self.status = status
         },
@@ -84,11 +69,19 @@ export const Profile = types
           const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
         },
+        get hasSentInvite(): boolean {
+          // check list of received invitation for given user
+          return self.service.profile.receivedInvitations.exists(self.id)
+        },
+        get hasReceivedInvite(): boolean {
+          // check list of own sent invitations for given user
+          return self.service.profile.sendInvitations.exists(self.id)
+        },
+        get isFriend(): boolean {
+          return self.service.profile.friends.exists(self.id)
+        },
         get isVerified(): boolean {
           return self.roles.length ? self.roles.indexOf('verified') !== -1 : false
-        },
-        get isMutual(): boolean {
-          return self.isFollowed && self.isFollower
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {

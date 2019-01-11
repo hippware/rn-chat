@@ -1,6 +1,6 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
-import {IEventUserFollow, IProfile} from 'wocky-client'
+import {IEventFriendInvite, IProfile} from 'wocky-client'
 import {StyleSheet} from 'react-native'
 import alert from '../../utils/alert'
 import {inject, observer} from 'mobx-react/native'
@@ -11,7 +11,7 @@ import GradientButton from '../common/GradientButton'
 const geoIcon = require('../../../images/notificationFollow.png')
 
 type Props = {
-  item: IEventUserFollow
+  item: IEventFriendInvite
   user: IProfile
 }
 

@@ -11,7 +11,11 @@ export {EventBot, IEventBot} from './model/EventBot'
 export {EventBotCreate, IEventBotCreate} from './model/EventBotCreate'
 export {EventBotGeofence, IEventBotGeofence} from './model/EventBotGeofence'
 export {EventBotPost, IEventBotPost} from './model/EventBotPost'
-export {EventUserFollow, IEventUserFollow} from './model/EventUserFollow'
+export {
+  EventFriendInvite,
+  IEventFriendInvite,
+  IEventFriendInviteData,
+} from './model/EventFriendInvite'
 export {EventBotInvite, IEventBotInvite} from './model/EventBotInvite'
 export {File, IFile, FileRef} from './model/File'
 export {IFileService} from './transport/FileService'

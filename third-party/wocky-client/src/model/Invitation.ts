@@ -3,7 +3,8 @@ import {Profile} from './Profile'
 import {createPaginable} from './PaginableList'
 
 export const Invitation = types.model('Invitation', {
-  createdAt: types.Date,
+  id: types.identifier,
+  createdAt: types.optional(types.Date, () => Date.now()),
   recipient: types.reference(Profile),
   sender: types.reference(Profile),
 })
@@ -11,7 +12,4 @@ export const Invitation = types.model('Invitation', {
 export interface IInvitation extends Instance<typeof Invitation> {}
 export interface IIInvitationIn extends SnapshotIn<typeof Invitation> {}
 
-export const InvitationPaginableList = createPaginable<IInvitation>(
-  types.reference(Invitation),
-  'InvitationList'
-)
+export const InvitationPaginableList = createPaginable<IInvitation>(Invitation, 'InvitationList')

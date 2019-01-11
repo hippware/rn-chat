@@ -3,7 +3,7 @@ import {EventBotCreate} from './EventBotCreate'
 import {EventBotPost} from './EventBotPost'
 import {EventBotGeofence} from './EventBotGeofence'
 import {EventDelete} from './EventDelete'
-import {EventUserFollow} from './EventUserFollow'
+import {EventFriendInvite} from './EventFriendInvite'
 import {EventBotInvite} from './EventBotInvite'
 import {createPaginable} from './PaginableList'
 import {IWocky} from '../index'
@@ -13,7 +13,7 @@ export const EventEntity = types.union(
   EventBotCreate,
   EventBotGeofence,
   EventDelete,
-  EventUserFollow,
+  EventFriendInvite,
   EventBotInvite
 )
 export type IEventEntity = typeof EventEntity.Type

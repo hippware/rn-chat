@@ -182,14 +182,6 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    _follow: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.follow(username)
-    }),
-    _unfollow: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.unfollow(username)
-    }),
     _block: flow(function*(username: string) {
       yield waitFor(() => self.connected)
       yield self.transport.block(username)
@@ -449,6 +441,7 @@ export const Wocky = types
           // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
           data = _.cloneDeep(data)
           const item: any = createEvent(data, self)
+          // console.log('NOTIFICATION:', JSON.stringify(item))
           self.notifications.remove(item.id)
           self.notifications.addToTop(item)
           self.hasUnreadNotifications = true

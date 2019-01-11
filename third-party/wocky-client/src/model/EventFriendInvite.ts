@@ -2,17 +2,17 @@ import {types, Instance} from 'mobx-state-tree'
 import {Event, IEventData} from './Event'
 import {IProfilePartial, Profile} from './Profile'
 
-export const EventUserFollow = types
+export const EventFriendInvite = types
   .compose(
     Event,
     types.model({
       user: types.reference(Profile),
     })
   )
-  .named('EventUserFollow')
+  .named('EventFriendInvite')
 
-export interface IEventUserFollow extends Instance<typeof EventUserFollow> {}
+export interface IEventFriendInvite extends Instance<typeof EventFriendInvite> {}
 
-export interface IEventUserFollowData extends IEventData {
+export interface IEventFriendInviteData extends IEventData {
   user: IProfilePartial
 }
