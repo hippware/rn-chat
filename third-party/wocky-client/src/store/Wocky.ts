@@ -674,24 +674,14 @@ export const Wocky = types
       ]
     }
 
-    const restart = flow(function*() {
-      if (self.connected) {
-        yield self.disablePush()
-        yield self.disconnect()
-      }
-
-      self.profile = null
-      clearCache()
-      self.sessionCount = 0
-      self.username = null
-      self.password = null
-      self.phoneNumber = undefined
-    })
-
     return {
       clearCache,
-      restart,
       logout: flow(function* logout() {
+        if (self.connected) {
+          yield self.disablePush()
+          yield self.disconnect()
+        }
+
         if (self.providerName) {
           const provider = getProvider(self.providerName)
           if (provider) {
@@ -699,7 +689,13 @@ export const Wocky = types
           }
           self.providerName = ''
         }
-        restart()
+
+        self.profile = null
+        clearCache()
+        self.sessionCount = 0
+        self.username = null
+        self.password = null
+        self.phoneNumber = undefined
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)
