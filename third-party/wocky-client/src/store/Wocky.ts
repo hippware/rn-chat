@@ -1,4 +1,4 @@
-import {types, getParent, getEnv, flow, Instance, getRoot} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {Profile, IProfile, IProfilePartial} from '../model/Profile'
@@ -19,7 +19,7 @@ import {IEventData} from '../model/Event'
 import {PaginableLoadType, PaginableLoadPromise, Transport} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
-import {ILoginProvider} from './ILoginProvider'
+import {ILoginProvider, getProvider} from './LoginProvider'
 
 export const Wocky = types
   .compose(
@@ -100,11 +100,11 @@ export const Wocky = types
         login: flow(function*(providerName = '') {
           let provider = null as ILoginProvider | null
           if (providerName) {
-            provider = getRoot(self)[providerName] as ILoginProvider
+            provider = getProvider(providerName)
           } else if (self.providerName) {
             // If providerName is not supplied, then reuse existing
             //   provider if there is one
-            provider = getRoot(self)[self.providerName] as ILoginProvider
+            provider = getProvider(self.providerName)
           }
 
           if (!provider) return false
@@ -693,7 +693,7 @@ export const Wocky = types
       restart,
       logout: flow(function* logout() {
         if (self.providerName) {
-          const provider = getRoot(self)[self.providerName] as ILoginProvider
+          const provider = getProvider(self.providerName)
           if (provider) {
             yield provider.onLogout()
           }

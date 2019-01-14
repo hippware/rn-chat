@@ -1,6 +1,6 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
-import {IWocky} from 'wocky-client'
+import {IWocky, registerProvider} from 'wocky-client'
 import {IEnv} from '.'
 import {settings} from '../globals'
 
@@ -18,6 +18,7 @@ const codeUrlString = '?inviteCode='
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
+    providerName: 'firebase',
     token: types.maybeNull(types.string),
     resource: types.maybeNull(types.string),
     inviteCode: types.maybeNull(types.string),
@@ -27,15 +28,6 @@ const FirebaseStore = types
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
   }))
-  .views(self => {
-    return {
-      get providerName() {
-        // This needs to match the member variable of getRoot/getParent that points to an instance of this object
-        // Is there a way to auto-discover this?
-        return 'firebaseStore'
-      },
-    }
-  })
   .actions(self => ({
     setState(state: State) {
       Object.assign(self, state)
@@ -67,6 +59,7 @@ const FirebaseStore = types
     }
 
     function afterAttach() {
+      registerProvider(self.providerName, self as any)
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = (getParent(self) as any).wocky // wocky could be null for HMR (?)
       // setup dynamic links

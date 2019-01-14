@@ -1,22 +1,18 @@
 import {types, flow} from 'mobx-state-tree'
+import {registerProvider} from 'wocky-client'
 
 // This class implements ILoginProvider from 'wocky-client'
 //   but I don't think there's a way to declare this with MST stores?
 const BypassStore = types
   .model('BypassStore', {
     phone: '',
-  })
-  .views(self => {
-    return {
-      get providerName() {
-        // This needs to match the member variable of getRoot/getParent that points to an instance of this object
-        // Is there a way to auto-discover this?
-        return 'bypassStore'
-      },
-    }
+    providerName: 'bypass',
   })
   .actions(self => {
     return {
+      afterAttach: () => {
+        registerProvider(self.providerName, self as any)
+      },
       setPhone: phone => {
         self.phone = phone
       },

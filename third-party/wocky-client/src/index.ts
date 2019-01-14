@@ -1,5 +1,5 @@
 export {Wocky, IWocky} from './store/Wocky'
-export {ILoginProvider} from './store/ILoginProvider'
+export {ILoginProvider, registerProvider, getProvider} from './store/LoginProvider'
 export {Profile, IProfile} from './model/Profile'
 export {Base, SERVICE_NAME} from './model/Base'
 export {Chat, IChat} from './model/Chat'
