@@ -18,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Presence widget fixes (PR #3236)
   * New! Presence widget reappears after each kill/reload (#3219)
   * "Here" missing on widget (You're Here) (#2933)
+* [dev] upgrade CircleCI node version to 11 (#3244)
+* Bot creation missing autofocus to enter place or address (#3116)
 
 # 4.0.1 - 2018 Dec 20
 
