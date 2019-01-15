@@ -5,8 +5,7 @@ import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
-import {IBypassStore} from '../store/BypassStore'
-import {IWocky} from 'wocky-client'
+import {IWocky, IBypassStore} from 'wocky-client'
 
 type Props = {
   wocky?: IWocky

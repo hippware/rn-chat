@@ -1,9 +1,9 @@
 import {types, flow} from 'mobx-state-tree'
-import {registerProvider} from 'wocky-client'
+import {registerProvider} from './LoginProvider'
 
 // This class implements ILoginProvider from 'wocky-client'
 //   but I don't think there's a way to declare this with MST stores?
-const BypassStore = types
+export const BypassStore = types
   .model('BypassStore', {
     phone: '',
     providerName: 'bypass',
@@ -27,6 +27,5 @@ const BypassStore = types
     }
   })
 
-export default BypassStore
 type BypassStoreType = typeof BypassStore.Type
 export interface IBypassStore extends BypassStoreType {}
