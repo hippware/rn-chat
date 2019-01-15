@@ -438,7 +438,17 @@ export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
 }
 
-export function generateWockyToken(payload): string {
+type TokenParams = {
+  jti: string
+  iss: string
+  aud?: string
+  dvc: string
+  typ: string
+  sub: string
+  phone_number?: string
+}
+
+export function generateWockyToken(payload: TokenParams): string {
   // TODO: store this with react-native-native-env
   const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
   const header = {alg: 'HS512', typ: 'JWT'}
