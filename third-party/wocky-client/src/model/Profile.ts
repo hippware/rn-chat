@@ -18,6 +18,9 @@ export const Profile = types
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
       botsSize: 0,
+      hasSentInvite: false,
+      hasReceivedInvite: false,
+      isFriend: false,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
@@ -31,6 +34,31 @@ export const Profile = types
     delete res.subscribedBots
     return res
   })
+  .actions(self => ({
+    sentInvite: () => {
+      self.hasSentInvite = true
+      if (self.hasSentInvite && self.hasReceivedInvite) {
+        self.isFriend = true
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+    receiveInvite: () => {
+      self.hasReceivedInvite = true
+      if (self.hasSentInvite && self.hasReceivedInvite) {
+        self.isFriend = true
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+    setFriend: (friend: boolean) => {
+      self.isFriend = friend
+      if (friend) {
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+  }))
   .extend(self => {
     return {
       actions: {
@@ -42,12 +70,30 @@ export const Profile = types
         },
         invite: flow(function*() {
           yield waitFor(() => self.connected)
-          self.service.profile.sendInvitations.addToTop({
-            id: self.id,
-            recipient: self.service.profiles.get(self.id),
-            sender: self.service.profiles.get(self.service.username),
-          })
+          self.receiveInvite()
+          if (self.isFriend) {
+            // remove from receivedInvitations and add to friends
+            self.service.profile.receivedInvitations.remove(self.id)
+            self.service.profile.friends.addToTop({
+              id: self.id,
+              user: self.service.profiles.get(self.id),
+            })
+          } else {
+            self.service.profile.sentInvitations.addToTop({
+              id: self.id,
+              recipient: self.service.profiles.get(self.id),
+              sender: self.service.profiles.get(self.service.username),
+            })
+          }
           yield self.transport.friendInvite(self.id)
+        }),
+        unfriend: flow(function*() {
+          yield waitFor(() => self.connected)
+          if (self.isFriend) {
+            self.service.profile.friends.remove(self.id)
+            self.setFriend(false)
+            yield self.transport.friendDelete(self.id)
+          }
         }),
         afterAttach: () => {
           if (self.service) {
@@ -68,17 +114,6 @@ export const Profile = types
         get isOwn(): boolean {
           const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
-        },
-        get hasSentInvite(): boolean {
-          // check list of received invitation for given user
-          return self.service.profile.receivedInvitations.exists(self.id)
-        },
-        get hasReceivedInvite(): boolean {
-          // check list of own sent invitations for given user
-          return self.service.profile.sendInvitations.exists(self.id)
-        },
-        get isFriend(): boolean {
-          return self.service.profile.friends.exists(self.id)
         },
         get isVerified(): boolean {
           return self.roles.length ? self.roles.indexOf('verified') !== -1 : false

@@ -25,11 +25,11 @@ import {
   convertBot,
   convertNotification,
   convertNotifications,
-  processRosterItem,
   convertBotPost,
   convertLocation,
   waitFor,
   convertMessage,
+  iso8601toDate,
 } from './utils'
 import _ from 'lodash'
 import {IBotPostIn} from '../model/BotPost'
@@ -78,6 +78,7 @@ export class Transport {
       this.subscribeBotVisitors()
       this.subscribeNotifications()
       this.subscribeMessages()
+      this.subscribeContacts()
     }
     return res
   }
@@ -109,15 +110,47 @@ export class Transport {
     }
   }
 
-  async loadProfile(user: string): Promise<IProfilePartial | null> {
+  async loadProfile(id: string): Promise<IProfilePartial | null> {
     const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {
-            user(id: "${user}") {
+            user(id: "${id}") {
               ${PROFILE_PROPS}
               ${
-                user === this.username
-                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} }`
+                id === this.username
+                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} 
+                  sentInvitations(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        recipient {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                  friends(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        name
+                        user {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                  receivedInvitations(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        sender {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                }`
                   : ''
               }
             }
@@ -127,39 +160,27 @@ export class Transport {
     if (!res.data.user) {
       return null
     }
-    return convertProfile(res.data.user)
-  }
-  async requestRoster(): Promise<any[]> {
-    const res = await this.client!.query<any>({
-      query: gql`
-        query requestRoster {
-          currentUser {
-            id
-            contacts(first: 100) {
-              edges {
-                relationship
-                createdAt
-                node {
-                  id
-                  roles
-                  firstName
-                  lastName
-                  handle
-                  media {
-                    thumbnailUrl
-                    trosUrl
-                  }
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
-    this.subscribeContacts() // subscribe to contacts changes
-    return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) =>
-      processRosterItem(node, relationship, createdAt)
-    )
+    const result: any = convertProfile(res.data.user)
+    if (id === this.username) {
+      result.receivedInvitations = res.data.user.receivedInvitations.edges.map(
+        ({node: {createdAt, sender}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          user: convertProfile(sender),
+        })
+      )
+      result.sentInvitations = res.data.user.sentInvitations.edges.map(
+        ({node: {createdAt, recipient}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          user: convertProfile(recipient),
+        })
+      )
+      result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
+        createdAt: iso8601toDate(createdAt).getTime(),
+        name,
+        user: convertProfile(user),
+      }))
+    }
+    return result
   }
 
   async generateId(): Promise<string> {
@@ -1032,7 +1053,11 @@ export class Transport {
         // tslint:disable-next-line
         console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
-        this.rosterItem = processRosterItem(user, relationship, createdAt)
+        this.rosterItem = {
+          user: convertProfile(user),
+          relationship,
+          createdAt: iso8601toDate(createdAt).getTime(),
+        }
       }),
     })
     this.subscriptions.push(subscription)

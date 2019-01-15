@@ -1,18 +1,18 @@
-import {IProfile} from 'wocky-client'
+import {IContact} from 'wocky-client'
 
-const _searchFilter = (p: IProfile, searchFilter: string) => {
+const _searchFilter = (p: IContact, searchFilter: string) => {
   const s = searchFilter && searchFilter.toLowerCase().trim()
   return s && s.length
-    ? (p.handle && p.handle.toLowerCase().startsWith(s)) ||
-        (p.firstName && p.firstName.toLowerCase().startsWith(s)) ||
-        (p.lastName && p.lastName.toLowerCase().startsWith(s))
+    ? (p.user.handle && p.user.handle.toLowerCase().startsWith(s)) ||
+        (p.user.firstName && p.user.firstName.toLowerCase().startsWith(s)) ||
+        (p.user.lastName && p.user.lastName.toLowerCase().startsWith(s))
     : true
 }
 
 export const followersSectionIndex = (
   searchFilter: string,
-  followers: IProfile[],
-  newFollowers: IProfile[] = []
+  followers: IContact[],
+  newFollowers: IContact[] = []
 ): object[] => {
   const newFilter = newFollowers.filter(f => _searchFilter(f, searchFilter))
   const followFilter = followers.filter(f => _searchFilter(f, searchFilter)).filter(f => !f.isNew)
@@ -22,7 +22,7 @@ export const followersSectionIndex = (
   return sections
 }
 
-export const followingSectionIndex = (searchFilter: string, following: IProfile[]): object[] => {
+export const followingSectionIndex = (searchFilter: string, following: IContact[]): object[] => {
   const followFilter = following.filter(f => _searchFilter(f, searchFilter))
   return [{key: 'following', data: followFilter}]
 }

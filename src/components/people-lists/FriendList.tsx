@@ -22,7 +22,7 @@ const searchIcon = require('../../../images/search.png')
 class FriendList extends React.Component<Props> {
   list: any
 
-  renderItem = ({item}) => <FriendCard profile={item} />
+  renderItem = ({item}) => <FriendCard profile={item.user} />
 
   render() {
     return (

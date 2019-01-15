@@ -2,12 +2,12 @@ import {createUser, sleep, waitFor} from './support/testuser'
 import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
-let user: IWocky, user2: IWocky, user1user2Profile: IProfile
-let user1phone: string
+let user: IWocky, user2: IWocky, user1user2Profile, user2user1Profile: IProfile
+let user1phone, user2phone: string
 
 describe('New GraphQL profile tests', () => {
   beforeAll(async () => {
-    jest.setTimeout(10000)
+    jest.setTimeout(30000)
     user = await createUser()
     user2 = await createUser()
   })
@@ -38,6 +38,7 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile).toBeTruthy()
     expect(user.profile!.phoneNumber).toBeTruthy()
     user1phone = user.profile!.phoneNumber!
+    user2phone = user2.profile!.phoneNumber!
     await user.profile!.update({
       handle: 'a' + user1phone.replace('+', ''),
       firstName: 'name1',
@@ -54,24 +55,107 @@ describe('New GraphQL profile tests', () => {
     await user2.profile!.save()
   })
 
-  it('user1 follows user2', async () => {
+  it('user1 sent friend invite to user2', async () => {
     expect(user.profile!.sortedFriends.length).toBe(0)
     expect(user2.profile!.sortedFriends.length).toBe(0)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
     user1user2Profile = await user.loadProfile(user2.username!)
-    const user2user1Profile = await user2.loadProfile(user.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
     expect(user2user1Profile).toBeTruthy()
     expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile.hasSentInvite).toBeFalsy()
+    expect(user2user1Profile.hasSentInvite).toBeFalsy()
     await user1user2Profile.invite()
+    expect(user.profile!.sentInvitations.length).toBe(1)
+    expect(user.profile!.sentInvitations.list[0].id).toBe(user2.username)
     expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
-    // await waitFor(
-    //   () => user.profile.sortedFriends.length === 1 && user2.profile.sortedFriends.length === 1,
-    //   'user1 and user2 rosters didnt update in time'
-    // )
-    // expect(user.profile.sortedFriends[0].id).toBe(user2.username)
-    // expect(user2.profile.sortedFriends[0].id).toBe(user.username)
-    // expect(user1user2Profile.isFollowed).toBe(true)
-    // expect(user2user1Profile.isFollower).toBe(true)
+    await waitFor(() => user2user1Profile.hasSentInvite)
+    expect(user2.profile!.receivedInvitations.list[0].id).toBe(user.username)
+  })
+
+  it('relogin, check lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(1)
+    expect(user.profile!.sentInvitations.length).toBe(1)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
+    expect(user2user1Profile.hasSentInvite).toBeTruthy()
+  })
+
+  it('accept invite', async () => {
+    expect(user2user1Profile.isFriend).toBeFalsy()
+    await user2user1Profile.invite() // became friends!
+    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile.isFriend).toBeTruthy()
+    expect(user2.profile!.friends.length).toBe(1)
+    expect(user2.profile!.friends.list[0].id).toBe(user.username)
+  })
+
+  it('check for notification', async () => {
+    await waitFor(() => user1user2Profile.isFriend)
+    expect(user.profile!.friends.length).toBe(1)
+    expect(user.profile!.friends.list[0].id).toBe(user2.username)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
+  })
+
+  it('relogin, check friends lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
+    expect(user.profile!.friends.length).toBe(1)
+    expect(user2.profile!.friends.length).toBe(1)
+
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    // console.log('PROFILE12', JSON.stringify(user1user2Profile))
+    // console.log('PROFILE21', JSON.stringify(user1user2Profile))
+    expect(user1user2Profile.isFriend).toBeTruthy()
+    expect(user2user1Profile.isFriend).toBeTruthy()
+  })
+
+  it('unfriend, check notification', async () => {
+    expect(user2.profile!.friends.length).toBe(1)
+    await user1user2Profile.unfriend()
+    expect(user1user2Profile.isFriend).toBeFalsy()
+    expect(user.profile!.friends.length).toBe(0)
+    // wait for 'NONE' contact notification processing
+    await waitFor(() => !user2user1Profile.isFriend)
+    expect(user2.profile!.friends.length).toBe(0)
+    expect(user2user1Profile.isFriend).toBeFalsy()
+  })
+
+  it('relogin, check empty friends lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.friends.length).toBe(0)
+    expect(user2.profile!.friends.length).toBe(0)
+
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    // console.log('PROFILE12', JSON.stringify(user1user2Profile))
+    // console.log('PROFILE21', JSON.stringify(user1user2Profile))
+    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile.hasSentInvite).toBeFalsy()
+    expect(user1user2Profile.isFriend).toBeFalsy()
   })
 
   // // TODO: check profile is online after presence enabled

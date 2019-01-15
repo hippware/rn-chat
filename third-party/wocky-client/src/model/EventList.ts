@@ -18,7 +18,7 @@ export const EventEntity = types.union(
 )
 export type IEventEntity = typeof EventEntity.Type
 
-export function createEvent(params: any, service: IWocky) {
+export function createEvent(params: any, service: IWocky): IEventEntity {
   if (params.user) {
     params.user = service.profiles.get(params.user.id, params.user)
   }

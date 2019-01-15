@@ -475,18 +475,6 @@ export function assert(condition, message) {
   }
 }
 
-export function processRosterItem(user, relationship, createdAt) {
-  const createdTime = iso8601toDate(createdAt).getTime()
-  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
-
-  return convertProfile({
-    isNew: days <= 7,
-    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
-    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
-    ...user,
-  })
-}
-
 export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {
   return {
     device,

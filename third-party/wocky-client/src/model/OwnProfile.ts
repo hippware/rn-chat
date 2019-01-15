@@ -2,8 +2,8 @@ import {types, getSnapshot, flow, Instance} from 'mobx-state-tree'
 import {Profile, IProfile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
-import {InvitationPaginableList} from './Invitation'
-import {ContactPaginableList} from './Contact'
+import {InvitationPaginableList, Invitation} from './Invitation'
+import {ContactPaginableList, Contact} from './Contact'
 import {waitFor} from '../transport/utils'
 
 const Hidden = types
@@ -43,7 +43,7 @@ export const OwnProfile = types
       email: types.maybeNull(types.string),
       phoneNumber: types.maybeNull(types.string),
       hidden: types.optional(Hidden, {}),
-      sendInvitations: types.optional(InvitationPaginableList, {}),
+      sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ContactPaginableList, {}),
     })
@@ -60,6 +60,41 @@ export const OwnProfile = types
     },
   }))
   .actions(self => ({
+    addFriend: (profile: IProfile, createdAt: Date, name: string = '') => {
+      self.friends.add(
+        Contact.create({
+          id: profile.id,
+          createdAt,
+          name,
+          user: profile.id,
+        })
+      )
+      self.receivedInvitations.remove(profile.id)
+      self.sentInvitations.remove(profile.id)
+      profile.setFriend(true)
+    },
+    receiveInvitation: (profile: IProfile, createdAt = new Date()) => {
+      self.receivedInvitations.add(
+        Invitation.create({
+          id: profile.id,
+          createdAt,
+          sender: profile.id,
+          recipient: self.id,
+        })
+      )
+      profile.sentInvite()
+    },
+    sendInvitation: (profile: IProfile, createdAt = new Date()) => {
+      self.sentInvitations.add(
+        Invitation.create({
+          id: profile.id,
+          createdAt,
+          recipient: profile.id,
+          sender: self.id,
+        })
+      )
+      profile.receiveInvite()
+    },
     frientDelete: flow(function*(username: string) {
       yield waitFor(() => self.connected)
       yield self.transport.friendDelete(username)
@@ -68,6 +103,23 @@ export const OwnProfile = types
       yield self.service._hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),
+  }))
+  .actions(self => ({
+    load({avatar, receivedInvitations = [], sentInvitations = [], friends = [], ...data}: any) {
+      Object.assign(self, data)
+      if (avatar) {
+        self.avatar = self.service.files.get(avatar.id, avatar)
+      }
+      receivedInvitations.forEach(({createdAt, user}) =>
+        self.receiveInvitation(self.service.profiles.get(user.id, user), createdAt)
+      )
+      sentInvitations.forEach(({createdAt, user}) =>
+        self.sendInvitation(self.service.profiles.get(user.id, user), createdAt)
+      )
+      friends.forEach(({createdAt, user, name}) =>
+        self.addFriend(self.service.profiles.get(user.id, user), createdAt, name)
+      )
+    },
   }))
   .named('OwnProfile')
 

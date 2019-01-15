@@ -319,23 +319,6 @@ export const Wocky = types
         })
         return arr.map(self.getBot)
       }) as (a) => Promise<IBot[]>,
-      _loadRelations: flow(function*(
-        userId: string,
-        relation: string = 'following',
-        lastId?: string,
-        max: number = 10
-      ) {
-        yield waitFor(() => self.connected)
-        const {list, count} = yield self.transport.loadRelations(userId, relation, lastId, max)
-        const res: any = []
-        for (const rec of list) {
-          const {id} = rec
-          // TODO avoid extra request to load profile (server-side)
-          const profile = yield self.getProfile(id, undefined)
-          res.push(profile)
-        }
-        return {list: res, count}
-      }),
       _sendMessage: flow(function*(msg: IMessage) {
         // console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(
@@ -406,6 +389,25 @@ export const Wocky = types
           }
         }
       }),
+      _onRosterItem({
+        user,
+        relationship,
+        createdAt,
+      }: {
+        user: IProfile
+        relationship: string
+        createdAt: Date
+      }) {
+        const profile = self.profiles.get(user.id, user)
+        if (relationship === 'FRIEND') {
+          profile.setFriend(true)
+          self.profile!.addFriend(profile, createdAt)
+        }
+        if (relationship === 'NONE') {
+          profile.setFriend(false)
+          self.profile!.friends.remove(user.id)
+        }
+      },
       // _onNotification: flow(function*(data: any) {
       _onNotification(data: any) {
         // console.log('& ONNOTIFICATION', self.username, JSON.stringify(data))
@@ -440,10 +442,9 @@ export const Wocky = types
         try {
           // need to deep clone here to prevent mobx error "[mobx] Dynamic observable objects cannot be frozen"
           data = _.cloneDeep(data)
-          const item: any = createEvent(data, self)
-          // console.log('NOTIFICATION:', JSON.stringify(item))
-          self.notifications.remove(item.id)
+          const item = createEvent(data, self)
           self.notifications.addToTop(item)
+          item.process()
           self.hasUnreadNotifications = true
         } catch (e) {
           getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
@@ -596,6 +597,7 @@ export const Wocky = types
         ),
         reaction(() => self.transport.message, message => self._addMessage(message, true)),
         reaction(() => self.transport.notification, self._onNotification),
+        reaction(() => self.transport.rosterItem, self._onRosterItem),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
