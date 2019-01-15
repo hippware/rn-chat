@@ -112,9 +112,10 @@ export const Wocky = types
           // Allow provider to override any default values
           const payload = {
             aud: 'Wocky',
-            jti: /*self.username = */ uuid(),
+            jti: uuid(),
             iss: appInfo.uaString,
             dvc: appInfo.uniqueId,
+            iat: Math.floor(Date.now() / 1000),
             ...(yield provider.getLoginCredentials()),
           }
 

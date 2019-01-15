@@ -446,6 +446,7 @@ type TokenParams = {
   typ: string
   sub: string
   phone_number?: string
+  iat?: number
 }
 
 export function generateWockyToken(payload: TokenParams): string {
