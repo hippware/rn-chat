@@ -1,4 +1,4 @@
-import {Wocky, IWocky, Transport} from '../../src'
+import {Wocky, IWocky, Transport, BypassStore, registerProvider} from '../../src'
 import {AppInfo} from '../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
@@ -68,9 +68,12 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     )
     addMiddleware(service, simpleActionLogger)
 
-    await service.login({
-      phoneNumber,
-    })
+    const provider = BypassStore.create()
+    provider.setPhone(phoneNumber)
+    // BypassStore registers provider in afterAttach() which is not called
+    //   Register it ourselves
+    registerProvider(provider.providerName, provider)
+    await service.login(provider.providerName)
     return service
   } catch (e) {
     console.error(e)
