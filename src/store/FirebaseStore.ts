@@ -59,7 +59,7 @@ const FirebaseStore = types
     }
 
     function afterAttach() {
-      registerProvider(self.providerName, self as any)
+      registerProvider(self as any)
       auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = (getParent(self) as any).wocky // wocky could be null for HMR (?)
       // setup dynamic links

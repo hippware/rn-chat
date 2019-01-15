@@ -13,8 +13,8 @@ export interface ILoginProvider {
 // A simple registry of provider objects
 const providers = {}
 
-export function registerProvider(name: string, provider: ILoginProvider) {
-  providers[name] = provider
+export function registerProvider(provider: ILoginProvider) {
+  providers[provider.providerName] = provider
 }
 
 export function getProvider(name: string): ILoginProvider {

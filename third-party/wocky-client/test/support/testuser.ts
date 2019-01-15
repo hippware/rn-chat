@@ -72,7 +72,7 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     provider.setPhone(phoneNumber)
     // BypassStore registers provider in afterAttach() which is not called
     //   Register it ourselves
-    registerProvider(provider.providerName, provider)
+    registerProvider(provider)
     await service.login(provider.providerName)
     return service
   } catch (e) {

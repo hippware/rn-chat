@@ -11,7 +11,7 @@ export const BypassStore = types
   .actions(self => {
     return {
       afterAttach: () => {
-        registerProvider(self.providerName, self as any)
+        registerProvider(self as any)
       },
       setPhone: phone => {
         self.phone = phone
