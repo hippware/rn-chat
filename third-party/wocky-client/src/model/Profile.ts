@@ -89,11 +89,11 @@ export const Profile = types
         }),
         unfriend: flow(function*() {
           yield waitFor(() => self.connected)
-          if (self.isFriend) {
-            self.service.profile.friends.remove(self.id)
-            self.setFriend(false)
-            yield self.transport.friendDelete(self.id)
-          }
+          self.service.profile.friends.remove(self.id)
+          self.service.profile.receivedInvitations.remove(self.id)
+          self.service.profile.sentInvitations.remove(self.id)
+          self.setFriend(false)
+          yield self.transport.friendDelete(self.id)
         }),
         afterAttach: () => {
           if (self.service) {
