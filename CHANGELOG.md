@@ -45,6 +45,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * [dev] Refactor Factory class (#3201)
   * wocky-client and messaging improvements (PR #3208, PR #3209)
   * Various improvements for images, bot posts (PR #3210)
+  * Fix missed avatar for new profiles (#3200)
 
 # 4.0.0 - 2018 Dec 10
 
