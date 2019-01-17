@@ -62,10 +62,10 @@ class ConnectButton extends React.Component<Props> {
           <Spinner color="pink" />
         ) : profile.isFriend ? (
           <Image source={imgFollowing} />
-        ) : profile.hasSentInvite ? (
+        ) : profile.hasSentInvite || profile.hasReceivedInvite ? (
           <View style={[styles.profileButton, styles.requestedButton]}>
             <RText size={15} color={colors.GREY} weight={'Medium'}>
-              Request Sent
+              {profile.hasSentInvite ? 'Request Received' : 'Request Sent'}
             </RText>
           </View>
         ) : (
