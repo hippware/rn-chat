@@ -93,7 +93,7 @@ export const OwnProfile = types
           sender: self.id,
         })
       )
-      profile.receiveInvite()
+      profile.receivedInvite()
     },
     // Does this get used anywhere?
     friendDelete: flow(function*(username: string) {

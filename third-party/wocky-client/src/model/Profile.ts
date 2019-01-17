@@ -43,7 +43,7 @@ export const Profile = types
         self.hasSentInvite = false
       }
     },
-    receiveInvite: () => {
+    receivedInvite: () => {
       self.hasReceivedInvite = true
       if (self.hasSentInvite && self.hasReceivedInvite) {
         self.isFriend = true
@@ -70,7 +70,7 @@ export const Profile = types
         },
         invite: flow(function*() {
           yield waitFor(() => self.connected)
-          self.receiveInvite()
+          self.receivedInvite()
           if (self.isFriend) {
             // remove from receivedInvitations and add to friends
             self.service.profile.receivedInvitations.remove(self.id)
