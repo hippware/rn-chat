@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.0.2 - 2019 Jan 17
+
 * Comments are visible before the user followed the location (#3211)
 * [dev] wocky-client typing improvements, cleanup (PR #3215, PR #3217)
 * Fix chat message images (PR #3214)
@@ -20,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * "Here" missing on widget (You're Here) (#2933)
 * [dev] upgrade CircleCI node version to 11 (#3244)
 * Bot creation missing autofocus to enter place or address (#3116)
+* New user relationship model (#3252)
 
 # 4.0.1 - 2018 Dec 20
 
