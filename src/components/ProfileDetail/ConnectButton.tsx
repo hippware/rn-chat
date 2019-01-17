@@ -38,14 +38,14 @@ class ConnectButton extends React.Component<Props> {
           onPress: async () => {
             this.pendingFollowChange = true
             await profile.unfriend()
-            this.props.analytics.track('user_unfriend', this.props.myProfile.toJSON())
+            this.props.analytics.track('user_unfollow', this.props.myProfile.toJSON())
             this.pendingFollowChange = false
           },
         },
       ])
     } else {
       await profile.invite()
-      this.props.analytics.track('user_invite', this.props.myProfile.toJSON())
+      this.props.analytics.track('user_follow', this.props.myProfile.toJSON())
       this.pendingFollowChange = false
     }
   }

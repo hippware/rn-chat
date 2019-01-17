@@ -45,7 +45,7 @@ const FollowButton = inject('analytics')(
             await unfriend(profile)
           } else {
             await invite()
-            analytics.track('user_invite', (profile as any).toJSON())
+            analytics.track('user_follow', (profile as any).toJSON())
           }
         }}
       >
