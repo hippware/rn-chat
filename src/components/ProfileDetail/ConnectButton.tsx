@@ -45,7 +45,7 @@ class ConnectButton extends React.Component<Props> {
       ])
     } else {
       await profile.invite()
-      this.props.analytics.track('user_frist', this.props.myProfile.toJSON())
+      this.props.analytics.track('user_invite', this.props.myProfile.toJSON())
       this.pendingFollowChange = false
     }
   }

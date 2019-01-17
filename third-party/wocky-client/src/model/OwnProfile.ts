@@ -95,7 +95,8 @@ export const OwnProfile = types
       )
       profile.receiveInvite()
     },
-    frientDelete: flow(function*(username: string) {
+    // Does this get used anywhere?
+    friendDelete: flow(function*(username: string) {
       yield waitFor(() => self.connected)
       yield self.transport.friendDelete(username)
     }),
