@@ -28,9 +28,9 @@ class GeofenceShare extends React.Component<Props> {
   @observable bot?: IBot
 
   componentDidMount() {
-    const {getBot, friends} = this.props.wocky!
+    const {getBot, profile} = this.props.wocky!
     this.bot = getBot({id: this.props.botId})
-    this.props.searchStore!.localResult.setList(friends.map(f => ({profile: f})))
+    this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
     if (!this.props.store.sharePresencePrimed) {
       // NOTE: had to add a delay to prevent immediately closing
       setTimeout(() => Actions.sharePresencePrimer(), 2000)

@@ -2,18 +2,23 @@
   "__schema": {
     "types": [
       {
+        "possibleTypes": [{"name": "Notification"}, {"name": "NotificationDeleted"}],
+        "name": "NotificationUpdate",
+        "kind": "UNION"
+      },
+      {
         "possibleTypes": [
+          {"name": "BotInvitationNotification"},
+          {"name": "BotInvitationResponseNotification"},
           {"name": "BotItemNotification"},
           {"name": "GeofenceEventNotification"},
-          {"name": "InvitationNotification"},
-          {"name": "InvitationResponseNotification"},
-          {"name": "UserFollowNotification"}
+          {"name": "UserInvitationNotification"}
         ],
         "name": "NotificationData",
         "kind": "UNION"
       },
       {
-        "possibleTypes": [{"name": "OtherUser"}, {"name": "CurrentUser"}],
+        "possibleTypes": [{"name": "CurrentUser"}, {"name": "OtherUser"}],
         "name": "User",
         "kind": "INTERFACE"
       }

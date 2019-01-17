@@ -23,7 +23,7 @@ class ConnectButton extends React.Component<Props> {
 
   toggleFollow = async () => {
     const {profile} = this.props
-    if (profile.isFollowed) {
+    if (profile.isFriend) {
       alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
         {
           text: 'Cancel',
@@ -37,15 +37,15 @@ class ConnectButton extends React.Component<Props> {
           style: 'destructive',
           onPress: async () => {
             this.pendingFollowChange = true
-            await profile.unfollow()
-            this.props.analytics.track('user_unfollow', this.props.myProfile.toJSON())
+            await profile.unfriend()
+            this.props.analytics.track('user_unfriend', this.props.myProfile.toJSON())
             this.pendingFollowChange = false
           },
         },
       ])
     } else {
-      await profile.follow()
-      this.props.analytics.track('user_follow', this.props.myProfile.toJSON())
+      await profile.invite()
+      this.props.analytics.track('user_invite', this.props.myProfile.toJSON())
       this.pendingFollowChange = false
     }
   }
@@ -60,12 +60,12 @@ class ConnectButton extends React.Component<Props> {
       >
         {this.pendingFollowChange ? (
           <Spinner color="pink" />
-        ) : profile.isMutual ? (
+        ) : profile.isFriend ? (
           <Image source={imgFollowing} />
-        ) : profile.isFollowed ? (
+        ) : profile.hasSentInvite || profile.hasReceivedInvite ? (
           <View style={[styles.profileButton, styles.requestedButton]}>
             <RText size={15} color={colors.GREY} weight={'Medium'}>
-              Request Sent
+              {profile.hasSentInvite ? 'Request Received' : 'Request Sent'}
             </RText>
           </View>
         ) : (

@@ -1,13 +1,13 @@
-import {createUser, waitFor} from './support/testuser'
+import {createUser, sleep, waitFor} from './support/testuser'
 import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
-let user: IWocky, user2: IWocky, user1user2Profile: IProfile
-let user1phone: string
+let user: IWocky, user2: IWocky, user1user2Profile, user2user1Profile: IProfile
+let user1phone, user2phone: string
 
 describe('New GraphQL profile tests', () => {
   beforeAll(async () => {
-    jest.setTimeout(10000)
+    jest.setTimeout(30000)
     user = await createUser()
     user2 = await createUser()
   })
@@ -38,6 +38,7 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile).toBeTruthy()
     expect(user.profile!.phoneNumber).toBeTruthy()
     user1phone = user.profile!.phoneNumber!
+    user2phone = user2.profile!.phoneNumber!
     await user.profile!.update({
       handle: 'a' + user1phone.replace('+', ''),
       firstName: 'name1',
@@ -54,123 +55,209 @@ describe('New GraphQL profile tests', () => {
     await user2.profile!.save()
   })
 
-  it('user1 follows user2', async () => {
-    expect(user.sortedRoster.length).toBe(0)
-    expect(user2.sortedRoster.length).toBe(0)
+  it('user1 sent friend invite to user2', async () => {
+    expect(user.profile!.sortedFriends.length).toBe(0)
+    expect(user2.profile!.sortedFriends.length).toBe(0)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
     user1user2Profile = await user.loadProfile(user2.username!)
-    const user2user1Profile = await user2.loadProfile(user.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
     expect(user2user1Profile).toBeTruthy()
-    await user1user2Profile.follow()
-    await waitFor(
-      () => user.sortedRoster.length === 1 && user2.sortedRoster.length === 1,
-      'user1 and user2 rosters didnt update in time'
-    )
-    expect(user.sortedRoster[0].id).toBe(user2.username)
-    expect(user2.sortedRoster[0].id).toBe(user.username)
-    expect(user1user2Profile.isFollowed).toBe(true)
-    expect(user2user1Profile.isFollower).toBe(true)
+    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile.hasSentInvite).toBeFalsy()
+    expect(user2user1Profile.hasSentInvite).toBeFalsy()
+    await user1user2Profile.invite()
+    expect(user.profile!.sentInvitations.length).toBe(1)
+    expect(user.profile!.sentInvitations.list[0].id).toBe(user2.username)
+    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
+    await waitFor(() => user2user1Profile.hasSentInvite)
+    expect(user2.profile!.receivedInvitations.list[0].id).toBe(user.username)
   })
 
-  // TODO: check profile is online after presence enabled
-  // await waitFor(() => user2.sortedRoster[0].status === 'available', 'user2 not available in time')
-
-  it('load followers', async () => {
-    const steve = await createUser()
-    await steve.profile!.update({
-      handle: 'steve' + steve.profile!.phoneNumber!.replace('+', ''),
-      firstName: 'steve',
-      lastName: 'stevenson',
-      email: 's@ss.com',
-    })
-    await steve.profile!.save()
-
-    // verify that all 3 profiles have handles
-    // this is a back-end requirement for users to return in 'followers' or 'following' query
-    expect([!!user.profile!.handle, !!user2.profile!.handle, !!steve.profile!.handle]).toEqual([
-      true,
-      true,
-      true,
-    ])
-    // TODO: verify that these profile updates exist on the server (via `save`)
-
-    const user1steve = await user.loadProfile(steve.username!)
-    expect(user1steve).toBeTruthy()
-    await user1steve.followers.load()
-    expect(user1steve.followers.length).toEqual(0)
-    const user2steve = await user2.loadProfile(steve.username!)
-    await user2steve.follow()
-    await user1steve.followers.load({force: true})
-    await steve.remove()
-    expect(user1steve.followers.length).toEqual(1)
-    expect(user1steve.followers.list[0].handle).toEqual(user2.profile!.handle)
+  it('relogin, check lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(1)
+    expect(user.profile!.sentInvitations.length).toBe(1)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
+    expect(user2user1Profile.hasSentInvite).toBeTruthy()
   })
 
-  it('unfollow and refollow', async () => {
-    expect(user.followed.length).toBe(1)
-    await user1user2Profile.unfollow()
-    expect(user1user2Profile.isFollowed).toBe(false)
-    expect(user.followed.length).toBe(0)
-    await user1user2Profile.follow()
+  it('accept invite', async () => {
+    expect(user2user1Profile.isFriend).toBeFalsy()
+    await user2user1Profile.invite() // became friends!
+    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile.isFriend).toBeTruthy()
+    expect(user2.profile!.friends.length).toBe(1)
+    expect(user2.profile!.friends.list[0].id).toBe(user.username)
   })
 
-  it('block and unblock', async () => {
-    expect(user.blocked.length).toBe(0)
-    await user1user2Profile.block()
-    expect(user.blocked.length).toBe(1)
-    expect(user.followed.length).toBe(0)
-    await user1user2Profile.unblock()
-    expect(user.blocked.length).toBe(0)
-    // TODO: restore this test
-    // expect(user.followed.length).toBe(0)
+  it('check for notification', async () => {
+    await waitFor(() => user1user2Profile.isFriend)
+    expect(user.profile!.friends.length).toBe(1)
+    expect(user.profile!.friends.list[0].id).toBe(user2.username)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
   })
 
-  it('hide and unhide', async () => {
-    const date = new Date(Date.now() + 1000)
-    await user.profile!.hide(true, date)
-    expect(user.profile!.hidden!.expires!.getTime()).toEqual(date.getTime())
-    expect(user.profile!.hidden!.enabled).toEqual(true)
-    await user.profile!.hide(false, undefined)
-    expect(user.profile!.hidden!.expires).toBe(null)
-    expect(user.profile!.hidden!.enabled).toEqual(false)
+  it('relogin, check friends lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.receivedInvitations.length).toBe(0)
+    expect(user2.profile!.receivedInvitations.length).toBe(0)
+    expect(user.profile!.sentInvitations.length).toBe(0)
+    expect(user2.profile!.sentInvitations.length).toBe(0)
+    expect(user.profile!.friends.length).toBe(1)
+    expect(user2.profile!.friends.length).toBe(1)
+
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    // console.log('PROFILE12', JSON.stringify(user1user2Profile))
+    // console.log('PROFILE21', JSON.stringify(user1user2Profile))
+    expect(user1user2Profile.isFriend).toBeTruthy()
+    expect(user2user1Profile.isFriend).toBeTruthy()
   })
 
-  // TODO deal with verification of search?
-  // it('searches users', async done => {
-  //   try {
-  //     timestamp()
-  //     await gql.login(user.username!, user.password!, host)
-  //     await gql.searchUsers('abc')
-  //     // NOTE: results for newly created users don't show up in the results which makes expected values
-  //     // on the return from `searchUsers` difficult here
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
+  it('unfriend, check notification', async () => {
+    expect(user2.profile!.friends.length).toBe(1)
+    await user1user2Profile.unfriend()
+    expect(user1user2Profile.isFriend).toBeFalsy()
+    expect(user.profile!.friends.length).toBe(0)
+    // wait for 'NONE' contact notification processing
+    await waitFor(() => !user2user1Profile.isFriend)
+    expect(user2.profile!.friends.length).toBe(0)
+    expect(user2user1Profile.isFriend).toBeFalsy()
+  })
+
+  it('relogin, check empty friends lists for both accounts', async () => {
+    await user.logout()
+    await user2.logout()
+    user = await createUser(undefined, user1phone)
+    user2 = await createUser(undefined, user2phone)
+    expect(user.profile!.friends.length).toBe(0)
+    expect(user2.profile!.friends.length).toBe(0)
+
+    user1user2Profile = await user.loadProfile(user2.username!)
+    user2user1Profile = await user2.loadProfile(user.username!)
+    // console.log('PROFILE12', JSON.stringify(user1user2Profile))
+    // console.log('PROFILE21', JSON.stringify(user1user2Profile))
+    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile.hasSentInvite).toBeFalsy()
+    expect(user1user2Profile.isFriend).toBeFalsy()
+  })
+
+  // // TODO: check profile is online after presence enabled
+  // // await waitFor(() => user2.profile.sortedFriends[0].status === 'available', 'user2 not available in time')
+
+  // it('load followers', async () => {
+  //   const steve = await createUser()
+  //   await steve.profile!.update({
+  //     handle: 'steve' + steve.profile!.phoneNumber!.replace('+', ''),
+  //     firstName: 'steve',
+  //     lastName: 'stevenson',
+  //     email: 's@ss.com',
+  //   })
+  //   await steve.profile!.save()
+
+  //   // verify that all 3 profiles have handles
+  //   // this is a back-end requirement for users to return in 'followers' or 'following' query
+  //   expect([!!user.profile!.handle, !!user2.profile!.handle, !!steve.profile!.handle]).toEqual([
+  //     true,
+  //     true,
+  //     true,
+  //   ])
+  //   // TODO: verify that these profile updates exist on the server (via `save`)
+
+  //   const user1steve = await user.loadProfile(steve.username!)
+  //   expect(user1steve).toBeTruthy()
+  //   await user1steve.followers.load()
+  //   expect(user1steve.followers.length).toEqual(0)
+  //   const user2steve = await user2.loadProfile(steve.username!)
+  //   await user2steve.follow()
+  //   await user1steve.followers.load({force: true})
+  //   await steve.remove()
+  //   expect(user1steve.followers.length).toEqual(1)
+  //   expect(user1steve.followers.list[0].handle).toEqual(user2.profile!.handle)
   // })
 
-  it('enable/disable push notifications', async () => {
-    await user.enablePush('randomToken')
-    await user.disablePush()
-  })
+  // it('unfollow and refollow', async () => {
+  //   expect(user.followed.length).toBe(1)
+  //   await user1user2Profile.unfollow()
+  //   expect(user1user2Profile.isFollowed).toBe(false)
+  //   expect(user.followed.length).toBe(0)
+  //   await user1user2Profile.follow()
+  // })
 
-  it('remove/delete user', async () => {
-    const user3 = await createUser()
-    expect(user3).toBeTruthy()
-    await user3.remove()
-    // todo: any way to verify (other than no errors?)
-  })
+  // it('block and unblock', async () => {
+  //   expect(user.blocked.length).toBe(0)
+  //   await user1user2Profile.block()
+  //   expect(user.blocked.length).toBe(1)
+  //   expect(user.followed.length).toBe(0)
+  //   await user1user2Profile.unblock()
+  //   expect(user.blocked.length).toBe(0)
+  //   // TODO: restore this test
+  //   // expect(user.followed.length).toBe(0)
+  // })
+
+  // it('hide and unhide', async () => {
+  //   const date = new Date(Date.now() + 1000)
+  //   await user.profile!.hide(true, date)
+  //   expect(user.profile!.hidden!.expires!.getTime()).toEqual(date.getTime())
+  //   expect(user.profile!.hidden!.enabled).toEqual(true)
+  //   await user.profile!.hide(false, undefined)
+  //   expect(user.profile!.hidden!.expires).toBe(null)
+  //   expect(user.profile!.hidden!.enabled).toEqual(false)
+  // })
+
+  // // TODO deal with verification of search?
+  // // it('searches users', async done => {
+  // //   try {
+  // //     timestamp()
+  // //     await gql.login(user.username!, user.password!, host)
+  // //     await gql.searchUsers('abc')
+  // //     // NOTE: results for newly created users don't show up in the results which makes expected values
+  // //     // on the return from `searchUsers` difficult here
+  // //     done()
+  // //   } catch (e) {
+  // //     done(e)
+  // //   }
+  // // })
+
+  // it('enable/disable push notifications', async () => {
+  //   await user.enablePush('randomToken')
+  //   await user.disablePush()
+  // })
+
+  // it('remove/delete user', async () => {
+  //   const user3 = await createUser()
+  //   expect(user3).toBeTruthy()
+  //   await user3.remove()
+  //   // todo: any way to verify (other than no errors?)
+  // })
 
   afterAll(async () => {
+    await sleep(1000)
     try {
       await user.remove()
     } catch (e) {
-      // console.warn('error removing user 1', e)
+      console.warn('error removing user 1', e)
     }
     try {
       await user2.remove()
     } catch (e) {
-      // console.warn('error removing user 2', e)
+      console.warn('error removing user 2', e)
     }
   })
 })

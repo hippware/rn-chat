@@ -106,12 +106,12 @@ exports[`BotDetails renders with no data 1`] = `
                     "handle": "southerneer",
                     "lastName": "kirkham",
                     "loaded": true,
+                    "sortedFriends": Array [],
                     "updateError": "",
                   },
                   "profiles": Object {},
                   "register": [MockFunction],
                   "sessionCount": 0,
-                  "sortedRoster": Array [],
                   "username": "username",
                 }
               }

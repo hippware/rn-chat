@@ -3,9 +3,10 @@ export const AREA_TOO_LARGE = 'AREA_TOO_LARGE'
 export const PROFILE_PROPS = `id firstName lastName handle
   media { thumbnailUrl fullUrl trosUrl }
   bots(first:0, relationship: OWNED) { totalCount }
-  followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
-  followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 `
+// TODO: switch FOLLOWER & FOLLOWING to INVITED & INVITED_BY
+// followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
+// followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 
 export const BOT_PROPS = `id icon title address addressData description radius shortname 
   media { thumbnailUrl fullUrl trosUrl }
@@ -50,12 +51,12 @@ export const NOTIFICATIONS_PROPS = `
     createdAt
     data {
       __typename
-      ... on UserFollowNotification {
+      ... on UserInvitationNotification {
         user {
           ${PROFILE_PROPS}
         }
       }
-      ... on InvitationNotification {
+      ... on BotInvitationNotification {
         bot {${BOT_PROPS}}
         invitation {
           accepted
@@ -63,7 +64,7 @@ export const NOTIFICATIONS_PROPS = `
         }
         user {${PROFILE_PROPS}}
       }
-      ... on InvitationResponseNotification {
+      ... on BotInvitationResponseNotification {
         accepted
         invitation {
           id
@@ -78,55 +79,6 @@ export const NOTIFICATIONS_PROPS = `
         bot {${BOT_PROPS}}
         botItem {
           ${BOT_POST_PROPS}
-        }
-      }
-      ... on GeofenceEventNotification {
-        bot {${BOT_PROPS}}
-        user {${PROFILE_PROPS}}
-        event
-      }
-    }
-  }
-  `
-// todo: delete after switch-over to GraphQL
-export const NOTIFICATIONS_PROPS_OLD = `
-  ... on Notification {
-    id
-    createdAt
-    data {
-      __typename
-      ... on UserFollowNotification {
-        user {
-          ${PROFILE_PROPS}
-        }
-      }
-      ... on InvitationNotification {
-        bot {${BOT_PROPS}}
-        invitation {
-          accepted
-          id
-        }
-        user {${PROFILE_PROPS}}
-      }
-      ... on InvitationResponseNotification {
-        accepted
-        invitation {
-          id
-          accepted
-        }
-        bot {
-          ${BOT_PROPS}
-        }
-        user {${PROFILE_PROPS}}
-      }
-      ... on BotItemNotification {
-        bot {${BOT_PROPS}}
-        botItem {
-          id
-          image
-          ${MEDIA_PROPS}
-          owner {${PROFILE_PROPS}}
-          stanza
         }
       }
       ... on GeofenceEventNotification {

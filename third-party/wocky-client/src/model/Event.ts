@@ -11,6 +11,11 @@ export const Event = types
       throw new Error('Abstract method!')
     },
   }))
+  .actions(() => ({
+    process: () => {
+      // do nothing
+    },
+  }))
   .named('Event')
 
 export interface IEvent extends Instance<typeof Event> {}

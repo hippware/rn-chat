@@ -12,7 +12,7 @@ type Props = {
 @observer
 export default class MessageButton extends React.Component<Props> {
   render() {
-    if (this.props.profile && this.props.profile.isMutual && !this.props.profile.isOwn) {
+    if (this.props.profile && this.props.profile.isFriend && !this.props.profile.isOwn) {
       return (
         <TouchableOpacity
           style={[

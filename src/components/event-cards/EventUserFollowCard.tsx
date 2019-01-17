@@ -1,6 +1,6 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
-import {IEventUserFollow, IProfile} from 'wocky-client'
+import {IEventFriendInvite, IProfile} from 'wocky-client'
 import {StyleSheet} from 'react-native'
 import alert from '../../utils/alert'
 import {inject, observer} from 'mobx-react/native'
@@ -11,7 +11,7 @@ import GradientButton from '../common/GradientButton'
 const geoIcon = require('../../../images/notificationFollow.png')
 
 type Props = {
-  item: IEventUserFollow
+  item: IEventFriendInvite
   user: IProfile
 }
 
@@ -34,30 +34,30 @@ type FollowProps = {
 
 const FollowButton = inject('analytics')(
   observer(({profile, analytics}: FollowProps) => {
-    const {follow, isFollowed} = profile
+    const {isFriend, invite} = profile
     return (
       <GradientButton
-        style={[styles.button, isFollowed ? styles.following : styles.follow]}
-        isPink={isFollowed}
+        style={[styles.button, isFriend ? styles.friend : styles.notFriend]}
+        isPink={isFriend}
         offColor="white"
         onPress={async () => {
-          if (isFollowed) {
-            await unfollow(profile)
+          if (isFriend) {
+            await unfriend(profile)
           } else {
-            await follow()
-            analytics.track('user_follow', (profile as any).toJSON())
+            await invite()
+            analytics.track('user_invite', (profile as any).toJSON())
           }
         }}
       >
-        <RText size={10.5} weight="Medium" color={isFollowed ? 'white' : colors.PINK}>
-          {isFollowed ? 'FRIENDS' : 'CONNECT'}
+        <RText size={10.5} weight="Medium" color={isFriend ? 'white' : colors.PINK}>
+          {isFriend ? 'FRIENDS' : 'CONNECT'}
         </RText>
       </GradientButton>
     )
   })
 )
 
-const unfollow = async (profile: any) => {
+const unfriend = async (profile: any) => {
   return new Promise(resolve => {
     alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
@@ -65,7 +65,7 @@ const unfollow = async (profile: any) => {
         text: 'Unfriend',
         style: 'destructive',
         onPress: async () => {
-          await profile.unfollow()
+          await profile.unfriend()
           resolve()
         },
       },
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 3.6,
   },
-  follow: {
+  friend: {
     borderColor: colors.PINK,
     borderWidth: 1,
   },
-  following: {},
+  notFriend: {},
 })

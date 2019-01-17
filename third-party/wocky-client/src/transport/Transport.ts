@@ -3,7 +3,7 @@ import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory
 import gql from 'graphql-tag'
 import {IPagingList, MediaUploadParams} from './types'
 import {observable, action} from 'mobx'
-import * as AbsintheSocket from '@absinthe/socket'
+import {create as createAbsintheSocket} from '@absinthe/socket'
 import {createAbsintheSocketLink} from '@absinthe/socket-apollo-link'
 import {Socket as PhoenixSocket} from 'phoenix'
 import {IProfilePartial} from '../model/Profile'
@@ -25,11 +25,11 @@ import {
   convertBot,
   convertNotification,
   convertNotifications,
-  processRosterItem,
   convertBotPost,
   convertLocation,
   waitFor,
   convertMessage,
+  iso8601toDate,
 } from './utils'
 import _ from 'lodash'
 import {IBotPostIn} from '../model/BotPost'
@@ -78,6 +78,7 @@ export class Transport {
       this.subscribeBotVisitors()
       this.subscribeNotifications()
       this.subscribeMessages()
+      this.subscribeContacts()
     }
     return res
   }
@@ -109,15 +110,47 @@ export class Transport {
     }
   }
 
-  async loadProfile(user: string): Promise<IProfilePartial | null> {
+  async loadProfile(id: string): Promise<IProfilePartial | null> {
     const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {
-            user(id: "${user}") {
+            user(id: "${id}") {
               ${PROFILE_PROPS}
               ${
-                user === this.username
-                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} }`
+                id === this.username
+                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} 
+                  sentInvitations(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        recipient {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                  friends(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        name
+                        user {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                  receivedInvitations(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        sender {
+                          ${PROFILE_PROPS}
+                        }
+                      }
+                    }
+                  }
+                }`
                   : ''
               }
             }
@@ -127,39 +160,27 @@ export class Transport {
     if (!res.data.user) {
       return null
     }
-    return convertProfile(res.data.user)
-  }
-  async requestRoster(): Promise<any[]> {
-    const res = await this.client!.query<any>({
-      query: gql`
-        query requestRoster {
-          currentUser {
-            id
-            contacts(first: 100) {
-              edges {
-                relationship
-                createdAt
-                node {
-                  id
-                  roles
-                  firstName
-                  lastName
-                  handle
-                  media {
-                    thumbnailUrl
-                    trosUrl
-                  }
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
-    this.subscribeContacts() // subscribe to contacts changes
-    return res.data.currentUser.contacts.edges.map(({relationship, createdAt, node}) =>
-      processRosterItem(node, relationship, createdAt)
-    )
+    const result: any = convertProfile(res.data.user)
+    if (id === this.username) {
+      result.receivedInvitations = res.data.user.receivedInvitations.edges.map(
+        ({node: {createdAt, sender}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          user: convertProfile(sender),
+        })
+      )
+      result.sentInvitations = res.data.user.sentInvitations.edges.map(
+        ({node: {createdAt, recipient}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          user: convertProfile(recipient),
+        })
+      )
+      result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
+        createdAt: iso8601toDate(createdAt).getTime(),
+        name,
+        user: convertProfile(user),
+      }))
+    }
+    return result
   }
 
   async generateId(): Promise<string> {
@@ -542,11 +563,11 @@ export class Transport {
     return {method, headers: {header: headers}, url: uploadUrl, reference_url: referenceUrl, file}
   }
 
-  async follow(userId: string): Promise<void> {
+  async friendInvite(userId: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation follow($input: FollowInput!) {
-          follow(input: $input) {
+        mutation friendInvite($input: FriendInviteInput!) {
+          friendInvite(input: $input) {
             ${VOID_PROPS}            
           }
         }
@@ -555,11 +576,11 @@ export class Transport {
     })
   }
 
-  async unfollow(userId: string): Promise<void> {
+  async friendDelete(userId: string): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation unfollow($input: UnfollowInput!) {
-          unfollow(input: $input) {
+        mutation friendDelete($input: FriendDeleteInput!) {
+          friendDelete(input: $input) {
             ${VOID_PROPS}            
           }
         }
@@ -956,6 +977,34 @@ export class Transport {
 
   /******************************** SUBSCRIPTIONS ********************************/
 
+  // todo: call this eventually when the rest of the relationship model is fixed
+  subscribePresence() {
+    // console.log('& subscribe presence', this.username)
+    const subscription = this.client!.subscribe({
+      query: gql`
+        subscription presence {
+          presence {
+            id
+            presenceStatus
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        // console.log('& presence next', this.username, result.data.followees)
+        const {id, presenceStatus} = result.data.followees
+        this.presence = {id, status: presenceStatus}
+      }),
+      // error: error => {
+      //   console.warn('& subscribe presence error', this.username, error)
+      // },
+      // complete: () => {
+      //   console.log('& subscribe presence complete', this.username)
+      // },
+    })
+    this.subscriptions.push(subscription)
+  }
+
   private subscribeNotifications() {
     const subscription = this.client!.subscribe({
       query: gql`
@@ -970,6 +1019,8 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
+        // tslint:disable-next-line
+        console.log('& notification', result)
         this.notification = convertNotification({node: result.data.notifications})
       }),
     })
@@ -999,9 +1050,14 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        // console.log('& contact', result)
+        // tslint:disable-next-line
+        console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
-        this.rosterItem = processRosterItem(user, relationship, createdAt)
+        this.rosterItem = {
+          user: convertProfile(user),
+          relationship,
+          createdAt: iso8601toDate(createdAt).getTime(),
+        }
       }),
     })
     this.subscriptions.push(subscription)
@@ -1212,7 +1268,7 @@ export class Transport {
       },
     }
     return new ApolloClient({
-      link: createAbsintheSocketLink(AbsintheSocket.create(socket)),
+      link: createAbsintheSocketLink(createAbsintheSocket(socket)),
       cache: new InMemoryCache({fragmentMatcher}),
       defaultOptions,
     })

@@ -22,16 +22,14 @@ const searchIcon = require('../../../images/search.png')
 class FriendList extends React.Component<Props> {
   list: any
 
-  renderItem = ({item}) => <FriendCard profile={item} />
+  renderItem = ({item}) => <FriendCard profile={item.user} />
 
   render() {
-    const {wocky} = this.props
-    const {friends} = wocky!
     return (
       <DraggablePopupList
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.user.id}
         fadeNavConfig={{
           back: true,
           title: (
@@ -40,7 +38,7 @@ class FriendList extends React.Component<Props> {
             </RText>
           ),
         }}
-        data={friends}
+        data={this.props.wocky!.profile!.friends.list.slice()}
         keyboardShouldPersistTaps="handled"
         // keyboardDismissMode="interactive"
       />
@@ -60,12 +58,12 @@ class FriendList extends React.Component<Props> {
             marginBottom: 5,
           }}
         >
-          <FriendCount count={wocky!.friends.length} />
+          <FriendCount count={wocky!.profile!.friends.list.length} />
           <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={Actions.friendSearch}>
             <Image source={searchIcon} />
           </TouchableOpacity>
         </View>
-        {wocky!.friends.length <= 0 ? (
+        {wocky!.profile!.friends.list.length <= 0 ? (
           <View>
             <RText weight="Regular" color={colors.GREY} style={placeholderStyle.placeholderText}>
               Start Adding Friends!
