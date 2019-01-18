@@ -128,6 +128,7 @@ class SignUp extends React.Component<Props> {
               onSubmitEditing={() => this.done()}
               store={this.vProfile ? this.vProfile.handle : undefined}
               testID="signUpUsername"
+              selectionColor={colors.COVER_BLUE}
             />
           </View>
           <RText

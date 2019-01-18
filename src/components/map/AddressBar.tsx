@@ -22,6 +22,7 @@ type Props = {
   geocodingStore?: any
   analytics?: any
   homeStore?: IHomeStore
+  focused?: boolean
 }
 
 @inject('geocodingStore', 'analytics', 'homeStore')
@@ -30,7 +31,7 @@ class AddressBar extends React.Component<Props> {
   input: any
   @observable text: string = ''
   readonly suggestions = observable.array([])
-  @observable searchEnabled: boolean = false
+  @observable searchEnabled: boolean = this.props.focused === undefined ? true : this.props.focused
   handler?: () => void
   handler2?: () => void
   wrappedInstance: any // mobx-react property for use by ancestors
@@ -165,7 +166,7 @@ class AddressBar extends React.Component<Props> {
           <View style={styles.searchContainer}>
             {this.searchToggleBtn()}
             <TextInput
-              // autoFocus={this.searchEnabled}
+              autoFocus={this.searchEnabled}
               style={styles.textInput}
               autoCorrect={false}
               clearButtonMode="while-editing"
@@ -175,6 +176,7 @@ class AddressBar extends React.Component<Props> {
               onFocus={() => (this.searchEnabled = true)}
               returnKeyType="search"
               ref={r => (this.input = r)}
+              selectionColor={colors.COVER_BLUE}
             />
           </View>
           <UseCurrentLocation enabled={this.showCurrentLocation} onPress={this.onLocationSelect} />
@@ -197,7 +199,6 @@ class AddressBar extends React.Component<Props> {
     )
   }
 }
-
 export default AddressBar
 
 const styles = StyleSheet.create({

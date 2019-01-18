@@ -1,9 +1,10 @@
-import {types, flow, IAnyModelType, Instance} from 'mobx-state-tree'
+import {types, IAnyModelType, flow, Instance} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
+import {waitFor} from '../transport/utils'
 
 export const Profile = types
   .compose(
@@ -16,18 +17,13 @@ export const Profile = types
       status: 'unavailable',
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
-      isBlocked: false,
-      isFollowed: false,
-      isFollower: false,
-      isNew: false,
-      followersSize: 0,
-      followedSize: 0,
       botsSize: 0,
+      hasSentInvite: false,
+      hasReceivedInvite: false,
+      isFriend: false,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
-      followed: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
-      followers: types.optional(types.late((): IAnyModelType => ProfilePaginableList), {}),
     })
   )
   .named('Profile')
@@ -36,10 +32,33 @@ export const Profile = types
     delete res.status
     delete res.ownBots
     delete res.subscribedBots
-    delete res.followed
-    delete res.followers
     return res
   })
+  .actions(self => ({
+    sentInvite: () => {
+      self.hasSentInvite = true
+      if (self.hasSentInvite && self.hasReceivedInvite) {
+        self.isFriend = true
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+    receivedInvite: () => {
+      self.hasReceivedInvite = true
+      if (self.hasSentInvite && self.hasReceivedInvite) {
+        self.isFriend = true
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+    setFriend: (friend: boolean) => {
+      self.isFriend = friend
+      if (friend) {
+        self.hasReceivedInvite = false
+        self.hasSentInvite = false
+      }
+    },
+  }))
   .extend(self => {
     return {
       actions: {
@@ -49,14 +68,35 @@ export const Profile = types
             self.avatar = self.service.files.get(avatar.id, avatar)
           }
         },
+        invite: flow(function*() {
+          yield waitFor(() => self.connected)
+          self.receivedInvite()
+          if (self.isFriend) {
+            // remove from receivedInvitations and add to friends
+            self.service.profile.receivedInvitations.remove(self.id)
+            self.service.profile.friends.addToTop({
+              id: self.id,
+              user: self.service.profiles.get(self.id),
+            })
+          } else {
+            self.service.profile.sentInvitations.addToTop({
+              id: self.id,
+              recipient: self.service.profiles.get(self.id),
+              sender: self.service.profiles.get(self.service.username),
+            })
+          }
+          yield self.transport.friendInvite(self.id)
+        }),
+        unfriend: flow(function*() {
+          yield waitFor(() => self.connected)
+          self.service.profile.friends.remove(self.id)
+          self.service.profile.receivedInvitations.remove(self.id)
+          self.service.profile.sentInvitations.remove(self.id)
+          self.setFriend(false)
+          yield self.transport.friendDelete(self.id)
+        }),
         afterAttach: () => {
           if (self.service) {
-            self.followers.setRequest(
-              self.service._loadRelations.bind(self.service, self.id, 'follower')
-            )
-            self.followed.setRequest(
-              self.service._loadRelations.bind(self.service, self.id, 'following')
-            )
             self.ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             self.subscribedBots.setRequest(
               self.service._loadSubscribedBots.bind(self.service, self.id)
@@ -66,25 +106,6 @@ export const Profile = types
             }
           }
         },
-        follow: flow(function*() {
-          yield self.service._follow(self.id)
-          self.isFollowed = true
-        }),
-        unfollow: flow(function*() {
-          yield self.service._unfollow(self.id)
-          self.isFollowed = false
-        }),
-        block: flow(function*() {
-          yield self.service._block(self.id)
-          self.isFollowed = false
-          self.isBlocked = true
-          self.isNew = false
-        }),
-        unblock: flow(function*() {
-          yield self.service._unblock(self.id)
-          self.isBlocked = false
-          self.isNew = false
-        }),
         setStatus: (status: string) => {
           self.status = status
         },
@@ -96,9 +117,6 @@ export const Profile = types
         },
         get isVerified(): boolean {
           return self.roles.length ? self.roles.indexOf('verified') !== -1 : false
-        },
-        get isMutual(): boolean {
-          return self.isFollowed && self.isFollower
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {

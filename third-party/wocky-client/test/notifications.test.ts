@@ -21,7 +21,7 @@ describe('Notifications (static)', () => {
   it('gets User Follow notification', async () => {
     // alice follows bob
     const alicesBobProfile = await alice.loadProfile(bob.username!)
-    await alicesBobProfile.follow()
+    await alicesBobProfile.invite()
     // Expected Notification: User follow notification
     await sleep(1000)
     await bob.notifications.load()

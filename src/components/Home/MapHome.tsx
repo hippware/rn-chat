@@ -99,7 +99,7 @@ export default class MapHome extends React.Component<IProps> {
   createFromLongPress = (value: any) => {
     if (!this.props.homeStore!.creationMode) {
       this.setCenterCoordinate(value.nativeEvent.coordinate)
-      Actions.createBot()
+      Actions.createBot({focused: false})
     }
   }
 

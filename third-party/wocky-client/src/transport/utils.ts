@@ -4,7 +4,7 @@ import {IEventBotGeofenceData} from '../model/EventBotGeofence'
 import {IEventData} from '../model/Event'
 import {IEventBotInviteData} from '../model/EventBotInvite'
 import {IEventBotPostData} from '../model/EventBotPost'
-import {IEventUserFollowData} from '../model/EventUserFollow'
+import {IEventFriendInviteData} from '../model/EventFriendInvite'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
@@ -301,14 +301,7 @@ export function convertImage(image) {
     : null
 }
 
-export function convertProfile({
-  media,
-  bots,
-  followers,
-  followed,
-  hidden,
-  ...data
-}): IProfilePartial {
+export function convertProfile({media, bots, hidden, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
     hidden: hidden
@@ -316,8 +309,6 @@ export function convertProfile({
       : null,
     avatar: convertImage(media),
     botsSize: bots ? bots.totalCount : undefined,
-    followersSize: followers ? followers.totalCount : undefined,
-    followedSize: followed ? followed.totalCount : undefined,
     ...data,
   } as IProfilePartial
 }
@@ -374,14 +365,14 @@ export function convertNotification(edge: any): IEventData | null {
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
-    case 'UserFollowNotification':
-      const followNotification: IEventUserFollowData = {
+    case 'UserInvitationNotification':
+      const friendInviteNotification: IEventFriendInviteData = {
         id,
         time,
         user: convertProfile(data.user),
       }
-      // console.log('& user follow:', followNotification)
-      return followNotification
+      // console.log('& user follow:', friendInviteNotification)
+      return friendInviteNotification
     case 'BotItemNotification':
       bot = convertBot(data.bot)
       const botItemNotification: IEventBotPostData = {
@@ -397,8 +388,8 @@ export function convertNotification(edge: any): IEventData | null {
         bot,
       }
       return botItemNotification
-    case 'InvitationNotification':
-    case 'InvitationResponseNotification':
+    case 'BotInvitationNotification':
+    case 'BotInvitationResponseNotification':
       // console.log('& invite notification', data.invitation)
       bot = {
         ...convertBot(data.bot),
@@ -465,18 +456,6 @@ export function assert(condition, message) {
     }
     throw message // Fallback
   }
-}
-
-export function processRosterItem(user, relationship, createdAt) {
-  const createdTime = iso8601toDate(createdAt).getTime()
-  const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
-
-  return convertProfile({
-    isNew: days <= 7,
-    isFollowed: relationship === 'FOLLOWING' || relationship === 'FRIEND',
-    isFollower: relationship === 'FOLLOWER' || relationship === 'FRIEND',
-    ...user,
-  })
 }
 
 export function convertLocation({longitude, latitude, accuracy}: ILocation, device: string) {

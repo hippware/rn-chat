@@ -79,6 +79,7 @@ class FriendSearch extends React.Component<Props> {
           clearButtonMode="while-editing"
           onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}
           placeholder="Search by name or username"
+          selectionColor={colors.COVER_BLUE}
         />
       </View>
     )
