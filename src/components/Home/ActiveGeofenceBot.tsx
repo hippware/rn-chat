@@ -47,6 +47,7 @@ class ActiveBot extends React.Component<Props> {
                     textAlign: 'center',
                     fontFamily: 'Roboto-Bold',
                     height: 38,
+                    overflow: 'visible',
                   }}
                 >
                   You're{'\r\n'}
@@ -94,5 +95,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'visible',
   },
 })
