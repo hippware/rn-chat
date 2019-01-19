@@ -77,7 +77,6 @@ const env = {
 
 const Store = types
   .model('Store', {
-    wocky: Wocky,
     homeStore: HomeStore,
     firebaseStore: FirebaseStore,
     bypassStore: BypassStore,
