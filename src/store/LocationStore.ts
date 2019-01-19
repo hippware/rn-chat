@@ -6,7 +6,6 @@ import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
-import {IStore} from '.'
 
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
@@ -299,7 +298,8 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    const {wocky, onceStore} = getRoot<IStore>(self)
+    // const {wocky, onceStore} = getRoot<IStore>(self)
+    const {wocky, onceStore} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
     const {logger} = getEnv(self)
 

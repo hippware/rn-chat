@@ -30,7 +30,6 @@ export const Wocky = types
       id: 'wocky',
       // todo: make this volatile?
       username: types.maybeNull(types.string),
-      phoneNumber: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
       profile: types.maybeNull(OwnProfile),

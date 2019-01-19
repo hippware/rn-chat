@@ -4,11 +4,10 @@ import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import * as log from '../utils/log'
-
-// TODO: need to export declaration file to make this work as expected?
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
+import {IAuthStore} from 'src/store/AuthStore'
 
 type Props = {
   wocky?: IWocky
@@ -17,9 +16,10 @@ type Props = {
   locationStore?: ILocationStore
   log?: any
   analytics?: any
+  authStore?: IAuthStore
 }
 
-@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics')
+@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics', 'authStore')
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -69,13 +69,12 @@ export default class Connectivity extends React.Component<Props> {
   tryReconnect = async reason => {
     const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
+    const {authStore} = this.props
     if (
       AppState.currentState === 'active' &&
       !model.connected &&
       !model.connecting &&
-      model.providerName &&
-      model.username &&
-      model.password &&
+      authStore!.canLogin &&
       model.host
     ) {
       try {
@@ -84,7 +83,7 @@ export default class Connectivity extends React.Component<Props> {
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        await model.login()
+        await authStore!.login()
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {

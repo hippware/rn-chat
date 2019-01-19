@@ -1,4 +1,4 @@
-import {Wocky, IWocky, Transport, BypassStore, registerProvider} from '../../src'
+import {Wocky, IWocky, Transport} from '../../src'
 import {AppInfo} from '../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'

@@ -5,7 +5,7 @@ import {settings} from '../globals'
 
 export const cleanState = {
   firebaseStore: {},
-  bypassStore: {},
+  authStore: {},
   locationStore: {},
   searchStore: {},
   profileValidationStore: {},
@@ -36,8 +36,7 @@ const PersistableModel = types
     function loadMinimal(parsed: any) {
       logger.log('loadMinimal')
       try {
-        const {username, password, host} = parsed.wocky
-        applySnapshot(self.wocky, {username, password, host})
+        applySnapshot(self, {authStore: parsed.authStore} as any)
       } catch (err) {
         logger.warn('Minimal hydration error', err)
         analytics.track('loadMinimal_fail', parsed)
@@ -80,6 +79,7 @@ const PersistableModel = types
       try {
         const data = await loadFromStorage(modelName)
         parsed = JSON.parse(data)
+        // console.log('& parsed', parsed)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
         const newBinaryVersion =
