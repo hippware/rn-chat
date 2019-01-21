@@ -80,7 +80,6 @@ const PersistableModel = types
       try {
         const data = await loadFromStorage(modelName)
         parsed = JSON.parse(data)
-        // console.log('& parsed', parsed)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
         const newBinaryVersion =

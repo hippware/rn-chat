@@ -31,7 +31,7 @@ const AuthStore = types
           strategy = strategies[self.strategyName]
           return strategy.login(store)
         } catch (error) {
-          analytics.track('& error_connection', {error})
+          analytics.track('error_connection', {error})
         }
         return Promise.resolve(false)
       },
