@@ -371,7 +371,7 @@ const LocationStore = types
       BackgroundGeolocation.un('providerchange', self.onProviderChange)
     }
 
-    const onLogout = flow(function*() {
+    const logout = flow(function*() {
       yield self.invalidateCredentials()
       yield BackgroundGeolocation.stop()
       logger.log(prefix, 'Stop')
@@ -382,7 +382,7 @@ const LocationStore = types
       finish,
       didMount,
       willUnmount,
-      onLogout,
+      logout,
     }
   })
 

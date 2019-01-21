@@ -2,7 +2,7 @@ import {Credentials} from 'wocky-client'
 
 export type AuthStrategy = {
   login: (store) => Promise<boolean>
-  logout: (store) => Promise<boolean>
+  logout: (store) => Promise<void>
 }
 
 export type Strategy = 'firebase' | 'bypass'
@@ -30,7 +30,7 @@ const Strategies: IStrategies = {
       const credentials: Credentials = {typ: 'bypass', sub: phone, phone_number: phone}
       return wocky.login(credentials)
     },
-    logout: () => Promise.resolve(true),
+    logout: Promise.resolve,
   },
 }
 

@@ -1,4 +1,4 @@
-import {types, Instance, getParent} from 'mobx-state-tree'
+import {types, Instance, getParent, flow, applySnapshot} from 'mobx-state-tree'
 import analytics from 'src/utils/analytics'
 import strategies, {AuthStrategy, Strategy} from './authStrategies'
 
@@ -36,17 +36,17 @@ const AuthStore = types
         return Promise.resolve(false)
       },
 
-      logout(): Promise<boolean> {
-        homeStore.onLogout()
-        locationStore.onLogout()
-        if (strategy!.logout(store)) {
-          self.phone = undefined
-          self.strategyName = 'firebase'
-          strategy = null
-          return wocky.logout()
+      logout: flow(function*() {
+        homeStore.logout()
+        locationStore.logout()
+        if (strategy) {
+          yield strategy.logout(store)
         }
-        return Promise.resolve(false)
-      },
+        applySnapshot(self, {})
+        strategy = null
+        yield wocky.logout()
+        return true
+      }),
     }
   })
 
