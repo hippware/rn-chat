@@ -42,6 +42,7 @@ const AuthStore = types
         if (strategy!.logout(store)) {
           self.phone = undefined
           self.strategyName = 'firebase'
+          strategy = null
           return wocky.logout()
         }
         return Promise.resolve(false)

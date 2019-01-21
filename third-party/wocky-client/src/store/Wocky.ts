@@ -28,7 +28,6 @@ export const Wocky = types
     Storages,
     types.model({
       id: 'wocky',
-      // todo: make this volatile?
       username: types.maybeNull(types.string),
       host: types.string,
       sessionCount: 0,

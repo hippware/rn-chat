@@ -33,7 +33,7 @@ class TestRegister extends React.Component<Props, State> {
       return
     }
 
-    this.props.authStore!.register(`+1555${this.state.text}`, false)
+    this.props.authStore!.register(`+1555${this.state.text}`, 'bypass')
     Actions.connect()
   }
 

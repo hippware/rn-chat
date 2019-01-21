@@ -20,13 +20,13 @@ const FirebaseStore = types
   .model('FirebaseStore', {
     resource: types.maybeNull(types.string),
     inviteCode: types.maybeNull(types.string),
+    token: types.maybeNull(types.string),
   })
   .volatile(() => ({
     phone: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
-    token: types.maybe(types.string),
   }))
   .actions(self => ({
     setState(state: State) {
@@ -130,7 +130,7 @@ const FirebaseStore = types
     const logout = flow(function*() {
       analytics.track('logout')
       if (self.token) {
-        self.setState({token: undefined})
+        self.token = null
         try {
           yield auth.signOut()
         } catch (err) {
@@ -209,7 +209,7 @@ const FirebaseStore = types
     const registerWithToken = flow(function*() {
       try {
         self.setState({buttonText: 'Connecting...'})
-        authStore.register(self.phone, true)
+        authStore.register(self.phone, 'firebase')
         yield (authStore as IAuthStore).login()
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {

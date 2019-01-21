@@ -107,7 +107,7 @@ class TinyRobotRouter extends React.Component<Props> {
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
-            <Scene key="checkCredentials" on={() => wocky!.username && wocky!.host} success="checkProfile" failure="preConnection" />
+            <Scene key="checkCredentials" on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
