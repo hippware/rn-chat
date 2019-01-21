@@ -42,6 +42,7 @@ export default class Connectivity extends React.Component<Props> {
         this.isActive &&
         !model.connected &&
         !model.connecting &&
+        this.props.authStore!.canLogin &&
         Date.now() - this.lastDisconnected >= this.retryDelay
       ) {
         await this.tryReconnect(`retry: ${this.retryDelay}`)
