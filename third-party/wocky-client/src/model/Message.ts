@@ -5,11 +5,10 @@ import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable} from './PaginableList'
 import {IWocky} from '../index'
-import uuid from 'uuid/v1'
 import _ from 'lodash'
 
 const MessageBase = types.model('MessageBase', {
-  id: types.optional(types.string, () => uuid()),
+  id: types.identifier,
   otherUser: types.reference(Profile),
   content: '',
   media: FileRef,
@@ -40,7 +39,6 @@ export const Message = types
     clear: () => {
       self.media = null
       self.content = ''
-      self.id = uuid()
     },
     setBody: (text: string) => {
       self.content = text

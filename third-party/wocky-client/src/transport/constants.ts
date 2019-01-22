@@ -98,6 +98,7 @@ export const VOID_PROPS = `
 `
 
 export const MESSAGE_PROPS = `
+  id
   content
   createdAt
   direction

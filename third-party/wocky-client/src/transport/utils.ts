@@ -467,8 +467,9 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage({direction, content, otherUser, createdAt, media}): IMessageIn {
+export function convertMessage({id, direction, content, otherUser, createdAt, media}): IMessageIn {
   return {
+    id: id.toString(),
     otherUser,
     time: new Date(createdAt).valueOf(),
     media: convertImage(media) as any,

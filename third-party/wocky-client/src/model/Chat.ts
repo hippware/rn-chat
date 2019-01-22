@@ -3,6 +3,7 @@ import {Message, MessagePaginableList} from './Message'
 import {Wocky} from '../store/Wocky'
 import {Profile} from './Profile'
 const moment = require('moment')
+import uuid from 'uuid/v1'
 
 export const Chat = types
   .model('Chat', {
@@ -45,6 +46,8 @@ export const Chat = types
       // todo: strong typing
       const service: any = getParentOfType(self, Wocky)
       self.message = Message.create({
+        // todo
+        id: uuid(),
         otherUser: self.id,
         isOutgoing: true,
       })
