@@ -154,10 +154,10 @@ export const Wocky = types
       let existingChat = self.chats.get(otherUserId)
       const msg = createMessage(message, self)
       if (existingChat) {
-        existingChat.messages.add(msg)
+        existingChat.messages.addToTop(msg)
       } else {
         existingChat = self.createChat(otherUserId)
-        existingChat.messages.add({...message, otherUser: otherUserId})
+        existingChat.messages.addToTop({...message, otherUser: otherUserId})
       }
       if (!existingChat.active) {
         msg!.setUnread(unread)
@@ -195,9 +195,9 @@ export const Wocky = types
         max
       )
       items.forEach(item => {
-        const msg = createMessage(item.message, self)
+        const msg = createMessage({...item.message, unread: true}, self)
         const chat = self.createChat(item.chatId)
-        chat.messages.addToTop(msg) // TODO replace existing message to avoid duplicates?
+        chat.messages.addToTop(msg)
       })
     }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
