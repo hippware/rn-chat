@@ -92,7 +92,7 @@ const PersistableModel = types
         }
       } catch (err) {
         logger.log('hydration error', modelName, err, parsed)
-        if (modelName === STORE_NAME && parsed && parsed.wocky) {
+        if (modelName === STORE_NAME && parsed && parsed.authStore) {
           loadMinimal(parsed)
         } else {
           await tryMigrate()
