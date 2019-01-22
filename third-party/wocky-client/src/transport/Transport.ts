@@ -516,20 +516,19 @@ export class Transport {
     return this.disconnect()
   }
 
-  async downloadURL(): Promise<any> {
-    throw new Error('Not supported')
-  }
-
-  async downloadFile(): Promise<any> {
-    throw new Error('Not supported')
-  }
-
-  async downloadThumbnail(): Promise<any> {
-    throw new Error('Not supported')
-  }
-
-  async downloadTROS(): Promise<any> {
-    throw new Error('Not supported')
+  async downloadTROS(trosUrl: string): Promise<any> {
+    await waitFor(() => this.connected)
+    const res = await this.client!.query<any>({
+      query: gql`
+        query mediaUrls($trosUrl: String!) {
+          mediaUrls(timeout: 10000, trosUrl: $trosUrl) {
+            thumbnailUrl
+          }
+        }
+      `,
+      variables: {trosUrl},
+    })
+    return res.data.mediaUrls.thumbnailUrl
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {

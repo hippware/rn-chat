@@ -73,7 +73,9 @@ export const File = types
       }
     },
     afterAttach: flow(function*() {
-      // todo: since self.url defaults to '' won't this always evaluate to true?
+      if (!self.thumbnail && !self.url) {
+        self.url = yield self.transport.downloadTROS(self.id)
+      }
       if (self.url) {
         yield self.downloadThumbnail()
       }
