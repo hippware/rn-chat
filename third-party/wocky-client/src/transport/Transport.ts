@@ -79,6 +79,7 @@ export class Transport {
       this.subscribeNotifications()
       this.subscribeMessages()
       this.subscribeContacts()
+      this.subscribePresence()
     }
     return res
   }
@@ -977,9 +978,7 @@ export class Transport {
 
   /******************************** SUBSCRIPTIONS ********************************/
 
-  // todo: call this eventually when the rest of the relationship model is fixed
   subscribePresence() {
-    // console.log('& subscribe presence', this.username)
     const subscription = this.client!.subscribe({
       query: gql`
         subscription presence {
@@ -991,16 +990,9 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        // console.log('& presence next', this.username, result.data.followees)
-        const {id, presenceStatus} = result.data.followees
+        const {id, presenceStatus} = result.data.presence
         this.presence = {id, status: presenceStatus}
       }),
-      // error: error => {
-      //   console.warn('& subscribe presence error', this.username, error)
-      // },
-      // complete: () => {
-      //   console.log('& subscribe presence complete', this.username)
-      // },
     })
     this.subscriptions.push(subscription)
   }
@@ -1019,8 +1011,6 @@ export class Transport {
       },
     }).subscribe({
       next: action((result: any) => {
-        // tslint:disable-next-line
-        console.log('& notification', result)
         this.notification = convertNotification({node: result.data.notifications})
       }),
     })
