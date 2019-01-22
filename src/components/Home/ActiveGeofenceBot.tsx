@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native'
+import {View, TouchableOpacity, ViewStyle} from 'react-native'
 
 import {observer, inject} from 'mobx-react/native'
 
@@ -37,24 +37,18 @@ class ActiveBot extends React.Component<Props> {
     return bot && isAlive(bot) ? (
       <View style={outerStyle}>
         <View style={innerStyle}>
-          <BotBubble bot={bot} scale={0} onImagePress={this.goToBot} radius={11}>
-            {bot.visitor ? (
-              <View style={[styles.youreHere, {backgroundColor: 'white'}]}>
-                <RText
-                  size={13}
-                  color={colors.PINK}
-                  style={{
-                    textAlign: 'center',
-                    fontFamily: 'Roboto-Bold',
-                    height: 38,
-                  }}
-                >
-                  You're{'\r\n'}
-                  Here
-                </RText>
-              </View>
-            ) : null}
-          </BotBubble>
+          {bot.visitor ? (
+            <BotBubble
+              youreHere={true}
+              bot={bot}
+              scale={0}
+              onImagePress={this.goToBot}
+              radius={11}
+              image={require('../../../images/YoureHere.png')}
+            />
+          ) : (
+            <BotBubble bot={bot} scale={0} onImagePress={this.goToBot} radius={11} />
+          )}
           <TouchableOpacity onPress={this.goToBot}>
             <RText
               size={13}
@@ -82,17 +76,3 @@ class ActiveBot extends React.Component<Props> {
 }
 
 export default ActiveBot
-
-const styles = StyleSheet.create({
-  youreHere: {
-    flex: 1,
-    borderRadius: 10,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

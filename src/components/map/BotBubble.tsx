@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, ImageRequireSource} from 'react-native'
+import {TouchableOpacity, ImageRequireSource, Image} from 'react-native'
 // import Bubble from './BubbleAnimated'
 import Bubble from './Bubble'
 import {observer} from 'mobx-react/native'
@@ -15,23 +15,27 @@ type Props = {
   showLoader?: boolean
   radius?: number
   borderWidth?: number
+  youreHere?: boolean
 }
 
 @observer
 class BotBubble extends React.Component<Props> {
   render() {
-    const {bot, showLoader, image, onImagePress, ...rest} = this.props
+    const {bot, showLoader, image, onImagePress, youreHere = false, ...rest} = this.props
     if (!bot || !isAlive(bot) || !bot.location) {
       return null
     }
+
+    const defaultIcon = require('../../../images/mapIcons/question.png')
     const text = bot.icon
-    const bubble = (
-      <Bubble
-        text={text}
-        textSize={35}
-        showLoader={showLoader === undefined ? bot.image && !bot.image.loaded : showLoader}
-        {...rest}
-      />
+    const bubble = youreHere ? (
+      <Bubble image={image} {...rest} />
+    ) : bot.icon ? (
+      <Bubble text={text} textSize={35} {...rest} />
+    ) : (
+      <Bubble {...rest}>
+        <Image style={{width: 28, height: 28}} resizeMode="contain" source={defaultIcon} />
+      </Bubble>
     )
 
     return onImagePress ? (
