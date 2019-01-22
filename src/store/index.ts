@@ -1,9 +1,9 @@
-import {types, getEnv, addMiddleware, flow, Instance} from 'mobx-state-tree'
+import {types, getEnv, addMiddleware, Instance} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Wocky, Transport, AppInfo, IAppInfo} from 'wocky-client'
+import {Transport, AppInfo, IAppInfo} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
 import {settings} from '../globals'
@@ -11,6 +11,7 @@ import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
+import AuthStore from './AuthStore'
 import fileService from './fileService'
 import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
@@ -76,9 +77,9 @@ const env = {
 
 const Store = types
   .model('Store', {
-    wocky: Wocky,
     homeStore: HomeStore,
     firebaseStore: FirebaseStore,
+    authStore: AuthStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,
@@ -91,20 +92,17 @@ const Store = types
       return getEnv(self).fileService.getImageSize
     },
   }))
+
+const PersistableStore = types
+  .compose(PersistableModel, Store)
+  .named(STORE_NAME)
   .actions(self => ({
-    logout: flow(function*() {
-      self.homeStore.logout()
-      self.locationStore.logout()
-      return yield self.firebaseStore.logout()
-    }),
     afterCreate() {
       analytics.identify(self.wocky)
     },
   }))
 
-const PersistableStore = types.compose(PersistableModel, Store).named(STORE_NAME)
-
-export interface IStore extends Instance<typeof Store> {}
+export interface IStore extends Instance<typeof PersistableStore> {}
 
 const theStore = PersistableStore.create(
   {

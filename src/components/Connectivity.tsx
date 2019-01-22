@@ -4,11 +4,10 @@ import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import * as log from '../utils/log'
-
-// TODO: need to export declaration file to make this work as expected?
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
+import {IAuthStore} from 'src/store/AuthStore'
 
 type Props = {
   wocky?: IWocky
@@ -17,9 +16,10 @@ type Props = {
   locationStore?: ILocationStore
   log?: any
   analytics?: any
+  authStore?: IAuthStore
 }
 
-@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics')
+@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics', 'authStore')
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -35,12 +35,14 @@ export default class Connectivity extends React.Component<Props> {
       this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO})
       this._handleConnectionInfoChange(reach)
     })
+    // todo: refactor. Since interval is hardcoded here exponential backoff won't work...it checks every second regardless of changes to retryDelay
     this.intervalId = setInterval(async () => {
       const model = this.props.wocky!
       if (
         this.isActive &&
         !model.connected &&
         !model.connecting &&
+        this.props.authStore!.canLogin &&
         Date.now() - this.lastDisconnected >= this.retryDelay
       ) {
         await this.tryReconnect(`retry: ${this.retryDelay}`)
@@ -69,26 +71,20 @@ export default class Connectivity extends React.Component<Props> {
   tryReconnect = async reason => {
     const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
-    if (
-      AppState.currentState === 'active' &&
-      !model.connected &&
-      !model.connecting &&
-      (model.phoneNumber || model.accessToken) &&
-      model.username &&
-      model.password &&
-      model.host
-    ) {
+    const {authStore} = this.props
+    if (AppState.currentState === 'active' && !model.connected && !model.connecting) {
       try {
         this.props.analytics.track('reconnect_try', {
           ...info,
           delay: this.retryDelay,
           connectionInfo: this.connectionInfo,
         })
-        await model.login({})
+        await authStore!.login()
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
         this.props.analytics.track('reconnect_fail', {...info, error: e})
+        // todo: error message will be different with GraphQL (?)
         if (e.toString().indexOf('not-authorized') !== -1 || e.toString().indexOf('invalid')) {
           this.retryDelay = 1e9
           Actions.logout()

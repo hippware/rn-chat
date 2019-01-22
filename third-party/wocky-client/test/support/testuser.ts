@@ -69,7 +69,9 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     addMiddleware(service, simpleActionLogger)
 
     await service.login({
-      phoneNumber,
+      phone_number: phoneNumber,
+      typ: 'bypass',
+      sub: phoneNumber,
     })
     return service
   } catch (e) {

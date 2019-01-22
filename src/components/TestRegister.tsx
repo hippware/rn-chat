@@ -6,6 +6,7 @@ import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
 import {IWocky} from 'wocky-client'
+import {IAuthStore} from 'src/store/AuthStore'
 
 type Props = {
   wocky?: IWocky
@@ -13,13 +14,14 @@ type Props = {
   navStore?: INavStore
   name: string
   warn?: any
+  authStore: IAuthStore
 }
 
 type State = {
   text: string
 }
 
-@inject('wocky', 'analytics', 'warn', 'navStore')
+@inject('wocky', 'analytics', 'warn', 'navStore', 'authStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -30,7 +32,9 @@ class TestRegister extends React.Component<Props, State> {
     if (this.props.navStore!.scene !== this.props.name) {
       return
     }
-    Actions.connect({phoneNumber: `+1555${this.state.text}`})
+
+    this.props.authStore!.register(`+1555${this.state.text}`, 'bypass')
+    Actions.connect()
   }
 
   render() {

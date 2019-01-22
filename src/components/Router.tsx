@@ -50,6 +50,7 @@ import { IStore } from 'src/store'
 import { IPersistable } from 'src/store/PersistableModel'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import ChatTitle from './Chats/ChatTitle'
+import { IAuthStore } from 'src/store/AuthStore';
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
 
@@ -62,11 +63,12 @@ type Props = {
   iconStore?: IconStore
   store?: IStore & IPersistable
   onceStore?: IOnceStore
+  authStore?: IAuthStore
   analytics?: any
   log?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log', 'onceStore')
+@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log', 'onceStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -98,19 +100,19 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, iconStore, wocky, navStore, onceStore} = this.props
+    const {store, iconStore, wocky, navStore, onceStore, authStore} = this.props
 
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
-            <Scene key="checkCredentials" on={() => wocky!.username && wocky!.password && wocky!.host} success="checkProfile" failure="preConnection" />
-            <Scene key="connect" on={this.login} success="checkHandle" failure="preConnection" />
+            <Scene key="checkCredentials" on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
+            <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
             <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
-            <Scene key="logout" on={store!.logout} success="preConnection" />
+            <Scene key="logout" on={authStore!.logout} success="preConnection" />
           </Stack>
           <Lightbox>
             <Stack initial hideNavBar key="main">
@@ -210,17 +212,6 @@ class TinyRobotRouter extends React.Component<Props> {
   resetSearchStore = () => {
     this.props.store!.searchStore.setGlobal('')
     Actions.pop()
-  }
-
-  // TODO: Move it outside
-  login = async (data = {}) => {
-    try {
-      await this.props.wocky!.login(data) // Remove that after new typings for MST3
-      return true
-    } catch (error) {
-      this.props.analytics.track('error_connection', {error})
-    }
-    return false
   }
 }
 

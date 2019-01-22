@@ -1,28 +1,29 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
-import {IWocky} from 'wocky-client'
+import {IWocky, Credentials} from 'wocky-client'
 import {IEnv} from '.'
 import {settings} from '../globals'
+import {RNFirebase} from 'react-native-firebase'
+import {IAuthStore} from './AuthStore'
 
 type State = {
-  phone?: string
-  token?: string
   resource?: string
   buttonText?: string
   registered?: boolean
   errorMessage?: string
+  token?: string
 }
 
 const codeUrlString = '?inviteCode='
 
 const FirebaseStore = types
   .model('FirebaseStore', {
-    phone: '',
-    token: types.maybeNull(types.string),
     resource: types.maybeNull(types.string),
     inviteCode: types.maybeNull(types.string),
+    token: types.maybeNull(types.string),
   })
   .volatile(() => ({
+    phone: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
@@ -42,6 +43,7 @@ const FirebaseStore = types
   }))
   .actions(self => {
     const {firebase, auth, logger, analytics}: IEnv = getEnv(self)
+    const {authStore} = getParent<any>(self)
     let wocky: IWocky
     let confirmResult: any
     let unsubscribe: any
@@ -95,9 +97,10 @@ const FirebaseStore = types
       if (user) {
         try {
           await auth!.currentUser!.reload()
-          const token = await auth!.currentUser!.getIdToken(true)
-          self.setState({token})
-          // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});)
+          // self.token = await auth!.currentUser!.getIdToken(true)
+          self.setState({
+            token: await auth!.currentUser!.getIdToken(true),
+          })
         } catch (err) {
           logger.warn('Firebase onAuthStateChanged error:', err)
           analytics.track('auth_error_firebase', {error: err})
@@ -110,6 +113,20 @@ const FirebaseStore = types
       }
     }
 
+    const getLoginCredentials = flow(function*() {
+      if (!self.token) {
+        return null
+      }
+      // Refresh firebase token if less than 5 minutes from expiry
+      const tokenResult: RNFirebase.IdTokenResult = yield auth.currentUser!.getIdTokenResult(false)
+      // todo: use moment instead of Date
+      if (tokenResult.claims.exp - Date.now() / 1000 < 300) {
+        self.token = yield auth.currentUser!.getIdToken(true)
+      }
+
+      return {typ: 'firebase', sub: self.token, phone_number: self.phone}
+    }) as () => Promise<Credentials | null>
+
     const logout = flow(function*() {
       analytics.track('logout')
       if (self.token) {
@@ -121,12 +138,7 @@ const FirebaseStore = types
           logger.warn('firebase logout error', err)
         }
       }
-      try {
-        yield wocky.logout()
-      } catch (err) {
-        analytics.track('error_wocky_logout', {error: err})
-        logger.warn('wocky logout error', err)
-      }
+
       self.reset()
       confirmResult = null
       return true
@@ -197,7 +209,8 @@ const FirebaseStore = types
     const registerWithToken = flow(function*() {
       try {
         self.setState({buttonText: 'Connecting...'})
-        yield wocky.login({accessToken: self.token!})
+        authStore.register(self.phone, 'firebase')
+        yield (authStore as IAuthStore).login()
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
         logger.warn('RegisterWithToken error', err)
@@ -206,6 +219,7 @@ const FirebaseStore = types
       } finally {
         self.setState({
           buttonText: 'Verify',
+          // todo: shouldn't overwrite errorMessage here
           errorMessage: '',
         })
       }
@@ -249,6 +263,7 @@ const FirebaseStore = types
 
     return {
       afterAttach,
+      getLoginCredentials,
       logout,
       beforeDestroy,
       verifyPhone,
