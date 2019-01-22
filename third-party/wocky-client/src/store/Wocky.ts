@@ -20,7 +20,8 @@ import {PaginableLoadType, PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
-export type LoginParams = {phoneNumber?: string; accessToken?: string}
+export type Credentials = {typ: string; sub: string; phone_number?: string}
+
 export const Wocky = types
   .compose(
     Base,
@@ -28,9 +29,6 @@ export const Wocky = types
     types.model({
       id: 'wocky',
       username: types.maybeNull(types.string),
-      password: types.maybeNull(types.string),
-      accessToken: types.maybe(types.string),
-      phoneNumber: types.maybe(types.string),
       host: types.string,
       sessionCount: 0,
       profile: types.maybeNull(OwnProfile),
@@ -74,25 +72,22 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*({phoneNumber, accessToken}: LoginParams) {
-          if (phoneNumber) {
-            self.phoneNumber = phoneNumber
+        login: flow(function*(credentials: Credentials) {
+          const payload = {
+            aud: 'Wocky',
+            jti: uuid(),
+            iss: appInfo.uaString,
+            dvc: appInfo.uniqueId,
+            iat: Math.floor(Date.now() / 1000),
+            ...credentials,
           }
-          if (accessToken) {
-            self.accessToken = accessToken
-          }
-          self.password = generateWockyToken({
-            phoneNumber: self.phoneNumber,
-            accessToken: self.accessToken,
-            userId: (self.username = uuid()),
-            uaString: appInfo.uaString,
-            deviceId: appInfo.uniqueId,
-          })
-          const res = yield self.transport.login(self.password, self.host)
+
+          const password = generateWockyToken(payload)
+          const res = yield self.transport.login(password, self.host)
           if (!res) {
             return false
           }
-          // set username
+
           if (self.transport.username) {
             self.username = self.transport.username
           }
@@ -100,7 +95,7 @@ export const Wocky = types
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
-        }),
+        }) as (credentials: Credentials) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'unavailable'
@@ -601,6 +596,7 @@ export const Wocky = types
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
       ]
     }
+
     return {
       clearCache,
       logout: flow(function* logout() {
@@ -608,13 +604,11 @@ export const Wocky = types
           yield self.disablePush()
           yield self.disconnect()
         }
+
         self.profile = null
         clearCache()
         self.sessionCount = 0
         self.username = null
-        self.password = null
-        self.phoneNumber = undefined
-        self.accessToken = undefined
       }),
       afterCreate: () => {
         self.notifications.setRequest(self._loadNotifications)

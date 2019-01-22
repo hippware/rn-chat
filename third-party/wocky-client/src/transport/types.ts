@@ -6,18 +6,6 @@ export interface IPagingList<T> {
   count: number
 }
 
-export type LoginParams = {
-  userId?: string
-  token?: string
-  password?: string
-  accessToken?: string
-  host?: string
-  version?: string
-  os?: string
-  deviceName?: string
-  phoneNumber?: string
-}
-
 export type MediaUploadParams = {
   access?: string
   file: {
