@@ -49,7 +49,7 @@ describe('New GraphQL conversation tests', () => {
     )
     expect(bob.chats.list.length).toBe(1)
     expect(bob.chats.list[0].messages.list.length).toBe(2)
-    expect(bob.chats.list[0].messages.last!.content).toBe('hello2')
+    expect(bob.chats.list[0].messages.last!.content).toBe('hello')
   })
 
   it("bob can load alice's chat messages", async () => {
