@@ -131,7 +131,7 @@ const HomeStore = types
   }))
   .actions(self => {
     return {
-      onLogout() {
+      logout() {
         applySnapshot(self, {})
       },
       addBotsToList(bots: IBot[]): void {

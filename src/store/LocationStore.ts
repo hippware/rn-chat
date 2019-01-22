@@ -6,7 +6,6 @@ import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
-import {IStore} from '.'
 
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
@@ -299,7 +298,8 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    const {wocky, onceStore} = getRoot<IStore>(self)
+    // const {wocky, onceStore} = getRoot<IStore>(self)
+    const {wocky, onceStore} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
     const {logger} = getEnv(self)
 
@@ -371,7 +371,7 @@ const LocationStore = types
       BackgroundGeolocation.un('providerchange', self.onProviderChange)
     }
 
-    const onLogout = flow(function*() {
+    const logout = flow(function*() {
       yield self.invalidateCredentials()
       yield BackgroundGeolocation.stop()
       logger.log(prefix, 'Stop')
@@ -382,7 +382,7 @@ const LocationStore = types
       finish,
       didMount,
       willUnmount,
-      onLogout,
+      logout,
     }
   })
 

@@ -1,11 +1,11 @@
 import {types, getType, flow, getSnapshot, applySnapshot, getEnv, Instance} from 'mobx-state-tree'
 import {reaction} from 'mobx'
-import {Wocky} from 'wocky-client'
+import {Wocky, IWocky} from 'wocky-client'
 import {settings} from '../globals'
 
 export const cleanState = {
   firebaseStore: {},
-  bypassStore: {},
+  authStore: {},
   locationStore: {},
   searchStore: {},
   profileValidationStore: {},
@@ -34,10 +34,10 @@ const PersistableModel = types
     }
 
     function loadMinimal(parsed: any) {
-      logger.log('loadMinimal')
+      logger.log('loadMinimal', parsed)
       try {
-        const {username, password, host} = parsed.wocky
-        applySnapshot(self.wocky, {username, password, host})
+        // todo: try rehydrating onceStore to prevent going through onboarding after a cache reset?
+        applySnapshot((self as any).authStore, parsed.authStore)
       } catch (err) {
         logger.warn('Minimal hydration error', err)
         analytics.track('loadMinimal_fail', parsed)
@@ -91,7 +91,7 @@ const PersistableModel = types
           applySnapshot(self, parsed)
         }
       } catch (err) {
-        logger.log('hydration error', modelName, parsed, err)
+        logger.log('hydration error', modelName, err, parsed)
         if (modelName === STORE_NAME && parsed && parsed.wocky) {
           loadMinimal(parsed)
         } else {
@@ -132,15 +132,17 @@ const PersistableModel = types
           disposePersistenceReaction()
           disposePersistenceReaction = undefined
         }
+        // calling self.wocky here causes ts problems so the following is necessary
+        const wocky: IWocky = self.wocky
         // shut down wocky
-        self.wocky.clearCache()
-        self.wocky.disposeReactions()
+        wocky.clearCache()
+        wocky.disposeReactions()
         // wipe out old state and apply clean
         applySnapshot(self as any, {
           ...cleanState,
           wocky: {host: settings.getDomain()},
         })
-        self.wocky.startReactions()
+        wocky.startReactions()
         // load minimal state to re-login
         const data = yield loadFromStorage(STORE_NAME)
         const parsed = JSON.parse(data)

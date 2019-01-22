@@ -56,7 +56,7 @@ export default {
   warn: jest.fn(),
   firebaseStore: {
     phone: '1234567890',
-    token: null,
+    token: undefined as any,
     resource: null,
     inviteCode: null,
     buttonText: 'Verify',
@@ -68,7 +68,7 @@ export default {
     setInviteCode: jest.fn(),
     afterAttach: jest.fn(),
     getLoginCredentials: jest.fn(),
-    onLogout: jest.fn(),
+    logout: jest.fn(),
     beforeDestroy: jest.fn(),
     verifyPhone: jest.fn(),
     confirmCode: jest.fn(),

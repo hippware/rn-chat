@@ -5,7 +5,8 @@ import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'
 import {INavStore} from '../store/NavStore'
-import {IWocky, IBypassStore} from 'wocky-client'
+import {IWocky} from 'wocky-client'
+import {IAuthStore} from 'src/store/AuthStore'
 
 type Props = {
   wocky?: IWocky
@@ -13,14 +14,14 @@ type Props = {
   navStore?: INavStore
   name: string
   warn?: any
-  bypassStore?: IBypassStore
+  authStore: IAuthStore
 }
 
 type State = {
   text: string
 }
 
-@inject('wocky', 'analytics', 'warn', 'navStore', 'bypassStore')
+@inject('wocky', 'analytics', 'warn', 'navStore', 'authStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -32,8 +33,8 @@ class TestRegister extends React.Component<Props, State> {
       return
     }
 
-    this.props.bypassStore!.setPhone(`+1555${this.state.text}`)
-    Actions.connect({providerName: this.props.bypassStore!.providerName})
+    this.props.authStore!.register(`+1555${this.state.text}`, 'bypass')
+    Actions.connect()
   }
 
   render() {
