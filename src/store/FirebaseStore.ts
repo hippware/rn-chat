@@ -119,10 +119,12 @@ const FirebaseStore = types
       }
       // Refresh firebase token if less than 5 minutes from expiry
       const tokenResult: RNFirebase.IdTokenResult = yield auth.currentUser!.getIdTokenResult(false)
-      // todo: use moment instead of Date
-      if (tokenResult.claims.exp - Date.now() / 1000 < 300) {
-        self.token = yield auth.currentUser!.getIdToken(true)
-      }
+
+      // Due to a possible race condition if this function gets called
+      //   twice in quick succession, we should always getIdToken()
+      //   even if it has not expired.
+      const refresh = tokenResult.claims.exp - Date.now() / 1000 < 300
+      self.token = yield auth.currentUser!.getIdToken(refresh)
 
       return {typ: 'firebase', sub: self.token, phone_number: self.phone}
     }) as () => Promise<Credentials | null>
