@@ -98,7 +98,7 @@ export const Wocky = types
         }) as (credentials: Credentials) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
-            self.profile!.status = 'unavailable'
+            self.profile!.status = 'OFFLINE'
           }
           yield self.transport.disconnect()
         }),
@@ -571,7 +571,7 @@ export const Wocky = types
               self._loadNewNotifications()
             } else {
               Array.from(self.profiles.storage.values()).forEach((profile: any) =>
-                profile.setStatus('unavailable')
+                profile.setStatus('OFFLINE')
               )
             }
           }

@@ -17,7 +17,7 @@ type Props = {
 }
 
 const PresenceDot = observer(({profile, size, disableStatus, style}: Props) => {
-  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor
+  const backgroundColor = profile && profile.status === 'ONLINE' ? onlineColor : offlineColor
   const shift = size * avatarScale * 3 / 4
   const d = Math.max(10, size / 5) * avatarScale
   const theStyle = {
