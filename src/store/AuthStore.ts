@@ -9,7 +9,7 @@ const AuthStore = types
   })
   .views(self => ({
     get canLogin(): boolean {
-      return !!self.phone
+      return self.strategyName === 'firebase' || !!self.phone
     },
   }))
   .actions(self => {
@@ -26,14 +26,14 @@ const AuthStore = types
       login(): Promise<boolean> {
         try {
           if (!self.canLogin) {
-            throw new Error('Phone number must be set before login.')
+            throw new Error('Login not possible.')
           }
           strategy = strategies[self.strategyName]
           return strategy.login(store)
         } catch (error) {
           analytics.track('error_connection', {error})
+          return Promise.reject(error)
         }
-        return Promise.resolve(false)
       },
 
       logout: flow(function*() {
