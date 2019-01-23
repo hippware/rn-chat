@@ -13,9 +13,10 @@ import {RText} from '../common'
 import {inject} from 'mobx-react/native'
 import {minHeight} from '../Global'
 import {IOnceStore} from 'src/store/OnceStore'
+import PushNotification from 'react-native-push-notification'
 
 type Props = {
-  log?: (text: string) => void
+  log?: (...args) => void
   onceStore?: IOnceStore
 }
 
@@ -40,7 +41,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
         >
           <OnboardingLocation onPress={this.checkLocationPermissions} />
           <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
-          <OnboardingNotifications onPress={this.checkAccelerometerPermissions} />
+          <OnboardingNotifications onPress={this.checkNotificationPermissions} />
           <OnboardingFindFriends
             // onPress={this.findFriends}
             // onSkip={() => this.swiper.scrollBy(1)}
@@ -81,11 +82,20 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   private checkAccelerometerPermissions = async () => {
-    const {log} = console
     // NOTE: this will return 'restricted' on a simulator
     const check = await this.getPermission('motion')
-    log!(`& check is ${check}`)
+    this.props.log!(`Accelerometer check result is ${check}`)
     this.swiper.scrollBy(1)
+  }
+
+  // NOTE: no need to check this permission on Android
+  private checkNotificationPermissions = async () => {
+    if (!PushNotification.isPermissionsRequestPending) {
+      const {alert, badge, sound} = await PushNotification.requestPermissions()
+      // todo, what if they deny permissions?
+      this.props.log!(alert, badge, sound)
+      this.swiper.scrollBy(1)
+    }
   }
 
   private getPermission = async (perm: string, extra?: any): Promise<any> => {

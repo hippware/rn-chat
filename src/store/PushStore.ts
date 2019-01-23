@@ -4,7 +4,6 @@ import PushNotification from 'react-native-push-notification'
 import {Linking} from 'react-native'
 
 class PushStore {
-  requestedPermissions = false
   wocky: any
   analytics: any
   @observable pushNotificationToken?: string
@@ -53,14 +52,6 @@ class PushStore {
         PushNotification.setApplicationIconBadgeNumber(0)
       }
     })
-    when(() => wocky.connected, this.requestPushPermissions)
-  }
-
-  requestPushPermissions = async () => {
-    if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
-      await PushNotification.requestPermissions()
-      this.requestedPermissions = true
-    }
   }
 }
 
