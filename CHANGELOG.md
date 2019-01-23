@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Refactor authentication logic (PR #3250, PR #3267, PR #3272)
+  * User is logged out when the app is in background too long (#3223)
+* "Here" missing on widget. Replaced with an image (#2933, PR #3269)
+* Download image by TROS url (PR #3273) 
+  * Image messages don't show until app reload (#3226)
+
 # 4.0.2 - 2019 Jan 17
 
 * Comments are visible before the user followed the location (#3211)
