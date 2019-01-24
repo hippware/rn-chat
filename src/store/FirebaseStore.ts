@@ -3,7 +3,6 @@ import {when} from 'mobx'
 import {IWocky, Credentials} from 'wocky-client'
 import {IEnv} from '.'
 import {settings} from '../globals'
-import {RNFirebase} from 'react-native-firebase'
 import {IAuthStore} from './AuthStore'
 
 type State = {
@@ -20,13 +19,13 @@ const FirebaseStore = types
   .model('FirebaseStore', {
     resource: types.maybeNull(types.string),
     inviteCode: types.maybeNull(types.string),
-    token: types.maybeNull(types.string),
   })
   .volatile(() => ({
     phone: '',
     buttonText: 'Verify',
     registered: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
+    token: null,
   }))
   .actions(self => ({
     setState(state: State) {
@@ -113,21 +112,23 @@ const FirebaseStore = types
     }
 
     const getLoginCredentials = flow(function*() {
-      if (!self.token) {
+      if (!auth.currentUser) {
         return null
       }
-      // Refresh firebase token if less than 5 minutes from expiry
-      const tokenResult: RNFirebase.IdTokenResult = yield auth.currentUser!.getIdTokenResult(false)
 
-      // Under some timing conditions, firebase may have internally
-      //   refreshed the IdToken. In this case, getIdTokenResult(false)
-      //   returns the claims of the current IdToken that is inside
-      //   firebase. We don't have this IdToken yet so we need to fetch it.
-      // In other words, we must always call getIdToken(). The only
-      //   question is whether to force a refresh.
-      const refresh = tokenResult.claims.exp - Date.now() / 1000 < 300
-      self.token = yield auth.currentUser!.getIdToken(refresh)
+      // // Refresh firebase token if less than 5 minutes from expiry
+      // const tokenResult: RNFirebase.IdTokenResult = yield auth.currentUser!.getIdTokenResult(false)
 
+      // // Under some timing conditions, firebase may have internally
+      // //   refreshed the IdToken. In this case, getIdTokenResult(false)
+      // //   returns the claims of the current IdToken that is inside
+      // //   firebase. We don't have this IdToken yet so we need to fetch it.
+      // // In other words, we must always call getIdToken(). The only
+      // //   question is whether to force a refresh.
+      // const refresh = tokenResult.claims.exp - Date.now() / 1000 < 300
+      // self.token = yield auth.currentUser!.getIdToken(refresh)
+
+      self.token = yield auth.currentUser!.getIdToken()
       return {typ: 'firebase', sub: self.token, phone_number: self.phone}
     }) as () => Promise<Credentials | null>
 
