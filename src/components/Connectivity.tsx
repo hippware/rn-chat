@@ -84,8 +84,7 @@ export default class Connectivity extends React.Component<Props> {
         this.retryDelay = 1000
       } catch (e) {
         this.props.analytics.track('reconnect_fail', {...info, error: e})
-        // todo: error message will be different with GraphQL (?)
-        if (e.toString().indexOf('not-authorized') !== -1 || e.toString().indexOf('invalid')) {
+        if (e.toString().indexOf('invalid token') !== -1) {
           this.retryDelay = 1e9
           Actions.logout()
         } else {
