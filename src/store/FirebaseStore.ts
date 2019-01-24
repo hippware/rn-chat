@@ -1,6 +1,6 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
-import {IWocky, Credentials, waitFor} from 'wocky-client'
+import {IWocky, Credentials} from 'wocky-client'
 import {IEnv} from '.'
 import {settings} from '../globals'
 import {RNFirebase} from 'react-native-firebase'
@@ -26,7 +26,6 @@ const FirebaseStore = types
     phone: '',
     buttonText: 'Verify',
     registered: false,
-    initialized: false,
     errorMessage: '', // to avoid strange typescript errors when set it to string or null,
   }))
   .actions(self => ({
@@ -40,9 +39,6 @@ const FirebaseStore = types
     },
     setInviteCode: code => {
       self.inviteCode = code
-    },
-    init: () => {
-      self.initialized = true
     },
   }))
   .actions(self => {
@@ -64,7 +60,7 @@ const FirebaseStore = types
     }
 
     function afterAttach() {
-      auth.onAuthStateChanged(self.init)
+      auth.onAuthStateChanged(processFirebaseAuthChange)
       wocky = (getParent(self) as any).wocky // wocky could be null for HMR (?)
       // setup dynamic links
       unsubscribe = firebase.links().onLink(onFirebaseDynamicLink)
@@ -95,14 +91,32 @@ const FirebaseStore = types
       unsubscribe()
     }
 
+    // NOTE: this is not a MST action
+    async function processFirebaseAuthChange(user: any) {
+      logger.log('FIREBASESTORE: AUTH STATE CHANGED', !!user)
+      if (user) {
+        try {
+          await auth!.currentUser!.reload()
+          self.setState({
+            token: await auth!.currentUser!.getIdToken(true),
+          })
+        } catch (err) {
+          logger.warn('Firebase onAuthStateChanged error:', err)
+          analytics.track('auth_error_firebase', {error: err})
+          if (wocky && wocky.profile && wocky.connected) {
+            wocky.logout()
+          }
+        }
+      } else if (wocky && wocky.profile && wocky.connected) {
+        wocky.logout()
+      }
+    }
+
     const getLoginCredentials = flow(function*() {
-      yield waitFor(() => self.initialized)
       if (!self.token) {
         return null
       }
-      if (!auth.currentUser) {
-        return null
-      }
+      // Refresh firebase token if less than 5 minutes from expiry
       const tokenResult: RNFirebase.IdTokenResult = yield auth.currentUser!.getIdTokenResult(false)
 
       // Under some timing conditions, firebase may have internally
