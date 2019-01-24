@@ -35,6 +35,8 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* tinyrobotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tinyrobotTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		3974AC9721F943EA003612BB /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3974AC7321F943CE003612BB /* libRCTContacts.a */; };
+		3974AC9821F943F7003612BB /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3974AC7321F943CE003612BB /* libRCTContacts.a */; };
 		397A73F0211A5D17008AC2EF /* libReactNativeTouchThroughView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 397A73EF211A5611008AC2EF /* libReactNativeTouchThroughView.a */; };
 		56FC1E3D5FB74A8AA6FDADEA /* libReactNativeTouchThroughView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7484CC068DAD40D8A1FAC6A1 /* libReactNativeTouchThroughView.a */; };
 		57786A3E7DB44B328862DF0B /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D547D421BC54B89BA838270 /* AppCenter-Config.plist */; };
@@ -259,6 +261,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		3974AC7221F943CE003612BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3974AC6721F943CE003612BB /* RCTContacts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1441618E1BD0A79300FA4F59;
+			remoteInfo = RCTContacts;
+		};
 		397A73EE211A5611008AC2EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FC136934107845E4B59116F3 /* ReactNativeTouchThroughView.xcodeproj */;
@@ -460,6 +469,7 @@
 		2D02E47B1E0B4A5D006451C7 /* tinyrobot-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tinyrobot-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* tinyrobot-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tinyrobot-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3974AC6721F943CE003612BB /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		39EF672420EEA9B5001C7D08 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
 		39EF672520EEA9CF001C7D08 /* tinyrobot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tinyrobot.entitlements; path = tinyrobot/tinyrobot.entitlements; sourceTree = "<group>"; };
 		3ECBFBCC4C5C4B819CF4ADA8 /* libLRDRCTNativeEnv.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTNativeEnv.a; sourceTree = "<group>"; };
@@ -521,6 +531,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3974AC9821F943F7003612BB /* libRCTContacts.a in Frameworks */,
 				87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */,
 				87C4125C20E634FF0044AF0A /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -570,6 +581,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3974AC9721F943EA003612BB /* libRCTContacts.a in Frameworks */,
 				397A73F0211A5D17008AC2EF /* libReactNativeTouchThroughView.a in Frameworks */,
 				87C414BE20E66C8E0044AF0A /* libReactNativeCameraKit.a in Frameworks */,
 				87C4148020E669F90044AF0A /* libRCTPushNotification.a in Frameworks */,
@@ -723,6 +735,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3974AC6821F943CE003612BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3974AC7321F943CE003612BB /* libRCTContacts.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		397A73EB211A5611008AC2EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -752,6 +772,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3974AC6721F943CE003612BB /* RCTContacts.xcodeproj */,
 				87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */,
 				87C4122D20E634EE0044AF0A /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -1103,6 +1124,10 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
+					ProductGroup = 3974AC6821F943CE003612BB /* Products */;
+					ProjectRef = 3974AC6721F943CE003612BB /* RCTContacts.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -1294,6 +1319,13 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3974AC7321F943CE003612BB /* libRCTContacts.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTContacts.a;
+			remoteRef = 3974AC7221F943CE003612BB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		397A73EF211A5611008AC2EF /* libReactNativeTouchThroughView.a */ = {
