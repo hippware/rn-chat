@@ -9,6 +9,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * "Here" missing on widget. Replaced with an image (#2933, PR #3269)
 * Download image by TROS url (PR #3273) 
   * Image messages don't show until app reload (#3226)
+* [GraphQL] Online presence (#3270)
+* [dev] modify `tryMigrate` (#3266)
+* Some messages are not correctly marked as unread (#3227)
+  * Use message IDs (PR #3277)
+* Onboarding 3: Notifications Permissions (#3030)
 
 # 4.0.2 - 2019 Jan 17
 
