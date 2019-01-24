@@ -10014,6 +10014,11 @@ react-native-code-push@^5.3.4:
     plist "3.0.1"
     xcode "1.0.0"
 
+react-native-contacts@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-3.1.1.tgz#41ded28baf7ab83b9b4dc66c54db4c4e3601967b"
+  integrity sha512-xSwL2n0OFnPlSwkw/xzBeiwYtVtB38wmGucAoucMcp9EDfH+gJQ7oqPzRk9uBddYpvOCIw8+J+vsFRW2iJAwMA==
+
 "react-native-country-picker-modal@github:hippware/react-native-country-picker-modal":
   version "0.5.0"
   resolved "https://codeload.github.com/hippware/react-native-country-picker-modal/tar.gz/8e5f72e3a9e5730764efc06a6f722e96efe79a19"
