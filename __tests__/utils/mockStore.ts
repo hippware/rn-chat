@@ -57,6 +57,8 @@ export default {
   firebaseStore: {
     phone: '1234567890',
     token: undefined as any,
+    initialized: false,
+    init: jest.fn(),
     resource: null,
     inviteCode: null,
     buttonText: 'Verify',
