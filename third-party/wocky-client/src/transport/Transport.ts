@@ -980,6 +980,29 @@ export class Transport {
     })
   }
 
+  async userBulkLookup(phoneNumbers: string[]) {
+    try {
+      const res = await this.client!.query<any>({
+        query: gql`
+          query userBulkLookup($phoneNumbers: [String]!) {
+            userBulkLookup(phoneNumbers: $phoneNumbers) {
+              e164PhoneNumber
+              phoneNumber
+              user {
+                id
+              }
+            }
+          }
+        `,
+        variables: {phoneNumbers},
+      })
+      console.log('& result', res.data.userBulkLookup)
+      return res.data.userBulkLookup
+    } catch (err) {
+      console.log('& error', err)
+    }
+  }
+
   /******************************** SUBSCRIPTIONS ********************************/
 
   subscribePresence() {
