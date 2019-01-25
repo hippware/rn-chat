@@ -111,7 +111,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="onboarding" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
           </Stack>
           <Lightbox>

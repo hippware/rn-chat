@@ -977,6 +977,7 @@ export class Transport {
 
   async userBulkLookup(phoneNumbers: string[]) {
     try {
+      console.log('transport bulk lookup', phoneNumbers)
       const res = await this.client!.query<any>({
         query: gql`
           query userBulkLookup($phoneNumbers: [String]!) {
@@ -991,6 +992,7 @@ export class Transport {
         `,
         variables: {phoneNumbers},
       })
+      console.log('& res 1', res)
       console.log('& result', res.data.userBulkLookup)
       return res.data.userBulkLookup
     } catch (err) {

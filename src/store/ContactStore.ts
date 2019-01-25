@@ -50,15 +50,15 @@ class ContactStore {
     this.loading = true
     RNContacts.getAll(async (error, contacts) => {
       if (!error) {
-        // console.log(contacts)
+        console.log(contacts)
         this.contacts.replace(contacts.map(c => new MyContact(c)))
         const phoneNumbers = this.contacts.reduce<string[]>((prev, current) => {
           return [...prev, ...current.contact.phoneNumbers.map(p => p.number)]
         }, [])
 
         // todo: uncomment once Bernard figures out what's bombing
-        // const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
-        // console.log('result', bulkResult)
+        const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
+        console.log('result', bulkResult)
 
         // todo: loop through bulkResult and update this.contacts accordingly
       }
