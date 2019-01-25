@@ -4,8 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.0.4 - 2019 Jan 24
+
+* Revert: Implement graphql relogin (PR #3283)
+* Hotfix: allow initial sms login
+
+# 4.0.3 - 2019 Jan 24
+
 * Refactor authentication logic (PR #3250, PR #3267, PR #3272)
   * User is logged out when the app is in background too long (#3223)
+  * Always call getIdToken() in case Firebase has a new token (PR #3279)
 * "Here" missing on widget. Replaced with an image (#2933, PR #3269)
 * Download image by TROS url (PR #3273) 
   * Image messages don't show until app reload (#3226)
@@ -14,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Some messages are not correctly marked as unread (#3227)
   * Use message IDs (PR #3277)
 * Onboarding 3: Notifications Permissions (#3030)
+* Implement graphql relogin (PR #3283)
 
 # 4.0.2 - 2019 Jan 17
 
