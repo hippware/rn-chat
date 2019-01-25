@@ -26,6 +26,7 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import OnceStore from './OnceStore'
+import ContactStore from './ContactStore'
 const jsVersion = require('../../package.json').version
 const transport = new Transport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
@@ -117,6 +118,7 @@ export const reportStore = rs
 export const iconStore = new IconStore()
 export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
+export const contactStore = new ContactStore(theStore.wocky)
 // simple logging
 addMiddleware(theStore, simpleActionLogger)
 
