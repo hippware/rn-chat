@@ -47,11 +47,7 @@ describe('FileStore', () => {
     // TODO fix unstable test here
     user1 = await createUser(undefined, user1phone)
     const profile = await user1.loadProfile(user1.username!)
-    // await waitFor(
-    //   () => !!profile!.avatar && profile!.avatar!.thumbnail !== null,
-    //   'thumbnail not loaded in time',
-    //   6000
-    // )
+    await waitFor(() => !!profile!.avatar && profile!.avatar!.thumbnail !== null)
     // expect(profile!.avatar!.url).toBe('')
     // expect(profile!.avatar!.thumbnail!.uri).toBeTruthy()
     try {
