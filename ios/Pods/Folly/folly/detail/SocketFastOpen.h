@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Facebook, Inc.
+ * Copyright 2016-present Facebook, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,11 @@
 #include <folly/portability/Sockets.h>
 #include <sys/types.h>
 
-#if !defined(FOLLY_ALLOW_TFO) && defined(__linux__) && !defined(__ANDROID__)
+#if !defined(FOLLY_ALLOW_TFO)
+#if defined(__linux__) || defined(__APPLE__)
 // only allow for linux right now
 #define FOLLY_ALLOW_TFO 1
+#endif
 #endif
 
 namespace folly {
@@ -42,5 +44,5 @@ int tfo_enable(int sockfd, size_t max_queue_size);
  * Check if TFO succeeded in being used.
  */
 bool tfo_succeeded(int sockfd);
-}
-}
+} // namespace detail
+} // namespace folly

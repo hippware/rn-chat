@@ -1,16 +1,17 @@
 {
   "passPerPreset": true,
   "presets": [
-    "react-native"
+  "@babel/preset-typescript",
+    "module:metro-react-native-babel-preset"
   ],
   "sourceMaps": "inline",
-  "plugins": ["transform-decorators-legacy", "transform-class-properties"],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread", "@babel/plugin-transform-flow-strip-types", ["@babel/plugin-proposal-decorators", { "legacy": true }], ["@babel/plugin-proposal-class-properties", { "loose": true }]],
   "env": {
     "production": {
       "plugins": ["transform-remove-console"]
     },
     "test": {
-      "plugins": ["transform-decorators-legacy", "transform-class-properties"]
+      "plugins": ["@babel/plugin-proposal-object-rest-spread", "@babel/plugin-transform-flow-strip-types", ["@babel/plugin-proposal-decorators", { "legacy": true }], ["@babel/plugin-proposal-class-properties", { "loose": true }]]
     }
   }
 }
