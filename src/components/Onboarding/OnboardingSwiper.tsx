@@ -14,13 +14,16 @@ import {inject} from 'mobx-react/native'
 import {minHeight} from '../Global'
 import {IOnceStore} from 'src/store/OnceStore'
 import PushNotification from 'react-native-push-notification'
+import OnboardingFindFriendsList from './OnboardingFindFriendsList'
+import ContactStore from 'src/store/ContactStore'
 
 type Props = {
   log?: (...args) => void
   onceStore?: IOnceStore
+  contactStore?: ContactStore
 }
 
-@inject('log', 'onceStore')
+@inject('log', 'onceStore', 'contactStore')
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
@@ -42,29 +45,19 @@ export default class OnboardingSwiper extends React.Component<Props> {
           <OnboardingLocation onPress={this.checkLocationPermissions} />
           <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
           <OnboardingNotifications onPress={this.checkNotificationPermissions} />
-          <OnboardingFindFriends
-            // onPress={this.findFriends}
-            // onSkip={() => this.swiper.scrollBy(1)}
-            // TODO: replace these with real calls in later tickets
-            onPress={this.done}
-            onSkip={this.done}
-          />
+          <OnboardingFindFriends onPress={this.findFriends} onSkip={this.done} />
+          <OnboardingFindFriendsList onPress={this.done} />
         </Swiper>
       </View>
     )
   }
 
   private checkLocationPermissions = async () => {
-    // const {log} = this.props
-    const {log} = console
     const check = await this.getPermission('location', {type: 'always'})
-    log('& check', check)
     if (check === 'authorized') {
-      log!('& always on permission authorized!')
       this.swiper.scrollBy(1)
     } else {
       // TODO: show overlay with instructions for changing location settings. https://zpl.io/bPdleyl
-      log!('& location permission not always allowed')
       Alert.alert('', "We need your location to show you what's nearby!", [
         {
           text: 'OK',
@@ -108,10 +101,15 @@ export default class OnboardingSwiper extends React.Component<Props> {
     return check
   }
 
-  // todo
-  // private findFriends = () => {
-  //   this.swiper.scrollBy(1)
-  // }
+  private findFriends = async () => {
+    try {
+      await this.props.contactStore!.requestPermission()
+      this.swiper.scrollBy(1)
+      this.props.contactStore!.loadContacts()
+    } catch (err) {
+      this.done()
+    }
+  }
 
   private done = () => {
     this.props.onceStore!.flip('onboarded')
