@@ -544,6 +544,11 @@ export const Wocky = types
       userInviteRedeemCode(code: string): Promise<void> {
         return self.transport.userInviteRedeemCode(code)
       },
+      userBulkLookup: flow(function*(phoneNumbers: string[]) {
+        const data = yield self.transport.userBulkLookup(phoneNumbers)
+        console.log('& data', data)
+        return data
+      }) as (phoneNumbers: string[]) => Promise<any[]>,
     }
   })
   .actions(self => ({
