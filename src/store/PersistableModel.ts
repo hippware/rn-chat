@@ -20,6 +20,7 @@ const PersistableModel = types
   .model({id: 'Persistable', wocky: Wocky})
   .volatile(() => ({
     reloading: false,
+    hydrated: false,
   }))
   .actions(self => {
     const {logger, storage, analytics, appInfo} = getEnv(self)
@@ -88,6 +89,7 @@ const PersistableModel = types
       hydrate: flow(function* hydrate() {
         if (storage) {
           yield load()
+          self.hydrated = true
           startPersistenceReaction()
           return true
         }

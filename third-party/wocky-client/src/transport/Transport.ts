@@ -11,6 +11,7 @@ import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
+const TIMEOUT = 5000
 import {
   PROFILE_PROPS,
   BOT_PROPS,
@@ -72,7 +73,7 @@ export class Transport {
     }
     this.connecting = true
     this.prepConnection()
-    const res = await this.authenticate(token)
+    const res = await timeout(this.authenticate(token), TIMEOUT)
 
     if (res) {
       this.subscribeBotVisitors()
@@ -106,6 +107,9 @@ export class Transport {
         this.username = (res.data as any).authenticate.user.id
       }
       return this.connected
+    } catch (e) {
+      this.disconnect()
+      throw e
     } finally {
       this.connecting = false
     }
@@ -1231,10 +1235,12 @@ export class Transport {
     socket.onError(() => {
       // console.warn('& graphql Phoenix socket error', err)
       this.connected = false
+      this.connecting = false
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
       this.connected = false
+      this.connecting = false
     })
     socket.onOpen(() => {
       // console.log('& graphql open')
@@ -1276,4 +1282,25 @@ export class Transport {
       }
     })
   }
+}
+
+function timeout(promise: Promise<any>, timeoutMillis: number) {
+  let _timeout: any
+  return Promise.race([
+    promise,
+    new Promise((_0, reject) => {
+      _timeout = setTimeout(() => {
+        reject('Operation timed out!')
+      }, timeoutMillis)
+    }),
+  ]).then(
+    v => {
+      clearTimeout(_timeout)
+      return v
+    },
+    err => {
+      clearTimeout(_timeout)
+      throw err
+    }
+  )
 }

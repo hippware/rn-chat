@@ -14,9 +14,10 @@ interface IStrategies {
 const Strategies: IStrategies = {
   firebase: {
     login: async store => {
-      const {wocky, firebaseStore} = store
+      const {wocky, firebaseStore, authStore} = store
       const credentials: Credentials = await firebaseStore.getLoginCredentials()
-      return wocky.login(credentials)
+
+      return wocky.login({...credentials, phone_number: authStore.phone})
     },
     logout: async store => {
       return store.firebaseStore.logout()
