@@ -3,7 +3,7 @@
 
 DEPLOYMENT_NAME=$1
 DESCRIPTION=$2
-RELEASE_ID=`date +"%Y-%m-%d_%H-%M-%S %z"`
+RELEASE_ID=`date +"%Y-%m-%d_%H-%M-%S_%z"`
 BUILD_DIR=cpbuild
 BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
 
