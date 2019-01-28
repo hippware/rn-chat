@@ -73,16 +73,20 @@ export class Transport {
     }
     this.connecting = true
     this.prepConnection()
-    const res = await timeout(this.authenticate(token), TIMEOUT)
-
-    if (res) {
-      this.subscribeBotVisitors()
-      this.subscribeNotifications()
-      this.subscribeMessages()
-      this.subscribeContacts()
-      this.subscribePresence()
+    try {
+      const res = await timeout(this.authenticate(token), TIMEOUT)
+      if (res) {
+        this.subscribeBotVisitors()
+        this.subscribeNotifications()
+        this.subscribeMessages()
+        this.subscribeContacts()
+        this.subscribePresence()
+      }
+      return res
+    } catch (e) {
+      this.disconnect()
+      throw e
     }
-    return res
   }
 
   @action
@@ -107,9 +111,6 @@ export class Transport {
         this.username = (res.data as any).authenticate.user.id
       }
       return this.connected
-    } catch (e) {
-      this.disconnect()
-      throw e
     } finally {
       this.connecting = false
     }
