@@ -44,7 +44,7 @@ const Avatar = observer(
     const showMask =
       profile.isOwn && (profile as IOwnProfile).hidden && (profile as IOwnProfile).hidden.enabled
     const title = profile.displayName || ' '
-    const Clazz = tappable ? TouchableOpacity : View
+    const Clazz: React.ComponentClass<any> = tappable ? TouchableOpacity : View
     const sharedStyle = {
       width: size * avatarScale,
       height: size * avatarScale,
