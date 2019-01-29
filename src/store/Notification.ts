@@ -60,5 +60,9 @@ export default class Notification {
   }
 
   // next = () => (this.lifeCycleIndex += 1);
-  @action close = () => (this.lifeCycleIndex = CLOSING)
+  @action
+  close = () => {
+    // console.log('NOTIFICATION CLOSE')
+    this.lifeCycleIndex = CLOSING
+  }
 }

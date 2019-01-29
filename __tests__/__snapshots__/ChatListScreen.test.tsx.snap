@@ -83,53 +83,45 @@ exports[`ChatListScreen renders with no data 1`] = `
     >
       <View>
         <View
-          onLayout={[Function]}
-          style={null}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "flex": 1,
+              "justifyContent": "center",
+              "marginTop": 150,
+            }
+          }
         >
-          <View
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "transparent",
-                "flex": 1,
-                "justifyContent": "center",
-                "marginTop": 150,
-              }
+              Array [
+                Object {
+                  "color": "rgb(196,196,196)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 18,
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Array [
-                  Object {
-                    "color": "rgb(196,196,196)",
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 18,
-                  },
-                  Object {
-                    "textAlign": "center",
-                  },
-                ]
-              }
-            >
-              No messages yet
+            No messages yet
 Why not start a conversation?
-            </Text>
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/botGray.png",
-                }
+          </Text>
+          <Image
+            source={
+              Object {
+                "testUri": "../../../images/botGray.png",
               }
-              style={
-                Object {
-                  "marginTop": 20,
-                }
+            }
+            style={
+              Object {
+                "marginTop": 20,
               }
-            />
-          </View>
+            }
+          />
         </View>
       </View>
     </RCTScrollView>

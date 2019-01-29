@@ -51,7 +51,7 @@ export default class BotDetails extends React.Component<Props> {
     return <View style={{backgroundColor: 'white', height: 100 * k}} />
   })
 
-  async componentDidMount() {
+  async componentWillMount() {
     const {wocky, analytics, botId, homeStore} = this.props
     runInAction(() => {
       this.bot = wocky!.getBot({id: botId})

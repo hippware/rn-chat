@@ -73,9 +73,6 @@ exports[`Signup renders 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -247,9 +244,6 @@ exports[`Signup renders 1`] = `
         </View>
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -272,9 +266,6 @@ exports[`Signup renders 1`] = `
       >
         By signing up you agree to our 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Array [
@@ -292,9 +283,6 @@ exports[`Signup renders 1`] = `
         , 
 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Array [
@@ -310,9 +298,6 @@ exports[`Signup renders 1`] = `
           Terms of Service
         </Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -353,9 +338,6 @@ exports[`Signup renders 1`] = `
         }
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
