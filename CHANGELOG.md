@@ -17,6 +17,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * User is logged out when the app is in background too long (#3223)
   * Connecting Banner that does not go away (#3275)
 * React native 0.58 upgrade and related fixes (#3287, PR #3288)
+  * Add react-native-contacts
   * Enable bitcode (PR #3293)
 
 # 4.0.4 - 2019 Jan 24
