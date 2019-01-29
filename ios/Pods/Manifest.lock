@@ -1,13 +1,13 @@
 PODS:
-  - AppCenter/Core (1.10.0)
-  - AppCenterReactNativeShared (1.9.0):
-    - AppCenter/Core (= 1.10.0)
+  - AppCenter/Core (1.11.0)
+  - AppCenterReactNativeShared (1.10.0):
+    - AppCenter/Core (= 1.11.0)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.13.0):
-    - BugsnagReactNative/Core (= 2.13.0)
+  - BugsnagReactNative (2.14.0):
+    - BugsnagReactNative/Core (= 2.14.0)
     - React
-  - BugsnagReactNative/Core (2.13.0):
+  - BugsnagReactNative/Core (2.14.0):
     - React
   - BVLinearGradient (2.5.3):
     - React
@@ -17,7 +17,7 @@ PODS:
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - CodePush (5.5.1):
+  - CodePush (5.5.2):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -184,14 +184,14 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.4.5):
+  - RNBackgroundFetch (2.4.6):
     - React
   - RNBackgroundGeolocation (2.14.2):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFirebase (5.2.0):
+  - RNFirebase (5.2.1):
     - Firebase/Core
     - React
   - RNFS (2.13.3):
@@ -205,7 +205,7 @@ PODS:
   - yoga (0.58.0.React)
 
 DEPENDENCIES:
-  - AppCenterReactNativeShared (~> 1.9.0)
+  - AppCenterReactNativeShared
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - CodePush (from `../node_modules/react-native-code-push`)
@@ -313,8 +313,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 2d196f6547d274ab86836f9082cfdbd3d397e7b6
-  AppCenterReactNativeShared: a4bf64d2fae919fc0b235fe47a02ef9ddd3a0011
+  AppCenter: 3bccf8d733e337d0db574dd4cb0e33ab9637b7f2
+  AppCenterReactNativeShared: a77b000c2ac6dc2e44472621d7d0770f196e5822
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 0b7626917d3612281d07aea84e5041f123290fee
@@ -330,8 +330,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 8f49b70f57ab5cbb032ef41d64992ded21606459
   FirebaseDynamicLinks: c713da5f75c324f38fb2d57164bbc1c461aa6739
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
-  Folly: 940622d8ee23066716a0b58cf15d9246dbf1d66d
-  glog: 5baac736cba0857d11b896afc39b60d03e1fbcd1
+  Folly: de497beb10f102453a1afa9edbf8cf8a251890de
+  glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
@@ -357,6 +357,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
-PODFILE CHECKSUM: 48be381988a7884802014a8f830228a476e74f9d
+PODFILE CHECKSUM: 2d9163d8f05360617868c3be089f15cf1fde9dde
 
 COCOAPODS: 1.5.3
