@@ -9,6 +9,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * [dev] Check BugSnag sourcemaps (#3002)
 * Codepush bundleID tweaks (PR #3291)
 * Reconnection rework (PR #3286)
+  * Fix firebase login (with real phone number) (Regression #3172)
+  * User is logged out when the app is in background too long (#3223)
+  * Connecting Banner that does not go away (#3275)
 
 # 4.0.4 - 2019 Jan 24
 
