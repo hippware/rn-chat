@@ -180,7 +180,6 @@
     "babel-jest": "23.6.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-remove-console": "^6.8.4",
-    "babel-preset-react-native": "^4.0.0",
     "bugsnag-sourcemaps": "^1.0.4",
     "chalk": "^2.4.1",
     "denodeify": "^1.2.1",
