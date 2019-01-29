@@ -170,7 +170,7 @@
     "@types/node-fetch": "^2.1.2",
     "@types/phoenix": "^0.0.4",
     "@types/react": "^16.6.3",
-    "@types/react-native": "^0.58.0",
+    "@types/react-native": "^0.57.32",
     "@types/react-navigation": "^2.13.0",
     "@types/react-test-renderer": "^16.0.3",
     "@types/strophe": "1.2.27",
