@@ -330,8 +330,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 8f49b70f57ab5cbb032ef41d64992ded21606459
   FirebaseDynamicLinks: c713da5f75c324f38fb2d57164bbc1c461aa6739
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
-  Folly: de497beb10f102453a1afa9edbf8cf8a251890de
-  glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
+  Folly: 940622d8ee23066716a0b58cf15d9246dbf1d66d
+  glog: 5baac736cba0857d11b896afc39b60d03e1fbcd1
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
