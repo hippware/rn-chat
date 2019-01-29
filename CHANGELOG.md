@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Restore file.test.ts (PR #3285), then reverted (PR #3290)
+* Fixes to appcenter-post-build (PR #3282)
+  * [dev] Check BugSnag sourcemaps (#3002)
+* Codepush bundleID tweaks (PR #3291)
+* Reconnection rework (PR #3286)
+
 # 4.0.4 - 2019 Jan 24
 
 * Revert: Implement graphql relogin (PR #3283)
