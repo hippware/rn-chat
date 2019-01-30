@@ -19,6 +19,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * React native 0.58 upgrade and related fixes (#3287, PR #3288)
   * Add react-native-contacts
   * Enable bitcode (PR #3293)
+  * Update typescript to 3.2.4, lots of other dependencies
 
 # 4.0.4 - 2019 Jan 24
 
