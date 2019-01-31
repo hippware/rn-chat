@@ -15,7 +15,7 @@ type Props = {
   user: IProfile
 }
 
-const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
+const EventFriendInviteRequestCard = observer(({item: {relativeDateAsString, user}}: Props) => (
   <EventCardTemplate
     timestamp={relativeDateAsString}
     action={'wants to connect with you.'}
@@ -25,7 +25,7 @@ const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Prop
   />
 ))
 
-export default EventUserFollowCard
+export default EventFriendInviteRequestCard
 
 type FollowProps = {
   profile: IProfile

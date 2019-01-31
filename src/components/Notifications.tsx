@@ -9,6 +9,8 @@ import ListFooter from './ListFooter'
 import {navBarStyle, placeholderStyle} from './styles'
 import {colors} from 'src/constants'
 import {View} from 'react-native'
+import SwitchButton from './SwitchButton'
+import {PINK, WHITE} from '../constants/colors'
 
 type Props = {
   wocky?: IWocky
@@ -17,6 +19,9 @@ type Props = {
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
+  state = {
+    index: 1,
+  }
   componentDidMount() {
     this.props.wocky!.viewNotifications()
   }
@@ -37,9 +42,26 @@ class Notifications extends React.Component<Props> {
           title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
         }}
         headerInner={
-          <RText size={17} weight={'Medium'}>
-            Updates
-          </RText>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <SwitchButton
+              text1="Updates"
+              text2="Requests"
+              switchWidth={220}
+              switchHeight={32}
+              btnStyle={{}}
+              btnHeight={32}
+              btnBorderColor={PINK}
+              btnBackgroundColor={PINK}
+              switchBackgroundColor={WHITE}
+              switchBorderColor={PINK}
+              switchBorderRadius={16}
+              activeFontColor={WHITE}
+              fontColor={PINK}
+              onValueChange={(index: number) => {
+                this.setState({index})
+              }}
+            />
+          </View>
         }
         data={notifications.length > 0 ? notifications.list.slice() : []}
         renderItem={this.renderItem}
