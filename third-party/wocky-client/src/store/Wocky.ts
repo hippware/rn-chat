@@ -15,8 +15,7 @@ import uuid from 'uuid/v1'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {IEventData} from '../model/Event'
-import {PaginableLoadType, PaginableLoadPromise} from '../transport/Transport'
+import {PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
@@ -362,16 +361,6 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)
       }),
-      _loadNotifications: flow(function*(lastId: string, max: number = 20) {
-        yield waitFor(() => self.connected)
-        const {list, count}: PaginableLoadType<IEventData> = yield self.transport.loadNotifications(
-          {
-            beforeId: lastId,
-            limit: max,
-          }
-        )
-        return {list: list.map(data => createEvent(data, self)), count}
-      }) as RequestType,
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
@@ -498,6 +487,7 @@ export const Wocky = types
         const {list} = yield self.transport.loadNotifications({
           afterId: mostRecentNotification && (mostRecentNotification.id as any),
           limit,
+          types: undefined,
         })
         if (list.length === limit) {
           // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
@@ -603,7 +593,6 @@ export const Wocky = types
         self.username = null
       }),
       afterCreate: () => {
-        self.notifications.setRequest(self._loadNotifications)
         self.geofenceBots.setRequest(self._loadGeofenceBots as any)
         startReactions()
       },

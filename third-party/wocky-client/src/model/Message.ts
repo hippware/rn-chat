@@ -4,7 +4,6 @@ import {FileRef} from './File'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable} from './PaginableList'
-import {IWocky} from '../index'
 import _ from 'lodash'
 
 const MessageBase = types.model('MessageBase', {
@@ -16,7 +15,7 @@ const MessageBase = types.model('MessageBase', {
   isOutgoing: types.boolean,
 })
 
-export function createMessage(params: any, service: IWocky): IMessage {
+export function createMessage(params: any, service: any): IMessage {
   params = _.cloneDeep(params)
   if (params.otherUser) {
     params.otherUser = service.profiles.get(params.otherUser.id, params.otherUser)

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, StyleSheet, Animated} from 'react-native'
 import RText from '../components/common/RText'
+import {observer} from 'mobx-react/native'
 
 type Props = {
   switchSpeedChange?: number
@@ -25,6 +26,8 @@ type Props = {
 type State = {
   activeSwitch: number
 }
+
+@observer
 export default class SwitchButton extends Component<Props, State> {
   static defaultProps = {
     switchSpeedChange: 100,
