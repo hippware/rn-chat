@@ -8,6 +8,11 @@ export const EventBotCreate = types
       created: types.boolean,
     })
   )
+  .views(() => ({
+    get isRequest() {
+      return false
+    },
+  }))
   .named('EventBotCreate')
 
 export interface IEventBotCreate extends Instance<typeof EventBotCreate> {}

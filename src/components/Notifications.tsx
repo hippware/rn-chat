@@ -8,7 +8,7 @@ import EventCard from './event-cards/EventCard'
 import ListFooter from './ListFooter'
 import {navBarStyle, placeholderStyle} from './styles'
 import {colors} from 'src/constants'
-import {View} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import SwitchButton from './SwitchButton'
 import {PINK, WHITE} from '../constants/colors'
 
@@ -19,15 +19,15 @@ type Props = {
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
-  state = {
-    index: 1,
+  componentWillMount() {
+    this.props.wocky!.notifications.setMode(1)
   }
   componentDidMount() {
-    this.props.wocky!.viewNotifications()
+    this.props.wocky!.notifications.readAll()
   }
 
   componentWillUnmount() {
-    this.props.wocky!.viewNotifications()
+    this.props.wocky!.notifications.readAll()
   }
 
   render() {
@@ -39,7 +39,7 @@ class Notifications extends React.Component<Props> {
       <DraggablePopupList
         fadeNavConfig={{
           back: true,
-          title: <RText style={navBarStyle.titleStyle}>Updates</RText>,
+          title: <RText style={navBarStyle.titleStyle}>{notifications.title}</RText>,
         }}
         headerInner={
           <View style={{flex: 1, alignItems: 'center'}}>
@@ -57,33 +57,33 @@ class Notifications extends React.Component<Props> {
               switchBorderRadius={16}
               activeFontColor={WHITE}
               fontColor={PINK}
-              onValueChange={(index: number) => {
-                this.setState({index})
-              }}
-            />
+              onValueChange={notifications.setMode}
+            >
+              {notifications.hasUnread && <View style={styles.newDot} />}
+            </SwitchButton>
           </View>
         }
-        data={notifications.length > 0 ? notifications.list.slice() : []}
+        data={notifications.data}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         onEndReachedThreshold={0.5}
         onEndReached={() => notifications.load()}
         ListFooterComponent={observer(() => (
           <View>
-            {notifications.length === 0 ? (
+            {notifications.data.length === 0 ? (
               <View>
                 <RText
                   weight="Regular"
                   color={colors.GREY}
                   style={placeholderStyle.placeholderText as any}
                 >
-                  No new updates
+                  {notifications.emptyTitle}
                 </RText>
               </View>
             ) : (
               <ListFooter
                 style={{backgroundColor: 'white'}}
-                finished={notifications.finished || notifications.length === 0}
+                finished={notifications.finished || notifications.data.length === 0}
               />
             )}
           </View>
@@ -96,5 +96,19 @@ class Notifications extends React.Component<Props> {
 
   keyExtractor = (item: any) => item.id
 }
+
+const styles = StyleSheet.create({
+  newDot: {
+    position: 'absolute',
+    top: -5,
+    right: 0,
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: 13 / 2,
+    width: 13,
+    height: 13,
+    backgroundColor: colors.GOLD,
+  },
+})
 
 export default Notifications
