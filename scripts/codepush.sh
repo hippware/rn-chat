@@ -3,7 +3,6 @@
 
 DEPLOYMENT_NAME=$1
 DESCRIPTION=$2
-RELEASE_ID=`date +"%Y-%m-%d_%H-%M-%S_%z"`
 BUILD_DIR=cpbuild
 BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
 
@@ -18,6 +17,8 @@ if [ -z "$DESCRIPTION" ]; then
     echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
     exit 1
 fi
+
+RELEASE_ID=${DEPLOYMENT_NAME}_`date +"%Y-%m-%d_%H-%M-%S_%z"`
 
 # if [ -z "$RELEASE_ID" ]; then
 #     echo "No bugsnag unique id specified"
