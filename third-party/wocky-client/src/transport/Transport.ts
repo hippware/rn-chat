@@ -315,13 +315,14 @@ export class Transport {
     limit?: number
     beforeId?: string
     afterId?: string
+    types: string[] | undefined
   }): PaginableLoadPromise<IEventData> {
-    const {limit, beforeId, afterId} = params
+    const {limit, beforeId, afterId, types} = params
     // console.log('& gql load', beforeId, afterId, limit)
     const res = await this.client!.query<any>({
       query: gql`
-        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
-          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
+        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!, $types: [NotificationType]) {
+          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId, types: $types) {
             totalCount
             edges {
               node {
@@ -331,7 +332,7 @@ export class Transport {
           }
         }
       `,
-      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username},
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
     })
     // console.log('& gql res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {

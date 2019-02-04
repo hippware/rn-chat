@@ -15,8 +15,7 @@ import uuid from 'uuid/v1'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {IEventData} from '../model/Event'
-import {PaginableLoadType, PaginableLoadPromise} from '../transport/Transport'
+import {PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot} from '../model/Location'
 
@@ -33,7 +32,6 @@ export const Wocky = types
       sessionCount: 0,
       profile: types.maybeNull(OwnProfile),
       notifications: types.optional(EventList, {}),
-      hasUnreadNotifications: false,
       geofenceBots: types.optional(BotPaginableList, {}),
       // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, {}),
@@ -363,16 +361,6 @@ export const Wocky = types
         yield waitFor(() => self.connected)
         yield self.transport.removeUpload(tros)
       }),
-      _loadNotifications: flow(function*(lastId: string, max: number = 20) {
-        yield waitFor(() => self.connected)
-        const {list, count}: PaginableLoadType<IEventData> = yield self.transport.loadNotifications(
-          {
-            beforeId: lastId,
-            limit: max,
-          }
-        )
-        return {list: list.map(data => createEvent(data, self)), count}
-      }) as RequestType,
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
@@ -445,14 +433,10 @@ export const Wocky = types
           const item = createEvent(data, self)
           self.notifications.addToTop(item)
           item.process()
-          self.hasUnreadNotifications = true
         } catch (e) {
           getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
-      },
-      viewNotifications() {
-        self.hasUnreadNotifications = false
       },
       // incorporateUpdates: () => {
       //   for (let i = self.updates.length - 1; i >= 0; i--) {
@@ -503,20 +487,13 @@ export const Wocky = types
         const {list} = yield self.transport.loadNotifications({
           afterId: mostRecentNotification && (mostRecentNotification.id as any),
           limit,
+          types: undefined,
         })
         if (list.length === limit) {
           // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
           self.notifications.refresh()
         }
-        const beforeCount = self.notifications.length
         list.reverse().forEach(self._onNotification)
-        const afterCount = self.notifications.length
-        if (afterCount === beforeCount) {
-          self.hasUnreadNotifications = false
-        } else if (beforeCount === 0) {
-          // first app load or after cache reset
-          self.hasUnreadNotifications = true
-        }
         self.notifications.cursor = self.notifications.last && self.notifications.last.id
         // console.log(
         //   '& notifications list after initial load',
@@ -616,7 +593,6 @@ export const Wocky = types
         self.username = null
       }),
       afterCreate: () => {
-        self.notifications.setRequest(self._loadNotifications)
         self.geofenceBots.setRequest(self._loadGeofenceBots as any)
         startReactions()
       },

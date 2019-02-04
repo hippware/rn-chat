@@ -4,14 +4,17 @@ import {Base, IBaseData} from './Base'
 import {IProfile} from './Profile'
 
 export const Event = types
-  .compose(Base, Timeable, types.model({id: types.identifier}))
+  .compose(Base, Timeable, types.model({id: types.identifier, unread: true}))
   .named('Event')
   .views(() => ({
     get target(): IProfile {
       throw new Error('Abstract method!')
     },
   }))
-  .actions(() => ({
+  .actions(self => ({
+    read: () => {
+      self.unread = false
+    },
     process: () => {
       // do nothing
     },

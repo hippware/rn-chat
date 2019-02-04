@@ -8,4 +8,9 @@ export const EventDelete = types
       delete: types.boolean,
     })
   )
+  .views(() => ({
+    get isRequest() {
+      return false
+    },
+  }))
   .named('EventDelete')

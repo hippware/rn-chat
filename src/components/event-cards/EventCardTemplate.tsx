@@ -54,7 +54,8 @@ const EventCardTemplate = observer(
             <RText>
               <RText size={14} weight="Medium">{`@${profile.handle} `}</RText>
               <RText size={14} color={colors.PURPLISH_GREY}>
-                {action}{' '}
+                {action}
+                {'\n'}
               </RText>
               {line2 == null && (
                 <RText size={14} weight="Light" color={colors.DARK_GREY}>
