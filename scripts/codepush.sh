@@ -3,7 +3,6 @@
 
 DEPLOYMENT_NAME=$1
 DESCRIPTION=$2
-RELEASE_ID=`date +"%Y-%m-%d_%H-%M-%S_%z"`
 BUILD_DIR=cpbuild
 BUGSNAG_API_KEY=f108fb997359e5519815d5fc58c79ad3
 
@@ -19,6 +18,8 @@ if [ -z "$DESCRIPTION" ]; then
     exit 1
 fi
 
+RELEASE_ID=${DEPLOYMENT_NAME}_`date +"%Y-%m-%d_%H-%M-%S_%z"`
+
 # if [ -z "$RELEASE_ID" ]; then
 #     echo "No bugsnag unique id specified"
 #     echo "Usage: yarn codepush [deployment name] [description] [bugsnag unique id]"
@@ -32,8 +33,8 @@ sed -e "2s/.*/const codeBundleId = \"$RELEASE_ID\"/" -i '' src/utils/bugsnagConf
 # Release iOS App
 ## Release JS bundle via Code Push
 
-echo ./node_modules/.bin/appcenter codepush release-react -a hippware/tinyrobot-2 -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR $3 $4 $5 $6 $7 $8 $9
-./node_modules/.bin/appcenter codepush release-react -a hippware/tinyrobot-2 -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR $3 $4 $5 $6 $7 $8 $9
+echo ./node_modules/.bin/appcenter codepush release-react -a hippware/tinyrobot-2 -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR --sourcemap-output $BUILD_DIR/CodePush/main.jsbundle.map $3 $4 $5 $6 $7 $8 $9
+./node_modules/.bin/appcenter codepush release-react -a hippware/tinyrobot-2 -d $DEPLOYMENT_NAME --description "$DESCRIPTION" --output-dir $BUILD_DIR --sourcemap-output $BUILD_DIR/CodePush/main.jsbundle.map $3 $4 $5 $6 $7 $8 $9
 
 ## Upload source map and sources to Bugsnag
 yarn bugsnag-sourcemaps upload \
