@@ -990,6 +990,9 @@ export class Transport {
               phoneNumber
               user {
                 id
+                handle
+                firstName
+                lastName
               }
             }
           }
