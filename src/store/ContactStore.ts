@@ -91,7 +91,8 @@ class ContactStore {
 
         // console.log('loadContacts: lookupResult: ', lookupResult)
 
-        const myContacts = []
+        // Use an object so as to avoid duplicates
+        const map = {}
         contacts.forEach(contact => {
           // Create a contact for each account, if any
           let hasAccount = false
@@ -100,7 +101,7 @@ class ContactStore {
             if (lookupResult[item.number].user) {
               const myContact = new MyContact(contact)
               myContact.setProfile(lookupResult[item.number].user)
-              myContacts.push(myContact)
+              map[lookupResult[item.number].user.id] = myContact
               hasAccount = true
             }
           })
@@ -140,7 +141,27 @@ class ContactStore {
               phoneNumber,
               lookupResult[phoneNumber].e164PhoneNumber
             )
-            myContacts.push(myContact)
+            map[phoneNumber] = myContact
+          }
+        })
+
+        const myContacts = Object.values(map).sort((a, b) => {
+          if (a.profile) {
+            if (b.profile) {
+              // a.profile && b.profile
+              return a.profile.handle.localeCompare(b.profile.handle)
+            } else {
+              // a.profile && !b.profile
+              return -1
+            }
+          } else if (b.profile) {
+            // !a.profile && b.profile
+            return 1
+          } else {
+            // !a.profile && !b.profile
+            return `${a.contact.givenName} ${a.contact.givenName}`.localeCompare(
+              `${b.contact.givenName} ${b.contact.givenName}`
+            )
           }
         })
 
