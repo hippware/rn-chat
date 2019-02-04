@@ -1,6 +1,7 @@
 import {types, Instance} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
 import {BotPost, IBotPostIn} from './BotPost'
+import {EventRequestTypes} from './EventList'
 
 export const EventBotPostType = 'BOT_ITEM_NOTIFICATION'
 export const EventBotPost = types
@@ -12,7 +13,7 @@ export const EventBotPost = types
   )
   .views(() => ({
     get isRequest() {
-      return false
+      return EventRequestTypes.includes(EventBotPostType)
     },
   }))
   .named('EventBotPost')

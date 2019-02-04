@@ -1,6 +1,8 @@
 import {types, Instance} from 'mobx-state-tree'
 import {EventBot} from './EventBot'
+import {EventRequestTypes} from './EventList'
 
+export const EventBotCreateType = 'BOT_CREATE_NOTIFICATION'
 export const EventBotCreate = types
   .compose(
     EventBot,
@@ -10,7 +12,7 @@ export const EventBotCreate = types
   )
   .views(() => ({
     get isRequest() {
-      return false
+      return EventRequestTypes.includes(EventBotCreateType)
     },
   }))
   .named('EventBotCreate')
