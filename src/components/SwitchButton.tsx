@@ -115,6 +115,8 @@ export default class SwitchButton extends Component<Props, State> {
                   style={[
                     this.props.btnStyle || switchStyles.wayBtnActive,
                     {
+                      top: -1,
+                      left: -1,
                       width: this.props.switchWidth / 2 || this.state.sbWidth / 2,
                       height:
                         this.props.btnHeight ||
