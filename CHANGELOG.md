@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [bugsnag] Non-codepush builds set appVersion instead. (PR #3298)
+* Sourcemaps cannot be generated for codepush (#3304)
+* Updates / Requests Screen Enhancement (#3037)
+  * Baseline functionality
 
 # 4.1.0 - 2019 Jan 29
 
