@@ -62,7 +62,7 @@ class Notifications extends React.Component<Props> {
                 notifications.load()
               }}
             >
-              {notifications.hasUnread && <View style={styles.newDot} />}
+              {notifications.hasUnreadRequests && <View style={styles.newDot} />}
             </SwitchButton>
           </View>
         }
