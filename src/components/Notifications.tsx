@@ -57,7 +57,10 @@ class Notifications extends React.Component<Props> {
               switchBorderRadius={16}
               activeFontColor={WHITE}
               fontColor={PINK}
-              onValueChange={notifications.setMode}
+              onValueChange={index => {
+                notifications.setMode(index)
+                notifications.load()
+              }}
             >
               {notifications.hasUnread && <View style={styles.newDot} />}
             </SwitchButton>
