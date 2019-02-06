@@ -6,8 +6,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * [bugsnag] Non-codepush builds set appVersion instead. (PR #3298)
 * Sourcemaps cannot be generated for codepush (#3304)
-* Updates / Requests Screen Enhancement (#3037)
-  * Baseline functionality
+* Updates/Requests (PR #3303)
+  * (Baseline) Updates / Requests Screen Enhancement (#3037)
+  * Updates/Requests: Location Name should be on second line (#3305)
+  * Updates/Request: Slider does not completely cover white area (#3308)
 
 # 4.1.0 - 2019 Jan 29
 
