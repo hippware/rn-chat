@@ -15,25 +15,26 @@ type Props = {
   user: IProfile
 }
 
-const EventFriendInviteRequestCard = observer(({item: {relativeDateAsString, user}}: Props) => (
+const EventFriendInviteRequestCard = observer(({item}: Props) => (
   <EventCardTemplate
-    timestamp={relativeDateAsString}
+    timestamp={item.relativeDateAsString}
     action={'wants to connect with you.'}
     icon={geoIcon}
-    profile={user}
-    rightColumnElement={<FollowButton profile={user} />}
+    profile={item.user}
+    rightColumnElement={<ConnectButton item={item} />}
   />
 ))
 
 export default EventFriendInviteRequestCard
 
-type FollowProps = {
-  profile: IProfile
+type ConnectProps = {
+  item: IEventFriendInvite
   analytics?: any
 }
 
-const FollowButton = inject('analytics')(
-  observer(({profile, analytics}: FollowProps) => {
+const ConnectButton = inject('analytics')(
+  observer(({item, analytics}: ConnectProps) => {
+    const profile = item.user
     const {isFriend} = profile
     return isFriend ? (
       <GradientButton
@@ -57,7 +58,7 @@ const FollowButton = inject('analytics')(
         <TouchableOpacity onPress={() => invite(profile, analytics)}>
           <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => profile.unfriend()}>
+        <TouchableOpacity onPress={() => decline(item)}>
           <Image source={require('../../../images/friendDecline.png')} />
         </TouchableOpacity>
       </View>
@@ -68,6 +69,10 @@ const FollowButton = inject('analytics')(
 const invite = async (profile: IProfile, analytics: any) => {
   await profile.invite()
   analytics.track('user_follow', (profile as any).toJSON())
+}
+
+const decline = async (item: IEventFriendInvite) => {
+  await item.remove()
 }
 
 const unfriend = async (profile: IProfile) => {

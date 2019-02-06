@@ -311,6 +311,19 @@ export class Transport {
     })
   }
 
+  async notificationDelete(id: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation notificationDelete($input: NotificationDeleteInput!) {
+          notificationDelete(input: $input) {
+            ${VOID_PROPS}            
+          }
+        }
+      `,
+      variables: {input: {id}},
+    })
+  }
+
   async loadNotifications(params: {
     limit?: number
     beforeId?: string

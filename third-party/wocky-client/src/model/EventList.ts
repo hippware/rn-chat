@@ -81,12 +81,6 @@ export const EventList = types
     },
   }))
   .actions(self => ({
-    removeUser(id: string) {
-      const index = self.result.findIndex((el: any) => el.user.id === id)
-      if (index !== -1) {
-        self.result.splice(index, 1)
-      }
-    },
     _loadNotifications: flow(function*(lastId: string, max: number = 20) {
       yield waitFor(() => self.connected)
       const {list, count}: PaginableLoadType<IEventData> = yield self.transport.loadNotifications({
