@@ -183,8 +183,6 @@ exports[`EventBotPostCard renders 1`] = `
         }
       >
         commented on
-        
-
       </Text>
       <Text
         style={
@@ -192,12 +190,13 @@ exports[`EventBotPostCard renders 1`] = `
             Object {
               "color": "rgb(155,155,155)",
               "fontFamily": "Roboto-Light",
-              "fontSize": 14,
+              "fontSize": 12,
             },
             undefined,
           ]
         }
       >
+         
         1234
       </Text>
     </Text>

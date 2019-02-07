@@ -57,15 +57,18 @@ export const EventList = types
   })
   .views(self => ({
     get updates() {
-      return self.list.slice().filter(x => !x.isRequest)
+      return self.list.filter(x => !x.isRequest)
     },
     get requests() {
-      return self.list.slice().filter(x => x.isRequest)
+      return self.list.filter(x => x.isRequest)
     },
   }))
   .views(self => ({
     get hasUnread() {
       return self.list.filter(x => x.unread).length > 0
+    },
+    get hasUnreadRequests() {
+      return self.requests.filter(x => x.unread).length > 0
     },
     get data() {
       return self.mode === 1 ? self.updates : self.requests

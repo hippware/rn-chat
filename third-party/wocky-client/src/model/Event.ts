@@ -1,7 +1,8 @@
-import {types, Instance} from 'mobx-state-tree'
+import {types, Instance, getParent} from 'mobx-state-tree'
 import {Timeable, ITimeableData} from './Timeable'
 import {Base, IBaseData} from './Base'
 import {IProfile} from './Profile'
+import {flow} from 'mobx'
 
 export const Event = types
   .compose(Base, Timeable, types.model({id: types.identifier, unread: true}))
@@ -15,6 +16,11 @@ export const Event = types
     read: () => {
       self.unread = false
     },
+    remove: flow(function*() {
+      const parent: any = getParent(getParent(self))
+      yield self.transport.notificationDelete(self.id)
+      parent.remove(self.id)
+    }),
     process: () => {
       // do nothing
     },
