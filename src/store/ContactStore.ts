@@ -96,11 +96,15 @@ class ContactStore {
           // Create a contact for each account, if any
           let hasAccount = false
           contact.phoneNumbers.forEach(item => {
-            // ToDo: Skip account if itself
             if (lookupResult[item.number].user) {
-              const myContact = new MyContact(contact)
-              myContact.setProfile(lookupResult[item.number].user)
-              map[lookupResult[item.number].user.id] = myContact
+              // Skip account if itself.
+              // Is __typename !== 'CurrentUser' the best way to check?
+              if (lookupResult[item.number].user.__typename !== 'CurrentUser') {
+                const myContact = new MyContact(contact)
+                myContact.setProfile(lookupResult[item.number].user)
+                map[lookupResult[item.number].user.id] = myContact
+              }
+
               hasAccount = true
             }
           })
