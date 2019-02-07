@@ -4,9 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.1 - 2019 Feb 7
+
 * [bugsnag] Non-codepush builds set appVersion instead. (PR #3298)
 * Sourcemaps cannot be generated for codepush (#3304)
-* Updates/Requests (PR #3303, PR #3311)
+* Updates/Requests (PR #3303, PR #3311, PR #3313)
   * (Baseline) Updates / Requests Screen Enhancement (#3037)
   * Location Name should be on second line (#3305)
   * User should have X or check mark to accept/decline requests (#3306)
