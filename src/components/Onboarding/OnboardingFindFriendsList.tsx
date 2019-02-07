@@ -51,7 +51,9 @@ const OnboardingFindFriendsList = inject('contactStore')(
           <FlatList
             data={contactStore!.contacts.slice()}
             renderItem={({item}) => <Friend contact={item} />}
-            keyExtractor={item => item.contact.recordID}
+            keyExtractor={item =>
+              item.profile ? `uuid-${item.profile.id}` : `contact-${item.contact.recordID}`
+            }
           />
         )}
       </View>
