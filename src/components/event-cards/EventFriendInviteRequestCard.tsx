@@ -45,7 +45,7 @@ const ConnectButton = inject('analytics')(
           if (isFriend) {
             await unfriend(profile)
           } else {
-            await invite(profile, analytics)
+            await invite(item, analytics)
           }
         }}
       >
@@ -55,7 +55,7 @@ const ConnectButton = inject('analytics')(
       </GradientButton>
     ) : (
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity onPress={() => invite(profile, analytics)}>
+        <TouchableOpacity onPress={() => invite(item, analytics)}>
           <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => decline(item)}>
@@ -66,8 +66,10 @@ const ConnectButton = inject('analytics')(
   })
 )
 
-const invite = async (profile: IProfile, analytics: any) => {
+const invite = async (item: IEventFriendInvite, analytics: any) => {
+  const profile = item.user
   await profile.invite()
+  await item.removeAfterDelay(2) // remove the item after 2 sec
   analytics.track('user_follow', (profile as any).toJSON())
 }
 
