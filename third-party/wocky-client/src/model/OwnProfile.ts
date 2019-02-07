@@ -4,7 +4,6 @@ import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
-import {waitFor} from '../transport/utils'
 
 const Hidden = types
   .model('HiddenType', {
@@ -95,11 +94,6 @@ export const OwnProfile = types
       )
       profile.receivedInvite()
     },
-    // Does this get used anywhere?
-    friendDelete: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.friendDelete(username)
-    }),
     hide: flow(function*(value: boolean, expires: Date | undefined) {
       yield self.service._hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
