@@ -85,8 +85,7 @@ class ContactStore {
         const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
         const lookupResult = []
         bulkResult.forEach(item => {
-          // Todo: Remove condition once wocky #2207 is fixed
-          if (item) lookupResult[item.phoneNumber] = item
+          lookupResult[item.phoneNumber] = item
         })
 
         // console.log('loadContacts: lookupResult: ', lookupResult)
