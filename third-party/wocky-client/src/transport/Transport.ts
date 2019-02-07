@@ -994,6 +994,7 @@ export class Transport {
                 firstName
                 lastName
               }
+              relationship
             }
           }
         `,
