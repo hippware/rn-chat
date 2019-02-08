@@ -21,8 +21,8 @@ exec(
     exec(
       `curl https://upload.bugsnag.com/ \
         -F apiKey=f108fb997359e5519815d5fc58c79ad3 \
-        -F appVersion="${appVersion}" \
-        -F minifiedUrl="main.jsbundle" \
+        -F "appVersion=${appVersion}" \
+        -F minifiedUrl=main.jsbundle \
         -F sourceMap=@./sourcemap.js \
         -F minifiedFile=@./ios/main.jsbundle \
         -F overwrite=true`,
