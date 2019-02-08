@@ -9,7 +9,7 @@ import {width, height, k} from './Global'
 import {inject} from 'mobx-react/native'
 
 const bg1 = require('../../images/slide1.png')
-const footprints = require('../../images/foot.png')
+const livelocation = require('../../images/livelocation.png')
 const bg2 = require('../../images/slide2.png')
 const discover = require('../../images/discover.png')
 const bg3 = require('../../images/slide3.png')
@@ -32,14 +32,14 @@ class Onboarding extends React.Component {
           autoplayTimeout={5}
           loop
         >
-          <Slide bgImg={bg1} iconImg={footprints} left>
-            {"See who's at your\r\nfavorite locations!"}
+          <Slide bgImg={bg1} iconImg={livelocation} left>
+            {'Share your live location\r\nwith friends!'}
           </Slide>
           <Slide bgImg={bg2} iconImg={discover} center>
-            {'Share locations with\r\nfriends and family!'}
+            {'Tag locations with\r\nfriends and family!'}
           </Slide>
           <Slide bgImg={bg3} iconImg={notification}>
-            {'Know when friends\r\nare visiting!'}
+            {'See who’s at your\r\nfavorite locations!'}
           </Slide>
         </SwiperAny>
         <Buttons />
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 100 - FLEX,
-    paddingHorizontal: 40,
+    paddingHorizontal: 40 * k,
     top: -5,
   },
   footerButtons: {
