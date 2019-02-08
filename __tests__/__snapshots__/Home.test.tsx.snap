@@ -98,160 +98,152 @@ exports[`Home renders with no data 1`] = `
       >
         <View>
           <View
-            onLayout={[Function]}
-            style={null}
+            style={
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
           >
             <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "flexDirection": "row",
-                  "justifyContent": "center",
+                  "opacity": 1,
                 }
               }
             >
               <View
-                accessible={true}
-                isTVSelectable={true}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
-                  Object {
-                    "opacity": 1,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "flex-start",
+                      "flex": 0,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 12,
+                    },
+                    Object {
+                      "marginLeft": 6,
+                    },
+                  ]
                 }
               >
-                <View
+                <Image
+                  resizeMode="contain"
+                  source={
+                    Object {
+                      "testUri": "../../../images/NewPin.png",
+                    }
+                  }
+                  style={
+                    Object {
+                      "height": 62,
+                      "marginLeft": -6.6000000000000005,
+                      "width": 56,
+                    }
+                  }
+                />
+                <Text
+                  numberOfLines={2}
                   style={
                     Array [
                       Object {
-                        "alignSelf": "flex-start",
-                        "flex": 0,
-                        "paddingHorizontal": 16,
-                        "paddingVertical": 12,
+                        "color": "rgb(253,95,108)",
+                        "fontFamily": "Roboto-Regular",
+                        "fontSize": 13,
                       },
                       Object {
-                        "marginLeft": 6,
+                        "left": -10,
+                        "textAlign": "center",
                       },
                     ]
                   }
                 >
-                  <Image
-                    resizeMode="contain"
-                    source={
-                      Object {
-                        "testUri": "../../../images/NewPin.png",
-                      }
-                    }
-                    style={
-                      Object {
-                        "height": 62,
-                        "marginLeft": -6.6000000000000005,
-                        "width": 56,
-                      }
-                    }
-                  />
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                    numberOfLines={2}
-                    style={
-                      Array [
-                        Object {
-                          "color": "rgb(253,95,108)",
-                          "fontFamily": "Roboto-Regular",
-                          "fontSize": 13,
-                        },
-                        Object {
-                          "left": -10,
-                          "textAlign": "center",
-                        },
-                      ]
-                    }
-                  >
-                    New!
-                  </Text>
-                </View>
+                  New!
+                </Text>
               </View>
-              <View
-                style={
+            </View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "flex": 0,
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Image
+                source={
                   Object {
-                    "alignSelf": "flex-start",
-                    "flex": 0,
-                    "paddingHorizontal": 16,
-                    "paddingVertical": 12,
+                    "testUri": "../../../images/PlaceholderPin.png",
                   }
                 }
-              >
-                <Image
-                  source={
-                    Object {
-                      "testUri": "../../../images/PlaceholderPin.png",
-                    }
-                  }
-                  style={
-                    Object {
-                      "height": 57,
-                      "marginTop": 5,
-                      "width": 51,
-                    }
-                  }
-                />
-              </View>
-              <View
                 style={
                   Object {
-                    "alignSelf": "flex-start",
-                    "flex": 0,
-                    "paddingHorizontal": 16,
-                    "paddingVertical": 12,
+                    "height": 57,
+                    "marginTop": 5,
+                    "width": 51,
                   }
                 }
-              >
-                <Image
-                  source={
-                    Object {
-                      "testUri": "../../../images/PlaceholderPin.png",
-                    }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "flex": 0,
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/PlaceholderPin.png",
                   }
-                  style={
-                    Object {
-                      "height": 57,
-                      "marginTop": 5,
-                      "width": 51,
-                    }
-                  }
-                />
-              </View>
-              <View
+                }
                 style={
                   Object {
-                    "alignSelf": "flex-start",
-                    "flex": 0,
-                    "paddingHorizontal": 16,
-                    "paddingVertical": 12,
+                    "height": 57,
+                    "marginTop": 5,
+                    "width": 51,
                   }
                 }
-              >
-                <Image
-                  source={
-                    Object {
-                      "testUri": "../../../images/PlaceholderPin.png",
-                    }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignSelf": "flex-start",
+                  "flex": 0,
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/PlaceholderPin.png",
                   }
-                  style={
-                    Object {
-                      "height": 57,
-                      "marginTop": 5,
-                      "width": 51,
-                    }
+                }
+                style={
+                  Object {
+                    "height": 57,
+                    "marginTop": 5,
+                    "width": 51,
                   }
-                />
-              </View>
+                }
+              />
             </View>
           </View>
         </View>
@@ -303,9 +295,6 @@ exports[`Home renders with no data 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -320,9 +309,6 @@ exports[`Home renders with no data 1`] = `
             SHARE YOUR VISITS!
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -360,9 +346,6 @@ exports[`Home renders with no data 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -425,9 +408,6 @@ exports[`Home renders with no data 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -463,9 +443,6 @@ exports[`Home renders with no data 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {

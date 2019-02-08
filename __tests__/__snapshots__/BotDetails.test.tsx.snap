@@ -161,7 +161,6 @@ exports[`BotDetails renders with no data 1`] = `
       <View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View>
             <R2RTouchThroughView
@@ -213,8 +212,6 @@ exports[`BotDetails renders with no data 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
                       ellipsizeMode="tail"
                       numberOfLines={2}
                       style={
@@ -280,9 +277,6 @@ exports[`BotDetails renders with no data 1`] = `
                         }
                       >
                         <Text
-                          accessible={true}
-                          allowFontScaling={true}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -336,9 +330,6 @@ exports[`BotDetails renders with no data 1`] = `
                         }
                       >
                         <Text
-                          accessible={true}
-                          allowFontScaling={true}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -431,7 +422,6 @@ exports[`BotDetails renders with no data 1`] = `
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -537,9 +527,6 @@ exports[`BotDetails renders with no data 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               numberOfLines={1}
               style={
                 Array [
@@ -564,9 +551,6 @@ exports[`BotDetails renders with no data 1`] = `
               }
             />
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               numberOfLines={1}
               style={
                 Array [
@@ -704,6 +688,7 @@ exports[`BotDetails renders with no data 1`] = `
               },
             ]
           }
+          underlineColorAndroid="transparent"
           value=""
         />
         <View
@@ -730,9 +715,6 @@ exports[`BotDetails renders with no data 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {

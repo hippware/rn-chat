@@ -8,6 +8,7 @@ import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
 import {IAuthStore} from 'src/store/AuthStore'
+import {IStore} from 'src/store'
 
 type Props = {
   wocky?: IWocky
@@ -17,9 +18,19 @@ type Props = {
   log?: any
   analytics?: any
   authStore?: IAuthStore
+  store?: IStore
 }
 
-@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'log', 'analytics', 'authStore')
+@inject(
+  'wocky',
+  'homeStore',
+  'notificationStore',
+  'locationStore',
+  'log',
+  'analytics',
+  'authStore',
+  'store'
+)
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -71,8 +82,13 @@ export default class Connectivity extends React.Component<Props> {
   tryReconnect = async reason => {
     const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
-    const {authStore} = this.props
-    if (AppState.currentState === 'active' && !model.connected && !model.connecting) {
+    const {authStore, store} = this.props
+    if (
+      AppState.currentState === 'active' &&
+      !model.connected &&
+      !model.connecting &&
+      store!.hydrated
+    ) {
       try {
         this.props.analytics.track('reconnect_try', {
           ...info,
@@ -85,7 +101,7 @@ export default class Connectivity extends React.Component<Props> {
       } catch (e) {
         this.props.analytics.track('reconnect_fail', {...info, error: e})
         // todo: error message will be different with GraphQL (?)
-        if (e.toString().indexOf('not-authorized') !== -1 || e.toString().indexOf('invalid')) {
+        if (e.toString().indexOf('invalid') !== -1) {
           this.retryDelay = 1e9
           Actions.logout()
         } else {

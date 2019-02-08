@@ -4,6 +4,23 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.0 - 2019 Jan 29
+
+**React Native upgrade** See below.
+
+* Restore file.test.ts (PR #3285), then reverted (PR #3290)
+* Fixes to appcenter-post-build (PR #3282)
+  * [dev] Check BugSnag sourcemaps (#3002)
+* Codepush bundleID tweaks (PR #3291)
+* Reconnection rework (PR #3286)
+  * Fix firebase login (with real phone number) (Regression #3172)
+  * User is logged out when the app is in background too long (#3223)
+  * Connecting Banner that does not go away (#3275)
+* React native 0.58 upgrade and related fixes (#3287, PR #3288)
+  * Add react-native-contacts
+  * Enable bitcode (PR #3293)
+  * Update typescript to 3.2.4, lots of other dependencies
+
 # 4.0.4 - 2019 Jan 24
 
 * Revert: Implement graphql relogin (PR #3283)
@@ -15,7 +32,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * User is logged out when the app is in background too long (#3223)
   * Always call getIdToken() in case Firebase has a new token (PR #3279)
 * "Here" missing on widget. Replaced with an image (#2933, PR #3269)
-* Download image by TROS url (PR #3273) 
+* Download image by TROS url (PR #3273)
   * Image messages don't show until app reload (#3226)
 * [GraphQL] Online presence (#3270)
 * [dev] modify `tryMigrate` (#3266)

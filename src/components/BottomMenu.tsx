@@ -35,7 +35,7 @@ export function disableInvisibleMode(profile: IOwnProfile) {
   ])
 }
 const MenuItemWrapper = ({children, ...rest}: IMenuItemWrapperProps) => {
-  const Wrapper = rest.onPress ? TouchableOpacity : View
+  const Wrapper: React.ComponentClass<any> = rest.onPress ? TouchableOpacity : View
   return <Wrapper {...rest}>{children}</Wrapper>
 }
 

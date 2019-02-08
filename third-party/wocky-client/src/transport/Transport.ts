@@ -11,6 +11,7 @@ import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
+const TIMEOUT = 5000
 import {
   PROFILE_PROPS,
   BOT_PROPS,
@@ -72,16 +73,20 @@ export class Transport {
     }
     this.connecting = true
     this.prepConnection()
-    const res = await this.authenticate(token)
-
-    if (res) {
-      this.subscribeBotVisitors()
-      this.subscribeNotifications()
-      this.subscribeMessages()
-      this.subscribeContacts()
-      this.subscribePresence()
+    try {
+      const res = await timeout(this.authenticate(token), TIMEOUT)
+      if (res) {
+        this.subscribeBotVisitors()
+        this.subscribeNotifications()
+        this.subscribeMessages()
+        this.subscribeContacts()
+        this.subscribePresence()
+      }
+      return res
+    } catch (e) {
+      this.disconnect()
+      throw e
     }
-    return res
   }
 
   @action
@@ -986,13 +991,16 @@ export class Transport {
               phoneNumber
               user {
                 id
+                handle
+                firstName
+                lastName
               }
+              relationship
             }
           }
         `,
         variables: {phoneNumbers},
       })
-      console.log('& res 1', res)
       console.log('& result', res.data.userBulkLookup)
       return res.data.userBulkLookup
     } catch (err) {
@@ -1256,10 +1264,12 @@ export class Transport {
     socket.onError(() => {
       // console.warn('& graphql Phoenix socket error', err)
       this.connected = false
+      this.connecting = false
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
       this.connected = false
+      this.connecting = false
     })
     socket.onOpen(() => {
       // console.log('& graphql open')
@@ -1301,4 +1311,25 @@ export class Transport {
       }
     })
   }
+}
+
+function timeout(promise: Promise<any>, timeoutMillis: number) {
+  let _timeout: any
+  return Promise.race([
+    promise,
+    new Promise((_0, reject) => {
+      _timeout = setTimeout(() => {
+        reject('Operation timed out!')
+      }, timeoutMillis)
+    }),
+  ]).then(
+    v => {
+      clearTimeout(_timeout)
+      return v
+    },
+    err => {
+      clearTimeout(_timeout)
+      throw err
+    }
+  )
 }

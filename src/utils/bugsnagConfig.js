@@ -1,5 +1,5 @@
-// NOTE: below is automatically generated in codepush.sh
-const codeBundleId = '2018-10-02_17-28-45'
+// codeBundleId is filled in by codepush.sh
+const codeBundleId = ''
 
 // -------------------------------------------------------------------------------------------------
 // Create a singleton instance of the bugsnag client so we don't have to duplicate our configuration
@@ -11,6 +11,8 @@ const config = new Configuration()
 config.notifyReleaseStages = ['testflight', 'production']
 if (codeBundleId) {
   config.codeBundleId = codeBundleId
+} else {
+  config.appVersion = require('../../package.json').version
 }
 const client = new Client(config)
 

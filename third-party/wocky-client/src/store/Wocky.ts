@@ -10,7 +10,7 @@ import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
 import {createMessage, IMessage, IMessageIn} from '../model/Message'
-import {processMap, waitFor, generateWockyToken} from '../transport/utils'
+import {processMap, waitFor, generateWockyToken, assert} from '../transport/utils'
 import uuid from 'uuid/v1'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
@@ -73,6 +73,11 @@ export const Wocky = types
       },
       actions: {
         login: flow(function*(credentials: Credentials) {
+          // HACK: short circuit login in case of no credentials. This sometimes happens with reconnect in Connectivity.tsx
+          assert(
+            credentials && credentials.typ && credentials.sub && credentials.phone_number,
+            'bad credentials:' + credentials
+          )
           const payload = {
             aud: 'Wocky',
             jti: uuid(),

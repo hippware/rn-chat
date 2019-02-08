@@ -35,7 +35,7 @@ def testing_pods
   pod 'Firebase/DynamicLinks'
   pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
   # Pods for AppCenter
-  pod 'AppCenterReactNativeShared', '~> 1.9.0'
+  pod 'AppCenterReactNativeShared'
   pod 'RNFS', :path => '../node_modules/react-native-fs'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'

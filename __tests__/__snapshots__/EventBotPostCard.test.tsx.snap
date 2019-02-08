@@ -99,9 +99,6 @@ exports[`EventBotPostCard renders 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -148,9 +145,6 @@ exports[`EventBotPostCard renders 1`] = `
     }
   >
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -163,9 +157,6 @@ exports[`EventBotPostCard renders 1`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -180,9 +171,6 @@ exports[`EventBotPostCard renders 1`] = `
         @null 
       </Text>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -198,9 +186,6 @@ exports[`EventBotPostCard renders 1`] = `
          
       </Text>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
