@@ -15,7 +15,7 @@ if (codeBundleId) {
   config.codeBundleId = codeBundleId
 } else {
   const version = require('../../package.json').version
-  const buildNumber = DeviceInfo.getBuildNumber()
+  const buildNumber = process.env.NODE_ENV === 'test' ? 0 : DeviceInfo.getBuildNumber()
   config.appVersion = `${version} (${buildNumber})`
 }
 const client = new Client(config)
