@@ -107,3 +107,5 @@ export const MESSAGE_PROPS = `
     ${PROFILE_PROPS}
   }
 `
+export const LOCATION_PROPS = `lat lon isFetch isMoving odometer speed heading createdAt altitude accuracy batteryLevel
+`

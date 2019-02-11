@@ -17,7 +17,7 @@ import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
-import {ILocation, ILocationSnapshot} from '../model/Location'
+import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 
 export type Credentials = {typ: string; sub: string; phone_number?: string}
 
@@ -569,6 +569,15 @@ export const Wocky = types
               if (profile.isOwn && self.profile) {
                 self.profile!.setStatus(status)
               }
+            }
+          }
+        ),
+        reaction(
+          () => self.transport.sharedLocation,
+          ({id, location}) => {
+            const profile = self.profiles.get(id)
+            if (profile) {
+              profile.setLocation(createLocation(location))
             }
           }
         ),

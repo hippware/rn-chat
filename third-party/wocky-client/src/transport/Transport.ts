@@ -20,6 +20,7 @@ import {
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
   AREA_TOO_LARGE,
+  LOCATION_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -56,6 +57,7 @@ export class Transport {
   @observable message?: IMessageIn
   @observable notification: any
   @observable presence: any
+  @observable sharedLocation: any
   @observable rosterItem: any
   @observable botVisitor: any
 
@@ -81,6 +83,7 @@ export class Transport {
         this.subscribeMessages()
         this.subscribeContacts()
         this.subscribePresence()
+        this.subscribeSharedLocations()
       }
       return res
     } catch (e) {
@@ -281,6 +284,39 @@ export class Transport {
         }
       `,
       variables: {...params, device: this.resource},
+    })
+  }
+  async userLocationShare(userId: string, expiresAt: Date): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationLiveShare(
+          $userId: String!
+          $expiresAt: DateTime!
+        ) {
+          userLocationLiveShare(
+            input: {expiresAt: $expiresAt, sharedWithId: $userId}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {userId, expiresAt},
+    })
+  }
+  async userLocationCancelShare(userId: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationCancelShare(
+          $userId: String!
+        ) {
+          userLocationCancelShare(
+            input: {sharedWithId: $userId}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {userId},
     })
   }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
@@ -995,6 +1031,29 @@ export class Transport {
   }
 
   /******************************** SUBSCRIPTIONS ********************************/
+
+  subscribeSharedLocations() {
+    const subscription = this.client!.subscribe({
+      query: gql`
+        subscription sharedLocations {
+          sharedLocations {
+            user {
+              id
+            }
+            location {
+              ${LOCATION_PROPS}
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        const {user: {id}, location} = result.data.sharedLocations
+        this.sharedLocation = {id, location}
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
 
   subscribePresence() {
     const subscription = this.client!.subscribe({

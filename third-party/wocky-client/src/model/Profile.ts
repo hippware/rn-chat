@@ -5,6 +5,7 @@ import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
+import {Location, ILocationSnapshot} from './Location'
 
 export const Profile = types
   .compose(
@@ -17,6 +18,7 @@ export const Profile = types
       status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
+      location: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
@@ -30,6 +32,7 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
+    delete res.location
     delete res.ownBots
     delete res.subscribedBots
     return res
@@ -50,6 +53,9 @@ export const Profile = types
         self.hasReceivedInvite = false
         self.hasSentInvite = false
       }
+    },
+    setLocation(location: ILocationSnapshot) {
+      self.location = Location.create(location)
     },
     setFriend: (friend: boolean) => {
       self.isFriend = friend
@@ -94,6 +100,12 @@ export const Profile = types
           self.service.profile.sentInvitations.remove(self.id)
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
+        }),
+        shareLocation: flow(function*(expiresAt: Date) {
+          yield self.transport.userLocationShare(self.id, expiresAt)
+        }),
+        cancelShare: flow(function*() {
+          yield self.transport.userLocationCancelShare(self.id)
         }),
         afterAttach: () => {
           if (self.service) {

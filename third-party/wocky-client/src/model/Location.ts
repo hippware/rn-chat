@@ -1,5 +1,15 @@
 import {types, Instance, SnapshotIn} from 'mobx-state-tree'
-
+export const createLocation = ({
+  lat,
+  lon,
+  accuracy,
+}: {
+  lat: number
+  lon: number
+  accuracy: number
+}) => {
+  return Location.create({latitude: lat, longitude: lon, accuracy})
+}
 export const Location = types
   .model('Location', {
     latitude: types.number,
