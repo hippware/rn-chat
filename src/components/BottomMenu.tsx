@@ -52,8 +52,8 @@ const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMe
 )
 
 const LiveLocationButton = ({invisible, active}) => (
-  <View style={{position: 'absolute', top: -20, zIndex: 10}}>
-    <TouchableOpacity style={{marginLeft: 150}}>
+  <View style={{position: 'absolute', top: -25, zIndex: 10}}>
+    <TouchableOpacity style={{marginLeft: 160}}>
       {invisible ? (
         <Image source={require('../../images/liveLocationButtonGhost.png')} />
       ) : active ? (
@@ -105,7 +105,7 @@ export default class BottomMenu extends React.Component<Props> {
       <BottomPopup>
         <MenuItemWrapper
           style={{
-            marginTop: 25 * k,
+            marginTop: 35 * k,
             alignItems: 'center',
             justifyContent: 'center',
           }}
