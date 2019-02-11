@@ -1,11 +1,9 @@
-import autobind from 'autobind-decorator'
 import {computed, observable, reaction, action} from 'mobx'
 import {IObservableArray} from 'mobx'
 import {colors} from '../constants'
 import {IWocky} from 'wocky-client'
 import Notification from './Notification'
 
-@autobind
 class NotificationStore {
   @observable stack: IObservableArray<Notification> = observable([])
   disposer?: () => void
@@ -19,7 +17,7 @@ class NotificationStore {
   }
 
   @action
-  start() {
+  start = () => {
     if (this.started) return
     this.finish()
     this.started = true
@@ -54,7 +52,7 @@ class NotificationStore {
   }
 
   @action
-  finish() {
+  finish = () => {
     if (this.disposer) this.disposer()
     if (this.timeout) {
       clearTimeout(this.timeout)
@@ -71,7 +69,7 @@ class NotificationStore {
   }
 
   @action
-  dismiss(notification: Notification) {
+  dismiss = (notification: Notification) => {
     const index = this.stack.findIndex(n => n.message === notification.message)
     if (index !== -1) {
       this.stack.splice(index, 1)
@@ -79,7 +77,7 @@ class NotificationStore {
   }
 
   @action
-  show(message: string, options: object = {}): Notification {
+  show = (message: string, options: object = {}): Notification => {
     const notification = new Notification({
       message,
       onClosed: () => this.dismiss(notification),
@@ -92,7 +90,7 @@ class NotificationStore {
     return notification
   }
 
-  flash(message: string): Notification {
+  flash = (message: string): Notification => {
     return this.show(message, {autoCloseTimeout: 2000})
   }
 }
