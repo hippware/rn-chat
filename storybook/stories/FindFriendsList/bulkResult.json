@@ -1,0 +1,99 @@
+[
+  {
+    "e164PhoneNumber": "+14083737247",
+    "phoneNumber": "(408) 373-7247",
+    "user": {
+      "loaded": false,
+      "id": "4c874aea-c17d-40b3-905b-f4db00074164",
+      "avatar":
+        "tros:4c874aea-c17d-40b3-905b-f4db00074164@next.dev.tinyrobot.com/file/864d2456-7178-40cc-ad17-7b72dbb7c07b",
+      "handle": "scurry",
+      "firstName": "Steve",
+      "lastName": "Curry",
+      "botsSize": 0,
+      "hasSentInvite": false,
+      "hasReceivedInvite": false,
+      "isFriend": false,
+      "roles": []
+    },
+    "relationship": "NONE",
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+14085553514",
+    "phoneNumber": "(408) 555-3514",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+14085555270",
+    "phoneNumber": "(408) 555-5270",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+14155553695",
+    "phoneNumber": "(415) 555-3695",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+15554787672",
+    "phoneNumber": "555-478-7672",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+15555228243",
+    "phoneNumber": "555-522-8243",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+15555648583",
+    "phoneNumber": "(555) 564-8583",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+15556106679",
+    "phoneNumber": "555-610-6679",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+15557664823",
+    "phoneNumber": "(555) 766-4823",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+17075551854",
+    "phoneNumber": "(707) 555-1854",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+18885551212",
+    "phoneNumber": "888-555-1212",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  },
+  {
+    "e164PhoneNumber": "+18885555512",
+    "phoneNumber": "888-555-5512",
+    "user": null,
+    "relationship": null,
+    "__typename": "UserBulkLookupResult"
+  }
+]
