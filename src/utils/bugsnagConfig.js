@@ -1,5 +1,5 @@
 // codeBundleId is filled in by codepush.sh
-const codeBundleId = ''
+const codeBundleId = 'StagingPavel_2019-02-12_15-54-04_+0100'
 
 // -------------------------------------------------------------------------------------------------
 // Create a singleton instance of the bugsnag client so we don't have to duplicate our configuration
