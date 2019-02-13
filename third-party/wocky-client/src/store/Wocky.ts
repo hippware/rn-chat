@@ -180,18 +180,6 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    _block: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.block(username)
-    }),
-    _unblock: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.unblock(username)
-    }),
-    _hideUser: flow(function*(value: boolean, expire?: Date) {
-      yield waitFor(() => self.connected)
-      yield self.transport.hideUser(value, expire)
-    }),
     loadChats: flow(function*(max: number = 50) {
       yield waitFor(() => self.connected)
       const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(

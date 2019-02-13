@@ -23,6 +23,7 @@ export const Profile = types
       hasSentInvite: false,
       hasReceivedInvite: false,
       isFriend: false,
+      isBlocked: false,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
@@ -64,6 +65,9 @@ export const Profile = types
         self.hasSentInvite = false
       }
     },
+    setBlocked: (value: boolean) => {
+      self.isBlocked = value
+    },
   }))
   .extend(self => {
     return {
@@ -103,6 +107,14 @@ export const Profile = types
         }),
         shareLocation: flow(function*(expiresAt: Date) {
           yield self.transport.userLocationShare(self.id, expiresAt)
+        }),
+        block: flow(function*() {
+          yield self.transport.block(self.id)
+          self.service.profile.addBlocked(self, new Date())
+        }),
+        unblock: flow(function*() {
+          yield self.transport.unblock(self.id)
+          self.service.profile.removeBlocked(self)
         }),
         cancelShare: flow(function*() {
           yield self.transport.userLocationCancelShare(self.id)
