@@ -980,32 +980,41 @@ export class Transport {
     })
   }
 
-  async userBulkLookup(phoneNumbers: string[]) {
-    try {
-      console.log('transport bulk lookup', phoneNumbers)
-      const res = await this.client!.query<any>({
-        query: gql`
+  async userBulkLookup(phoneNumbers: string[]): Promise<any[]> {
+    const res = await this.client!.query<any>({
+      query: gql`
           query userBulkLookup($phoneNumbers: [String]!) {
             userBulkLookup(phoneNumbers: $phoneNumbers) {
               e164PhoneNumber
               phoneNumber
               user {
-                id
-                handle
-                firstName
-                lastName
+                ${PROFILE_PROPS}
               }
               relationship
             }
           }
         `,
-        variables: {phoneNumbers},
-      })
-      console.log('& result', res.data.userBulkLookup)
-      return res.data.userBulkLookup
-    } catch (err) {
-      console.log('& error', err)
-    }
+      variables: {phoneNumbers},
+    })
+    const results = res.data.userBulkLookup
+    return results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null}))
+  }
+
+  async friendSmsInvite(phoneNumber: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation friendBulkInvite(
+          $phoneNumbers: [String!]
+        ) {
+          friendBulkInvite(
+            input: {phoneNumbers: $phoneNumbers}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {phoneNumbers: [phoneNumber]},
+    })
   }
 
   /******************************** SUBSCRIPTIONS ********************************/

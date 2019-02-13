@@ -551,9 +551,22 @@ export const Wocky = types
       },
       userBulkLookup: flow(function*(phoneNumbers: string[]) {
         const data = yield self.transport.userBulkLookup(phoneNumbers)
-        console.log('& data', data)
+        data.forEach(d => {
+          if (d.user) {
+            const profile = self.profiles.get(d.user.id, d.user)
+            // if (d.relationship === 'FRIEND') {
+            //   profile.setFriend(true)
+            //   self.profile!.addFriend(profile, new Date())
+            // }
+            d.user = profile
+          }
+        })
+
         return data
       }) as (phoneNumbers: string[]) => Promise<any[]>,
+      friendSmsInvite: (phoneNumber: string): Promise<void> => {
+        return self.transport.friendSmsInvite(phoneNumber)
+      },
     }
   })
   .actions(self => ({

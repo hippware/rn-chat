@@ -14,3 +14,5 @@ export type MediaUploadParams = {
   }
   size: number
 }
+
+export type UserContactRelationship = 'FRIEND' | 'INVITED' | 'INVITED_BY' | 'NONE' | 'SELF' | null
