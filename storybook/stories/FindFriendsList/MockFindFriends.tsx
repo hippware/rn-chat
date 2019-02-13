@@ -3,7 +3,7 @@ import OnboardingFindFriendsList from '../../../src/components/Onboarding/Onboar
 import {Provider} from 'mobx-react/native'
 import ContactStore, {MyContact} from '../../../src/store/ContactStore'
 import {observable} from 'mobx'
-import {IWocky} from 'wocky-client'
+import {Profile} from 'wocky-client'
 
 const contacts: any[] = require('./contacts.json')
 
@@ -17,9 +17,15 @@ function emptyFn() {
   /* noop */
 }
 
-const mockWocky = {
-  async userBulkLookup() {
-    return require('./bulkResult.json')
+const wocky = {
+  userBulkLookup: async phoneNumbers => {
+    const data = require('./bulkResult.json')
+    data.forEach(d => {
+      if (d.user) {
+        d.user = Profile.create(d.user)
+      }
+    })
+    return data
   },
 }
 
@@ -27,11 +33,7 @@ class MockStore implements ContactStore {
   @observable loading: boolean = false
 
   readonly contacts = observable.array<MyContact>([])
-  wocky: IWocky | undefined
-
-  constructor(wocky: IWocky) {
-    this.wocky = wocky
-  }
+  wocky
 
   requestPermission = async () => {
     // noop
@@ -45,28 +47,30 @@ class MockStore implements ContactStore {
       return [...prev, ...current.phoneNumbers.map(p => p.number)]
     }, [])
 
-    // console.log('& loadContacts: phoneNumbers: ', phoneNumbers)
+    const bulkResult = await wocky!.userBulkLookup(phoneNumbers)
 
-    const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
-    // console.log('& bulkResult: ', bulkResult)
-    // // console.log('& my contacts: ', this.contacts.slice())
-    // bulkResult.forEach(r => {
-    //   // find the associated contact from the phoneNumber
-    //   const contact = this.contacts.find(c =>
-    //     c.contact.phoneNumbers.map(pn => pn.number).includes(r.phoneNumber)
-    //   )
+    bulkResult.forEach(r => {
+      // find the associated contact from the phoneNumber
+      const contact = this.contacts.find(c =>
+        c.contact.phoneNumbers.map(pn => pn.number).includes(r.phoneNumber)
+      )
 
-    //   // update the contact with the bulk result
-    //   if (contact) {
-    //     contact.updateWithBulkData(r)
-    //   }
-    // })
+      // update the contact with the bulk result
+      if (contact) {
+        contact.updateWithBulkData(r)
+      }
+    })
     // todo: process error?
     this.loading = false
   }
+
+  inviteContact = async (contact: MyContact) => {
+    await sleep(1000)
+    contact.smsSent = true
+  }
 }
 
-const contactStore = new MockStore(mockWocky as any)
+const contactStore = new MockStore()
 
 // tslint:disable-next-line
 export default class MockFindFriends extends React.Component {
