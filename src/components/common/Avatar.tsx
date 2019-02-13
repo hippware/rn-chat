@@ -1,5 +1,13 @@
 import React from 'react'
-import {View, Image, Text, TouchableOpacity, StyleSheet, ViewStyle} from 'react-native'
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ViewStyle,
+  ImageSourcePropType,
+} from 'react-native'
 import {avatarScale} from '../Global'
 import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
@@ -11,7 +19,9 @@ import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
 
 type Props = {
-  profile: IProfile
+  profile?: IProfile
+  image?: ImageSourcePropType
+  displayName?: string
   size: number
   disableStatus?: boolean
   style?: ViewStyle
@@ -32,18 +42,23 @@ const Avatar = observer(
     borderWidth,
     showFrame,
     profile,
+    image,
+    displayName,
     tappable = true,
     hideDot,
     borderColor,
     fontSize,
     fontFamily,
   }: Props) => {
-    if (!profile || !isAlive(profile)) {
+    if ((!profile || !isAlive(profile)) && (!image && !displayName)) {
       return null
     }
     const showMask =
-      profile.isOwn && (profile as IOwnProfile).hidden && (profile as IOwnProfile).hidden.enabled
-    const title = profile.displayName || ' '
+      profile &&
+      profile.isOwn &&
+      (profile as IOwnProfile).hidden &&
+      (profile as IOwnProfile).hidden.enabled
+    const title = (profile ? profile.displayName : displayName) || ' '
     const Clazz: React.ComponentClass<any> = tappable ? TouchableOpacity : View
     const sharedStyle = {
       width: size * avatarScale,
@@ -56,12 +71,12 @@ const Avatar = observer(
     return (
       <Clazz
         style={{justifyContent: 'flex-end'}}
-        onPress={() => Actions.profileDetails({item: profile.id})}
+        onPress={() => (profile ? Actions.profileDetails({item: profile.id}) : null)}
       >
         <View style={[style, {height: size * avatarScale, width: size * avatarScale}]}>
-          {!!profile.avatar ? (
+          {(!!profile && profile.avatar) || image ? (
             <AvatarImage
-              avatar={profile.avatar}
+              avatar={profile ? profile.avatar : {thumbnail: image}}
               style={sharedStyle}
               size={size}
               showMask={showMask}
@@ -84,7 +99,8 @@ const Avatar = observer(
               />
             </View>
           )}
-          {!hideDot && <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />}
+          {!hideDot &&
+            profile && <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />}
         </View>
       </Clazz>
     )
