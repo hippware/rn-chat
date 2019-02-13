@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Update initial welcome slides for Live Location (#3316, PR #3319)
 * TestFlight sourcemaps to use build number in identifer (#3317)
 * Live Location Sharing - Baseline / API (#3312)
+* Remove autobind dependency (PR #3326)
+* Load presence status for profiles (PR #3335)
+  * Fixes: [GraphQL] Online presence (#3270)
 
 # 4.1.1 - 2019 Feb 7
 
