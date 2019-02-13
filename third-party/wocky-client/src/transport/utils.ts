@@ -301,13 +301,14 @@ export function convertImage(image) {
     : null
 }
 
-export function convertProfile({media, bots, hidden, ...data}): IProfilePartial {
+export function convertProfile({media, bots, hidden, presenceStatus, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
     hidden: hidden
       ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
       : null,
     avatar: convertImage(media),
+    status: presenceStatus,
     botsSize: bots ? bots.totalCount : undefined,
     ...data,
   } as IProfilePartial

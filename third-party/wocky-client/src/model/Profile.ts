@@ -179,6 +179,7 @@ export interface IProfilePartial {
   botsSize: number
   followersSize: number
   followedSize: number
+  status: string
   hidden: {
     enabled: boolean
     expires: Date
