@@ -1,15 +1,11 @@
 import React from 'react'
-import {StyleSheet, Keyboard, View, TextInput, TouchableOpacity, Image, Alert} from 'react-native'
-import {RText, Spinner, Separator, Switch} from '../common'
-import {colors} from '../../constants'
-import {k, height, minHeight} from '../Global'
-import {observer, inject} from 'mobx-react/native'
+import {View, TouchableOpacity, Image} from 'react-native'
+import {RText, Separator, Switch} from '../common'
+import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
-import EmojiSelector from 'react-native-emoji-selector'
 import LinearGradient from 'react-native-linear-gradient'
-import {BlurView} from 'react-native-blur'
 
-export default class LiveLocationCompose extends React.Component<Props> {
+export default class LiveLocationCompose extends React.Component {
   render() {
     let switchOn = false
     return (

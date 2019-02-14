@@ -1,9 +1,25 @@
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+  StyleProp,
+  ViewStyle,
+} from 'react-native'
 
-import PropTypes from 'prop-types'
-
-export default class Switch extends React.Component {
+type Props = {
+  isOn: boolean
+  label?: string
+  onColor: string
+  offColor: string
+  size: string
+  labelStyle: any
+  onToggle: (toggle: boolean) => void
+  icon: any
+}
+export default class Switch extends React.Component<Props> {
   static calculateDimensions(size) {
     switch (size) {
       case 'large':
@@ -25,17 +41,6 @@ export default class Switch extends React.Component {
     }
   }
 
-  static propTypes = {
-    isOn: PropTypes.bool.isRequired,
-    label: PropTypes.string,
-    onColor: PropTypes.string.isRequired,
-    offColor: PropTypes.string.isRequired,
-    size: PropTypes.string,
-    labelStyle: PropTypes.object,
-    onToggle: PropTypes.func.isRequired,
-    icon: PropTypes.object,
-  }
-
   static defaultProps = {
     isOn: false,
     onColor: '#634fc9',
@@ -48,13 +53,14 @@ export default class Switch extends React.Component {
   offsetX = new Animated.Value(0)
   dimensions = Switch.calculateDimensions(this.props.size)
 
-  createToggleSwitchStyle = () => ({
-    justifyContent: 'center',
-    width: this.dimensions.width,
-    borderRadius: 20,
-    padding: this.dimensions.padding,
-    backgroundColor: this.props.isOn ? this.props.onColor : this.props.offColor,
-  })
+  createToggleSwitchStyle = () =>
+    ({
+      justifyContent: 'center',
+      width: this.dimensions.width,
+      borderRadius: 20,
+      padding: this.dimensions.padding,
+      backgroundColor: this.props.isOn ? this.props.onColor : this.props.offColor,
+    } as StyleProp<ViewStyle>)
 
   createInsideCircleStyle = () => ({
     alignItems: 'center',
