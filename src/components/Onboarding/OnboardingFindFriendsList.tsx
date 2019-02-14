@@ -82,19 +82,19 @@ const OnboardingFindFriendsList = inject('contactStore')(
 )
 
 const Friend = observer(({contact}: {contact: MyContact}) => {
-  const {contact: {thumbnailPath, givenName}, phoneNumber, profile} = contact
+  const {contact: {thumbnailPath}, displayName, phoneNumber, profile} = contact
   return (
     <PersonRow
       imageComponent={
         <Avatar
           image={thumbnailPath ? {uri: thumbnailPath} : undefined}
-          displayName={givenName}
+          displayName={displayName}
           size={42}
         />
       }
       handleComponent={
         <RText color={colors.DARK_PURPLE} weight="Medium" size={14}>
-          {`${contact.contact.givenName} ${contact.contact.familyName}`}
+          {displayName}
         </RText>
       }
       displayName={profile ? profile.displayName : phoneNumber ? phoneNumber.number : ''}

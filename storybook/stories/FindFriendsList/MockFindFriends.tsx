@@ -37,10 +37,19 @@ class MockStore implements ContactStore {
 
   @computed
   get sortedContacts() {
-    return this.contacts.slice().sort((a, b) => {
-      if (a.relationship && b.relationship) return -1
-      else if (b.relationship && !a.relationship) return 1
-      else return 0
+    // ensure the contact has an assigned phone #, either a first or last name, and is not already a friend
+    const filtered = this.contacts
+      .slice()
+      .filter(
+        c =>
+          c.phoneNumber &&
+          (c.contact.familyName || c.contact.givenName) &&
+          c.relationship !== 'FRIEND'
+      )
+
+    // sort alphabetically by first name (or last name if no first name)
+    return filtered.sort((a, b) => {
+      return a.displayName > b.displayName ? 1 : -1
     })
   }
 
