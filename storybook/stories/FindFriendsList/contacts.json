@@ -1,0 +1,194 @@
+[
+  {
+    "jobTitle": "Producer",
+    "thumbnailPath": "",
+    "recordID": "177C371E-701D-42F8-A03B-C61CA31627F6",
+    "note": "",
+    "postalAddresses": [
+      {
+        "region": "CA",
+        "postCode": "94010",
+        "country": "",
+        "city": "Hillsborough",
+        "street": "165 Davis Street",
+        "label": "work",
+        "state": "CA"
+      }
+    ],
+    "emailAddresses": [{"label": "work", "email": "kate-bell@mac.com"}],
+    "phoneNumbers": [
+      {"label": "mobile", "number": "(555) 564-8583"},
+      {"label": "main", "number": "(415) 555-3695"}
+    ],
+    "company": "Creative Consulting",
+    "givenName": "Kate",
+    "middleName": "",
+    "birthday": {"day": 20, "month": 0, "year": 1978},
+    "hasThumbnail": false,
+    "urlAddresses": [{"label": "homepage", "url": "www.icloud.com"}],
+    "familyName": "Bell"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "AB211C5F-9EC9-429F-9466-B9382FF61035",
+    "note": "Sister: Emily",
+    "postalAddresses": [
+      {
+        "region": "CA",
+        "postCode": "94925",
+        "country": "USA",
+        "city": "Corte Madera",
+        "street": "332 Laguna Street",
+        "label": "home",
+        "state": "CA"
+      }
+    ],
+    "emailAddresses": [{"label": "home", "email": "d-higgins@mac.com"}],
+    "phoneNumbers": [
+      {"label": "home", "number": "555-478-7672"},
+      {"label": "mobile", "number": "(408) 555-5270"},
+      {"label": "home fax", "number": "(408) 555-3514"}
+    ],
+    "company": "",
+    "givenName": "Daniel",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Higgins"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath":
+      "/Users/kirkham/Library/Developer/CoreSimulator/Devices/EA9519F3-B7A4-46B5-A9BA-60017FEE8A94/data/Containers/Data/Application/B171D4C6-103A-4EF4-A993-9D92E91C1113/Library/Caches/rncontacts_410FE041-5C4E-48DA-B4DE-04C15EA3DBAC.png",
+    "recordID": "410FE041-5C4E-48DA-B4DE-04C15EA3DBAC",
+    "note": "College roommate",
+    "postalAddresses": [
+      {
+        "region": "GA",
+        "postCode": "30303",
+        "country": "USA",
+        "city": "Atlanta",
+        "street": "3494 Kuhl Avenue",
+        "label": "work",
+        "state": "GA"
+      },
+      {
+        "region": "GA",
+        "postCode": "30303",
+        "country": "USA",
+        "city": "Atlanta",
+        "street": "1234 Laurel Street",
+        "label": "home",
+        "state": "GA"
+      }
+    ],
+    "emailAddresses": [{"label": "work", "email": "John-Appleseed@mac.com"}],
+    "phoneNumbers": [
+      {"label": "mobile", "number": "888-555-5512"},
+      {"label": "home", "number": "888-555-1212"}
+    ],
+    "company": "",
+    "givenName": "John",
+    "middleName": "",
+    "birthday": {"day": 22, "month": 5, "year": 1980},
+    "hasThumbnail": true,
+    "urlAddresses": [],
+    "familyName": "Appleseed"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F57C8277-585D-4327-88A6-B5689FF69DFE",
+    "note": "",
+    "postalAddresses": [
+      {
+        "region": "CA",
+        "postCode": "94965",
+        "country": "USA",
+        "city": "Sausalito",
+        "street": "1001  Leavenworth Street",
+        "label": "home",
+        "state": "CA"
+      }
+    ],
+    "emailAddresses": [{"label": "home", "email": "anna-haro@mac.com"}],
+    "phoneNumbers": [{"label": "home", "number": "555-522-8243"}],
+    "company": "",
+    "givenName": "Anna",
+    "middleName": "",
+    "birthday": {"day": 29, "month": 7, "year": 1985},
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Haro"
+  },
+  {
+    "jobTitle": "Portfolio Manager",
+    "thumbnailPath": "",
+    "recordID": "2E73EE73-C03F-4D5F-B1E8-44E85A70F170",
+    "note": "",
+    "postalAddresses": [
+      {
+        "region": "CA",
+        "postCode": "94901",
+        "country": "",
+        "city": "San Rafael",
+        "street": "1741 Kearny Street",
+        "label": "work",
+        "state": "CA"
+      }
+    ],
+    "emailAddresses": [{"label": "work", "email": "hank-zakroff@mac.com"}],
+    "phoneNumbers": [
+      {"label": "work", "number": "(555) 766-4823"},
+      {"label": "other", "number": "(707) 555-1854"}
+    ],
+    "company": "Financial Services Inc.",
+    "givenName": "Hank",
+    "middleName": "M.",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Zakroff"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "E94CD15C-7964-4A9B-8AC4-10D7CFB791FD",
+    "note": "Plays on Cole's Little League Baseball Team\n",
+    "postalAddresses": [
+      {
+        "region": "CA",
+        "postCode": "94920",
+        "country": "USA",
+        "city": "Tiburon",
+        "street": "1747 Steuart Street",
+        "label": "home",
+        "state": "CA"
+      }
+    ],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "home", "number": "555-610-6679"}],
+    "company": "",
+    "givenName": "David",
+    "middleName": "",
+    "birthday": {"day": 15, "month": 5, "year": 1998},
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Taylor"
+  },
+  {
+    "jobTitle": "",
+    "thumbnailPath": "",
+    "recordID": "F778AEB1-135D-4851-8969-BCBA4F48C1ED:ABPerson",
+    "note": "",
+    "postalAddresses": [],
+    "emailAddresses": [],
+    "phoneNumbers": [{"label": "iPhone", "number": "(408) 373-7247"}],
+    "company": "",
+    "givenName": "Steve",
+    "middleName": "",
+    "hasThumbnail": false,
+    "urlAddresses": [],
+    "familyName": "Curry"
+  }
+]

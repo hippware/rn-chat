@@ -9,6 +9,7 @@ import Avatar from './common/Avatar'
 import {k, minHeight, avatarScale} from './Global'
 import {IWocky, IOwnProfile} from 'wocky-client'
 import {RText} from './common'
+import AnimatedLinearGradient from 'react-native-animated-linear-gradient'
 
 interface IMenuItemProps extends TouchableOpacityProps {
   icon?: any
@@ -50,6 +51,43 @@ const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMe
   </MenuItemWrapper>
 )
 
+const LiveLocationButton = ({invisible, active}) => (
+  <View style={{position: 'absolute', top: -25, zIndex: 10}}>
+    <TouchableOpacity style={{marginLeft: 160}}>
+      {invisible ? (
+        <Image source={require('../../images/liveLocationButtonGhost.png')} />
+      ) : active ? (
+        <View
+          style={{
+            width: 135,
+            height: 53,
+            borderRadius: 21,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <AnimatedLinearGradient
+            customColors={[
+              'rgb(232, 66, 178)',
+              'rgb(255, 114, 59)',
+              'rgb(255, 183, 44)',
+              'rgb(159, 68, 242)',
+            ]}
+            speed={600}
+          />
+          <Image
+            style={{marginRight: 10}}
+            source={require('../../images/ShareLiveLocationText.png')}
+          />
+        </View>
+      ) : (
+        <Image source={require('../../images/liveLocationButton.png')} />
+      )}
+    </TouchableOpacity>
+  </View>
+)
+
 type Props = {
   wocky?: IWocky
 }
@@ -66,9 +104,14 @@ export default class BottomMenu extends React.Component<Props> {
     return (
       <BottomPopup>
         <MenuItemWrapper
-          style={{marginTop: 25 * k, alignItems: 'center', justifyContent: 'center'}}
+          style={{
+            marginTop: 35 * k,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
           testID="myAccountMenuItem"
         >
+          <LiveLocationButton invisible={false} active={false} />
           <Avatar
             size={74}
             fontSize="large"

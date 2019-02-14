@@ -180,18 +180,6 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    _block: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.block(username)
-    }),
-    _unblock: flow(function*(username: string) {
-      yield waitFor(() => self.connected)
-      yield self.transport.unblock(username)
-    }),
-    _hideUser: flow(function*(value: boolean, expire?: Date) {
-      yield waitFor(() => self.connected)
-      yield self.transport.hideUser(value, expire)
-    }),
     loadChats: flow(function*(max: number = 50) {
       yield waitFor(() => self.connected)
       const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
@@ -525,6 +513,24 @@ export const Wocky = types
       },
       userInviteRedeemCode(code: string): Promise<void> {
         return self.transport.userInviteRedeemCode(code)
+      },
+      userBulkLookup: flow(function*(phoneNumbers: string[]) {
+        const data = yield self.transport.userBulkLookup(phoneNumbers)
+        data.forEach(d => {
+          if (d.user) {
+            const profile = self.profiles.get(d.user.id, d.user)
+            // if (d.relationship === 'FRIEND') {
+            //   profile.setFriend(true)
+            //   self.profile!.addFriend(profile, new Date())
+            // }
+            d.user = profile
+          }
+        })
+
+        return data
+      }) as (phoneNumbers: string[]) => Promise<any[]>,
+      friendSmsInvite: (phoneNumber: string): Promise<void> => {
+        return self.transport.friendSmsInvite(phoneNumber)
       },
     }
   })

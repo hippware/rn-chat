@@ -4,6 +4,7 @@ import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
+import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 
 const Hidden = types
   .model('HiddenType', {
@@ -45,11 +46,21 @@ export const OwnProfile = types
       sentInvitations: types.optional(InvitationPaginableList, {}),
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ContactPaginableList, {}),
+      blocked: types.optional(BlockedUserPaginableList, {}),
     })
   )
   .views(self => ({
     get sortedFriends(): IProfile[] {
       return self.friends.list
+        .map(contact => contact.user)
+        .filter(x => x.handle)
+        .slice()
+        .sort((a, b) => {
+          return a.handle!.toLocaleLowerCase().localeCompare(b.handle!.toLocaleLowerCase())
+        })
+    },
+    get sortedBlocked(): IProfile[] {
+      return self.blocked.list
         .map(contact => contact.user)
         .filter(x => x.handle)
         .slice()
@@ -71,6 +82,20 @@ export const OwnProfile = types
       self.receivedInvitations.remove(profile.id)
       self.sentInvitations.remove(profile.id)
       profile.setFriend(true)
+    },
+    addBlocked: (profile: IProfile, createdAt: Date) => {
+      self.blocked.add(
+        BlockedUser.create({
+          id: profile.id,
+          createdAt,
+          user: profile.id,
+        })
+      )
+      profile.setBlocked(true)
+    },
+    removeBlocked: (profile: IProfile) => {
+      self.blocked.remove(profile.id)
+      profile.setBlocked(false)
     },
     receiveInvitation: (profile: IProfile, createdAt = new Date()) => {
       self.receivedInvitations.add(
@@ -95,12 +120,19 @@ export const OwnProfile = types
       profile.receivedInvite()
     },
     hide: flow(function*(value: boolean, expires: Date | undefined) {
-      yield self.service._hideUser(value, expires)
+      yield self.transport.hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),
   }))
   .actions(self => ({
-    load({avatar, receivedInvitations = [], sentInvitations = [], friends = [], ...data}: any) {
+    load({
+      avatar,
+      blocked = [],
+      receivedInvitations = [],
+      sentInvitations = [],
+      friends = [],
+      ...data
+    }: any) {
       Object.assign(self, data)
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)
@@ -113,6 +145,9 @@ export const OwnProfile = types
       )
       friends.forEach(({createdAt, user, name}) =>
         self.addFriend(self.service.profiles.get(user.id, user), createdAt, name)
+      )
+      blocked.forEach(({createdAt, user}) =>
+        self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
       )
     },
   }))
