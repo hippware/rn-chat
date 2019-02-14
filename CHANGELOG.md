@@ -10,6 +10,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove autobind dependency (PR #3326)
 * Load presence status for profiles (PR #3335)
   * Fixes: [GraphQL] Online presence (#3270)
+* Fix up Blocked Users functionality (#3254)
+
 
 # 4.1.1 - 2019 Feb 7
 
