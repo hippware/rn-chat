@@ -515,6 +515,7 @@ export const Wocky = types
         return self.transport.userInviteRedeemCode(code)
       },
       userBulkLookup: flow(function*(phoneNumbers: string[]) {
+        yield waitFor(() => self.connected)
         const data = yield self.transport.userBulkLookup(phoneNumbers)
         data.forEach(d => {
           if (d.user) {
