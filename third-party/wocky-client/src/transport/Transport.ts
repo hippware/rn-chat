@@ -138,6 +138,16 @@ export class Transport {
                       }
                     }
                   }
+                  blocks(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        user {
+                          firstName handle id lastName media { thumbnailUrl fullUrl trosUrl }
+                        }
+                      }
+                    }
+                  }
                   friends(first:100) {
                     edges {
                       node {
@@ -186,6 +196,10 @@ export class Transport {
       result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
         createdAt: iso8601toDate(createdAt).getTime(),
         name,
+        user: convertProfile(user),
+      }))
+      result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
+        createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
       }))
     }
@@ -645,6 +659,7 @@ export class Transport {
   }
 
   async block(userId: string): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userBlock($input: UserBlockInput!) {
@@ -658,6 +673,7 @@ export class Transport {
   }
 
   async unblock(userId: string): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userUnblock($input: UserUnblockInput!) {
@@ -976,6 +992,7 @@ export class Transport {
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userHide($enable: Boolean!, $expire: DateTime) {
@@ -1117,8 +1134,6 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        // tslint:disable-next-line
-        console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = {
           user: convertProfile(user),

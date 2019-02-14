@@ -10,7 +10,7 @@ const BlockedList = inject('wocky')(
     <Screen>
       <PeopleList
         renderItem={({item}) => <BlockableProfileItem profile={item} />}
-        sections={[{key: 'blocked', data: _.sortBy(wocky.blocked, 'handle')}]}
+        sections={[{key: 'blocked', data: wocky.profile.sortedBlocked}]}
         loadMore={() => {
           /**/
         }}
