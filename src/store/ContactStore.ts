@@ -2,13 +2,19 @@ import {observable, action, computed} from 'mobx'
 import {IWocky, IProfile} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
 
-const phoneNumberLabelsPrecedence = ['main', 'mobile', 'iPhone', 'home', 'work', 'other']
-const phoneNumberExcludedLabels = ['home fax', 'work fax']
+// todo: revisit these labels with the Android port
+const labelPrecedence = ['main', 'mobile', 'iPhone', 'home', 'work', 'other']
+// const labelExclude = ['home fax', 'work fax']
 
-function phoneIsMoreImportant(phoneNew: PhoneNumber, phoneExisting: PhoneNumber): boolean {
-  // todo
-  // phoneNumberLabelsPrecedence.indexOf(num.label) < phoneNumberLabelsPrecedence.indexOf(this.phoneNumber.label)
-  return true
+function isMoreImportant(phoneNew: PhoneNumber, phoneExisting: PhoneNumber): boolean {
+  let precNew = labelPrecedence.indexOf(phoneNew.label)
+  let precOld = labelPrecedence.indexOf(phoneExisting.label)
+
+  // correct for non-existent labels
+  precNew = precNew > -1 ? precNew : 1000
+  precOld = precOld > -1 ? precOld : 1000
+
+  return precNew < precOld
 }
 
 export type UserContactRelationship = 'FRIEND' | 'INVITED' | 'INVITED_BY' | 'NONE' | 'SELF' | null
@@ -27,8 +33,6 @@ export class MyContact {
   @observable relationship: UserContactRelationship = null
   @observable smsSent: boolean = false
   contact: Contact
-  // phoneNumber?: string
-  // e164PhoneNumber?: string
   phoneNumber?: PhoneNumber
 
   constructor(contact: Contact) {
@@ -44,20 +48,17 @@ export class MyContact {
 
   @action
   updateWithBulkData(bulkData: BulkData) {
-    // console.log('& update for', bulkData, this.contact)
-
     // short circuit if we already have a profile
     if (this.profile) return
 
     if (bulkData.user) {
-      console.log('& user', bulkData.user)
       this.profile = bulkData.user
       this.relationship = bulkData.relationship
     }
 
     const num = this.contact.phoneNumbers.find(n => n.number === bulkData.phoneNumber)
     if (this.phoneNumber) {
-      if (num && num.label && phoneIsMoreImportant(num, this.phoneNumber)) {
+      if (num && isMoreImportant(num, this.phoneNumber)) {
         this.phoneNumber = num
       }
     } else {
@@ -73,6 +74,25 @@ class ContactStore {
 
   constructor(wocky: IWocky) {
     this.wocky = wocky
+  }
+
+  @computed
+  get sortedContacts() {
+    return this.contacts.slice().sort((a, b) => {
+      if (a.relationship && !b.relationship) {
+        return -100
+      } else if (b.relationship && !a.relationship) {
+        return 100
+      } else if (a.relationship && b.relationship) {
+        const relationshipPriorities = ['FRIEND', 'INVITED', 'INVITED_BY', 'NONE', 'SELF']
+        return (
+          relationshipPriorities.indexOf(a.relationship!) -
+          relationshipPriorities.indexOf(b.relationship!)
+        )
+      } else {
+        return 0
+      }
+    })
   }
 
   requestPermission = async () => {
@@ -91,17 +111,12 @@ class ContactStore {
     this.loading = true
     RNContacts.getAll(async (error, contacts) => {
       if (!error) {
-        // console.log('& raw contacts', JSON.stringify(contacts))
         this.contacts.replace(contacts.map(c => new MyContact(c)))
         const phoneNumbers = contacts.reduce<string[]>((prev, current) => {
           return [...prev, ...current.phoneNumbers.map(p => p.number)]
         }, [])
 
-        // console.log('& loadContacts: phoneNumbers: ', phoneNumbers)
-
         const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
-        // console.log('& bulkResult: ', JSON.stringify(bulkResult))
-        // console.log('& my contacts: ', this.contacts.slice())
         bulkResult.forEach(r => {
           // find the associated contact from the phoneNumber
           const contact = this.contacts.find(c =>
@@ -121,7 +136,6 @@ class ContactStore {
 
   async inviteContact(contact: MyContact) {
     await this.wocky!.friendSmsInvite(contact.phoneNumber!.number)
-    console.log('& invited')
     contact.smsSent = true
   }
 }

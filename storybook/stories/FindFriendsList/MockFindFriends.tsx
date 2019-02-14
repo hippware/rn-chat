@@ -2,7 +2,7 @@ import React from 'react'
 import OnboardingFindFriendsList from '../../../src/components/Onboarding/OnboardingFindFriendsList'
 import {Provider} from 'mobx-react/native'
 import ContactStore, {MyContact} from '../../../src/store/ContactStore'
-import {observable} from 'mobx'
+import {observable, computed} from 'mobx'
 import {Profile} from 'wocky-client'
 
 const contacts: any[] = require('./contacts.json')
@@ -34,6 +34,15 @@ class MockStore implements ContactStore {
 
   readonly contacts = observable.array<MyContact>([])
   wocky
+
+  @computed
+  get sortedContacts() {
+    return this.contacts.slice().sort((a, b) => {
+      if (a.relationship && b.relationship) return -1
+      else if (b.relationship && !a.relationship) return 1
+      else return 0
+    })
+  }
 
   requestPermission = async () => {
     // noop

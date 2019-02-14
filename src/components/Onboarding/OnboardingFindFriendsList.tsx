@@ -8,7 +8,6 @@ import {inject} from 'mobx-react'
 import ContactStore, {MyContact} from 'src/store/ContactStore'
 import PersonRow from '../people-lists/PersonRow'
 import {colors} from 'src/constants'
-import {IWocky} from 'wocky-client'
 
 type Props = {
   onPress: () => void
@@ -62,7 +61,7 @@ const OnboardingFindFriendsList = inject('contactStore')(
         ) : (
           <FlatList
             style={{flex: 1, width: '100%'}}
-            data={contactStore!.contacts.slice()}
+            data={contactStore!.sortedContacts.slice()}
             renderItem={({item}) => <Friend contact={item} />}
             keyExtractor={item => item.contact.recordID}
           />
