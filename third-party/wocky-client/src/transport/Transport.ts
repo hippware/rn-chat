@@ -1064,7 +1064,7 @@ export class Transport {
       variables: {phoneNumbers},
     })
     const results = res.data.userBulkLookup
-    return results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null}))
+    return results ? results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null})) : []
   }
 
   async friendSmsInvite(phoneNumber: string): Promise<void> {

@@ -110,18 +110,20 @@ class ContactStore {
   loadContacts = async () => {
     this.loading = true
     RNContacts.getAll(async (error, contacts) => {
-      if (!error) {
+      if (!error && contacts) {
         this.contacts.replace(contacts.map(c => new MyContact(c)))
         const phoneNumbers = contacts.reduce<string[]>((prev, current) => {
-          return [...prev, ...current.phoneNumbers.map(p => p.number)]
+          return current.phoneNumbers ? [...prev, ...current.phoneNumbers.map(p => p.number)] : prev
         }, [])
 
         const bulkResult = await this.wocky!.userBulkLookup(phoneNumbers)
         bulkResult.forEach(r => {
           // find the associated contact from the phoneNumber
-          const contact = this.contacts.find(c =>
-            c.contact.phoneNumbers.map(pn => pn.number).includes(r.phoneNumber)
-          )
+          const contact = this.contacts.find(c => {
+            return c.contact.phoneNumbers
+              ? c.contact.phoneNumbers.map(pn => pn.number).includes(r.phoneNumber)
+              : false
+          })
 
           // update the contact with the bulk result
           if (contact) {
