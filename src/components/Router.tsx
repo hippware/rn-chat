@@ -144,13 +144,13 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="friendSearch" component={FriendSearch} />
                       <Scene key="visitors" component={VisitorList} />
                       <Scene key="profileDetails" component={ProfileDetail} />
-                      <Scene key="LiveLocationCompose" component={LiveLocationCompose} backAction={() => backAction(iconStore!)} />
-                      <Scene key="LiveLocationSettings" component={LiveLocationSettings} backAction={() => backAction(iconStore!)} />
+                      <Scene key="liveLocationCompose" component={LiveLocationCompose} backAction={() => backAction(iconStore!)} />
+                      <Scene key="liveLocationSettings" component={LiveLocationSettings} backAction={() => backAction(iconStore!)} />
                     </Stack>
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                     <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
-                    <Scene key="LiveLocationShare" component={LiveLocationShare} title="Select Friends" backAction={() => backAction(iconStore!)} />
+                    <Scene key="liveLocationShare" component={LiveLocationShare} title="Select Friends" backAction={() => backAction(iconStore!)} />
                     {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />

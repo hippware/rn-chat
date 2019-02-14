@@ -32,7 +32,6 @@ export default class LiveLocationCompose extends React.Component {
             <RText
               style={{
                 width: 255,
-                fontFamily: 'Roboto',
                 fontSize: 17,
                 fontWeight: '500',
                 textAlign: 'center',

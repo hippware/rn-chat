@@ -96,7 +96,7 @@ export default class LiveLocationCompose extends React.Component {
         </View>
         <TouchableOpacity
           style={{width: '100%', height: 50 * minHeight}}
-          onPress={Actions.LiveLocationSettings}
+          onPress={Actions.liveLocationSettings}
         >
           <LinearGradient
             start={{x: 0, y: 0.5}}

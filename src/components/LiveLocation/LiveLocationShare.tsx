@@ -34,7 +34,7 @@ export default class LiveLocationShare extends React.Component<Props> {
           isDisabled={!selected}
           onPress={() => {
             Actions.popTo('home')
-            Actions.LiveLocationCompose()
+            Actions.liveLocationCompose()
           }}
         >
           <RText size={15} color="white">
