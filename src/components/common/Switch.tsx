@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
-  StyleProp,
-  ViewStyle,
-} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, Animated} from 'react-native'
 
 type Props = {
   isOn: boolean
@@ -53,27 +45,6 @@ export default class Switch extends React.Component<Props> {
   offsetX = new Animated.Value(0)
   dimensions = Switch.calculateDimensions(this.props.size)
 
-  createToggleSwitchStyle = () =>
-    ({
-      justifyContent: 'center',
-      width: this.dimensions.width,
-      borderRadius: 20,
-      padding: this.dimensions.padding,
-      backgroundColor: this.props.isOn ? this.props.onColor : this.props.offColor,
-    } as StyleProp<ViewStyle>)
-
-  createInsideCircleStyle = () => ({
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 4,
-    position: 'absolute',
-    backgroundColor: 'white',
-    transform: [{translateX: this.offsetX}],
-    width: this.dimensions.circleWidth,
-    height: this.dimensions.circleHeight,
-    borderRadius: this.dimensions.circleWidth / 2,
-  })
-
   render() {
     const toValue = this.props.isOn ? this.dimensions.width - this.dimensions.translateX : 0
 
@@ -88,13 +59,33 @@ export default class Switch extends React.Component<Props> {
           <Text style={[styles.labelStyle, this.props.labelStyle]}>{this.props.label}</Text>
         ) : null}
         <TouchableOpacity
-          style={this.createToggleSwitchStyle()}
+          style={{
+            justifyContent: 'center',
+            width: this.dimensions.width,
+            borderRadius: 20,
+            padding: this.dimensions.padding,
+            backgroundColor: this.props.isOn ? this.props.onColor : this.props.offColor,
+          }}
           activeOpacity={0.8}
           onPress={() => {
             this.props.onToggle(!this.props.isOn)
           }}
         >
-          <Animated.View style={this.createInsideCircleStyle()}>{this.props.icon}</Animated.View>
+          <Animated.View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: 4,
+              position: 'absolute',
+              backgroundColor: 'white',
+              transform: [{translateX: this.offsetX}],
+              width: this.dimensions.circleWidth,
+              height: this.dimensions.circleHeight,
+              borderRadius: this.dimensions.circleWidth / 2,
+            }}
+          >
+            {this.props.icon}
+          </Animated.View>
         </TouchableOpacity>
       </View>
     )
