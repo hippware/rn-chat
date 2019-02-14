@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Load presence status for profiles (PR #3335)
   * Fixes: [GraphQL] Online presence (#3270)
 * Fix up Blocked Users functionality (#3254)
+* [UI only] Live Location Share Button (PR #3339)
+* Onboarding 4: Invite Friends (#3045)
 
 
 # 4.1.1 - 2019 Feb 7
