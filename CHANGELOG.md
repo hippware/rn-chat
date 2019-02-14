@@ -52,7 +52,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * User is logged out when the app is in background too long (#3223)
   * Always call getIdToken() in case Firebase has a new token (PR #3279)
 * "Here" missing on widget. Replaced with an image (#2933, PR #3269)
-* Download image by TROS url (PR #3273) 
+* Download image by TROS url (PR #3273)
   * Image messages don't show until app reload (#3226)
 * [GraphQL] Online presence (#3270)
 * [dev] modify `tryMigrate` (#3266)
