@@ -3,6 +3,7 @@ export const AREA_TOO_LARGE = 'AREA_TOO_LARGE'
 export const PROFILE_PROPS = `id firstName lastName handle
   media { thumbnailUrl fullUrl trosUrl }
   bots(first:0, relationship: OWNED) { totalCount }
+  presenceStatus
 `
 // TODO: switch FOLLOWER & FOLLOWING to INVITED & INVITED_BY
 // followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
@@ -106,4 +107,6 @@ export const MESSAGE_PROPS = `
   otherUser {
     ${PROFILE_PROPS}
   }
+`
+export const LOCATION_PROPS = `lat lon isFetch isMoving odometer speed heading createdAt altitude accuracy batteryLevel
 `

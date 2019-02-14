@@ -4,6 +4,26 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Update initial welcome slides for Live Location (#3316, PR #3319)
+* TestFlight sourcemaps to use build number in identifer (#3317)
+* Live Location Sharing - Baseline / API (#3312)
+* Remove autobind dependency (PR #3326)
+* Load presence status for profiles (PR #3335)
+  * Fixes: [GraphQL] Online presence (#3270)
+* Fix up Blocked Users functionality (#3254)
+
+
+# 4.1.1 - 2019 Feb 7
+
+* [bugsnag] Non-codepush builds set appVersion instead. (PR #3298)
+* Sourcemaps cannot be generated for codepush (#3304)
+* Updates/Requests (PR #3303, PR #3311, PR #3313)
+  * (Baseline) Updates / Requests Screen Enhancement (#3037)
+  * Location Name should be on second line (#3305)
+  * User should have X or check mark to accept/decline requests (#3306)
+  * Yellow indicator should be on Updates with new update (#3307)
+  * Slider does not completely cover white area (#3308)
+
 # 4.1.0 - 2019 Jan 29
 
 **React Native upgrade** See below.

@@ -2,6 +2,9 @@ import {types, Instance} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
 import {Profile} from './Profile'
 
+export const EventBotInviteType = 'BOT_INVITATION_NOTIFICATION'
+export const EventBotInviteResponseType = 'BOT_INVITATION_RESPONSE_NOTIFICATION'
+
 export const EventBotInvite = types
   .compose(
     EventBot,
@@ -11,6 +14,11 @@ export const EventBotInvite = types
       isResponse: types.boolean,
     })
   )
+  .views(self => ({
+    get isRequest() {
+      return self.isResponse ? false : true
+    },
+  }))
   .named('EventBotInvite')
 
 export interface IEventBotInvite extends Instance<typeof EventBotInvite> {}

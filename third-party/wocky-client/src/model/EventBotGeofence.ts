@@ -1,7 +1,9 @@
 import {types, Instance} from 'mobx-state-tree'
 import {EventBot, IEventBotData} from './EventBot'
 import {Profile, IProfilePartial} from './Profile'
+import {EventRequestTypes} from './EventList'
 
+export const EventBotGeofenceType = 'GEOFENCE_EVENT_NOTIFICATION'
 export const EventBotGeofence = types
   .compose(
     EventBot,
@@ -10,6 +12,11 @@ export const EventBotGeofence = types
       profile: types.reference(Profile),
     })
   )
+  .views(() => ({
+    get isRequest() {
+      return EventRequestTypes.includes(EventBotGeofenceType)
+    },
+  }))
   .named('EventBotGeofence')
 
 export interface IEventBotGeofence extends Instance<typeof EventBotGeofence> {}

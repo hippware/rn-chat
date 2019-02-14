@@ -2,7 +2,7 @@ import React from 'react'
 // import EventBotShareCard from './EventBotShareCard'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
-import EventUserFollowCard from './EventUserFollowCard'
+import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
 import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
@@ -66,7 +66,7 @@ const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
   // EventBotShare: EventBotShareCard,
   EventBotGeofence: EventBotGeofenceCard,
-  EventUserFollow: EventUserFollowCard,
+  EventFriendInvite: EventFriendInviteRequestCard,
   EventBotInvite: EventBotInviteCard,
 }
 

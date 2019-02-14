@@ -192,34 +192,23 @@ describe('New GraphQL profile tests', () => {
   //   expect(user1steve.followers.list[0].handle).toEqual(user2.profile!.handle)
   // })
 
-  // it('unfollow and refollow', async () => {
-  //   expect(user.followed.length).toBe(1)
-  //   await user1user2Profile.unfollow()
-  //   expect(user1user2Profile.isFollowed).toBe(false)
-  //   expect(user.followed.length).toBe(0)
-  //   await user1user2Profile.follow()
-  // })
+  it('block and unblock', async () => {
+    expect(user.profile!.blocked.length).toBe(0)
+    await user1user2Profile.block()
+    expect(user.profile!.blocked.length).toBe(1)
+    await user1user2Profile.unblock()
+    expect(user.profile!.blocked.length).toBe(0)
+  })
 
-  // it('block and unblock', async () => {
-  //   expect(user.blocked.length).toBe(0)
-  //   await user1user2Profile.block()
-  //   expect(user.blocked.length).toBe(1)
-  //   expect(user.followed.length).toBe(0)
-  //   await user1user2Profile.unblock()
-  //   expect(user.blocked.length).toBe(0)
-  //   // TODO: restore this test
-  //   // expect(user.followed.length).toBe(0)
-  // })
-
-  // it('hide and unhide', async () => {
-  //   const date = new Date(Date.now() + 1000)
-  //   await user.profile!.hide(true, date)
-  //   expect(user.profile!.hidden!.expires!.getTime()).toEqual(date.getTime())
-  //   expect(user.profile!.hidden!.enabled).toEqual(true)
-  //   await user.profile!.hide(false, undefined)
-  //   expect(user.profile!.hidden!.expires).toBe(null)
-  //   expect(user.profile!.hidden!.enabled).toEqual(false)
-  // })
+  it('hide and unhide', async () => {
+    const date = new Date(Date.now() + 1000)
+    await user.profile!.hide(true, date)
+    expect(user.profile!.hidden!.expires!.getTime()).toEqual(date.getTime())
+    expect(user.profile!.hidden!.enabled).toEqual(true)
+    await user.profile!.hide(false, undefined)
+    expect(user.profile!.hidden!.expires).toBe(null)
+    expect(user.profile!.hidden!.enabled).toEqual(false)
+  })
 
   // // TODO deal with verification of search?
   // // it('searches users', async done => {

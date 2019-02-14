@@ -20,6 +20,7 @@ import {
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
   AREA_TOO_LARGE,
+  LOCATION_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -56,6 +57,7 @@ export class Transport {
   @observable message?: IMessageIn
   @observable notification: any
   @observable presence: any
+  @observable sharedLocation: any
   @observable rosterItem: any
   @observable botVisitor: any
 
@@ -81,6 +83,7 @@ export class Transport {
         this.subscribeMessages()
         this.subscribeContacts()
         this.subscribePresence()
+        this.subscribeSharedLocations()
       }
       return res
     } catch (e) {
@@ -135,6 +138,16 @@ export class Transport {
                       }
                     }
                   }
+                  blocks(first:100) {
+                    edges {
+                      node {
+                        createdAt
+                        user {
+                          firstName handle id lastName media { thumbnailUrl fullUrl trosUrl }
+                        }
+                      }
+                    }
+                  }
                   friends(first:100) {
                     edges {
                       node {
@@ -183,6 +196,10 @@ export class Transport {
       result.friends = res.data.user.friends.edges.map(({node: {createdAt, user, name}}) => ({
         createdAt: iso8601toDate(createdAt).getTime(),
         name,
+        user: convertProfile(user),
+      }))
+      result.blocked = res.data.user.blocks.edges.map(({node: {createdAt, user}}) => ({
+        createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
       }))
     }
@@ -283,6 +300,39 @@ export class Transport {
       variables: {...params, device: this.resource},
     })
   }
+  async userLocationShare(userId: string, expiresAt: Date): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationLiveShare(
+          $userId: String!
+          $expiresAt: DateTime!
+        ) {
+          userLocationLiveShare(
+            input: {expiresAt: $expiresAt, sharedWithId: $userId}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {userId, expiresAt},
+    })
+  }
+  async userLocationCancelShare(userId: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationCancelShare(
+          $userId: String!
+        ) {
+          userLocationCancelShare(
+            input: {sharedWithId: $userId}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {userId},
+    })
+  }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
     const res = await this.client!.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510
@@ -311,17 +361,31 @@ export class Transport {
     })
   }
 
+  async notificationDelete(id: string): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation notificationDelete($input: NotificationDeleteInput!) {
+          notificationDelete(input: $input) {
+            ${VOID_PROPS}            
+          }
+        }
+      `,
+      variables: {input: {id}},
+    })
+  }
+
   async loadNotifications(params: {
     limit?: number
     beforeId?: string
     afterId?: string
+    types: string[] | undefined
   }): PaginableLoadPromise<IEventData> {
-    const {limit, beforeId, afterId} = params
+    const {limit, beforeId, afterId, types} = params
     // console.log('& gql load', beforeId, afterId, limit)
     const res = await this.client!.query<any>({
       query: gql`
-        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!) {
-          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId) {
+        query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!, $types: [NotificationType]) {
+          notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId, types: $types) {
             totalCount
             edges {
               node {
@@ -331,7 +395,7 @@ export class Transport {
           }
         }
       `,
-      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username},
+      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
     })
     // console.log('& gql res', JSON.stringify(res.data.notifications))
     if (res.data && res.data.notifications) {
@@ -595,6 +659,7 @@ export class Transport {
   }
 
   async block(userId: string): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userBlock($input: UserBlockInput!) {
@@ -608,6 +673,7 @@ export class Transport {
   }
 
   async unblock(userId: string): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userUnblock($input: UserUnblockInput!) {
@@ -926,6 +992,7 @@ export class Transport {
   }
 
   async hideUser(enable: boolean, expire?: Date): Promise<void> {
+    await waitFor(() => this.connected)
     return this.voidMutation({
       mutation: gql`
         mutation userHide($enable: Boolean!, $expire: DateTime) {
@@ -1019,6 +1086,29 @@ export class Transport {
 
   /******************************** SUBSCRIPTIONS ********************************/
 
+  subscribeSharedLocations() {
+    const subscription = this.client!.subscribe({
+      query: gql`
+        subscription sharedLocations {
+          sharedLocations {
+            user {
+              id
+            }
+            location {
+              ${LOCATION_PROPS}
+            }
+          }
+        }
+      `,
+    }).subscribe({
+      next: action((result: any) => {
+        const {user: {id}, location} = result.data.sharedLocations
+        this.sharedLocation = {id, location}
+      }),
+    })
+    this.subscriptions.push(subscription)
+  }
+
   subscribePresence() {
     const subscription = this.client!.subscribe({
       query: gql`
@@ -1081,8 +1171,6 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        // tslint:disable-next-line
-        console.log('& contact', result)
         const {user, relationship, createdAt} = result.data.contacts
         this.rosterItem = {
           user: convertProfile(user),

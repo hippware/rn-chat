@@ -24,6 +24,7 @@ describe('Notifications (static)', () => {
     await alicesBobProfile.invite()
     // Expected Notification: User follow notification
     await sleep(1000)
+    bob.notifications.setMode(2) // requests tab
     await bob.notifications.load()
     expect(bob.notifications.count).toEqual(1)
     expect(bob.notifications.list[0]).toHaveProperty('user')

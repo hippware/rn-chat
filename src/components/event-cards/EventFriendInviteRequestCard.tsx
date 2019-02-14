@@ -1,7 +1,7 @@
 import React from 'react'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventFriendInvite, IProfile} from 'wocky-client'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Image, View, TouchableOpacity} from 'react-native'
 import alert from '../../utils/alert'
 import {inject, observer} from 'mobx-react/native'
 import {RText} from '../common'
@@ -15,27 +15,28 @@ type Props = {
   user: IProfile
 }
 
-const EventUserFollowCard = observer(({item: {relativeDateAsString, user}}: Props) => (
+const EventFriendInviteRequestCard = observer(({item}: Props) => (
   <EventCardTemplate
-    timestamp={relativeDateAsString}
+    timestamp={item.relativeDateAsString}
     action={'wants to connect with you.'}
     icon={geoIcon}
-    profile={user}
-    rightColumnElement={<FollowButton profile={user} />}
+    profile={item.user}
+    rightColumnElement={<ConnectButton item={item} />}
   />
 ))
 
-export default EventUserFollowCard
+export default EventFriendInviteRequestCard
 
-type FollowProps = {
-  profile: IProfile
+type ConnectProps = {
+  item: IEventFriendInvite
   analytics?: any
 }
 
-const FollowButton = inject('analytics')(
-  observer(({profile, analytics}: FollowProps) => {
-    const {isFriend, invite} = profile
-    return (
+const ConnectButton = inject('analytics')(
+  observer(({item, analytics}: ConnectProps) => {
+    const profile = item.user
+    const {isFriend} = profile
+    return isFriend ? (
       <GradientButton
         style={[styles.button, isFriend ? styles.friend : styles.notFriend]}
         isPink={isFriend}
@@ -44,20 +45,39 @@ const FollowButton = inject('analytics')(
           if (isFriend) {
             await unfriend(profile)
           } else {
-            await invite()
-            analytics.track('user_follow', (profile as any).toJSON())
+            await invite(item, analytics)
           }
         }}
       >
         <RText size={10.5} weight="Medium" color={isFriend ? 'white' : colors.PINK}>
-          {isFriend ? 'FRIENDS' : 'CONNECT'}
+          FRIENDS
         </RText>
       </GradientButton>
+    ) : (
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={() => invite(item, analytics)}>
+          <Image style={{marginRight: 5}} source={require('../../../images/friendAccept.png')} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => decline(item)}>
+          <Image source={require('../../../images/friendDecline.png')} />
+        </TouchableOpacity>
+      </View>
     )
   })
 )
 
-const unfriend = async (profile: any) => {
+const invite = async (item: IEventFriendInvite, analytics: any) => {
+  const profile = item.user
+  await profile.invite()
+  await item.removeAfterDelay(2) // remove the item after 2 sec
+  analytics.track('user_follow', (profile as any).toJSON())
+}
+
+const decline = async (item: IEventFriendInvite) => {
+  await item.remove()
+}
+
+const unfriend = async (profile: IProfile) => {
   return new Promise(resolve => {
     alert(null, `Are you sure you want to unfriend @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},

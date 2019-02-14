@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo "Checking for deploy-stage..."
-echo $APPCENTER_BRANCH
+echo "Build ID: $APPCENTER_BUILD_ID"
+echo "Branch: $APPCENTER_BRANCH"
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
 then
@@ -11,5 +11,5 @@ fi
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage"  ] || [ "$APPCENTER_BRANCH" == "production" ]
 then
-  yarn bugsnag
+  yarn bugsnag $APPCENTER_BUILD_ID
 fi

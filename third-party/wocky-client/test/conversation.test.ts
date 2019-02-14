@@ -5,9 +5,9 @@ let alice: IWocky, bob: IWocky, chat: IChat
 
 describe('New GraphQL conversation tests', () => {
   beforeAll(async () => {
+    jest.setTimeout(20000)
     alice = await createUser()
     bob = await createUser()
-    jest.setTimeout(10000)
   })
 
   it('update profiles with handles so they can send messages', async () => {

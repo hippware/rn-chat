@@ -5,6 +5,7 @@ import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
+import {Location, ILocationSnapshot} from './Location'
 
 export const Profile = types
   .compose(
@@ -17,10 +18,12 @@ export const Profile = types
       status: types.optional(types.enumeration(['ONLINE', 'OFFLINE']), 'OFFLINE'),
       firstName: types.maybeNull(types.string),
       lastName: types.maybeNull(types.string),
+      location: types.maybe(Location),
       botsSize: 0,
       hasSentInvite: false,
       hasReceivedInvite: false,
       isFriend: false,
+      isBlocked: false,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
@@ -30,6 +33,7 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
+    delete res.location
     delete res.ownBots
     delete res.subscribedBots
     return res
@@ -51,12 +55,18 @@ export const Profile = types
         self.hasSentInvite = false
       }
     },
+    setLocation(location: ILocationSnapshot) {
+      self.location = Location.create(location)
+    },
     setFriend: (friend: boolean) => {
       self.isFriend = friend
       if (friend) {
         self.hasReceivedInvite = false
         self.hasSentInvite = false
       }
+    },
+    setBlocked: (value: boolean) => {
+      self.isBlocked = value
     },
   }))
   .extend(self => {
@@ -94,6 +104,20 @@ export const Profile = types
           self.service.profile.sentInvitations.remove(self.id)
           self.setFriend(false)
           yield self.transport.friendDelete(self.id)
+        }),
+        shareLocation: flow(function*(expiresAt: Date) {
+          yield self.transport.userLocationShare(self.id, expiresAt)
+        }),
+        block: flow(function*() {
+          yield self.transport.block(self.id)
+          self.service.profile.addBlocked(self, new Date())
+        }),
+        unblock: flow(function*() {
+          yield self.transport.unblock(self.id)
+          self.service.profile.removeBlocked(self)
+        }),
+        cancelShare: flow(function*() {
+          yield self.transport.userLocationCancelShare(self.id)
         }),
         afterAttach: () => {
           if (self.service) {
@@ -167,6 +191,7 @@ export interface IProfilePartial {
   botsSize: number
   followersSize: number
   followedSize: number
+  status: string
   hidden: {
     enabled: boolean
     expires: Date
