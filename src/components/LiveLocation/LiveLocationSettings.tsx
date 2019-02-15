@@ -5,9 +5,9 @@ import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
 
+let switchOn = false
 export default class LiveLocationCompose extends React.Component {
   render() {
-    let switchOn = false
     return (
       <View
         style={{
@@ -46,8 +46,8 @@ export default class LiveLocationCompose extends React.Component {
               onColor="#FE5C6C"
               offColor="#D3D3D3"
               size="regular"
-              onToggle={() => {
-                switchOn = true
+              onToggle={isOn => {
+                switchOn = isOn
               }}
             />
           </View>

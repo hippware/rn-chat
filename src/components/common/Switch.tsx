@@ -42,17 +42,19 @@ export default class Switch extends React.Component<Props> {
     icon: null,
   }
 
-  offsetX = new Animated.Value(0)
-  dimensions = Switch.calculateDimensions(this.props.size)
-
-  render() {
+  componentWillReceiveProps() {
     const toValue = this.props.isOn ? this.dimensions.width - this.dimensions.translateX : 0
 
     Animated.timing(this.offsetX, {
       toValue,
       duration: 300,
     }).start()
+  }
 
+  offsetX = new Animated.Value(0)
+  dimensions = Switch.calculateDimensions(this.props.size)
+
+  render() {
     return (
       <View style={styles.container}>
         {this.props.label ? (
