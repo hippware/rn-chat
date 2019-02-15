@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.2 - 2019 Feb 14
+
 * Update initial welcome slides for Live Location (#3316, PR #3319)
 * TestFlight sourcemaps to use build number in identifer (#3317)
 * Live Location Sharing - Baseline / API (#3312)
@@ -13,7 +15,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix up Blocked Users functionality (#3254)
 * [UI only] Live Location Share Button (PR #3339)
 * Onboarding 4: Invite Friends (#3045)
-
 
 # 4.1.1 - 2019 Feb 7
 
