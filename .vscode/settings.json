@@ -3,5 +3,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "typescript.tsdk": "./node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "tslint.configFile": "./tslint.json"
 }
