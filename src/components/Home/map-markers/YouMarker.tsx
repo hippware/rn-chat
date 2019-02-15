@@ -53,7 +53,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
           </View>
         )}
 
-        <Pulse />
+        {/* <Pulse /> */}
       </HackMarker>
     )
   )
