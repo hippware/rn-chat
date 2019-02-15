@@ -30,13 +30,13 @@ export default class Pulse extends Component {
 
   static defaultProps = {
     color: 'rgba(255,255,255,0)',
-    diameter: 90,
-    duration: 1000,
+    diameter: 80,
+    duration: 2500,
     image: null,
     initialDiameter: 70,
     numPulses: 1,
     pulseStyle: {borderColor: '#fe5c6c', borderWidth: 1},
-    speed: 10,
+    speed: 20,
     style: {
       top: 0,
       bottom: 0,
