@@ -8,6 +8,7 @@ import {IHomeStore, ISelectableCard} from '../../../store/HomeStore'
 import {Avatar} from '../../common'
 import {colors} from '../../../constants'
 import Triangle from '../../map/Triangle'
+import Pulse from './Pulse'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -51,6 +52,8 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
             />
           </View>
         )}
+
+        <Pulse />
       </HackMarker>
     )
   )
