@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Rollback recent sourcemap related changes (PR #3349)
+
 # 4.1.2 - 2019 Feb 14
 
 * Update initial welcome slides for Live Location (#3316, PR #3319)
