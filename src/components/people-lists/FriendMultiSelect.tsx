@@ -8,7 +8,7 @@ import InviteFriendsRow from './InviteFriendsRow'
 
 type Props = {
   selection: any
-  botTitle: string
+  botTitle?: string
   inviteMessage?: string
 }
 

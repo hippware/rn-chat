@@ -53,7 +53,7 @@ const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMe
 
 const LiveLocationButton = ({invisible, active}) => (
   <View style={{position: 'absolute', top: -25, zIndex: 10}}>
-    <TouchableOpacity style={{marginLeft: 160}}>
+    <TouchableOpacity style={{marginLeft: 160}} onPress={Actions.liveLocationShare}>
       {invisible ? (
         <Image source={require('../../images/liveLocationButtonGhost.png')} />
       ) : active ? (
