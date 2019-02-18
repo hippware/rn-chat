@@ -8,9 +8,12 @@ describe('Live Locations', () => {
   const differentLocation = {longitude: 1.1, latitude: 1.1, accuracy: 1}
 
   beforeAll(async () => {
-    jest.setTimeout(10000)
+    jest.setTimeout(20000)
+    console.log('CREATE FIRST USER')
     bob = await createUser()
+    console.log('CREATE SECOND USER')
     alice = await createUser()
+    console.log('CREATION IS COMPLETE')
   })
 
   it('make friends, share location', async () => {

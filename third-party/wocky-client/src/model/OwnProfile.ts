@@ -5,6 +5,7 @@ import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
+import {LocationSharePaginableList, LocationShare} from './LocationShare'
 
 const Hidden = types
   .model('HiddenType', {
@@ -47,6 +48,7 @@ export const OwnProfile = types
       receivedInvitations: types.optional(InvitationPaginableList, {}),
       friends: types.optional(ContactPaginableList, {}),
       blocked: types.optional(BlockedUserPaginableList, {}),
+      locationShares: types.optional(LocationSharePaginableList, {}),
     })
   )
   .views(self => ({
@@ -93,6 +95,21 @@ export const OwnProfile = types
       )
       profile.setBlocked(true)
     },
+    addLocationShare: (sharedWith: IProfile, createdAt: Date, expiresAt: Date) => {
+      self.locationShares.add(
+        LocationShare.create({
+          id: sharedWith.id,
+          createdAt,
+          expiresAt,
+          sharedWith: sharedWith.id,
+        })
+      )
+      sharedWith.setSharesLocation(true)
+    },
+    removeLocationShare: (profile: IProfile) => {
+      self.locationShares.remove(profile.id)
+      profile.setSharesLocation(false)
+    },
     removeBlocked: (profile: IProfile) => {
       self.blocked.remove(profile.id)
       profile.setBlocked(false)
@@ -131,6 +148,7 @@ export const OwnProfile = types
       receivedInvitations = [],
       sentInvitations = [],
       friends = [],
+      locationShares = [],
       ...data
     }: any) {
       Object.assign(self, data)
@@ -148,6 +166,13 @@ export const OwnProfile = types
       )
       blocked.forEach(({createdAt, user}) =>
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
+      )
+      locationShares.forEach(({id, createdAt, expiresAt, sharedWith}) =>
+        self.addLocationShare(
+          self.service.profiles.get(sharedWith.id, sharedWith),
+          createdAt,
+          expiresAt
+        )
       )
     },
   }))
