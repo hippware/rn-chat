@@ -1150,7 +1150,7 @@
     fast-deep-equal "1.0.0"
     flow-static-land "0.2.8"
 
-"@jumpn/utils-graphql@0.6.0", "@jumpn/utils-graphql@github:hippware/utils-graphql#bf8b6c4":
+"@jumpn/utils-graphql@0.6.0":
   version "0.6.0"
   resolved "https://codeload.github.com/hippware/utils-graphql/tar.gz/bf8b6c45629b67ed6aea83920858ca7727032202"
   dependencies:
