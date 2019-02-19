@@ -4,6 +4,7 @@ import {observer} from 'mobx-react/native'
 import {ProfileHandle} from '../common'
 import {IProfile} from 'wocky-client'
 import PersonRow from './PersonRow'
+import {View, Image} from 'react-native'
 
 type Props = {
   profile: IProfile
@@ -19,7 +20,13 @@ const ProfileItem = observer(({profile, style, children, selected, tappable}: Pr
       imageComponent={<Avatar size={44} profile={profile} tappable={tappable !== false} />}
       handleComponent={<ProfileHandle size={16} profile={profile} />}
       displayName={profile.displayName}
+      style={style}
     >
+      {selected !== undefined && (
+        <View style={{width: 25}}>
+          {selected && <Image source={require('../../../images/contactSelect.png')} />}
+        </View>
+      )}
       {children}
     </PersonRow>
   ) : null
