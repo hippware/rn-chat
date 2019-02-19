@@ -11,7 +11,7 @@ import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-const TIMEOUT = 5000
+const TIMEOUT = 10000
 import {
   PROFILE_PROPS,
   BOT_PROPS,
@@ -70,12 +70,15 @@ export class Transport {
     this.host = host
     if (this.connecting) {
       // prevent duplicate login
+      // console.log('WAITING FOR CONNECTING COMPLETE')
       await waitFor(() => !this.connecting)
       return this.connected
     }
     this.connecting = true
+    // console.log('PREP CONNECTION')
     this.prepConnection()
     try {
+      // console.log('START LOGIN')
       const res = await timeout(this.authenticate(token), TIMEOUT)
       if (res) {
         this.subscribeBotVisitors()
@@ -107,7 +110,9 @@ export class Transport {
         `,
         variables: {token},
       }
+      // console.log('START AUTHENTICATE', new Date())
       const res = await this.client!.mutate(mutation)
+      // console.log('COMPLETE AUTHENTICATE', new Date())
       // set the username based on what's returned in the mutation
       this.connected = (res.data as any).authenticate !== null
       if (this.connected) {
@@ -402,6 +407,7 @@ export class Transport {
       const {totalCount, edges} = res.data.notifications
 
       const list = convertNotifications(edges)!
+      // console.log('NOTIFICATIONS:', types, JSON.stringify(list))
       return {
         count: totalCount,
         list,
@@ -1352,13 +1358,13 @@ export class Transport {
       // uncomment to see all graphql messages!
       // logger: (kind, msg, data) => {
       //   if (msg !== 'close') {
-      //     console.log('& socket:' + `${kind}: ${msg}`, JSON.stringify(data))
+      //     console.log('& socket:' + `${kind}: ${msg}`, new Date(), JSON.stringify(data))
       //   } else {
       //     console.log('close')
       //   }
       // },
     })
-    socket.onError(() => {
+    socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
       this.connected = false
       this.connecting = false
@@ -1410,12 +1416,16 @@ export class Transport {
   }
 }
 
+// let i = 0
 function timeout(promise: Promise<any>, timeoutMillis: number) {
   let _timeout: any
+  // i++
+  // console.log('START: ', i, new Date())
   return Promise.race([
     promise,
     new Promise((_0, reject) => {
       _timeout = setTimeout(() => {
+        // console.log('TIMEOUT: ', i, new Date())
         reject('Operation timed out!')
       }, timeoutMillis)
     }),

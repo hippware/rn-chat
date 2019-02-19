@@ -52,6 +52,16 @@ export const NOTIFICATIONS_PROPS = `
     createdAt
     data {
       __typename
+      ... on LocationShareEndNotification {
+        user {
+          ${PROFILE_PROPS}
+        }
+      }
+      ... on LocationShareNotification {
+        user {
+          ${PROFILE_PROPS}
+        }
+      }
       ... on UserInvitationNotification {
         user {
           ${PROFILE_PROPS}

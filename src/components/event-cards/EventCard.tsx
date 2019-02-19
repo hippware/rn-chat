@@ -6,10 +6,14 @@ import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
 import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
+import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
+import {RText} from '../common'
+import {TouchableOpacity} from 'react-native'
+import {colors} from 'src/constants'
 
 const geoIcon = require('../../../images/notificationGeo.png')
 const notificationIcon = require('../../../images/notificationMessage.png')
-
+const shareLocationIcon = require('../../../images/notificationLocation.png')
 const EventBotInviteCard = observer(
   ({
     item: {bot, relativeDateAsString, sender, isAccepted, isResponse},
@@ -62,12 +66,39 @@ const EventBotGeofenceCard = observer(
   )
 )
 
+const EventLocationShareCard = observer(
+  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => (
+    <EventCardTemplate
+      profile={sharedWith}
+      icon={shareLocationIcon}
+      timestamp={relativeDateAsString}
+      action={'is sharing location with you'}
+    >
+      <TouchableOpacity
+        style={{
+          borderColor: colors.PINK,
+          borderWidth: 1,
+          marginTop: 5,
+          height: 29,
+          borderRadius: 3,
+          justifyContent: 'center',
+        }}
+        onPress={Actions.liveLocationShare}
+      >
+        <RText weight="Medium" color={colors.PINK} style={{marginLeft: 10, marginRight: 10}}>
+          SHARE YOUR LOCATION
+        </RText>
+      </TouchableOpacity>
+    </EventCardTemplate>
+  )
+)
 const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
   // EventBotShare: EventBotShareCard,
   EventBotGeofence: EventBotGeofenceCard,
   EventFriendInvite: EventFriendInviteRequestCard,
   EventBotInvite: EventBotInviteCard,
+  EventLocationShare: EventLocationShareCard,
 }
 
 type Props = {
