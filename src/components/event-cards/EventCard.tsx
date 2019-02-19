@@ -83,6 +83,7 @@ const EventLocationShareCard = observer(
           borderRadius: 3,
           justifyContent: 'center',
         }}
+        onPress={Actions.liveLocationShare}
       >
         <RText weight="Medium" color={colors.PINK} style={{marginLeft: 10, marginRight: 10}}>
           SHARE YOUR LOCATION
