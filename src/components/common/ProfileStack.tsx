@@ -2,10 +2,10 @@ import React from 'react'
 import {View, ViewStyle} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {IProfile} from 'wocky-client'
-
-import {Avatar, RText} from '../common'
 import {colors} from '../../constants'
 import {avatarScale} from '../Global'
+import RText from './RText'
+import Avatar from './Avatar'
 
 type Props = {
   firstProfile: IProfile
