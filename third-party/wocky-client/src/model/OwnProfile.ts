@@ -52,6 +52,9 @@ export const OwnProfile = types
     })
   )
   .views(self => ({
+    get isLocationShared() {
+      return self.locationShares.length > 0
+    },
     get sortedFriends(): IProfile[] {
       return self.friends.list
         .map(contact => contact.user)
