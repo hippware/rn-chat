@@ -11,7 +11,7 @@ import {ILocationSnapshot, IBotPost} from '..'
 import {IBot, IBotIn} from '../model/Bot'
 import {ILocation} from '../model/Location'
 const introspectionQueryResultData = require('./fragmentTypes.json')
-const TIMEOUT = 20000
+const TIMEOUT = 10000
 import {
   PROFILE_PROPS,
   BOT_PROPS,
