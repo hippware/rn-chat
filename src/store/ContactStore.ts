@@ -18,7 +18,7 @@ function isMoreImportant(phoneNew: PhoneNumber, phoneExisting: PhoneNumber): boo
 
 export type UserContactRelationship = 'FRIEND' | 'INVITED' | 'INVITED_BY' | 'NONE' | 'SELF' | null
 
-const CONTACTS_MAX = 99
+const CONTACTS_MAX = 100
 
 type BulkData = {
   e164PhoneNumber: string
