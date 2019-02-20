@@ -24,6 +24,7 @@ export const Profile = types
       hasReceivedInvite: false,
       isFriend: false,
       isBlocked: false,
+      sharesLocation: false,
       roles: types.optional(types.array(types.string), []),
       ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
@@ -67,6 +68,9 @@ export const Profile = types
     },
     setBlocked: (value: boolean) => {
       self.isBlocked = value
+    },
+    setSharesLocation: (value: boolean) => {
+      self.sharesLocation = value
     },
   }))
   .extend(self => {

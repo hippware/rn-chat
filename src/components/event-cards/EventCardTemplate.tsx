@@ -14,10 +14,11 @@ type Props = {
   line2?: string | null
   rightColumnElement?: ReactElement<any>
   onPress?: () => void
+  children?: ReactElement<any>
 }
 
 const EventCardTemplate = observer(
-  ({profile, timestamp, icon, action, line2, rightColumnElement, onPress}: Props) => {
+  ({profile, timestamp, icon, action, line2, rightColumnElement, onPress, children}: Props) => {
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View
@@ -73,6 +74,7 @@ const EventCardTemplate = observer(
                 </RText>
               )}
             </RText>
+            {children}
           </View>
 
           <View

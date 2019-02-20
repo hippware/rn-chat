@@ -11,8 +11,10 @@ import {RequestType} from '../model/PaginableList'
 import {IEventData} from '../model/Event'
 import {PaginableLoadType} from '../transport/Transport'
 import {waitFor} from '../transport/utils'
+import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
+import {EventLocationShareEnd} from './EventLocationShareEnd'
 
-export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType]
+export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType, EventLocationShareType]
 export const EventUpdatesTypes = [
   EventBotPostType,
   EventBotGeofenceType,
@@ -25,7 +27,9 @@ export const EventEntity = types.union(
   EventBotGeofence,
   EventDelete,
   EventFriendInvite,
-  EventBotInvite
+  EventBotInvite,
+  EventLocationShare,
+  EventLocationShareEnd
 )
 export type IEventEntity = typeof EventEntity.Type
 

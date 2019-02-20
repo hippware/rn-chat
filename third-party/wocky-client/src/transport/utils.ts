@@ -10,6 +10,8 @@ import {IProfilePartial} from '../model/Profile'
 import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
 import {IMessageIn} from '../model/Message'
+import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
+import {IEventLocationShareData} from '../model/EventLocationShare'
 
 export async function waitFor(condition: () => boolean) {
   return new Promise((resolve, reject) => {
@@ -421,8 +423,20 @@ export function convertNotification(edge: any): IEventData | null {
         isEnter: data.event === 'ENTER',
       }
       return geofenceNotification
+    case 'LocationShareEndNotification':
+      const locationShareEndNotification: IEventLocationShareEndData = {
+        sharedEndWith: data.user.id,
+        id,
+      }
+      return locationShareEndNotification
+    case 'LocationShareNotification':
+      const locationShareNotification: IEventLocationShareData = {
+        sharedWith: data.user.id,
+        id,
+      }
+      return locationShareNotification
     default:
-      throw new Error(`failed to process notification ${edge}`)
+      throw new Error('Failed to process notification: ' + JSON.stringify(edge))
   }
 }
 

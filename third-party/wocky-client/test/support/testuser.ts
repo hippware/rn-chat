@@ -83,7 +83,7 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
 export async function waitFor(
   condition: () => boolean,
   errorMessage: string = '',
-  timeout: number = 3000
+  timeout: number = 10000
 ) {
   const promise = new Promise((resolve, reject) => {
     when(() => {
