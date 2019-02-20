@@ -5,7 +5,7 @@ import {positive, error} from './utils'
 const version = require('../package.json').version
 // buildID is the first command line argument, if supplied
 const buildID = process.argv.length >= 3 ? process.argv[2] : null
-const appVersion = buildID ? `${version} (${buildID})` : version
+const appVersion = version // buildID ? `${version} (${buildID})` : version
 
 console.log(`appVersion: ${appVersion}`)
 console.log(chalk.green('Bundling react-native assets...'))

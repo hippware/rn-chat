@@ -7,16 +7,11 @@ const codeBundleId = ''
 // -------------------------------------------------------------------------------------------------
 // https://docs.bugsnag.com/platforms/react-native/#basic-configuration
 import {Client, Configuration} from 'bugsnag-react-native'
-import DeviceInfo from 'react-native-device-info'
 
 const config = new Configuration()
 config.notifyReleaseStages = ['testflight', 'production']
 if (codeBundleId) {
   config.codeBundleId = codeBundleId
-} else {
-  const version = require('../../package.json').version
-  const buildNumber = process.env.NODE_ENV === 'test' ? 0 : DeviceInfo.getBuildNumber()
-  config.appVersion = `${version} (${buildNumber})`
 }
 const client = new Client(config)
 
