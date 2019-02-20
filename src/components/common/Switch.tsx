@@ -42,8 +42,8 @@ export default class Switch extends React.Component<Props> {
     icon: null,
   }
 
-  componentWillReceiveProps() {
-    const toValue = this.props.isOn ? this.dimensions.width - this.dimensions.translateX : 0
+  componentWillReceiveProps(nextProps) {
+    const toValue = nextProps.isOn ? this.dimensions.width - this.dimensions.translateX : 0
 
     Animated.timing(this.offsetX, {
       toValue,
@@ -51,8 +51,10 @@ export default class Switch extends React.Component<Props> {
     }).start()
   }
 
-  offsetX = new Animated.Value(0)
   dimensions = Switch.calculateDimensions(this.props.size)
+  offsetX = new Animated.Value(
+    this.props.isOn ? this.dimensions.width - this.dimensions.translateX : 0
+  )
 
   render() {
     return (
@@ -69,9 +71,7 @@ export default class Switch extends React.Component<Props> {
             backgroundColor: this.props.isOn ? this.props.onColor : this.props.offColor,
           }}
           activeOpacity={0.8}
-          onPress={() => {
-            this.props.onToggle(!this.props.isOn)
-          }}
+          onPress={() => this.props.onToggle(!this.props.isOn)}
         >
           <Animated.View
             style={{

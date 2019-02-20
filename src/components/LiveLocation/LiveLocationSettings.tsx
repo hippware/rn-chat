@@ -1,12 +1,18 @@
 import React from 'react'
-import {View, TouchableOpacity, Image} from 'react-native'
+import {View, TouchableOpacity, Alert, Image} from 'react-native'
 import {RText, Separator, Switch} from '../common'
 import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
+import {observer, inject} from 'mobx-react/native'
+import {IWocky} from 'wocky-client'
 
-let switchOn = false
-export default class LiveLocationCompose extends React.Component {
+type Props = {
+  wocky?: IWocky
+}
+@inject('wocky')
+@observer
+export default class LiveLocationCompose extends React.Component<Props> {
   render() {
     return (
       <View
@@ -42,12 +48,21 @@ export default class LiveLocationCompose extends React.Component {
               Sharing your live location
             </RText>
             <Switch
-              isOn={switchOn}
+              isOn={this.props.wocky!.profile!.isLocationShared}
               onColor="#FE5C6C"
               offColor="#D3D3D3"
               size="regular"
               onToggle={isOn => {
-                switchOn = isOn
+                if (!isOn) {
+                  Alert.alert('', 'Are you sure you want to turn off live location sharing?', [
+                    {text: 'Cancel', style: 'cancel'},
+                    {
+                      text: 'Yes',
+                      style: 'destructive',
+                      onPress: () => this.props.wocky!.profile!.cancelAllLocationShares(),
+                    },
+                  ])
+                }
               }}
             />
           </View>

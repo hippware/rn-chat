@@ -5,7 +5,7 @@ import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
-import {LocationSharePaginableList, LocationShare} from './LocationShare'
+import {LocationSharePaginableList, LocationShare, ILocationShare} from './LocationShare'
 
 const Hidden = types
   .model('HiddenType', {
@@ -143,6 +143,11 @@ export const OwnProfile = types
       yield self.transport.hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),
+    cancelAllLocationShares: () => {
+      self.locationShares.list.forEach((share: ILocationShare) => {
+        share.sharedWith.cancelShareLocation()
+      })
+    },
   }))
   .actions(self => ({
     load({
@@ -170,7 +175,7 @@ export const OwnProfile = types
       blocked.forEach(({createdAt, user}) =>
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
       )
-      locationShares.forEach(({id, createdAt, expiresAt, sharedWith}) =>
+      locationShares.forEach(({createdAt, expiresAt, sharedWith}) =>
         self.addLocationShare(
           self.service.profiles.get(sharedWith.id, sharedWith),
           createdAt,

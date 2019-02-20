@@ -174,6 +174,17 @@ export class Transport {
                       }
                     }
                   }
+                  locationShares (first: 100) {
+                    edges {
+                      node {
+                        sharedWith {
+                          ${PROFILE_PROPS}
+                        }
+                        createdAt
+                        expiresAt
+                      }
+                    }
+                  }
                 }`
                   : ''
               }
@@ -207,6 +218,13 @@ export class Transport {
         createdAt: iso8601toDate(createdAt).getTime(),
         user: convertProfile(user),
       }))
+      result.locationShares = res.data.user.locationShares.edges.map(
+        ({node: {createdAt, expiresAt, sharedWith}}) => ({
+          createdAt: iso8601toDate(createdAt).getTime(),
+          expiresAt: iso8601toDate(expiresAt).getTime(),
+          sharedWith: convertProfile(sharedWith),
+        })
+      )
     }
     return result
   }
