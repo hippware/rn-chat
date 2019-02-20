@@ -81,7 +81,6 @@ export const Wocky = types
             jti: uuid(),
             iss: appInfo.uaString,
             dvc: appInfo.uniqueId,
-            iat: Math.floor(Date.now() / 1000),
             ...credentials,
           }
 
