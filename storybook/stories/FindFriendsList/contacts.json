@@ -183,12 +183,12 @@
     "note": "",
     "postalAddresses": [],
     "emailAddresses": [],
-    "phoneNumbers": [{"label": "iPhone", "number": "(408) 373-7247"}],
+    "phoneNumbers": [{"label": "iPhone", "number": "(123) 456-7890"}],
     "company": "",
     "givenName": "Steve",
     "middleName": "",
     "hasThumbnail": false,
     "urlAddresses": [],
-    "familyName": "Curry"
+    "familyName": "Stevington"
   }
 ]

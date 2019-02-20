@@ -5,7 +5,8 @@ import ContactStore, {MyContact} from '../../../src/store/ContactStore'
 import {observable, computed} from 'mobx'
 import {Profile} from 'wocky-client'
 
-const contacts: any[] = require('./contacts.json')
+// const contacts: any[] = require('./contacts.json')
+const contacts: any[] = require('./contactsMiranda2.json')
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => {
@@ -37,10 +38,20 @@ class MockStore implements ContactStore {
 
   @computed
   get sortedContacts() {
-    return this.contacts.slice().sort((a, b) => {
-      if (a.relationship && b.relationship) return -1
-      else if (b.relationship && !a.relationship) return 1
-      else return 0
+    console.log('& sorted contacts', this.contacts.slice())
+    // ensure the contact has an assigned phone #, either a first or last name, and is not already a friend
+    const filtered = this.contacts
+      .slice()
+      .filter(
+        c =>
+          c.contact.phoneNumbers.length > 0 &&
+          (c.contact.familyName || c.contact.givenName) &&
+          c.relationship !== 'FRIEND'
+      )
+
+    // sort alphabetically by first name (or last name if no first name)
+    return filtered.sort((a, b) => {
+      return a.displayName > b.displayName ? 1 : -1
     })
   }
 
@@ -71,6 +82,10 @@ class MockStore implements ContactStore {
     })
     // todo: process error?
     this.loading = false
+  }
+
+  lookupPhoneNumbers = async () => {
+    // noop
   }
 
   inviteContact = async (contact: MyContact) => {

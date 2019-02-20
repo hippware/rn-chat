@@ -1069,8 +1069,11 @@ export class Transport {
         `,
       variables: {phoneNumbers},
     })
+    if (res.errors) {
+      throw new Error(typeof res.errors !== 'string' ? JSON.stringify(res.errors) : res.errors)
+    }
     const results = res.data.userBulkLookup
-    return results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null}))
+    return results ? results.map(r => ({...r, user: r.user ? convertProfile(r.user) : null})) : []
   }
 
   async friendSmsInvite(phoneNumber: string): Promise<void> {
@@ -1391,7 +1394,7 @@ export class Transport {
       },
       query: {
         fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
+        // errorPolicy: 'ignore',
       },
     }
     return new ApolloClient({
