@@ -1,9 +1,9 @@
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import {RText} from '.'
 import {colors} from 'src/constants'
 import {k} from '../Global'
 import {View} from 'react-native'
+import RText from './RText'
 
 const Pill = ({children}) => (
   <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
