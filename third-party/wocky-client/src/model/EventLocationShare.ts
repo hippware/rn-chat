@@ -20,7 +20,7 @@ export const EventLocationShare = types
   }))
   .actions(self => ({
     process: () => {
-      self.service.profile.addLocationSharer(self, new Date(), new Date()) // TODO: replace dates with createdAt, expiresAt
+      self.service.profile.addLocationSharer(self.sharedWith, new Date(), new Date()) // TODO: replace dates with createdAt, expiresAt
     },
   }))
   .named('EventLocationShare')

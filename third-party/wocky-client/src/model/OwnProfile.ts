@@ -114,7 +114,6 @@ export const OwnProfile = types
           sharedWith: sharedWith.id,
         })
       )
-      sharedWith.setSharesLocation(true)
     },
     removeLocationSharer: (profile: IProfile) => {
       self.locationSharers.remove(profile.id)
@@ -133,7 +132,6 @@ export const OwnProfile = types
     },
     removeLocationShare: (profile: IProfile) => {
       self.locationShares.remove(profile.id)
-      profile.setSharesLocation(false)
     },
     removeBlocked: (profile: IProfile) => {
       self.blocked.remove(profile.id)

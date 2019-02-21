@@ -20,7 +20,7 @@ export const EventLocationShareEnd = types
   }))
   .actions(self => ({
     process: () => {
-      self.service.profile.removeLocationSharer(self) // TODO: replace dates with createdAt, expiresAt
+      self.service.profile.removeLocationSharer(self.sharedEndWith)
     },
   }))
   .named('EventLocationShareEnd')
