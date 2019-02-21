@@ -143,6 +143,10 @@ export const OwnProfile = types
       yield self.transport.hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),
+    cancelAllLocationShares: flow(function*() {
+      yield self.transport.userLocationCancelAllShares()
+      self.locationShares.refresh()
+    }),
   }))
   .actions(self => ({
     load({
@@ -170,7 +174,7 @@ export const OwnProfile = types
       blocked.forEach(({createdAt, user}) =>
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
       )
-      locationShares.forEach(({id, createdAt, expiresAt, sharedWith}) =>
+      locationShares.forEach(({createdAt, expiresAt, sharedWith}) =>
         self.addLocationShare(
           self.service.profiles.get(sharedWith.id, sharedWith),
           createdAt,

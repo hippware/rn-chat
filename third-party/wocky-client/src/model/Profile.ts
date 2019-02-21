@@ -111,6 +111,11 @@ export const Profile = types
         }),
         shareLocation: flow(function*(expiresAt: Date) {
           yield self.transport.userLocationShare(self.id, expiresAt)
+          self.service.profile.addLocationShare(self, new Date(), expiresAt)
+        }),
+        cancelShareLocation: flow(function*() {
+          yield self.transport.userLocationCancelShare(self.id)
+          self.service.profile.removeLocationShare(self)
         }),
         block: flow(function*() {
           yield self.transport.block(self.id)
@@ -119,9 +124,6 @@ export const Profile = types
         unblock: flow(function*() {
           yield self.transport.unblock(self.id)
           self.service.profile.removeBlocked(self)
-        }),
-        cancelShare: flow(function*() {
-          yield self.transport.userLocationCancelShare(self.id)
         }),
         afterAttach: () => {
           if (self.service) {

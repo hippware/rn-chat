@@ -116,6 +116,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
             <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
+            <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Stack>
           <Lightbox>
             <Stack initial hideNavBar key="main">
@@ -144,13 +145,13 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="friendSearch" component={FriendSearch} />
                       <Scene key="visitors" component={VisitorList} />
                       <Scene key="profileDetails" component={ProfileDetail} />
-                      <Scene key="liveLocationCompose" component={LiveLocationCompose} backAction={() => backAction(iconStore!)} />
-                      <Scene key="liveLocationSettings" component={LiveLocationSettings} backAction={() => backAction(iconStore!)} />
+                      <Scene key="liveLocationCompose" component={LiveLocationCompose} />
+                      <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     </Stack>
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                     <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                     <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
-                    <Scene key="liveLocationShare" component={LiveLocationShare} title="Select Friends" backAction={() => backAction(iconStore!)} />
+                    <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                     {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                     <Scene key="myAccount" component={MyAccount} editMode back />
                     <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />

@@ -67,7 +67,7 @@ describe('Live Locations', () => {
   it('cancel share and verify', async () => {
     timestamp()
     const bobAlicesProfile = await bob.loadProfile(alice.username!)
-    await bobAlicesProfile.cancelShare()
+    await bobAlicesProfile.cancelShareLocation()
     const alicesBobProfile = await alice.loadProfile(bob.username!)
     // update location
     await bob.setLocation(theLocation)
