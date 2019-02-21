@@ -49,8 +49,15 @@ export const OwnProfile = types
       friends: types.optional(ContactPaginableList, {}),
       blocked: types.optional(BlockedUserPaginableList, {}),
       locationShares: types.optional(LocationSharePaginableList, {}),
+      locationSharers: types.optional(LocationSharePaginableList, {}),
     })
   )
+  .postProcessSnapshot(snapshot => {
+    const res = {...snapshot}
+    delete res.locationShares
+    delete res.locationSharers
+    return res
+  })
   .views(self => ({
     get isLocationShared() {
       return self.locationShares.length > 0
@@ -107,11 +114,24 @@ export const OwnProfile = types
           sharedWith: sharedWith.id,
         })
       )
+    },
+    removeLocationSharer: (profile: IProfile) => {
+      self.locationSharers.remove(profile.id)
+      profile.setSharesLocation(false)
+    },
+    addLocationSharer: (sharedWith: IProfile, createdAt: Date, expiresAt: Date) => {
+      self.locationSharers.add(
+        LocationShare.create({
+          id: sharedWith.id,
+          createdAt,
+          expiresAt,
+          sharedWith: sharedWith.id,
+        })
+      )
       sharedWith.setSharesLocation(true)
     },
     removeLocationShare: (profile: IProfile) => {
       self.locationShares.remove(profile.id)
-      profile.setSharesLocation(false)
     },
     removeBlocked: (profile: IProfile) => {
       self.blocked.remove(profile.id)
@@ -156,6 +176,7 @@ export const OwnProfile = types
       sentInvitations = [],
       friends = [],
       locationShares = [],
+      locationSharers = [],
       ...data
     }: any) {
       Object.assign(self, data)
@@ -176,6 +197,13 @@ export const OwnProfile = types
       )
       locationShares.forEach(({createdAt, expiresAt, sharedWith}) =>
         self.addLocationShare(
+          self.service.profiles.get(sharedWith.id, sharedWith),
+          createdAt,
+          expiresAt
+        )
+      )
+      locationSharers.forEach(({createdAt, expiresAt, sharedWith}) =>
+        self.addLocationSharer(
           self.service.profiles.get(sharedWith.id, sharedWith),
           createdAt,
           expiresAt
