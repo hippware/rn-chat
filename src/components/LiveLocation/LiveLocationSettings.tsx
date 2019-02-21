@@ -1,11 +1,14 @@
 import React from 'react'
 import {View, TouchableOpacity, Alert, Image, FlatList} from 'react-native'
-import {RText, Separator, Switch} from '../common'
+import {RText, Separator, Switch, Avatar} from '../common'
 import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
 import {observer, inject} from 'mobx-react/native'
 import {IWocky} from 'wocky-client'
+import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
+import PersonRow from '../people-lists/PersonRow'
+import {colors} from 'src/constants'
 
 type Props = {
   wocky?: IWocky
@@ -75,7 +78,7 @@ export default class LiveLocationSettings extends React.Component<Props> {
 
         <FlatList
           data={profile!.locationShares.list.slice()}
-          renderItem={({item}) => <View style={{borderWidth: 1, height: 50, width: '100%'}} />}
+          renderItem={({item}) => <ProfileLocationShare locationShare={item} />}
           keyExtractor={item => item.id}
         />
 
@@ -104,3 +107,21 @@ export default class LiveLocationSettings extends React.Component<Props> {
     )
   }
 }
+
+const ProfileLocationShare = ({locationShare: {sharedWith}}: {locationShare: ILocationShare}) => (
+  <PersonRow
+    imageComponent={<Avatar profile={sharedWith} size={48} hideDot />}
+    handleComponent={
+      <RText size={15} weight="Bold" color={colors.DARK_PURPLE}>
+        {`@${sharedWith.displayName}`}
+      </RText>
+    }
+    // todo: need answer to https://github.com/hippware/rn-chat/issues/3328#issuecomment-465516555
+    displayName={'for 1 hour'}
+    style={{marginHorizontal: 45}}
+  >
+    <TouchableOpacity onPress={sharedWith.cancelShareLocation}>
+      <Image source={require('../../../images/cancelShare.png')} />
+    </TouchableOpacity>
+  </PersonRow>
+)
