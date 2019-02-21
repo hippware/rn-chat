@@ -358,6 +358,8 @@ const LocationStore = types
 
       const config = yield BackgroundGeolocation.ready({})
       logger.log(prefix, 'Ready: ', config)
+
+      self.updateBackgroundConfigSuccess(config)
     })
 
     function willUnmount() {
