@@ -356,6 +356,17 @@ export class Transport {
       variables: {userId},
     })
   }
+  async userLocationCancelAllShares() {
+    return this.voidMutation({
+      mutation: gql`
+        mutation userLocationCancelAllShares {
+          userLocationCancelAllShares {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+    })
+  }
   async getLocationsVisited(limit: number = 50): Promise<object[]> {
     const res = await this.client!.query<any>({
       // NOTE: id is required in this query to prevent apollo-client error: https://github.com/apollographql/apollo-client/issues/2510

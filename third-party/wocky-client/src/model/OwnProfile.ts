@@ -5,7 +5,7 @@ import {createUploadable} from './Uploadable'
 import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
-import {LocationSharePaginableList, LocationShare, ILocationShare} from './LocationShare'
+import {LocationSharePaginableList, LocationShare} from './LocationShare'
 
 const Hidden = types
   .model('HiddenType', {
@@ -143,11 +143,10 @@ export const OwnProfile = types
       yield self.transport.hideUser(value, expires)
       self.hidden = Hidden.create({enabled: value, expires})
     }),
-    cancelAllLocationShares: () => {
-      self.locationShares.list.forEach((share: ILocationShare) => {
-        share.sharedWith.cancelShareLocation()
-      })
-    },
+    cancelAllLocationShares: flow(function*() {
+      yield self.transport.userLocationCancelAllShares()
+      self.locationShares.refresh()
+    }),
   }))
   .actions(self => ({
     load({
