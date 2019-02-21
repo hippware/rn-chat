@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, TouchableOpacity, ViewStyle} from 'react-native'
+import {View, TouchableOpacity} from 'react-native'
 
 import {observer, inject} from 'mobx-react/native'
 
@@ -12,23 +12,21 @@ import {analyticsGeoWidgetTap} from '../../utils/analytics'
 import {colors} from '../../constants'
 import {IHomeStore} from '../../store/HomeStore'
 import {minHeight} from '../Global'
+import {IActiveBannerItem} from './ActiveGeoBotBanner'
 
-type Props = {
+interface IProps extends IActiveBannerItem {
   wocky?: IWocky
   bot: IBot
   analytics?: any
-  outerStyle: ViewStyle
-  innerStyle: ViewStyle
   homeStore?: IHomeStore
 }
 
 @inject('wocky', 'analytics', 'homeStore')
 @observer
-class ActiveBot extends React.Component<Props> {
+export default class ActiveGeofenceBot extends React.Component<IProps> {
   goToBot = (): void => {
     this.props.homeStore!.selectBot(this.props.bot)
     Actions.botDetails({botId: this.props.bot.id})
-    // setTimeout(() => Actions.visitors({item: this.props.bot.id}), 500)
     this.props.analytics.track(analyticsGeoWidgetTap)
   }
 
@@ -74,5 +72,3 @@ class ActiveBot extends React.Component<Props> {
     ) : null
   }
 }
-
-export default ActiveBot
