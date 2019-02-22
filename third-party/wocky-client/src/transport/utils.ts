@@ -425,12 +425,15 @@ export function convertNotification(edge: any): IEventData | null {
       return geofenceNotification
     case 'LocationShareEndNotification':
       const locationShareEndNotification: IEventLocationShareEndData = {
+        time,
         sharedEndWith: data.user.id,
         id,
       }
       return locationShareEndNotification
     case 'LocationShareNotification':
       const locationShareNotification: IEventLocationShareData = {
+        time,
+        expiresAt: data.expiresAt ? iso8601toDate(data.expiresAt) : new Date(), // workaround for old notifications with null expiresAt
         sharedWith: data.user.id,
         id,
       }

@@ -16,9 +16,6 @@ const liveImg = require('../../../images/live.png')
 const ActiveLocationSharer = ({sharer, outerStyle, innerStyle}: IProps) => (
   <View style={outerStyle}>
     <View style={innerStyle}>
-      {/* todo: `sharedWith` doesn't make sense for `locationSharer`, we need an API fix
-          https://github.com/hippware/wocky/issues/2290 */}
-
       {/* todo: need custom avatar with the extra circle around the outside...will need to wait until Alan comes back to get that asset */}
 
       <Avatar profile={sharer.sharedWith} size={64} />

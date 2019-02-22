@@ -11,6 +11,7 @@ export const EventLocationShare = types
     Event,
     types.model({
       sharedWith: types.reference(Profile),
+      expiresAt: types.Date,
     })
   )
   .views(() => ({
@@ -20,7 +21,7 @@ export const EventLocationShare = types
   }))
   .actions(self => ({
     process: () => {
-      self.service.profile.addLocationSharer(self.sharedWith, new Date(), new Date()) // TODO: replace dates with createdAt, expiresAt
+      self.service.profile.addLocationSharer(self.sharedWith, self.date, self.expiresAt)
     },
   }))
   .named('EventLocationShare')
@@ -29,4 +30,5 @@ export interface IEventLocationShare extends Instance<typeof EventLocationShare>
 
 export interface IEventLocationShareData extends IEventData {
   sharedWith: IProfilePartial
+  expiresAt: Date
 }

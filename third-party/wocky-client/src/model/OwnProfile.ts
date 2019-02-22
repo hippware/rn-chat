@@ -55,7 +55,6 @@ export const OwnProfile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.locationShares
-    delete res.locationSharers
     return res
   })
   .views(self => ({

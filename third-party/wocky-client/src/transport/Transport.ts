@@ -188,7 +188,7 @@ export class Transport {
                   locationSharers (first: 100) {
                     edges {
                       node {
-                        sharedWith {
+                        user {
                           ${PROFILE_PROPS}
                         }
                         createdAt
@@ -237,10 +237,10 @@ export class Transport {
         })
       )
       result.locationSharers = res.data.user.locationSharers.edges.map(
-        ({node: {createdAt, expiresAt, sharedWith}}) => ({
+        ({node: {createdAt, expiresAt, user}}) => ({
           createdAt: iso8601toDate(createdAt).getTime(),
           expiresAt: iso8601toDate(expiresAt).getTime(),
-          sharedWith: convertProfile(sharedWith),
+          sharedWith: convertProfile(user), // use user to get who is sharer
         })
       )
     }
