@@ -75,7 +75,7 @@ exports[`BotDetails renders with no data 1`] = `
               notificationStore={Object {}}
               wocky={
                 Object {
-                  "activeBots": Object {},
+                  "activeBots": Array [],
                   "all": Object {},
                   "blocked": Object {},
                   "bots": Object {},
@@ -106,6 +106,12 @@ exports[`BotDetails renders with no data 1`] = `
                     "handle": "southerneer",
                     "lastName": "kirkham",
                     "loaded": true,
+                    "locationSharers": Object {
+                      "list": Array [],
+                    },
+                    "locationShares": Object {
+                      "list": Array [],
+                    },
                     "sortedFriends": Array [],
                     "updateError": "",
                   },

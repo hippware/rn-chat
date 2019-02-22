@@ -1,5 +1,13 @@
 import React from 'react'
-import {View, FlatList, StyleSheet, Animated, TouchableOpacity, Image} from 'react-native'
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Image,
+  ViewStyle,
+} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
