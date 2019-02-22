@@ -223,11 +223,6 @@ export const Wocky = types
         bot.setNew(true)
         return bot
       }),
-      _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
-        yield waitFor(() => self.connected)
-        const {list, cursor, count} = yield self.transport.loadOwnBots(userId, lastId, max)
-        return {list: list.map(self.getBot), count, cursor}
-      }),
       _loadGeofenceBots: flow(function*(lastId?: string, max: number = 10) {
         yield waitFor(() => self.connected)
         const {list, cursor, count} = yield self.transport.loadGeofenceBots()

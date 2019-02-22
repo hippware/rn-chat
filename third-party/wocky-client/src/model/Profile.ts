@@ -26,7 +26,6 @@ export const Profile = types
       isBlocked: false,
       sharesLocation: false,
       roles: types.optional(types.array(types.string), []),
-      ownBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
     })
   )
@@ -35,7 +34,6 @@ export const Profile = types
     const res = {...snapshot}
     delete res.status
     delete res.location
-    delete res.ownBots
     delete res.subscribedBots
     return res
   })
@@ -127,7 +125,6 @@ export const Profile = types
         }),
         afterAttach: () => {
           if (self.service) {
-            self.ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
             self.subscribedBots.setRequest(
               self.service._loadSubscribedBots.bind(self.service, self.id)
             )
