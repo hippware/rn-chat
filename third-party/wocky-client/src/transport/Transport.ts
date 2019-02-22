@@ -462,10 +462,6 @@ export class Transport {
     }
     return {count: 0, list: []}
   }
-
-  async loadOwnBots(id: string, lastId?: string, max: number = 10) {
-    return await this.loadBots('OWNED', id, lastId, max)
-  }
   async loadSubscribedBots(
     userId: string,
     lastId?: string,
