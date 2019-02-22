@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.3 - 2019 Feb 21
+
 * Rollback recent sourcemap related changes (PR #3349)
 * Live Location: Share location - no existing shares (#3327, PR #3340)
 * Live Location: Notifications integration (#3330, PR #3352)
@@ -14,6 +16,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] Don't include `iat` field in jwt. (PR #3359)
 * Invite Friends fixes (PR #3345)
   * Contacts do not load, loader spins one revolution and stops (#3344)
+* Location Debugger: Unable to turn debug mode off (white screen) (#3336)
+* Live Location: Share location - existing shares (#3328)
 
 # 4.1.2 - 2019 Feb 14
 
