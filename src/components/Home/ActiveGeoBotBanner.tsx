@@ -1,5 +1,13 @@
 import React from 'react'
-import {View, FlatList, StyleSheet, Animated, TouchableOpacity, Image} from 'react-native'
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  Image,
+  ViewStyle,
+} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
@@ -13,6 +21,10 @@ import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
 import {INavStore} from '../../store/NavStore'
 import {IHomeStore} from '../../store/HomeStore'
+import {computed} from 'mobx'
+import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
+import {getType} from 'mobx-state-tree'
+import ActiveLocationSharer from './ActiveLocationSharer'
 
 type Props = {
   wocky?: IWocky
@@ -26,11 +38,22 @@ type State = {
   yOffset: Animated.Value
 }
 
+export interface IActiveBannerItem {
+  outerStyle: ViewStyle
+  innerStyle: ViewStyle
+}
+
 @inject('wocky', 'analytics', 'homeStore', 'navStore')
 @observer
-export default class ActiveGeoBotBanner extends React.Component<Props> {
+export default class ActiveGeoBotBanner extends React.Component<Props, State> {
   state: State = {
     yOffset: new Animated.Value(0),
+  }
+
+  @computed
+  get bannerItems(): Array<ILocationShare | IBot> {
+    const {profile, activeBots} = this.props.wocky!
+    return profile ? [...profile.locationSharers.list.slice(), ...activeBots.slice()] : []
   }
 
   componentWillReceiveProps(newProps) {
@@ -45,7 +68,6 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
 
   render() {
     const {wocky, navStore, homeStore} = this.props
-    const {activeBots, profile} = wocky!
     return (
       <Animated.View
         style={{
@@ -68,12 +90,10 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
           }}
         >
           <FlatList
-            data={profile && activeBots.length > 0 ? activeBots.slice() : null}
+            data={this.bannerItems}
             horizontal
             keyExtractor={this.keyExtractor}
-            renderItem={
-              profile && activeBots.length > 0 ? this.renderActiveBot : this.renderPlaceholder
-            }
+            renderItem={this.renderActiveBot}
             showsHorizontalScrollIndicator={false}
             ListEmptyComponent={<ActiveBannerPlaceholder />}
             style={{paddingLeft: 8 * k}}
@@ -87,16 +107,18 @@ export default class ActiveGeoBotBanner extends React.Component<Props> {
     )
   }
 
-  keyExtractor = (item, _1) => item.id
+  keyExtractor = item => item.id
 
-  renderActiveBot = ({item}: {item: IBot}) => (
-    <ActiveGeofenceBot bot={item} outerStyle={styles.outer} innerStyle={styles.inner} />
-  )
-
-  renderPlaceholder = ({item}: {item: any}) => {
-    const Comp = item.render || null
-    return <Comp />
-  }
+  renderActiveBot = ({item}: {item: IBot | ILocationShare}) =>
+    getType(item).name === 'Bot' ? (
+      <ActiveGeofenceBot bot={item as IBot} outerStyle={styles.outer} innerStyle={styles.inner} />
+    ) : (
+      <ActiveLocationSharer
+        sharer={item as ILocationShare}
+        outerStyle={styles.outer}
+        innerStyle={styles.inner}
+      />
+    )
 }
 
 const settingsImg = require('../../../images/settingsBtn.png')
@@ -144,6 +166,8 @@ const styles = StyleSheet.create({
   },
   inner: {
     width: 75,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   newDot: {
     position: 'absolute',
