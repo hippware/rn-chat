@@ -57,7 +57,7 @@ export default class MapHome extends React.Component<IProps> {
 
     this.reactions = [
       reaction(
-        () => homeStore!.focusedBotLocation,
+        () => homeStore!.focusedLocation,
         (location: any) => this.setCenterCoordinate(location),
         {
           name: 'MapHome: re-center map on focused card',

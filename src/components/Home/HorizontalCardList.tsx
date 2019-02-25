@@ -5,6 +5,7 @@ import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
+import ProfileCard from '../home-cards/ProfileCard'
 import {observer, inject, Observer} from 'mobx-react/native'
 import {ICard} from '../../store/HomeStore'
 import {getType, isAlive} from 'mobx-state-tree'
@@ -26,6 +27,7 @@ const cardMap = {
   BotCard,
   YouCard,
   TutorialCard,
+  ProfileCard,
 }
 
 const translateYDefault = -13 * k
