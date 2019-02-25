@@ -1,6 +1,6 @@
 import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
-import {IObservableArray} from 'mobx'
-import {Bot, IBot, Location} from 'wocky-client'
+import {IObservableArray, reaction} from 'mobx'
+import {Bot, IBot, Profile, IProfile, Location, ILocation, IWocky} from 'wocky-client'
 import {IStore} from './index'
 
 const SelectableCard = types
@@ -13,6 +13,10 @@ const SelectableCard = types
       return (getParent(self) as IObservableArray).findIndex(item => {
         return item === self
       })
+    },
+    // return location for this card, null if there is no location (like for TutorialCard)
+    get location(): ILocation | null {
+      return null
     },
   }))
   .actions(self => ({
@@ -31,6 +35,11 @@ const BotCard = types
       bot: types.reference(Bot),
     })
   )
+  .views(self => ({
+    get location() {
+      return self.bot.location
+    },
+  }))
   .named('BotCard')
 
 type BotCardType = typeof BotCard.Type
@@ -50,17 +59,26 @@ const TutorialCard = SelectableCard.props({
   tutorial: types.boolean,
 }).named('TutorialCard')
 
-const Card = types.union(BotCard, YouCard, TutorialCard)
+const ProfileCard = SelectableCard.props({
+  profile: types.reference(Profile),
+})
+  .views(self => ({
+    get location() {
+      return self.profile.location
+    },
+  }))
+  .named('ProfileCard')
+
+const Card = types.union(BotCard, YouCard, TutorialCard, ProfileCard)
 export type ICard = typeof Card.Type
 
 const HomeStore = types
   .model('HomeStore', {
     fullScreenMode: false,
-    homeBotList: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
+    cards: types.optional(types.array(Card), [{tutorial: true}, {you: true}]), // pre-populate with 'you', tutorial card
     index: 0,
-    focusedBotLocation: types.maybeNull(Location),
+    focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
-    scrolledToBot: types.maybeNull(types.reference(Bot)),
   })
   .views(self => {
     const {navStore} = getRoot<IStore>(self)
@@ -81,7 +99,7 @@ const HomeStore = types
   .views(self => ({
     // return the list for current mode
     get list(): ICard[] {
-      return self.creationMode ? [] : self.homeBotList
+      return self.creationMode ? [] : self.cards
     },
   }))
   .views(self => ({
@@ -92,16 +110,16 @@ const HomeStore = types
   .actions(self => ({
     setFocusedLocation(location) {
       if (!location) {
-        self.focusedBotLocation = null
+        self.focusedLocation = null
       } else {
         const {latitude, longitude, accuracy} = location
         // change center only if location is changed
         if (
-          !self.focusedBotLocation ||
-          self.focusedBotLocation.longitude !== longitude ||
-          self.focusedBotLocation.latitude !== latitude
+          !self.focusedLocation ||
+          self.focusedLocation.longitude !== longitude ||
+          self.focusedLocation.latitude !== latitude
         ) {
-          self.focusedBotLocation = Location.create({latitude, longitude, accuracy})
+          self.focusedLocation = Location.create({latitude, longitude, accuracy})
         }
       }
     },
@@ -113,17 +131,17 @@ const HomeStore = types
     // sets new index for the current mode, deselects previously selected bot and select new one.
     setIndex: (index: number): void => {
       self.fullScreenMode = false
-      if (self.index < self.homeBotList.length) {
-        self.homeBotList[self.index].setSelected(false)
+      if (self.index < self.cards.length) {
+        self.cards[self.index].setSelected(false)
       }
-      if (index < self.homeBotList.length) {
+      if (index < self.cards.length) {
         self.index = index
         if (self.list.length) {
           // select card
           self.list[self.index].setSelected(true)
-          // change map center if bot card is selected
-          if (getType(self.list[self.index]) === BotCard) {
-            self.setFocusedLocation((self.list[self.index] as IBotCard).bot.location)
+          // change map center if card has location
+          if (self.list[self.index].location) {
+            self.setFocusedLocation(self.list[self.index].location)
           }
         }
       }
@@ -135,17 +153,37 @@ const HomeStore = types
         applySnapshot(self, {})
       },
       addBotsToList(bots: IBot[]): void {
-        const list = self.homeBotList
+        const list = self.cards
         bots.forEach(bot => {
           if (!list.find((item: any) => item.bot && item.bot.id === bot.id)) {
             list.push(BotCard.create({bot: bot.id}))
           }
         })
       },
+      addProfilesToList(profiles: IProfile[]): void {
+        const list = self.cards
+        profiles.forEach(profile => {
+          if (!list.find((item: any) => item.profile && item.profile.id === profile.id)) {
+            // insert into 3-rd position after TutorialCard and YouCard
+            list.splice(2, 0, ProfileCard.create({profile: profile.id}))
+          }
+        })
+      },
       removeBot(bot: IBot): void {
-        const index = self.homeBotList.findIndex((item: any) => item.bot && item.bot.id === bot.id)
+        const index = self.cards.findIndex((item: any) => item.bot && item.bot.id === bot.id)
         if (index !== -1) {
-          self.homeBotList.splice(index, 1)
+          self.cards.splice(index, 1)
+        }
+        if (index <= self.index) {
+          self.setIndex(self.index - 1) // TODO set index within visible area
+        }
+      },
+      removeProfile(profile: IProfile): void {
+        const index = self.cards.findIndex(
+          (item: any) => item.profile && item.profile.id === profile.id
+        )
+        if (index !== -1) {
+          self.cards.splice(index, 1)
         }
         if (index <= self.index) {
           self.setIndex(self.index - 1) // TODO set index within visible area
@@ -174,12 +212,35 @@ const HomeStore = types
     return {}
   })
   .actions(self => ({
+    afterAttach: () => {
+      const mainStore: any = getParent(self)
+      const wocky: IWocky = mainStore.wocky
+      reaction(
+        () => wocky.profile && wocky.profile.locationSharers.list,
+        () => {
+          // const selected = self.cards[self.index] TODO: preserve index
+          // TODO remove expired sharers
+          self.addProfilesToList(
+            wocky.profile!.locationSharers.list.map(sharer => sharer.sharedWith)
+          )
+        }
+      )
+    },
     selectBot(bot: IBot) {
       const index = self.list.findIndex((b: any) => b.bot && b.bot.id === bot.id)
       if (index >= 0) {
         self.setIndex(index)
       } else {
         self.addBotsToList([bot])
+        self.setIndex(self.list.length - 1)
+      }
+    },
+    selectProfile(profile: IProfile) {
+      const index = self.list.findIndex((b: any) => b.profile && b.profile.id === profile.id)
+      if (index >= 0) {
+        self.setIndex(index)
+      } else {
+        self.addProfilesToList([profile])
         self.setIndex(self.list.length - 1)
       }
     },
