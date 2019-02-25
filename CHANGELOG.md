@@ -4,7 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Baseline for locationSharers (PR #3364)
+* Remove `ownBots` and other dead code (PR #3367, PR #3368)
+* Live Location: Presence widget integration (#3331, PR #3364, PR #3366)
 
 # 4.1.3 - 2019 Feb 21
 
