@@ -8453,6 +8453,11 @@ mississippi@^3.0.0:
     stream-each "^1.1.0"
     through2 "^2.0.0"
 
+mitt@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.1.3.tgz#528c506238a05dce11cd914a741ea2cc332da9b8"
+  integrity sha512-mUDCnVNsAi+eD6qA0HkRkwYczbLHJ49z17BGe2PYRhZL4wpZUFZGJHU7/5tmvohoma+Hdn0Vh/oJTiPEmgSruA==
+
 mixin-deep@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
@@ -9860,6 +9865,11 @@ ramda@^0.21.0:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.21.0.tgz#a001abedb3ff61077d4ff1d577d44de77e8d0a35"
   integrity sha1-oAGr7bP/YQd9T/HVd9RN536NCjU=
 
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+
 randomatic@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-3.1.1.tgz#b776efc59375984e36c537b2f51a1f0aff0da1ed"
@@ -10457,6 +10467,27 @@ react@^16.6.3, react@^16.7.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.12.0"
+
+reactotron-core-client@^2.3.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.4.0.tgz#0351bcc7a93b7da2dc5c0c0c46b0ee83caae935e"
+  integrity sha512-Bh5MG724PO7fH3Ic7wN+Ph6I/fC4yrswneymXzmtM8NIUV8R1UOiQ4FUpzOMZdfWPPEYF3TN4aDg41NPtcNiNg==
+
+reactotron-mst@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-2.1.4.tgz#a46ac9f21f41589b0cdc9babed4341f61604d34d"
+  integrity sha512-z9l/qquiwiLUv6qap/rZ/H7wFJR3HF5/AQBF+uSnSGbMkUBtAP+PrmogPv7CYupeJqj3oOY3NJ/aiHSqDSYofA==
+  dependencies:
+    ramda "^0.25.0"
+
+reactotron-react-native@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-2.2.0.tgz#7a5d8b014dfffb478885d0a152b529f89e7d30e0"
+  integrity sha512-pFpWt6GsBLCO/Ycov6P4lVT7krvH9QrRvS2IHNqf7+oCLzaOXtzsesT5tvHQ8YkdScBD9ngeZYA/JzE/YKkvcQ==
+  dependencies:
+    mitt "^1.1.2"
+    prop-types "^15.5.10"
+    reactotron-core-client "^2.3.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
