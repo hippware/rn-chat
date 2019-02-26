@@ -1,5 +1,6 @@
 import {types, getType, flow, getSnapshot, applySnapshot, getEnv, Instance} from 'mobx-state-tree'
 import {reaction} from 'mobx'
+import codePush from 'react-native-code-push'
 import {Wocky, IWocky} from 'wocky-client'
 import {settings} from '../globals'
 
@@ -119,9 +120,10 @@ const PersistableModel = types
         const data = yield loadFromStorage(STORE_NAME)
         const parsed = JSON.parse(data)
         loadMinimal(parsed)
-        // TODO: reload onceStore data here too?
-        self.reloading = false
-        startPersistenceReaction()
+
+        // Persist state and restart
+        storage.setItem(getType(self).name, JSON.stringify(getSnapshot(self)))
+        codePush.restartApp()
       }),
     }
   })
