@@ -1,13 +1,11 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import {Image} from 'react-native'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../../store/LocationStore'
 import {IHomeStore, ISelectableCard} from '../../../store/HomeStore'
-import {Avatar} from '../../common'
-import {colors} from '../../../constants'
-import Triangle from '../../map/Triangle'
+import LocationAvatar from '../LocationAvatar'
 
 interface IProps {
   locationStore?: ILocationStore
@@ -41,24 +39,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         {!profile.avatar && !profile.hidden.enabled ? (
           <Image source={require('../../../../images/you.png')} />
         ) : (
-          <View
-            style={{
-              alignItems: 'center',
-              borderColor: colors.PINK,
-              borderWidth: 1,
-              borderRadius: 50,
-              paddingTop: 3.5,
-              paddingHorizontal: 3.5,
-            }}
-          >
-            <Avatar size={52} profile={profile} hideDot borderColor={colors.PINK} />
-            <Triangle
-              width={10}
-              height={3.5}
-              color={profile.hidden.enabled ? colors.DARK_GREY : colors.PINK}
-              direction="down"
-            />
-          </View>
+          <LocationAvatar profile={profile} hidden={profile.hidden.enabled} />
         )}
       </HackMarker>
     )

@@ -1,4 +1,4 @@
-import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
 import {IObservableArray, reaction} from 'mobx'
 import {Bot, IBot, Profile, IProfile, Location, ILocation, IWocky} from 'wocky-client'
 import {IStore} from './index'
@@ -62,6 +62,8 @@ const LocationSharerCard = SelectableCard.props({
     },
   }))
   .named('LocationSharerCard')
+
+export interface ILocationSharerCard extends Instance<typeof LocationSharerCard.Type> {}
 
 const Card = types.union(BotCard, YouCard, TutorialCard, LocationSharerCard)
 export type ICard = typeof Card.Type
@@ -210,13 +212,14 @@ const HomeStore = types
       const mainStore: any = getParent(self)
       const wocky: IWocky = mainStore.wocky
       reaction(
-        () => wocky.profile && wocky.profile.locationSharers.list,
+        () => wocky && wocky.profile && wocky.profile.locationSharers.list,
         () => {
           // const selected = self.cards[self.index] TODO: preserve index
           // TODO remove expired sharers
-          self.addProfilesToList(
-            wocky.profile!.locationSharers.list.map(sharer => sharer.sharedWith)
-          )
+          if (wocky.profile) {
+            const profiles = wocky.profile!.locationSharers.list.map(sharer => sharer.sharedWith)
+            self.addProfilesToList(profiles)
+          }
         }
       )
     },

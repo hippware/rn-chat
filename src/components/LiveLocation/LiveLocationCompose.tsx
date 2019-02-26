@@ -6,12 +6,14 @@ import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
 import {observer, inject} from 'mobx-react/native'
 import {ISearchStore} from '../../store/SearchStore'
+import {ILocationStore} from '../../store/LocationStore'
 import {IWocky} from 'wocky-client'
 import moment from 'moment'
 
 type Props = {
-  wocky: IWocky
+  wocky?: IWocky
   searchStore?: ISearchStore
+  locationStore?: ILocationStore
 }
 
 type State = {
@@ -44,7 +46,7 @@ const CHOICES = [
 ]
 const UNTIL_OFF = Date.now() + 24 * HOUR * 365
 
-@inject('wocky', 'searchStore')
+@inject('wocky', 'searchStore', 'locationStore')
 @observer
 export default class LiveLocationCompose extends React.Component<Props, State> {
   Checkbox = ({value, children}) => (
@@ -64,13 +66,18 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     duration: 2,
   }
   share = async () => {
-    const selection = this.props.searchStore!.localResult
+    const {locationStore, searchStore, wocky} = this.props
+    const selection = searchStore!.localResult
     const expireAt = new Date(
       this.state.option ? UNTIL_OFF : Date.now() + CHOICES[this.state.duration].value
     )
     // TODO modify server-side API to pass array of usr_ids ?
     for (const profile of selection.selected) {
       await profile.shareLocation(expireAt)
+    }
+    // send location
+    if (locationStore!.location) {
+      await wocky!.setLocation(locationStore!.location!)
     }
     Actions.popTo('home')
   }

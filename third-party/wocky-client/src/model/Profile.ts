@@ -33,7 +33,7 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
-    delete res.location
+    // delete res.location - need to preserve location because now it is passed only via subscriptions
     delete res.subscribedBots
     return res
   })
