@@ -6,6 +6,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Remove `ownBots` and other dead code (PR #3367, PR #3368)
 * Live Location: Presence widget integration (#3331, PR #3364, PR #3366)
+  * Live Location Avatar variation UI (#3378, PR #3380) 
+* Baseline for sharer user's profile card (PR #3377)
+* Display different button for enabled sharing (PR #3376)
+  * Live Location: Notifications integration (Rework #3330)
 
 # 4.1.3 - 2019 Feb 21
 
