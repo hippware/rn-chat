@@ -1,4 +1,4 @@
-import {types, getType, getParent, applySnapshot, getRoot} from 'mobx-state-tree'
+import {types, getType, getParent, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
 import {IObservableArray, reaction} from 'mobx'
 import {Bot, IBot, Profile, IProfile, Location, ILocation, IWocky} from 'wocky-client'
 import {IStore} from './index'
@@ -48,18 +48,12 @@ export interface IBotCard extends BotCardType {}
 const YouCard = SelectableCard.props({
   you: types.boolean,
 }).named('YouCard')
-// NOTE: if we don't need to unselect current bot we can return empty 'select' and use it from HorizontalCardList
-// .actions(self => ({
-//   select: () => {
-//     // no action for you card
-//   },
-// }))
 
 const TutorialCard = SelectableCard.props({
   tutorial: types.boolean,
 }).named('TutorialCard')
 
-const ProfileCard = SelectableCard.props({
+const LocationSharerCard = SelectableCard.props({
   profile: types.reference(Profile),
 })
   .views(self => ({
@@ -67,14 +61,11 @@ const ProfileCard = SelectableCard.props({
       return self.profile.location
     },
   }))
-  .named('ProfileCard')
+  .named('LocationSharerCard')
 
-type ProfileCardType = typeof ProfileCard.Type
-export interface IProfileCard extends ProfileCardType {
-  profile: IProfile
-}
+export interface ILocationSharerCard extends Instance<typeof LocationSharerCard.Type> {}
 
-const Card = types.union(BotCard, YouCard, TutorialCard, ProfileCard)
+const Card = types.union(BotCard, YouCard, TutorialCard, LocationSharerCard)
 export type ICard = typeof Card.Type
 
 const HomeStore = types
@@ -170,7 +161,7 @@ const HomeStore = types
         profiles.forEach(profile => {
           if (!list.find((item: any) => item.profile && item.profile.id === profile.id)) {
             // insert into 3-rd position after TutorialCard and YouCard
-            list.splice(2, 0, ProfileCard.create({profile: profile.id}))
+            list.splice(2, 0, LocationSharerCard.create({profile: profile.id}))
           }
         })
       },

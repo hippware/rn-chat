@@ -8,8 +8,9 @@ import {IProfile} from 'wocky-client'
 type Props = {
   profile: IProfile
   hidden?: boolean
+  tappable?: boolean
 }
-const LocationAvatar = ({profile, hidden}: Props) => {
+const LocationAvatar = ({profile, hidden, tappable}: Props) => {
   const color = hidden ? colors.DARK_GREY : colors.PINK
   return (
     <View
@@ -24,7 +25,7 @@ const LocationAvatar = ({profile, hidden}: Props) => {
         width: 63.6,
       }}
     >
-      <Avatar noScale size={54} profile={profile} hideDot borderColor={color} />
+      <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
       <Triangle width={8} height={8} color={color} direction="down" />
     </View>
   )
