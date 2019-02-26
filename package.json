@@ -158,6 +158,8 @@
     "promise": "^7.1.1",
     "react-dom": "^16.6.0",
     "react-test-renderer": "16.6.3",
+    "reactotron-mst": "^2.1.4",
+    "reactotron-react-native": "^2.2.0",
     "readline-sync": "^1.4.7",
     "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",

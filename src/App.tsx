@@ -15,9 +15,12 @@ import NotificationBanner from './components/NotificationBanner'
 import Connectivity from './components/Connectivity'
 import * as logger from './utils/log'
 // import TinyRobotRouter from './components/RouterTest';
-// require('./utils/reactotron');
 import ErrorHandler from './components/common/ErrorHandler'
 import geocodingStore from './store/geocodingService'
+
+if (__DEV__) {
+  require('./utils/reactotron')
+}
 
 const App = () => (
   <Provider
