@@ -32,6 +32,7 @@ type Props = {
   fontFamily?: 'bold' | 'regular'
   hideDot?: boolean
   borderColor?: string
+  noScale?: boolean
 }
 
 const Avatar = observer(
@@ -49,6 +50,7 @@ const Avatar = observer(
     borderColor,
     fontSize,
     fontFamily,
+    noScale = false,
   }: Props) => {
     if ((!profile || !isAlive(profile)) && (!image && !displayName)) {
       return null
@@ -60,20 +62,22 @@ const Avatar = observer(
       (profile as IOwnProfile).hidden.enabled
     const title = (profile ? profile.displayName : displayName) || ' '
     const Clazz: React.ComponentClass<any> = tappable ? TouchableOpacity : View
+    const scaledSize = noScale ? size : size * avatarScale
     const sharedStyle = {
-      width: size * avatarScale,
-      height: size * avatarScale,
-      borderRadius: size * avatarScale / 2,
+      width: scaledSize,
+      height: scaledSize,
+      borderRadius: scaledSize / 2,
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * avatarScale,
       borderColor: showMask ? colors.DARK_GREY : borderColor || colors.WHITE,
       overflow: 'hidden',
     }
+
     return (
       <Clazz
         style={{justifyContent: 'flex-end'}}
         onPress={() => (profile ? Actions.profileDetails({item: profile.id}) : null)}
       >
-        <View style={[style, {height: size * avatarScale, width: size * avatarScale}]}>
+        <View style={[style, {height: scaledSize, width: scaledSize}]}>
           {(!!profile && profile.avatar) || image ? (
             <AvatarImage
               avatar={profile ? profile.avatar : {thumbnail: image}}
@@ -95,7 +99,7 @@ const Avatar = observer(
             <View style={[styles.absolute, styles.frameOuter]}>
               <Image
                 source={require('../../../images/avatarFrame.png')}
-                style={{width: size * avatarScale, height: size * avatarScale}}
+                style={{width: scaledSize, height: scaledSize}}
               />
             </View>
           )}
