@@ -265,7 +265,7 @@ export function hashCode(s: string): number {
   return hash
 }
 
-export function iso8601toDate(date: string) {
+export function iso8601toDate(date: string): Date {
   let timestamp = Date.parse(date),
     minutesOffset = 0
   if (isNaN(timestamp)) {

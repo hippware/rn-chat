@@ -10,7 +10,7 @@ import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
 import {createMessage, IMessage, IMessageIn} from '../model/Message'
-import {processMap, waitFor, generateWockyToken, assert} from '../transport/utils'
+import {iso8601toDate, processMap, waitFor, generateWockyToken, assert} from '../transport/utils'
 import uuid from 'uuid/v1'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
@@ -578,7 +578,9 @@ export const Wocky = types
           ({id, location}) => {
             const profile = self.profiles.get(id)
             if (profile) {
-              profile.setLocation(createLocation(location))
+              profile.setLocation(
+                createLocation({...location, createdAt: iso8601toDate(location.createdAt)})
+              )
             }
           }
         ),

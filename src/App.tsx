@@ -18,9 +18,9 @@ import * as logger from './utils/log'
 import ErrorHandler from './components/common/ErrorHandler'
 import geocodingStore from './store/geocodingService'
 
-if (__DEV__) {
-  require('./utils/reactotron')
-}
+// if (__DEV__) {
+//   require('./utils/reactotron')
+// }
 
 const App = () => (
   <Provider

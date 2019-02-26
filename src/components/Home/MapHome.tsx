@@ -14,6 +14,7 @@ import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
 import YouMarker from './map-markers/YouMarker'
+import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
 
@@ -31,6 +32,7 @@ interface IProps {
 const markerMap: {[key: string]: any} = {
   YouCard: YouMarker,
   BotCard: BotMarker,
+  ProfileCard: ProfileMarker,
 }
 
 @inject('locationStore', 'wocky', 'homeStore', 'navStore')

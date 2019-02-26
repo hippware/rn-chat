@@ -69,6 +69,11 @@ const ProfileCard = SelectableCard.props({
   }))
   .named('ProfileCard')
 
+type ProfileCardType = typeof ProfileCard.Type
+export interface IProfileCard extends ProfileCardType {
+  profile: IProfile
+}
+
 const Card = types.union(BotCard, YouCard, TutorialCard, ProfileCard)
 export type ICard = typeof Card.Type
 
@@ -216,13 +221,14 @@ const HomeStore = types
       const mainStore: any = getParent(self)
       const wocky: IWocky = mainStore.wocky
       reaction(
-        () => wocky.profile && wocky.profile.locationSharers.list,
+        () => wocky && wocky.profile && wocky.profile.locationSharers.list,
         () => {
           // const selected = self.cards[self.index] TODO: preserve index
           // TODO remove expired sharers
-          self.addProfilesToList(
-            wocky.profile!.locationSharers.list.map(sharer => sharer.sharedWith)
-          )
+          if (wocky.profile) {
+            const profiles = wocky.profile!.locationSharers.list.map(sharer => sharer.sharedWith)
+            self.addProfilesToList(profiles)
+          }
         }
       )
     },
