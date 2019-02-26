@@ -4,10 +4,10 @@ import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import {Avatar, RText} from '../common'
 import {minHeight} from '../Global'
 import {colors} from '../../constants'
-import {Actions} from 'react-native-router-flux'
 import {IActiveBannerItem} from './ActiveGeoBotBanner'
 import {inject} from 'mobx-react/native'
 import {IHomeStore} from 'src/store/HomeStore'
+import Triangle from '../map/Triangle'
 
 interface IProps extends IActiveBannerItem {
   sharer: ILocationShare
@@ -26,25 +26,43 @@ const ActiveLocationSharer = inject('homeStore')(
           homeStore!.selectProfile(sharer.sharedWith)
         }}
       >
-        {/* todo: need custom avatar with the extra circle around the outside...will need to wait until Alan comes back to get that asset */}
-
-        <Avatar profile={sharer.sharedWith} size={64} tappable={false} />
-        <Image source={liveImg} style={{position: 'absolute', right: 0, top: 0}} />
-        <TouchableOpacity
-          onPress={() => Actions.profileDetails({item: sharer.sharedWith.id})}
-          style={{marginTop: 4}}
+        <View
+          style={{
+            alignItems: 'center',
+            borderColor: colors.PINK,
+            borderWidth: 1,
+            borderRadius: 50,
+            paddingTop: 3.3,
+            paddingHorizontal: 3.3,
+            height: 63.6,
+            width: 63.6,
+          }}
         >
-          <RText
-            size={13}
-            style={{textAlign: 'center', marginTop: 2 * minHeight}}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            color={colors.DARK_GREY}
-            weight={'Medium'}
-          >
-            {`@${sharer.sharedWith.handle}`}
-          </RText>
-        </TouchableOpacity>
+          <Avatar
+            noScale
+            size={54}
+            profile={sharer.sharedWith}
+            hideDot
+            borderColor={colors.PINK}
+            tappable={false}
+          />
+          <Triangle width={8} height={8} color={colors.PINK} direction="down" />
+        </View>
+
+        <Image
+          source={liveImg}
+          style={{position: 'absolute', right: -2, top: -4, width: 39, height: 21}}
+        />
+        <RText
+          size={13}
+          style={{textAlign: 'center', marginTop: 2 * minHeight}}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          color={colors.DARK_GREY}
+          weight={'Medium'}
+        >
+          {`@${sharer.sharedWith.handle}`}
+        </RText>
       </TouchableOpacity>
     </View>
   )

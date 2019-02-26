@@ -122,7 +122,7 @@ export default class MapHome extends React.Component<IProps> {
     const {location} = locationStore!
     if (!location) {
       return (
-        <View style={styles.container}>
+        <View style={[commonStyles.absolute, {bottom: -50 * k}, styles.container]}>
           <Spinner />
         </View>
       )

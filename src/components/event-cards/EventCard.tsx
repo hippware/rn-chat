@@ -3,13 +3,14 @@ import React from 'react'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
-import {observer} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
 import {RText} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
+import {IWocky} from 'wocky-client'
 
 const geoIcon = require('../../../images/notificationGeo.png')
 const notificationIcon = require('../../../images/notificationMessage.png')
@@ -66,30 +67,68 @@ const EventBotGeofenceCard = observer(
   )
 )
 
-const EventLocationShareCard = observer(
-  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => (
-    <EventCardTemplate
-      profile={sharedWith}
-      icon={shareLocationIcon}
-      timestamp={relativeDateAsString}
-      action={'is sharing location with you'}
+const Button = ({
+  text,
+  onPress,
+  textStyle,
+  style,
+}: {
+  text: string
+  onPress: any
+  textStyle?: any
+  style?: any
+}) => (
+  <TouchableOpacity
+    style={[
+      {
+        borderColor: colors.PINK,
+        borderWidth: 1,
+        marginTop: 5,
+        height: 29,
+        borderRadius: 3,
+        justifyContent: 'center',
+      },
+      style,
+    ]}
+    onPress={onPress}
+  >
+    <RText
+      weight="Medium"
+      color={colors.PINK}
+      style={[{marginLeft: 10, marginRight: 10}, textStyle]}
     >
-      <TouchableOpacity
-        style={{
-          borderColor: colors.PINK,
-          borderWidth: 1,
-          marginTop: 5,
-          height: 29,
-          borderRadius: 3,
-          justifyContent: 'center',
-        }}
-        onPress={Actions.liveLocationShare}
+      {text}
+    </RText>
+  </TouchableOpacity>
+)
+
+const EventLocationShareCard = inject('wocky')(
+  observer(
+    ({
+      wocky,
+      item: {sharedWith, relativeDateAsString},
+    }: {
+      wocky: IWocky
+      item: IEventLocationShare
+    }) => (
+      <EventCardTemplate
+        profile={sharedWith}
+        icon={shareLocationIcon}
+        timestamp={relativeDateAsString}
+        action={'is sharing location with you'}
       >
-        <RText weight="Medium" color={colors.PINK} style={{marginLeft: 10, marginRight: 10}}>
-          SHARE YOUR LOCATION
-        </RText>
-      </TouchableOpacity>
-    </EventCardTemplate>
+        {wocky.profile && wocky.profile!.isLocationShared ? (
+          <Button
+            text="SHARING LOCATION"
+            style={{backgroundColor: colors.PINK}}
+            textStyle={{color: colors.WHITE}}
+            onPress={Actions.liveLocationShare}
+          />
+        ) : (
+          <Button text="SHARE YOUR LOCATION" onPress={Actions.liveLocationShare} />
+        )}
+      </EventCardTemplate>
+    )
   )
 )
 const eventCardMap: {[key: string]: any} = {

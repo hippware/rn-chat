@@ -13,8 +13,8 @@
     "jestWocky": "jest --config jest.wocky.config.json",
     "jestWockyCI": "jest --config jest.wocky.config.json --no-cache --i --detectOpenHandles --forceExit",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest": "jest --config jest.config.json",
-    "jestCI": "jest --config jest.config.json --verbose --runInBand",
+    "jest": "jest --config jest.config.js",
+    "jestCI": "jest --config jest.config.js --verbose --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.ts' 'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
@@ -26,36 +26,6 @@
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start"
-  },
-  "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "./__tests__/utils/testSetup.ts",
-      "./node_modules/appcenter/test/AppCenterMock.js",
-      "./third-party/wocky-client/test/support/setup.js"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
-    "modulePaths": [
-      "<rootDir>",
-      "<rootDir>/third-party/wocky-client/src"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "moduleNameMapper": {
-      "wocky-client": "third-party/wocky-client/src"
-    }
   },
   "detox": {
     "configurations": {
@@ -117,14 +87,12 @@
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-maps": "^0.22.0",
-    "react-native-message-bar": "^2.0.7",
     "react-native-mixpanel": "^1.1.1",
     "react-native-native-env": "github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6",
     "react-native-permissions": "^1.1.1",
     "react-native-push-notification": "^3.1.2",
     "react-native-router-flux": "^4.0.3",
     "react-native-snap-carousel": "^3.7.5",
-    "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.13",
     "react-native-touch-through-view": "^0.1.4",
     "react-navigation": "^2.x",
@@ -153,7 +121,7 @@
     "@babel/plugin-proposal-throw-expressions": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@storybook/addon-actions": "^4.0.7",
@@ -170,12 +138,11 @@
     "@types/react-native": "^0.57.32",
     "@types/react-navigation": "^2.13.0",
     "@types/react-test-renderer": "^16.0.3",
-    "@types/strophe": "1.2.27",
-    "@types/xmldom": "^0.1.29",
     "appcenter-cli": "^1.1.5",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "23.6.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-transform-remove-console": "^6.8.4",
     "bugsnag-sourcemaps": "^1.0.4",
     "chalk": "^2.4.1",
@@ -190,8 +157,9 @@
     "pretty-quick": "^1.8.0",
     "promise": "^7.1.1",
     "react-dom": "^16.6.0",
-    "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "16.6.3",
+    "reactotron-mst": "^2.1.4",
+    "reactotron-react-native": "^2.2.0",
     "readline-sync": "^1.4.7",
     "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",
