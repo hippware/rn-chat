@@ -334,10 +334,6 @@ const LocationStore = types
           },
           {name: 'LocationStore: Start RNBGL after connected'}
         ),
-        autorun(() => !self.location && onceStore.onboarded && self.getCurrentPosition(), {
-          delay: 500,
-          name: 'LocationStore: Get current location after cache reset',
-        }),
       ]
     })
 
