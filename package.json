@@ -13,8 +13,8 @@
     "jestWocky": "jest --config jest.wocky.config.json",
     "jestWockyCI": "jest --config jest.wocky.config.json --no-cache --i --detectOpenHandles --forceExit",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
-    "jest": "jest --config jest.config.json",
-    "jestCI": "jest --config jest.config.json --verbose --runInBand",
+    "jest": "jest --config jest.config.js",
+    "jestCI": "jest --config jest.config.js --verbose --runInBand",
     "lint": "tslint -p . -c tslint.json  'src/**/*.ts' 'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
@@ -26,36 +26,6 @@
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start"
-  },
-  "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "./__tests__/utils/testSetup.ts",
-      "./node_modules/appcenter/test/AppCenterMock.js",
-      "./third-party/wocky-client/test/support/setup.js"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ],
-    "modulePaths": [
-      "<rootDir>",
-      "<rootDir>/third-party/wocky-client/src"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "((/__tests__/.*(test|spec)\\.(jsx?|tsx?))|(third-party/wocky-client/(test/.*(test)\\.ts)))$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "moduleNameMapper": {
-      "wocky-client": "third-party/wocky-client/src"
-    }
   },
   "detox": {
     "configurations": {
