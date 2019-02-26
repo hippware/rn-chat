@@ -1553,16 +1553,6 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/strophe@1.2.27":
-  version "1.2.27"
-  resolved "https://registry.yarnpkg.com/@types/strophe/-/strophe-1.2.27.tgz#0ca8a7aca60449d0881095731162e00a1c28d49c"
-  integrity sha1-DKinrKYESdCIEJVzEWLgChwo1Jw=
-
-"@types/xmldom@^0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@types/xmldom/-/xmldom-0.1.29.tgz#c4428b0ca86d3b881475726fd94980b38a27c381"
-  integrity sha1-xEKLDKhtO4gUdXJv2UmAs4onw4E=
-
 "@types/zen-observable@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
