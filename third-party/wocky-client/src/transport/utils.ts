@@ -418,8 +418,7 @@ export function convertNotification(edge: any): IEventData | null {
         id,
         time,
         bot,
-        // profile: convertProfile(data.user),
-        profile: data.user.id,
+        profile: convertProfile(data.user),
         isEnter: data.event === 'ENTER',
       }
       return geofenceNotification
