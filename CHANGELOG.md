@@ -14,7 +14,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Live Location: Sharer user's profile card (#3371, PR #3377, PR #3381)
 * Baseline for #3332 (with #3385) (PR #3387)
   * LL: App to send one data point when location sharing starts (#3385)
-* Live Location: Pulsing Share Live Location CTA (#3329)
+* Live Location: ~Pulsing~ Share Live Location CTA (#3329)
 
 # 4.1.3 - 2019 Feb 21
 
