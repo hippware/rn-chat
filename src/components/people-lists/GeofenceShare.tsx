@@ -1,12 +1,12 @@
 import React from 'react'
-import {Alert, TouchableOpacity, StyleSheet} from 'react-native'
+import {Alert, TouchableOpacity, StyleSheet, View} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import FriendMultiSelect from './FriendMultiSelect'
 import {colors} from '../../constants'
-import {k} from '../Global'
+import {k, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 
 import {RText, BottomButton} from '../common'
@@ -63,11 +63,14 @@ class GeofenceShare extends React.Component<Props> {
     const selected = selection.selected.length > 0
     return (
       <Screen>
-        <FriendMultiSelect
-          selection={selection}
-          botTitle={this.bot && this.bot.title ? this.bot.title : ''}
-          inviteMessage="To share presence!"
-        />
+        <View style={{marginBottom: 50 * minHeight, flex: 1}}>
+          <FriendMultiSelect
+            selection={selection}
+            botTitle={this.bot && this.bot.title ? this.bot.title : ''}
+            inviteMessage="To share presence!"
+          />
+        </View>
+
         <BottomButton isDisabled={!selected} onPress={this.share}>
           <RText size={15} color="white" style={styles.shareText}>
             Invite to Follow Location
