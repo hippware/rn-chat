@@ -582,7 +582,7 @@ export const Wocky = types
             const profile = self.profiles.get(id)
             if (profile) {
               profile.setLocation(
-                createLocation({...location, createdAt: iso8601toDate(location.createdAt)})
+                createLocation({...location, createdAt: iso8601toDate(location.capturedAt)})
               )
             }
           }

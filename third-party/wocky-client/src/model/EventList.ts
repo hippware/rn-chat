@@ -37,6 +37,9 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.user) {
     params.user = service.profiles.get(params.user.id, params.user)
   }
+  if (params.profile) {
+    params.profile = service.profiles.get(params.profile.id, params.profile)
+  }
   if (params.bot) {
     params.bot = service.bots.get(params.bot.id, params.bot)
   }

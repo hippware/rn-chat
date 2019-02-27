@@ -32,7 +32,7 @@ interface IProps {
 const markerMap: {[key: string]: any} = {
   YouCard: YouMarker,
   BotCard: BotMarker,
-  ProfileCard: ProfileMarker,
+  LocationSharerCard: ProfileMarker,
 }
 
 @inject('locationStore', 'wocky', 'homeStore', 'navStore')
