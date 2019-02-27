@@ -6,6 +6,8 @@ import {RText, BottomButton} from '../common'
 import FriendMultiSelect from '../people-lists/FriendMultiSelect'
 import {IWocky} from 'wocky-client'
 import {ISearchStore} from '../../store/SearchStore'
+import {View} from 'react-native'
+import {minHeight} from '../Global'
 
 type Props = {
   botId: string
@@ -29,7 +31,9 @@ export default class LiveLocationShare extends React.Component<Props> {
     const selected = selection.selected.length > 0
     return (
       <Screen>
-        <FriendMultiSelect selection={selection} inviteMessage="To share your location!" />
+        <View style={{marginBottom: 50 * minHeight, flex: 1}}>
+          <FriendMultiSelect selection={selection} inviteMessage="To share your location!" />
+        </View>
         <BottomButton
           isDisabled={!selected}
           onPress={() => {
