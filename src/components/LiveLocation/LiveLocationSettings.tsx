@@ -14,11 +14,11 @@ import moment from 'moment'
 type Props = {
   wocky?: IWocky
 }
-@inject('wocky')
-@observer
-export default class LiveLocationSettings extends React.Component<Props> {
-  render() {
-    const {profile} = this.props.wocky!
+
+const LiveLocationSettings = inject('wocky')(
+  observer(({wocky}: Props) => {
+    const {profile} = wocky!
+    const buttonHeight = 50 * minHeight
     return (
       <View
         style={{
@@ -68,8 +68,8 @@ export default class LiveLocationSettings extends React.Component<Props> {
                     text: 'Yes',
                     style: 'destructive',
                     onPress: () => {
-                      this.props.wocky!.profile!.cancelAllLocationShares()
-                      this.props.wocky!.profile!.setSharesLocation(false)
+                      profile!.cancelAllLocationShares()
+                      profile!.setSharesLocation(false)
                       Actions.popTo('home')
                     },
                   },
@@ -82,13 +82,14 @@ export default class LiveLocationSettings extends React.Component<Props> {
         <Separator style={{width: '100%', backgroundColor: 'rgb(224,224,224)'}} />
 
         <FlatList
+          style={{marginBottom: buttonHeight}}
           data={profile!.locationShares.list.slice()}
           renderItem={({item}) => <ProfileLocationShare locationShare={item} />}
           keyExtractor={item => item.id}
         />
 
         <TouchableOpacity
-          style={{width: '100%', height: 50 * minHeight, bottom: 0, position: 'absolute'}}
+          style={{width: '100%', height: buttonHeight, bottom: 0, position: 'absolute'}}
           onPress={Actions.liveLocationSelectFriends}
         >
           <LinearGradient
@@ -110,8 +111,8 @@ export default class LiveLocationSettings extends React.Component<Props> {
         </TouchableOpacity>
       </View>
     )
-  }
-}
+  })
+)
 
 const ProfileLocationShare = ({
   locationShare: {expiresAt, sharedWith},
@@ -146,3 +147,5 @@ const ProfileLocationShare = ({
     </PersonRow>
   )
 }
+
+export default LiveLocationSettings
