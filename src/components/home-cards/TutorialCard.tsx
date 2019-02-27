@@ -2,26 +2,27 @@ import React from 'react'
 import {View, StyleSheet, Image} from 'react-native'
 import {RText} from '../common'
 import {colors} from '../../constants'
-import {k} from '../Global'
+import {k, fontScale} from '../Global'
 import Card from './Card'
 import {Actions} from 'react-native-router-flux'
 
 const TutorialCard = () => (
-  <Card
-    onPress={() => {
-      Actions.createBot()
-    }}
-  >
+  <Card onPress={Actions.liveLocationShare}>
     <View style={styles.textContainer}>
-      <RText size={17} weight="Bold" color={colors.DARK_PURPLE} numberOfLines={1}>
-        Map Your Favorite Spots
+      <RText size={16} weight="Bold" color={colors.PINK} numberOfLines={1}>
+        New Feature
       </RText>
-      <RText size={13} weight="Bold" color={colors.PINKISH_GREY} style={{marginTop: 3 * k}}>
-        Show friends the places you love!
+      <RText
+        size={16 * fontScale}
+        weight="Bold"
+        color={colors.DARK_PURPLE}
+        style={{marginTop: 2 * k}}
+      >
+        Share Your Live Location!
       </RText>
     </View>
     <View style={styles.imageContainer}>
-      <Image style={styles.icon} source={require('../../../images/createTutorial.png')} />
+      <Image style={styles.icon} source={require('../../../images/TapHere.png')} />
     </View>
   </Card>
 )
@@ -31,18 +32,20 @@ export default TutorialCard
 const styles = StyleSheet.create({
   icon: {
     // flex: 1,
-    height: 44 * k,
-    width: 44 * k,
+    height: 86,
+    width: 82,
+    position: 'absolute',
+    top: -15,
+    right: 5 * k,
   },
   textContainer: {
     flex: 1,
-    paddingVertical: 18 * k,
+    paddingVertical: 16 * k,
     paddingLeft: 25 * k,
     justifyContent: 'center',
   },
   imageContainer: {
-    padding: 22 * k,
-    paddingLeft: 10 * k,
+    padding: 13 * k,
     alignItems: 'center',
     justifyContent: 'center',
   },

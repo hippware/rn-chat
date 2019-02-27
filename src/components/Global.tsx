@@ -9,6 +9,8 @@ export const s = height - 667 < 0 ? 1 - (667 - height) * 3.2 / 667 : 1 + (height
 export const minHeight = height - 667 < 0 ? 1 : 1 + (height - 667) * 1.2 / 667
 // scales avatar based on screensize (different ratios for smaller screens vs larger screens)
 export const avatarScale = height - 667 < 0 ? 1 : 1 + (height - 667) * 0.8 / 667
+// scales font based on screensize (different ratios for smaller screens vs larger screens)
+export const fontScale = height - 667 < 0 ? 1 : 1 + (height - 667) * 0.3 / 667
 
 export const defaultCover = [
   require('../../images/defaultCover0.png'),
