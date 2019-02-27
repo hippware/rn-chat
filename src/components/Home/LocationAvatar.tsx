@@ -12,12 +12,13 @@ type Props = {
 }
 const LocationAvatar = ({profile, hidden, tappable}: Props) => {
   const color = hidden ? colors.DARK_GREY : colors.PINK
+  const dynamicWidth = profile.sharesLocation ? 1 : 0
   return (
     <View
       style={{
         alignItems: 'center',
         borderColor: color,
-        borderWidth: 1,
+        borderWidth: dynamicWidth,
         borderRadius: 50,
         paddingTop: 3.3,
         paddingHorizontal: 3.3,

@@ -111,7 +111,10 @@ export default class BottomMenu extends React.Component<Props> {
           }}
           testID="myAccountMenuItem"
         >
-          <LiveLocationButton invisible={false} active={false} />
+          <LiveLocationButton
+            invisible={profile.hidden.enabled}
+            active={profile.isLocationShared}
+          />
           <Avatar
             size={74}
             fontSize="large"
