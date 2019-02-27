@@ -11,6 +11,10 @@ type Props = {
 
 const ProfileMarker = observer(({homeStore, card}: Props) => {
   const {profile, location} = card
+  // we could have null location until https://github.com/hippware/wocky/issues/2304 is implemented
+  if (!location) {
+    return null
+  }
   const {latitude, longitude} = location
   return (
     profile && (
