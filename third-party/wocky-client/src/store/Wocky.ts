@@ -5,7 +5,7 @@ import {IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
-import {IBot, BotPaginableList} from '../model/Bot'
+import {Bot, IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
@@ -35,6 +35,7 @@ export const Wocky = types
       geofenceBots: types.optional(BotPaginableList, {}),
       // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, {}),
+      localBots: types.optional(BotPaginableList, {}),
     })
   )
   .named(SERVICE_NAME)
@@ -297,7 +298,9 @@ export const Wocky = types
           latitudeDelta,
           longitudeDelta,
         })
-        return arr.map(self.getBot)
+        return arr.map(bot => {
+          self.localBots.add(self.getBot(bot))
+        })
       }) as (a) => Promise<IBot[]>,
       _sendMessage: flow(function*(msg: IMessage) {
         // console.log('& sendMessage', getSnapshot(msg))

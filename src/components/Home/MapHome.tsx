@@ -82,15 +82,14 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {addBotsToList, creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
+    const {creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
     // don't add bot during creation mode (to avoid replacing of new location)
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
       try {
-        const bots = await this.props.wocky!.loadLocalBots(region)
+        await this.props.wocky!.loadLocalBots(region)
         this.areaTooLarge = false
-        addBotsToList(bots)
       } catch (e) {
         // TODO display UI for area too large
         this.areaTooLarge = true
@@ -154,7 +153,7 @@ export default class MapHome extends React.Component<IProps> {
           {...this.props}
         >
           {list.map((card, i) => {
-            const Card = markerMap[getType(card).name]
+            const Card = markerMap[card.name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
         </MapView>
