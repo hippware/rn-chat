@@ -9,6 +9,7 @@ import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
+import {Card} from '../../store/HomeStore'
 
 type Props = {
   enabled: boolean

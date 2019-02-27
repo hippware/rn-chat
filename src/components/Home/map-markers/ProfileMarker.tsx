@@ -1,11 +1,11 @@
 import React from 'react'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
-import {IHomeStore, ILocationSharerCard} from '../../../store/HomeStore'
+import {IHomeStore, LocationSharerCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 
 type Props = {
-  card: ILocationSharerCard
+  card: LocationSharerCard
   homeStore?: IHomeStore
 }
 

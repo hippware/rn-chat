@@ -1,7 +1,6 @@
 /* tslint:disable:max-classes-per-file */
-import {types, getType, getParent, applySnapshot, getRoot, Instance} from 'mobx-state-tree'
-import {IObservableArray, reaction} from 'mobx'
-import {Bot, IBot, Profile, IProfile, Location, ILocation, IWocky} from 'wocky-client'
+import {types, applySnapshot, getRoot} from 'mobx-state-tree'
+import {IBot, IProfile, Location, ILocation} from 'wocky-client'
 import {IStore} from './index'
 
 export class Card {
@@ -59,6 +58,7 @@ const HomeStore = types
     fullScreenMode: false,
     focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
+    index: 0,
   })
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
@@ -111,22 +111,31 @@ const HomeStore = types
       self.mapCenterLocation = Location.create({latitude, longitude, accuracy})
     },
   }))
-  .actions(self => {
+  .extend(self => {
+    let selected = null
     return {
-      logout() {
-        applySnapshot(self, {})
-      },
-      toggleFullscreen: () => {
-        self.fullScreenMode = !self.fullScreenMode
-      },
-      disableFullScreen: () => {
-        self.fullScreenMode = false
-      },
-      start() {
-        // empty
-      },
-      finish() {
-        self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
+      actions: {
+        selectProfile(profile: IProfile) {},
+        setIndex(index: number) {
+          selected = self.cards[index]
+          self.index = index
+          console.log('NUMBER:', index)
+        },
+        logout() {
+          applySnapshot(self, {})
+        },
+        toggleFullscreen: () => {
+          self.fullScreenMode = !self.fullScreenMode
+        },
+        disableFullScreen: () => {
+          self.fullScreenMode = false
+        },
+        start() {
+          // empty
+        },
+        finish() {
+          self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
+        },
       },
     }
   })

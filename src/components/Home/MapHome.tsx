@@ -1,7 +1,6 @@
 import React from 'react'
 import MapView from 'react-native-maps'
 import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
-import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
