@@ -17,7 +17,7 @@ const LocationAvatar = ({profile, hidden, tappable}: Props) => {
       style={{
         alignItems: 'center',
         borderColor: color,
-        borderWidth: 1,
+        borderWidth: profile.sharesLocation ? 1 : 0,
         borderRadius: 50,
         paddingTop: 3.3,
         paddingHorizontal: 3.3,

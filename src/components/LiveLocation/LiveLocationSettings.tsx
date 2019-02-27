@@ -69,6 +69,7 @@ export default class LiveLocationSettings extends React.Component<Props> {
                     style: 'destructive',
                     onPress: () => {
                       this.props.wocky!.profile!.cancelAllLocationShares()
+                      this.props.wocky!.profile!.setSharesLocation(false)
                       Actions.popTo('home')
                     },
                   },
