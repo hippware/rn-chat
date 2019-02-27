@@ -79,7 +79,6 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     if (locationStore!.location) {
       await wocky!.setLocation(locationStore!.location!)
     }
-    wocky!.profile!.setSharesLocation(true)
     Actions.popTo('home')
   }
   render() {
