@@ -23,7 +23,7 @@ const ActiveLocationSharer = inject('homeStore')(
         style={innerStyle}
         onPress={() => {
           homeStore!.setFocusedLocation(sharer.sharedWith.location)
-          homeStore!.selectProfile(sharer.sharedWith)
+          homeStore!.select(sharer.sharedWith.id)
         }}
       >
         <LocationAvatar profile={sharer.sharedWith} tappable={false} />

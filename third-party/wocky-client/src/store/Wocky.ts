@@ -175,6 +175,7 @@ export const Wocky = types
       self.profile!.subscribedBots.remove(id)
       self.profiles.get(self.username!)!.subscribedBots.remove(id)
       self.geofenceBots.remove(id)
+      self.localBots.remove(id)
       // self.geoBots.delete(id)
       self.bots.delete(id)
     },

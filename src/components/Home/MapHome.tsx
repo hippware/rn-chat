@@ -21,7 +21,7 @@ const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 
-interface IProps {
+type Props = {
   locationStore?: ILocationStore
   wocky?: IWocky
   homeStore?: IHomeStore
@@ -36,7 +36,7 @@ const markerMap: {[key: string]: any} = {
 
 @inject('locationStore', 'wocky', 'homeStore', 'navStore')
 @observer
-export default class MapHome extends React.Component<IProps> {
+export default class MapHome extends React.Component<Props> {
   static defaultProps = {
     autoZoom: true,
   }

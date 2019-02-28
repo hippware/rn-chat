@@ -4,7 +4,7 @@ import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../../store/LocationStore'
-import {IHomeStore, ISelectableCard} from '../../../store/HomeStore'
+import {IHomeStore, YouCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 interface ICardProps extends IProps {
-  card: ISelectableCard
+  card: YouCard
 }
 
 const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps) => {
@@ -31,7 +31,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         key={`youmarker${profile.avatar && profile.avatar.loaded && profile.sharesLocation}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
-          card.select()
+          homeStore!.select(card.id)
           homeStore!.setFocusedLocation(location)
         }}
         stopPropagation

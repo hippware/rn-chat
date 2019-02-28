@@ -60,7 +60,7 @@ export default class BotDetails extends React.Component<Props> {
       return
     }
 
-    homeStore.selectBot(this.bot)
+    homeStore.select(this.bot.id)
     homeStore.setFocusedLocation(this.bot.location)
     await wocky!.loadBot(botId)
 

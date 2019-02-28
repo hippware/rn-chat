@@ -4,9 +4,15 @@ import {IBot, IProfile, Location, ILocation} from 'wocky-client'
 import {IStore} from './index'
 
 export class Card {
+  // unique id for the card
+  get id(): string {
+    return this.name
+  }
+  // location for given card
   get location(): ILocation | undefined {
     return undefined
   }
+  // name of class
   get name(): string {
     throw new Error('It is abstract class')
   }
@@ -22,6 +28,10 @@ export class BotCard extends Card {
 
   get location() {
     return this.bot.location || undefined
+  }
+
+  get id() {
+    return this.bot.id
   }
 
   get name() {
@@ -51,6 +61,9 @@ export class LocationSharerCard extends Card {
   get name() {
     return 'LocationSharerCard'
   }
+  get id() {
+    return this.profile.id
+  }
 }
 
 const HomeStore = types
@@ -58,7 +71,7 @@ const HomeStore = types
     fullScreenMode: false,
     focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
-    index: 0,
+    selectedId: types.maybe(types.string),
   })
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
@@ -81,7 +94,8 @@ const HomeStore = types
                 sharer => new LocationSharerCard(sharer.sharedWith)
               )
             : []
-        return [new TutorialCard(), new YouCard(), ...sharers]
+        const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
+        return [new TutorialCard(), new YouCard(), ...sharers, ...localBots]
       },
     }
   })
@@ -89,6 +103,10 @@ const HomeStore = types
     // return the list for current mode
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
+    },
+    get index(): number {
+      const index = self.cards.findIndex(card => card.id === self.selectedId)
+      return index !== -1 ? index : 0
     },
   }))
   .actions(self => ({
@@ -110,35 +128,34 @@ const HomeStore = types
     setMapCenter({latitude, longitude, accuracy}) {
       self.mapCenterLocation = Location.create({latitude, longitude, accuracy})
     },
+    select(id: string) {
+      self.selectedId = id
+    },
   }))
-  .extend(self => {
-    let selected = null
-    return {
-      actions: {
-        selectProfile(profile: IProfile) {},
-        setIndex(index: number) {
-          selected = self.cards[index]
-          self.index = index
-          console.log('NUMBER:', index)
-        },
-        logout() {
-          applySnapshot(self, {})
-        },
-        toggleFullscreen: () => {
-          self.fullScreenMode = !self.fullScreenMode
-        },
-        disableFullScreen: () => {
-          self.fullScreenMode = false
-        },
-        start() {
-          // empty
-        },
-        finish() {
-          self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
-        },
-      },
-    }
-  })
+  .actions(self => ({
+    setIndex(index: number) {
+      self.fullScreenMode = false
+      self.select(self.cards[index].id)
+      if (self.cards[self.index].location) {
+        self.setFocusedLocation(self.cards[self.index].location)
+      }
+    },
+    logout() {
+      applySnapshot(self, {})
+    },
+    toggleFullscreen: () => {
+      self.fullScreenMode = !self.fullScreenMode
+    },
+    disableFullScreen: () => {
+      self.fullScreenMode = false
+    },
+    start() {
+      // empty
+    },
+    finish() {
+      self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
+    },
+  }))
   .postProcessSnapshot((snapshot: any) => {
     // No need to persist this store
     return {}

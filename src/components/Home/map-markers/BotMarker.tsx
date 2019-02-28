@@ -5,16 +5,16 @@ import Bubble from '../../map/Bubble'
 import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 import BotIcon from 'src/components/common/BotIcon'
-import {IBotCard, IHomeStore} from '../../../store/HomeStore'
+import {BotCard, IHomeStore} from '../../../store/HomeStore'
 
 type Props = {
-  card: IBotCard
+  card: BotCard
   homeStore?: IHomeStore
 }
 
 const BotMarker = inject('homeStore')(
   observer(({homeStore, card}: Props) => {
-    const {isSelected} = card
+    const isSelected = card.id === homeStore!.selectedId
     let bot: IBot
     // dirty workaround for #3013 (until we will not found the real case)
     try {
@@ -34,7 +34,7 @@ const BotMarker = inject('homeStore')(
       <HackMarker
         coordinate={{latitude, longitude}}
         zIndex={isSelected ? 2000 : 1} // selected marker should be on top #2696
-        onPress={card.select}
+        onPress={() => homeStore!.select(card.id)}
         key={card.bot.id}
         stopPropagation
       >

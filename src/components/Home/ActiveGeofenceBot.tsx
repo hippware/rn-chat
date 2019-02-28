@@ -25,7 +25,7 @@ interface IProps extends IActiveBannerItem {
 @observer
 export default class ActiveGeofenceBot extends React.Component<IProps> {
   goToBot = (): void => {
-    this.props.homeStore!.selectBot(this.props.bot)
+    this.props.homeStore!.select(this.props.bot.id)
     Actions.botDetails({botId: this.props.bot.id})
     this.props.analytics.track(analyticsGeoWidgetTap)
   }
