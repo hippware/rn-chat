@@ -168,7 +168,8 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
           <View
             style={{
               flexDirection: 'row',
-              marginVertical: 13 * minHeight,
+              marginVertical: 18 * minHeight,
+              marginBottom: 30,
               marginHorizontal: '8%',
             }}
           >
@@ -192,9 +193,7 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
           >
             <RText color="white" size={15}>
               Share Live Location
-              {this.state.option
-                ? ' until you turn this off'
-                : ' for ' + CHOICES[this.state.duration].text}
+              {this.state.option ? '' : ' For ' + CHOICES[this.state.duration].text}
             </RText>
           </LinearGradient>
         </TouchableOpacity>
