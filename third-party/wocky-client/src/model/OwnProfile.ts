@@ -165,6 +165,7 @@ export const OwnProfile = types
     cancelAllLocationShares: flow(function*() {
       yield self.transport.userLocationCancelAllShares()
       self.locationShares.refresh()
+      self.sharesLocation = false
     }),
   }))
   .actions(self => ({

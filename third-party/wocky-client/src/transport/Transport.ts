@@ -1433,7 +1433,7 @@ export class Transport {
     const defaultOptions: any = {
       watchQuery: {
         fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
+        // errorPolicy: 'ignore',
       },
       query: {
         fetchPolicy: 'network-only',

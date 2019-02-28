@@ -7,7 +7,7 @@ import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
-import {RText} from '../common'
+import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
 import {IWocky} from 'wocky-client'
@@ -118,10 +118,10 @@ const EventLocationShareCard = inject('wocky')(
         action={'is sharing location with you'}
       >
         {wocky.profile && wocky.profile!.isLocationShared ? (
-          <Button
+          <GradientButton
             text="SHARING LOCATION"
-            style={{backgroundColor: colors.PINK}}
-            textStyle={{color: colors.WHITE}}
+            style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
+            textStyle={{fontSize: 12, color: 'white'}}
             onPress={Actions.liveLocationShare}
           />
         ) : (

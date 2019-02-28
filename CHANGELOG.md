@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.4 - 2019 Feb 27
+
 * Remove `ownBots` and other dead code (PR #3367, PR #3368, PR #3383)
 * Live Location: Presence widget integration (#3331, PR #3364, PR #3366)
   * Live Location Avatar variation UI (#3378, PR #3380)
@@ -12,9 +14,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Setup Reactotron (PR #3384)
 * Restart app after clearing cache (PR #3386) / Fix: Reset Cache (#2805)
 * Live Location: Sharer user's profile card (#3371, PR #3377, PR #3381)
-* Baseline for #3332 (with #3385) (PR #3387)
+* Various Live Location work, fixes and improvements (PR #3387, PR #3392)
+  * Live Location: View users on the map (#3332)
   * LL: App to send one data point when location sharing starts (#3385)
+  * Various fixes and improvements
 * Live Location: ~Pulsing~ Share Live Location CTA (#3329)
+* Share location user list to be above the Select Friends button (#3372)
+* Notification/Updates screen results in blank white screen (#3373)
+* Hot-fix: Don't display profile markers with null location (see #wocky/2304)
 
 # 4.1.3 - 2019 Feb 21
 
