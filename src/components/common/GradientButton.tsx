@@ -2,25 +2,30 @@ import React from 'react'
 import {StyleSheet, TouchableOpacity, TouchableOpacityProps, ViewStyle} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import {colors} from '../../constants'
+import {RText} from '.'
 
 const pink = ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
 const grey = [colors.DARK_GREY, colors.DARK_GREY]
 
 interface IProps extends TouchableOpacityProps {
-  isPink: boolean
+  isPink?: boolean
   offColor?: string
-  children: any
+  children?: any
   innerStyle?: ViewStyle
   onPress?: any
+  text?: string
+  textStyle?: any
 }
 
 const GradientButton = ({
-  isPink,
+  isPink = true,
   offColor,
   children,
   style,
   innerStyle,
   onPress,
+  textStyle = {color: colors.WHITE},
+  text,
   ...rest
 }: IProps) => (
   <TouchableOpacity style={[{overflow: 'hidden'}, style]} onPress={onPress} {...rest}>
@@ -30,7 +35,13 @@ const GradientButton = ({
       colors={isPink ? pink : offColor ? [offColor, offColor] : grey}
       style={[styles.gradient, innerStyle]}
     >
-      {children}
+      {children ? (
+        children
+      ) : (
+        <RText weight={'Medium'} style={textStyle}>
+          {text}
+        </RText>
+      )}
     </LinearGradient>
   </TouchableOpacity>
 )
