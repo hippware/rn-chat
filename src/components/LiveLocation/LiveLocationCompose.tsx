@@ -87,7 +87,11 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     if (!selected) {
       throw new Error('No profile is selected') // it should never happen
     }
-    const untilDate = moment(Date.now() + CHOICES[this.state.duration].value).format('lll')
+    const untilDate =
+      moment(Date.now()).format('L') ===
+      moment(Date.now() + CHOICES[this.state.duration].value).format('L')
+        ? moment(Date.now() + CHOICES[this.state.duration].value).format('LT')
+        : moment(Date.now() + CHOICES[this.state.duration].value).format('MMM D, LT')
     return (
       <View
         style={{
