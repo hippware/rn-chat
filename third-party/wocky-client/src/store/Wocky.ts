@@ -35,6 +35,7 @@ export const Wocky = types
       geofenceBots: types.optional(BotPaginableList, {}),
       // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, {}),
+      localBots: types.optional(BotPaginableList, {}),
     })
   )
   .named(SERVICE_NAME)
@@ -174,6 +175,7 @@ export const Wocky = types
       self.profile!.subscribedBots.remove(id)
       self.profiles.get(self.username!)!.subscribedBots.remove(id)
       self.geofenceBots.remove(id)
+      self.localBots.remove(id)
       // self.geoBots.delete(id)
       self.bots.delete(id)
     },
@@ -297,8 +299,10 @@ export const Wocky = types
           latitudeDelta,
           longitudeDelta,
         })
-        return arr.map(self.getBot)
-      }) as (a) => Promise<IBot[]>,
+        arr.forEach(bot => {
+          self.localBots.add(self.getBot(bot))
+        })
+      }),
       _sendMessage: flow(function*(msg: IMessage) {
         // console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(

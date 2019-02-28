@@ -1,7 +1,6 @@
 import React from 'react'
 import MapView from 'react-native-maps'
 import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
-import {getType} from 'mobx-state-tree'
 import {observer, inject} from 'mobx-react/native'
 import {observable, action, reaction} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
@@ -22,7 +21,7 @@ const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
 const TRANS_DELTA = DEFAULT_DELTA + 0.005
 
-interface IProps {
+type Props = {
   locationStore?: ILocationStore
   wocky?: IWocky
   homeStore?: IHomeStore
@@ -37,7 +36,7 @@ const markerMap: {[key: string]: any} = {
 
 @inject('locationStore', 'wocky', 'homeStore', 'navStore')
 @observer
-export default class MapHome extends React.Component<IProps> {
+export default class MapHome extends React.Component<Props> {
   static defaultProps = {
     autoZoom: true,
   }
@@ -82,15 +81,14 @@ export default class MapHome extends React.Component<IProps> {
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
-    const {addBotsToList, creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
+    const {creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
     // don't add bot during creation mode (to avoid replacing of new location)
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
     if (!creationMode) {
       try {
-        const bots = await this.props.wocky!.loadLocalBots(region)
+        await this.props.wocky!.loadLocalBots(region)
         this.areaTooLarge = false
-        addBotsToList(bots)
       } catch (e) {
         // TODO display UI for area too large
         this.areaTooLarge = true
@@ -154,7 +152,7 @@ export default class MapHome extends React.Component<IProps> {
           {...this.props}
         >
           {list.map((card, i) => {
-            const Card = markerMap[getType(card).name]
+            const Card = markerMap[card.name]
             return Card && <Card {...this.props} key={`card${i}`} card={card} />
           })}
         </MapView>

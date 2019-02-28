@@ -89,7 +89,6 @@ class BotButtons extends React.Component<Props> {
                 text: 'Delete',
                 style: 'destructive',
                 onPress: () => {
-                  this.props.homeStore!.removeBot(bot)
                   wocky!.removeBot(bot!.id)
                   Actions.popTo('home')
                 },
@@ -166,9 +165,9 @@ const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
 
 const unfollow = {
   name: 'Unfollow Location',
-  action: ({bot, homeStore}: Props) => {
+  action: ({bot, wocky}: Props) => {
     Actions.pop()
     ;(bot as IBot).unsubscribe()
-    homeStore!.removeBot(bot)
+    wocky!.removeBot(bot.id)
   },
 }

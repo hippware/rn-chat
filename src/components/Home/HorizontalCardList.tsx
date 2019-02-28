@@ -5,12 +5,11 @@ import Carousel from 'react-native-snap-carousel'
 import BotCard from '../home-cards/BotCard'
 import TutorialCard from '../home-cards/TutorialCard'
 import YouCard from '../home-cards/YouCard'
-import {observer, inject, Observer} from 'mobx-react/native'
-import {ICard} from '../../store/HomeStore'
-import {getType, isAlive} from 'mobx-state-tree'
+import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
+import {Card} from '../../store/HomeStore'
 
 type Props = {
   enabled: boolean
@@ -64,7 +63,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         <Carousel
           key={`carousel${enabled}`}
           ref={r => (this.list = r)}
-          data={list.filter(x => isAlive(x)).slice()} // avoid problems after bot delete
+          data={list}
           renderItem={this.renderItem}
           firstItem={index}
           sliderWidth={width}
@@ -77,9 +76,9 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     )
   }
 
-  renderItem = ({item, index}: {item: ICard; index: number}) => {
-    const RenderClass = cardMap[getType(item).name]
-    return <Observer>{() => <RenderClass {...item} />}</Observer>
+  renderItem = ({item, index}: {item: Card; index: number}) => {
+    const RenderClass = cardMap[item.name]
+    return <RenderClass {...item} />
   }
 }
 
