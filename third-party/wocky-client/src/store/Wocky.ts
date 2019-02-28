@@ -299,10 +299,10 @@ export const Wocky = types
           latitudeDelta,
           longitudeDelta,
         })
-        return arr.map(bot => {
+        arr.forEach(bot => {
           self.localBots.add(self.getBot(bot))
         })
-      }) as (a) => Promise<IBot[]>,
+      }),
       _sendMessage: flow(function*(msg: IMessage) {
         // console.log('& sendMessage', getSnapshot(msg))
         yield self.transport.sendMessage(
