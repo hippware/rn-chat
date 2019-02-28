@@ -69,7 +69,6 @@ const LiveLocationSettings = inject('wocky')(
                     style: 'destructive',
                     onPress: () => {
                       profile!.cancelAllLocationShares()
-                      profile!.setSharesLocation(false)
                       Actions.popTo('home')
                     },
                   },

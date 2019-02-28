@@ -110,6 +110,7 @@ export const Profile = types
         shareLocation: flow(function*(expiresAt: Date) {
           yield self.transport.userLocationShare(self.id, expiresAt)
           self.service.profile.addLocationShare(self, new Date(), expiresAt)
+          self.sharesLocation = true
         }),
         cancelShareLocation: flow(function*() {
           yield self.transport.userLocationCancelShare(self.id)
