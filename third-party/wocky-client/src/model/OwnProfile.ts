@@ -192,9 +192,10 @@ export const OwnProfile = types
       friends.forEach(({createdAt, user, name}) =>
         self.addFriend(self.service.profiles.get(user.id, user), createdAt, name)
       )
-      blocked.forEach(({createdAt, user}) =>
+      blocked.forEach(({createdAt, user}) => {
+        user.isBlocked = true
         self.addBlocked(self.service.profiles.get(user.id, user), createdAt)
-      )
+      })
       locationShares.forEach(({createdAt, expiresAt, sharedWith}) =>
         self.addLocationShare(
           self.service.profiles.get(sharedWith.id, sharedWith),

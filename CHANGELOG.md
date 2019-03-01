@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Live location on/off toggle tweaks (PR #3394)
+* [dev] don't ignore GraphQL errors on `watchQuery` (#3353)
+* Updated 'Sharing Location' Button to gradient button (PR #3397)
+  * Live Location: Notifications integration (Rework #3330)
+* Replace "initial card" on the HS/Map. (#3382)
+* [dev] make HomeStore cards list a computed value (#3390)
+
 # 4.1.4 - 2019 Feb 27
 
 * Remove `ownBots` and other dead code (PR #3367, PR #3368, PR #3383)
