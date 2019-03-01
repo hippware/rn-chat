@@ -59,13 +59,13 @@ describe('NewGraphQL tests', () => {
   })
 
   it('get local bots 0', async () => {
-    const res = await user.loadLocalBots({
+    await user.loadLocalBots({
       latitude: 1.2,
       longitude: 2.2,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
     })
-    expect(res.length).toBe(2)
+    expect(user.localBots.length).toBe(2)
   })
   it('get local bots 1 - expect area too large', async () => {
     try {
@@ -82,13 +82,13 @@ describe('NewGraphQL tests', () => {
     }
   })
   it('get local bots 2', async () => {
-    const res = await user.loadLocalBots({
+    await user.loadLocalBots({
       latitude: 3.2,
       longitude: 4.2,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
     })
-    expect(res.length).toBe(0)
+    expect(user.localBots.length).toBe(2)
   })
 
   it('update bot description', async () => {
