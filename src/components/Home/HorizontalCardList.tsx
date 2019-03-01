@@ -95,6 +95,7 @@ const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
         >
           <TouchableOpacity
             onPress={() => {
+              homeStore.stopFollowingUserOnMap()
               if (locationStore.location) homeStore.setFocusedLocation(locationStore.location)
             }}
             style={[styles.button, styles.shadow]}

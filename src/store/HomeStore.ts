@@ -161,11 +161,10 @@ const HomeStore = types
     let disposer: any = null
     return {
       followUserOnMap(user: IProfile) {
-        if (!disposer) {
-          disposer = autorun(() => self.setFocusedLocation(user.location), {
-            name: 'FollowUserOnMap',
-          })
-        }
+        if (disposer) disposer()
+        disposer = autorun(() => self.setFocusedLocation(user.location), {
+          name: 'FollowUserOnMap',
+        })
       },
       stopFollowingUserOnMap() {
         if (disposer) {
