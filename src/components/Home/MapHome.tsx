@@ -46,9 +46,11 @@ export default class MapHome extends React.Component<Props> {
   mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
   mapRef: MapView | null = null
   reactions: any[] = []
+  animating: boolean = false
 
   setCenterCoordinate = (location: ILocation) => {
     if (this.mapRef && location) {
+      this.animating = true
       this.mapRef.animateToCoordinate(location)
     }
   }
@@ -75,16 +77,19 @@ export default class MapHome extends React.Component<Props> {
   @action
   onRegionChange = ({latitudeDelta}: MapViewRegion) => {
     // NOTE: this runs _very_ often while panning/scrolling the map
+    if (!this.animating) this.props.homeStore!.stopFollowingUserOnMap()
     if (latitudeDelta) {
       this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
     }
   }
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
+    this.animating = false
     const {creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
-    // don't add bot during creation mode (to avoid replacing of new location)
     setMapCenter(region)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
+
+    // don't add bot during creation mode (to avoid replacing of new location)
     if (!creationMode) {
       try {
         await this.props.wocky!.loadLocalBots(region)
@@ -105,14 +110,12 @@ export default class MapHome extends React.Component<Props> {
 
   onMapPress = () => {
     const {homeStore, navStore} = this.props
-    const {toggleFullscreen} = homeStore!
-    const {scene} = navStore!
-    if (['botCompose', 'botEdit', 'createBot'].includes(scene)) {
+    if (['botCompose', 'botEdit', 'createBot'].includes(navStore!.scene)) {
       return
-    } else if (scene !== 'home') {
+    } else if (navStore!.scene !== 'home') {
       Actions.popTo('home')
     } else {
-      toggleFullscreen()
+      homeStore!.toggleFullscreen()
     }
   }
 

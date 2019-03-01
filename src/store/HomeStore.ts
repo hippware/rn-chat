@@ -2,6 +2,7 @@
 import {types, applySnapshot, getRoot} from 'mobx-state-tree'
 import {IBot, IProfile, Location, ILocation} from 'wocky-client'
 import {IStore} from './index'
+import {autorun} from 'mobx'
 
 export class Card {
   // unique id for the card
@@ -156,6 +157,24 @@ const HomeStore = types
       self.setFocusedLocation(null) // otherwise focused location will not be changed and reaction will not fire
     },
   }))
+  .actions(self => {
+    let disposer: any = null
+    return {
+      followUserOnMap(user: IProfile) {
+        if (!disposer) {
+          disposer = autorun(() => self.setFocusedLocation(user.location), {
+            name: 'FollowUserOnMap',
+          })
+        }
+      },
+      stopFollowingUserOnMap() {
+        if (disposer) {
+          disposer()
+          disposer = null
+        }
+      },
+    }
+  })
   .postProcessSnapshot((snapshot: any) => {
     // No need to persist this store
     return {}

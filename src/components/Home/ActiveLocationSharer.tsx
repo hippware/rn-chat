@@ -22,7 +22,7 @@ const ActiveLocationSharer = inject('homeStore')(
       <TouchableOpacity
         style={innerStyle}
         onPress={() => {
-          homeStore!.setFocusedLocation(sharer.sharedWith.location)
+          homeStore!.followUserOnMap(sharer.sharedWith)
           homeStore!.select(sharer.sharedWith.id)
         }}
       >
