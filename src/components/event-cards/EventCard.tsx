@@ -117,15 +117,19 @@ const EventLocationShareCard = inject('wocky')(
         timestamp={relativeDateAsString}
         action={'is sharing location with you'}
       >
-        {wocky.profile && wocky.profile!.isLocationShared ? (
-          <GradientButton
-            text="SHARING LOCATION"
-            style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
-            textStyle={{fontSize: 12, color: 'white'}}
-            onPress={Actions.liveLocationShare}
-          />
+        {sharedWith.sharesLocation ? (
+          wocky.profile && wocky.profile!.isLocationShared ? (
+            <GradientButton
+              text="SHARING LOCATION"
+              style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
+              textStyle={{fontSize: 12, color: 'white'}}
+              onPress={Actions.liveLocationShare}
+            />
+          ) : (
+            <Button text="SHARE YOUR LOCATION" onPress={Actions.liveLocationShare} />
+          )
         ) : (
-          <Button text="SHARE YOUR LOCATION" onPress={Actions.liveLocationShare} />
+          undefined
         )}
       </EventCardTemplate>
     )

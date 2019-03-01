@@ -104,30 +104,9 @@ export const OwnProfile = types
       )
       profile.setBlocked(true)
     },
-    addLocationShare: (sharedWith: IProfile, createdAt: Date, expiresAt: Date) => {
-      self.locationShares.add(
-        LocationShare.create({
-          id: sharedWith.id,
-          createdAt,
-          expiresAt,
-          sharedWith: sharedWith.id,
-        })
-      )
-    },
     removeLocationSharer: (profile: IProfile) => {
       self.locationSharers.remove(profile.id)
       profile.setSharesLocation(false)
-    },
-    addLocationSharer: (sharedWith: IProfile, createdAt: Date, expiresAt: Date) => {
-      self.locationSharers.add(
-        LocationShare.create({
-          id: sharedWith.id,
-          createdAt,
-          expiresAt,
-          sharedWith: sharedWith.id,
-        })
-      )
-      sharedWith.setSharesLocation(true)
     },
     removeLocationShare: (profile: IProfile) => {
       self.locationShares.remove(profile.id)
@@ -165,9 +144,39 @@ export const OwnProfile = types
     cancelAllLocationShares: flow(function*() {
       yield self.transport.userLocationCancelAllShares()
       self.locationShares.refresh()
-      self.sharesLocation = false
     }),
   }))
+  .actions(self => {
+    const timers: any[] = []
+    return {
+      addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
+        self.locationSharers.add(
+          LocationShare.create({
+            id: sharedWith.id,
+            createdAt,
+            expiresAt,
+            sharedWith: sharedWith.id,
+          })
+        )
+        sharedWith.setSharesLocation(true)
+        timers.push(setTimeout(() => self.removeLocationSharer(sharedWith), expiresAt - Date.now()))
+      },
+      addLocationShare(sharedWith: IProfile, createdAt: number, expiresAt: number) {
+        self.locationShares.add(
+          LocationShare.create({
+            id: sharedWith.id,
+            createdAt,
+            expiresAt,
+            sharedWith: sharedWith.id,
+          })
+        )
+        timers.push(setTimeout(() => self.removeLocationShare(sharedWith), expiresAt - Date.now()))
+      },
+      beforeDestroy() {
+        timers.forEach(clearInterval)
+      },
+    }
+  })
   .actions(self => ({
     load({
       avatar,

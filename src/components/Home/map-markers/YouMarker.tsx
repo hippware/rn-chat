@@ -28,7 +28,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
     profile && (
       <HackMarker
         zIndex={1000}
-        key={`youmarker${profile.avatar && profile.avatar.loaded && profile.sharesLocation}`}
+        key={`youmarker${profile.avatar && profile.avatar.loaded && profile.isLocationShared}`}
         coordinate={{latitude, longitude}}
         onPress={() => {
           homeStore!.select(card.id)
@@ -39,7 +39,11 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         {!profile.avatar && !profile.hidden.enabled ? (
           <Image source={require('../../../../images/you.png')} />
         ) : (
-          <LocationAvatar profile={profile} hidden={profile.hidden.enabled} />
+          <LocationAvatar
+            profile={profile}
+            hidden={profile.hidden.enabled}
+            sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
+          />
         )}
       </HackMarker>
     )
