@@ -26,7 +26,7 @@ const ActiveLocationSharer = inject('homeStore')(
           homeStore!.select(sharer.sharedWith.id)
         }}
       >
-        <LocationAvatar profile={sharer.sharedWith} tappable={false} />
+        <LocationAvatar profile={sharer.sharedWith} sharesLocation tappable={false} />
         <Image
           source={liveImg}
           style={{position: 'absolute', right: -2, top: -4, width: 39, height: 21}}

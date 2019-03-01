@@ -14,11 +14,12 @@ import {waitFor} from '../transport/utils'
 import {EventLocationShare, EventLocationShareType} from './EventLocationShare'
 import {EventLocationShareEnd} from './EventLocationShareEnd'
 
-export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType, EventLocationShareType]
+export const EventRequestTypes = [EventFriendInviteType, EventBotInviteType]
 export const EventUpdatesTypes = [
   EventBotPostType,
   EventBotGeofenceType,
   EventBotInviteResponseType,
+  EventLocationShareType,
 ]
 
 export const EventEntity = types.union(

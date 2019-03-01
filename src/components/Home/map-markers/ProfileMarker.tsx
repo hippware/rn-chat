@@ -28,7 +28,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         }}
         stopPropagation
       >
-        <LocationAvatar profile={profile} />
+        <LocationAvatar profile={profile} sharesLocation={profile.sharesLocation} />
       </HackMarker>
     )
   )

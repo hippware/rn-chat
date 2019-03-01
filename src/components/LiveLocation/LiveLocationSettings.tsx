@@ -9,7 +9,6 @@ import {IWocky} from 'wocky-client'
 import {ILocationShare} from 'third-party/wocky-client/src/model/LocationShare'
 import PersonRow from '../people-lists/PersonRow'
 import {colors} from 'src/constants'
-import moment from 'moment'
 
 type Props = {
   wocky?: IWocky
@@ -113,38 +112,25 @@ const LiveLocationSettings = inject('wocky')(
   })
 )
 
-const ProfileLocationShare = ({
-  locationShare: {expiresAt, sharedWith},
-}: {
-  locationShare: ILocationShare
-}) => {
-  const duration =
-    expiresAt.getTime() - Date.now() > 1000 * 3600 * 72
-      ? 'Until you turn it off'
-      : 'for ' +
-        moment
-          .duration(moment(expiresAt).diff(moment(new Date())))
-          .humanize()
-          .replace('d', ' days')
-          .replace('h', ' hours')
-          .replace('m', ' minutes')
-          .replace('1 hours', '1 hour')
-  return (
-    <PersonRow
-      imageComponent={<Avatar profile={sharedWith} size={48} hideDot />}
-      handleComponent={
-        <RText size={15} weight="Bold" color={colors.DARK_PURPLE}>
-          {`@${sharedWith.handle}`}
-        </RText>
-      }
-      displayName={duration}
-      style={{marginHorizontal: 45}}
-    >
-      <TouchableOpacity onPress={sharedWith.cancelShareLocation}>
-        <Image source={require('../../../images/cancelShare.png')} />
-      </TouchableOpacity>
-    </PersonRow>
-  )
-}
+const ProfileLocationShare = observer(
+  ({locationShare: {forDuration, sharedWith}}: {locationShare: ILocationShare}) => {
+    return (
+      <PersonRow
+        imageComponent={<Avatar profile={sharedWith} size={48} hideDot />}
+        handleComponent={
+          <RText size={15} weight="Bold" color={colors.DARK_PURPLE}>
+            {`@${sharedWith.handle}`}
+          </RText>
+        }
+        displayName={forDuration}
+        style={{marginHorizontal: 45}}
+      >
+        <TouchableOpacity onPress={sharedWith.cancelShareLocation}>
+          <Image source={require('../../../images/cancelShare.png')} />
+        </TouchableOpacity>
+      </PersonRow>
+    )
+  }
+)
 
 export default LiveLocationSettings

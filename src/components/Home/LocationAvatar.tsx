@@ -9,15 +9,16 @@ type Props = {
   profile: IProfile
   hidden?: boolean
   tappable?: boolean
+  sharesLocation: boolean
 }
-const LocationAvatar = ({profile, hidden, tappable}: Props) => {
+const LocationAvatar = ({profile, sharesLocation, hidden, tappable}: Props) => {
   const color = hidden ? colors.DARK_GREY : colors.PINK
   return (
     <View
       style={{
         alignItems: 'center',
         borderColor: color,
-        borderWidth: profile.sharesLocation ? 1 : 0,
+        borderWidth: sharesLocation ? 1 : 0,
         borderRadius: 50,
         paddingTop: 3.3,
         paddingHorizontal: 3.3,
