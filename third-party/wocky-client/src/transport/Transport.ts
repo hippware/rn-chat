@@ -48,7 +48,6 @@ export class Transport {
   socket?: PhoenixSocket
   subscriptions: ZenObservable.Subscription[] = []
   username?: string
-  password?: string
   token?: string
   host?: string
 
