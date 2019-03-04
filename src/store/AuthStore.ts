@@ -9,7 +9,7 @@ const AuthStore = types
   })
   .views(self => ({
     get canLogin(): boolean {
-      return self.strategyName === 'firebase' || !!self.phone
+      return !!self.phone
     },
   }))
   .actions(self => {
