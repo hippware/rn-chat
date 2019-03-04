@@ -24,7 +24,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         coordinate={{latitude, longitude}}
         onPress={() => {
           homeStore!.select(card.id)
-          homeStore!.setFocusedLocation(location)
+          homeStore!.followUserOnMap(profile)
         }}
         stopPropagation
       >
