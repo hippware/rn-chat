@@ -19,7 +19,7 @@ export const Location = types
     latitude: types.number,
     longitude: types.number,
     accuracy: types.maybeNull(types.number),
-    createdAt: types.optional(types.Date, new Date()),
+    createdAt: types.maybe(types.Date),
     fromNow: '',
   })
   .volatile(() => ({
@@ -27,7 +27,9 @@ export const Location = types
   }))
   .actions(self => ({
     setFromNow() {
-      self.fromNow = moment(self.createdAt).fromNow(true) + ' ago'
+      if (self.createdAt) {
+        self.fromNow = moment(self.createdAt).fromNow(true) + ' ago'
+      }
     },
   }))
   .actions(self => {
@@ -39,15 +41,25 @@ export const Location = types
       },
       // use setInterval to update self.fromNow time once per minute
       afterAttach() {
-        timer = setInterval(() => {
+        if (self.createdAt) {
+          timer = setInterval(() => {
+            self.setFromNow()
+          }, 1000 * 60)
           self.setFromNow()
-        }, 1000 * 60)
-        self.setFromNow()
+        }
       },
       beforeDestroy() {
-        clearInterval(timer)
+        if (timer !== undefined) {
+          clearInterval(timer)
+        }
       },
     }
+  })
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.createdAt
+    delete res.fromNow
+    return res
   })
 
 export interface ILocation extends Instance<typeof Location> {}

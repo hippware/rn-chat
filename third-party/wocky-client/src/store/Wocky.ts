@@ -543,6 +543,7 @@ export const Wocky = types
       self.geofenceBots.refresh()
       self.chats.clear()
       // self.geoBots.clear()
+      self.localBots.refresh()
       self.notifications.refresh()
       self.bots.clear()
       self.profiles.clear()
