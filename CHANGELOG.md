@@ -10,6 +10,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Live Location: Notifications integration (Rework #3330)
 * Replace "initial card" on the HS/Map. (#3382)
 * [dev] make HomeStore cards list a computed value (#3390)
+* 'GraphQL error: User not found' (#3370)
+* Live location duration picker date format (#3403)
+* Map should "auto center/focus" when tracking a target (#3400)
+* Bug fixes and improvements (PR #3414)
+  * LL: Sharing Location button/notification should go away (#3401)
+  * LL: Time remaining increases on "Sharing your live location" (#3405)
+  * Own marker is not bordered after own location is shared (#3411)
 
 # 4.1.4 - 2019 Feb 27
 
