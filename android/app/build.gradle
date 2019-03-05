@@ -94,25 +94,26 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
-        applicationId "com.tinyrobot"
-        minSdkVersion 16
-        targetSdkVersion 22
+        applicationId "com.tinyrobot.tinyrobotStaging"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
     }
     splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86"
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86-64"
         }
     }
     buildTypes {
@@ -126,7 +127,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86-64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -137,18 +138,61 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-touch-through-view')
-    compile project(':appcenter-analytics')
-    compile project(':appcenter-crashes')
-    compile project(':appcenter')
-    compile project(':react-native-device-info')
-    compile project(':react-native-linear-gradient')
-    compile project(':react-native-push-notification')
-    compile project(':react-native-fs')
-    compile project(':react-native-native-env')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-native-env')
+    implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-fs')
+    implementation project(':react-native-firebase')
+implementation(project(':react-native-maps')){
+       exclude group: 'com.google.android.gms', module: 'play-services-base'
+       exclude group: 'com.google.android.gms', module: 'play-services-maps'
+   }
+   implementation 'com.google.android.gms:play-services-base:+'
+   implementation 'com.google.android.gms:play-services-maps:+'
+       implementation project(':react-native-mixpanel')
+    implementation project(':react-native-touch-through-view')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+ // Firebase dependencies
+  implementation "com.google.firebase:firebase-core:16.0.6"
+  implementation "com.google.android.gms:play-services-base:16.0.1"
+
+  /* -------------------------
+   *   OPTIONAL FIREBASE SDKS
+   * ------------------------- */
+
+  implementation('com.google.firebase:firebase-ads:15.0.1') {
+    // exclude `customtabs` as the support lib version is out of date
+    // we manually add it as a dependency below with a custom version
+    exclude group: 'com.android.support', module: 'customtabs'
+  }
+
+  // Authentication
+  implementation "com.google.firebase:firebase-auth:16.1.0"
+  // Analytics
+//  implementation "com.google.firebase:firebase-analytics:16.0.6"
+  // Performance Monitoring
+  implementation "com.google.firebase:firebase-perf:16.2.3"
+  // Remote Config
+  implementation "com.google.firebase:firebase-config:16.1.2"
+  // Cloud Storage
+//  implementation "com.google.firebase:firebase-storage:16.0.5"
+  // Invites
+  implementation "com.google.firebase:firebase-invites:16.0.6"
+  // Dynamic Links
+  implementation "com.google.firebase:firebase-dynamic-links:16.1.5"
+  // Real-time Database
+//  implementation "com.google.firebase:firebase-database:16.0.5"
+  // Cloud Functions
+//  implementation "com.google.firebase:firebase-functions:16.1.3"
+  // Cloud Firestore
+//  implementation "com.google.firebase:firebase-firestore:17.1.5"
+  // Cloud Messaging / FCM
+//  implementation "com.google.firebase:firebase-messaging:17.3.4"
+  // Crashlytics
+//  implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+//    transitive = true
+//  }
 }
 
 // Run this once to be able to run the application with BUCK
@@ -157,3 +201,21 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.android.application'
+
+android {
+  // ...
+}
+
+dependencies {
+  // ...
+//  implementation 'com.google.android.gms:play-services-base:16.0.1'
+//  implementation 'com.google.firebase:firebase-core:16.0.7'
+//  implementation 'com.android.support:support-v4:28.0.0'
+  // Getting a "Could not find" error? Make sure you have
+  // added the Google maven respository to your root build.gradle
+}
+
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'

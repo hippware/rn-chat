@@ -1,4 +1,4 @@
-package com.tinyrobot;
+package com.tinyrobot.tinyrobotStaging;
 
 import com.facebook.react.ReactActivity;
 

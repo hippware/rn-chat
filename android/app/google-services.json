@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "548019610697",
+    "firebase_url": "https://my-project-1480497595993.firebaseio.com",
+    "project_id": "my-project-1480497595993",
+    "storage_bucket": "my-project-1480497595993.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548019610697:android:83d6d973976a93dd",
+        "android_client_info": {
+          "package_name": "com.tinyrobot.tinyrobotStaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0hfno98UbMMVHwz0Sh2t4OsAsAX4iEZE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

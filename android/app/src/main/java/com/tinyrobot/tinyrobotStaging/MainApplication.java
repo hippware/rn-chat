@@ -1,17 +1,15 @@
-package com.tinyrobot;
+package com.tinyrobot.tinyrobotStaging;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.rome2rio.android.reactnativetouchthroughview.TouchThroughViewPackage;
-import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
-import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
-import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.rnfs.RNFSPackage;
 import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.rnfs.RNFSPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.kevinejohn.RNMixpanel.RNMixpanel;
+import com.rome2rio.android.reactnativetouchthroughview.TouchThroughViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -32,13 +30,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new TouchThroughViewPackage(),
-            new AppCenterReactNativePackage(MainApplication.this),
-            new RNDeviceInfo(),
+            new RCTNativeEnvPackage(BuildConfig.class),
             new LinearGradientPackage(),
-            new ReactNativePushNotificationPackage(),
             new RNFSPackage(),
-            new RCTNativeEnvPackage()
+            new RNFirebasePackage(),
+            new MapsPackage(),
+            new RNMixpanel(),
+            new TouchThroughViewPackage()
       );
     }
 
