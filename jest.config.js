@@ -14,4 +14,5 @@ module.exports = {
   moduleNameMapper: {
     'wocky-client': 'third-party/wocky-client/src',
   },
+  testMatch: null,
 }

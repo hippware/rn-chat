@@ -8,5 +8,6 @@
     "^.+\\.tsx?$": "ts-jest"
   },
   "testRegex": "third-party/wocky-client/(test/.*(test)\\.ts)$",
+  "testMatch": null,
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"]
 }
