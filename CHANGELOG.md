@@ -13,10 +13,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * 'GraphQL error: User not found' (#3370)
 * Live location duration picker date format (#3403)
 * Map should "auto center/focus" when tracking a target (#3400)
+  * Live Location: Auto-follow tweaks (#3415)
 * Bug fixes and improvements (PR #3414)
   * LL: Sharing Location button/notification should go away (#3401)
   * LL: Time remaining increases on "Sharing your live location" (#3405)
   * Own marker is not bordered after own location is shared (#3411)
+* Prevent excessive reconnect tries after logout (#3299, PR #3396)
+* Improvements and fixes (PR #3418)
+  * Tweak 'fromNow' calculation for bots and locations.
+  * Prevent crash after logout (if there is at least one local bot)
 
 # 4.1.4 - 2019 Feb 27
 
