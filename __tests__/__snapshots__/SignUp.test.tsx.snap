@@ -177,6 +177,7 @@ exports[`Signup renders 1`] = `
                 onSubmitEditing={[Function]}
                 placeholder="Username"
                 placeholderTextColor="rgb(212,212,212)"
+                rejectResponderTermination={true}
                 returnKeyType="next"
                 selectionColor="rgb(89, 176, 242)"
                 store={
@@ -185,26 +186,6 @@ exports[`Signup renders 1`] = `
                     "isValid": undefined,
                     "key": "handle",
                     "value": "southerneer",
-                    Symbol(mobx did run lazy initializers): true,
-                    Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                      "defaultEnhancer": [Function],
-                      "keysAtom": Atom$$1 {
-                        "diffValue": 0,
-                        "isBeingObserved": false,
-                        "isPendingUnobservation": false,
-                        "lastAccessedBy": 0,
-                        "lowestObserverState": 2,
-                        "name": "ValidateItem@5.keys",
-                        "observers": Set {},
-                      },
-                      "name": "ValidateItem@5",
-                      "target": [Circular],
-                      "values": Map {
-                        "errorMessage" => "",
-                        "value" => "southerneer",
-                        "isValid" => undefined,
-                      },
-                    },
                   }
                 }
                 style={
