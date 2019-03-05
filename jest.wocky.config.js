@@ -1,17 +1,12 @@
 module.exports = {
-  preset: 'react-native',
-  setupFiles: ['./__tests__/utils/testSetup.ts', './node_modules/appcenter/test/AppCenterMock.js'],
+  setupFiles: ['<rootDir>/third-party/wocky-client/test/support/setup.js'],
   transformIgnorePatterns: [
     'node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)',
   ],
-  modulePaths: ['<rootDir>', '<rootDir>/third-party/wocky-client/src'],
   transform: {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.tsx?$': 'ts-jest',
   },
+  testMatch: ['<rootDir>/third-party/wocky-client/test/*.test.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  moduleNameMapper: {
-    'wocky-client': 'third-party/wocky-client/src',
-  },
-  testMatch: [ "**/__tests__/**/*.(spec|test).[jt]s?(x)" ],
 }

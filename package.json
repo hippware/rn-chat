@@ -10,8 +10,8 @@
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
     "tsc:all": "node node_modules/.bin/tsc -p tsconfig.json",
-    "jestWocky": "jest --config jest.wocky.config.json",
-    "jestWockyCI": "jest --config jest.wocky.config.json --no-cache --i --detectOpenHandles --forceExit",
+    "jestWocky": "jest --config jest.wocky.config.js",
+    "jestWockyCI": "jest --config jest.wocky.config.js --no-cache --i --detectOpenHandles --forceExit",
     "mochaWockyLocal": "WOCKY_LOCAL=true npm run mochaWocky -- --timeout 5000",
     "jest": "jest --config jest.config.js",
     "jestCI": "jest --config jest.config.js --verbose --runInBand",
@@ -111,10 +111,14 @@
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/runtime": "^7.3.4",
-    "babel-jest": "^23.6.0",
-    "jest": "^23.6.0",
+    "babel-jest": "^24.1.0",
+    "form-data": "^1.0.0-rc4",
+    "jest": "^24.1.0",
     "metro-react-native-babel-preset": "0.51.0",
-    "ts-jest": "^23.10.4",
+    "node-fetch": "^2.1.2",
+    "promise": "^7.1.1",
+    "react-test-renderer": "16.8.3",
+    "ts-jest": "^24.0.0",
     "ts-node": "^7.0.1",
     "ts-unused-exports": "^2.0.11",
     "tsconfig-paths": "^3.6.0",
@@ -123,7 +127,7 @@
     "tslint-config-prettier": "^1.15.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333",
-    "react-test-renderer": "16.8.3"
+    "websocket": "^1.0.28"
   },
   "husky": {
     "hooks": {
