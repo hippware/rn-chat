@@ -13,5 +13,5 @@ module.exports = {
   moduleNameMapper: {
     'wocky-client': 'third-party/wocky-client/src',
   },
-  testMatch: [ "**/__tests__/**/*.(spec|test).[jt]s?(x)" ],
+  testMatch: ['**/__tests__/**/*.(spec|test).[jt]s?(x)'],
 }
