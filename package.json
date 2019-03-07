@@ -57,6 +57,7 @@
     "bugsnag-react-native": "^2.9.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "jsc-android": "241213.x.x",
     "jsrsasign": "^8.0.12",
     "libphonenumber-js": "^1.6.4",
     "lodash": "^4.17.11",
@@ -68,6 +69,7 @@
     "phoenix": "^1.4.1",
     "prop-types": "^15.7.2",
     "react": "16.6.3",
+    "react-dom": "^16.8.4",
     "react-native": "0.58.0-rc.2",
     "react-native-actionsheet": "^2.2.2",
     "react-native-animated-linear-gradient": "^1.2.0",
@@ -94,8 +96,7 @@
     "react-native-swiper": "1.5.13",
     "react-native-touch-through-view": "^1.0.2",
     "tcomb-form-native": "^0.6.20",
-    "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e",
-    "jsc-android": "241213.x.x"
+    "validate.js": "github:hippware/validate.js#969b4fb274b0bb5234b8fe4199cc07dc1acb536e"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
