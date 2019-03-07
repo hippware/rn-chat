@@ -1,4 +1,4 @@
-package com.tinyrobot.tinyrobotStaging;
+package com.hippware.android.tinyrobot;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.bugsnag.BugsnagReactNative;
 import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -13,6 +14,7 @@ import com.rnfs.RNFSPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.links.RNFirebaseLinksPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.rome2rio.android.reactnativetouchthroughview.TouchThroughViewPackage;
@@ -28,11 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
-        @Override
-        protected String getJSBundleFile() {
-        return CodePush.getJSBundleFile();
-        }
-    
+    @Override
+    protected String getJSBundleFile() {
+      return CodePush.getJSBundleFile();
+    }
+
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -40,22 +42,14 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new ReactNativePushNotificationPackage(),
-            new CodePush("aKbSrov0EFd-mvtC31iYca_W0EtFS1jJ7ITUE", getApplicationContext(), BuildConfig.DEBUG),
-            new RNDeviceInfo(),
-            BugsnagReactNative.getPackage(),
-            new RCTNativeEnvPackage(BuildConfig.class),
-            new LinearGradientPackage(),
-            new RNFSPackage(),
-            new RNFirebasePackage(),
-            new RNFirebaseAuthPackage(),
-            new RNFirebaseMessagingPackage(),
-            new MapsPackage(),
-            new RNMixpanel(),
-            new TouchThroughViewPackage()
-      );
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNBackgroundGeolocation(),
+          BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(), new LinearGradientPackage(),
+          new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(), new RNDeviceInfo(),
+          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
+              getApplicationContext(), BuildConfig.DEBUG),
+
+          new RCTNativeEnvPackage(BuildConfig.class), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
+          new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage());
     }
 
     @Override

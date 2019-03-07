@@ -177,7 +177,6 @@ exports[`Signup renders 1`] = `
                 onSubmitEditing={[Function]}
                 placeholder="Username"
                 placeholderTextColor="rgb(212,212,212)"
-                rejectResponderTermination={true}
                 returnKeyType="next"
                 selectionColor="rgb(89, 176, 242)"
                 store={
