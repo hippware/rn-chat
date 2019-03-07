@@ -22,6 +22,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Improvements and fixes (PR #3418)
   * Tweak 'fromNow' calculation for bots and locations.
   * Prevent crash after logout (if there is at least one local bot)
+* [dev] Write new unit tests for refactored HomeStore (PR #3410)
 
 # 4.1.4 - 2019 Feb 27
 
