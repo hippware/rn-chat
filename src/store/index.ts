@@ -6,7 +6,8 @@ import DeviceInfo from 'react-native-device-info'
 import {Transport, AppInfo, IAppInfo} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
 
-import {settings} from '../globals'
+// import {settings} from '../globals'
+import Config from 'react-native-config'
 import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
@@ -95,7 +96,10 @@ const Store = types
   }))
 
 const PersistableStore = types
-  .compose(PersistableModel, Store)
+  .compose(
+    PersistableModel,
+    Store
+  )
   .named(STORE_NAME)
   .actions(self => ({
     afterCreate() {
@@ -109,7 +113,8 @@ const theStore = PersistableStore.create(
   {
     ...cleanState,
     codePushStore,
-    wocky: {host: settings.getDomain()},
+    // wocky: {host: settings.getDomain()},
+    wocky: {host: Config.HOST},
   },
   env
 )

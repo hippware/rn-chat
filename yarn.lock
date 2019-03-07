@@ -10093,6 +10093,11 @@ react-native-code-push@^5.3.4:
     plist "3.0.1"
     xcode "1.0.0"
 
+react-native-config@^0.11.7:
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
+  integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
+
 react-native-contacts@^3.1.1:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-3.1.2.tgz#44ca24046d3ddfcaeba70da06e7e5c750fdbd7e4"
