@@ -6,6 +6,7 @@ import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
+import {IOwnProfile} from './OwnProfile'
 
 export const Profile = types
   .compose(
@@ -24,7 +25,6 @@ export const Profile = types
       hasReceivedInvite: false,
       isFriend: false,
       isBlocked: false,
-      sharesLocation: false,
       roles: types.optional(types.array(types.string), []),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
     })
@@ -67,9 +67,6 @@ export const Profile = types
     setBlocked: (value: boolean) => {
       self.isBlocked = value
     },
-    setSharesLocation: (value: boolean) => {
-      self.sharesLocation = value
-    },
   }))
   .extend(self => {
     return {
@@ -110,7 +107,6 @@ export const Profile = types
         shareLocation: flow(function*(expiresAt: Date) {
           yield self.transport.userLocationShare(self.id, expiresAt)
           self.service.profile.addLocationShare(self, new Date(), expiresAt)
-          self.sharesLocation = true
         }),
         cancelShareLocation: flow(function*() {
           yield self.transport.userLocationCancelShare(self.id)
@@ -139,6 +135,14 @@ export const Profile = types
         },
       },
       views: {
+        get sharesLocation(): boolean {
+          const ownProfile: IOwnProfile = self.service && self.service.profile
+          return ownProfile && ownProfile.locationSharers.exists(self.id)
+        },
+        get receivesLocationShare(): boolean {
+          const ownProfile: IOwnProfile = self.service && self.service.profile
+          return ownProfile && ownProfile.locationShares.exists(self.id)
+        },
         get isOwn(): boolean {
           const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
