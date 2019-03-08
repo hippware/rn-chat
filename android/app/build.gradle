@@ -78,8 +78,16 @@ project.ext.react = [
   entryFile: "index.js"
 ]
 
+project.ext.envConfigFiles = [
+  stagingDebug: ".env.staging",
+  stagingRelease: ".env.staging",
+  prodDebug: ".env.prod",
+  prodRelease: ".env.prod"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -113,6 +121,8 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
+  flavorDimensions "default"
+
   defaultConfig {
     applicationId "com.hippware.android.tinyrobot"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -143,6 +153,24 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  // todo: flesh out flavors
+  // https://medium.com/@ywongcode/building-multiple-versions-of-a-react-native-app-4361252ddde5
+  productFlavors {
+    staging {
+      minSdkVersion rootProject.ext.minSdkVersion
+      // applicationId "com.hippware.android.tinyrobotStaging"
+      targetSdkVersion rootProject.ext.targetSdkVersion
+      // resValue "string", "build_config_package", "com.myapp"
+    }
+    prod {
+      minSdkVersion rootProject.ext.minSdkVersion
+      // applicationId 'com.hippware.android.tinyrobot'
+      targetSdkVersion rootProject.ext.targetSdkVersion
+      // resValue "string", "build_config_package", "com.myapp"
+    }
+  }
+
   // applicationVariants are e.g. debug, release
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
@@ -179,11 +207,12 @@ dependencies {
     implementation project(':react-native-device-info')
     implementation project(':react-native-code-push')
     implementation project(':react-native-maps')
-  //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
-  implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-config')
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-/* ----------------------------
+  /* ----------------------------
    *    REACT NATIVE FIREBASE
    * ---------------------------- */
 
@@ -230,7 +259,7 @@ dependencies {
         exclude group: 'com.google.firebase', module: 'firebase-iid'
     }
 
-implementation 'com.google.firebase:firebase-iid:17.0.4'
+  implementation 'com.google.firebase:firebase-iid:17.0.4'
   // Crashlytics
   implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
     transitive = true

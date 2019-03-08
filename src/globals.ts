@@ -1,4 +1,5 @@
 import Config from 'react-native-config'
+import {error} from 'util'
 
 export type Settings = {
   configurableLocationSettings: boolean
@@ -16,7 +17,9 @@ export type Settings = {
   mixPanelApiToken: string
 }
 
-// todo: add check for each .env config setting?
+if (!Config || !Config.HOST) {
+  error('Invalid config!', process.env.ENVFILE, Config)
+}
 
 const isStaging = Config.IS_STAGING === 'true'
 
