@@ -8,7 +8,6 @@ import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.bugsnag.BugsnagReactNative;
-import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.rnfs.RNFSPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -54,7 +53,6 @@ public class MainApplication extends Application implements ReactApplication {
         new RNMixpanel(),
         new RNDeviceInfo(),
         new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
-        new RCTNativeEnvPackage(BuildConfig.class),
         new RNFirebasePackage(),
         new RNFirebaseAuthPackage(),
         new RNFirebaseMessagingPackage(),

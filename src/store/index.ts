@@ -4,7 +4,6 @@ import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, AppInfo, IAppInfo} from 'wocky-client'
-import nativeEnv from 'react-native-native-env'
 import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
@@ -57,7 +56,6 @@ export type IEnv = {
   fileService: any
   geolocation: Geolocation
   analytics: Analytics
-  nativeEnv: any
   appInfo: IAppInfo
 }
 
@@ -71,7 +69,6 @@ const env = {
   fileService,
   geolocation,
   analytics,
-  nativeEnv,
   appInfo,
 }
 
