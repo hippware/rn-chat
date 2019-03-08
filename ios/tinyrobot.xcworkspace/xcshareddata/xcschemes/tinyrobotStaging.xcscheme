@@ -5,6 +5,15 @@
    <BuildAction
       parallelizeBuildables = "NO"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "echo &quot;.env.staging&quot; &gt; /tmp/envfile&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -17,7 +26,7 @@
                BlueprintIdentifier = "87C4147A20E669F90044AF0A"
                BuildableName = "tinyrobotStaging.app"
                BlueprintName = "tinyrobotStaging"
-               ReferencedContainer = "container:TinyRobot.xcodeproj">
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +44,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +67,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -84,7 +93,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:TinyRobot.xcodeproj">
+            ReferencedContainer = "container:tinyrobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
