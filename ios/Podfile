@@ -24,7 +24,6 @@ def testing_pods
   pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'react-native-blur', :path => '../node_modules/react-native-blur'
-  pod 'react-native-config', :podspec => '../node_modules/react-native-config/react-native-config.podspec'
   pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
   pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
