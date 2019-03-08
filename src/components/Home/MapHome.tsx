@@ -51,7 +51,7 @@ export default class MapHome extends React.Component<Props> {
   setCenterCoordinate = (location: ILocation) => {
     if (this.mapRef && location) {
       this.animating = true
-      this.mapRef.animateToCoordinate(location)
+      this.mapRef.animateCamera({center: location})
     }
   }
 

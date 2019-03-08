@@ -8,7 +8,8 @@ const codeBundleId = ''
 // https://docs.bugsnag.com/platforms/react-native/#basic-configuration
 import {Client, Configuration} from 'bugsnag-react-native'
 
-const config = new Configuration()
+const API_KEY = 'f108fb997359e5519815d5fc58c79ad3'
+const config = new Configuration(API_KEY) // should be passed to work with Android
 config.notifyReleaseStages = ['testflight', 'production']
 if (codeBundleId) {
   config.codeBundleId = codeBundleId

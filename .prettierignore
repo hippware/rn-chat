@@ -1,2 +1,4 @@
 src/components/Router.tsx
 package.json
+ios/*
+android/*

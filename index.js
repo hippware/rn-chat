@@ -9,6 +9,7 @@ YellowBox.ignoreWarnings([
   'RCTBridge required dispatch_sync to load', // https://github.com/Microsoft/react-native-code-push/issues/632#issuecomment-265962068
   'Required dispatch_sync to load constants', // https://github.com/Microsoft/react-native-code-push/issues/632#issuecomment-265962068
   'Class RCTCxxModule was not exported.', // https://github.com/facebook/react-native/issues/18201#issuecomment-384166348
+  'Warning: NetInfo', // todo: see #3424
 ])
 
 // Uncomment for storybook

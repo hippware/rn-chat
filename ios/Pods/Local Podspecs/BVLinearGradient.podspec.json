@@ -17,8 +17,14 @@
   },
   "source_files": "BVLinearGradient/*.{h,m}",
   "preserve_paths": "**/*.js",
-  "frameworks": ["UIKit", "QuartzCore", "Foundation"],
+  "frameworks": [
+    "UIKit",
+    "QuartzCore",
+    "Foundation"
+  ],
   "dependencies": {
-    "React": []
+    "React": [
+
+    ]
   }
 }
