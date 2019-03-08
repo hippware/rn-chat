@@ -27,7 +27,9 @@ const EventBotInviteCard = observer(
       timestamp={relativeDateAsString}
       action={
         isResponse
-          ? isAccepted ? 'accepted your invite to' : 'rejected your invite to'
+          ? isAccepted
+            ? 'accepted your invite to'
+            : 'rejected your invite to'
           : 'invited you to follow'
       }
       line2={bot.title}
@@ -118,7 +120,7 @@ const EventLocationShareCard = inject('wocky')(
         action={'is sharing location with you'}
       >
         {sharedWith.sharesLocation ? (
-          wocky.profile && wocky.profile!.isLocationShared ? (
+          sharedWith.receivesLocationShare ? (
             <GradientButton
               text="SHARING LOCATION"
               style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
