@@ -165,6 +165,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     implementation project(':react-native-background-geolocation')
     implementation project(':bugsnag-react-native')
     implementation project(':react-native-push-notification')
@@ -222,7 +223,12 @@ dependencies {
   // Cloud Firestore
   implementation "com.google.firebase:firebase-firestore:17.1.5"
   // Cloud Messaging / FCM
-  implementation "com.google.firebase:firebase-messaging:17.3.4"
+  //implementation "com.google.firebase:firebase-messaging:17.3.4"
+  implementation ("com.google.firebase:firebase-messaging:17.3.4"){
+        exclude group: 'com.google.firebase', module: 'firebase-iid'
+    }
+
+implementation 'com.google.firebase:firebase-iid:17.0.3'
   // Crashlytics
   implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
     transitive = true
