@@ -228,7 +228,7 @@ dependencies {
         exclude group: 'com.google.firebase', module: 'firebase-iid'
     }
 
-implementation 'com.google.firebase:firebase-iid:17.0.3'
+implementation 'com.google.firebase:firebase-iid:17.0.4'
   // Crashlytics
   implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
     transitive = true
