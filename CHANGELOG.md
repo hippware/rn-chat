@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.1.5 - 2019 Mar 7
+
 * Live location on/off toggle tweaks (PR #3394)
 * [dev] don't ignore GraphQL errors on `watchQuery` (#3353)
 * Updated 'Sharing Location' Button to gradient button (PR #3397)

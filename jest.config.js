@@ -9,9 +9,9 @@ module.exports = {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
     '^.+\\.tsx?$': 'ts-jest',
   },
-  testRegex: '(/__tests__/.*(test|spec)\\.(jsx?|tsx?))$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   moduleNameMapper: {
     'wocky-client': 'third-party/wocky-client/src',
   },
+  testMatch: ['**/__tests__/**/*.(spec|test).[jt]s?(x)'],
 }
