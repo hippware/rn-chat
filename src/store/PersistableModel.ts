@@ -113,7 +113,7 @@ const PersistableModel = types
         // wipe out old state and apply clean
         applySnapshot(self as any, {
           ...cleanState,
-          wocky: {host: settings.getDomain()},
+          wocky: {host: settings.host},
         })
         wocky.startReactions()
         // load minimal state to re-login

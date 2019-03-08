@@ -25,13 +25,8 @@ const CodePushStore = types
     downloadProgress: 0,
   }))
   .views(self => ({
-    get flavor(): string {
-      return __DEV__ ? 'local' : settings.isStaging ? 'staging' : 'production'
-    },
-  }))
-  .views(self => ({
     get channels(): Channel[] {
-      return deployments[self.flavor]
+      return deployments[settings.codePushFlavor]
     },
   }))
   .views(self => ({

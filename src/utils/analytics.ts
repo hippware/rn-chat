@@ -13,9 +13,7 @@ export class Analytics {
 
   constructor() {
     if (__DEV__ || !Mixpanel) return
-    Mixpanel.sharedInstanceWithToken(
-      settings.isStaging ? '5ee41c4ec134d9c7d769d9ddf41ed8eb' : '3f62ffcf7a8fc0100157f877af5668a6'
-    )
+    Mixpanel.sharedInstanceWithToken(settings.mixPanelApiToken)
   }
 
   identify = (wocky: IWocky) => {

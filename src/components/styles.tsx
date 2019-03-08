@@ -11,7 +11,7 @@ export const navBarStyle = {
   navBarRightButtonColor: 'rgb(254,92,108)',
   navBarLeftButtonColor: colors.DARK_GREY,
   navBarCancelColor: colors.DARK_GREY,
-  navBarButtonColor: settings.isStaging ? colors.STAGING_COLOR : 'rgb(117,117,117)',
+  navBarButtonColor: settings.navBarButtonColor,
   navBarBackgroundColor: 'white',
   navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',

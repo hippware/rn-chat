@@ -1,4 +1,3 @@
-import {settings} from '../globals'
 import {logCategories, logLevels} from '../constants/logConstants'
 
 export const levels = logLevels
@@ -32,17 +31,17 @@ export const log = (...args: any[]): void => {
 
   // TODO: account for categories
   // (!config.category || !settings.logCategory (config.category && settings.logCategory && config.category === settings.logCategory)
-  if (config.level <= settings.logLevel) {
-    if (config.level === levels.WARNING) {
-      // tslint:disable-next-line
-      console.warn(...args)
-    } else {
-      // tslint:disable-next-line
-      console.log(...args)
-    }
-  } else {
-    // console.log('no log!', config, settings);
-  }
+  // if (config.level <= settings.logLevel) {
+  //   if (config.level === levels.WARNING) {
+  //     // tslint:disable-next-line
+  //     console.warn(...args)
+  //   } else {
+  // tslint:disable-next-line
+  console.log(...args)
+  //   }
+  // } else {
+  //   // console.log('no log!', config, settings);
+  // }
 }
 
 export const warn = (...args: any[]): void => {

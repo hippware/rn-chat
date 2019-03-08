@@ -5,9 +5,6 @@ import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, AppInfo, IAppInfo} from 'wocky-client'
 import nativeEnv from 'react-native-native-env'
-
-// import {settings} from '../globals'
-import Config from 'react-native-config'
 import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
@@ -28,6 +25,7 @@ import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import OnceStore from './OnceStore'
 import ContactStore from './ContactStore'
+import {settings} from '../globals'
 const jsVersion = require('../../package.json').version
 const transport = new Transport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
@@ -113,8 +111,7 @@ const theStore = PersistableStore.create(
   {
     ...cleanState,
     codePushStore,
-    // wocky: {host: settings.getDomain()},
-    wocky: {host: Config.HOST},
+    wocky: {host: settings.host},
   },
   env
 )

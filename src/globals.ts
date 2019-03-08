@@ -1,35 +1,37 @@
-import {log} from './constants'
+import Config from 'react-native-config'
 
-const DEV_HOST = 'testing.dev.tinyrobot.com'
-// TODO add PROD/STAGING for next server
-const PROD_HOST = 'next.prod.tinyrobot.com'
-const STAGING_HOST = 'next.dev.tinyrobot.com'
-// coefficient for scaling for smaller devices like iPhone 5S
-
-class Settings {
-  isTesting: boolean = false
-  isStaging: boolean = false
-  isProduction: boolean = true
-  logLevel: number = log.logLevels.VERBOSE
-  logCategory = null
-
-  constructor() {
-    if (process.env.NODE_ENV === 'test') {
-      this.isStaging = !!process.env.STAGING
-      this.isTesting = !this.isStaging
-    } else {
-      const NativeEnv = require('react-native-native-env').default
-      this.isTesting = NativeEnv.get('TESTING')
-      this.isStaging = NativeEnv.get('STAGING')
-    }
-
-    this.isProduction = !this.isStaging && !this.isTesting
-  }
-
-  getDomain() {
-    return this.isTesting ? DEV_HOST : this.isStaging ? STAGING_HOST : PROD_HOST
-  }
+export type Settings = {
+  configurableLocationSettings: boolean
+  host: string
+  dynamicLinkDomain: string
+  iosBundleId: string
+  iosAppStoreId: string
+  friendlyErrorMessage: boolean
+  allowDebugScreen: boolean
+  allowProfileDelete: boolean
+  allowBypassLogin: boolean
+  uriPrefix: string
+  navBarButtonColor: string
+  codePushFlavor: string
+  mixPanelApiToken: string
 }
-export const settings = new Settings()
 
-export const DEBUG = settings.isTesting
+// todo: add check for each .env config setting?
+
+const isStaging = Config.IS_STAGING === 'true'
+
+export const settings: Settings = {
+  configurableLocationSettings: isStaging,
+  host: Config.HOST,
+  dynamicLinkDomain: Config.DYNAMIC_LINK_DOMAIN,
+  iosBundleId: Config.IOS_BUNDLE_ID,
+  iosAppStoreId: Config.IOS_APP_STORE_ID,
+  friendlyErrorMessage: isStaging,
+  allowDebugScreen: isStaging,
+  allowProfileDelete: isStaging,
+  allowBypassLogin: isStaging,
+  uriPrefix: Config.URI_PREFIX,
+  navBarButtonColor: isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
+  codePushFlavor: __DEV__ ? 'local' : isStaging ? 'staging' : 'production',
+  mixPanelApiToken: Config.MIXPANEL_API_TOKEN,
+}

@@ -175,7 +175,7 @@ class MyAccount extends React.Component<Props> {
           >
             Logout
           </LinkButton>
-          {settings.isStaging && (
+          {settings.allowProfileDelete && (
             <LinkButton
               style={{marginTop: 50}}
               onPress={() => {
@@ -224,19 +224,18 @@ const LinkButton = ({
 )
 
 const Title = inject('wocky')(
-  observer(
-    ({wocky}) =>
-      wocky.profile ? (
-        <RText
-          size={18}
-          style={{
-            letterSpacing: 0.5,
-            color: colors.DARK_PURPLE,
-          }}
-        >
-          Edit Profile
-        </RText>
-      ) : null
+  observer(({wocky}) =>
+    wocky.profile ? (
+      <RText
+        size={18}
+        style={{
+          letterSpacing: 0.5,
+          color: colors.DARK_PURPLE,
+        }}
+      >
+        Edit Profile
+      </RText>
+    ) : null
   )
 )
 

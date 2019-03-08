@@ -83,12 +83,15 @@ const LocationStore = types
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
       const R = 6371000 // Radius of the earth in m
-      const dLat = (lat2 - lat1) * Math.PI / 180 // deg2rad below
-      const dLon = (lon2 - lon1) * Math.PI / 180
+      const dLat = ((lat2 - lat1) * Math.PI) / 180 // deg2rad below
+      const dLon = ((lon2 - lon1) * Math.PI) / 180
       const a =
         0.5 -
         Math.cos(dLat) / 2 +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2
+        (Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          (1 - Math.cos(dLon))) /
+          2
 
       const res = R * 2 * Math.asin(Math.sqrt(a))
       const result = self.isMetric ? res : res * 3.2808399
@@ -154,8 +157,7 @@ const LocationStore = types
         disableLocationAuthorizationAlert: true,
       } as any
 
-      // For non-Prod, don't configure settings which are user configurable
-      if (settings.isProduction) {
+      if (!settings.configurableLocationSettings) {
         config.stopTimeout = 1
         config.distanceFilter = 10
       }
@@ -224,7 +226,7 @@ const LocationStore = types
       try {
         const token = yield wocky.getLocationUploadToken()
         yield BackgroundGeolocation.setConfig({
-          url: `https://${settings.getDomain()}/api/v1/users/${wocky.username}/locations`,
+          url: `https://${settings.host}/api/v1/users/${wocky.username}/locations`,
           headers: {
             Accept: 'application/json',
             Authentication: `Bearer ${token}`,
