@@ -3,10 +3,10 @@
   "version": "4.1.5",
   "private": true,
   "scripts": {
-    "start": "ENVFILE=.env.staging && node node_modules/react-native/local-cli/cli.js start",
+    "start": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js start",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
-    "ios": "ENVFILE=.env.staging && node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
-    "android": "ENVFILE=.env.staging && node node_modules/react-native/local-cli/cli.js run-android --variant stagingDebug",
+    "ios": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
+    "android": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-android --variant stagingDebug",
     "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",

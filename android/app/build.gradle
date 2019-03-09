@@ -78,11 +78,14 @@ project.ext.react = [
   entryFile: "index.js"
 ]
 
+// configure env files for different build flavors.
+// NOTE: use all lowercase
+// https://github.com/luggit/react-native-config#android-1
 project.ext.envConfigFiles = [
-  stagingDebug: ".env.staging",
-  stagingRelease: ".env.staging",
-  prodDebug: ".env.prod",
-  prodRelease: ".env.prod"
+  stagingdebug: ".env.staging",
+  stagingrelease: ".env.staging",
+  proddebug: ".env.prod",
+  prodrelease: ".env.prod"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
