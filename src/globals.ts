@@ -1,5 +1,5 @@
 import Config from 'react-native-config'
-import {error} from 'util'
+import {error} from './utils/log'
 
 export type Settings = {
   configurableLocationSettings: boolean
