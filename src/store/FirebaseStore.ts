@@ -2,8 +2,8 @@ import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky, Credentials} from 'wocky-client'
 import {IEnv} from '.'
-import {settings} from '../globals'
 import {IAuthStore} from './AuthStore'
+import {settings} from '../globals'
 
 type State = {
   resource?: string
@@ -247,15 +247,11 @@ const FirebaseStore = types
           },
           body: JSON.stringify({
             dynamicLinkInfo: {
-              dynamicLinkDomain: settings.isStaging
-                ? 'tinyrobotstaging.page.link'
-                : 'tinyrobot.page.link',
+              dynamicLinkDomain: settings.dynamicLinkDomain,
               link: `https://tinyrobot.com/${codeUrlString}${code}`,
               iosInfo: {
-                iosBundleId: settings.isStaging
-                  ? 'com.hippware.ios.ChatStaging'
-                  : 'com.hippware.tinyrobot',
-                iosAppStoreId: '1295678402', // since there is no app store listing for Staging no need to differentiate
+                iosBundleId: settings.iosBundleId,
+                iosAppStoreId: settings.iosAppStoreId, // since there is no app store listing for Staging no need to differentiate
               },
             },
           }),

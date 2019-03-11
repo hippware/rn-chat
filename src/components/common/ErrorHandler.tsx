@@ -61,7 +61,7 @@ class ErrorHandler extends React.Component<Props> {
 }
 
 const ErrorView = ({error, errorInfo, reload}) => {
-  if (settings.isStaging) {
+  if (settings.friendlyErrorMessage) {
     return (
       <View style={{flex: 1}}>
         <ScrollView

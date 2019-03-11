@@ -57,8 +57,6 @@ import LiveLocationShare from './LiveLocation/LiveLocationShare';
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
 
-const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://'
-
 type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
@@ -106,7 +104,7 @@ class TinyRobotRouter extends React.Component<Props> {
     const {store, iconStore, wocky, navStore, onceStore, authStore} = this.props
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Stack hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
@@ -158,7 +156,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                     <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                     <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                    {settings.isStaging && [
+                    {settings.allowDebugScreen && [
                       <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                       <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                       <Scene key="codePush" component={CodePushScene} title="CodePush" back />,

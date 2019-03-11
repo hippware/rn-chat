@@ -9841,6 +9841,11 @@ react-native-code-push@^5.3.4:
     plist "3.0.1"
     xcode "1.0.0"
 
+react-native-config@^0.11.7:
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
+  integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
+
 react-native-contacts@^3.1.1:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-3.1.4.tgz#9db6e39c319f4960182e273ce48e8f8db7e5f799"
@@ -9936,10 +9941,6 @@ react-native-mixpanel@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.1.tgz#012580fb1b42b6c0ee35d0af0a24af68cfa79b89"
   integrity sha512-jjCYGri9xQ+NO5lu9RCm+hH/u9dP++4VPhUe6O8smUiJtqhBVwQtDn+iJM/NBBQwBVq5SKaDipbYdgOHdJT2WQ==
-
-"react-native-native-env@github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6":
-  version "0.0.7"
-  resolved "https://codeload.github.com/aksonov/react-native-native-env/tar.gz/6e89ac8cd2dc26e4421b1d85a61529bd02643aa6"
 
 react-native-permissions@^1.1.1:
   version "1.1.1"

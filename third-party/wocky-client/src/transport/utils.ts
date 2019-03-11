@@ -364,7 +364,13 @@ export function convertNotification(edge: any): IEventData | null {
   if (edge.node.__typename === 'NotificationDeleted') {
     return null
   }
-  const {node: {data: {__typename, ...data}, id, createdAt}} = edge
+  const {
+    node: {
+      data: {__typename, ...data},
+      id,
+      createdAt,
+    },
+  } = edge
   const time = new Date(createdAt).getTime()
   // console.log('& converting type', __typename, createdAt, time)
   switch (__typename) {
@@ -457,7 +463,6 @@ type TokenParams = {
 }
 
 export function generateWockyToken(payload: TokenParams): string {
-  // TODO: store this with react-native-native-env
   const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
   const header = {alg: 'HS512', typ: 'JWT'}
   const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})

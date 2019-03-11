@@ -79,7 +79,7 @@ const Slide = ({bgImg, iconImg, left, center, children}: any) => {
 }
 
 const BypassButton = () => {
-  return settings.isStaging || settings.isTesting ? (
+  return settings.allowBypassLogin ? (
     <TouchableOpacity
       onPress={Actions.testRegisterScene}
       style={styles.bypassButton}

@@ -136,7 +136,7 @@ const Buttons = () => (
   >
     <TouchableOpacity
       onPress={() => Actions.bottomMenu()}
-      onLongPress={() => settings.isStaging && Actions.debugScreen()}
+      onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
     >
       <Image source={settingsImg} />
     </TouchableOpacity>

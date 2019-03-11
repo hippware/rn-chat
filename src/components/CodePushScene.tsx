@@ -11,6 +11,7 @@ import {colors} from '../constants'
 import {IAppInfo} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
 import {ICodePushStore} from '../store/CodePushStore'
+import {settings} from '../globals'
 
 type Props = {
   codePushStore?: ICodePushStore
@@ -84,11 +85,11 @@ const Channels = inject('codePushStore')(
     let inner
     if (codePushStore!.refreshing || codePushStore!.syncing) inner = <ActivityIndicator />
     else if (!codePushStore!.channelUpdates.length)
-      inner = <Text>{`No updates available for ${codePushStore!.flavor}`}</Text>
+      inner = <Text>{`No updates available for ${settings.codePushFlavor}`}</Text>
     else {
       inner = (
         <View>
-          <Text>{`Available updates for ${codePushStore!.flavor}:`}</Text>
+          <Text>{`Available updates for ${settings.codePushFlavor}:`}</Text>
           {codePushStore!.channelUpdates.map(c => (
             <TouchableOpacity
               key={c.key}
@@ -111,7 +112,13 @@ const SyncStatus = inject('codePushStore')(
   observer(({codePushStore}: Props) => {
     const {syncStatus: status} = codePushStore!
     if (status.length) {
-      return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>
+      return (
+        <View style={{marginTop: 20}}>
+          {status.map(s => (
+            <Text key={s}>{s}</Text>
+          ))}
+        </View>
+      )
     } else {
       return null
     }
