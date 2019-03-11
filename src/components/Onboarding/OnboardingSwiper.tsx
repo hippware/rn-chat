@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import Permissions from 'react-native-permissions'
 import Swiper from 'react-native-swiper'
-import {View, Alert} from 'react-native'
+import {View, Alert, Platform} from 'react-native'
 import {colors} from 'src/constants'
 import {Actions} from 'react-native-router-flux'
 
@@ -28,6 +28,14 @@ export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
   render() {
+    const pages: ReactElement[] = []
+    pages.push(<OnboardingLocation key="0" onPress={this.checkLocationPermissions} />)
+    if (Platform.OS === 'ios') {
+      pages.push(<OnboardingAccelerometer key="1" onPress={this.checkAccelerometerPermissions} />)
+      pages.push(<OnboardingNotifications key="2" onPress={this.checkNotificationPermissions} />)
+    }
+    pages.push(<OnboardingFindFriends key="3" onPress={this.findFriends} onSkip={this.done} />)
+    pages.push(<OnboardingFindFriendsList key="4" onPress={this.done} />)
     return (
       <View style={{flex: 1}}>
         <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
@@ -42,11 +50,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
           scrollEnabled={false}
           loop={false}
         >
-          <OnboardingLocation onPress={this.checkLocationPermissions} />
-          <OnboardingAccelerometer onPress={this.checkAccelerometerPermissions} />
-          <OnboardingNotifications onPress={this.checkNotificationPermissions} />
-          <OnboardingFindFriends onPress={this.findFriends} onSkip={this.done} />
-          <OnboardingFindFriendsList onPress={this.done} />
+          {pages}
         </Swiper>
       </View>
     )
