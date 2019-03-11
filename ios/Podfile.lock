@@ -4,10 +4,10 @@ PODS:
     - AppCenter/Core (= 1.11.0)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.14.0):
-    - BugsnagReactNative/Core (= 2.14.0)
+  - BugsnagReactNative (2.15.0):
+    - BugsnagReactNative/Core (= 2.15.0)
     - React
-  - BugsnagReactNative/Core (2.14.0):
+  - BugsnagReactNative/Core (2.15.0):
     - React
   - BVLinearGradient (2.5.3):
     - React

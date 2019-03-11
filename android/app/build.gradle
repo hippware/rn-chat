@@ -78,8 +78,19 @@ project.ext.react = [
   entryFile: "index.js"
 ]
 
+// configure env files for different build flavors.
+// NOTE: use all lowercase
+// https://github.com/luggit/react-native-config#android-1
+project.ext.envConfigFiles = [
+  stagingdebug: ".env.staging",
+  stagingrelease: ".env.staging",
+  proddebug: ".env.prod",
+  prodrelease: ".env.prod"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -113,6 +124,8 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
+  flavorDimensions "default"
+
   defaultConfig {
     applicationId "com.hippware.android.tinyrobot"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -143,6 +156,24 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  // todo: flesh out flavors
+  // https://medium.com/@ywongcode/building-multiple-versions-of-a-react-native-app-4361252ddde5
+  productFlavors {
+    staging {
+      minSdkVersion rootProject.ext.minSdkVersion
+      // applicationId "com.hippware.android.tinyrobotStaging"
+      targetSdkVersion rootProject.ext.targetSdkVersion
+      // resValue "string", "build_config_package", "com.myapp"
+    }
+    prod {
+      minSdkVersion rootProject.ext.minSdkVersion
+      // applicationId 'com.hippware.android.tinyrobot'
+      targetSdkVersion rootProject.ext.targetSdkVersion
+      // resValue "string", "build_config_package", "com.myapp"
+    }
+  }
+
   // applicationVariants are e.g. debug, release
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
@@ -165,22 +196,25 @@ configurations.all {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     implementation project(':react-native-background-geolocation')
     implementation project(':bugsnag-react-native')
-    implementation project(':react-native-push-notification')
+    implementation(project(':react-native-push-notification')){
+        exclude group: 'com.google.firebase', module: 'firebase-iid'
+    }
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-fs')
     implementation project(':react-native-touch-through-view')
     implementation project(':react-native-mixpanel')
-    implementation project(':react-native-native-env')
     implementation project(':react-native-device-info')
     implementation project(':react-native-code-push')
     implementation project(':react-native-maps')
-  //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
-  implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-config')
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-/* ----------------------------
+  /* ----------------------------
    *    REACT NATIVE FIREBASE
    * ---------------------------- */
 
@@ -222,7 +256,12 @@ dependencies {
   // Cloud Firestore
   implementation "com.google.firebase:firebase-firestore:17.1.5"
   // Cloud Messaging / FCM
-  implementation "com.google.firebase:firebase-messaging:17.3.4"
+  //implementation "com.google.firebase:firebase-messaging:17.3.4"
+  implementation ("com.google.firebase:firebase-messaging:17.3.4"){
+        exclude group: 'com.google.firebase', module: 'firebase-iid'
+    }
+
+  implementation 'com.google.firebase:firebase-iid:17.0.4'
   // Crashlytics
   implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
     transitive = true

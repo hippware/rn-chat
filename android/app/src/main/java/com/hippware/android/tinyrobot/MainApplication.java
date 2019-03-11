@@ -8,7 +8,6 @@ import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.bugsnag.BugsnagReactNative;
-import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.rnfs.RNFSPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -22,6 +21,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,14 +42,24 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNBackgroundGeolocation(),
-          BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(), new LinearGradientPackage(),
-          new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(), new RNDeviceInfo(),
-          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
-              getApplicationContext(), BuildConfig.DEBUG),
-
-          new RCTNativeEnvPackage(BuildConfig.class), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
-          new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage());
+      return Arrays.<ReactPackage>asList(
+        new MainReactPackage(),
+        new RNBackgroundGeolocation(),
+        BugsnagReactNative.getPackage(),
+        new ReactNativePushNotificationPackage(),
+        new LinearGradientPackage(),
+        new RNFSPackage(),
+        new TouchThroughViewPackage(),
+        new RNMixpanel(),
+        new RNDeviceInfo(),
+        new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+        new RNFirebasePackage(),
+        new RNFirebaseAuthPackage(),
+        new RNFirebaseMessagingPackage(),
+        new RNFirebaseLinksPackage(),
+        new MapsPackage(),
+        new ReactNativeConfigPackage()
+      );
     }
 
     @Override

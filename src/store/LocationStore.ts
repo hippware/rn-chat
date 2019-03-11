@@ -63,6 +63,9 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
   logLevel: types.maybeNull(types.enumeration(LogLevelValues)),
 })
 
+// todo: https://github.com/hippware/rn-chat/issues/3434
+const isMetric = true
+
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?
@@ -73,12 +76,6 @@ const LocationStore = types
     enabled: true,
     alwaysOn: true,
     debugSounds: false,
-  }))
-  .views(self => ({
-    get isMetric() {
-      const {nativeEnv} = getEnv(self)
-      return nativeEnv.get('NSLocaleUsesMetricSystem')
-    },
   }))
   .views(self => ({
     distance: (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -94,12 +91,12 @@ const LocationStore = types
           2
 
       const res = R * 2 * Math.asin(Math.sqrt(a))
-      const result = self.isMetric ? res : res * 3.2808399
+      const result = isMetric ? res : res * 3.2808399
       return result
     },
     distanceToString: (distance: number): string => {
       let base, unit
-      if (self.isMetric) {
+      if (isMetric) {
         base = distance / 1000
         unit = 'km'
       } else {

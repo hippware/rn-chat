@@ -106,7 +106,6 @@ export const OwnProfile = types
     },
     removeLocationSharer: (profile: IProfile) => {
       self.locationSharers.remove(profile.id)
-      profile.setSharesLocation(false)
     },
     removeLocationShare: (profile: IProfile) => {
       self.locationShares.remove(profile.id)
@@ -158,7 +157,6 @@ export const OwnProfile = types
             sharedWith: sharedWith.id,
           })
         )
-        sharedWith.setSharesLocation(true)
         timers.push(setTimeout(() => self.removeLocationSharer(sharedWith), expiresAt - Date.now()))
       },
       addLocationShare(sharedWith: IProfile, createdAt: number, expiresAt: number) {

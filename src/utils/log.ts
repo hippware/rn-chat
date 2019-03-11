@@ -51,3 +51,11 @@ export const warn = (...args: any[]): void => {
   // tslint:disable-next-line
   console.warn(...args)
 }
+
+export const error = (...args: any[]): void => {
+  // don't log on non-dev builds
+  if (!__DEV__) return
+
+  // tslint:disable-next-line
+  console.error(...args)
+}
