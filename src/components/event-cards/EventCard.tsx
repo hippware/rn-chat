@@ -3,14 +3,13 @@ import React from 'react'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
-import {observer, inject} from 'mobx-react/native'
+import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
 import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
-import {IWocky} from 'wocky-client'
 
 const geoIcon = require('../../../images/notificationGeo.png')
 const notificationIcon = require('../../../images/notificationMessage.png')
