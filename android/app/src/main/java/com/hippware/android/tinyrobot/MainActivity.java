@@ -5,10 +5,14 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactActivity;
 import com.microsoft.codepush.react.CodePush;
+import android.view.MotionEvent;
+import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandlerInterface;
+import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandler;
 
-public class MainActivity extends ReactActivity {
+public class MainActivity extends ReactActivity implements TouchThroughTouchHandlerInterface {
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
+    private TouchThroughTouchHandler touchThroughTouchHandler = new TouchThroughTouchHandler();
 
     // @Override
     // protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +38,16 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "App";
+    }
+
+    public TouchThroughTouchHandler getTouchThroughTouchHandler() {
+        return touchThroughTouchHandler;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        touchThroughTouchHandler.handleTouchEvent(ev);
+
+        return super.dispatchTouchEvent(ev);
     }
 }
