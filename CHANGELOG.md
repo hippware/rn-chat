@@ -4,6 +4,19 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.2.?
+
+**Android**, **React Native DOWNgrade**: See below
+
+* Baseline for Android app with RN0.58.RC2 (PR #3423, PR #3429)
+  * [android] [dev] Build codebase under Android (#3420)
+  * [dev] Downgrade to React Native 0.58.rc2 (#3422)
+  * Update: typescript to 3.3.3333, cocoa pods, lots of other components
+  * Minor source code changes (MapHome.tsx, bugsnagConfig.js)
+  * [dev] Upgrade Bugsnag (#3144)
+* Use correct calculated properties (PR #3430)
+  * Live Location: Notifications integration (Rework #3330)
+
 # 4.1.5 - 2019 Mar 7
 
 * Live location on/off toggle tweaks (PR #3394)
