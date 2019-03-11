@@ -54,7 +54,7 @@ class TestRegister extends React.Component<Props, State> {
         <Text
           style={{
             padding: 10 * k,
-            paddingTop: 40 * k,
+            paddingTop: 15 * k,
             width,
             textAlign: 'left',
             fontFamily: 'Roboto-Medium',
@@ -98,7 +98,7 @@ class TestRegister extends React.Component<Props, State> {
               fontSize: 16 * k,
               fontFamily: 'Roboto-Regular',
               width: 300 * k,
-              height: 30 * k,
+              height: 40 * k,
             }}
             testID="bypassPhoneInput"
           />
@@ -125,10 +125,8 @@ class TestRegister extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    position: 'absolute',
-    bottom: 290 * k,
-    left: 30 * k,
-    right: 30 * k,
+    top: 10 * k,
+    width: (width - 30) * k,
     height: 50 * k,
     borderWidth: 0,
     borderRadius: 2 * k,
