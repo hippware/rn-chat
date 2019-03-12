@@ -26,6 +26,7 @@ const prefix = 'BGGL'
 // https://github.com/transistorsoft/react-native-background-geolocation/blob/master/docs/README.md#config-integer-desiredaccuracy-0-10-100-1000-in-meters
 export const LocationAccuracyChoices = {
   '-1': 'HIGH',
+  '0': 'ANDROID DEFAULT',
   '10': 'MEDIUM',
   '100': 'LOW',
   '1000': 'VERY_LOW',
@@ -136,7 +137,7 @@ const LocationStore = types
         backgroundOptions: {
           ...options,
           desiredAccuracy: options.desiredAccuracy.toString(),
-          activityType: options.activityType.toString(),
+          activityType: options.activityType ? options.activityType.toString() : undefined,
           logLevel: options.logLevel.toString(),
         },
       })
