@@ -23,7 +23,15 @@ export default class SplitRenderer extends React.Component<Props> {
     } else {
       return (
         <View
-          style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            borderWidth: 1, // workaround to display 'Back' button for android
+            borderColor: 'transparent',
+          }}
           key={scene.route.key}
           pointerEvents="box-none"
         >

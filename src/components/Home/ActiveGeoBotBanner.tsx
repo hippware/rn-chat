@@ -15,7 +15,7 @@ import HeaderLocationOverlay from './HeaderLocationOverlay'
 import ActiveBannerPlaceholder from './ActiveBannerPlaceholder'
 import {IBot, IWocky} from 'wocky-client'
 import {analyticsGeoWidgetTap} from '../../utils/analytics'
-import {k, isIphoneX, minHeight} from '../Global'
+import {k, isIphoneX, isIphone, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import InvisibleModeOverlay from './InvisibleModeOverlay'
 import {settings} from '../../globals'
@@ -82,7 +82,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
         <View
           style={{
             backgroundColor: 'white',
-            paddingTop: isIphoneX ? 28 * k : 23 * k,
+            paddingTop: isIphoneX ? 28 * k : isIphone ? 23 * k : 0,
             shadowColor: colors.GREY,
             shadowOffset: {width: 0, height: 2},
             shadowOpacity: 1,
