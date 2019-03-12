@@ -1,5 +1,6 @@
 import {AppRegistry, YellowBox} from 'react-native'
 import App from './src/App'
+require('./src/utils/setup')
 
 YellowBox.ignoreWarnings([
   'Required dispatch_sync to load constants', // https://github.com/Microsoft/react-native-code-push/issues/632#issuecomment-265962068
