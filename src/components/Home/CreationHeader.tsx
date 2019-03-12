@@ -10,15 +10,17 @@ import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconStore from '../../store/IconStore'
+import {IHomeStore} from 'src/store/HomeStore'
 
 type Props = {
   wocky?: IWocky
   analytics?: any
   iconStore: IconStore
   focused: boolean
+  homeStore?: IHomeStore
 }
 
-@inject('wocky', 'analytics', 'iconStore')
+@inject('wocky', 'analytics', 'iconStore', 'homeStore')
 @observer
 export default class CreationHeader extends React.Component<Props> {
   @observable bot?: IBot
@@ -26,6 +28,7 @@ export default class CreationHeader extends React.Component<Props> {
 
   componentWillMount() {
     this.createBot()
+    this.props.homeStore!.stopFollowingUserOnMap()
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000)
   }
 
