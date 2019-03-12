@@ -14,8 +14,16 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Update: typescript to 3.3.3333, cocoa pods, lots of other components
   * Minor source code changes (MapHome.tsx, bugsnagConfig.js)
   * [dev] Upgrade Bugsnag (#3144)
-* Use correct calculated properties (PR #3430)
-  * Live Location: Notifications integration (Rework #3330)
+* Android UI tweaks (PR #3445)
+  * [dev] [android] Fix layout for bypass login (#3436)
+  * [android] Remove iOS-only screens (#3438)
+  * [android] Google maps is empty (#3440)
+* [android] Fix react-native-touch-through-view exceptions (#3439)
+
+* Live Location: Notifications integration (Rework #3330)
+  * Use correct calculated properties (PR #3430), More fixes (PR #3443)
+* Replace rn-native-env with react-native-config (#3421, PR #3428)
+  * Some changes to app configuration variables.
 
 # 4.1.5 - 2019 Mar 7
 
