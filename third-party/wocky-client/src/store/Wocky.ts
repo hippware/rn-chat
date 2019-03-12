@@ -504,7 +504,7 @@ export const Wocky = types
           yield fs.downloadHttpFile(sourceUrl, fileName, {})
         }
         const {width, height} = yield fs.getImageSize(fileName)
-        return {uri: fileName, width, height}
+        return {uri: 'file://' + fileName, width, height}
       }),
       userInviteMakeCode(): Promise<string> {
         return self.transport.userInviteMakeCode()
