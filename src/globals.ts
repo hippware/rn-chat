@@ -7,7 +7,7 @@ export type Settings = {
   dynamicLinkDomain: string
   iosBundleId: string
   iosAppStoreId: string
-  friendlyErrorMessage: boolean
+  showFullErrorMessage: boolean
   allowDebugScreen: boolean
   allowProfileDelete: boolean
   allowBypassLogin: boolean
@@ -29,7 +29,7 @@ export const settings: Settings = {
   dynamicLinkDomain: Config.DYNAMIC_LINK_DOMAIN,
   iosBundleId: Config.IOS_BUNDLE_ID,
   iosAppStoreId: Config.IOS_APP_STORE_ID,
-  friendlyErrorMessage: isStaging,
+  showFullErrorMessage: isStaging,
   allowDebugScreen: isStaging,
   allowProfileDelete: isStaging,
   allowBypassLogin: isStaging,
