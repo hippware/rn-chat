@@ -38,7 +38,7 @@ class PushStore {
           }
         }
       },
-      senderID: 'YOUR GCM SENDER ID',
+      senderID: '548019610697',
       permissions: {
         alert: true,
         badge: true,

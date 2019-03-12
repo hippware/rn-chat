@@ -3,14 +3,13 @@ import React from 'react'
 import {getType} from 'mobx-state-tree'
 import {IEvent, IEventBotInvite, IEventBotPost, IEventBotGeofence} from 'wocky-client'
 import EventFriendInviteRequestCard from './EventFriendInviteRequestCard'
-import {observer, inject} from 'mobx-react/native'
+import {observer} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import EventCardTemplate from './EventCardTemplate'
 import {IEventLocationShare} from 'third-party/wocky-client/src/model/EventLocationShare'
 import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
-import {IWocky} from 'wocky-client'
 
 const geoIcon = require('../../../images/notificationGeo.png')
 const notificationIcon = require('../../../images/notificationMessage.png')
@@ -104,39 +103,32 @@ const Button = ({
   </TouchableOpacity>
 )
 
-const EventLocationShareCard = inject('wocky')(
-  observer(
-    ({
-      wocky,
-      item: {sharedWith, relativeDateAsString},
-    }: {
-      wocky: IWocky
-      item: IEventLocationShare
-    }) => (
-      <EventCardTemplate
-        profile={sharedWith}
-        icon={shareLocationIcon}
-        timestamp={relativeDateAsString}
-        action={'is sharing location with you'}
-      >
-        {sharedWith.sharesLocation ? (
-          sharedWith.receivesLocationShare ? (
-            <GradientButton
-              text="SHARING LOCATION"
-              style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
-              textStyle={{fontSize: 12, color: 'white'}}
-              onPress={Actions.liveLocationShare}
-            />
-          ) : (
-            <Button text="SHARE YOUR LOCATION" onPress={Actions.liveLocationShare} />
-          )
+const EventLocationShareCard = observer(
+  ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => (
+    <EventCardTemplate
+      profile={sharedWith}
+      icon={shareLocationIcon}
+      timestamp={relativeDateAsString}
+      action={'is sharing location with you'}
+    >
+      {sharedWith.sharesLocation ? (
+        sharedWith.receivesLocationShare ? (
+          <GradientButton
+            text="SHARING LOCATION"
+            style={{width: 160, height: 29, borderRadius: 4, marginVertical: 4}}
+            textStyle={{fontSize: 12, color: 'white'}}
+            onPress={Actions.liveLocationShare}
+          />
         ) : (
-          undefined
-        )}
-      </EventCardTemplate>
-    )
+          <Button text="SHARE YOUR LOCATION" onPress={Actions.liveLocationShare} />
+        )
+      ) : (
+        undefined
+      )}
+    </EventCardTemplate>
   )
 )
+
 const eventCardMap: {[key: string]: any} = {
   EventBotPost: EventBotPostCard,
   // EventBotShare: EventBotShareCard,
@@ -149,9 +141,9 @@ const eventCardMap: {[key: string]: any} = {
 type Props = {
   item: IEvent
 }
-const EventCard = ({item}: Props) => {
+const EventCard = observer(({item}: Props) => {
   const CardClass = eventCardMap[getType(item).name]
   return CardClass ? <CardClass item={item} /> : null
-}
+})
 
 export default EventCard
