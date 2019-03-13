@@ -79,21 +79,10 @@ exports[`ChatScreen renders with no data 1`] = `
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
         renderItem={[Function]}
         scrollEventThrottle={50}
         stickyHeaderIndices={Array []}
-        style={
-          Array [
-            Object {
-              "transform": Array [
-                Object {
-                  "scaleY": -1,
-                },
-              ],
-            },
-            undefined,
-          ]
-        }
         updateCellsBatchingPeriod={50}
         viewabilityConfigCallbackPairs={Array []}
         windowSize={21}
