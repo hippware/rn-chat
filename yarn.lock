@@ -9995,7 +9995,7 @@ react-native-linear-gradient@^2.5.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.3.tgz#d90cf19a13fcccfa8bb32025ac40a15ae1b49e99"
   integrity sha512-XdusrOXXlkI+yQpUW7YLeiq9cZiBwkvQX4XEkHPVrJ9H47gsKmdgBwObkZBzBQUP0dKK/Sg6aVpETEis4w43bQ==
 
-react-native-maps@react-native-community/react-native-maps#master:
+react-native-maps@react-native-community/react-native-maps#f0027855d2bf9a740a99d42bac62c87973f000ed:
   version "0.23.0"
   resolved "https://codeload.github.com/react-native-community/react-native-maps/tar.gz/f0027855d2bf9a740a99d42bac62c87973f000ed"
 
