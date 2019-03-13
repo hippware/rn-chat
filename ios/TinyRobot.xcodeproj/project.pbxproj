@@ -842,7 +842,7 @@
 			isa = PBXGroup;
 			children = (
 				DCDA564826954DAC982E2628 /* libAppCenterReactNative.a */,
-						);
+			);
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
@@ -1601,7 +1601,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
@@ -1648,7 +1648,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tinyrobot/Pods-tinyrobot-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
@@ -1703,7 +1703,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
@@ -1750,7 +1750,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E6EE2FD58E8E2BE37D447290 /* [CP] Check Pods Manifest.lock */ = {

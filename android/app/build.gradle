@@ -112,10 +112,6 @@ android {
     disable 'GradleCompatible'
     disable 'InvalidPackage'
   }
-  packagingOptions {
-    pickFirst '**/libgnustl_shared.so'
-    pickFirst '**/libjsc.so'
-  }
 
   // because of firestore:
   dexOptions {
@@ -187,12 +183,6 @@ android {
       }
     }
   }
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'org.webkit:android-jsc:r241213'
-   }
 }
 
 dependencies {
