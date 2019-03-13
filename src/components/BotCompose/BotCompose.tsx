@@ -212,7 +212,7 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {load, save, id, setUserLocation} = this.bot!
+      const {load, save, setUserLocation} = this.bot!
       load({title: this.text, icon: this.props.iconStore!.emoji})
       Keyboard.dismiss()
       setUserLocation(this.props.locationStore.location)
@@ -221,8 +221,9 @@ export class BotCompose extends React.Component<Props> {
       if (!this.props.edit) {
         // need to add new bot to localBots (to be displayed on MapHome)
         this.props.wocky!.localBots.add(this.bot!)
+
         setTimeout(() => {
-          Actions.geofenceShare({botId: id}) // all bots now are 'geofence'
+          Actions.geofenceShare({botId: this.bot!.id}) // all bots now are 'geofence'
         })
       } else {
         Actions.pop()
