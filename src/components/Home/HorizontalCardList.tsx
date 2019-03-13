@@ -14,7 +14,7 @@ import {Card} from '../../store/HomeStore'
 type Props = {
   enabled: boolean
   setIndex: any
-  list: any[]
+  list: Card[]
   index: number
 }
 
@@ -29,15 +29,17 @@ const cardMap = {
   LocationSharerCard,
 }
 
-const translateYDefault = -13 * k
-
 const create = require('../../../images/create.png')
 const currentLocation = require('../../../images/currentLocationButton.png')
 const notificationsButton = require('../../../images/notificationsButton.png')
+const height = 115 * ((minHeight - 1) * 0.4 + 1)
+const marginBottom = 14 * s
+const totalHeight = height + marginBottom
+const buttonPadding = 10
 
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
-    translateY: new Animated.Value(translateYDefault),
+    translateY: new Animated.Value(0),
   }
 
   list: any
@@ -45,7 +47,7 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   componentWillReceiveProps(newProps) {
     if (newProps.enabled !== this.props.enabled) {
       Animated.spring(this.state.translateY, {
-        toValue: newProps.enabled ? translateYDefault : 160 * k,
+        toValue: newProps.enabled ? 0 : totalHeight - buttonPadding,
       }).start()
     }
 
@@ -58,20 +60,25 @@ export default class HorizontalCardList extends React.Component<Props, State> {
     const {list, setIndex, index, enabled} = this.props
     const {translateY} = this.state
     return (
-      <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
+      <Animated.View
+        style={{alignSelf: 'flex-end', transform: [{translateY}]}}
+        pointerEvents="box-none"
+      >
         <ButtonColumn />
-        <Carousel
-          key={`carousel${enabled}`}
-          ref={r => (this.list = r)}
-          data={list}
-          renderItem={this.renderItem}
-          firstItem={index}
-          sliderWidth={width}
-          itemWidth={width - 50 * k}
-          onSnapToItem={setIndex}
-          inactiveSlideOpacity={1}
-          initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
-        />
+        <View style={styles.carouselContainer}>
+          <Carousel
+            key={`carousel${enabled}`}
+            ref={r => (this.list = r)}
+            data={list}
+            renderItem={this.renderItem}
+            firstItem={index}
+            sliderWidth={width}
+            itemWidth={width - 50 * k}
+            onSnapToItem={setIndex}
+            inactiveSlideOpacity={1}
+            initialNumToRender={list.length} // TODO: potential performance bottleneck with many bots
+          />
+        </View>
       </Animated.View>
     )
   }
@@ -83,69 +90,66 @@ export default class HorizontalCardList extends React.Component<Props, State> {
 }
 
 const ButtonColumn = inject('homeStore', 'navStore', 'locationStore', 'wocky')(
-  observer(
-    ({homeStore, navStore, locationStore, wocky}) =>
-      navStore.scene !== 'botCompose' ? (
-        <View
-          style={{
-            position: 'absolute',
-            top: -150 * minHeight, // TODO: make this styling more device-specific
-            right: 10,
+  observer(({homeStore, navStore, locationStore, wocky}) =>
+    navStore.scene !== 'botCompose' ? (
+      <View
+        style={{
+          alignSelf: 'flex-end',
+          paddingRight: buttonPadding,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            homeStore.stopFollowingUserOnMap()
+            if (locationStore.location) homeStore.setFocusedLocation(locationStore.location)
           }}
+          style={[styles.button, styles.shadow]}
         >
-          <TouchableOpacity
-            onPress={() => {
-              homeStore.stopFollowingUserOnMap()
-              if (locationStore.location) homeStore.setFocusedLocation(locationStore.location)
-            }}
-            style={[styles.button, styles.shadow]}
-          >
-            <Image source={currentLocation} />
-          </TouchableOpacity>
+          <Image source={currentLocation} />
+        </TouchableOpacity>
 
-          {!homeStore.fullScreenMode && (
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  Actions.notifications()
-                }}
-                style={styles.button}
-              >
-                <View>
-                  <Image source={notificationsButton} />
-                  {wocky.notifications.hasUnread && <View style={styles.newDot} />}
-                </View>
-              </TouchableOpacity>
+        {!homeStore.fullScreenMode && (
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                Actions.notifications()
+              }}
+              style={styles.button}
+            >
+              <View>
+                <Image source={notificationsButton} />
+                {wocky.notifications.hasUnread && <View style={styles.newDot} />}
+              </View>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  Actions.createBot()
-                }}
-                style={styles.button}
-              >
-                <Image source={create} />
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      ) : null
+            <TouchableOpacity
+              onPress={() => {
+                Actions.createBot()
+              }}
+              style={styles.button}
+            >
+              <Image source={create} />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    ) : null
   )
 )
 
 const dotWidth = 13
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: 'flex-end',
-    height: 115 * ((minHeight - 1) * 0.4 + 1),
-    marginBottom: 14 * s,
+  carouselContainer: {
+    height,
+    marginBottom,
     shadowColor: colors.GREY,
     shadowOpacity: 1,
     shadowRadius: 8,
     shadowOffset: {height: 0, width: 0},
   },
   button: {
-    marginTop: 15 * k,
+    marginTop: 15,
   },
   shadow: {
     shadowColor: colors.PINK,
