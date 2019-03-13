@@ -106,9 +106,11 @@ export const OwnProfile = types
     },
     removeLocationSharer: (profile: IProfile) => {
       self.locationSharers.remove(profile.id)
+      profile.setSharesLocation(false)
     },
     removeLocationShare: (profile: IProfile) => {
       self.locationShares.remove(profile.id)
+      profile.setReceivesLocationShare(false)
     },
     removeBlocked: (profile: IProfile) => {
       self.blocked.remove(profile.id)
@@ -142,6 +144,7 @@ export const OwnProfile = types
     }),
     cancelAllLocationShares: flow(function*() {
       yield self.transport.userLocationCancelAllShares()
+      self.locationShares.list.forEach(share => share.sharedWith.setReceivesLocationShare(false))
       self.locationShares.refresh()
     }),
   }))
@@ -157,6 +160,7 @@ export const OwnProfile = types
             sharedWith: sharedWith.id,
           })
         )
+        sharedWith.setSharesLocation(true)
         timers.push(setTimeout(() => self.removeLocationSharer(sharedWith), expiresAt - Date.now()))
       },
       addLocationShare(sharedWith: IProfile, createdAt: number, expiresAt: number) {
@@ -168,6 +172,7 @@ export const OwnProfile = types
             sharedWith: sharedWith.id,
           })
         )
+        sharedWith.setReceivesLocationShare(true)
         timers.push(setTimeout(() => self.removeLocationShare(sharedWith), expiresAt - Date.now()))
       },
       beforeDestroy() {

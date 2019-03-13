@@ -6,7 +6,6 @@ import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
-import {IOwnProfile} from './OwnProfile'
 
 export const Profile = types
   .compose(
@@ -25,6 +24,8 @@ export const Profile = types
       hasReceivedInvite: false,
       isFriend: false,
       isBlocked: false,
+      sharesLocation: false, // pseudo-calculated property for correct FlatList rendering
+      receivesLocationShare: false, // pseudo-calculated property for correct FlatList rendering
       roles: types.optional(types.array(types.string), []),
       subscribedBots: types.optional(types.late((): IAnyModelType => BotPaginableList), {}),
     })
@@ -33,11 +34,19 @@ export const Profile = types
   .postProcessSnapshot(snapshot => {
     const res = {...snapshot}
     delete res.status
+    delete res.sharesLocation
+    delete res.receivesLocationShare
     // delete res.location - need to preserve location because now it is passed only via subscriptions
     delete res.subscribedBots
     return res
   })
   .actions(self => ({
+    setSharesLocation(value: boolean) {
+      self.sharesLocation = value
+    },
+    setReceivesLocationShare(value: boolean) {
+      self.receivesLocationShare = value
+    },
     sentInvite: () => {
       self.hasSentInvite = true
       if (self.hasSentInvite && self.hasReceivedInvite) {
@@ -135,14 +144,6 @@ export const Profile = types
         },
       },
       views: {
-        get sharesLocation(): boolean {
-          const ownProfile: IOwnProfile = self.service && self.service.profile
-          return ownProfile && ownProfile.locationSharers.exists(self.id)
-        },
-        get receivesLocationShare(): boolean {
-          const ownProfile: IOwnProfile = self.service && self.service.profile
-          return ownProfile && ownProfile.locationShares.exists(self.id)
-        },
         get isOwn(): boolean {
           const ownProfile = self.service && self.service.profile
           return ownProfile && self.id === ownProfile.id
