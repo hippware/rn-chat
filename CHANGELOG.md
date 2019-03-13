@@ -19,11 +19,17 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * [android] Remove iOS-only screens (#3438)
   * [android] Google maps is empty (#3440)
 * [android] Fix react-native-touch-through-view exceptions (#3439)
+* [android] state.activityType is null for Android (#3441)
+* [android] Re-define custom setTimeout for android (#3437, PR #3458)
+* Adjust UI and remote image loading (PR #3457)
+  * [android] Images from our server are not displayed (#3442)
 
 * Live Location: Notifications integration (Rework #3330)
   * Use correct calculated properties (PR #3430), More fixes (PR #3443)
-* Replace rn-native-env with react-native-config (#3421, PR #3428)
+* Replace rn-native-env with rn-config (#3421, PR #3428, PR #3454)
   * Some changes to app configuration variables.
+* Stop following user on map (PR #3450)
+  * Live Location: Auto-follow tweaks (#3415)
 
 # 4.1.5 - 2019 Mar 7
 
