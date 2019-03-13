@@ -29,8 +29,8 @@
       <action android:name="com.google.firebase.MESSAGING_EVENT" />
     </intent-filter>
   </service>
-  <!-- react-native-background-geolocation licence -->
-     <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="YOUR_LICENCE_KEY_HERE" />
+  <!-- react-native-background-geolocation license -->
+     <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="495562b5f0d6558e6f7d46d47c18bbaa41ac7c8f9321bf551883445630cf9ac0" />
     
     </application>
 
