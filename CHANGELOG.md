@@ -27,6 +27,7 @@ Android
 * [android] Add RNBGL android license (#3463)
 * [android] Tapping on bottom column of map buttons doesn't work (#3449)
 * HOTFIX: update yarn.lock after removing jsc-android
+* [android] app crashes shortly after load (#3467)
 
 Other
 * Live Location: Notifications integration (Rework #3330)
