@@ -1,12 +1,12 @@
 import React from 'react'
-import {StyleSheet, Text, Image, Linking} from 'react-native'
+import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
 import {observer} from 'mobx-react/native'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
 import {GradientButton, RText} from '../common'
-import {WHITE} from 'src/constants/colors'
+import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 
 import backgroundGeolocation from 'react-native-background-geolocation'
 
@@ -43,11 +43,19 @@ class LocationWarning extends React.Component<Props> {
 }
 
 export const LocationWarningUI = ({onPress}) => (
-  <BlurView
-    blurType="xlight"
-    blurAmount={10}
-    style={[globalStyles.absolute, {alignItems: 'center', justifyContent: 'center'}] as any}
+  <View
+    style={[
+      globalStyles.absolute,
+      {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Platform.select({ios: 'transparent', android: TRANSLUCENT_WHITE}),
+      },
+    ]}
   >
+    {Platform.OS === 'ios' && (
+      <BlurView blurType="xlight" blurAmount={10} style={globalStyles.absolute} />
+    )}
     <Text style={styles.title}>
       Tap “<Text style={{fontFamily: 'Roboto-Medium'}}>Always</Text>” to let tinyrobot work
       perfectly.
@@ -69,7 +77,7 @@ export const LocationWarningUI = ({onPress}) => (
         Open Settings
       </RText>
     </GradientButton>
-  </BlurView>
+  </View>
 )
 
 export default LocationWarning
