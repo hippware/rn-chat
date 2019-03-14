@@ -11,7 +11,7 @@ console.log(`appVersion: ${appVersion}`)
 console.log(chalk.green('Bundling react-native assets...'))
 
 exec(
-  'react-native bundle --platform ios --entry-file index.ios.js --dev false --bundle-output ./ios/main.jsbundle --sourcemap-output ./sourcemap.js',
+  'react-native bundle --platform ios --entry-file index.js --dev false --bundle-output ./ios/main.jsbundle --sourcemap-output ./sourcemap.js',
   (err, stdout) => {
     console.log('RN bundle result:', positive(stdout), error(err))
 
