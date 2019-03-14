@@ -6,8 +6,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 4.2.?
 
-**Android**, **React Native upgrade to 0.59.0**: See below
+**React Native upgrade to 0.59.0**: See below
 
+Android
 * Baseline for Android app with RN0.58.RC2 (PR #3423, PR #3429)
   * [android] [dev] Build codebase under Android (#3420)
   * [dev] Downgrade to React Native 0.58.rc2 (#3422)
@@ -27,6 +28,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Tapping on bottom column of map buttons doesn't work (#3449)
 * HOTFIX: update yarn.lock after removing jsc-android
 
+Other
 * Live Location: Notifications integration (Rework #3330)
   * Use calculated properties (PR #3430), More fixes (PR #3443, PR #3465)
 * Replace rn-native-env with rn-config (#3421, PR #3428, PR #3454)
