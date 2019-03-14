@@ -224,6 +224,7 @@ const LocationStore = types
       try {
         const token = yield wocky.getLocationUploadToken()
         yield BackgroundGeolocation.setConfig({
+          maxRecordsToPersist: 10,
           url: `https://${settings.host}/api/v1/users/${wocky.username}/locations`,
           headers: {
             Accept: 'application/json',
@@ -320,8 +321,8 @@ const LocationStore = types
             if (wocky.connected && onceStore.onboarded) {
               try {
                 await self.refreshCredentials()
-                await self.getCurrentPosition()
                 await BackgroundGeolocation.start()
+                await self.getCurrentPosition()
                 logger.log(prefix, 'Start')
               } catch (err) {
                 // prevent unhandled promise rejection
