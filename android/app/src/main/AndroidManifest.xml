@@ -10,6 +10,12 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+
+      <!-- https://stackoverflow.com/a/50779232/476228
+        todo: remove this if we target a higher Google Maps SDK (after a rn-maps update perhaps)
+      -->
+      <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
       <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyDjvPNa8X4sVI9-jUb8BrN08nwCa9Hp128"/>
