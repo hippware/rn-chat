@@ -6,7 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 4.2.?
 
-**Android**, **React Native DOWNgrade**: See below
+**Android**, **React Native upgrade to 0.59.0**: See below
 
 * Baseline for Android app with RN0.58.RC2 (PR #3423, PR #3429)
   * [android] [dev] Build codebase under Android (#3420)
@@ -23,13 +23,17 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Re-define custom setTimeout for android (#3437, PR #3458)
 * Adjust UI and remote image loading (PR #3457)
   * [android] Images from our server are not displayed (#3442)
+* [android] Add RNBGL android license (#3463)
+* [android] Tapping on bottom column of map buttons doesn't work (#3449)
+* HOTFIX: update yarn.lock after removing jsc-android
 
 * Live Location: Notifications integration (Rework #3330)
-  * Use correct calculated properties (PR #3430), More fixes (PR #3443)
+  * Use calculated properties (PR #3430), More fixes (PR #3443, PR #3465)
 * Replace rn-native-env with rn-config (#3421, PR #3428, PR #3454)
   * Some changes to app configuration variables.
 * Stop following user on map (PR #3450)
   * Live Location: Auto-follow tweaks (#3415)
+* React Native 0.59.0 upgrade (#3464)
 
 # 4.1.5 - 2019 Mar 7
 
