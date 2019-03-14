@@ -261,29 +261,47 @@ exports[`Home renders with no data 1`] = `
           </View>
         </View>
       </RCTScrollView>
-      <BlurView
-        blurAmount={10}
-        blurType="xlight"
+      <View
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
-            },
-            Object {
-              "alignItems": "center",
               "bottom": 0,
-              "flexDirection": "row",
               "left": 0,
-              "padding": 40,
-              "paddingHorizontal": 60,
-              "paddingTop": 70,
               "position": "absolute",
               "right": 0,
               "top": 0,
             },
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 40,
+              "paddingHorizontal": 60,
+              "paddingTop": 70,
+            },
+            Object {
+              "backgroundColor": "transparent",
+            },
           ]
         }
       >
+        <BlurView
+          blurAmount={10}
+          blurType="xlight"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+        />
         <Image
           resizeMode="contain"
           source={
@@ -374,30 +392,48 @@ exports[`Home renders with no data 1`] = `
             </Text>
           </View>
         </View>
-      </BlurView>
-      <BlurView
-        blurAmount={10}
-        blurType="xlight"
+      </View>
+      <View
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
-            },
-            Object {
-              "alignItems": "center",
               "bottom": 0,
-              "flexDirection": "row",
               "left": 0,
-              "padding": 40,
-              "paddingHorizontal": 60,
-              "paddingTop": 70,
               "position": "absolute",
               "right": 0,
               "top": 0,
             },
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 40,
+              "paddingHorizontal": 60,
+              "paddingTop": 70,
+            },
+            Object {
+              "backgroundColor": "transparent",
+            },
           ]
         }
       >
+        <BlurView
+          blurAmount={10}
+          blurType="xlight"
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+        />
         <Image
           resizeMode="contain"
           source={
@@ -471,7 +507,7 @@ exports[`Home renders with no data 1`] = `
             </Text>
           </View>
         </View>
-      </BlurView>
+      </View>
     </View>
     <View
       pointerEvents="box-none"
