@@ -1,5 +1,5 @@
 import React from 'react'
-import {Transitioner} from 'react-navigation'
+import {Transitioner} from 'react-navigation-stack'
 import {View} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'

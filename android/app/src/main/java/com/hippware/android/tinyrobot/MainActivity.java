@@ -8,6 +8,10 @@ import com.microsoft.codepush.react.CodePush;
 import android.view.MotionEvent;
 import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandlerInterface;
 import com.rome2rio.android.reactnativetouchthroughview.TouchThroughTouchHandler;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 public class MainActivity extends ReactActivity implements TouchThroughTouchHandlerInterface {
     private ReactRootView mReactRootView;
@@ -50,4 +54,15 @@ public class MainActivity extends ReactActivity implements TouchThroughTouchHand
 
         return super.dispatchTouchEvent(ev);
     }
+
+    @Override
+    protected ReactActivityDelegate createReactActivityDelegate() {
+        return new ReactActivityDelegate(this, getMainComponentName()) {
+            @Override
+            protected ReactRootView createRootView() {
+                return new RNGestureHandlerEnabledRootView(MainActivity.this);
+            }
+        };
+    }
+
 }
