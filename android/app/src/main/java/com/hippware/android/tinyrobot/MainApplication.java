@@ -22,6 +22,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,24 +43,14 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new RNBackgroundGeolocation(),
-        BugsnagReactNative.getPackage(),
-        new ReactNativePushNotificationPackage(),
-        new LinearGradientPackage(),
-        new RNFSPackage(),
-        new TouchThroughViewPackage(),
-        new RNMixpanel(),
-        new RNDeviceInfo(),
-        new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
-        new RNFirebasePackage(),
-        new RNFirebaseAuthPackage(),
-        new RNFirebaseMessagingPackage(),
-        new RNFirebaseLinksPackage(),
-        new MapsPackage(),
-        new ReactNativeConfigPackage()
-      );
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNBackgroundGeolocation(),
+          BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(), new LinearGradientPackage(),
+          new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(), new RNDeviceInfo(),
+          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
+              getApplicationContext(), BuildConfig.DEBUG),
+          new RNGestureHandlerPackage(), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
+          new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage(),
+          new ReactNativeConfigPackage());
     }
 
     @Override
