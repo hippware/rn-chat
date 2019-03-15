@@ -111,16 +111,7 @@ const TheButton = ({reload}) => (
     style={{position: 'relative', left: 0, right: 0, marginHorizontal: 30, marginTop: 50}}
     onPress={reload}
   >
-    <View style={{alignItems: 'center', flexDirection: 'row'}}>
-      <Image
-        source={require('../../../images/reload.png')}
-        style={{height: 19, marginRight: 5}}
-        resizeMode="contain"
-      />
-      <RText size={17.5} color={colors.WHITE}>
-        Reload
-      </RText>
-    </View>
+    Reload
   </Button>
 )
 
