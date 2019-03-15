@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 4.2.?
+# 4.2.0 - 2019 Mar 14
 
 **React Native upgrade to 0.59.0**: See below
 
@@ -37,6 +37,8 @@ Other
 * Stop following user on map (PR #3450)
   * Live Location: Auto-follow tweaks (#3415)
 * React Native 0.59.0 upgrade (#3464)
+* Set maxRecordsToPersist=10, Send location at every launch (PR #3472)
+  * Live Location: Occasional lag or history of users travel (#3412)
 
 # 4.1.5 - 2019 Mar 7
 
