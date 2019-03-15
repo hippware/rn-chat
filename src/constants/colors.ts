@@ -92,6 +92,8 @@ export const COVER_GREEN = 'rgb(62, 208, 149)'
 export const COVER_GREEN_MASK = addAlpha(COVER_GREEN, 0.4)
 export const PINK_MASK = addAlpha(PINK, 0.3)
 
+export const TRANSLUCENT_WHITE = 'rgba(255,255,255,0.85)'
+
 export const backgroundColorNight = 'rgba(49,37,62,0.90)'
 
 export const navBarTextColorDay = DARK_PURPLE

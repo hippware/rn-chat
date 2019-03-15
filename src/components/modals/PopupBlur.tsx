@@ -1,8 +1,10 @@
 import React from 'react'
-import {StyleSheet, View, ViewStyle} from 'react-native'
+import {StyleSheet, View, ViewStyle, Platform} from 'react-native'
 import {BlurView} from 'react-native-blur'
 import {k} from '../Global'
 import {CloseButton} from '../common'
+import globalStyles from '../styles'
+import {TRANSLUCENT_WHITE} from 'src/constants/colors'
 
 type Props = {
   containerStyle?: ViewStyle
@@ -11,25 +13,36 @@ type Props = {
 }
 
 const PopupBlur = ({children, containerStyle, showCloseButton}: Props) => (
-  <BlurView blurType="light" blurAmount={15} style={styles.absolute}>
+  <View
+    style={[
+      globalStyles.absolute,
+      {backgroundColor: Platform.select({ios: 'transparent', android: TRANSLUCENT_WHITE})},
+    ]}
+  >
+    {Platform.OS === 'ios' && (
+      <BlurView
+        blurType="light"
+        blurAmount={15}
+        style={
+          [
+            globalStyles.absolute,
+            {
+              alignItems: 'stretch',
+              justifyContent: 'center',
+              backgroundColor: TRANSLUCENT_WHITE,
+            },
+          ] as any
+        }
+      />
+    )}
     <View style={[styles.container, containerStyle]}>{children}</View>
     {showCloseButton && <CloseButton style={styles.closeButton} />}
-  </BlurView>
+  </View>
 )
 
 export default PopupBlur
 
 const styles = StyleSheet.create({
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-  },
   container: {
     backgroundColor: 'transparent',
     marginHorizontal: 20,

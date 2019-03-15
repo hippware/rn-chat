@@ -1,5 +1,14 @@
 import React from 'react'
-import {StyleSheet, Keyboard, View, TextInput, TouchableOpacity, Image, Alert} from 'react-native'
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Alert,
+  Platform,
+} from 'react-native'
 import {RText, Spinner} from '../common'
 import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
@@ -15,6 +24,7 @@ import EmojiSelector from 'react-native-emoji-selector'
 import LinearGradient from 'react-native-linear-gradient'
 import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
+import globalStyles from '../styles'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -114,24 +124,35 @@ export class BotCompose extends React.Component<Props> {
             },
             shadowRadius: 12,
             shadowOpacity: 1,
+            height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
+            backgroundColor: Platform.select({
+              ios: 'transparent',
+              android: 'white',
+            }),
           }}
         >
-          <BlurView
-            blurType="light"
-            blurAmount={5}
-            style={{
-              height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
-              backgroundColor: 'rgba(255,255,255,0.5)',
-              overflow: 'hidden',
-            }}
-          >
-            <EmojiSelector
-              showHistory
-              onEmojiSelected={this.onEmojiSelected}
-              showSearchBar={false}
-              columns={8}
+          {/* todo: add blurview on Android hacks: https://github.com/react-native-community/react-native-blur#android */}
+          {Platform.OS === 'ios' && (
+            <BlurView
+              blurType="light"
+              blurAmount={5}
+              style={
+                [
+                  globalStyles.absolute,
+                  {
+                    backgroundColor: 'rgba(255,255,255,0.5)',
+                    overflow: 'hidden',
+                  },
+                ] as any
+              }
             />
-          </BlurView>
+          )}
+          <EmojiSelector
+            showHistory
+            onEmojiSelected={this.onEmojiSelected}
+            showSearchBar={false}
+            columns={8}
+          />
         </View>
         {!this.props.iconStore!.isEmojiKeyboardShown && (
           <View>
@@ -212,7 +233,7 @@ export class BotCompose extends React.Component<Props> {
     }
     try {
       this.isLoading = true
-      const {load, save, id, setUserLocation} = this.bot!
+      const {load, save, setUserLocation} = this.bot!
       load({title: this.text, icon: this.props.iconStore!.emoji})
       Keyboard.dismiss()
       setUserLocation(this.props.locationStore.location)
@@ -221,8 +242,9 @@ export class BotCompose extends React.Component<Props> {
       if (!this.props.edit) {
         // need to add new bot to localBots (to be displayed on MapHome)
         this.props.wocky!.localBots.add(this.bot!)
+
         setTimeout(() => {
-          Actions.geofenceShare({botId: id}) // all bots now are 'geofence'
+          Actions.geofenceShare({botId: this.bot!.id}) // all bots now are 'geofence'
         })
       } else {
         Actions.pop()
@@ -278,12 +300,6 @@ const styles = StyleSheet.create({
     paddingLeft: 21 * k,
     fontFamily: 'Roboto-Regular',
     fontSize: 17,
-  },
-  absolute: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
   gradient: {
     flex: 1,

@@ -14,7 +14,7 @@ type Props = {
 
 const foot = require('../../../images/footOpaquePink.png')
 
-const HeaderLocationOverlay = inject('wocky')(
+const InvisibleModeOverlay = inject('wocky')(
   observer(({wocky}: Props) => {
     if (!wocky!.profile || (wocky!.profile!.hidden && !wocky!.profile!.hidden.enabled)) {
       return null
@@ -40,7 +40,7 @@ const HeaderLocationOverlay = inject('wocky')(
   })
 )
 
-export default HeaderLocationOverlay
+export default InvisibleModeOverlay
 
 const styles = StyleSheet.create({
   image: {
