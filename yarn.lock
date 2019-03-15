@@ -7580,11 +7580,6 @@ lodash.isboolean@^3.0.3:
   resolved "https://registry.yarnpkg.com/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
   integrity sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=
 
-lodash.isequal@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
-
 lodash.isinteger@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
@@ -10053,12 +10048,12 @@ react-native-push-notification@^3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.2.tgz#a6129fb2897773a19c7b42bba1b51a9a4aac7df3"
   integrity sha512-MjjPNXb2Cw7g1D41DtVbTVuGFCAtADxb91pAEFSkQ0AZ2gIooqYkWFHBL6woc15QHhtaZS8VT2GQoyW5OWlxIg==
 
-react-native-router-flux@^4.1.0-beta.1:
-  version "4.1.0-beta.1"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.1.tgz#9de62bb54ff2af8e99905a02dbc524e00b4ab513"
-  integrity sha512-jOvItJhlJYUG5t/GP7vIQgdxwUvx3Jkm67v2I686pTQtAsErHJ9s91aChs2hLXQRTvC3pxbEmj2JSh7Ymsuo1g==
+react-native-router-flux@^4.1.0-beta.2:
+  version "4.1.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.2.tgz#6c7322d278b395f17bd94b27f5f1bb0e2482d874"
+  integrity sha512-g6oIawJRnKwv55je1BqAkjY9S4hrktRlbLL0tTw4WpFdh6p1HLlJHvUuMBoa5uUrIwarj/1GkN/T3LT67kfdhQ==
   dependencies:
-    lodash.isequal "4.5.0"
+    lodash "^4.17.11"
     opencollective "^1.0.3"
     path-to-regexp "^2.4.0"
     prop-types "^15.6.2"
