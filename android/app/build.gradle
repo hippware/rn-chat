@@ -126,13 +126,30 @@ android {
     applicationId "com.hippware.android.tinyrobot"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 1
-    versionName "1.0"
+    versionCode 2
+    versionName "1.01"
     ndk {
       abiFilters "armeabi-v7a", "x86"
     }
     // because of firestore:
     multiDexEnabled true
+  }
+  signingConfigs {
+    // since AppCenter signs the apk separately don't specify signing configs there
+    if (!System.getenv('IS_APPCENTER')) {
+      staging {
+        storeFile file(STAGING_RELEASE_STORE_FILE)
+        storePassword STAGING_RELEASE_STORE_PASSWORD
+        keyAlias STAGING_RELEASE_KEY_ALIAS
+        keyPassword STAGING_RELEASE_KEY_PASSWORD
+      }
+      prod {
+        storeFile file(PROD_RELEASE_STORE_FILE)
+        storePassword PROD_RELEASE_STORE_PASSWORD
+        keyAlias PROD_RELEASE_KEY_ALIAS
+        keyPassword PROD_RELEASE_KEY_PASSWORD
+      }
+    }
   }
   splits {
     abi {
@@ -155,18 +172,24 @@ android {
 
   // todo: flesh out flavors
   // https://medium.com/@ywongcode/building-multiple-versions-of-a-react-native-app-4361252ddde5
+  // https://developer.android.com/studio/build/build-variants
   productFlavors {
     staging {
       minSdkVersion rootProject.ext.minSdkVersion
-      // applicationId "com.hippware.android.tinyrobotStaging"
       targetSdkVersion rootProject.ext.targetSdkVersion
-      // resValue "string", "build_config_package", "com.myapp"
+
+      // don't sign AppCenter gradle builds...the APK is signed in a subsequent build step.
+      if (!System.getenv('IS_APPCENTER')) {
+        signingConfig signingConfigs.staging
+      }
+      applicationIdSuffix ".staging"
     }
     prod {
       minSdkVersion rootProject.ext.minSdkVersion
-      // applicationId 'com.hippware.android.tinyrobot'
       targetSdkVersion rootProject.ext.targetSdkVersion
-      // resValue "string", "build_config_package", "com.myapp"
+      if (!System.getenv('IS_APPCENTER')) {
+        signingConfig signingConfigs.prod
+      }
     }
   }
 
