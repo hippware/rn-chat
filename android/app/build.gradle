@@ -177,6 +177,8 @@ android {
     staging {
       minSdkVersion rootProject.ext.minSdkVersion
       targetSdkVersion rootProject.ext.targetSdkVersion
+
+      // don't sign AppCenter gradle builds...the APK is signed in a subsequent build step.
       if (!System.getenv('IS_APPCENTER')) {
         signingConfig signingConfigs.staging
       }
