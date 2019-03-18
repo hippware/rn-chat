@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-maps/lib/components/MapView.js b/node_modules/react-native-maps/lib/components/MapView.js
+index 929d76d..fd3c668 100644
+--- a/node_modules/react-native-maps/lib/components/MapView.js
++++ b/node_modules/react-native-maps/lib/components/MapView.js
+@@ -812,7 +812,7 @@ class MapView extends React.Component {
+   }
+ 
+   _uiManagerCommand(name) {
+-    return NativeModules.UIManager[getAirMapName(this.props.provider)].Commands[name];
++    return NativeModules.UIManager.getViewManagerConfig(getAirMapName(this.props.provider)).Commands[name];
+   }
+ 
+   _mapManagerCommand(name) {
