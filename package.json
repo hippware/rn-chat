@@ -28,7 +28,8 @@
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
-    "storybook": "storybook start"
+    "storybook": "storybook start",
+    "postinstall": "patch-package"
   },
   "detox": {
     "configurations": {
@@ -68,7 +69,9 @@
     "mobx-state-tree": "^3.10.2",
     "moment": "^2.24.0",
     "mst-middlewares": "^3.10.2",
+    "patch-package": "^6.0.5",
     "phoenix": "^1.4.1",
+    "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.0",
