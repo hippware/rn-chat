@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -43,7 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNBackgroundGeolocation(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNLocalizePackage(), new RNBackgroundGeolocation(),
           BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(), new LinearGradientPackage(),
           new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(), new RNDeviceInfo(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
