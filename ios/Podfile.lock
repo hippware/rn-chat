@@ -208,6 +208,8 @@ PODS:
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
+  - RNLocalize (1.1.0):
+    - React
   - RSKImageCropper (2.2.1)
   - SSZipArchive (2.1.4)
   - yoga (0.59.0.React)
@@ -251,6 +253,7 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RSKImageCropper
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -320,6 +323,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -363,12 +368,13 @@ SPEC CHECKSUMS:
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
-  RNGestureHandler: b65d391f4f570178d657b99a16ec99d09b8656b0
+  RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98
   RNImageCropPicker: 754299983d07c450aec0834c0efe0ed114131ff3
+  RNLocalize: 079a659b6ac62d98ac76e1050353a51a8e06f5bd
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
-PODFILE CHECKSUM: a67b6d90c935b44a1a85567089415e47b09c07d6
+PODFILE CHECKSUM: 238baf22b168e221dec7e2314f3122e8453245e8
 
 COCOAPODS: 1.6.1

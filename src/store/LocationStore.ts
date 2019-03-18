@@ -6,6 +6,7 @@ import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
+import * as RNLocalize from 'react-native-localize'
 
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
@@ -65,8 +66,7 @@ const BackgroundLocationConfigOptions = types.model('BackgroundLocationConfigOpt
 })
 
 // todo: https://github.com/hippware/rn-chat/issues/3434
-const isMetric = true
-
+const isMetric = RNLocalize.usesMetricSystem()
 const LocationStore = types
   .model('LocationStore', {
     // should we persist location?

@@ -41,7 +41,9 @@ def testing_pods
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 
-  # Third party deps podspec link
+  # Add new pods below this line
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
