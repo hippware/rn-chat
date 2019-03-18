@@ -107,6 +107,9 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+
+def isAppCenterBuild = System.getenv("APPCENTER_BRANCH")
+
 android {
   lintOptions {
     disable 'GradleCompatible'
@@ -136,7 +139,7 @@ android {
   }
   signingConfigs {
     // since AppCenter signs the apk separately don't specify signing configs there
-    if (!System.getenv('IS_APPCENTER')) {
+    if (!isAppCenterBuild) {
       staging {
         storeFile file(STAGING_RELEASE_STORE_FILE)
         storePassword STAGING_RELEASE_STORE_PASSWORD
@@ -179,7 +182,7 @@ android {
       targetSdkVersion rootProject.ext.targetSdkVersion
 
       // don't sign AppCenter gradle builds...the APK is signed in a subsequent build step.
-      if (!System.getenv('IS_APPCENTER')) {
+      if (!isAppCenterBuild) {
         signingConfig signingConfigs.staging
       }
       applicationIdSuffix ".staging"
@@ -187,7 +190,7 @@ android {
     prod {
       minSdkVersion rootProject.ext.minSdkVersion
       targetSdkVersion rootProject.ext.targetSdkVersion
-      if (!System.getenv('IS_APPCENTER')) {
+      if (!isAppCenterBuild) {
         signingConfig signingConfigs.prod
       }
     }
