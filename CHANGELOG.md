@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [android] Fix rn-blur error (#3447)
+* hot-fix: fix ErrorHandler to work with React Native 0.59
+* Update: react-navigation 3.x, react-native-router-flux (PR #3238)
+* Configure android builds (PR #3474)
+
 # 4.2.0 - 2019 Mar 14
 
 **React Native upgrade to 0.59.0**: See below
