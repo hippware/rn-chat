@@ -1,5 +1,4 @@
 import Config from 'react-native-config'
-import {error} from './utils/log'
 
 export type Settings = {
   configurableLocationSettings: boolean
@@ -18,7 +17,7 @@ export type Settings = {
 }
 
 if (!Config || !Config.HOST) {
-  error('Invalid config!', process.env.ENVFILE, Config)
+  throw new Error('Invalid config!')
 }
 
 const isStaging = Config.IS_STAGING === 'true'

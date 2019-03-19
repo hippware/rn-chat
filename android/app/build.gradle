@@ -110,6 +110,10 @@ def enableProguardInReleaseBuilds = false
 
 def isAppCenterBuild = System.getenv("APPCENTER_BRANCH")
 
+// output values from .env file so we know it's getting picked up correctly
+System.println("*** HOST: " + project.env.get("HOST"))
+System.println("*** IS_STAGING: " + project.env.get("IS_STAGING"))
+
 android {
   lintOptions {
     disable 'GradleCompatible'
@@ -126,7 +130,6 @@ android {
   flavorDimensions "default"
 
   defaultConfig {
-    applicationId "com.hippware.android.tinyrobot"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 2
@@ -136,7 +139,9 @@ android {
     }
     // because of firestore:
     multiDexEnabled true
-    resValue "string", "build_config_package", "com.hippware.android.tinyrobot"
+
+    // https://github.com/luggit/react-native-config#advanced-android-setup
+   resValue "string", "build_config_package", "com.hippware.android.tinyrobot"
   }
   signingConfigs {
     // since AppCenter signs the apk separately don't specify signing configs there
