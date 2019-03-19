@@ -136,6 +136,7 @@ android {
     }
     // because of firestore:
     multiDexEnabled true
+    resValue "string", "build_config_package", "com.hippware.android.tinyrobot"
   }
   signingConfigs {
     // since AppCenter signs the apk separately don't specify signing configs there
