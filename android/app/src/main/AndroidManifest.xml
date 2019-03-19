@@ -1,43 +1,30 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.hippware.android.tinyrobot">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.hippware.android.tinyrobot">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-      android:name=".MainApplication"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
-      android:theme="@style/AppTheme">
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
 
-      <!-- https://stackoverflow.com/a/50779232/476228
+    <!-- https://stackoverflow.com/a/50779232/476228
         todo: remove this if we target a higher Google Maps SDK (after a rn-maps update perhaps)
       -->
-      <uses-library android:name="org.apache.http.legacy" android:required="false" />
+    <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
-      <meta-data
-     android:name="com.google.android.geo.API_KEY"
-     android:value="AIzaSyDjvPNa8X4sVI9-jUb8BrN08nwCa9Hp128"/>
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-<service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
-    <intent-filter>
-      <action android:name="com.google.firebase.MESSAGING_EVENT" />
-    </intent-filter>
-  </service>
-  <!-- react-native-background-geolocation license -->
-     <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="495562b5f0d6558e6f7d46d47c18bbaa41ac7c8f9321bf551883445630cf9ac0" />
-    
-    </application>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDjvPNa8X4sVI9-jUb8BrN08nwCa9Hp128"/>
+    <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+    <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+    <!-- react-native-background-geolocation license -->
+    <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="495562b5f0d6558e6f7d46d47c18bbaa41ac7c8f9321bf551883445630cf9ac0" />
+
+  </application>
 
 </manifest>
