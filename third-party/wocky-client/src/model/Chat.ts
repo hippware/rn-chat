@@ -19,7 +19,7 @@ export const Chat = types
   }))
   .views(self => ({
     get sortedMessages() {
-      return self.messages.list!.sort((a, b) => a.time - b.time)
+      return self.messages.list!.sort((a, b) => b.time - a.time)
     },
     get unreadCount(): number {
       return self.messages.list.reduce((prev, current) => prev + (current.unread ? 1 : 0), 0)

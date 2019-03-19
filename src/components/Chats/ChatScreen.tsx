@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, ActivityIndicator, FlatList} from 'react-native'
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import moment from 'moment'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
@@ -9,6 +9,7 @@ import ChatMessage from './ChatMessage'
 import {withKeyboardHOC} from '../common'
 import {IWocky, IChat, IMessage} from 'wocky-client'
 import InputArea from './InputArea'
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view'
 
 type Props = {
   item: string
@@ -66,16 +67,16 @@ class ChatScreen extends React.Component<Props> {
     </View>
   )
 
-  _footerComponent: any = observer(
-    () => (this.chat!.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null)
+  _footerComponent: any = observer(() =>
+    this.chat!.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
   )
 
   render() {
     return this.chat && isAlive(this.chat) ? (
       <Screen>
-        <FlatList
+        <KeyboardAwareFlatList
           inverted
-          data={this.chat.sortedMessages.reverse()}
+          data={this.chat.sortedMessages.slice()}
           renderItem={this.renderItem}
           keyExtractor={i => i.id}
           onEndReached={() => this.chat!.messages.load()}

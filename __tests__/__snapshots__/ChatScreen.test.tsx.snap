@@ -60,15 +60,31 @@ exports[`ChatScreen renders with no data 1`] = `
     >
       <RCTScrollView
         ListFooterComponent={[Function]}
+        automaticallyAdjustContentInsets={false}
+        contentInset={
+          Object {
+            "bottom": 0,
+          }
+        }
         data={Array []}
         disableVirtualization={false}
+        enableAutomaticScroll={true}
+        enableOnAndroid={false}
+        enableResetScrollToCoords={true}
+        extraHeight={75}
+        extraScrollHeight={0}
         getItem={[Function]}
         getItemCount={[Function]}
+        getScrollResponder={[Function]}
+        handleOnScroll={[Function]}
         horizontal={false}
         initialNumToRender={10}
         invertStickyHeaders={true}
         inverted={true}
         keyExtractor={[Function]}
+        keyboardDismissMode="interactive"
+        keyboardOpeningTime={250}
+        keyboardSpace={0}
         maxToRenderPerBatch={10}
         numColumns={1}
         onContentSizeChange={[Function]}
@@ -81,9 +97,18 @@ exports[`ChatScreen renders with no data 1`] = `
         onScrollEndDrag={[Function]}
         removeClippedSubviews={false}
         renderItem={[Function]}
-        scrollEventThrottle={50}
+        resetKeyboardSpace={[Function]}
+        scrollEventThrottle={1}
+        scrollForExtraHeightOnAndroid={[Function]}
+        scrollIntoView={[Function]}
+        scrollToEnd={[Function]}
+        scrollToFocusedInput={[Function]}
+        scrollToPosition={[Function]}
+        showsVerticalScrollIndicator={true}
         stickyHeaderIndices={Array []}
+        update={[Function]}
         updateCellsBatchingPeriod={50}
+        viewIsInsideTabBar={false}
         viewabilityConfigCallbackPairs={Array []}
         windowSize={21}
       >

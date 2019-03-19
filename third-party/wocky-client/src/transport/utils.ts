@@ -492,7 +492,7 @@ export function convertMessage({id, direction, content, otherUser, createdAt, me
   return {
     id: id.toString(),
     otherUser,
-    time: new Date(createdAt).valueOf(),
+    time: iso8601toDate(createdAt).getTime(),
     media: convertImage(media) as any,
     content: content || undefined,
     isOutgoing: direction === 'OUTGOING',
