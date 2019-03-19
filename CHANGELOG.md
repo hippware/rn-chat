@@ -8,6 +8,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * hot-fix: fix ErrorHandler to work with React Native 0.59
 * Update: react-navigation 3.x, react-native-router-flux (PR #3238)
 * Configure android builds (PR #3474)
+* Don't request unnecessary sharedLocation fields (#3479)
+* Use rn-localize to set metric system in LocationStore (#3434)
+* [android] [rn-maps] fix for UIManager warning from MapHome.tsx (#3448)
 
 # 4.2.0 - 2019 Mar 14
 
