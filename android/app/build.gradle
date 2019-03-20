@@ -133,11 +133,21 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
 
+    def versionPropsFile = file('version.properties')
+    Properties versionProps = new Properties()
+
+    if (versionPropsFile.canRead()) {
+        versionProps.load(new FileInputStream(versionPropsFile))
+    }
+    // def code = versionProps['VERSION_CODE'].toInteger()
+    def name= versionProps['VERSION_NAME']
+
     // this gets bumped automatically by AppCenter
     versionCode 2
 
-    // this should map the versions in package.json, ios, etc
-    versionName "4.2.0"
+    // this should match the versions in package.json, ios, etc
+    versionName name
+
     ndk {
       abiFilters "armeabi-v7a", "x86"
     }

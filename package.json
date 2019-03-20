@@ -22,7 +22,7 @@
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "bash ./scripts/codepush.sh",
-    "version:bump": "babel-node ./scripts/version-increment.js",
+    "versionBump": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/version-increment.ts",
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
