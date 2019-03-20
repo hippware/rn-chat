@@ -67,6 +67,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "548019610697-ss6h8klm0s7p1t2g7suhtm6v0u9srg5s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot.staging",
+            "certificate_hash": "a4dd583379cdc221c29430f8257a188755ad5859"
+          }
+        },
+        {
+          "client_id": "548019610697-dqf0carjmsgu1s6sh2640m5an2i8oh3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot.staging",
+            "certificate_hash": "615997723d35361318a6f6acc0ab1eb3a95820da"
+          }
+        },
+        {
           "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -81,8 +97,21 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "548019610697-cvfs1fjakvibmefqa4epp141a7a1c78o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hippware.tinyrobot",
+                "app_store_id": "1295678402"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2
