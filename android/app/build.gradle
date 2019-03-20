@@ -132,8 +132,12 @@ android {
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
+
+    // this gets bumped automatically by AppCenter
     versionCode 2
-    versionName "1.01"
+
+    // this should map the versions in package.json, ios, etc
+    versionName "4.2.0"
     ndk {
       abiFilters "armeabi-v7a", "x86"
     }
