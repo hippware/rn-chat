@@ -298,9 +298,7 @@ export function iso8601toDate(date: string): Date {
 }
 
 export function convertImage(image) {
-  return image && image.trosUrl && image.thumbnailUrl
-    ? {id: image.trosUrl, url: image.thumbnailUrl}
-    : null
+  return image && image.trosUrl ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
 
 export function convertProfile({media, bots, hidden, presenceStatus, ...data}): IProfilePartial {

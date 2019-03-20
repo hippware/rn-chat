@@ -54,6 +54,11 @@ export const Chat = types
       self.messages.setRequest(service._loadChatMessages.bind(service, self.id))
     },
   }))
+  .postProcessSnapshot((snapshot: any) => {
+    const res: any = {...snapshot}
+    delete res.active
+    return res
+  })
 
 export interface IChat extends Instance<typeof Chat> {}
 export interface IChatIn extends SnapshotIn<typeof Chat> {}

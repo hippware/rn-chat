@@ -10,14 +10,12 @@ interface IProps {
   imageProps: any
 }
 
-@observer
-export default class LazyImage extends React.Component<IProps> {
-  render() {
-    const {file, placeholder, imageProps} = this.props
-    return (file && file.thumbnail) || !placeholder ? (
-      <Image source={file && file.thumbnail} {...imageProps} />
-    ) : (
-      placeholder
-    )
-  }
-}
+const LazyImage = observer(({file, placeholder, imageProps}: IProps) => {
+  return (file && file.thumbnail) || !placeholder ? (
+    <Image source={file && file.thumbnail} {...imageProps} />
+  ) : (
+    placeholder
+  )
+})
+
+export default LazyImage

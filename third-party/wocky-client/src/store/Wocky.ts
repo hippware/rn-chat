@@ -187,7 +187,7 @@ export const Wocky = types
         max
       )
       items.forEach(item => {
-        const msg = createMessage({...item.message, unread: true}, self)
+        const msg = createMessage(item.message, self)
         const chat = self.createChat(item.chatId)
         chat.messages.addToTop(msg)
       })
@@ -304,7 +304,7 @@ export const Wocky = types
         })
       }),
       _sendMessage: flow(function*(msg: IMessage) {
-        // console.log('& sendMessage', getSnapshot(msg))
+        // console.log('& sendMessage', JSON.stringify(msg))
         yield self.transport.sendMessage(
           (msg.otherUser!.id || msg.otherUser!) as string,
           msg.content.length ? msg.content : undefined,
@@ -312,7 +312,7 @@ export const Wocky = types
         )
         // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
         // TODO better IMessage to IMessageIn conversion?
-        self._addMessage(msg as any, false)
+        self._addMessage({...msg, id: Date.now() + ''} as any, false)
       }),
       _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
         yield waitFor(() => self.connected)
@@ -589,7 +589,10 @@ export const Wocky = types
             }
           }
         ),
-        reaction(() => self.transport.message, message => self._addMessage(message, true)),
+        reaction(
+          () => self.transport.message,
+          message => self._addMessage({...message} as any, true)
+        ),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.rosterItem, self._onRosterItem),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
