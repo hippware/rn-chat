@@ -35,7 +35,7 @@ class EditNote extends React.Component<Props> {
           value={this.bot!.description}
           autoFocus
           multiline
-          onBlur={Actions.pop}
+          onBlur={() => Actions.pop()}
           selectionColor={colors.COVER_BLUE}
         />
         <GradientButton
@@ -46,7 +46,7 @@ class EditNote extends React.Component<Props> {
             alignItems: 'center',
           }}
           isPink
-          onPress={Actions.pop}
+          onPress={() => Actions.pop()}
         >
           <RText color="white" size={15}>
             Add Note

@@ -27,7 +27,7 @@ type Props = {
 export default class VerifyCode extends React.Component<Props> {
   static left = () => (
     <TouchableOpacity
-      onPress={Actions.pop}
+      onPress={() => Actions.pop()}
       style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}
     >
       <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />

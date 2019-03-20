@@ -23,7 +23,7 @@ const NavBarHeader = ({config: {title, back, backAction, right, left}}: Props) =
     <View style={styles.header}>
       <View style={{width: 23}}>
         {back ? (
-          <TouchableOpacity onPress={backAction || Actions.pop}>
+          <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
             <Image
               source={backButtonImage}
               style={{tintColor: navBarButtonColor, width: 13, height: 21, marginLeft: 10}}

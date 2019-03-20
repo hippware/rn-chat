@@ -27,7 +27,7 @@ const GeoHeaderPrimer = () => (
     </TouchableOpacity>
 
     <TouchableOpacity
-      onPress={Actions.pop}
+      onPress={() => Actions.pop()}
       style={[styles.button, {backgroundColor: 'transparent'}]}
     >
       <RText size={17.5} color={colors.PINK}>
