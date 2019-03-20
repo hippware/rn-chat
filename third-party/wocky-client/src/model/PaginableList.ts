@@ -13,15 +13,21 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
       finished: false,
     }))
     .actions(self => ({
-      add: (item: any) => {
-        if (!self.result.find((el: any) => el.id === item.id)) {
-          self.result.push(item)
+      remove: (id: string) => {
+        const index = self.result.findIndex((el: any) => el.id === id)
+        if (index !== -1) {
+          self.result.splice(index, 1)
         }
       },
+    }))
+    .actions(self => ({
+      add: (item: any) => {
+        self.remove(item.id)
+        self.result.push(item)
+      },
       addToTop: (item: any) => {
-        if (!self.result.find((el: any) => el.id === item.id)) {
-          self.result.unshift(item)
-        }
+        self.remove(item.id)
+        self.result.unshift(item)
       },
     }))
     .extend(self => {
@@ -45,12 +51,6 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
           setRequest: (req: RequestType) => (request = req),
           exists: (id: string): boolean => {
             return self.result.find((el: any) => isAlive(el) && el.id === id) !== undefined
-          },
-          remove: (id: string) => {
-            const index = self.result.findIndex((el: any) => el.id === id)
-            if (index !== -1) {
-              self.result.splice(index, 1)
-            }
           },
           refresh: () => {
             self.result.clear()
