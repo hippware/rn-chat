@@ -7,10 +7,18 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Fix rn-blur error (#3447)
 * hot-fix: fix ErrorHandler to work with React Native 0.59
 * Update: react-navigation 3.x, react-native-router-flux (PR #3238)
-* Configure android builds (PR #3474)
 * Don't request unnecessary sharedLocation fields (#3479)
 * Use rn-localize to set metric system in LocationStore (#3434)
 * [android] [rn-maps] fix for UIManager warning from MapHome.tsx (#3448)
+
+* Android build system work / Finish build variants (#3433)
+  * Configure android builds (PR #3474)
+    * [dev] combine staging and prod AppCenter apps into one (#3471)
+  * Better solution for determing appcenter env (PR #3487)
+    * Could not get unknown property 'STAGING_RELEASE_STORE_FILE' (#3482)
+  * Tweaks to run android build (PR #3492)
+
+* WIP: messaging UI fixes (PR #3493)
 
 # 4.2.0 - 2019 Mar 14
 
