@@ -10097,10 +10097,10 @@ react-native-push-notification@^3.1.2:
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.2.tgz#a6129fb2897773a19c7b42bba1b51a9a4aac7df3"
   integrity sha512-MjjPNXb2Cw7g1D41DtVbTVuGFCAtADxb91pAEFSkQ0AZ2gIooqYkWFHBL6woc15QHhtaZS8VT2GQoyW5OWlxIg==
 
-react-native-router-flux@^4.1.0-beta.3:
-  version "4.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.3.tgz#9340eae0830e04bef02ecc95bbb3ace901a36f06"
-  integrity sha512-rO3rdn8a1QfIEi6izpan6jEXyGCAFdQ5gFCnwDvePl8S9W3gNW48CMQLcAwBKrE1TOOYaiD/q2lKJwdFZ+oJXQ==
+react-native-router-flux@^4.1.0-beta.4:
+  version "4.1.0-beta.4"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.1.0-beta.4.tgz#938714af73518bd3eedfa0818167532604a388cd"
+  integrity sha512-mEUvIxoh0yZ63FnJ2IQnkBzp2SwpCiMKs/J+Jifp/Pb/sisXjs3W5TPPe3ktzYUaU/SO7pZ2qT3jILVSAYPnng==
   dependencies:
     lodash "^4.17.11"
     opencollective "^1.0.3"
