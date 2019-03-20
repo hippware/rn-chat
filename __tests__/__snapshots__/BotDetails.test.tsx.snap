@@ -501,7 +501,7 @@ exports[`BotDetails renders with no data 1`] = `
                 Object {
                   "height": 21,
                   "marginLeft": 10,
-                  "tintColor": "rgb(117,117,117)",
+                  "tintColor": "rgb(28,247,39)",
                   "width": 13,
                 }
               }
