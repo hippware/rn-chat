@@ -42,8 +42,6 @@ export default class MapHome extends React.Component<Props> {
   }
   @observable areaTooLarge = false
 
-  @observable
-  mapType: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard' = 'standard'
   mapRef: MapView | null = null
   reactions: any[] = []
   animating: boolean = false
@@ -79,7 +77,7 @@ export default class MapHome extends React.Component<Props> {
     // NOTE: this runs _very_ often while panning/scrolling the map
     if (!this.animating) this.props.homeStore!.stopFollowingUserOnMap()
     if (latitudeDelta) {
-      this.mapType = latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard'
+      this.props.homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
     }
   }
 
@@ -121,7 +119,7 @@ export default class MapHome extends React.Component<Props> {
 
   render() {
     const {locationStore, homeStore} = this.props
-    const {list, detailsMode, creationMode, fullScreenMode} = homeStore!
+    const {list, detailsMode, creationMode, fullScreenMode, mapType} = homeStore!
     const {location} = locationStore!
     if (!location) {
       return (
@@ -147,7 +145,7 @@ export default class MapHome extends React.Component<Props> {
           style={commonStyles.absolute}
           customMapStyle={mapStyle}
           scrollEnabled={!detailsMode}
-          mapType={this.mapType}
+          mapType={mapType}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
           rotateEnabled={false}
