@@ -60,10 +60,10 @@ class AnimatedPushScene extends React.Component<Props> {
         pointerEvents="box-none"
         style={{
           position: 'absolute',
-          left: -1,
-          right: -1,
-          top: fromTop ? -1 : undefined,
-          bottom: fromTop ? undefined : -1,
+          left: 0,
+          right: 0,
+          top: fromTop ? 0 : undefined,
+          bottom: fromTop ? undefined : 0,
           transform: [
             {
               translateY: this.slideHeight,
