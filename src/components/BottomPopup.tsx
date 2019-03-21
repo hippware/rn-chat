@@ -16,7 +16,7 @@ const BottomPopup = inject('homeStore')(
         <Image
           style={styles.absolute}
           source={
-            homeStore.mapType === 'hybrid'
+            homeStore!.mapType === 'hybrid'
               ? require('../../images/bottomPopupDarkShadow.png')
               : require('../../images/bottomPopup.png')
           }

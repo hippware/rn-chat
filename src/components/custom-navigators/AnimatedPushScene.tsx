@@ -48,17 +48,22 @@ class AnimatedPushScene extends React.Component<Props> {
   }
 
   render() {
-    const {descriptor: {navigation, getComponent}, route: {params: {fromTop}}} = this.props.scene
+    const {
+      descriptor: {navigation, getComponent},
+      route: {
+        params: {fromTop},
+      },
+    } = this.props.scene
     const Scene = getComponent()
     return (
       <Animated.View
         pointerEvents="box-none"
         style={{
           position: 'absolute',
-          left: 0,
-          right: 0,
-          top: fromTop ? 0 : undefined,
-          bottom: fromTop ? undefined : 0,
+          left: -1,
+          right: -1,
+          top: fromTop ? -1 : undefined,
+          bottom: fromTop ? undefined : -1,
           transform: [
             {
               translateY: this.slideHeight,
@@ -66,7 +71,11 @@ class AnimatedPushScene extends React.Component<Props> {
             },
           ],
         }}
-        onLayout={({nativeEvent: {layout: {height: viewHeight}}}) => (this.viewHeight = viewHeight)}
+        onLayout={({
+          nativeEvent: {
+            layout: {height: viewHeight},
+          },
+        }) => (this.viewHeight = viewHeight)}
       >
         <Scene navigation={navigation} />
       </Animated.View>

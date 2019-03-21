@@ -21,7 +21,7 @@ export default class BackButton extends React.Component<Props> {
       scene: {index, isActive},
     } = nextProps
     Animated.spring(this.offsetLeft, {
-      toValue: index > 0 && isActive ? 0 : -100,
+      toValue: index > 0 && isActive ? -5 : -100,
       useNativeDriver: true,
     }).start()
   }
@@ -47,7 +47,7 @@ export default class BackButton extends React.Component<Props> {
         <Image
           style={{position: 'absolute', top: 0, left: 0}}
           source={
-            homeStore.mapType === 'hybrid'
+            homeStore!.mapType === 'hybrid'
               ? require('../../../images/backButtonContainerDarkShadow.png')
               : require('../../../images/backButtonContainer.png')
           }

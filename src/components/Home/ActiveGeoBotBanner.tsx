@@ -83,7 +83,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
           style={{
             backgroundColor: 'white',
             paddingTop: isIphoneX ? 28 * k : isIphone ? 23 * k : 0,
-            shadowColor: homeStore.mapType === 'hybrid' ? '#333' : colors.GREY,
+            shadowColor: homeStore!.mapType === 'hybrid' ? '#333' : colors.GREY,
             shadowOffset: {width: 0, height: 2},
             shadowOpacity: 1,
             shadowRadius: 5,
@@ -119,7 +119,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
               <Image source={settingsImg} />
             </TouchableOpacity>
             <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
-              <Image source={homeStore.mapType === 'hybrid' ? infoImgWhite : infoImg} />
+              <Image source={homeStore!.mapType === 'hybrid' ? infoImgWhite : infoImg} />
             </TouchableOpacity>
           </View>
         )}
