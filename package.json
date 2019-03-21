@@ -9,6 +9,7 @@
     "android": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-android --variant stagingDebug --appIdSuffix='staging'",
     "androidShake": "adb shell input keyevent 82",
     "androidReload": "adb shell input text RR",
+    "androidNetwork": "adb reverse tcp:8081 tcp:8081",
     "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
