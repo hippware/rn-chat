@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.3.??
+
 * [android] Fix rn-blur error (#3447)
 * hot-fix: fix ErrorHandler to work with React Native 0.59
 * Update: react-navigation 3.x, react-native-router-flux (PR #3238)
@@ -15,8 +17,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Configure android builds (PR #3474)
     * [dev] combine staging and prod AppCenter apps into one (#3471)
   * Better solution for determing appcenter env (PR #3487)
-    * Could not get unknown property 'STAGING_RELEASE_STORE_FILE' (#3482)
   * Tweaks to run android build (PR #3492); Env fix (PR #3490)
+  * Add default gradle properties (PR #3504)
+    * Could not get unknown property 'STAGING_RELEASE_STORE_FILE' (#3482)
 * [android] RNBGL staging license (PR #3494); Fixes crash (#3489)
 * Fixes for messaging UI (PR #3493, PR #3502)
   * Image messages don't show until app reload (#3226)
@@ -27,6 +30,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Images not displayed for Messages UI list of conversations (#3500)
   * Messages UI always displays "New Messages" after fresh login (#3501)
 * Update google maps style to include stroke (#3508)
+* New `versionBump` script to manage version code (#3507)
 
 # 4.2.0 - 2019 Mar 14
 
