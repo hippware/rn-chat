@@ -1,18 +1,44 @@
-// tslint:disable:no-console
+/**
+ * Bump native version #s based on package.json version
+ *
+ * Usage: `yarn versionBump [minor | major]`
+ */
 
 import fs from 'fs'
 import {exec} from 'child_process'
 import chalk from 'chalk'
+import console = require('console')
+
+//  tslint:disable:no-console
+
+// default to micro version #
+let indexToBump = 2
+
+switch (process.argv[2]) {
+  case 'minor':
+    indexToBump = 1
+    break
+  case 'major':
+    indexToBump = 0
+    break
+  case undefined:
+    break
+  default:
+    throw new Error('only "major" or "minor" are valid options')
+}
 
 // 1. Retrieve the current version # from package.json
 const packageInfo = require('../package.json')
 
 // 2. bump the build number
-const versionParts = packageInfo.version.split('.')
-const buildInt = parseInt(versionParts[2]) + 1
-const newVersion = [versionParts[0], versionParts[1], buildInt].join('.')
+const versionParts: string[] = packageInfo.version.split('.')
+const newVersion = versionParts
+  .map((p, index) => (index === indexToBump ? parseInt(p) + 1 : index > indexToBump ? 0 : p))
+  .join('.')
 
 writeToFiles()
+
+// ------------------------------------------------------------
 
 async function writeToFiles() {
   console.log(chalk.cyan.underline('\r\nBUMP VERSION'))
