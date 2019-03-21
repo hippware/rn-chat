@@ -43,6 +43,24 @@ export default class VerifyCode extends React.Component<Props> {
   @observable isResending: boolean = false
   @observable isResent: boolean = false
   input: any
+  disposer: any
+
+  componentDidMount() {
+    this.disposer = when(
+      () => this.props.firebaseStore!.registered,
+      () => {
+        this.isConfirming = false
+        Actions.checkProfile()
+      }
+    )
+  }
+
+  componentWillUnmount() {
+    if (this.disposer) {
+      this.disposer()
+      this.disposer = undefined
+    }
+  }
 
   processText = (text: string): void => {
     this.hiddenCode = text
@@ -65,14 +83,8 @@ export default class VerifyCode extends React.Component<Props> {
       const {firebaseStore} = this.props
       this.isConfirming = true
       await firebaseStore!.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()})
-      when(
-        () => firebaseStore!.registered,
-        () => {
-          this.isConfirming = false
-          Actions.checkProfile()
-        }
-      )
-    } catch {
+      // nav will occur as a reaction in componentDidMount
+    } finally {
       this.isConfirming = false
     }
   }

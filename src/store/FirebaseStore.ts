@@ -24,7 +24,7 @@ const FirebaseStore = types
     phone: '',
     buttonText: 'Verify',
     registered: false,
-    errorMessage: '', // to avoid strange typescript errors when set it to string or null,
+    errorMessage: '',
     token: null,
   }))
   .actions(self => ({
@@ -40,12 +40,34 @@ const FirebaseStore = types
       self.inviteCode = code
     },
   }))
+  .actions(self => ({
+    registerWithToken: flow(function*() {
+      const {authStore} = getParent<any>(self)
+      const {logger, analytics} = getEnv(self)
+      try {
+        self.setState({buttonText: 'Connecting...'})
+        authStore.register(self.phone, 'firebase')
+        yield (authStore as IAuthStore).login()
+        self.setState({buttonText: 'Verify', registered: true})
+      } catch (err) {
+        logger.warn('RegisterWithToken error', err)
+        self.setState({errorMessage: 'Error registering, please try again'})
+        analytics.track('error_firebase_register', {error: err})
+      } finally {
+        self.setState({
+          buttonText: 'Verify',
+          // todo: shouldn't overwrite errorMessage here
+          errorMessage: '',
+        })
+      }
+    }),
+  }))
   .actions(self => {
     const {firebase, auth, logger, analytics}: IEnv = getEnv(self)
-    const {authStore} = getParent<any>(self)
     let wocky: IWocky
     let confirmResult: any
     let unsubscribe: any
+    let disposer
 
     function onFirebaseDynamicLink(url: string) {
       if (url) {
@@ -93,12 +115,15 @@ const FirebaseStore = types
     // NOTE: this is not a MST action
     async function processFirebaseAuthChange(user: any) {
       logger.log('FIREBASESTORE: AUTH STATE CHANGED', !!user)
+      logger.log(user)
       if (user) {
         try {
           await auth!.currentUser!.reload()
           self.setState({
             token: await auth!.currentUser!.getIdToken(true),
           })
+          if (disposer) disposer()
+          disposer = when(() => !!self.token && self.phone, self.registerWithToken)
         } catch (err) {
           logger.warn('Firebase onAuthStateChanged error:', err)
           analytics.track('auth_error_firebase', {error: err})
@@ -156,6 +181,7 @@ const FirebaseStore = types
         analytics.track('sms_confirmation_try')
         confirmResult = yield auth.signInWithPhoneNumber(phone)
         analytics.track('sms_confirmation_success')
+        // register/login occurs as a reaction in processFirebaseAuthChange
         return true
       } catch (err) {
         analytics.track('sms_confirmation_fail', {error: err, phone})
@@ -208,27 +234,8 @@ const FirebaseStore = types
     function register(): void {
       self.setState({buttonText: 'Registering...'})
       // TODO: set a timeout on firebase register
-      when(() => !!self.token, registerWithToken)
+      when(() => !!self.token, self.registerWithToken)
     }
-
-    const registerWithToken = flow(function*() {
-      try {
-        self.setState({buttonText: 'Connecting...'})
-        authStore.register(self.phone, 'firebase')
-        yield (authStore as IAuthStore).login()
-        self.setState({buttonText: 'Verify', registered: true})
-      } catch (err) {
-        logger.warn('RegisterWithToken error', err)
-        self.setState({errorMessage: 'Error registering, please try again'})
-        analytics.track('error_firebase_register', {error: err})
-      } finally {
-        self.setState({
-          buttonText: 'Verify',
-          // todo: shouldn't overwrite errorMessage here
-          errorMessage: '',
-        })
-      }
-    })
 
     // TODO: use rn-firebase for dynamic link generation when it's less broken
     const getFriendInviteLink = flow(function*() {
