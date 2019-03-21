@@ -21,7 +21,7 @@ export default class BackButton extends React.Component<Props> {
       scene: {index, isActive},
     } = nextProps
     Animated.spring(this.offsetLeft, {
-      toValue: index > 0 && isActive ? -5 : -100,
+      toValue: index > 0 && isActive ? 0 : -100,
       useNativeDriver: true,
     }).start()
   }
