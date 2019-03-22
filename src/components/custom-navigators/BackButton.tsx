@@ -33,7 +33,7 @@ export default class BackButton extends React.Component<Props> {
         style={{
           position: 'absolute',
           top: 50,
-          left: 0,
+          left: -5,
           width: 51,
           height: 55,
           transform: [
