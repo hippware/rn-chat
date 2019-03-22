@@ -17,7 +17,7 @@ const MessageBase = types.model('MessageBase', {
 
 export function createMessage(params: any, service: any): IMessage {
   if (params.otherUser) {
-    params.otherUser = params.otherUser.id
+    params.otherUser = service.profiles.get(params.otherUser.id, params.otherUser)
   }
   if (params.media) {
     params.media = service.files.get(params.media.id, params.media)

@@ -26,7 +26,7 @@
                BlueprintIdentifier = "87C4147A20E669F90044AF0A"
                BuildableName = "tinyrobotStaging.app"
                BlueprintName = "tinyrobotStaging"
-               ReferencedContainer = "container:tinyrobot.xcodeproj">
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,7 +44,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -93,7 +93,7 @@
             BlueprintIdentifier = "87C4147A20E669F90044AF0A"
             BuildableName = "tinyrobotStaging.app"
             BlueprintName = "tinyrobotStaging"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
