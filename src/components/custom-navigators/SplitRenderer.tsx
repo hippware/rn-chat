@@ -1,6 +1,6 @@
 import React from 'react'
 import {Transitioner} from 'react-navigation-stack'
-import {View} from 'react-native'
+import {View, Platform} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'
 import BackButton from './BackButton'
@@ -29,7 +29,8 @@ export default class SplitRenderer extends React.Component<Props> {
             left: 0,
             right: 0,
             bottom: 0,
-            borderWidth: 1, // workaround to display 'Back' button for android
+            // todo: remove borderWidth on Android (appears around edge of Bottom Menu screens)
+            borderWidth: Platform.OS === 'android' ? 1 : 0, // workaround to display 'Back' button for android
             borderColor: 'transparent',
           }}
           key={scene.route.key}

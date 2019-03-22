@@ -83,7 +83,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
           style={{
             backgroundColor: 'white',
             paddingTop: isIphoneX ? 28 * k : isIphone ? 23 * k : 0,
-            shadowColor: colors.GREY,
+            shadowColor: homeStore!.mapType === 'hybrid' ? '#333' : colors.GREY,
             shadowOffset: {width: 0, height: 2},
             shadowOpacity: 1,
             shadowRadius: 5,
@@ -102,7 +102,9 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
           <HeaderLocationOverlay />
           <InvisibleModeOverlay />
         </View>
-        {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && <Buttons />}
+        {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && (
+          <Buttons mapType={homeStore!.mapType} />
+        )}
       </Animated.View>
     )
   }
@@ -121,10 +123,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
     )
 }
 
-const settingsImg = require('../../../images/settingsBtn.png')
-const infoImg = require('../../../images/info.png')
-
-const Buttons = () => (
+const Buttons = ({mapType}) => (
   <View
     style={{
       marginRight: 10,
@@ -141,11 +140,14 @@ const Buttons = () => (
       <Image source={settingsImg} />
     </TouchableOpacity>
     <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
-      <Image source={infoImg} />
+      <Image source={mapType === 'hybrid' ? infoImgWhite : infoImg} />
     </TouchableOpacity>
   </View>
 )
 
+const settingsImg = require('../../../images/settingsBtn.png')
+const infoImgWhite = require('../../../images/iButtonWhite.png')
+const infoImg = require('../../../images/info.png')
 const dotWidth = 12
 
 const styles = StyleSheet.create({

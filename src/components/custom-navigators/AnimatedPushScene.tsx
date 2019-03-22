@@ -48,7 +48,12 @@ class AnimatedPushScene extends React.Component<Props> {
   }
 
   render() {
-    const {descriptor: {navigation, getComponent}, route: {params: {fromTop}}} = this.props.scene
+    const {
+      descriptor: {navigation, getComponent},
+      route: {
+        params: {fromTop},
+      },
+    } = this.props.scene
     const Scene = getComponent()
     return (
       <Animated.View
@@ -66,7 +71,11 @@ class AnimatedPushScene extends React.Component<Props> {
             },
           ],
         }}
-        onLayout={({nativeEvent: {layout: {height: viewHeight}}}) => (this.viewHeight = viewHeight)}
+        onLayout={({
+          nativeEvent: {
+            layout: {height: viewHeight},
+          },
+        }) => (this.viewHeight = viewHeight)}
       >
         <Scene navigation={navigation} />
       </Animated.View>

@@ -9,13 +9,14 @@ import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import LocationSharerCard from '../home-cards/LocationSharerCard'
-import {Card} from '../../store/HomeStore'
+import {Card, IHomeStore} from '../../store/HomeStore'
 
 type Props = {
   enabled: boolean
   setIndex: any
   list: Card[]
   index: number
+  homeStore?: IHomeStore
 }
 
 type State = {
@@ -37,6 +38,8 @@ const marginBottom = 14 * s
 const totalHeight = height + marginBottom
 const buttonPadding = 10
 
+@inject('homeStore')
+@observer
 export default class HorizontalCardList extends React.Component<Props, State> {
   state = {
     translateY: new Animated.Value(0),
@@ -57,7 +60,8 @@ export default class HorizontalCardList extends React.Component<Props, State> {
   }
 
   render() {
-    const {list, setIndex, index, enabled} = this.props
+    const {list, setIndex, index, enabled, homeStore} = this.props
+    const {mapType} = homeStore!
     const {translateY} = this.state
     return (
       <Animated.View
@@ -65,7 +69,14 @@ export default class HorizontalCardList extends React.Component<Props, State> {
         pointerEvents="box-none"
       >
         <ButtonColumn />
-        <View style={styles.carouselContainer}>
+        <View
+          style={[
+            styles.carouselContainer,
+            {
+              shadowColor: mapType === 'hybrid' ? '#333' : colors.GREY,
+            },
+          ]}
+        >
           <Carousel
             key={`carousel${enabled}`}
             ref={r => (this.list = r)}
@@ -143,7 +154,6 @@ const styles = StyleSheet.create({
   carouselContainer: {
     height,
     marginBottom,
-    shadowColor: colors.GREY,
     shadowOpacity: 1,
     shadowRadius: 8,
     shadowOffset: {height: 0, width: 0},

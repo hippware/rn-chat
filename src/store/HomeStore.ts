@@ -73,6 +73,7 @@ const HomeStore = types
     focusedLocation: types.maybeNull(Location),
     mapCenterLocation: types.maybeNull(Location),
     selectedId: types.maybe(types.string),
+    mapType: types.optional(types.enumeration(['hybrid', 'standard']), 'standard'),
   })
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
@@ -131,6 +132,9 @@ const HomeStore = types
     },
     select(id: string) {
       self.selectedId = id
+    },
+    setMapType(type: 'standard' | 'hybrid') {
+      self.mapType = type
     },
   }))
   .actions(self => ({
