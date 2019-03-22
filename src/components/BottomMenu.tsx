@@ -51,42 +51,41 @@ const MenuItem = ({style, image, innerStyle, children, imageStyle, ...rest}: IMe
   </MenuItemWrapper>
 )
 
-const LiveLocationButton = ({invisible, active}) => (
-  <View style={{position: 'absolute', top: -25, zIndex: 10}}>
-    <TouchableOpacity style={{marginLeft: 160}} onPress={Actions.liveLocationShare}>
-      {invisible ? (
-        <Image source={require('../../images/liveLocationButtonGhost.png')} />
-      ) : active ? (
-        <View
-          style={{
-            width: 135,
-            height: 53,
-            borderRadius: 21,
-            overflow: 'hidden',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <AnimatedLinearGradient
-            customColors={[
-              'rgb(232, 66, 178)',
-              'rgb(255, 114, 59)',
-              'rgb(255, 183, 44)',
-              'rgb(159, 68, 242)',
-            ]}
-            speed={600}
-          />
-          <Image
-            style={{marginRight: 10}}
-            source={require('../../images/ShareLiveLocationText.png')}
-          />
-        </View>
-      ) : (
-        <Image source={require('../../images/liveLocationButton.png')} />
-      )}
-    </TouchableOpacity>
-  </View>
-)
+const LiveLocationButton = ({invisible, active}) =>
+  !invisible ? (
+    <View style={{position: 'absolute', top: -25, zIndex: 10}}>
+      <TouchableOpacity style={{marginLeft: 160}} onPress={Actions.liveLocationShare}>
+        {active ? (
+          <View
+            style={{
+              width: 135,
+              height: 53,
+              borderRadius: 21,
+              overflow: 'hidden',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <AnimatedLinearGradient
+              customColors={[
+                'rgb(232, 66, 178)',
+                'rgb(255, 114, 59)',
+                'rgb(255, 183, 44)',
+                'rgb(159, 68, 242)',
+              ]}
+              speed={600}
+            />
+            <Image
+              style={{marginRight: 10}}
+              source={require('../../images/ShareLiveLocationText.png')}
+            />
+          </View>
+        ) : (
+          <Image source={require('../../images/liveLocationButton.png')} />
+        )}
+      </TouchableOpacity>
+    </View>
+  ) : null
 
 type Props = {
   wocky?: IWocky

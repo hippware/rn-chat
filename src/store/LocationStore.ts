@@ -7,6 +7,10 @@ import {settings} from '../globals'
 import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 import * as RNLocalize from 'react-native-localize'
+import moment from 'moment'
+
+const MAX_DATE1 = '2030-01-01-17:00'
+const MAX_DATE2 = '2030-01-01-18:00'
 
 export const BG_STATE_PROPS = [
   'elasticityMultiplier',
@@ -172,6 +176,7 @@ const LocationStore = types
   .actions(self => {
     const {logger, analytics, transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
+    let watcherID
 
     function onLocation(position) {
       logger.log(prefix, 'location: ', JSON.stringify(position))
@@ -272,6 +277,20 @@ const LocationStore = types
       BackgroundGeolocation.setConfig(config, self.updateBackgroundConfigSuccess)
     }
 
+    function startStandaloneGeolocation() {
+      stopStandaloneGeolocation()
+      watcherID = navigator.geolocation.watchPosition(onLocation, error =>
+        logger.warn('GPS ERROR:', error)
+      )
+    }
+
+    function stopStandaloneGeolocation() {
+      if (watcherID !== undefined) {
+        navigator.geolocation.clearWatch(watcherID)
+        watcherID = undefined
+      }
+    }
+
     function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (DeviceInfo.isEmulator()) {
@@ -295,6 +314,8 @@ const LocationStore = types
       invalidateCredentials,
       getCurrentPosition,
       setBackgroundConfig,
+      startStandaloneGeolocation,
+      stopStandaloneGeolocation,
       emailLog,
     }
   })
@@ -318,12 +339,17 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected && onceStore.onboarded) {
+            if (wocky.connected && onceStore.onboarded && wocky.profile) {
               try {
                 await self.refreshCredentials()
-                await BackgroundGeolocation.start()
-                await self.getCurrentPosition()
-                logger.log(prefix, 'Start')
+                if (!wocky.profile.hidden.enabled) {
+                  await BackgroundGeolocation.start()
+                  await self.getCurrentPosition()
+                  logger.log(prefix, 'Start')
+                } else {
+                  logger.log(prefix, 'Not started because user has invisible mode')
+                  self.startStandaloneGeolocation()
+                }
               } catch (err) {
                 // prevent unhandled promise rejection
                 logger.log(prefix, 'Start onConnected reaction error', err)
@@ -341,6 +367,7 @@ const LocationStore = types
     function finish() {
       reactions.forEach(disposer => disposer())
       reactions = []
+      self.stopStandaloneGeolocation()
     }
 
     const didMount = flow(function*() {
@@ -349,6 +376,7 @@ const LocationStore = types
 
       BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
       BackgroundGeolocation.onHttp(self.onHttp)
+      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
       BackgroundGeolocation.onMotionChange(self.onMotionChange)
       BackgroundGeolocation.onActivityChange(self.onActivityChange)
       BackgroundGeolocation.onProviderChange(self.onProviderChange)
@@ -372,6 +400,7 @@ const LocationStore = types
 
     const logout = flow(function*() {
       yield self.invalidateCredentials()
+      yield BackgroundGeolocation.stopSchedule()
       yield BackgroundGeolocation.stop()
       logger.log(prefix, 'Stop')
     })
@@ -384,6 +413,25 @@ const LocationStore = types
       logout,
     }
   })
+  .actions(self => ({
+    hide: flow(function*(value: boolean, expires: Date | undefined) {
+      self.finish()
+      self.stopStandaloneGeolocation()
+      if (value) {
+        yield BackgroundGeolocation.stopSchedule()
+        yield BackgroundGeolocation.stop()
+        const expiresDate = expires ? moment(expires).format('YYYY-MM-DD-HH:mm') : MAX_DATE1
+        const schedule = `${expiresDate} ${MAX_DATE2}`
+        // console.log(`SCHEDULE: ${schedule}`)
+        BackgroundGeolocation.setConfig({schedule: [schedule]})
+        yield BackgroundGeolocation.startSchedule()
+        self.startStandaloneGeolocation()
+      } else {
+        yield BackgroundGeolocation.stopSchedule()
+        self.start()
+      }
+    }),
+  }))
 
 export default LocationStore
 export type ILocationStore = typeof LocationStore.Type
