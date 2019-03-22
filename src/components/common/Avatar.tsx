@@ -17,6 +17,7 @@ import {isAlive} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
 import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
+import {toJS} from 'mobx'
 
 type Props = {
   profile?: IProfile
@@ -80,7 +81,7 @@ const Avatar = observer(
         <View style={[style, {height: scaledSize, width: scaledSize}]}>
           {(!!profile && profile.avatar) || image ? (
             <AvatarImage
-              avatar={profile ? profile.avatar : {thumbnail: image}}
+              avatar={profile ? toJS(profile.avatar) : {thumbnail: image}}
               style={sharedStyle}
               size={size}
               showMask={showMask}
@@ -103,8 +104,9 @@ const Avatar = observer(
               />
             </View>
           )}
-          {!hideDot &&
-            profile && <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />}
+          {!hideDot && profile && (
+            <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
+          )}
         </View>
       </Clazz>
     )
@@ -135,7 +137,7 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontF
       start={start}
       end={end}
       colors={theColors}
-      style={{borderRadius: size * avatarScale / 2}}
+      style={{borderRadius: (size * avatarScale) / 2}}
     >
       <View style={[style, styles.avatarContainer]}>
         {showMask ? (
