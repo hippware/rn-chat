@@ -4,7 +4,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 4.3.??
+# 4.2.1 - 2019 Mar 21
 
 * [android] Fix rn-blur error (#3447)
 * hot-fix: fix ErrorHandler to work with React Native 0.59
