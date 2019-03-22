@@ -103,25 +103,7 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
           <InvisibleModeOverlay />
         </View>
         {navStore!.scene !== 'botCompose' && !homeStore!.fullScreenMode && (
-          <View
-            style={{
-              marginRight: 10,
-              marginTop: 15,
-              alignItems: 'center',
-              alignSelf: 'flex-end',
-            }}
-            pointerEvents="box-none"
-          >
-            <TouchableOpacity
-              onPress={() => Actions.bottomMenu()}
-              onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
-            >
-              <Image source={settingsImg} />
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
-              <Image source={homeStore!.mapType === 'hybrid' ? infoImgWhite : infoImg} />
-            </TouchableOpacity>
-          </View>
+          <Buttons mapType={homeStore!.mapType} />
         )}
       </Animated.View>
     )
@@ -140,6 +122,28 @@ export default class ActiveGeoBotBanner extends React.Component<Props, State> {
       />
     )
 }
+
+const Buttons = ({mapType}) => (
+  <View
+    style={{
+      marginRight: 10,
+      marginTop: 15,
+      alignItems: 'center',
+      alignSelf: 'flex-end',
+    }}
+    pointerEvents="box-none"
+  >
+    <TouchableOpacity
+      onPress={() => Actions.bottomMenu()}
+      onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
+    >
+      <Image source={settingsImg} />
+    </TouchableOpacity>
+    <TouchableOpacity style={{marginTop: 15}} onPress={() => Actions.attribution()}>
+      <Image source={mapType === 'hybrid' ? infoImgWhite : infoImg} />
+    </TouchableOpacity>
+  </View>
+)
 
 const settingsImg = require('../../../images/settingsBtn.png')
 const infoImgWhite = require('../../../images/iButtonWhite.png')
