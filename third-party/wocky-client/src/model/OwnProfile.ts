@@ -1,4 +1,4 @@
-import {types, getSnapshot, flow, Instance} from 'mobx-state-tree'
+import {types, getSnapshot, flow, Instance, getRoot} from 'mobx-state-tree'
 import {Profile, IProfile} from './Profile'
 import {createUpdatable} from './Updatable'
 import {createUploadable} from './Uploadable'
@@ -139,7 +139,11 @@ export const OwnProfile = types
       profile.receivedInvite()
     },
     hide: flow(function*(value: boolean, expires: Date | undefined) {
+      const {locationStore} = getRoot(self)
       yield self.transport.hideUser(value, expires)
+      if (locationStore) {
+        yield locationStore.hide(value, expires)
+      }
       self.hidden = Hidden.create({enabled: value, expires})
     }),
     cancelAllLocationShares: flow(function*() {
