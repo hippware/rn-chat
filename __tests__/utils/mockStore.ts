@@ -76,6 +76,7 @@ export default {
     confirmCode: jest.fn(),
     resendCode: jest.fn(),
     getFriendInviteLink: jest.fn(),
+    registerWithToken: jest.fn(),
   } as IFirebaseStore,
   homeStore: {},
   navStore: {},
