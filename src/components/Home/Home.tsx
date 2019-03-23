@@ -6,6 +6,7 @@ import HorizontalCardList from './HorizontalCardList'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 import {IHomeStore} from '../../store/HomeStore'
 import {INavStore} from '../../store/NavStore'
+import {width, height} from '../Global'
 
 type Props = {
   homeStore?: IHomeStore
@@ -21,7 +22,14 @@ export default class Home extends React.Component<Props> {
     const {fullScreenMode, setIndex, list, index} = homeStore!
     const isCurrent = navStore!.scene === this.props.name
     return (
-      <View style={{flex: 1, justifyContent: 'space-between'}} testID="screenHome">
+      <View
+        style={{
+          width,
+          height,
+          justifyContent: 'space-between',
+        }}
+        testID="screenHome"
+      >
         <MapHome />
         <ActiveGeoBotBanner enabled={!fullScreenMode && isCurrent} />
         {isCurrent && (
