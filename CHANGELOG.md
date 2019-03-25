@@ -4,6 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Fix white shadow/blur issue when zoomed into satellite view (#3518)
+* Firebase auth (PR #3526)
+  * [android] set up Firebase SMS auth for .staging app (#3505)
+  * [android] Firebase auth auto verify (#3522)
+* 'Client side' invisible mode (#3426)
+  * LL: Invisible mode does not work for Live Location (#3402)
+* Better fix for message sending crash (PR #3531)
+  * Logout/login, navigate to Messages screen, receive app crash (#3517)
+
 # 4.2.1 - 2019 Mar 21
 
 * [android] Fix rn-blur error (#3447)
