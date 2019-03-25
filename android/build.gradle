@@ -9,7 +9,7 @@ buildscript {
   }
   repositories {
     google()
-    jcenter()
+//    jcenter()
     maven {
       url 'https://maven.fabric.io/public'
     }
