@@ -4,8 +4,9 @@ exports[`Home renders with no data 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
+      "height": 1334,
       "justifyContent": "space-between",
+      "width": 750,
     }
   }
   testID="screenHome"

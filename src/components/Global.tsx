@@ -1,7 +1,15 @@
 import {Dimensions, Platform} from 'react-native'
 
-const {width, height} = Dimensions.get('window')
-export {width, height}
+const {width: dWidth, height: dHeight} = Dimensions.get('window')
+let statusBarHeight = 0
+if (Platform.OS === 'android') {
+  const ED = require('react-native-extra-dimensions-android')
+  statusBarHeight = ED.getStatusBarHeight()
+}
+
+export const width = dWidth
+export const height = dHeight - statusBarHeight
+
 export const k = height / 667
 // scales spacing based on screensize (different ratios for smaller screens vs larger screens)
 export const s =

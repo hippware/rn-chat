@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js start",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
-    "ios": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
+    "ios": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 8 Plus' --scheme tinyrobotStaging",
     "android": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js run-android --variant stagingDebug --appIdSuffix='staging'",
     "androidShake": "adb shell input keyevent 82",
     "androidReload": "adb shell input text RR",
@@ -87,6 +87,7 @@
     "react-native-country-picker-modal": "github:hippware/react-native-country-picker-modal",
     "react-native-device-info": "^0.12.1",
     "react-native-emoji-selector": "^0.1.6",
+    "react-native-extra-dimensions-android": "^1.2.1",
     "react-native-firebase": "^5.2.3",
     "react-native-fs": "^2.13.3",
     "react-native-gesture-handler": "github:kmagiera/react-native-gesture-handler#ff74e0edadd62518b45d85f251f527307457ab9e",
