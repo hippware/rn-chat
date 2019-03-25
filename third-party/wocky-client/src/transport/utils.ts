@@ -301,12 +301,9 @@ export function convertImage(image) {
   return image && image.trosUrl ? {id: image.trosUrl, url: image.thumbnailUrl} : null
 }
 
-export function convertProfile({media, bots, hidden, presenceStatus, ...data}): IProfilePartial {
+export function convertProfile({media, bots, presenceStatus, ...data}): IProfilePartial {
   // console.log('convertProfile', bots, followers, followed, data)
   return {
-    hidden: hidden
-      ? {enabled: hidden.enabled, expires: hidden.expires ? new Date(hidden.expires) : null}
-      : null,
     avatar: convertImage(media),
     status: presenceStatus,
     botsSize: bots ? bots.totalCount : undefined,

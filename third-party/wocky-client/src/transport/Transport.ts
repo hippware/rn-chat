@@ -131,7 +131,7 @@ export class Transport {
               ${PROFILE_PROPS}
               ${
                 id === this.username
-                  ? `... on CurrentUser { email phoneNumber hidden {enabled expires} 
+                  ? `... on CurrentUser { email phoneNumber 
                   sentInvitations(first:100) {
                     edges {
                       node {
@@ -1039,20 +1039,6 @@ export class Transport {
     return res.data.localBots.bots.map(convertBot)
   }
 
-  async hideUser(enable: boolean, expire?: Date): Promise<void> {
-    await waitFor(() => this.connected)
-    return this.voidMutation({
-      mutation: gql`
-        mutation userHide($enable: Boolean!, $expire: DateTime) {
-          userHide(input: {enable: $enable, expire: $expire}) {
-            ${VOID_PROPS}
-          }
-        }
-      `,
-      variables: {enable, expire},
-    })
-  }
-
   async searchUsers(text: string): Promise<IProfilePartial[]> {
     const res = await this.client!.query<any>({
       query: gql`
@@ -1153,7 +1139,10 @@ export class Transport {
       `,
     }).subscribe({
       next: action((result: any) => {
-        const {user: {id}, location} = result.data.sharedLocations
+        const {
+          user: {id},
+          location,
+        } = result.data.sharedLocations
         this.sharedLocation = {id, location}
       }),
     })
