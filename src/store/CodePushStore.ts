@@ -58,6 +58,11 @@ const CodePushStore = types
       self.syncing = false
       codePush.allowRestart()
     },
+
+    clearUpdates() {
+      codePush.clearUpdates()
+      codePush.restartApp()
+    },
   }))
   .actions(self => ({
     onSyncStatusChanged(status: codePush.SyncStatus): void {
