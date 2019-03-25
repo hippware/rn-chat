@@ -117,13 +117,17 @@ const ClearUpdates = inject('codePushStore')(
         <TouchableOpacity
           style={[styles.syncButton]}
           onPress={() => {
-            Alert.alert('Clear Updates?', 'This will clear your existing CodePush update.', [
-              {text: 'Cancel', style: 'cancel'},
-              {text: 'OK', onPress: codePushStore!.clearUpdates},
-            ])
+            Alert.alert(
+              'Rollback Updates?',
+              'This will clear your existing CodePush update and rollback.',
+              [
+                {text: 'Cancel', style: 'cancel'},
+                {text: 'OK', onPress: codePushStore!.clearUpdates},
+              ]
+            )
           }}
         >
-          <Text style={{color: colors.PINK}}>Clear Updates</Text>
+          <Text style={{color: colors.PINK}}>Rollback Updates</Text>
         </TouchableOpacity>
       </View>
     )
