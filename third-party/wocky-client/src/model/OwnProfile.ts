@@ -140,7 +140,6 @@ export const OwnProfile = types
     },
     hide: flow(function*(value: boolean, expires: Date | undefined) {
       const {locationStore} = getRoot(self)
-      yield self.transport.hideUser(value, expires)
       if (locationStore) {
         yield locationStore.hide(value, expires)
       }
