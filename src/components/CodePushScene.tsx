@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   ProgressViewIOS,
+  Alert,
 } from 'react-native'
 import {colors} from '../constants'
 import {IAppInfo} from 'wocky-client'
@@ -26,7 +27,7 @@ class CodePushScene extends React.Component<Props> {
   }
 
   render() {
-    const {downloadProgress} = this.props.codePushStore!
+    const {downloadProgress, metadata} = this.props.codePushStore!
     return (
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
@@ -45,6 +46,7 @@ class CodePushScene extends React.Component<Props> {
         </View>
 
         <Channels />
+        {metadata && <ClearUpdates />}
         {downloadProgress > 0 && (
           <ProgressViewIOS progress={downloadProgress} style={{marginVertical: 10}} />
         )}
@@ -105,6 +107,26 @@ const Channels = inject('codePushStore')(
       )
     }
     return <View style={{marginTop: 20}}>{inner}</View>
+  })
+)
+
+const ClearUpdates = inject('codePushStore')(
+  observer(({codePushStore}: Props) => {
+    return (
+      <View style={{marginTop: 20}}>
+        <TouchableOpacity
+          style={[styles.syncButton]}
+          onPress={() => {
+            Alert.alert('Clear Updates?', 'This will clear your existing CodePush update.', [
+              {text: 'Cancel', style: 'cancel'},
+              {text: 'OK', onPress: codePushStore!.clearUpdates},
+            ])
+          }}
+        >
+          <Text style={{color: colors.PINK}}>Clear Updates</Text>
+        </TouchableOpacity>
+      </View>
+    )
   })
 )
 
