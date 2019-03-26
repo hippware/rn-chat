@@ -71,6 +71,10 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     const expireAt = new Date(
       this.state.option ? UNTIL_OFF : Date.now() + CHOICES[this.state.duration].value
     )
+    // disable invisible mode
+    if (wocky!.profile!.hidden.enabled) {
+      await wocky!.profile!.hide(false, undefined)
+    }
     // TODO modify server-side API to pass array of usr_ids ?
     for (const profile of selection.selected) {
       await profile.shareLocation(expireAt)

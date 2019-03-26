@@ -138,13 +138,6 @@ export const OwnProfile = types
       )
       profile.receivedInvite()
     },
-    hide: flow(function*(value: boolean, expires: Date | undefined) {
-      const {locationStore} = getRoot(self)
-      if (locationStore) {
-        yield locationStore.hide(value, expires)
-      }
-      self.hidden = Hidden.create({enabled: value, expires})
-    }),
     cancelAllLocationShares: flow(function*() {
       yield self.transport.userLocationCancelAllShares()
       self.locationShares.list.forEach(share => share.sharedWith.setReceivesLocationShare(false))
@@ -154,6 +147,16 @@ export const OwnProfile = types
   .actions(self => {
     const timers: any[] = []
     return {
+      hide: flow(function*(value: boolean, expires: Date | undefined) {
+        const {locationStore} = getRoot(self)
+        if (locationStore) {
+          yield locationStore.hide(value, expires)
+        }
+        if (value) {
+          yield self.cancelAllLocationShares()
+        }
+        self.hidden = Hidden.create({enabled: value, expires})
+      }),
       addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
         self.locationSharers.add(
           LocationShare.create({
