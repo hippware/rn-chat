@@ -106,7 +106,7 @@ class TinyRobotRouter extends React.Component<Props> {
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
-          <Stack hideNavBar lightbox type="replace">
+          <Lightbox hideNavBar lightbox type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
             <Scene key="checkCredentials" on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
@@ -115,7 +115,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
-          </Stack>
+          </Lightbox>
           <Lightbox>
             <Stack initial hideNavBar key="main">
               <Stack hideNavBar>
