@@ -106,7 +106,7 @@ class TinyRobotRouter extends React.Component<Props> {
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
-          <Lightbox hideNavBar lightbox type="replace">
+          <Lightbox hideNavBar type="replace">
             <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
             <Scene key="checkCredentials" on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
