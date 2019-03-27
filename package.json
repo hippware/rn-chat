@@ -10,6 +10,7 @@
     "androidShake": "adb shell input keyevent 82",
     "androidReload": "adb shell input text RR",
     "androidNetwork": "adb reverse tcp:8081 tcp:8081",
+    "androidInstall": "cd android && ./gradlew assembleStagingDebug && ./gradlew installStagingDebug && cd ..",
     "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
@@ -22,7 +23,7 @@
     "lint": "tslint -p . -c tslint.json  'src/**/*.ts' 'src/**/*.tsx'",
     "lintWocky": "tslint -p . -c tslint.json  'third-party/wocky-client/src/**/*.ts'",
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
-    "codepush": "bash ./scripts/codepush.sh",
+    "codepush": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/codepush/codepush.ts",
     "versionBump": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/version-increment.ts",
     "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
@@ -30,7 +31,8 @@
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "logcat": "adb logcat -e com.hippware"
   },
   "detox": {
     "configurations": {
@@ -125,7 +127,7 @@
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.57.38",
     "@types/react-test-renderer": "^16.8.1",
-    "appcenter-cli": "^1.1.12",
+    "appcenter-cli": "^1.1.14",
     "babel-jest": "^24.1.0",
     "bugsnag-sourcemaps": "^1.1.0",
     "form-data": "^1.0.0-rc4",
