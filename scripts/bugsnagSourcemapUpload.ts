@@ -2,16 +2,14 @@ import {upload} from 'bugsnag-sourcemaps'
 
 // tslint:disable:no-console
 
-export const BUNDLE_NAME = 'main.jsbundle'
-export const BUNDLE_MAP_NAME = BUNDLE_NAME + '.map'
-
 type Params = {
   appVersion: string
   codeBundleId?: string
   buildDirPath: string
+  bundleName: string
 }
 
-export default async ({appVersion, codeBundleId, buildDirPath}: Params) => {
+export default async ({appVersion, codeBundleId, buildDirPath, bundleName}: Params) => {
   console.log('Beginning bugsnag sourcemap upload...')
   // https://github.com/bugsnag/bugsnag-sourcemaps#api-usage
   const result = await upload(
@@ -20,8 +18,8 @@ export default async ({appVersion, codeBundleId, buildDirPath}: Params) => {
       appVersion,
       codeBundleId,
       minifiedUrl: 'main.jsbundle',
-      sourceMap: `${buildDirPath}/${BUNDLE_MAP_NAME}`,
-      minifiedFile: `${buildDirPath}/${BUNDLE_NAME}`, // optional
+      sourceMap: `${buildDirPath}/${bundleName}.map`,
+      minifiedFile: `${buildDirPath}/${bundleName}`, // optional
       // overwrite: true, // optional
       // sources: {
       //   'http://example.com/assets/main.js': path.resolve(__dirname, 'path/to/main.js'),

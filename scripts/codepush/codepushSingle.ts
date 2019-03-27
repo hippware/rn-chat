@@ -1,5 +1,5 @@
 import {exec} from 'child_process'
-import bugsnagSourcemapUpload, {BUNDLE_MAP_NAME, BUNDLE_NAME} from '../bugsnagSourcemapUpload'
+import bugsnagSourcemapUpload from '../bugsnagSourcemapUpload'
 
 // tslint:disable:no-console
 
@@ -18,13 +18,16 @@ export default async (
   const version = require('../../package.json').version
   console.log('version:', version)
 
+  const bundleName = platform === 'ios' ? 'main.jsbundle' : 'index.android.bundle'
+
   try {
     await injectBugsnagReleaseId(releaseId)
-    await codepush(appCenterAppName, deployment, description, version)
+    await codepush(appCenterAppName, deployment, description, version, bundleName)
     await bugsnagSourcemapUpload({
       appVersion: version,
       codeBundleId: releaseId,
       buildDirPath: `${buildDir}/CodePush`,
+      bundleName,
     })
     await cleanup()
   } catch (err) {
@@ -50,10 +53,11 @@ async function codepush(
   appCenterAppName,
   deployment: string,
   description: string,
-  version: string
+  version: string,
+  bundleName: string
 ) {
   return new Promise((resolve, reject) => {
-    const command = `./node_modules/.bin/appcenter codepush release-react -a hippware/${appCenterAppName} -d ${deployment} --description "${description}" --output-dir ${buildDir} --sourcemap-output ${buildDir}/CodePush/${BUNDLE_MAP_NAME} -t ${version} --bundle-name ${BUNDLE_NAME}`
+    const command = `./node_modules/.bin/appcenter codepush release-react -a hippware/${appCenterAppName} -d ${deployment} --description "${description}" --output-dir ${buildDir} --sourcemap-output ${buildDir}/CodePush/${bundleName}.map -t ${version} --bundle-name ${bundleName}`
     console.log(command)
     exec(command, (error, stdout) => {
       if (error) reject(error)

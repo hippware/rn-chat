@@ -1,6 +1,6 @@
 import {exec} from 'child_process'
 import {positive, error} from './utils'
-import bugsnagSourcemapUpload, {BUNDLE_NAME, BUNDLE_MAP_NAME} from './bugsnagSourcemapUpload'
+import bugsnagSourcemapUpload from './bugsnagSourcemapUpload'
 
 // tslint:disable:no-console
 
@@ -21,9 +21,10 @@ send()
 async function bundleAndSend(platform: 'ios' | 'android') {
   return new Promise((resolve, reject) => {
     const buildDirPath = './' + platform
+    const bundleName = 'main.jsbundle'
     console.log(`Bundling ${platform}...`)
     exec(
-      `react-native bundle --platform ${platform} --entry-file index.js --dev false --bundle-output ./${buildDirPath}/${BUNDLE_NAME} --sourcemap-output ${buildDirPath}/${BUNDLE_MAP_NAME}`,
+      `react-native bundle --platform ${platform} --entry-file index.js --dev false --bundle-output ./${buildDirPath}/${bundleName} --sourcemap-output ${buildDirPath}/${bundleName}.map`,
       async (err, stdout) => {
         console.log('RN bundle result:', positive(stdout), error(err))
 
@@ -35,6 +36,7 @@ async function bundleAndSend(platform: 'ios' | 'android') {
           appVersion,
           codeBundleId: appVersion + platform + buildId,
           buildDirPath,
+          bundleName,
         })
         resolve()
       }
