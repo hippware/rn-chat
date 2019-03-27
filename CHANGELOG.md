@@ -11,11 +11,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * 'Client side' invisible mode (#3426)
   * LL: Invisible mode does not work for Live Location (#3402)
   * Replaces usage of server-side invisible mode (#3538, PR #3540)
+  * Adjustments for share location (PR #3542)
 * Better fix for message sending crash (PR #3531)
   * Logout/login, navigate to Messages screen, receive app crash (#3517)
 * [android] Native view settings for top and bottom nav bars (#3461)
 * [android] No bottom margin for horizontal cards (#3514)
 * Replace StagingRollback with CodePush.clearUpdates() (#3435, PR #3539)
+* "Next" button on Select Friends screen does not function (#3519, PR #3542)
 
 # 4.2.1 - 2019 Mar 21
 
