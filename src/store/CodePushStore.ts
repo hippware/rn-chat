@@ -140,7 +140,7 @@ const CodePushStore = types
           codePush.UpdateState.PENDING
         )
 
-        if (metadataPending || metadataDownloaded) {
+        if ((metadataPending || metadataDownloaded) && self.channels[0].name !== 'Local') {
           // signal that we need to start with a clean cache on next app load
           self.pendingUpdate = true
         }
