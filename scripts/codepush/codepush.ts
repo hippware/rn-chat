@@ -1,5 +1,5 @@
 /**
- * Usage: yarn codepush [deployment name] [description] [ios | android | both] [bugsnag unique id]
+ * Usage: yarn codepush [deployment name] [description] [ios | android | both]
  */
 
 import codepushSingle from './codepushSingle'
@@ -10,9 +10,7 @@ const [deployment, description, platforms] = process.argv.slice(2)
 
 // // console.log(deploymentName, description, platforms)
 if (!(deployment && description && platforms)) {
-  console.error(
-    'Try again. yarn codepush [deployment name] [description] [ios | android | both] [bugsnag unique id]'
-  )
+  console.error('Try again. yarn codepush [deployment name] [description] [ios | android | both]')
   process.exit(1)
 }
 

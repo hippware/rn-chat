@@ -66,7 +66,9 @@ async function codepush(
 
 async function cleanup() {
   return new Promise((resolve, reject) => {
-    console.log('cleanup...')
+    console.log(
+      'Cleanup. Remove the codepush generated files and discard the change to bugsnagConfig.js'
+    )
     const removeFileCmd = `rm -rf ${buildDir}`
     const discardBugsnagChangesCmd = 'git checkout -- src/utils/bugsnagConfig.js'
     console.log(removeFileCmd)
