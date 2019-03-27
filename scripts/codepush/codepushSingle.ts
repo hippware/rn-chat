@@ -1,5 +1,5 @@
 import {exec} from 'child_process'
-import bugsnagSourcemapUpload from '../bugsnagSourcemapUpload'
+import bugsnagSourcemapUpload, {BUNDLE_MAP_NAME, BUNDLE_NAME} from '../bugsnagSourcemapUpload'
 
 // tslint:disable:no-console
 
@@ -21,7 +21,11 @@ export default async (
   try {
     await injectBugsnagReleaseId(releaseId)
     await codepush(appCenterAppName, deployment, description, version)
-    await bugsnagSourcemapUpload(version, releaseId, `${buildDir}/CodePush`)
+    await bugsnagSourcemapUpload({
+      appVersion: version,
+      codeBundleId: releaseId,
+      buildDirPath: `${buildDir}/CodePush`,
+    })
     await cleanup()
   } catch (err) {
     console.log('Error:', err)
@@ -49,7 +53,7 @@ async function codepush(
   version: string
 ) {
   return new Promise((resolve, reject) => {
-    const command = `./node_modules/.bin/appcenter codepush release-react -a hippware/${appCenterAppName} -d ${deployment} --description "${description}" --output-dir ${buildDir} --sourcemap-output ${buildDir}/CodePush/main.jsbundle.map -t ${version} --bundle-name main.jsbundle`
+    const command = `./node_modules/.bin/appcenter codepush release-react -a hippware/${appCenterAppName} -d ${deployment} --description "${description}" --output-dir ${buildDir} --sourcemap-output ${buildDir}/CodePush/${BUNDLE_MAP_NAME} -t ${version} --bundle-name ${BUNDLE_NAME}`
     console.log(command)
     exec(command, (error, stdout) => {
       if (error) reject(error)

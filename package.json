@@ -25,7 +25,7 @@
     "prettify": "prettier --write  'src/**/*.ts?(x)'",
     "codepush": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/codepush/codepush.ts",
     "versionBump": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/version-increment.ts",
-    "bugsnag": "babel-node ./scripts/send-bugsnag-symbols.js",
+    "bugsnag": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/sendBugsnagSymbols.ts",
     "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -O '{\"module\": \"commonjs\"}' scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
