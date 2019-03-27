@@ -1,30 +1,33 @@
 /**
- * Usage: yarn codepush [deployment name] [description] [ios | android | both]
+ * Usage: yarn codepush [deployment name] [description] ?[ios | android]
+ * By default codepushes to Android and iOS
  */
 
 import codepushSingle from './codepushSingle'
 
 // tslint:disable:no-console
 
-const [deployment, description, platforms] = process.argv.slice(2)
+const [deployment, description, platform] = process.argv.slice(2)
 
 // // console.log(deploymentName, description, platforms)
-if (!(deployment && description && platforms)) {
-  console.error('Try again. yarn codepush [deployment name] [description] [ios | android | both]')
+if (!(deployment && description)) {
+  console.error('Try again. yarn codepush [deployment name] [description] ?[ios | android]')
   process.exit(1)
 }
 
-if (!['android', 'ios', 'both'].includes(platforms)) {
-  console.error('Bad platform argument. Valid values are "android", "ios", or "both')
+if (platform && !['android', 'ios'].includes(platform)) {
+  console.error(
+    'Bad platform argument. Valid values are "android" or "ios". Leave blank to codepush to both platforms.'
+  )
   process.exit(1)
 }
 
 async function go() {
-  if (platforms === 'android' || platforms === 'both') {
+  if (platform === 'android' || !platform) {
     await codepushSingle(deployment, 'android', 'TinyrobotStaging', description)
   }
 
-  if (platforms === 'ios' || platforms === 'both') {
+  if (platform === 'ios' || !platform) {
     await codepushSingle(deployment, 'ios', 'tinyrobot-2', description)
   }
 }
