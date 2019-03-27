@@ -220,6 +220,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingLeft: 8.4 * k,
     height: 20 * minHeight,
     fontFamily: 'Roboto-Regular',
