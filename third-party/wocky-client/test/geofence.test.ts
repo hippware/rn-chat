@@ -63,6 +63,7 @@ describe('Geofence', () => {
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
     expect(bot.visitorsSize).toEqual(0)
+    await sleep(3000)
   })
 
   it('user1 invites user2 to bot', async () => {
@@ -82,6 +83,7 @@ describe('Geofence', () => {
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
     expect(bot2.visitorsSize).toEqual(0)
+    await sleep(3000)
   })
 
   it('load visitors and live updates', async () => {
