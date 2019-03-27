@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ProgressViewIOS,
   Alert,
+  Platform,
 } from 'react-native'
 import {colors} from '../constants'
 import {IAppInfo} from 'wocky-client'
@@ -32,7 +33,7 @@ class CodePushScene extends React.Component<Props> {
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
-            <Text style={styles.bold}>Version: </Text>
+            <Text style={styles.bold}>Version test 2: </Text>
             <Text>{this.props.appInfo!.nativeVersion}</Text>
           </Text>
 
@@ -47,7 +48,7 @@ class CodePushScene extends React.Component<Props> {
 
         <Channels />
         {metadata && <ClearUpdates />}
-        {downloadProgress > 0 && (
+        {downloadProgress > 0 && Platform.OS === 'ios' && (
           <ProgressViewIOS progress={downloadProgress} style={{marginVertical: 10}} />
         )}
         <SyncStatus />
@@ -94,13 +95,11 @@ const Channels = inject('codePushStore')(
           <Text>{`Available updates for ${settings.codePushFlavor}:`}</Text>
           {codePushStore!.channelUpdates.map(c => (
             <TouchableOpacity
-              key={c.key}
+              key={c.keyIOS}
               style={[styles.syncButton]}
               onPress={() => codePushStore!.sync(c)}
             >
-              <Text style={{color: colors.PINK}}>{`${c.displayName} - ${
-                c.updateDescription
-              }`}</Text>
+              <Text style={{color: colors.PINK}}>{`${c.name} - ${c.updateDescription}`}</Text>
             </TouchableOpacity>
           ))}
         </View>

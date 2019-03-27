@@ -2,56 +2,47 @@
   "production": [
     {
       "name": "Production",
-      "key": "rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ",
-      "displayName": "Prod",
-      "description": "self-explanatory"
+      "keyIOS": "rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ",
+      "keyAndroid": "ozoBHcysvc-eJpBhGgrg7F4kdsOyHyllKTUON"
     }
   ],
   "staging": [
     {
       "name": "Staging",
-      "key": "kjbwL0kvOAUoLXj-QMozErfAWuUJrJ9yb3rxX",
-      "displayName": "Staging",
-      "description":
-        "fallback deployment that should mirror the latest version pushed to TestFlight"
+      "keyIOS": "kjbwL0kvOAUoLXj-QMozErfAWuUJrJ9yb3rxX",
+      "keyAndroid": "YDilU0hLJlRlTa5GMADKkos379q5B1eeYaU_E"
     },
     {
       "name": "StagingRollback",
-      "key": "m3G8j9pxVPT8MkZQ1eA1o-J2vE13H19uuyIxX",
-      "displayName": "Staging rollback",
-      "description": "roll an existing codepush deploy back to the TestFlight version"
+      "keyIOS": "m3G8j9pxVPT8MkZQ1eA1o-J2vE13H19uuyIxX",
+      "keyAndroid": "TbI2DNbEPOTO9KDaA5fAngejmcHCHJVACRLON"
     },
     {
       "name": "StagingPavel",
-      "key": "vjrKCPgLTNZCl7ZDG86MPXGbhq9nryFn_nrem",
-      "displayName": "Staging-Pavel",
-      "description": "Pavel's channel"
+      "keyIOS": "vjrKCPgLTNZCl7ZDG86MPXGbhq9nryFn_nrem",
+      "keyAndroid": "kkIEtPc_TN-_4rcnnxTXjPDzRF1MBJjKpAL_4"
     },
     {
       "name": "StagingEric",
-      "key": "cMTcB3NU9aAs28OyvCYov8vWFN4SHy73_2rlX",
-      "displayName": "Staging-Eric",
-      "description": "Eric's channel"
+      "keyIOS": "cMTcB3NU9aAs28OyvCYov8vWFN4SHy73_2rlX",
+      "keyAndroid": "xtCWarj2wrVg62nnaxUO3TKbAt_XByXFpAI_N"
     },
     {
       "name": "StagingBeng",
-      "key": "3otAS0kRJnLvsHaUC9PGJCLSfYRFBkZTXAmmX",
-      "displayName": "Staging-Beng",
-      "description": "Beng's channel"
+      "keyIOS": "3otAS0kRJnLvsHaUC9PGJCLSfYRFBkZTXAmmX",
+      "keyAndroid": "PLQz1k4V7sdsh1uhtBKwMGcbZZIYr1odp0LON"
     },
     {
       "name": "StagingAlan",
-      "key": "PkIOp95ZUz2-qPlwMgiEXgLZOBr3ryvg5UkJN",
-      "displayName": "Staging-Alan",
-      "description": "Alan's channel"
+      "keyIOS": "PkIOp95ZUz2-qPlwMgiEXgLZOBr3ryvg5UkJN",
+      "keyAndroid": "ljCNDcEg03roK8yzx49jC2IXdEBgSkrOpCIu4"
     }
   ],
   "local": [
     {
       "name": "Local",
-      "key": "0CGMwYJzUqem-cZsnL4Se8VKfznjHyhwt2Hx7",
-      "displayName": "Local",
-      "description": "use this to test the CodePush process *only* on your local machine"
+      "keyIOS": "0CGMwYJzUqem-cZsnL4Se8VKfznjHyhwt2Hx7",
+      "keyAndroid": "MogiXPZaBjKKxM2s99ptPesbQNOxSyPw6C8dE"
     }
   ]
 }
