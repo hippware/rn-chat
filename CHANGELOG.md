@@ -18,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] No bottom margin for horizontal cards (#3514)
 * Replace StagingRollback with CodePush.clearUpdates() (#3435, PR #3539)
 * "Next" button on Select Friends screen does not function (#3519, PR #3542)
+* Adjust unit tests; Disable order check (#3369 and others)
+* [android] Pin Location Screen address not populating, black dot (#3516)
 
 # 4.2.1 - 2019 Mar 21
 
