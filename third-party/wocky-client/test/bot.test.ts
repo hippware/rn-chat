@@ -1,4 +1,4 @@
-import {createUser, waitFor, sleep} from './support/testuser'
+import {createUser, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 import {Location} from '../src/model/Location'
@@ -56,7 +56,6 @@ describe('NewGraphQL tests', () => {
     expect(bot2.title).toBe('Test bot2')
     expect(bot2.location!.latitude).toBe(1.2)
     expect(bot2.location!.longitude).toBe(2.2)
-    await sleep(3000)
   })
 
   it('get local bots 0', async () => {
