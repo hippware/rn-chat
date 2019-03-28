@@ -20,6 +20,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * "Next" button on Select Friends screen does not function (#3519, PR #3542)
 * Adjust unit tests; Disable order check (#3369 and others)
 * [android] Pin Location Screen address not populating, black dot (#3516)
+* Prevent loadMinimal on local codepush channel (PR #3549)
+* [android] App icons (#3547)
 
 # 4.2.1 - 2019 Mar 21
 
