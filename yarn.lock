@@ -1896,10 +1896,10 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha1-OBh+wt6nV3//Az/8sSFyaS/24Rg=
 
-appcenter-cli@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.1.12.tgz#4fd4f83c601556b51f48b50db0f255e5cab6ab54"
-  integrity sha512-fCypNGVE2k6sLARc5xYNgJzrla/zHUR+RFVFLxPsUCr0GTN7GK2hei51VZCK6pBrGw6hObdQ/YPkirO+ILxRFQ==
+appcenter-cli@^1.1.14:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/appcenter-cli/-/appcenter-cli-1.1.14.tgz#7fb95cc96d025f61ca53679131780700c71d86ad"
+  integrity sha512-HfjhHzowKlya4+oEIvF9q1rUwwQ2oCo9wcSFW/4miCmynztMl2Z7I+tmLYfR8+puI72+ltZJYOIu+luotrM1XA==
   dependencies:
     azure-storage "^2.10.1"
     bplist "0.0.4"
@@ -1938,6 +1938,7 @@ appcenter-cli@^1.1.12:
     unzip "^0.1.11"
     update-notifier "^2.5.0"
     uuid "^3.3.2"
+    webpack-cli "^3.2.3"
     which "^1.3.1"
     wordwrap "^1.0.0"
     xml2js "^0.4.19"
@@ -4426,6 +4427,11 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
+detect-file@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/detect-file/-/detect-file-1.0.0.tgz#f0d66d03672a825cb1b73bdb3fe62310c8e552b7"
+  integrity sha1-8NZtA2cqglyxtzvbP+YjEMjlUrc=
+
 detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
@@ -5349,6 +5355,16 @@ find-up@^2.0.0, find-up@^2.1.0:
   integrity sha1-RdG35QbHF93UgndaK3eSCjwMV6c=
   dependencies:
     locate-path "^2.0.0"
+
+findup-sync@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-2.0.0.tgz#9326b1488c22d1a6088650a86901b2d9a90a2cbc"
+  integrity sha1-kyaxSIwi0aYIhlCoaQGy2akKLLw=
+  dependencies:
+    detect-file "^1.0.0"
+    is-glob "^3.1.0"
+    micromatch "^3.0.4"
+    resolve-dir "^1.0.1"
 
 flow-static-land@0.2.7:
   version "0.2.7"
@@ -8162,7 +8178,7 @@ micromatch@^2.3.11:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
+micromatch@^3.0.4, micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
   version "3.1.10"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
   integrity sha512-MWikgl9n9M3w+bpsY3He8L+w9eF9338xRl8IAO5viDizwSzziFEyUzo2xrrloB64ADbTf8uA8vRqqttDTOmccg==
@@ -9971,16 +9987,17 @@ react-native-camera-kit@^6.3.0:
   dependencies:
     lodash "^4.14.2"
 
-react-native-code-push@^5.3.4:
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.5.2.tgz#b394e8f92f8bc4d184d73ff8d066406def24c1e8"
-  integrity sha512-hBXGhB6DcVqwnN4jWHcCCUBt3GMoC/FZ+ys/mlHMaR9696oKbv5ioW8mAFHMCtPRpdlt2Keo6MoLBMHigTSzug==
+react-native-code-push@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.6.0.tgz#e905d32d188c5f7bcff446d813271d03a69543fd"
+  integrity sha512-NDZG+t1K+7ubjdtkuQ5UjcqRZbtqZMiMPCnp3VJRfdcX2KcgivW0piRZ3myuAYd6Jyxs4w13rIXo2kzLW4sxBQ==
   dependencies:
     code-push "2.0.6"
     glob "^5.0.15"
     hoist-non-react-statics "^2.3.1"
     inquirer "1.1.2"
     plist "3.0.1"
+    semver "^5.6.0"
     xcode "1.0.0"
 
 react-native-config@^0.11.7:
@@ -10786,7 +10803,7 @@ resolve-cwd@^2.0.0:
   dependencies:
     resolve-from "^3.0.0"
 
-resolve-dir@^1.0.0:
+resolve-dir@^1.0.0, resolve-dir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-dir/-/resolve-dir-1.0.1.tgz#79a40644c362be82f26effe739c9bb5382046f43"
   integrity sha1-eaQGRMNivoLybv/nOcm7U4IEb0M=
@@ -11670,7 +11687,7 @@ supports-color@^2.0.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
   integrity sha1-U10EXOa2Nj+kARcIRimZXp3zJMc=
 
-supports-color@^5.3.0, supports-color@^5.4.0:
+supports-color@^5.3.0, supports-color@^5.4.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
   integrity sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==
@@ -12362,6 +12379,11 @@ uuid@^3.0.0, uuid@^3.2.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+v8-compile-cache@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.0.2.tgz#a428b28bb26790734c4fc8bc9fa106fccebf6a6c"
+  integrity sha512-1wFuMUIM16MDJRCrpbpuEPTUGmM5QMUg0cr3KFwra2XgOgFcPGDQHDh3CszSCD2Zewc/dh/pamNEW8CbfDebUw==
+
 v8flags@^3.1.1:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-3.1.2.tgz#fc5cd0c227428181e6c29b2992e4f8f1da5e0c9f"
@@ -12466,6 +12488,23 @@ webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
+
+webpack-cli@^3.2.3:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.0.tgz#55c8a74cae1e88117f9dda3a801c7272e93ca318"
+  integrity sha512-t1M7G4z5FhHKJ92WRKwZ1rtvi7rHc0NZoZRbSkol0YKl4HvcC8+DsmGDmK7MmZxHSAetHagiOsjOB6MmzC2TUw==
+  dependencies:
+    chalk "^2.4.1"
+    cross-spawn "^6.0.5"
+    enhanced-resolve "^4.1.0"
+    findup-sync "^2.0.0"
+    global-modules "^1.0.0"
+    import-local "^2.0.0"
+    interpret "^1.1.0"
+    loader-utils "^1.1.0"
+    supports-color "^5.5.0"
+    v8-compile-cache "^2.0.2"
+    yargs "^12.0.5"
 
 webpack-dev-middleware@^3.4.0:
   version "3.6.0"
@@ -12860,7 +12899,7 @@ yargs-parser@^7.0.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs@^12.0.2:
+yargs@^12.0.2, yargs@^12.0.5:
   version "12.0.5"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.5.tgz#05f5997b609647b64f66b81e3b4b10a368e7ad13"
   integrity sha512-Lhz8TLaYnxq/2ObqHDql8dX8CJi97oHxrjUcYtzKbbykPtVW9WB+poxI+NM2UIzsMgNCZTIf0AQwsjK5yMAqZw==

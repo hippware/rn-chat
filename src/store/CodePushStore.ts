@@ -2,15 +2,17 @@ import {types, flow} from 'mobx-state-tree'
 import {settings} from '../globals'
 import * as log from '../utils/log'
 import codePush, {RemotePackage, LocalPackage} from 'react-native-code-push'
+import {Platform} from 'react-native'
 
 const deployments = require('../constants/codepush-deployments.json')
 
 type Channel = {
   name: string
-  key: string
-  displayName: string
-  description: string
+  keyIOS: string
+  keyAndroid: string
 }
+
+const keyProp = Platform.select({android: 'keyAndroid', ios: 'keyIOS'})
 
 const CodePushStore = types
   .model('CodePushStore', {
@@ -31,16 +33,12 @@ const CodePushStore = types
   }))
   .views(self => ({
     get updateInfo(): string {
-      // To easily test, toggle comments in the following 4 lines
-      if (/* true || */ self.metadata) {
-        /* */ const {deploymentKey, label} = self.metadata
-        // const deploymentKey = 'StagingXYZ'
-        // const label = 'vN'
+      if (self.metadata) {
+        const {deploymentKey, label} = self.metadata
 
-        // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
-        if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
+        if (settings.codePushFlavor !== 'production') {
           const deploymentInfo = self.channels.filter(
-            deployment => deployment.key === deploymentKey
+            deployment => deployment[keyProp] === deploymentKey
           )
           const deploymentName = deploymentInfo.length > 0 ? deploymentInfo[0].name : deploymentKey
 
@@ -131,7 +129,7 @@ const CodePushStore = types
   .actions(self => ({
     checkCurrentStatus: flow(function*() {
       try {
-        const autoDeployKey = self.channels[0].key
+        const autoDeployKey = self.channels[0][keyProp]
         self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
         // check for update that exists but hasn't been downloaded yet (but will be downloaded automatically in the background)
         const metadataPending: RemotePackage = yield codePush.checkForUpdate(autoDeployKey)
@@ -171,7 +169,7 @@ const CodePushStore = types
       yield Promise.all(
         self.channels
           .map(channel => {
-            return codePush.checkForUpdate(channel.key).then(update => {
+            return codePush.checkForUpdate(channel[keyProp]).then(update => {
               if (update) {
                 self.addChannelUpdate(channel, update)
               }
@@ -188,7 +186,7 @@ const CodePushStore = types
           appendReleaseDescription: true,
         },
         installMode: codePush.InstallMode.IMMEDIATE,
-        deploymentKey: channel.key,
+        deploymentKey: channel[keyProp],
       }
       self.syncing = true
       self.syncStatus.clear()
