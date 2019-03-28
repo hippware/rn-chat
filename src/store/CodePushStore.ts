@@ -29,7 +29,6 @@ const CodePushStore = types
   .views(self => ({
     get channels(): Channel[] {
       return deployments[settings.codePushFlavor]
-      // return deployments['staging']
     },
   }))
   .views(self => ({
@@ -37,8 +36,7 @@ const CodePushStore = types
       if (self.metadata) {
         const {deploymentKey, label} = self.metadata
 
-        // Prod: rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ
-        if (deploymentKey !== 'rXt3kcwtaG9O8dzljOTZIDYvM8VUSJz03CBgQ') {
+        if (settings.codePushFlavor !== 'production') {
           const deploymentInfo = self.channels.filter(
             deployment => deployment[keyProp] === deploymentKey
           )
