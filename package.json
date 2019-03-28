@@ -77,7 +77,7 @@
     "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
-    "react-native": "0.59.0",
+    "react-native": "0.59.2",
     "react-native-actionsheet": "^2.2.2",
     "react-native-animated-linear-gradient": "^1.2.0",
     "react-native-background-geolocation": "^2.14.1",
