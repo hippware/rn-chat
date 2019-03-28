@@ -33,7 +33,7 @@ class CodePushScene extends React.Component<Props> {
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
-            <Text style={styles.bold}>Version test 2: </Text>
+            <Text style={styles.bold}>Version: </Text>
             <Text>{this.props.appInfo!.nativeVersion}</Text>
           </Text>
 
