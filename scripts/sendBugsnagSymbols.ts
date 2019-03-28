@@ -34,7 +34,7 @@ async function bundleAndSend(platform: 'ios' | 'android') {
 
         await bugsnagSourcemapUpload({
           appVersion,
-          codeBundleId: appVersion + platform + buildId,
+          codeBundleId: `${appVersion}-${platform}-${buildId}`,
           buildDirPath,
           bundleName,
         })
