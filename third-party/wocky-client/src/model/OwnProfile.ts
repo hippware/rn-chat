@@ -152,9 +152,6 @@ export const OwnProfile = types
         if (locationStore) {
           yield locationStore.hide(value, expires)
         }
-        if (value) {
-          yield self.cancelAllLocationShares()
-        }
         self.hidden = Hidden.create({enabled: value, expires})
       }),
       addLocationSharer(sharedWith: IProfile, createdAt: number, expiresAt: number) {
