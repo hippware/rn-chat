@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.3.0 - 2019 Mar 28
+
+**React Native upgrade to 0.59.2**
+
 * Fix white shadow/blur issue when zoomed into satellite view (#3518)
 * Firebase auth (PR #3526)
   * [android] set up Firebase SMS auth for .staging app (#3505)
@@ -22,6 +26,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Pin Location Screen address not populating, black dot (#3516)
 * Prevent loadMinimal on local codepush channel (PR #3549)
 * [android] App icons (#3547)
+* Codepush fixes (due to android), updates (#3496, PR #3541)
+  * [dev] Use version, build and os to identify sourcemaps (#3498)
+* React Native 0.59.2 upgrade (#3551)
 
 # 4.2.1 - 2019 Mar 21
 
