@@ -10,6 +10,7 @@ interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
   // fadeNavHeader?: ReactElement<any>
   fadeNavConfig?: NavConfig
+  offset?: number
 }
 
 export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
@@ -17,7 +18,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
   scrollY = new Animated.Value(0)
 
   render() {
-    const {headerInner, fadeNavConfig, style, ...listProps} = this.props
+    const {headerInner, fadeNavConfig, style, offset, ...listProps} = this.props
     const opacity = this.scrollY.interpolate({
       inputRange: [0, height / 2 - 80, height / 2],
       outputRange: [0, 0, 1],
@@ -28,11 +29,12 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
           ref={r => (this.list = r)}
           bounces={false}
           keyboardDismissMode="on-drag"
-          ListFooterComponent={<View style={{backgroundColor: 'white', height: 50 * k}} />}
+          ListFooterComponent={<View style={{backgroundColor: 'white', height: 250}} />}
           {...listProps}
-          onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.scrollY}}}])}
           style={[{flex: 1}, style]}
-          ListHeaderComponent={<DraggablePopupListHeader inner={this.props.headerInner} />}
+          ListHeaderComponent={
+            <DraggablePopupListHeader inner={this.props.headerInner} offset={offset} />
+          }
           showsVerticalScrollIndicator={false}
         />
         {fadeNavConfig && (
@@ -52,9 +54,9 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
 /**
  * This list header wrapper ensures that the user can "touch through" to the map behind the list
  */
-const DraggablePopupListHeader = ({inner}) => (
+const DraggablePopupListHeader = ({inner, offset}) => (
   <View>
-    <TouchThroughView style={{width, height: height / 2}} />
+    <TouchThroughView style={{width, height: offset || height / 2}} />
     <BottomPopup>
       <View
         style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}

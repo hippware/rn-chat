@@ -1,7 +1,7 @@
 import React from 'react'
-import {View, TextInput, Image} from 'react-native'
+import {View, TextInput, Image, Platform} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-
+import {height} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -13,7 +13,8 @@ type Props = {
   searchStore: ISearchStore
 }
 
-const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
+const KeyboardAwareDraggablePopupList: any =
+  Platform.OS === 'ios' ? withKeyboardHOC(DraggablePopupList) : DraggablePopupList
 
 const searchIcon = require('../../../images/search.png')
 
@@ -26,9 +27,12 @@ class FriendSearch extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    const {searchStore: {globalResult}} = this.props
+    const {
+      searchStore: {globalResult},
+    } = this.props
     return (
       <KeyboardAwareDraggablePopupList
+        offset={Platform.OS === 'android' ? height / 2 + 100 : undefined}
         ref={r => (this.list = r)}
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
