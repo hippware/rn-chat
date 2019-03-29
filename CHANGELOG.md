@@ -28,7 +28,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] App icons (#3547)
 * Codepush fixes (due to android), updates (#3496, PR #3541)
   * [dev] Use version, build and os to identify sourcemaps (#3498)
-* React Native 0.59.2 upgrade (#3551)
+* React Native 0.59.2 upgrade (PR #3551)
 
 # 4.2.1 - 2019 Mar 21
 
