@@ -5,5 +5,5 @@ echo "Branch: $APPCENTER_BRANCH"
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage"  ] || [ "$APPCENTER_BRANCH" == "production" ]
 then
-  yarn bugsnag $APPCENTER_BUILD_ID
+  yarn bugsnag
 fi
