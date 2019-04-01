@@ -192,7 +192,7 @@ PODS:
     - React
   - RNBackgroundFetch (2.5.1):
     - React
-  - RNBackgroundGeolocation (3.0.0-rc.3):
+  - RNBackgroundGeolocation (3.0.0-rc.4):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNDeviceInfo (0.9.3):
@@ -364,7 +364,7 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
-  RNBackgroundGeolocation: 9653d25dcd646e2237067e47acbdbd49dd365c86
+  RNBackgroundGeolocation: 1cd01544d457d339fee151488e7e75aa8919ae15
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
@@ -375,6 +375,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: 238baf22b168e221dec7e2314f3122e8453245e8
+PODFILE CHECKSUM: e8a46e61744b8aef5898062f49772b9b442605d4
 
 COCOAPODS: 1.6.1
