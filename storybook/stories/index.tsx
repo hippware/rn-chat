@@ -15,10 +15,16 @@ import OnboardingNotifications from '../../src/components/Onboarding/OnboardingN
 import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
 import {LocationWarningUI} from '../../src/components/modals/LocationWarning'
 import MockFindFriends from './FindFriendsList/MockFindFriends'
+import ListOnMap from './rn-touch-through-view/ListOnMap'
 
 function emptyFn() {
   /* noop */
 }
+
+storiesOf('Touch Through View + Flatlist', module)
+  // tslint:disable-next-line
+  // .add('Main Swiper', () => <OnboardingSwiper log={console.log} onceStore={{flip: emptyFn}} />)
+  .add('default', () => <ListOnMap />)
 
 storiesOf('Onboarding', module)
   // tslint:disable-next-line
