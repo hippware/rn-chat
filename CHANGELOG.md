@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Don't cancel location shares upon being invisible (#3556)
+* Long Press and then the X and Next buttons do not function (#3535)
+* [android] Persistent "Location Service activated" notification (#3469)
+  * Upgrade RNBGL to 3.0.0-rc.3 (PR #3563)
+
 # 4.3.0 - 2019 Mar 28
 
 **React Native upgrade to 0.59.2**

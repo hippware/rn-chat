@@ -9953,10 +9953,10 @@ react-native-animated-linear-gradient@^1.2.0:
     prop-types "^15.6.0"
     rgb2hex "^0.1.0"
 
-react-native-background-fetch@~2.5.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.5.1.tgz#d02663fd71d7a5cabc574f2ca5267d56b46f2a61"
-  integrity sha512-6s5k2APVkcgZTavDAUbo6MQJJGaNkQbWSR5h2AgArl5EaA7aEnqFMLl8YoTIvygmUPH+VpTuTbUq11SlFJPDSw==
+react-native-background-fetch@~2.4.4:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.4.6.tgz#86eef69f00f1acefd4107e658d35e7b2df4055ce"
+  integrity sha512-u0NH6liYRoohJqP8zFTj87ODK61D7ibl8q+lUFcc5WxPawC8C1DDrb82txtkbvyPNHch7hX2OYz5FAGaahvnDg==
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
@@ -9970,7 +9970,7 @@ react-native-background-geolocation@^3.0.0-rc.4:
     cocoa-lumberjack "^3.0.5"
     fast-plist "^0.1.2"
     plist "^2.0.1"
-    react-native-background-fetch "~2.5.0"
+    react-native-background-fetch "~2.4.4"
     xcode "^0.9.1"
 
 react-native-blur@^3.2.2:
