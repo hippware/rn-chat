@@ -9,6 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] Use version, os to identify sourcemaps (Rework #3498, PR #3568)
 * [android] Persistent "Location Service activated" notification (#3469)
   * Upgrade RNBGL to 3.0.0-rc.4 (PR #3572)
+* Update google-services.json (PR #3575)
+  * [android] firebase SMS auth bug (#3554)
 * Enable RNBGL batch uploading of data points (PR #3578)
   * Live Location: Occasional lag or history of users travel (#3412)
 
