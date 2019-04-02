@@ -9962,10 +9962,10 @@ react-native-background-fetch@~2.4.4:
     plist "^2.0.1"
     xcode "^0.9.1"
 
-react-native-background-geolocation@^2.14.1:
-  version "2.14.2"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.14.2.tgz#a95ded5fb12f0cd02035fc6031eeeb2d9a8eebf7"
-  integrity sha512-kbQpLiH9kOVDeCM5lgulhBpylgN0ue2oZmcFzXLbOllHSyfA4n/LmZmplK57zSmY2WvZux38i9kGTP0erIAbHQ==
+react-native-background-geolocation@^3.0.0-rc.4:
+  version "3.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.0.0-rc.4.tgz#2db328db29300b975683df4049b514d8679d6b35"
+  integrity sha512-wXWg8BhEA/+ZKuSRJAZtKCJSzpKRHL+jKycO591PzIsMKlo/tbcR0rXDGcBK7TjJ+2wUApeWjhOjJsHbIZ7o9A==
   dependencies:
     cocoa-lumberjack "^3.0.5"
     fast-plist "^0.1.2"
