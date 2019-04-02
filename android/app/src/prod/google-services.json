@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "548019610697-370t44sjsuefp3armsthktuvsp1ldt56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot",
+            "certificate_hash": "e67866628c89abbb211c0d7b6aa9bcaad91501dc"
+          }
         }
       ],
       "api_key": [
@@ -33,11 +37,7 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
@@ -52,9 +52,63 @@
               }
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548019610697:android:be50005fb3bdaf1f",
+        "android_client_info": {
+          "package_name": "com.hippware.android.tinyrobot.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548019610697-ss6h8klm0s7p1t2g7suhtm6v0u9srg5s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot.staging",
+            "certificate_hash": "a4dd583379cdc221c29430f8257a188755ad5859"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "548019610697-dqf0carjmsgu1s6sh2640m5an2i8oh3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot.staging",
+            "certificate_hash": "615997723d35361318a6f6acc0ab1eb3a95820da"
+          }
+        },
+        {
+          "client_id": "548019610697-8fmqksqm3iqjoa5oecehjoi1evb3j36t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hippware.android.tinyrobot.staging",
+            "certificate_hash": "d4563ed95f7579bad08c855d66c11e077b25a186"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0hfno98UbMMVHwz0Sh2t4OsAsAX4iEZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548019610697-bnitmdql0k20391nqahuns8a6d9kvhl8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "548019610697-cvfs1fjakvibmefqa4epp141a7a1c78o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hippware.tinyrobot",
+                "app_store_id": "1295678402"
+              }
+            }
+          ]
         }
       }
     }
