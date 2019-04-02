@@ -154,6 +154,8 @@ const LocationStore = types
     configure: flow(function*(reset = false) {
       const {logger} = getEnv(self)
       const config = {
+        batchSync: true,
+        maxRecordsToPersist: 20,
         startOnBoot: true,
         stopOnTerminate: false,
         disableLocationAuthorizationAlert: true,
@@ -229,7 +231,6 @@ const LocationStore = types
       try {
         const token = yield wocky.getLocationUploadToken()
         yield BackgroundGeolocation.setConfig({
-          maxRecordsToPersist: 10,
           url: `https://${settings.host}/api/v1/users/${wocky.username}/locations`,
           headers: {
             Accept: 'application/json',
