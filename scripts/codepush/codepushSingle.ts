@@ -39,7 +39,7 @@ export default async (
 async function injectBugsnagReleaseId(releaseId: string) {
   return new Promise((resolve, reject) => {
     exec(
-      `sed -e "2s/.*/const codeBundleId = '${releaseId}'/" -i '' src/utils/bugsnagConfig.js`,
+      `sed -e "2s/.*/const codeBundleId = '${releaseId}'/" -i '' src/utils/bugsnagConfig.ts`,
       (error, stdout) => {
         if (error) reject(error)
         // console.log('Bugsnag inject result:', positive(stdout))
@@ -71,10 +71,10 @@ async function codepush(
 async function cleanup() {
   return new Promise((resolve, reject) => {
     console.log(
-      'Cleanup. Remove the codepush generated files and discard the change to bugsnagConfig.js'
+      'Cleanup. Remove the codepush generated files and discard the change to bugsnagConfig.ts'
     )
     const removeFileCmd = `rm -rf ${buildDir}`
-    const discardBugsnagChangesCmd = 'git checkout -- src/utils/bugsnagConfig.js'
+    const discardBugsnagChangesCmd = 'git checkout -- src/utils/bugsnagConfig.ts'
     console.log(removeFileCmd)
     exec(removeFileCmd, (error, stdout) => {
       if (error) reject(error)
