@@ -73,27 +73,21 @@ type Props = {
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {wocky, locationStore, navStore, onceStore} = this.props
-
-    autorun(
-      () => {
-        if (onceStore!.onboarded && wocky!.connected && !locationStore!.enabled) {
-          if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popToHome()})
-        }
-      },
-      {delay: 1000}
-    )
+    const {locationStore, navStore, onceStore} = this.props
 
     reaction(() => this.props.navStore!.scene, () => Keyboard.dismiss())
 
-    // TODO: Move it outside, why we can't put it inside Home?
     autorun(
       () => {
         const {locationPrimed, onboarded} = onceStore!
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
-        if (onboarded && scene === 'home' && !alwaysOn && !locationPrimed) {
-          if (Actions.locationPrimer) Actions.locationPrimer()
+        if (onboarded && !alwaysOn) {
+          if (scene === 'home'  && !locationPrimed){
+            if (Actions.locationPrimer) Actions.locationPrimer()
+          } else {
+            if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
+          }
         }
       },
       {delay: 1000}
