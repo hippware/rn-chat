@@ -5,8 +5,8 @@ import ContactStore, {MyContact} from '../../../src/store/ContactStore'
 import {observable, computed} from 'mobx'
 import {Profile} from 'wocky-client'
 
-// const contacts: any[] = require('./contacts.json')
-const contacts: any[] = require('./contactsMiranda2.json')
+const contacts: any[] = require('./contacts.json')
+// const contacts: any[] = require('./contactsMiranda2.json')
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => {

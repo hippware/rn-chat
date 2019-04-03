@@ -3,6 +3,6 @@
   xmlns:tools="http://schemas.android.com/tools">
   <application>
     <!-- react-native-background-geolocation license -->
-    <meta-data tools:replace="android:value" android:name="com.transistorsoft.locationmanager.license" android:value="e96fb2c368a8761920a3973defa214f7329acb76465a1ecf10d14f3f474b3e70" />
+    <meta-data tools:replace="android:value" android:name="com.transistorsoft.locationmanager.license" android:value="57b94460360395a0887167f880ce1e8e6d5a0e854f1a15f385b777303ac149a0" />
   </application>
 </manifest>

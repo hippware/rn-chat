@@ -10,7 +10,7 @@ import withKeyboardHOC from '../common/withKeyboardHOC'
 import {ISearchStore} from '../../store/SearchStore'
 
 type Props = {
-  searchStore: ISearchStore
+  searchStore?: ISearchStore
 }
 
 const KeyboardAwareDraggablePopupList: any =
@@ -27,9 +27,7 @@ class FriendSearch extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item} />
 
   render() {
-    const {
-      searchStore: {globalResult},
-    } = this.props
+    const {searchStore} = this.props
     return (
       <KeyboardAwareDraggablePopupList
         offset={Platform.OS === 'android' ? height / 2 + 100 : undefined}
@@ -45,7 +43,7 @@ class FriendSearch extends React.Component<Props> {
             </RText>
           ),
         }}
-        data={globalResult.filteredList.map(p => p.profile)}
+        data={searchStore!.globalResult.filteredList.map(p => p.profile)}
         keyboardShouldPersistTaps="handled"
         // keyboardDismissMode="interactive"
       />
@@ -77,8 +75,8 @@ class FriendSearch extends React.Component<Props> {
           }}
           autoFocus
           ref={r => (this.input = r)}
-          onChangeText={searchStore.setGlobal}
-          value={searchStore.global}
+          onChangeText={searchStore!.setGlobal}
+          value={searchStore!.global}
           returnKeyType="search"
           clearButtonMode="while-editing"
           onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}

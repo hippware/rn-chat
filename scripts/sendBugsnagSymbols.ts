@@ -1,11 +1,11 @@
 import {exec} from 'child_process'
 import {positive, error} from './utils'
 import bugsnagSourcemapUpload from './bugsnagSourcemapUpload'
+import getCodeBundleId from '../src/utils/bugsnagCodeBundleId'
 
 // tslint:disable:no-console
 
 const appVersion = require('../package.json').version
-const buildId = process.argv.length >= 3 && process.argv[2]
 
 async function send() {
   console.log(`appVersion: ${appVersion}`)
@@ -34,7 +34,7 @@ async function bundleAndSend(platform: 'ios' | 'android') {
 
         await bugsnagSourcemapUpload({
           appVersion,
-          codeBundleId: `${appVersion}-${platform}-${buildId}`,
+          codeBundleId: getCodeBundleId(platform),
           buildDirPath,
           bundleName,
         })
