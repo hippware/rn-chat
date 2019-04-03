@@ -13,7 +13,7 @@ type Props = {
   searchStore?: ISearchStore
 }
 
-const KeyboardAwareDraggablePopupList: any =
+export const KeyboardAwareDraggablePopupList: any =
   Platform.OS === 'ios' ? withKeyboardHOC(DraggablePopupList) : DraggablePopupList
 
 const searchIcon = require('../../../images/search.png')
