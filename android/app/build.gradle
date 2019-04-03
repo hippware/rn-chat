@@ -232,6 +232,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-android-open-settings')
     implementation project(':react-native-extra-dimensions-android')
     implementation project(':react-native-localize')
     implementation project(':react-native-gesture-handler')

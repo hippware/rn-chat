@@ -1,4 +1,6 @@
 rootProject.name = 'tinyrobot'
+include ':react-native-android-open-settings'
+project(':react-native-android-open-settings').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-android-open-settings/android')
 include ':react-native-extra-dimensions-android'
 project(':react-native-extra-dimensions-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-extra-dimensions-android/android')
 include ':react-native-localize'
