@@ -7,6 +7,7 @@ import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
 import {GradientButton, RText} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
+import AndroidOpenSettings from 'react-native-android-open-settings'
 
 import backgroundGeolocation from 'react-native-background-geolocation'
 
@@ -32,10 +33,15 @@ class LocationWarning extends React.Component<Props> {
   }
 
   render() {
+    // TODO make generic reusable method for app settings
     return (
       <LocationWarningUI
         onPress={() => {
-          Linking.openURL('app-settings:{1}')
+          if (Platform.OS === 'ios') {
+            Linking.openURL('app-settings:{1}')
+          } else {
+            AndroidOpenSettings.appDetailsSettings()
+          }
         }}
       />
     )
