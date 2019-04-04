@@ -2,49 +2,53 @@ import React from 'react'
 import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
-import {observer} from 'mobx-react/native'
+import {when} from 'mobx'
+import {observer, inject} from 'mobx-react/native'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
 import {GradientButton, RText} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import AndroidOpenSettings from 'react-native-android-open-settings'
-
-import backgroundGeolocation from 'react-native-background-geolocation'
+import {ILocationStore} from '../../store/LocationStore'
 
 type Props = {
   afterLocationAlwaysOn: () => void
+  locationStore?: ILocationStore
 }
 
+@inject('locationStore')
 @observer
 class LocationWarning extends React.Component<Props> {
+  handler
   componentDidMount() {
-    backgroundGeolocation.on('providerchange', this.onLocationPermissionChanged)
+    const self = this
+    this.handler = when(
+      () => self.props.locationStore!.alwaysOn,
+      () => {
+        setTimeout(() => self.props.afterLocationAlwaysOn())
+      }
+    )
   }
 
   componentWillUnmount() {
-    backgroundGeolocation.un('providerchange', this.onLocationPermissionChanged)
+    this.handler()
   }
 
-  onLocationPermissionChanged = ({status}) => {
-    // console.log('& perms changed', status)
-    if (status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS) {
-      this.props.afterLocationAlwaysOn()
+  onPress = async () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings:{1}')
+    } else {
+      try {
+        await this.props.locationStore!.getCurrentPosition()
+      } catch (e) {
+        AndroidOpenSettings.appDetailsSettings()
+      }
     }
   }
 
   render() {
     // TODO make generic reusable method for app settings
-    return (
-      <LocationWarningUI
-        onPress={() => {
-          if (Platform.OS === 'ios') {
-            Linking.openURL('app-settings:{1}')
-          } else {
-            AndroidOpenSettings.appDetailsSettings()
-          }
-        }}
-      />
-    )
+    return <LocationWarningUI onPress={this.onPress} />
   }
 }
 
