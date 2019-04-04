@@ -9,7 +9,7 @@ PODS:
     - React
   - BugsnagReactNative/Core (2.15.0):
     - React
-  - BVLinearGradient (2.5.3):
+  - BVLinearGradient (2.5.4):
     - React
   - CocoaLumberjack (3.4.2):
     - CocoaLumberjack/Default (= 3.4.2)
@@ -17,7 +17,7 @@ PODS:
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - CodePush (5.5.2):
+  - CodePush (5.6.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
     - React
@@ -190,9 +190,9 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.4.6):
+  - RNBackgroundFetch (2.5.1):
     - React
-  - RNBackgroundGeolocation (3.0.0-rc.4):
+  - RNBackgroundGeolocation (3.0.0-rc.5):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNDeviceInfo (0.9.3):
@@ -208,7 +208,7 @@ PODS:
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
-  - RNLocalize (1.1.0):
+  - RNLocalize (1.1.1):
     - React
   - RSKImageCropper (2.2.1)
   - SSZipArchive (2.1.4)
@@ -334,9 +334,9 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 0acbd9b570c54a41a836f145f788ff28e652c831
-  BVLinearGradient: 0d985ec461359c82bc254f26d11008bdae50d17a
+  BVLinearGradient: 8cbc5155c978f2e43098818c91d206d07aae6d30
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
-  CodePush: 338a023972c64636503e8886cf4cb6ec27dd1c01
+  CodePush: 300e90b3481fa82569090406165b83745de3613a
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 963d5685fae888a56d6d4d9cfce6b9c976958798
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -364,17 +364,17 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
-  RNBackgroundGeolocation: 1cd01544d457d339fee151488e7e75aa8919ae15
+  RNBackgroundGeolocation: 3a5bf961801125a88b00dbb4d620b815fb4d39dc
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
   RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98
   RNImageCropPicker: 754299983d07c450aec0834c0efe0ed114131ff3
-  RNLocalize: 079a659b6ac62d98ac76e1050353a51a8e06f5bd
+  RNLocalize: 417aba825c1e5795a1a52dee37e0ac8acfb85f8f
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: e8a46e61744b8aef5898062f49772b9b442605d4
+PODFILE CHECKSUM: dee1d93deb37c22df744d20d1cf8c422bfe7e7ae
 
 COCOAPODS: 1.6.1

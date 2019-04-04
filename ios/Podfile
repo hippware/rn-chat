@@ -69,7 +69,7 @@ post_install do |installer|
       end
     end
 
-    targets_to_ignore = %w(React yoga)
+    targets_to_ignore = %w(React)
     
     if targets_to_ignore.include? target.name
       target.remove_from_project

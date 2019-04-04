@@ -5,7 +5,7 @@
 
     ]
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "description": "A toolbox for your React Native app localization.",
   "summary": "A toolbox for your React Native app localization.",
@@ -16,7 +16,7 @@
   },
   "source": {
     "git": "https://github.com/react-native-community/react-native-localize.git",
-    "tag": "1.1.0"
+    "tag": "1.1.1"
   },
   "source_files": "ios/*.{h,m}"
 }

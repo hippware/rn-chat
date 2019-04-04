@@ -116,6 +116,7 @@
 /* Begin PBXBuildFile section */
 		00117CD81AF05E0A6A257DFC8C9D2CB4 /* BSG_KSMach_Arm.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D420C5ADEABC2636C60028863C809 /* BSG_KSMach_Arm.c */; };
 		0018402758A2B13546F185068733E262 /* BugsnagBreadcrumb.h in Headers */ = {isa = PBXBuildFile; fileRef = 2335EDA3E1215AD81BAB9DD96925829C /* BugsnagBreadcrumb.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		004C3AB46D0A05D228031A73351665D7 /* instrumentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 520DA0D854EEA2CFEDA2339CFE06A8F1 /* instrumentation.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		004C6C1A4D8357815AE72C165AE5D608 /* Downloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 874BC6935C6A1D8560AB97AB8BAE8909 /* Downloader.m */; };
 		0062E9928404A6A4EA4A946C1FDA5E20 /* BSG_KSSysCtl.c in Sources */ = {isa = PBXBuildFile; fileRef = 5456CC15742912C78F863E7E4FC15037 /* BSG_KSSysCtl.c */; };
 		016A981B368ABF66C233E1CC05CA72DF /* AIRGoogleMapCircleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D87E31CDFE7368C089D2286261CFFB19 /* AIRGoogleMapCircleManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -143,6 +144,7 @@
 		05B80D98641B0E4D702B4323B185891D /* fileenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A69ED65AEB25BFE02D7DED319EF739D /* fileenc.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		06F6755EC42215F68B154317F1D0D6F2 /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF429F7807543C58B88A07527C098478 /* QBCheckmarkView.m */; };
 		07121AD1E9035CFDCDE1C082D213466F /* BugsnagCrashReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D991300355E93769EF017D3D2A332E8 /* BugsnagCrashReport.m */; };
+		076FCCAA2B41B2A18046511E31D1FE44 /* yoga-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 47BE7A8BCB5DD1E32C3BA0A6C5015EF5 /* yoga-dummy.m */; };
 		08278EC9C6AB49F583BD9F42D4800A12 /* UIViewController+AutomaticTracks.m in Sources */ = {isa = PBXBuildFile; fileRef = C09CCC827BABABC955ECA91D1F8DB745 /* UIViewController+AutomaticTracks.m */; };
 		089FCE8823B49BC8D12A8C0E28081D57 /* BSG_KSCrashContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AB06F08FDBC08EF8DF8F06EDF7189A7 /* BSG_KSCrashContext.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		08F9747618A9327A39D7B1AF00D5DC5C /* diy-fp.cc in Sources */ = {isa = PBXBuildFile; fileRef = C9842C4847285007440A0AE349154561 /* diy-fp.cc */; };
@@ -361,6 +363,7 @@
 		347AAEE53AB35BD3C21D979C4ACEADB6 /* AIRMapSnapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BFB2935FCD9BFB94CAE9795AADEBD6 /* AIRMapSnapshot.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		34AC6FE4CAB2B1A2E1218513FBE3CB1D /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 904CC49A63BA8AA343A49EC2915BDC57 /* zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		34E729EECC9FC51DE06700B2DC4AC910 /* RNFirebaseAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4ADF06E627752003D9EBD21B46AF7 /* RNFirebaseAuth.m */; };
+		34F1B005B6CE0161989EEEA6F2E42E41 /* YGValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E046C2E3C6E189A573DE2952C3C5B633 /* YGValue.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		3560C95E64C7DDC556D764141486EAD1 /* AIRMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FF176BE77CFCA63423BBA7B4EAA06E0 /* AIRMap.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		357531FD89AEA8994B4490725ADAC6F9 /* MPConnectIntegrations.h in Headers */ = {isa = PBXBuildFile; fileRef = 53536017A3CE27B2BB4F677D172AC4DB /* MPConnectIntegrations.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		358E666D208879540F034FB11A12B3A2 /* GULAppDelegateSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = EE421146B8A2C241A576183C3DBE3E10 /* GULAppDelegateSwizzler.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -396,6 +399,7 @@
 		3AFBED5EE75FADCD80361B2115637C08 /* aestab.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B894333A8B4B9FD711906B06AD9CF02 /* aestab.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3B09F5D8436CC65CB03A71194A615788 /* FIROAuthProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B91BA7C9E02E42E85F273318A9FC4C /* FIROAuthProvider.m */; };
 		3B57D35C7F3E3EFDFB437FB6469ADD50 /* MPDesignerEventBindingResponseMesssage.m in Sources */ = {isa = PBXBuildFile; fileRef = E392F19B93F1BB1D5E338B3FA2C1A25D /* MPDesignerEventBindingResponseMesssage.m */; };
+		3B823826DC60714603A9B901082E6FA8 /* CompactValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 31665D1A9923A94E4809771A6A81930C /* CompactValue.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3B92DB2B0CFEA299CF9B95101C1E5CF0 /* QBVideoIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = C1975851AB04F565F1DB0A9B1DDF2812 /* QBVideoIndicatorView.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3BDEDD8BFC130AB03A6536291BA1F8EB /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B8FE2160C2F5ACC25126D1D01F1708 /* UIColor+MPColor.m */; };
 		3C500E2C8B97695C85BECD453F89992A /* FIRSecureTokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF26214A8DC07821047BFD466F8A002 /* FIRSecureTokenResponse.m */; };
@@ -437,6 +441,7 @@
 		44346848476880AD5041F89AAB966E34 /* FIRErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D5CB437D5F73ACCA2AF407B44EFBF3E8 /* FIRErrors.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4441B20F0D1AF714376F5F9F949D3CA4 /* fileenc.h in Headers */ = {isa = PBXBuildFile; fileRef = CCE4CA3C970E58B281EC03D465EFAB71 /* fileenc.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		44D68A60071937FBE41B719B544E5363 /* BSG_KSCrashType.h in Headers */ = {isa = PBXBuildFile; fileRef = CE40C685147DF2AE15875534C0695DCC /* BSG_KSCrashType.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		44DA46DD1BEFC67F693345DEDD9F8E1B /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D51E7FFF23880D2F18E9AAA4D50663F3 /* YGMacros.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		44F28443DECC6EC22B664901AA55C072 /* AIRGoogleMapPolyline.h in Headers */ = {isa = PBXBuildFile; fileRef = A1ECE8BA78467F1092F90C1A11E53133 /* AIRGoogleMapPolyline.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		452B9B07DE7B0D17C839933AD19A44BD /* BSG_KSBacktrace_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C4A482968C08CC83F0E8C26DD80A9938 /* BSG_KSBacktrace_Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		453086A4616347A5D4AD6A25BF7D16A3 /* JWT-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 263716F5257ABEB8E0C2F28635C44CC9 /* JWT-dummy.m */; };
@@ -454,6 +459,7 @@
 		475A6CD77FFA2540798D19D6BF1396BC /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCE32EEF2B702C6477F76C0AF1E95EC /* GQTPointQuadTreeChild.m */; settings = {COMPILER_FLAGS = "-fno-modules"; }; };
 		478DBA4C4610B6AC87C8994D8234B57F /* GULMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F0833B3607B31A275F47640ED0AC004 /* GULMutableDictionary.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		478EA9BB35E6103004D1A38C7B99DADF /* MPNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 4373D13AA12053B0B6BC80F1EB169B1F /* MPNetwork.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		48341BD3EB4D1A340B41EC2C1E64D8C7 /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 61DDBB653B7A72949FF177C87844C5F6 /* YGLayout.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		486D7FC99468E5103D8988B3B3928E1D /* GMUHeatmapTileLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9AD7C43AB579F39AD4EE102025F25C /* GMUHeatmapTileLayer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		487D17D8C4292D4330D0E85B845C45E1 /* FIROAuthCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0DC74AA6B9720F4C38A587744B796D /* FIROAuthCredential.m */; };
 		488892B837167709A5CBD88E080446CC /* FIRGetProjectConfigResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 75611114B45B851B5D0146C0286C7A85 /* FIRGetProjectConfigResponse.m */; };
@@ -481,6 +487,7 @@
 		4E4A912C3C5D17DB11D73B61FE964061 /* MPABTestDesignerDisconnectMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3919770062768127371618EFCD3E3C70 /* MPABTestDesignerDisconnectMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4E750B889F2BDBCDBCA7AA5464DFCD80 /* FIRErrorCode.h in Headers */ = {isa = PBXBuildFile; fileRef = CC068327D32AA61425FD28CF84F8FD74 /* FIRErrorCode.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4E9770264B01130B3BAE1DF59DF2D560 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = B0957DC7E944D74BDFC8316FAE689A5B /* pwd2key.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4EC5B41F582293DC9A46FEDB260B4D19 /* YGEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AF30B6F1368779724CC140A178093E5 /* YGEnums.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4FF400A9798ADA1E8615A8603E848C04 /* FirebaseAuth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA733E33E721953172BB7BC806C30755 /* FirebaseAuth-dummy.m */; };
 		500EDFC6C363FFD0105DE9117F437D64 /* AIRGoogleMapPolygonManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A50FED5D5DFB31E17BF1B480FA20C481 /* AIRGoogleMapPolygonManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		503DFA217C660F748F057051E1336E86 /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FB2474DD461B895909BBF4802CE3335 /* JWT.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -533,6 +540,7 @@
 		59148E846AAA3AEFA85C261942A3F70B /* RNFirebaseStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = ED4FFD88B79854922AA786E4A0EB5E1F /* RNFirebaseStorage.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		5932065DF60370EAE87B4B3F27E3207F /* GMUGeometryRenderer+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C5E6E9CFC015B5B04D969E92B0CB8FF /* GMUGeometryRenderer+Testing.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		593852162511015BE87097173C28242D /* FIRAuthUIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 884542F80D501D55F604B17B9D6AA093 /* FIRAuthUIDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		597BE859E40F7BB68BCF716C3FA34EDB /* YGConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5551D8C4C5DF19B07B095B238B7524C2 /* YGConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		598BF86C3CEAF5C934DBC6C26792EF94 /* bignum.cc in Sources */ = {isa = PBXBuildFile; fileRef = BAF4D32B5F96AB84063DD50D8458C0C0 /* bignum.cc */; };
 		5A622B6B9E043308CF232D44B8E151EB /* GMUNonHierarchicalDistanceBasedAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 7269138BFB830B4687AFF9539E5BEFA0 /* GMUNonHierarchicalDistanceBasedAlgorithm.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		5AD2957BC9616A15C34796F1E7487F00 /* glog-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AD8D2265949AC0A65FB9C4EDB6BA0A /* glog-dummy.m */; };
@@ -560,6 +568,7 @@
 		620C6FF5F59C2DBD9D1453DA7ED93E43 /* Mixpanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5637B42A9E5491466AA5C2EAF0EAD539 /* Mixpanel.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		62241247DDA600B2D30607A664751231 /* RNGestureHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DFC0A02ADD1517DD18522D7DC2F7572 /* RNGestureHandlerManager.m */; };
 		62825760B895542D30194A59B53D82EA /* log_severity.h in Headers */ = {isa = PBXBuildFile; fileRef = F6ED2A1EA5697A83CED2C9902425874C /* log_severity.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		630339F24BBAEC0EEB56E6B1F66FB229 /* Yoga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C01180E734E1B77C4E5926AD997849 /* Yoga.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		634834AAC2F4296D00A3A68A7E23C719 /* NSError+BSG_SimpleConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = 878670F13D2968E701739C294A2801C2 /* NSError+BSG_SimpleConstructor.m */; };
 		63891104C2ED93E4DAF6A33B2E7C790D /* GULNetworkConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0783C230E108C37852BF0A2AE0178848 /* GULNetworkConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		638BD8C7EFC660E4CA813DFE6C7452D0 /* JWTBase64Coder.h in Headers */ = {isa = PBXBuildFile; fileRef = AC19D77ADEBF3DA80439C52E3D2CFC4F /* JWTBase64Coder.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -584,6 +593,7 @@
 		67439584D7E4BF71557CF908E58EF25F /* FIRAuthDataResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E94A037F713E49C86ED4DFA4C01E3D /* FIRAuthDataResult.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		676A8DB9F39548F7DDB924B81F92BE2B /* FIRAuthAppDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 709FE4571F21DEF4C775E5C6EC4404CD /* FIRAuthAppDelegateProxy.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		683BEB8DCC2C93F7EB9CD5EBEBDABFBD /* AIRGMSPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2615B9A16A3398CBB1987AF77B95FED7 /* AIRGMSPolygon.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		683C80BC85245BC878C838BC95BCC09E /* YGStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 911BBD622140B7C032908960795E665D /* YGStyle.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		68D7AF573F7474AB8188FCD712FFB752 /* MPResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 96289361105D414645FCF5C2DBD4FD3F /* MPResources.m */; };
 		68D7CF28CC234932A30B963BCC293FF8 /* RNFirebase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D05E1D465B93522CBCA0ECAAABD09C7 /* RNFirebase.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		68DADF7DF61B19BF3EE61362A6804C33 /* JWTCoding+ResultTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = FDE5DAA6D5ABC10B460D5E54A92ED0A1 /* JWTCoding+ResultTypes.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -596,14 +606,18 @@
 		6A5C5861E880FF15B972D1F3F393A71C /* RNGestureHandlerRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8C537BB06FABDDAC78EB960BE4592 /* RNGestureHandlerRegistry.m */; };
 		6A7A3A4784DF63C84637DC14820A6683 /* BugsnagHandledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A9A45DB143F955C89971B4760B93D3 /* BugsnagHandledState.m */; };
 		6A9E9F902D3D3FBFCAB764D8C895A8AF /* JWTAlgorithmRSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 806EBF1B7C8C4B89BC3C7D55174BD6FE /* JWTAlgorithmRSBase.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6AE93E3A417A41BF9125E0F7E4855970 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21F70FE13F296C51E93470E0F2BF8D /* Utils.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6B3F18E6D4A2836169002C3969FC27AB /* FIRComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FEC25E2D0445EBDEB02A40815CF0B3B /* FIRComponent.m */; };
 		6B461DEF01A4EC68AC3E64FF3942D9C2 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 06924023FD117C326E9B22DF221E5C55 /* es.lproj */; };
 		6B9B1E43917CC89C5B17A6A321BF0FEC /* RCTConvert+RNPStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9BD0EAFFC1460ECCD2304F5CFF3C61 /* RCTConvert+RNPStatus.m */; };
 		6BC968E429BC29179DD85841B3F2A320 /* CodePushDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0482BE4F51F4722F77EF73C959FB8E8E /* CodePushDownloadHandler.m */; };
 		6C5824273668562287277ABFADEB3F18 /* CodePush-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3DBD465F50F69E49993292CCD4D8B5 /* CodePush-dummy.m */; };
 		6C79B90767A69AFE57632ADCB3B4659E /* RNFirebase-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC71213262D5F6A14258945C44B1DC /* RNFirebase-dummy.m */; };
+		6CEE451D307EEC8E05341C80482D8737 /* YGNodePrint.h in Headers */ = {isa = PBXBuildFile; fileRef = BE5399999284ABFF8569FE1535DDFCA7 /* YGNodePrint.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6D0098A4AF20586C0F8BF92F1833DA5E /* BSG_KSLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = AE69A6EB2DD014B15F4549E710CD213C /* BSG_KSLogger.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6D3913895B99C9CA1AC7B01A3FDB3E40 /* stl_logging.h in Headers */ = {isa = PBXBuildFile; fileRef = E328296589EC766FD17EB2243A4D10DC /* stl_logging.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6D64E56F7C468C141A0C0424FFB16AA4 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 537BB582C9CE42990BA87DFAB588943F /* Utils.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
+		6DCCF54D43BBBBC2D35C8DF04D8751D3 /* YGEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9547FD5838815C32EBA9C74C2A244 /* YGEnums.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		6DD27D3AC315FEA98145DA79E9E043B3 /* VibrancyViewManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27251DE6B4F5F1E0E78B14657C1301A9 /* VibrancyViewManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6DF2D347C7A8F2292CD7145D2D036E3D /* FIRLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3F9FC60E1929BC23147852E403F714 /* FIRLogger.m */; };
 		6E4167EAB2AE7BBBFB0AD5930C755EBD /* GMUClusterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C85C503BEB016286D9637B829312E390 /* GMUClusterManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -641,6 +655,7 @@
 		76828C1A56A3A3FAA68838BC5AB70C23 /* BlurViewManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA99A6192538EC9FAA465F60E81E377 /* BlurViewManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7697EBD658726DE48B3916F524927DE2 /* FIRFacebookAuthCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = E64C5B18EEDFC9A6D32867A1BC598D29 /* FIRFacebookAuthCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		76990461E4C8C8CD6EF4EAFD111FC155 /* GMUGeoJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4597ABF72B3EAF6AA34CEC971F08CE40 /* GMUGeoJSONParser.m */; settings = {COMPILER_FLAGS = "-fno-modules"; }; };
+		76AF1D104A0085732253B4F43C372396 /* Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5EAC199E4DFC8F539B55635D93D940 /* Yoga.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		76FBA242412D93F93ED2B0831D3CD609 /* FIRPhoneAuthCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = CA015BAB2CAEFC7FD1F12C9E5A75EDC5 /* FIRPhoneAuthCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		77197DF1002072B5C1E2EC3F43B292D8 /* FIRAuthTokenResult.h in Headers */ = {isa = PBXBuildFile; fileRef = CD384366E11A640AEA991EBA8C47C3F3 /* FIRAuthTokenResult.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		775C99E8F4C8E80C3ED89574B94E472F /* BugsnagFileStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F140632A5F88AA15615A4A4FF30AA6A /* BugsnagFileStore.m */; };
@@ -671,6 +686,7 @@
 		7E8DBA26F82757B75B55496CFCC43C3D /* BSG_KSString.c in Sources */ = {isa = PBXBuildFile; fileRef = AB947584F31C9647227CB08876451A42 /* BSG_KSString.c */; };
 		7EAFC1439A504EB9E3AD7C86606571F1 /* QBAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 880D5BCAC925B6CBAD7DBE5224D9FB17 /* QBAssetsViewController.m */; };
 		7F2FEE614FCBB1968CA73A2B260730C1 /* BugsnagApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 7246765DDD2663E634AE5091A34AB56C /* BugsnagApiClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7F4DAC4302B706CF07885F61CF062EB2 /* YGValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB2973057659922E36FC0F32D66211C /* YGValue.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7F7874E65AED2A890EE014C9C7D58F1D /* diy-fp.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D7E933EFEC28D4A5AFB91AE90AAC02E /* diy-fp.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7FF6549537727DEB95FBAFDB8F4A1315 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = D221B45387BA57377EF051F5FD635E24 /* aes.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		801A5789283851C3A83991EFA07F92C8 /* JWTCryptoKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D2AAC451665E63717022D70758A521 /* JWTCryptoKey.m */; };
@@ -700,6 +716,7 @@
 		83E6A3E4F6D30B9A5A2B8939CB85B2C8 /* GMUGeometryRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 216188D7AA075774F3A62AFF65C7B0B4 /* GMUGeometryRenderer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		83F1557E495F2F22BAED40476F171016 /* RNFSManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BFC69C28A1C3CDA37BAF4D10EDB673E /* RNFSManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		83F6E3E7BAF0411AFE6B770BD22EF47D /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFB0C2269D2C4E1CF448049C5A8F560D /* String.cpp */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1"; }; };
+		8442B21D06894895798D6EFABDAE7920 /* YGMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2118351675C17A1708D4345ADA5632 /* YGMarker.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		849D49D2A17B0469CFBD7D3434EEE457 /* RNDeviceInfo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FF1DDAD398E9401A207D77EC4BB026 /* RNDeviceInfo-dummy.m */; };
 		84A275CF359F0D5EAA895437DA48D9EB /* MPObjectSerializerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E1607228B0E60FB055A08171748739A8 /* MPObjectSerializerConfig.m */; };
 		84EAE8F60281CB3EF824504346CA4B3E /* Unicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 951BBE03AB4034F2AE99C6CDBF699CE3 /* Unicode.cpp */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1"; }; };
@@ -762,6 +779,7 @@
 		906174AD800410B4773A4EAF4957653C /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7E04C6059FFCC29F22ED906C864093F6 /* logging.cc */; };
 		90729832AEEE8133D0DF3527CC2AB60A /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C0D688E5D3844C3E7813FF9B9A7D7AF /* aestab.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		90A1870975AA940D008B7D041541401A /* BSG_KSSignalInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AD2B0E2A7A951D91F8DA9D73AB34C4A /* BSG_KSSignalInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		911BE9A53996D8F96337BD36CBE880C9 /* YGConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5D30413445905CC039E2610CA7442D4 /* YGConfig.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		917E6F783C0F9FA6372293A20D425BF3 /* AutomaticEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CAA7230EDD6740AF65399EA63C0E97 /* AutomaticEvents.m */; };
 		91D8D820F44C55DB2B2648192C4D7926 /* FIRDynamicLinks.m in Sources */ = {isa = PBXBuildFile; fileRef = A75030DCA0CC30062E29868971797831 /* FIRDynamicLinks.m */; };
 		9287AB3E6AF520D4FF03CA2A92F78274 /* RNPAudioVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F473DAE8B902FCE03A0077D796AF9F8 /* RNPAudioVideo.m */; };
@@ -988,6 +1006,7 @@
 		C74F50F0160AD2B7CE9004C60CBC3374 /* FIRAuthBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = AC8BA87C416CC88D599A88E6AF4F83A2 /* FIRAuthBackend.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C77D2D67A7EFA66FEBAB2758FEBBAF51 /* MPPropertyDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 55C601872451516A01595D45BF7290AF /* MPPropertyDescription.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C79B3F61656390CAFAC8AB4C3448625D /* AIRMapMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDAD7512089968FD0C880BE16C18B9C /* AIRMapMarker.m */; };
+		C7BF6D2DB71BC7D09929F5F7BB4765AE /* YGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A9C8D7E1979FF3007A7D1FDBF8D7797 /* YGNode.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		C7DCA36BC01C33478E6BC8801AA6F929 /* utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3999EDE19AF1F9DBB636992D1EA44A4C /* utils.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C86CB38B8549336211596B8A21AD5E35 /* FIRVerifyCustomTokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB09B1B2A18CD526B0916C10E7E573C /* FIRVerifyCustomTokenResponse.m */; };
 		C941AAFC48EC9EE4E32497F218E7FC1B /* GTMSessionFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 366816CC45D5D26F88A606864E4A381E /* GTMSessionFetcherLogging.m */; };
@@ -1001,6 +1020,7 @@
 		CB628A106AE73E58EF87C3B09A2B74EC /* ioapi_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = 4ADD68AD26C446DAAD804DA99EA9F3A4 /* ioapi_mem.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		CB72F845DAFC82982889CCA44677A688 /* BugsnagKSCrashSysInfoParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CC5FEC60CA0F73689CE875493CC81F /* BugsnagKSCrashSysInfoParser.m */; };
 		CB9D670EF76A8944FB2DDCB58485333D /* RNFirebaseAdMobNativeExpressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D25328DE0F229314D37765439199A4 /* RNFirebaseAdMobNativeExpressManager.m */; };
+		CBFD9DB1782FA986A7FCF3F1CE6B9B1C /* YGMarker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B59F823F97C5A56144F96CF39B1E4F7 /* YGMarker.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		CC28903AF935484FDA55464C16F96F89 /* Pods-tinyrobotStaging-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CDC86D7AD4166FB8C646D26CD39181FB /* Pods-tinyrobotStaging-dummy.m */; };
 		CC3DE300726A5306CFD006FDDC849BA2 /* MPABTestDesignerTweakRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 68ED66803EF819AD2979B9AE5FD096A2 /* MPABTestDesignerTweakRequestMessage.m */; };
 		CC6370FDEF77FE1E3FA449266A7CAE6A /* GMUClusterIconGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 48759522D20F5D80A6BED2E4CD4027F1 /* GMUClusterIconGenerator.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1013,6 +1033,7 @@
 		CEFBD7A51DEC29738F59C9C0E0ED885F /* FIRAuthUserDefaultsStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 343D2C7392825EEC3A63581940C667AA /* FIRAuthUserDefaultsStorage.m */; };
 		CF7BE4A6746409146E0A13E06E01FCD8 /* RNBackgroundGeolocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5E40511205D6501EFB74D9A39CDF49 /* RNBackgroundGeolocation.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		CFFC6C644B304FA582589159D508FF02 /* FIRAppAssociationRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = D5BC12877B35BD5ECC1F8C34F9C8BEDE /* FIRAppAssociationRegistration.m */; };
+		D020BBBCE9FA000CAE84D90158945A26 /* YGFloatOptional.h in Headers */ = {isa = PBXBuildFile; fileRef = E3D7F69F72CCB2BBD92045695EB09273 /* YGFloatOptional.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D03F5522858EE8AF62B67F3C159E97C1 /* GMUCluster.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6CA5CBCC48AF81BCCED4B9C88C6401 /* GMUCluster.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D0643A7FD0647962A42F0298084A1042 /* _MPTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C61AEC92E13E0196B36315A9727257 /* _MPTweakBindObserver.m */; };
 		D09844918B53F7F3C6E692C031D0F636 /* AIRGoogleMapCallout.m in Sources */ = {isa = PBXBuildFile; fileRef = 155E72F7E2832AFE2DE3049825C6321C /* AIRGoogleMapCallout.m */; settings = {COMPILER_FLAGS = "-DHAVE_GOOGLE_MAPS=1 -DHAVE_GOOGLE_MAPS_UTILS=1 -fno-modules"; }; };
@@ -1053,6 +1074,7 @@
 		D6FD593186D9860DE07F68129E4EC98E /* GULNetworkMessageCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 85C17E139AA73AB0150B3DA9A064D294 /* GULNetworkMessageCode.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D7076BD901B2BF83E1DB5D6464BCF732 /* FIRAuthRPCResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C1104CD15C9840F11077F5782D34043 /* FIRAuthRPCResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D708B8986F381FA63D161D2A920A0119 /* FIREmailAuthProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 046295E0D2B2DBC595190BFB399BF4CF /* FIREmailAuthProvider.m */; };
+		D716A64D5B8C2F1F50D10D8361615D0E /* YGLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A9014331AAE0BF73F7ECDFB4A8E694E /* YGLayout.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		D724C6C50CA448CEA459A46F9265A737 /* DDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B943FA5F9AE94975C9845D0824CC285 /* DDLogMacros.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D786B9F333142F3B9279E9E919A125EE /* FIRVerifyPhoneNumberResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = E18655AA6DC4E75E0F46E899CF68FC8F /* FIRVerifyPhoneNumberResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D79796266D4D21E5BEFF3CC4DB19F649 /* BlurEffectWithAmount.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AA1CEAD94F1721C95EBF340E5243AF /* BlurEffectWithAmount.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1077,6 +1099,7 @@
 		DBD5082FCC114F5450A8859BFAE3B569 /* FIRAuthSerialTaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 529F974C2BC7418F4E44F680CD256F95 /* FIRAuthSerialTaskQueue.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DBD7AE542C859B7E3ACF40524A316CF8 /* prng.h in Headers */ = {isa = PBXBuildFile; fileRef = D4870EF898AC6E027833192C3A13CE9F /* prng.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DC33803B26C79E53364A96B53361317F /* FIRVerifyClientRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEDA95442690224E5A843F3D3A909C /* FIRVerifyClientRequest.m */; };
+		DC407BF86BFFBD1AC40FDFDB51723EFE /* YGNodePrint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3D37C0B4194DD9239E06C380AC8C176 /* YGNodePrint.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		DD266DE9F73B5B6976C8A1E5D7968BB0 /* FIRVerifyPasswordResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 352A07590B53B33A0F3801AEB8B35617 /* FIRVerifyPasswordResponse.m */; };
 		DD6D02DBD91521FDAEC64F81B842D51B /* GMUClusterAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 912E643FB44BAD0D599CDFDBAB691943 /* GMUClusterAlgorithm.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DDCF61A3BF5D9AA40A67DB45EB7FE8A2 /* MPNSNumberToCGFloatValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F4C48A4DE7761EB86546F6136225B /* MPNSNumberToCGFloatValueTransformer.m */; };
@@ -1172,6 +1195,7 @@
 		EF8BEF39E7D9C1D4FD4DAA3B6EEB31C6 /* RNPBackgroundRefresh.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E9489A4E45307C19B8832E8B26AD7C3 /* RNPBackgroundRefresh.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F004E65C45B591663C7CB89DF9A8310A /* BSG_KSCrashCallCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 72743AAE529DE1B3946E0DC8C484C3E8 /* BSG_KSCrashCallCompletion.m */; };
 		F02A08937884E724CEB2333DE4480B48 /* BSG_KSCrashReportFilterCompletion.h in Headers */ = {isa = PBXBuildFile; fileRef = B1B654071D65BCF819738E36EB7D84A0 /* BSG_KSCrashReportFilterCompletion.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F0666D13E63F8F94B9B8C8FA3691EF9D /* Yoga-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 42D5296E37735E72444E81CA6EFB508D /* Yoga-internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F07CEF4E16B976583D119E0A6F764BAD /* FDLURLComponents+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E6A52C38B728AD59B43D1B8209ACF28 /* FDLURLComponents+Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F0849AD5BFE390C278AF65ACDDEB059D /* MPABTestDesignerDeviceInfoResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D48BB0CFD892EEF9B6FF2D5C2A7C48F4 /* MPABTestDesignerDeviceInfoResponseMessage.m */; };
 		F0960941285EE2D183549A9FC89126A9 /* MPCGAffineTransformToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC23FB030F452BF13495B475D694745B /* MPCGAffineTransformToNSDictionaryValueTransformer.m */; };
@@ -1186,6 +1210,7 @@
 		F1D970C338CBB971430E119E50396FC0 /* AIRGMSPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F0387FDA795AD34EC892AD86610E6 /* AIRGMSPolyline.m */; settings = {COMPILER_FLAGS = "-DHAVE_GOOGLE_MAPS=1 -DHAVE_GOOGLE_MAPS_UTILS=1 -fno-modules"; }; };
 		F26C82AEAB64DACC06438BF3543ACC3B /* FIRAuthErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C8118C8AD24772E53630CA5A9434E6A /* FIRAuthErrors.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F29CD5283B18104900CEA2C4F4307267 /* RNFirebaseAdMob.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBEC3824C5868CD2F1ED2A7879BE46B /* RNFirebaseAdMob.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F2C5E883D5008449513A1BEE7A1B0ABC /* YGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2EFDE8A70D0D2E553FDC0410EBA7CB /* YGNode.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F2D7E2F60220426191E9E526A298371A /* BugsnagSessionTrackingPayload.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D2C0ED881258354C2EA29E4354702AD /* BugsnagSessionTrackingPayload.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F31124BE040427C9ECBDE0687BDD0482 /* GMUKMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA3E5FA2E5BA9E2E5ECB5927074E7F5 /* GMUKMLParser.m */; settings = {COMPILER_FLAGS = "-fno-modules"; }; };
 		F33AAC6A14FF6CD7BF73E97CE0880099 /* BSG_KSCrashSentry_Signal.h in Headers */ = {isa = PBXBuildFile; fileRef = 60BECDAEA34CD34056DB60633D7E5950 /* BSG_KSCrashSentry_Signal.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1247,6 +1272,7 @@
 		FE946A43588BCED8C1AB33E9E43ECCE9 /* FIRAuthCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BBF81AC2206AA2CE00B4A338D69F101 /* FIRAuthCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		FEA038A7575D8ACEFE863DBB05D2BF49 /* JWTAlgorithmESBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F230CC0AEA05E4CD4BCDF7D879B206BD /* JWTAlgorithmESBase.m */; };
 		FEB457835033FE0FCA32973C21ED8F8A /* GQTPointQuadTree.h in Headers */ = {isa = PBXBuildFile; fileRef = ED4C65E391B6AB9B8109D848BDB01731 /* GQTPointQuadTree.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		FEC4B076ECBBC22DC569654104D5E191 /* YGStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = A4B37BE608AB54EC1C887D79CE06BDA4 /* YGStyle.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		FEC6623AF09AF92ED1EB0ACCB05783FB /* GULReachabilityChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DA4E49205A634DF242F9708A5FF1BC /* GULReachabilityChecker.m */; };
 		FF0EA84CB91383C6DD2B78E885C28BD7 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9271983413FDB331A7E23A2D238668CD /* UIImage+Resize.m */; };
 		FF50FC529808AED7E7D9B8C5E79DB479 /* BSG_KSCrashState.h in Headers */ = {isa = PBXBuildFile; fileRef = 640DCA2DF090075372CFC5E5068BBA9A /* BSG_KSCrashState.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -1511,7 +1537,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 00000000FBE0;
+			remoteGlobalIDString = 8FF3DC81250074034AEB3E929B019B32;
 			remoteInfo = yoga;
 		};
 		3C247B5ACFEE9477D55F3D5A0E9CF40C /* PBXContainerItemProxy */ = {
@@ -1742,7 +1768,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 00000000FBE0;
+			remoteGlobalIDString = 8FF3DC81250074034AEB3E929B019B32;
 			remoteInfo = yoga;
 		};
 		7AB55CE9CAFDF5F29CD753D55F4387FE /* PBXContainerItemProxy */ = {
@@ -4346,6 +4372,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9D853CC7EA5FA8D81084E2FB1F3F85C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A471E93884318DF284D5A8C778CD4678 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8936,6 +8969,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D12A44EF9F121AB455D60C029B5C5660 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B823826DC60714603A9B901082E6FA8 /* CompactValue.h in Headers */,
+				004C3AB46D0A05D228031A73351665D7 /* instrumentation.h in Headers */,
+				6AE93E3A417A41BF9125E0F7E4855970 /* Utils.h in Headers */,
+				597BE859E40F7BB68BCF716C3FA34EDB /* YGConfig.h in Headers */,
+				4EC5B41F582293DC9A46FEDB260B4D19 /* YGEnums.h in Headers */,
+				D020BBBCE9FA000CAE84D90158945A26 /* YGFloatOptional.h in Headers */,
+				48341BD3EB4D1A340B41EC2C1E64D8C7 /* YGLayout.h in Headers */,
+				44DA46DD1BEFC67F693345DEDD9F8E1B /* YGMacros.h in Headers */,
+				8442B21D06894895798D6EFABDAE7920 /* YGMarker.h in Headers */,
+				F2C5E883D5008449513A1BEE7A1B0ABC /* YGNode.h in Headers */,
+				6CEE451D307EEC8E05341C80482D8737 /* YGNodePrint.h in Headers */,
+				FEC4B076ECBBC22DC569654104D5E191 /* YGStyle.h in Headers */,
+				7F4DAC4302B706CF07885F61CF062EB2 /* YGValue.h in Headers */,
+				F0666D13E63F8F94B9B8C8FA3691EF9D /* Yoga-internal.h in Headers */,
+				76AF1D104A0085732253B4F43C372396 /* Yoga.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D178A5A85186F2158489179F2F6F5F24 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -9469,6 +9524,23 @@
 			productReference = 2C58D06754DEFE28D562B1EEA62CA853 /* libFirebaseDynamicLinks.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		8FF3DC81250074034AEB3E929B019B32 /* yoga */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5F2DBE215C77CFEC5D91976A9A2E064 /* Build configuration list for PBXNativeTarget "yoga" */;
+			buildPhases = (
+				D12A44EF9F121AB455D60C029B5C5660 /* Headers */,
+				D89723BAA5D797F41FCC6E6044B1ABFA /* Sources */,
+				A471E93884318DF284D5A8C778CD4678 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = yoga;
+			productName = yoga;
+			productReference = E3FE63B9E16A01BD35D4062790885111 /* libyoga.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		91E070299C0AC542346C4F56FF472293 /* RNGestureHandler */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DBEC8F886D9BB898339F76141225E0C1 /* Build configuration list for PBXNativeTarget "RNGestureHandler" */;
@@ -9924,6 +9996,7 @@
 				75D91C9F6568592BEE30A29762706C11 /* RNLocalize */,
 				E6A6B46D85D997FD575933C533969422 /* RSKImageCropper */,
 				61156A209CBD871D4D0292E65EE121D1 /* SSZipArchive */,
+				8FF3DC81250074034AEB3E929B019B32 /* yoga */,
 			);
 		};
 /* End PBXProject section */
@@ -10651,6 +10724,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D89723BAA5D797F41FCC6E6044B1ABFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D64E56F7C468C141A0C0424FFB16AA4 /* Utils.cpp in Sources */,
+				911BE9A53996D8F96337BD36CBE880C9 /* YGConfig.cpp in Sources */,
+				6DCCF54D43BBBBC2D35C8DF04D8751D3 /* YGEnums.cpp in Sources */,
+				D716A64D5B8C2F1F50D10D8361615D0E /* YGLayout.cpp in Sources */,
+				CBFD9DB1782FA986A7FCF3F1CE6B9B1C /* YGMarker.cpp in Sources */,
+				C7BF6D2DB71BC7D09929F5F7BB4765AE /* YGNode.cpp in Sources */,
+				DC407BF86BFFBD1AC40FDFDB51723EFE /* YGNodePrint.cpp in Sources */,
+				683C80BC85245BC878C838BC95BCC09E /* YGStyle.cpp in Sources */,
+				34F1B005B6CE0161989EEEA6F2E42E41 /* YGValue.cpp in Sources */,
+				076FCCAA2B41B2A18046511E31D1FE44 /* yoga-dummy.m in Sources */,
+				630339F24BBAEC0EEB56E6B1F66FB229 /* Yoga.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E09690CA45B4F17920C6E15A6F7F71A5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11153,6 +11244,7 @@
 		7F74612E7ABF2AAE8D7C42F5B4392C36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yoga;
+			target = 8FF3DC81250074034AEB3E929B019B32 /* yoga */;
 			targetProxy = 39A012FE8CEDDE8AAA88AD53D82FC276 /* PBXContainerItemProxy */;
 		};
 		821F43E45FEA232BCE35BF85D5044BB7 /* PBXTargetDependency */ = {
@@ -11394,6 +11486,7 @@
 		C21016949CCBF6F569CB0CCF2FD437EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yoga;
+			target = 8FF3DC81250074034AEB3E929B019B32 /* yoga */;
 			targetProxy = 79412A7597656A571F3F62902275EE92 /* PBXContainerItemProxy */;
 		};
 		C2494595930FEB4AEEF85CE4FD3D451B /* PBXTargetDependency */ = {
@@ -12183,6 +12276,30 @@
 					"@executable_path/Frameworks",
 				);
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		41EAE399735588140CCCB8E70849FDCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94456A7F8D506C3CC9E8097EC929B3DE /* yoga.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/yoga/yoga-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = yoga;
+				PRODUCT_NAME = yoga;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -13726,6 +13843,29 @@
 			};
 			name = Debug;
 		};
+		FF093A282D78837DF4395844141C5B8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94456A7F8D506C3CC9E8097EC929B3DE /* yoga.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/yoga/yoga-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = yoga;
+				PRODUCT_NAME = yoga;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -14022,6 +14162,15 @@
 			buildConfigurations = (
 				3F2F9A53B3B7D4EAF4E208A873A88B7F /* Debug */,
 				5901168A845DEDFC88D8290C5CF5FE7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5F2DBE215C77CFEC5D91976A9A2E064 /* Build configuration list for PBXNativeTarget "yoga" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF093A282D78837DF4395844141C5B8B /* Debug */,
+				41EAE399735588140CCCB8E70849FDCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
