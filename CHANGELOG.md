@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [android] Open app location settings (#3585)
+  * [android] Open Settings does not work if user taps "Deny" (#3561)
+* [android] fix rn-blur issue, double pop-ups (#3447, PR #3583)
+
 # 4.4.0 - 2019 Apr 2
 
 * Don't cancel location shares upon being invisible (#3556)
