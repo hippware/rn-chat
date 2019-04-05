@@ -4,9 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.5.0 - 2019 Apr 4
+
 * [android] Open app location settings (#3585)
   * [android] Open Settings does not work if user taps "Deny" (#3561)
 * [android] fix rn-blur issue, double pop-ups (#3447, PR #3583)
+* Update: CodePush, react-native-background-geolocation (PR #3592)
 
 # 4.4.0 - 2019 Apr 2
 
