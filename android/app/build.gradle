@@ -231,31 +231,31 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-android-open-settings')
-    implementation project(':react-native-extra-dimensions-android')
-    implementation project(':react-native-localize')
-    implementation project(':react-native-gesture-handler')
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation project(':react-native-background-geolocation')
-    implementation project(':bugsnag-react-native')
-    implementation(project(':react-native-push-notification')){
-        exclude group: 'com.google.firebase', module: 'firebase-iid'
-        exclude group: 'com.google.firebase', module: 'firebase-messaging'
-    }
-    implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-fs')
-    implementation project(':react-native-touch-through-view')
-    implementation project(':react-native-mixpanel')
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-code-push')
+  implementation project(':react-native-android-open-settings')
+  implementation project(':react-native-extra-dimensions-android')
+  implementation project(':react-native-localize')
+  implementation project(':react-native-gesture-handler')
+  implementation 'com.android.support:multidex:1.0.3'
+  implementation project(':react-native-background-geolocation')
+  implementation project(':bugsnag-react-native')
+  implementation(project(':react-native-push-notification')){
+      exclude group: 'com.google.firebase', module: 'firebase-iid'
+      exclude group: 'com.google.firebase', module: 'firebase-messaging'
+  }
+  implementation project(':react-native-linear-gradient')
+  implementation project(':react-native-fs')
+  implementation project(':react-native-touch-through-view')
+  implementation project(':react-native-mixpanel')
+  implementation project(':react-native-device-info')
+  implementation project(':react-native-code-push')
   implementation(project(':react-native-maps')){
-       exclude group: 'com.google.android.gms', module: 'play-services-base'
-       exclude group: 'com.google.android.gms', module: 'play-services-maps'
-   } 
-    implementation project(':react-native-config')
-    //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    exclude group: 'com.google.android.gms', module: 'play-services-base'
+    exclude group: 'com.google.android.gms', module: 'play-services-maps'
+  } 
+  implementation project(':react-native-config')
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation fileTree(dir: "libs", include: ["*.jar"])
 
   /* ----------------------------
    *    REACT NATIVE FIREBASE
