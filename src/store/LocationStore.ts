@@ -344,10 +344,6 @@ const LocationStore = types
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
-                  await self.configure()
-                  const config = await BackgroundGeolocation.ready({})
-                  logger.log(prefix, 'Ready: ', config)
-                  self.updateBackgroundConfigSuccess(config)
                   await BackgroundGeolocation.start()
                   await self.getCurrentPosition()
                   logger.log(prefix, 'Start')
@@ -376,13 +372,19 @@ const LocationStore = types
     }
 
     const didMount = flow(function*() {
-      BackgroundGeolocation.logger.info(`${prefix} didMount`)
-      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-      BackgroundGeolocation.onHttp(self.onHttp)
-      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
-      BackgroundGeolocation.onMotionChange(self.onMotionChange)
-      BackgroundGeolocation.onActivityChange(self.onActivityChange)
-      BackgroundGeolocation.onProviderChange(self.onProviderChange)
+      if (self.alwaysOn) {
+        BackgroundGeolocation.logger.info(`${prefix} didMount`)
+        yield self.configure()
+        BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
+        BackgroundGeolocation.onHttp(self.onHttp)
+        // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
+        BackgroundGeolocation.onMotionChange(self.onMotionChange)
+        BackgroundGeolocation.onActivityChange(self.onActivityChange)
+        BackgroundGeolocation.onProviderChange(self.onProviderChange)
+        const config = yield BackgroundGeolocation.ready({})
+        logger.log(prefix, 'Ready: ', config)
+        self.updateBackgroundConfigSuccess(config)
+      }
     })
 
     function willUnmount() {
