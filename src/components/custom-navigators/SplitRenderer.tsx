@@ -1,6 +1,6 @@
 import React from 'react'
 import {Transitioner} from 'react-navigation-stack'
-import {View, Platform} from 'react-native'
+import {View, Platform, PlatformIOS} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'
 import BackButton from './BackButton'
@@ -21,6 +21,7 @@ export default class SplitRenderer extends React.Component<Props> {
         <AnimatedMainScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
       )
     } else {
+      const showButton = Platform.OS === 'android' && scene.route.params.backButtonOverlay
       return (
         <View
           style={{
@@ -36,8 +37,9 @@ export default class SplitRenderer extends React.Component<Props> {
           key={scene.route.key}
           pointerEvents="box-none"
         >
-          <BackButton transitionProps={transitionProps} scene={scene} />
+          {!showButton && <BackButton transitionProps={transitionProps} scene={scene} />}
           <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
+          {showButton && <BackButton transitionProps={transitionProps} scene={scene} />}
         </View>
       )
     }

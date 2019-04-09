@@ -23,8 +23,9 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
       inputRange: [0, height / 2 - 80, height / 2],
       outputRange: [0, 0, 1],
     })
+    const Wrapper = offset ? View : TouchThroughWrapper
     return (
-      <TouchThroughWrapper style={{width, height}}>
+      <Wrapper style={{width, height}}>
         <FlatList
           ref={r => (this.list = r)}
           bounces={false}
@@ -42,7 +43,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
             <NavBarHeader config={fadeNavConfig} />
           </Animated.View>
         )}
-      </TouchThroughWrapper>
+      </Wrapper>
     )
   }
 
@@ -56,7 +57,11 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
  */
 const DraggablePopupListHeader = ({inner, offset}) => (
   <View>
-    <TouchThroughView style={{width, height: offset || height / 2}} />
+    {offset ? (
+      <View style={{width, height: offset}} />
+    ) : (
+      <TouchThroughView style={{width, height: height / 2}} />
+    )}
     <BottomPopup>
       <View
         style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
