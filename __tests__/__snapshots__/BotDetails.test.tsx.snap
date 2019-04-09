@@ -605,11 +605,6 @@ exports[`BotDetails renders with no data 1`] = `
           "backgroundColor": "rgb(255,255,255)",
           "borderColor": "rgb(212,212,212)",
           "borderTopWidth": 0.5,
-          "bottom": 0,
-          "left": 0,
-          "paddingBottom": 60.00000000000001,
-          "position": "absolute",
-          "right": 0,
         }
       }
     >
