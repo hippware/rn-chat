@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "APPCENTER environment variables:"
-set | grep APPCENTER
+set | grep '^APPCENTER'
 
 brew uninstall node@6
 NODE_VERSION="11.3.0"
