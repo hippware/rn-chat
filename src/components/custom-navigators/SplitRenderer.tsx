@@ -1,6 +1,6 @@
 import React from 'react'
 import {Transitioner} from 'react-navigation-stack'
-import {View, Platform, PlatformIOS} from 'react-native'
+import {View, Platform} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'
 import BackButton from './BackButton'
