@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: "com.google.firebase.firebase-perf"
 apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
@@ -232,30 +231,31 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-android-open-settings')
-    implementation project(':react-native-extra-dimensions-android')
-    implementation project(':react-native-localize')
-    implementation project(':react-native-gesture-handler')
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation project(':react-native-background-geolocation')
-    implementation project(':bugsnag-react-native')
-    implementation(project(':react-native-push-notification')){
-        exclude group: 'com.google.firebase', module: 'firebase-iid'
-    }
-    implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-fs')
-    implementation project(':react-native-touch-through-view')
-    implementation project(':react-native-mixpanel')
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-code-push')
+  implementation project(':react-native-android-open-settings')
+  implementation project(':react-native-extra-dimensions-android')
+  implementation project(':react-native-localize')
+  implementation project(':react-native-gesture-handler')
+  implementation 'com.android.support:multidex:1.0.3'
+  implementation project(':react-native-background-geolocation')
+  implementation project(':bugsnag-react-native')
+  implementation(project(':react-native-push-notification')){
+      exclude group: 'com.google.firebase', module: 'firebase-iid'
+      exclude group: 'com.google.firebase', module: 'firebase-messaging'
+  }
+  implementation project(':react-native-linear-gradient')
+  implementation project(':react-native-fs')
+  implementation project(':react-native-touch-through-view')
+  implementation project(':react-native-mixpanel')
+  implementation project(':react-native-device-info')
+  implementation project(':react-native-code-push')
   implementation(project(':react-native-maps')){
-       exclude group: 'com.google.android.gms', module: 'play-services-base'
-       exclude group: 'com.google.android.gms', module: 'play-services-maps'
-   } 
-    implementation project(':react-native-config')
-    //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    exclude group: 'com.google.android.gms', module: 'play-services-base'
+    exclude group: 'com.google.android.gms', module: 'play-services-maps'
+  } 
+  implementation project(':react-native-config')
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation fileTree(dir: "libs", include: ["*.jar"])
 
   /* ----------------------------
    *    REACT NATIVE FIREBASE
@@ -273,50 +273,14 @@ dependencies {
    *   OPTIONAL FIREBASE SDKS
    * ------------------------- */
 
-  implementation('com.google.firebase:firebase-ads:15.0.1') {
-    // exclude `customtabs` as the support lib version is out of date
-    // we manually add it as a dependency below with a custom version
-    exclude group: 'com.android.support', module: 'customtabs'
-  }
-
   // Authentication
   implementation "com.google.firebase:firebase-auth:16.1.0"
-  // Analytics
-  implementation "com.google.firebase:firebase-analytics:16.0.6"
-  // Performance Monitoring
-  implementation "com.google.firebase:firebase-perf:16.2.3"
-  // Remote Config
-  implementation "com.google.firebase:firebase-config:16.1.2"
-  // Cloud Storage
-  implementation "com.google.firebase:firebase-storage:16.0.5"
-  // Invites
-  implementation "com.google.firebase:firebase-invites:16.0.6"
   // Dynamic Links
   implementation "com.google.firebase:firebase-dynamic-links:16.1.5"
-  // Real-time Database
-  implementation "com.google.firebase:firebase-database:16.0.5"
-  // Cloud Functions
-  implementation "com.google.firebase:firebase-functions:16.1.3"
-  // Cloud Firestore
-  implementation "com.google.firebase:firebase-firestore:17.1.5"
   // Cloud Messaging / FCM
-  //implementation "com.google.firebase:firebase-messaging:17.3.4"
   implementation ("com.google.firebase:firebase-messaging:17.3.4"){
-        exclude group: 'com.google.firebase', module: 'firebase-iid'
-    }
-
-  implementation 'com.google.firebase:firebase-iid:17.0.4'
-  // Crashlytics
-  implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-    transitive = true
+    exclude group: 'com.google.firebase', module: 'firebase-iid'
   }
-
-  /* --------------------------------
-   *  OPTIONAL SUPPORT LIBS
-   * -------------------------------- */
-
-  // For Firebase Ads
-  implementation "com.android.support:customtabs:27.1.1"
 
   // For React Native Firebase Notifications
   implementation 'me.leolin:ShortcutBadger:1.1.21@aar'

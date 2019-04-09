@@ -1,4 +1,4 @@
-import {createUser, sleep} from './support/testuser'
+import {createUser, sleep, waitFor} from './support/testuser'
 import {IWocky, IBot, ILocation, IEventBotInvite, IEventBotGeofence} from '../src'
 
 describe('Notifications (static)', () => {
@@ -16,6 +16,29 @@ describe('Notifications (static)', () => {
   beforeEach(async () => {
     bob.notifications.refresh()
     alice.notifications.refresh()
+  })
+
+  it('update profiles with handles', async () => {
+    await alice.profile!.update({
+      handle: 'a' + alice.profile!.phoneNumber!.replace('+', ''),
+      firstName: 'alice',
+      lastName: 'alerson',
+    })
+    await alice.profile!.save()
+    await bob.profile!.update({
+      handle: 'b' + bob.profile!.phoneNumber!.replace('+', ''),
+      firstName: 'bob',
+      lastName: 'boberts',
+    })
+    await bob.profile!.save()
+  })
+
+  it('make them friends', async () => {
+    const aliceBobProfile = await alice.loadProfile(bob.username!)
+    const bobAliceProfile = await bob.loadProfile(alice.username!)
+    await aliceBobProfile.invite()
+    await waitFor(() => bobAliceProfile.hasSentInvite)
+    await bobAliceProfile.invite() // become friends!
   })
 
   it('gets User Follow notification', async () => {
