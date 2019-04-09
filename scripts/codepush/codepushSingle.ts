@@ -11,8 +11,7 @@ export default async (
   appCenterAppName: string,
   description: string
 ) => {
-  // RELEASE_ID=${DEPLOYMENT_NAME}_`date +"%Y-%m-%d_%H-%M-%S_%z"`
-  const releaseId = `${deployment}-${platform}-${Date.now().toString()}`
+  const releaseId = `${deployment}-${platform}-${new Date().toISOString()}`
   console.log('release id:', releaseId)
 
   const version = require('../../package.json').version
