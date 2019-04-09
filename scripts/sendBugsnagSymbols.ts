@@ -22,7 +22,7 @@ send()
 async function bundleAndSend(platform: 'ios' | 'android') {
   return new Promise((resolve, reject) => {
     const buildDirPath = './' + platform
-    const bundleName = 'main.jsbundle'
+    const bundleName = platform === 'ios' ? 'main.jsbundle' : 'index.android.bundle'
     console.log(`Bundling ${platform}...`)
     exec(
       `react-native bundle --platform ${platform} --entry-file index.js --dev false --bundle-output ./${buildDirPath}/${bundleName} --sourcemap-output ${buildDirPath}/${bundleName}.map`,
