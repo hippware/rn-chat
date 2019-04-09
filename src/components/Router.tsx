@@ -85,7 +85,7 @@ class TinyRobotRouter extends React.Component<Props> {
         if (onboarded && !alwaysOn) {
           if (scene === 'home'  && !locationPrimed){
             if (Actions.locationPrimer) Actions.locationPrimer()
-          } else if (scene !== 'locationWarning'){
+          } else {
             if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
           }
         }

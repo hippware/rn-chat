@@ -340,7 +340,7 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected && onceStore.onboarded && wocky.profile && self.alwaysOn) {
+            if (wocky.connected && onceStore.onboarded && wocky.profile) {
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {
@@ -368,27 +368,29 @@ const LocationStore = types
     function finish() {
       reactions.forEach(disposer => disposer())
       reactions = []
-      // self.stopStandaloneGeolocation()
+      self.stopStandaloneGeolocation()
     }
 
     const didMount = flow(function*() {
-      if (self.alwaysOn) {
-        BackgroundGeolocation.logger.info(`${prefix} didMount`)
-        yield self.configure()
-        BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-        BackgroundGeolocation.onHttp(self.onHttp)
-        // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
-        BackgroundGeolocation.onMotionChange(self.onMotionChange)
-        BackgroundGeolocation.onActivityChange(self.onActivityChange)
-        BackgroundGeolocation.onProviderChange(self.onProviderChange)
-        const config = yield BackgroundGeolocation.ready({})
-        logger.log(prefix, 'Ready: ', config)
-        self.updateBackgroundConfigSuccess(config)
-      }
+      BackgroundGeolocation.logger.info(`${prefix} didMount`)
+      yield self.configure()
+
+      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
+      BackgroundGeolocation.onHttp(self.onHttp)
+      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
+      BackgroundGeolocation.onMotionChange(self.onMotionChange)
+      BackgroundGeolocation.onActivityChange(self.onActivityChange)
+      BackgroundGeolocation.onProviderChange(self.onProviderChange)
+
+      const config = yield BackgroundGeolocation.ready({})
+      logger.log(prefix, 'Ready: ', config)
+
+      self.updateBackgroundConfigSuccess(config)
     })
 
     function willUnmount() {
       BackgroundGeolocation.logger.info(`${prefix} willUnmount`)
+
       BackgroundGeolocation.un('location', self.onLocation)
       BackgroundGeolocation.un('http', self.onHttp)
       // backgroundGeolocation.un('error', ??)

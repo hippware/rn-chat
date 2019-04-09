@@ -13,10 +13,7 @@ import OnboardingAccelerometer from '../../src/components/Onboarding/OnboardingA
 // import OnboardingSwiper from '../../src/components/Onboarding/OnboardingSwiper'
 import OnboardingNotifications from '../../src/components/Onboarding/OnboardingNotifications'
 import OnboardingFindFriends from '../../src/components/Onboarding/OnboardingFindFriends'
-import {
-  LocationWarningIOS,
-  LocationWarningAndroid,
-} from '../../src/components/modals/LocationWarning'
+import {LocationWarningUI} from '../../src/components/modals/LocationWarning'
 import MockFindFriends from './FindFriendsList/MockFindFriends'
 
 function emptyFn() {
@@ -27,8 +24,7 @@ storiesOf('Onboarding', module)
   // tslint:disable-next-line
   // .add('Main Swiper', () => <OnboardingSwiper log={console.log} onceStore={{flip: emptyFn}} />)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
-  .add('1a - Location Warning IOS', () => <LocationWarningIOS onPress={emptyFn} />)
-  .add('1b - Location Warning Android', () => <LocationWarningAndroid onPress={emptyFn} />)
+  .add('1a - Location Warning', () => <LocationWarningUI onPress={emptyFn} />)
   .add('2 - Accelerometer', () => <OnboardingAccelerometer onPress={emptyFn} />)
   .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
