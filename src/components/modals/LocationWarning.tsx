@@ -2,53 +2,65 @@ import React from 'react'
 import {StyleSheet, Text, Image, Linking, View, Platform} from 'react-native'
 import {colors} from '../../constants'
 import {k, s, minHeight} from '../Global'
-import {observer} from 'mobx-react/native'
+import {when} from 'mobx'
+import {observer, inject} from 'mobx-react/native'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
-import {GradientButton, RText} from '../common'
+import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import AndroidOpenSettings from 'react-native-android-open-settings'
+import {ILocationStore} from '../../store/LocationStore'
 
-import backgroundGeolocation from 'react-native-background-geolocation'
+const footprint = require('../../../images/bigSmileBot.png')
 
 type Props = {
   afterLocationAlwaysOn: () => void
+  locationStore?: ILocationStore
 }
 
+@inject('locationStore')
 @observer
 class LocationWarning extends React.Component<Props> {
-  componentDidMount() {
-    backgroundGeolocation.on('providerchange', this.onLocationPermissionChanged)
+  handler
+  async componentDidMount() {
+    if (Platform.OS === 'android') {
+      try {
+        await this.props.locationStore!.getCurrentPosition()
+      } catch (e) {
+        // ignore error
+      }
+    }
+
+    this.handler = when(
+      () => this.props.locationStore!.alwaysOn,
+      () => {
+        setTimeout(() => this.props.afterLocationAlwaysOn())
+      }
+    )
   }
 
   componentWillUnmount() {
-    backgroundGeolocation.un('providerchange', this.onLocationPermissionChanged)
+    this.handler()
   }
 
-  onLocationPermissionChanged = ({status}) => {
-    // console.log('& perms changed', status)
-    if (status === backgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS) {
-      this.props.afterLocationAlwaysOn()
+  onPress = async () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings:{1}')
+    } else {
+      AndroidOpenSettings.appDetailsSettings()
     }
   }
 
   render() {
-    // TODO make generic reusable method for app settings
-    return (
-      <LocationWarningUI
-        onPress={() => {
-          if (Platform.OS === 'ios') {
-            Linking.openURL('app-settings:{1}')
-          } else {
-            AndroidOpenSettings.appDetailsSettings()
-          }
-        }}
-      />
+    return Platform.OS === 'ios' ? (
+      <LocationWarningIOS onPress={this.onPress} />
+    ) : (
+      <LocationWarningAndroid onPress={this.onPress} />
     )
   }
 }
 
-export const LocationWarningUI = ({onPress}) => (
+export const LocationWarningIOS = ({onPress}) => (
   <View
     style={[
       globalStyles.absolute,
@@ -59,9 +71,7 @@ export const LocationWarningUI = ({onPress}) => (
       },
     ]}
   >
-    {Platform.OS === 'ios' && (
-      <BlurView blurType="xlight" blurAmount={10} style={globalStyles.absolute} />
-    )}
+    <BlurView blurType="xlight" blurAmount={10} style={globalStyles.absolute} />
     <Text style={styles.title}>
       Tap “<Text style={{fontFamily: 'Roboto-Medium'}}>Always</Text>” to let tinyrobot work
       perfectly.
@@ -86,6 +96,35 @@ export const LocationWarningUI = ({onPress}) => (
   </View>
 )
 
+export const LocationWarningAndroid = ({onPress}) => (
+  <View
+    style={[
+      globalStyles.absolute,
+      {
+        alignItems: 'center',
+        backgroundColor: TRANSLUCENT_WHITE,
+      },
+    ]}
+  >
+    <Image source={footprint} style={{width: 68, height: 68, marginTop: 20}} resizeMode="contain" />
+    <RText style={styles.title} size={30} color="white">
+      {'Allow Location\r\nAccess'}
+    </RText>
+    <Separator backgroundColor="white" style={{width: 200 * k}} />
+    <Text style={styles.subtext2}>We need your location to show you what’s happening nearby!</Text>
+
+    <GradientButton
+      isPink
+      style={{height: 50, width: '80%', borderRadius: 4, marginBottom: 26 * s, marginTop: 40 * s}}
+      onPress={onPress}
+    >
+      <RText color={WHITE} size={18.5}>
+        Change Settings
+      </RText>
+    </GradientButton>
+  </View>
+)
+
 export default LocationWarning
 
 const styles = StyleSheet.create({
@@ -100,6 +139,14 @@ const styles = StyleSheet.create({
   subtext: {
     fontFamily: 'Roboto-Regular',
     fontSize: 17,
+    color: colors.DARK_GREY,
+    textAlign: 'center',
+    width: '70%',
+  },
+  subtext2: {
+    marginTop: 15,
+    fontFamily: 'Roboto-Light',
+    fontSize: 18,
     color: colors.DARK_GREY,
     textAlign: 'center',
     width: '70%',
