@@ -41,7 +41,6 @@ export default class BackButton extends React.Component<Props> {
               translateX: this.offsetLeft,
             },
           ],
-          zIndex: -1,
         }}
       >
         <Image

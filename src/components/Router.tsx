@@ -134,7 +134,7 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key="editNote" component={EditNote} />
                       <Scene key="notifications" component={Notifications} />
                       <Scene key="friends" component={peopleLists.FriendList} />
-                      <Scene key="friendSearch" component={FriendSearch} />
+                      <Scene key="friendSearch" component={FriendSearch} backButtonOverlay/>
                       <Scene key="visitors" component={VisitorList} />
                       <Scene key="profileDetails" component={ProfileDetail} />
                       <Scene key="liveLocationCompose" component={LiveLocationCompose} />
