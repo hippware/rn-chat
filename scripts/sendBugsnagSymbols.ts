@@ -1,4 +1,5 @@
 import {exec} from 'child_process'
+import {env} from 'process'
 import {positive, error} from './utils'
 import bugsnagSourcemapUpload from './bugsnagSourcemapUpload'
 import getCodeBundleId from '../src/utils/bugsnagCodeBundleId'
@@ -10,8 +11,8 @@ const appVersion = require('../package.json').version
 async function send() {
   console.log(`appVersion: ${appVersion}`)
 
-  await bundleAndSend('ios')
-  await bundleAndSend('android')
+  if (env.APPCENTER_XCODE_SCHEME) await bundleAndSend('ios')
+  if (env.APPCENTER_ANDROID_VARIANT) await bundleAndSend('android')
 }
 
 send()
