@@ -142,15 +142,15 @@ export const Bot = types
       if (data.visitors) {
         self.visitors.refresh()
         data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
-        delete data.visitors
       }
+      delete data.visitors
       if (data.posts) {
         self.posts.refresh()
         data.posts.forEach((p: any) =>
           self.posts.add(BotPost.create({id: p.id}).load({service: self.service, ...p}))
         )
-        delete data.posts
       }
+      delete data.posts
       Object.assign(self, data)
     },
   }))
