@@ -57,6 +57,7 @@ describe('Geofence', () => {
   it('user1 creates a geofence bot', async () => {
     bot = await user1.createBot()
     bot.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
+    await sleep(3000)
     await bot.update({
       location: {latitude: 1.1, longitude: 2.1},
       title: 'Test bot',
@@ -76,6 +77,7 @@ describe('Geofence', () => {
   it('user1 creates bot2', async () => {
     bot2 = await user1.createBot()
     bot2.setUserLocation({latitude: 1, longitude: 2, accuracy: 1})
+    await sleep(3000)
     await bot2.update({
       location: {latitude: 1.1, longitude: 2.1},
       title: 'Test bot2',
