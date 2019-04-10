@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.actionsheet.ActionSheetPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
@@ -49,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
             new ActionSheetPackage(),
+            new PickerPackage(),
             new AndroidOpenSettingsPackage(),
             new ExtraDimensionsPackage(), new RNLocalizePackage(), new RNBackgroundGeolocation(),
           BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(), new LinearGradientPackage(),

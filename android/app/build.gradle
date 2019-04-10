@@ -154,7 +154,10 @@ android {
     multiDexEnabled true
 
     // https://github.com/luggit/react-native-config#advanced-android-setup
-   resValue "string", "build_config_package", "com.hippware.android.tinyrobot"
+    resValue "string", "build_config_package", "com.hippware.android.tinyrobot"
+
+    // for rn-image-crop-picker
+    vectorDrawables.useSupportLibrary = true
   }
   signingConfigs {
     // since AppCenter signs the apk separately don't specify signing configs there
@@ -232,6 +235,7 @@ android {
 
 dependencies {
   implementation project(':react-native-action-sheet')
+    implementation project(':react-native-image-crop-picker')
   implementation project(':react-native-android-open-settings')
   implementation project(':react-native-extra-dimensions-android')
   implementation project(':react-native-localize')
