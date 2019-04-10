@@ -13,7 +13,7 @@ config.notifyReleaseStages = ['testflight', 'production']
 config.codeBundleId = codeBundleId.length > 0 ? codeBundleId : getCodeBundleId(Platform.OS)
 
 // For android tinyrobotStaging, releaseStage should not be 'production'
-if (Platform.OS === 'android' && settings.isStaging) config.releaseStage = 'testflight'
+if (!__DEV__ && Platform.OS === 'android' && settings.isStaging) config.releaseStage = 'testflight'
 
 const client = new Client(config)
 export default client
