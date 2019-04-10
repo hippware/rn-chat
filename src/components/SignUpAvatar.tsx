@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, TouchableOpacity, View} from 'react-native'
+import {Image, TouchableOpacity, View, Platform} from 'react-native'
 import {avatarScale} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
@@ -23,7 +23,11 @@ class SignUpAvatar extends React.Component<Props> {
   @observable imgSrc
 
   render() {
-    const {wocky: {profile}, showDot, style} = this.props
+    const {
+      wocky: {profile},
+      showDot,
+      style,
+    } = this.props
     const {avatar} = profile
     const theAvatar =
       (avatar && avatar.loaded && avatar.thumbnail) ||
@@ -42,7 +46,22 @@ class SignUpAvatar extends React.Component<Props> {
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner />
         ) : (
-          <View>
+          <View
+            style={[
+              Platform.OS === 'android' &&
+                avatar &&
+                avatar.loaded &&
+                avatar.thumbnail && {
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: AVATAR_DIMENSION + 3,
+                  height: AVATAR_DIMENSION + 3,
+                  borderWidth: 1.5,
+                  borderColor: colors.PINK,
+                  borderRadius: AVATAR_DIMENSION / 2,
+                },
+            ]}
+          >
             <Image
               style={[
                 {
@@ -50,7 +69,8 @@ class SignUpAvatar extends React.Component<Props> {
                   height: AVATAR_DIMENSION,
                   borderRadius: AVATAR_DIMENSION / 2,
                 },
-                avatar &&
+                Platform.OS === 'ios' &&
+                  avatar &&
                   avatar.loaded &&
                   avatar.thumbnail && {borderWidth: 1.5, borderColor: colors.PINK},
                 style,
