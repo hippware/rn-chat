@@ -7,6 +7,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * UI and refactoring for #3584, #3585 (PR #3595)
   * [android] [dev] Reconnection for disabled location settings (#3584)
   * [android] open app location settings (#3585)
+* [android] Fix build errors (#3598)
+* [dev] fix unit tests after geofence notifications tweaks (#3600)
+* [android] 'Add comment' box is not tappable (#3513)
+* Fix: Bugsnag sourcemaps still broken (#3594)
+* [android] Improvements for Friends Screen (#3520)
 
 # 4.5.0 - 2019 Apr 4
 
