@@ -1,7 +1,7 @@
-import {log} from '../utils/log'
+import {log} from './log'
 import PushNotification from 'react-native-push-notification'
 import {Linking} from 'react-native'
-import analytics from '../utils/analytics'
+import analytics from './analytics'
 
 export default wocky => {
   let pushNotificationToken
