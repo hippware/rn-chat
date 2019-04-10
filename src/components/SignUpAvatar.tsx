@@ -54,9 +54,9 @@ class SignUpAvatar extends React.Component<Props> {
                 avatar.thumbnail && {
                   justifyContent: 'center',
                   alignItems: 'center',
-                  width: AVATAR_DIMENSION + 3,
-                  height: AVATAR_DIMENSION + 3,
-                  borderWidth: 1.5,
+                  width: AVATAR_DIMENSION + 4,
+                  height: AVATAR_DIMENSION + 4,
+                  borderWidth: 2,
                   borderColor: colors.PINK,
                   borderRadius: AVATAR_DIMENSION / 2,
                 },
