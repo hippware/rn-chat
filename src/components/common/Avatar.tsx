@@ -24,10 +24,8 @@ type Props = {
   image?: ImageSourcePropType
   displayName?: string
   size: number
-  disableStatus?: boolean
   style?: ViewStyle
   borderWidth?: number
-  showFrame?: boolean
   tappable?: boolean
   fontSize?: 'small' | 'large'
   fontFamily?: 'bold' | 'regular'
@@ -39,10 +37,8 @@ type Props = {
 const Avatar = observer(
   ({
     size = 50,
-    disableStatus,
     style,
     borderWidth,
-    showFrame,
     profile,
     image,
     displayName,
@@ -96,17 +92,7 @@ const Avatar = observer(
               showMask={showMask}
             />
           )}
-          {showFrame && (
-            <View style={[styles.absolute, styles.frameOuter]}>
-              <Image
-                source={require('../../../images/avatarFrame.png')}
-                style={{width: scaledSize, height: scaledSize}}
-              />
-            </View>
-          )}
-          {!hideDot && profile && (
-            <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
-          )}
+          {!hideDot && profile && <PresenceDot profile={profile} size={size} />}
         </View>
       </Clazz>
     )
