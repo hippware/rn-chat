@@ -125,7 +125,10 @@ const ProfileLocationShare = observer(
         displayName={forDuration}
         style={{marginHorizontal: 45}}
       >
-        <TouchableOpacity onPress={sharedWith.cancelShareLocation}>
+        <TouchableOpacity
+          onPress={sharedWith.cancelShareLocation}
+          hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}
+        >
           <Image source={require('../../../images/cancelShare.png')} />
         </TouchableOpacity>
       </PersonRow>

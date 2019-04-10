@@ -26,7 +26,7 @@ const ProfileStack = observer(
             style={{
               height: size * avatarScale,
               width: size * avatarScale,
-              borderRadius: size * avatarScale / 2,
+              borderRadius: (size * avatarScale) / 2,
               backgroundColor: colors.PINK,
               position: 'absolute',
               right: 0,
