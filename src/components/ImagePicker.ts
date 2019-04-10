@@ -1,8 +1,8 @@
-import {Alert, ActionSheetIOS, Keyboard} from 'react-native'
+import {Alert, Keyboard} from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
-// import {log, levels} from '../utils/log'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
+import ActionSheet from 'react-native-action-sheet'
 
 type Props = {
   title?: string
@@ -95,7 +95,7 @@ export function showImagePicker(props: Props): void {
   if (props.title) {
     ;(options as any).title = props.title
   }
-  ActionSheetIOS.showActionSheetWithOptions(options, index => {
+  ActionSheet.showActionSheetWithOptions(options, index => {
     if (index < photoActions.length) photoActions[index].action({...defaultProps, ...props})
   })
 }
