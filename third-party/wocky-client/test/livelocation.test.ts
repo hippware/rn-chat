@@ -45,6 +45,7 @@ describe('Live Locations', () => {
 
   it('expect live location share notification', async () => {
     timestamp()
+    await sleep(3000)
     expect(alice.notifications.length).toBe(1)
     const notification: any = alice.notifications.list[0]
     expect(notification.sharedWith).toBeTruthy()

@@ -18,10 +18,20 @@ import {
   LocationWarningAndroid,
 } from '../../src/components/modals/LocationWarning'
 import MockFindFriends from './FindFriendsList/MockFindFriends'
+import {
+  DraggableOnMap,
+  KeyboardAwareDraggableOnMap,
+  MockFriendSearch,
+} from './rn-touch-through-view/ListOnMap'
 
 function emptyFn() {
   /* noop */
 }
+
+storiesOf('Touch Through View + Flatlist', module)
+  .add('Draggable List On Map', () => <DraggableOnMap />)
+  .add('Keyboard Aware Draggable List On Map', () => <KeyboardAwareDraggableOnMap />)
+  .add('Friend Search', () => <MockFriendSearch />)
 
 storiesOf('Onboarding', module)
   // tslint:disable-next-line
