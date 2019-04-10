@@ -5,6 +5,8 @@
 // #FE5C6C
 export const PINK = 'rgb(253,95,108)'
 
+export const YELLOW = 'rgb(255,197,54)'
+
 // aka Night Shadz
 // #B53E51
 export const DARK_RED = 'rgb(181,62,81)'

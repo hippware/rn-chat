@@ -6,6 +6,7 @@ import {isAlive} from 'mobx-state-tree'
 import {IBot} from 'wocky-client'
 import BotIcon from 'src/components/common/BotIcon'
 import {BotCard, IHomeStore} from '../../../store/HomeStore'
+import {colors} from 'src/constants'
 
 type Props = {
   card: BotCard
@@ -47,12 +48,13 @@ const BotMarker = inject('homeStore')(
             shadowRadius: 3,
             shadowOpacity: 0.12,
           }}
-          size={isSelected ? 48 : 35}
-          radius={isSelected ? 8 : 5}
-          textSize={isSelected ? 16 : 13}
+          size={48}
+          radius={8}
+          textSize={16}
           borderWidth={1.5}
+          triangleColor={isSelected ? colors.YELLOW : colors.PINK}
         >
-          <BotIcon icon={bot.icon} size={isSelected ? 30 : 20} />
+          <BotIcon icon={bot.icon} size={30} />
         </Bubble>
       </HackMarker>
     )

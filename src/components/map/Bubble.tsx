@@ -46,6 +46,7 @@ const Bubble = observer(
     const setRadius = radius || defaultRadius
     const setTextSize = textSize || 13
     const setBorderWidth = borderWidth || defaultBorderWidth
+    const borderColor = triangleColor || colors.PINK
     return (
       <View style={[{alignItems: 'center', padding: 3}, outerStyle]}>
         <Wrapper
@@ -53,6 +54,7 @@ const Bubble = observer(
           size={theSize}
           style={style}
           setRadius={setRadius}
+          borderColor={borderColor}
           setBorderWidth={setBorderWidth}
         >
           {showLoader ? (
@@ -87,13 +89,13 @@ const Bubble = observer(
           )}
           {children}
         </Wrapper>
-        <Triangle width={10} height={4} color={triangleColor || colors.PINK} direction="down" />
+        <Triangle width={10} height={4} color={borderColor} direction="down" />
       </View>
     )
   }
 )
 
-const Wrapper = ({gradient, children, size, style, setRadius, setBorderWidth}) =>
+const Wrapper = ({gradient, borderColor, children, size, style, setRadius, setBorderWidth}) =>
   gradient ? (
     <LinearGradient
       start={{x: 0, y: 1}}
@@ -107,12 +109,13 @@ const Wrapper = ({gradient, children, size, style, setRadius, setBorderWidth}) =
     <View
       style={[
         styles.common,
-        styles.bubble,
         {
           width: size,
           height: size,
           borderRadius: setRadius,
           borderWidth: setBorderWidth,
+          backgroundColor: colors.WHITE,
+          borderColor,
         },
         style,
       ]}
@@ -127,9 +130,5 @@ const styles = StyleSheet.create({
   common: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  bubble: {
-    backgroundColor: colors.WHITE,
-    borderColor: colors.PINK,
   },
 })

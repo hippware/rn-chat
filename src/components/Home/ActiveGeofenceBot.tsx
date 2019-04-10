@@ -62,7 +62,7 @@ export default class ActiveGeofenceBot extends React.Component<IProps> {
 
           {/* <ProfileStack profiles={bot.visitors.list} /> */}
           <ProfileStack
-            style={{position: 'absolute', top: -15, right: -8}}
+            style={{position: 'absolute', top: -15, right: -5}}
             firstProfile={bot.visitors.list[0]}
             stackSize={bot.visitorsSize}
             fontFamily="bold"
