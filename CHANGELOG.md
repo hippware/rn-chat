@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: Bugsnag sourcemaps still broken (#3594)
   * [android] [dev] Bugsnag release stage is always 'Production' (#3590)
 * [android] Improvements for Friends Screen (#3520)
+* [android] Notification Screen margin (#3527)
 * [android] Action sheet alternative (ie. for ImagePicker) (#3601)
 * Presence Widget: Avatars appear and quickly go away after login (#3257)
 * Live Location: Increase hit slop for X (#3503)
