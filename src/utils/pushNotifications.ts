@@ -1,6 +1,6 @@
 import {log} from './log'
 import PushNotification from 'react-native-push-notification'
-import {Linking} from 'react-native'
+import {Linking, Platform} from 'react-native'
 import analytics from './analytics'
 
 export default wocky => {
@@ -31,7 +31,7 @@ export default wocky => {
       sound: true,
     },
     popInitialNotification: true,
-    requestPermissions: false,
+    requestPermissions: Platform.OS === 'android',
   })
 
   PushNotification.getApplicationIconBadgeNumber((badgeCount: number) => {
