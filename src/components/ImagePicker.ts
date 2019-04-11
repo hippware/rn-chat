@@ -83,7 +83,6 @@ const photoActions = [
   },
 ]
 
-// @ANDROID
 export function showImagePicker(props: Props): void {
   const defaultProps = {
     cropping: true,

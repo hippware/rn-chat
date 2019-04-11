@@ -1,18 +1,15 @@
 import React from 'react'
-import {Image, TouchableOpacity, View} from 'react-native'
+import {TouchableOpacity} from 'react-native'
 import {avatarScale} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
-import {Spinner, PresenceDot} from './common'
+import {Spinner, Avatar} from './common'
 import {observable} from 'mobx'
 import {colors} from 'src/constants'
 
 type Props = {
-  style?: any
   wocky?: any
-  cameraScene?: string
   warn?: any
-  showDot?: boolean
 }
 
 const AVATAR_DIMENSION = 80 * avatarScale
@@ -23,12 +20,16 @@ class SignUpAvatar extends React.Component<Props> {
   @observable imgSrc
 
   render() {
-    const {wocky: {profile}, showDot, style} = this.props
+    const {profile} = this.props.wocky!
     const {avatar} = profile
     const theAvatar =
       (avatar && avatar.loaded && avatar.thumbnail) ||
       this.imgSrc ||
       require('../../images/addPhoto.png')
+
+    const avatarProps = avatar &&
+      avatar.loaded &&
+      avatar.thumbnail && {borderWidth: 1.5, borderColor: colors.PINK}
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
@@ -42,39 +43,7 @@ class SignUpAvatar extends React.Component<Props> {
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner />
         ) : (
-          <View>
-            <Image
-              style={[
-                {
-                  width: AVATAR_DIMENSION,
-                  height: AVATAR_DIMENSION,
-                  borderRadius: AVATAR_DIMENSION / 2,
-                },
-                avatar &&
-                  avatar.loaded &&
-                  avatar.thumbnail && {borderWidth: 1.5, borderColor: colors.PINK},
-                style,
-              ]}
-              source={theAvatar}
-              resizeMode="contain"
-            />
-            {showDot && (
-              <PresenceDot
-                profile={profile}
-                size={30}
-                style={{
-                  position: 'absolute',
-                  bottom: 5,
-                  right: 5,
-                  left: undefined,
-                  top: undefined,
-                  height: 18,
-                  width: 18,
-                  borderRadius: 9,
-                }}
-              />
-            )}
-          </View>
+          <Avatar size={AVATAR_DIMENSION} image={theAvatar} {...avatarProps} tappable={false} />
         )}
       </TouchableOpacity>
     )
