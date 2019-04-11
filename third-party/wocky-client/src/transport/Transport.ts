@@ -963,7 +963,7 @@ export class Transport {
     })
   }
 
-  async enablePush(token: string): Promise<void> {
+  async enablePush(token: string, platform: 'FCM' | 'APNS'): Promise<void> {
     return this.voidMutation({
       mutation: gql`
         mutation pushNotificationsEnable($input: PushNotificationsEnableInput!) {
@@ -972,7 +972,7 @@ export class Transport {
           }
         }
       `,
-      variables: {input: {device: this.resource, token}},
+      variables: {input: {device: this.resource, token, platform}},
     })
   }
 

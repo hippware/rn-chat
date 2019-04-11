@@ -18,7 +18,7 @@ import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import NavStore from './NavStore'
 import rs from './ReportStore'
-import PushStore from './PushStore'
+import initializePushNotifications from '../utils/pushNotifications'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
@@ -115,9 +115,11 @@ const theStore = PersistableStore.create(
 
 export const reportStore = rs
 export const iconStore = new IconStore()
-export const pushStore = new PushStore(theStore.wocky, analytics)
 export const notificationStore = new NotificationStore(theStore.wocky)
 export const contactStore = new ContactStore(theStore.wocky)
+
+initializePushNotifications(theStore.wocky.enablePush)
+
 // simple logging
 addMiddleware(theStore, simpleActionLogger)
 
