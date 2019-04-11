@@ -11,7 +11,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] fix unit tests after geofence notifications tweaks (#3600)
 * [android] 'Add comment' box is not tappable (#3513)
 * Fix: Bugsnag sourcemaps still broken (#3594)
+  * [android] [dev] Bugsnag release stage is always 'Production' (#3590)
 * [android] Improvements for Friends Screen (#3520)
+* [android] Action sheet alternative (ie. for ImagePicker) (#3601)
+* Presence Widget: Avatars appear and quickly go away after login (#3257)
+* Live Location: Increase hit slop for X (#3503)
+* [android] Visitors on the header widget needs to be a circle (#3532)
+* [android] Pin marker is missing bottom and right border (#3533)
 
 # 4.5.0 - 2019 Apr 4
 
