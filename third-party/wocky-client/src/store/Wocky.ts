@@ -446,9 +446,9 @@ export const Wocky = types
       //     self.geoBots.set(bot.id, self.getBot(bot))
       //   }
       // },
-      enablePush: flow(function*(token: string) {
+      enablePush: flow(function*(token: string, platform: 'FCM' | 'APNS') {
         yield waitFor(() => self.connected)
-        yield self.transport.enablePush(token)
+        yield self.transport.enablePush(token, platform)
       }),
       disablePush: flow(function*() {
         yield waitFor(() => self.connected)

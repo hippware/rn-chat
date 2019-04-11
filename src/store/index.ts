@@ -118,7 +118,7 @@ export const iconStore = new IconStore()
 export const notificationStore = new NotificationStore(theStore.wocky)
 export const contactStore = new ContactStore(theStore.wocky)
 
-initializePushNotifications(theStore.wocky)
+initializePushNotifications(theStore.wocky.enablePush)
 
 // simple logging
 addMiddleware(theStore, simpleActionLogger)

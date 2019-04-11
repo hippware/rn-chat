@@ -3,13 +3,10 @@ import PushNotification from 'react-native-push-notification'
 import {Linking, Platform} from 'react-native'
 import analytics from './analytics'
 
-export default wocky => {
-  let pushNotificationToken
-
+export default (onRegistered: (token: string, platform: 'FCM' | 'APNS') => void) => {
   PushNotification.configure({
     onRegister({token}) {
-      pushNotificationToken = token
-      wocky.enablePush(pushNotificationToken)
+      onRegistered(token, Platform.OS === 'android' ? 'FCM' : 'APNS')
     },
     onNotification(notification) {
       log('Push Notification:', notification)
