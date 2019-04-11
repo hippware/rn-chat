@@ -19,6 +19,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Live Location: Increase hit slop for X (#3503)
 * [android] Visitors on the header widget needs to be a circle (#3532)
 * [android] Pin marker is missing bottom and right border (#3533)
+* [android] allow choosing images from library (#3609)
+* [android] Avatar should be a circle (#3515)
+* [android] Android push notifications support (#3550)
 
 # 4.5.0 - 2019 Apr 4
 
