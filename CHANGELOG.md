@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.6.0 - 2019 Apr 11
+
 * UI and refactoring for #3584, #3585 (PR #3595)
   * [android] [dev] Reconnection for disabled location settings (#3584)
   * [android] open app location settings (#3585)
