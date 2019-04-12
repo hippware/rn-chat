@@ -21,7 +21,7 @@ const icon = require('../../../images/followers.png')
 
 @inject('wocky', 'analytics', 'firebaseStore')
 @observer
-class InviteFriendsRow extends React.Component<Props> {
+export default class InviteFriendsRowNew extends React.Component<Props> {
   render() {
     const {style, subtext, botTitle, wocky} = this.props
     const {profile} = wocky!
@@ -62,8 +62,6 @@ class InviteFriendsRow extends React.Component<Props> {
     this.props.analytics!.track('invite_friends_action_sheet', {action, activityType})
   }
 }
-
-export default InviteFriendsRow
 
 const styles = StyleSheet.create({
   container: {
