@@ -1,4 +1,4 @@
-import {types, isAlive, flow, Instance} from 'mobx-state-tree'
+import {types, isAlive, flow, Instance, getEnv} from 'mobx-state-tree'
 import {Base} from './Base'
 
 export const FileSource = types.model('FileSource', {
@@ -27,7 +27,7 @@ export const File = types
   }))
   .views(self => ({
     get loaded() {
-      return self.thumbnail !== null // self.source !== null
+      return self.thumbnail !== null
     },
   }))
   .postProcessSnapshot((snapshot: any) => {
@@ -45,7 +45,6 @@ export const File = types
         self.thumbnail = source
       },
       downloadThumbnail: flow(function*() {
-        // todo: since self.url defaults to '' won't the last test always evaluate to true?
         if (!self.loading && !self.thumbnail && self.url) {
           try {
             self.error = ''
@@ -65,18 +64,26 @@ export const File = types
   .actions(self => ({
     load({url, ...data}: any) {
       if (url) {
-        self.setSource(undefined)
-        self.setURL(url)
-        self.downloadThumbnail()
+        if (!self.thumbnail) {
+          self.setSource(undefined)
+          self.setURL(url)
+          self.downloadThumbnail()
+        }
       } else {
         Object.assign(self, data)
       }
     },
     afterAttach: flow(function*() {
+      const {fileService} = getEnv(self)
+      // check if file cache is not cleared
+      if (self.thumbnail) {
+        const exists = yield fileService.fileExists(self.thumbnail.uri)
+        if (!exists) {
+          self.setSource(null)
+        }
+      }
       if (!self.thumbnail && !self.url) {
         self.url = yield self.transport.downloadTROS(self.id)
-      }
-      if (self.url) {
         yield self.downloadThumbnail()
       }
     }),
