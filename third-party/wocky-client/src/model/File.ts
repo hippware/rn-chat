@@ -9,6 +9,8 @@ export const FileSource = types.model('FileSource', {
   cached: false,
 })
 
+// tslint:disable:no-console
+
 export const File = types
   .compose(
     Base,
@@ -16,7 +18,8 @@ export const File = types
       id: types.identifier,
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),
-      url: '',
+      // this should probably default to null or undefined. See the `todo` note below.
+      url: types.maybe(types.string),
     })
   )
   .named('File')
@@ -31,6 +34,7 @@ export const File = types
     },
   }))
   .postProcessSnapshot((snapshot: any) => {
+    console.log('& snapshot', snapshot)
     const res: any = {...snapshot}
     delete res.url
     return res
@@ -50,6 +54,7 @@ export const File = types
           try {
             self.error = ''
             self.loading = true
+            console.log('& download', self.id)
             self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
             self.url = ''
             self.loading = false
@@ -64,6 +69,7 @@ export const File = types
   })
   .actions(self => ({
     load({url, ...data}: any) {
+      console.log('& load', self.id)
       if (url) {
         self.setSource(undefined)
         self.setURL(url)
@@ -76,7 +82,7 @@ export const File = types
       if (!self.thumbnail && !self.url) {
         self.url = yield self.transport.downloadTROS(self.id)
       }
-      if (self.url) {
+      if (self.url && !self.thumbnail) {
         yield self.downloadThumbnail()
       }
     }),
