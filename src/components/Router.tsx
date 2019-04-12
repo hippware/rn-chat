@@ -50,10 +50,11 @@ import { IStore } from 'src/store'
 import { IPersistable } from 'src/store/PersistableModel'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import ChatTitle from './Chats/ChatTitle'
-import { IAuthStore } from 'src/store/AuthStore';
-import LiveLocationCompose from './LiveLocation/LiveLocationCompose';
-import LiveLocationSettings from './LiveLocation/LiveLocationSettings';
-import LiveLocationShare from './LiveLocation/LiveLocationShare';
+import {IAuthStore} from 'src/store/AuthStore'
+import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
+import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
+import LiveLocationShare from './LiveLocation/LiveLocationShare'
+
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
 
@@ -79,13 +80,11 @@ class TinyRobotRouter extends React.Component<Props> {
 
     autorun(
       () => {
-        const {locationPrimed, onboarded} = onceStore!
+        const {onboarded} = onceStore!
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
         if (onboarded && !alwaysOn) {
-          if (scene === 'home'  && !locationPrimed){
-            if (Actions.locationPrimer) Actions.locationPrimer()
-          } else if (scene !== 'locationWarning'){
+          if (scene !== 'locationWarning'){
             if (Actions.locationWarning) Actions.locationWarning({afterLocationAlwaysOn: () => Actions.popTo('home')})
           }
         }

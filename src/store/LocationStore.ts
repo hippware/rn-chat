@@ -372,15 +372,17 @@ const LocationStore = types
     }
 
     const didMount = flow(function*() {
+      BackgroundGeolocation.logger.info(`${prefix} didMount`)
+      BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
+      BackgroundGeolocation.onHttp(self.onHttp)
+      // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
+      BackgroundGeolocation.onMotionChange(self.onMotionChange)
+      BackgroundGeolocation.onActivityChange(self.onActivityChange)
+      BackgroundGeolocation.onProviderChange(self.onProviderChange)
+      // need to run start to properly set self.alwaysOn
+      yield start()
       if (self.alwaysOn) {
-        BackgroundGeolocation.logger.info(`${prefix} didMount`)
         yield self.configure()
-        BackgroundGeolocation.on('location', self.onLocation, self.onLocationError)
-        BackgroundGeolocation.onHttp(self.onHttp)
-        // BackgroundGeolocation.onSchedule(state => console.log('ON SCHEDULE!!!!!!!!!' + state.enabled))
-        BackgroundGeolocation.onMotionChange(self.onMotionChange)
-        BackgroundGeolocation.onActivityChange(self.onActivityChange)
-        BackgroundGeolocation.onProviderChange(self.onProviderChange)
         const config = yield BackgroundGeolocation.ready({})
         logger.log(prefix, 'Ready: ', config)
         self.updateBackgroundConfigSuccess(config)

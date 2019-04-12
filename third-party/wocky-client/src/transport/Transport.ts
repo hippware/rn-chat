@@ -79,7 +79,7 @@ export class Transport {
     try {
       // console.log('START LOGIN')
       const res = await timeout(this.authenticate(token), TIMEOUT)
-      if (res) {
+      if (res && this.client) {
         this.subscribeBotVisitors()
         this.subscribeNotifications()
         this.subscribeMessages()
@@ -124,6 +124,9 @@ export class Transport {
   }
 
   async loadProfile(id: string): Promise<IProfilePartial | null> {
+    if (!this.client) {
+      return null
+    }
     const res = await this.client!.query<any>({
       query: gql`
           query LoadProfile {
@@ -431,10 +434,11 @@ export class Transport {
     afterId?: string
     types: string[] | undefined
   }): PaginableLoadPromise<IEventData> {
-    const {limit, beforeId, afterId, types} = params
-    // console.log('& gql load', beforeId, afterId, limit)
-    const res = await this.client!.query<any>({
-      query: gql`
+    if (this.client) {
+      const {limit, beforeId, afterId, types} = params
+      // console.log('& gql load', beforeId, afterId, limit)
+      const res = await this.client!.query<any>({
+        query: gql`
         query notifications($first: Int, $last: Int, $beforeId: AInt, $afterId: AInt, $ownUsername: String!, $types: [NotificationType]) {
           notifications(first: $first, last: $last, beforeId: $beforeId, afterId: $afterId, types: $types) {
             totalCount
@@ -446,17 +450,18 @@ export class Transport {
           }
         }
       `,
-      variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
-    })
-    // console.log('& gql res', JSON.stringify(res.data.notifications))
-    if (res.data && res.data.notifications) {
-      const {totalCount, edges} = res.data.notifications
+        variables: {beforeId, afterId, first: limit || 20, ownUsername: this.username, types},
+      })
+      // console.log('& gql res', JSON.stringify(res.data.notifications))
+      if (res.data && res.data.notifications) {
+        const {totalCount, edges} = res.data.notifications
 
-      const list = convertNotifications(edges)!
-      // console.log('NOTIFICATIONS:', types, JSON.stringify(list))
-      return {
-        count: totalCount,
-        list,
+        const list = convertNotifications(edges)!
+        // console.log('NOTIFICATIONS:', types, JSON.stringify(list))
+        return {
+          count: totalCount,
+          list,
+        }
       }
     }
     return {count: 0, list: []}
@@ -470,8 +475,9 @@ export class Transport {
   }
   async loadGeofenceBots(): PaginableLoadPromise<IBotIn> {
     // load all guest bots
-    const res = await this.client!.query<any>({
-      query: gql`
+    if (this.client) {
+      const res = await this.client!.query<any>({
+        query: gql`
         query getActiveBots($ownUsername: String!) {
           currentUser {
             id
@@ -495,16 +501,19 @@ export class Transport {
           }
         }
       `,
-      variables: {
-        ownUsername: this.username,
-      },
-    })
-    const bots = res.data.currentUser.activeBots
-    const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
-    return {
-      list,
-      cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
-      count: bots.totalCount,
+        variables: {
+          ownUsername: this.username,
+        },
+      })
+      const bots = res.data.currentUser.activeBots
+      const list = bots.edges.filter((e: any) => e.node).map((e: any) => convertBot(e.node))
+      return {
+        list,
+        cursor: bots.edges.length ? bots.edges[bots.edges.length - 1].cursor : null,
+        count: bots.totalCount,
+      }
+    } else {
+      return {list: [], count: 0}
     }
   }
 
