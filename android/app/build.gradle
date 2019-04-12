@@ -258,6 +258,7 @@ dependencies {
     exclude group: 'com.google.android.gms', module: 'play-services-maps'
   } 
   implementation project(':react-native-config')
+  implementation project(":rncamerakit")
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation fileTree(dir: "libs", include: ["*.jar"])

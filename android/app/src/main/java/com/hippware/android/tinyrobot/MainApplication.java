@@ -28,6 +28,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.wix.RNCameraKit.RNCameraKitPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +60,7 @@ public class MainApplication extends Application implements ReactApplication {
               getApplicationContext(), BuildConfig.DEBUG),
           new RNGestureHandlerPackage(), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
           new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage(),
-          new ReactNativeConfigPackage());
+          new ReactNativeConfigPackage(), new RNCameraKitPackage());
     }
 
     @Override
