@@ -10268,10 +10268,10 @@ react-native-blur@^3.2.2:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-camera-kit@^6.3.0:
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-camera-kit/-/react-native-camera-kit-6.7.1.tgz#f98c542eba39ef0dcca764a175a081b48f9e831f"
-  integrity sha512-/i6tX3Hz6TXIuwolGiBDAgwWjYrZ6qR6o6Vs75sCTP1cchgQ5LTG0RyR61e8lABKl1ySGtxg49oFEKj6TjQYEw==
+react-native-camera-kit@^7.3.7:
+  version "7.3.7"
+  resolved "https://registry.yarnpkg.com/react-native-camera-kit/-/react-native-camera-kit-7.3.7.tgz#5b04ec2bd54304306ba32605e7a15b21d839c353"
+  integrity sha512-w/Zy8BuK3YxtVtTNW2PVHzsqkfWM/cApIIQqUAle/UBze3e/SzVVIZ7fveU1XUm6y0ld9WZZyuwl1aism5X4OQ==
   dependencies:
     lodash "^4.14.2"
 
