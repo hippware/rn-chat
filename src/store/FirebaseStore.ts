@@ -260,6 +260,10 @@ const FirebaseStore = types
                 iosBundleId: settings.iosBundleId,
                 iosAppStoreId: settings.iosAppStoreId, // since there is no app store listing for Staging no need to differentiate
               },
+              androidInfo: {
+                androidPackageName: settings.androidPackageName,
+                androidMinPackageVersionCode: '1',
+              },
             },
           }),
         }
