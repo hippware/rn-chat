@@ -4,8 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Avatars blink during app start and can't be loaded sometimes (#3617)
-  * Don't download existing file, check cache (PR #3623)
+* Don't download existing file, check cache (PR #3623)
+  * Flashing Avatar when coming from background (#3258)
+  * Avatars blink during start and can't be loaded sometimes (#3617)
 * Improve: [android] open app location settings (#3585, PR #3624)
 
 # 4.6.0 - 2019 Apr 11
