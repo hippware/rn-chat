@@ -1,3 +1,5 @@
+import {Platform} from 'react-native'
+
 export interface IFileService {
   tempDir: string
   fileExists(filename: string): Promise<boolean>
@@ -17,7 +19,8 @@ export async function upload({method, headers, url, file}: any) {
       resheaders[header.name] = header.value
       request.setRequestHeader(header.name, header.value)
     }
-    request.send(process.env.NODE_ENV === 'test' ? file.body : {uri: file.uri})
+    const uri = Platform.select({ios: file.uri, android: 'file://' + file.uri})
+    request.send(process.env.NODE_ENV === 'test' ? file.body : {uri})
     request.onreadystatechange = () => {
       if (request.readyState === 4) {
         if (request.status === 200) {
