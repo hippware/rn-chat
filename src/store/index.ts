@@ -1,4 +1,5 @@
 import {types, getEnv, addMiddleware, Instance} from 'mobx-state-tree'
+import {autorun} from 'mobx'
 import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
@@ -117,6 +118,10 @@ export const reportStore = rs
 export const iconStore = new IconStore()
 export const notificationStore = new NotificationStore(theStore.wocky)
 export const contactStore = new ContactStore(theStore.wocky)
+
+autorun(() => {
+  appInfo.setCodepushVersion(codePushStore.updateInfo)
+})
 
 initializePushNotifications(theStore.wocky.enablePush)
 

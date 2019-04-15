@@ -24,5 +24,10 @@ export const AppInfo = types
       return `TinyRobot/${self.jsVersion} (${extras.join('; ')})`
     },
   }))
+  .actions(self => ({
+    setCodepushVersion(value: string) {
+      self.codepushVersion = value
+    },
+  }))
 
 export interface IAppInfo extends Instance<typeof AppInfo> {}
