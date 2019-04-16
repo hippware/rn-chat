@@ -25,6 +25,13 @@ describe('NewGraphQL tests', () => {
       addressData: {city: 'Koper', country: 'Slovenia'},
     })
   })
+  it('make them friends', async () => {
+    const profile = await user.loadProfile(user2.username!)
+    const profile2 = await user2.loadProfile(user.username!)
+    await profile.invite()
+    await waitFor(() => profile2.hasSentInvite)
+    await profile2.invite() // become friends!
+  })
 
   it('checks the bot', () => {
     expect(bot.icon).toBe(icon)
@@ -125,9 +132,9 @@ describe('NewGraphQL tests', () => {
   })
 
   it('invite, accept bot invitation, unsubscribe', async () => {
-    expect(user2.notifications.length).toBe(0)
+    expect(user2.notifications.length).toBe(1)
     await bot.invite([user2!.username!])
-    await waitFor(() => user2.notifications.length === 1, 'bot invitation notification')
+    await waitFor(() => user2.notifications.length === 2, 'bot invitation notification')
     const loadedBot = await user2.loadBot(bot.id)
     await loadedBot.acceptInvitation(Location.create({latitude: 50, longitude: 50, accuracy: 5}))
     await user2.loadBot(bot.id)

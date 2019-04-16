@@ -47,11 +47,12 @@ describe('Geofence', () => {
       email: 'a2@aa.com',
     })
     await user2.profile!.save()
-  })
 
-  it('user2 follows user1', async () => {
     const profile1 = await user2.loadProfile(user1.username!)
+    const profile2 = await user1.loadProfile(user2.username!)
     await profile1.invite()
+    await waitFor(() => profile2.hasSentInvite)
+    await profile2.invite() // become friends!
   })
 
   it('user1 creates a geofence bot', async () => {
