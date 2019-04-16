@@ -212,10 +212,10 @@ export class BotCompose extends React.Component<Props> {
 
   addPhoto = (): void => {
     showImagePicker({
-      callback: async (source, response) => {
+      afterImagePicked: async image => {
         try {
           this.uploadingPhoto = true
-          await this.bot!.upload({file: source, size: response.size})
+          await this.bot!.upload({size: image.size, file: image})
         } catch (e) {
           this.props.notificationStore.flash(`Upload error: ${e}`)
         } finally {

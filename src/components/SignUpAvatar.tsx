@@ -1,7 +1,7 @@
 import React from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, ImageURISource} from 'react-native'
 import {avatarScale} from './Global'
-import {showImagePicker} from './ImagePicker'
+import {showImagePicker, PickerImage} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner, Avatar} from './common'
 import {observable} from 'mobx'
@@ -17,7 +17,7 @@ const AVATAR_DIMENSION = 80 * avatarScale
 @inject('wocky', 'warn')
 @observer
 class SignUpAvatar extends React.Component<Props> {
-  @observable imgSrc
+  @observable imgSrc?: ImageURISource
 
   render() {
     const {profile} = this.props.wocky!
@@ -36,7 +36,7 @@ class SignUpAvatar extends React.Component<Props> {
         onPress={() =>
           showImagePicker({
             title: 'Select Avatar',
-            callback: this.imageSelected,
+            afterImagePicked: this.imageSelected,
           })
         }
       >
@@ -49,18 +49,13 @@ class SignUpAvatar extends React.Component<Props> {
     )
   }
 
-  imageSelected = async (src, response) => {
+  imageSelected = async (image: PickerImage) => {
     const {profile, username, profiles} = this.props.wocky
     try {
-      await profile.upload({
-        file: src,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-      })
+      await profile.upload({size: image.size, file: image})
       // change data within profiles cache!
       profiles.get(username, {...profile})
-      this.imgSrc = src
+      this.imgSrc = image
     } catch (err) {
       // TODO handle upload error
       this.props.warn('upload error', err)

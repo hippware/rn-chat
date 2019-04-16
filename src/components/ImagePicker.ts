@@ -1,40 +1,31 @@
-import {Alert, Keyboard} from 'react-native'
-import ImagePicker from 'react-native-image-crop-picker'
+import {Alert, Keyboard, Platform} from 'react-native'
+import ImagePicker, {Image} from 'react-native-image-crop-picker'
 import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 import ActionSheet from 'react-native-action-sheet'
 
+export type AfterImagePicked = (imageSource: PickerImage) => void
+
 type Props = {
   title?: string
-  callback: any
+  afterImagePicked: AfterImagePicked
   cropping?: boolean
 }
 
-type Image = {
-  data: any
+export type PickerImage = {
   height: number
   width: number
-  mime: string
-  path: string
   size: number
+  uri: string
+  type: string
+  name: string
 }
 
 const IMG_DEFAULT_SIZE = 1000
 
-function createHandler(callback: any, response: Image) {
-  // log('SIZE:', response, {level: levels.VERBOSE})
-  const source = {
-    uri: response.path,
-    type: response.mime,
-    name: response.path.substring(response.path.lastIndexOf('/') + 1),
-    isStatic: true,
-  }
-  callback(source, response)
-}
-
-async function launchImageLibrary({callback, cropping}: Props): Promise<void> {
+async function launchImageLibrary({afterImagePicked, cropping}: Props): Promise<void> {
   try {
-    const image = await ImagePicker.openPicker({
+    const result = await ImagePicker.openPicker({
       width: IMG_DEFAULT_SIZE,
       height: IMG_DEFAULT_SIZE,
       cropping,
@@ -44,14 +35,22 @@ async function launchImageLibrary({callback, cropping}: Props): Promise<void> {
       // compressImageMaxHeight: 480,
       // compressImageQuality: 0.5,
     })
-    createHandler(callback, image as Image)
+    const image: Image = result[0] || result
+    afterImagePicked({
+      uri: Platform.select({android: 'file://' + image.path, ios: image.path}),
+      type: image.mime,
+      name: image.path.substring(image.path.lastIndexOf('/') + 1),
+      width: image.width,
+      height: image.height,
+      size: image.size,
+    })
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
     // log('launchImageLibrary error', err, {level: levels.ERROR});
   }
 }
 
-async function launchCamera({callback}: Props): Promise<void> {
+async function launchCamera({afterImagePicked}: Props): Promise<void> {
   const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
@@ -69,7 +68,7 @@ async function launchCamera({callback}: Props): Promise<void> {
     }
   }
   Keyboard.dismiss()
-  Actions.camera({callback})
+  Actions.camera({afterImagePicked})
 }
 
 const photoActions = [
