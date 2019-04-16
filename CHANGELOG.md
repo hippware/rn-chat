@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Flashing Avatar when coming from background (#3258)
   * Avatars blink during start and can't be loaded sometimes (#3617)
 * Improve: [android] open app location settings (#3585, PR #3624)
+* [android] Firebase dynamic links/invitations (#3567)
 
 # 4.6.0 - 2019 Apr 11
 
