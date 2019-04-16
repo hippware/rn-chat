@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native'
 import {colors} from '../constants'
-import {IAppInfo} from 'wocky-client'
+import {IAppInfo} from '../store/AppInfo'
 import {observer, inject} from 'mobx-react/native'
 import {ICodePushStore} from '../store/CodePushStore'
 import {settings} from '../globals'

@@ -3,7 +3,7 @@ import {simpleActionLogger} from 'mst-middlewares'
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Transport, AppInfo, IAppInfo} from 'wocky-client'
+import {Transport} from 'wocky-client'
 import * as logger from '../utils/log'
 import analytics, {Analytics} from '../utils/analytics'
 import PersistableModel from './PersistableModel'
@@ -22,6 +22,7 @@ import initializePushNotifications from '../utils/pushNotifications'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
+import {AppInfo} from './AppInfo'
 import OnceStore from './OnceStore'
 import ContactStore from './ContactStore'
 import {settings} from '../globals'
@@ -56,7 +57,6 @@ export type IEnv = {
   fileService: any
   geolocation: Geolocation
   analytics: Analytics
-  appInfo: IAppInfo
 }
 
 const env = {
@@ -69,7 +69,6 @@ const env = {
   fileService,
   geolocation,
   analytics,
-  appInfo,
 }
 
 const Store = types
@@ -83,6 +82,7 @@ const Store = types
     codePushStore: CodepushStore,
     navStore: NavStore,
     onceStore: OnceStore,
+    appInfo: AppInfo,
   })
   .views(self => ({
     get getImageSize() {
@@ -107,6 +107,7 @@ export interface IStore extends Instance<typeof PersistableStore> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
+    appInfo,
     codePushStore,
     wocky: {host: settings.host},
   },
