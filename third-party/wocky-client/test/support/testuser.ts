@@ -1,5 +1,5 @@
 import {Wocky, IWocky, Transport} from '../../src'
-import {AppInfo} from '../../src/store/AppInfo'
+import {AppInfo} from '../../../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
@@ -68,11 +68,13 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     )
     addMiddleware(service, simpleActionLogger)
 
-    await service.login({
-      phone_number: phoneNumber,
-      typ: 'bypass',
-      sub: phoneNumber,
-    })
+    await service.login(
+      appInfo.token({
+        phone_number: phoneNumber,
+        typ: 'bypass',
+        sub: phoneNumber,
+      })
+    )
     return service
   } catch (e) {
     console.error(e)

@@ -10,16 +10,13 @@ import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
 import {IChat} from '../model/Chat'
 import {createMessage, IMessage, IMessageIn} from '../model/Message'
-import {iso8601toDate, processMap, waitFor, generateWockyToken, assert} from '../transport/utils'
-import uuid from 'uuid/v1'
+import {iso8601toDate, processMap, waitFor} from '../transport/utils'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
-
-export type Credentials = {typ: string; sub: string; phone_number?: string}
 
 export const Wocky = types
   .compose(
@@ -58,7 +55,6 @@ export const Wocky = types
     }) as (id: string) => Promise<IProfile>,
   }))
   .extend(self => {
-    const {appInfo} = getEnv(self)
     return {
       views: {
         get connecting() {
@@ -71,22 +67,8 @@ export const Wocky = types
         // },
       },
       actions: {
-        login: flow(function*(credentials: Credentials) {
-          // HACK: short circuit login in case of no credentials. This sometimes happens with reconnect in Connectivity.tsx
-          assert(
-            credentials && credentials.typ && credentials.sub && credentials.phone_number,
-            'bad credentials:' + credentials
-          )
-          const payload = {
-            aud: 'Wocky',
-            jti: uuid(),
-            iss: appInfo.uaString,
-            dvc: appInfo.uniqueId,
-            ...credentials,
-          }
-
-          const password = generateWockyToken(payload)
-          const res = yield self.transport.login(password, self.host)
+        login: flow(function*(token: string) {
+          const res = yield self.transport.login(token, self.host)
           if (!res) {
             return false
           }
@@ -98,7 +80,7 @@ export const Wocky = types
           yield self.loadProfile(self.username!)
           self.sessionCount++
           return true
-        }) as (credentials: Credentials) => Promise<boolean>,
+        }) as (token: string) => Promise<boolean>,
         disconnect: flow(function*() {
           if (self.profile) {
             self.profile!.status = 'OFFLINE'

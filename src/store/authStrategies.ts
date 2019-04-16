@@ -1,4 +1,4 @@
-import {Credentials} from 'wocky-client'
+import {Credentials} from './AppInfo'
 
 export type AuthStrategy = {
   login: (store) => Promise<boolean>
@@ -14,10 +14,10 @@ interface IStrategies {
 const Strategies: IStrategies = {
   firebase: {
     login: async store => {
-      const {wocky, firebaseStore, authStore} = store
+      const {wocky, firebaseStore, authStore, appInfo} = store
       const credentials: Credentials = await firebaseStore.getLoginCredentials()
 
-      return wocky.login({...credentials, phone_number: authStore.phone})
+      return wocky.login(appInfo.token({...credentials, phone_number: authStore.phone}))
     },
     logout: async store => {
       return store.firebaseStore.logout()
@@ -25,11 +25,15 @@ const Strategies: IStrategies = {
   },
   bypass: {
     login: async store => {
-      const {authStore: {phone}, wocky} = store
+      const {
+        authStore: {phone},
+        wocky,
+        appInfo,
+      } = store
       // Since users need to have unique `sub`s so we'll just use phoneNumber in the case of a bypass login
       // https://hippware.slack.com/archives/C033TRJDD/p1543459452073900
       const credentials: Credentials = {typ: 'bypass', sub: phone, phone_number: phone}
-      return wocky.login(credentials)
+      return wocky.login(appInfo.token(credentials))
     },
     logout: Promise.resolve,
   },

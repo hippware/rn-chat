@@ -7,7 +7,6 @@ import {IEventBotPostData} from '../model/EventBotPost'
 import {IEventFriendInviteData} from '../model/EventFriendInvite'
 import {IBotData} from '../model/Bot'
 import {IProfilePartial} from '../model/Profile'
-import jsrsasign from 'jsrsasign'
 import {ILocation} from '../model/Location'
 import {IMessageIn} from '../model/Message'
 import {IEventLocationShareEndData} from '../model/EventLocationShareEnd'
@@ -445,23 +444,6 @@ export function convertNotification(edge: any): IEventData | null {
 
 export function convertNotifications(notifications: any[]): IEventData[] {
   return notifications.map(convertNotification).filter(x => x) as IEventData[]
-}
-
-type TokenParams = {
-  jti: string
-  iss: string
-  aud?: string
-  dvc: string
-  typ: string
-  sub: string
-  phone_number?: string
-}
-
-export function generateWockyToken(payload: TokenParams): string {
-  const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
-  const header = {alg: 'HS512', typ: 'JWT'}
-  const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-  return jwt
 }
 
 export function assert(condition, message) {
