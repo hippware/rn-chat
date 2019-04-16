@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableOpacity, ImageURISource} from 'react-native'
 import {avatarScale} from './Global'
-import {showImagePicker, PickerImage} from './ImagePicker'
+import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner, Avatar} from './common'
 import {observable} from 'mobx'
@@ -33,12 +33,7 @@ class SignUpAvatar extends React.Component<Props> {
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
-        onPress={() =>
-          showImagePicker({
-            title: 'Select Avatar',
-            afterImagePicked: this.imageSelected,
-          })
-        }
+        onPress={this.selectImage}
       >
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner />
@@ -49,16 +44,19 @@ class SignUpAvatar extends React.Component<Props> {
     )
   }
 
-  imageSelected = async (image: PickerImage) => {
-    const {profile, username, profiles} = this.props.wocky
-    try {
-      await profile.upload({size: image.size, file: image})
-      // change data within profiles cache!
-      profiles.get(username, {...profile})
-      this.imgSrc = image
-    } catch (err) {
-      // TODO handle upload error
-      this.props.warn('upload error', err)
+  selectImage = async () => {
+    const image = await showImagePicker()
+    if (image) {
+      const {profile, username, profiles} = this.props.wocky
+      try {
+        await profile.upload({size: image.size, file: image})
+        // change data within profiles cache!
+        profiles.get(username, {...profile})
+        this.imgSrc = image
+      } catch (err) {
+        // TODO handle upload error
+        this.props.warn('upload error', err)
+      }
     }
   }
 }

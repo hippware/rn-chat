@@ -4,10 +4,10 @@ import {Actions} from 'react-native-router-flux'
 import {inject} from 'mobx-react/native'
 import {CameraKitCameraScreen} from 'react-native-camera-kit'
 import {width, height} from './Global'
-import {AfterImagePicked} from './ImagePicker'
+import {PickerImage} from './ImagePicker'
 
 type Props = {
-  afterImagePicked: AfterImagePicked
+  afterImagePicked: (imageSource: PickerImage) => void
   store?: any
 }
 

@@ -65,17 +65,16 @@ class AddBotPost extends React.Component<Props> {
     }
   }
 
-  onAttach = () => {
-    showImagePicker({
-      afterImagePicked: image => {
-        // todo: fix uri here
-        this.imageURI = image.uri
-        this.image = image
-        if (this.textInput) {
-          this.textInput.focus()
-        }
-      },
-    })
+  onAttach = async () => {
+    const image = await showImagePicker()
+    if (image) {
+      // todo: fix uri here
+      this.imageURI = image.uri
+      this.image = image
+      if (this.textInput) {
+        this.textInput.focus()
+      }
+    }
   }
 
   render() {

@@ -4,14 +4,6 @@ import {Actions} from 'react-native-router-flux'
 import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 import ActionSheet from 'react-native-action-sheet'
 
-export type AfterImagePicked = (imageSource: PickerImage) => void
-
-type Props = {
-  title?: string
-  afterImagePicked: AfterImagePicked
-  cropping?: boolean
-}
-
 export type PickerImage = {
   height: number
   width: number
@@ -23,7 +15,15 @@ export type PickerImage = {
 
 const IMG_DEFAULT_SIZE = 1000
 
-async function launchImageLibrary({afterImagePicked, cropping}: Props): Promise<void> {
+function getImageUri(rawUri: string) {
+  let uri = rawUri
+  if (Platform.OS === 'android') {
+    uri = rawUri.indexOf('file://') !== 0 ? 'file://' + rawUri : rawUri
+  }
+  return uri
+}
+
+async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void> {
   try {
     const result = await ImagePicker.openPicker({
       width: IMG_DEFAULT_SIZE,
@@ -36,21 +36,22 @@ async function launchImageLibrary({afterImagePicked, cropping}: Props): Promise<
       // compressImageQuality: 0.5,
     })
     const image: Image = result[0] || result
-    afterImagePicked({
-      uri: Platform.select({android: 'file://' + image.path, ios: image.path}),
+
+    return {
+      uri: getImageUri(image.path),
       type: image.mime,
       name: image.path.substring(image.path.lastIndexOf('/') + 1),
       width: image.width,
       height: image.height,
       size: image.size,
-    })
+    }
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
     // log('launchImageLibrary error', err, {level: levels.ERROR});
   }
 }
 
-async function launchCamera({afterImagePicked}: Props): Promise<void> {
+async function launchCamera(): Promise<PickerImage | void> {
   const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
@@ -68,7 +69,9 @@ async function launchCamera({afterImagePicked}: Props): Promise<void> {
     }
   }
   Keyboard.dismiss()
-  Actions.camera({afterImagePicked})
+  return new Promise(resolve => {
+    Actions.camera({afterImagePicked: image => resolve(image)})
+  })
 }
 
 const photoActions = [
@@ -82,18 +85,23 @@ const photoActions = [
   },
 ]
 
-export function showImagePicker(props: Props): void {
-  const defaultProps = {
-    cropping: true,
-  }
+export async function showImagePicker(
+  title?: string,
+  cropping: boolean = true
+): Promise<PickerImage | void> {
   const options = {
     options: [...photoActions.map(a => a.title), 'Cancel'],
     cancelButtonIndex: photoActions.length,
   }
-  if (props.title) {
-    ;(options as any).title = props.title
+  if (title) {
+    ;(options as any).title = title
   }
-  ActionSheet.showActionSheetWithOptions(options, index => {
-    if (index < photoActions.length) photoActions[index].action({...defaultProps, ...props})
+  return new Promise(resolve => {
+    ActionSheet.showActionSheetWithOptions(options, index => {
+      if (index < photoActions.length) {
+        const image = photoActions[index].action(cropping)
+        resolve(image)
+      }
+    })
   })
 }
