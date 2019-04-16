@@ -71,6 +71,6 @@
     "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
-  "include": ["src/**/*", "third-party/wocky-client/src/**/*", "../../src/store/AppInfo.ts"],
+  "include": ["src/**/*", "third-party/wocky-client/src/**/*"],
   "exclude": ["node_modules"]
 }
