@@ -1,25 +1,33 @@
 import {Wocky, IWocky, Transport} from '../../src'
-import {AppInfo} from '../../../../src/store/AppInfo'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware, setLivelynessChecking} from 'mobx-state-tree'
 import {when} from 'mobx'
 import _ from 'lodash'
+import jsrsasign from 'jsrsasign'
+import uuid from 'uuid/v1'
 
 setLivelynessChecking('error')
 
 const SERVER_NAME = 'testing'
-const appInfo = AppInfo.create({
-  deviceId: 'test',
-  uniqueId: 'test',
-  systemName: 'unitTest',
-  jsVersion: '9.9.9',
-  nativeVersion: '9.9.9',
-  systemVersion: '1.0',
-})
 // tslint:disable:no-console
-
 const fs = require('fs')
+
+function token(credentials: any) {
+  const payload = {
+    aud: 'Wocky',
+    jti: uuid(),
+    iss: 'TinyRobot/9.9.9 unitTest 1.0; test',
+    dvc: 'test',
+    ...credentials,
+  }
+
+  // const password = generateWockyToken(payload)
+  const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
+  const header = {alg: 'HS512', typ: 'JWT'}
+  const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
+  return jwt
+}
 
 export function timestamp() {
   console.log('TIME: ', new Date().toLocaleString())
@@ -60,7 +68,6 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     const service = Wocky.create(
       {host},
       {
-        appInfo,
         transport,
         fileService,
         logger: console,
@@ -69,7 +76,7 @@ export async function createUser(num?: number, phoneNum?: string): Promise<IWock
     addMiddleware(service, simpleActionLogger)
 
     await service.login(
-      appInfo.token({
+      token({
         phone_number: phoneNumber,
         typ: 'bypass',
         sub: phoneNumber,
