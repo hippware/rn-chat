@@ -31,27 +31,20 @@ class AttachButton extends React.Component<Props> {
     )
   }
 
-  onAttach = () => {
+  onAttach = async () => {
     const {message, notificationStore} = this.props
-    showImagePicker({
-      callback: async (source, response) => {
-        try {
-          this.uploading = true
-          const {height, width} = response
-          await message.upload({
-            file: source,
-            size: response.size,
-            height,
-            width,
-          })
-          message.send()
-        } catch (e) {
-          notificationStore.flash(e.message)
-        } finally {
-          this.uploading = false
-        }
-      },
-    })
+    const image = await showImagePicker()
+    if (image) {
+      try {
+        this.uploading = true
+        await message.upload({size: image.size, file: image})
+        message.send()
+      } catch (e) {
+        notificationStore.flash(e.message)
+      } finally {
+        this.uploading = false
+      }
+    }
   }
 }
 

@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react/native'
 import {observable, action} from 'mobx'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'
-import {showImagePicker} from '../ImagePicker'
+import {showImagePicker, PickerImage} from '../ImagePicker'
 import {k, minHeight} from '../Global'
 import {IWocky, IBot, IBotPost} from 'wocky-client'
 import withKeyboardHOC from '../common/withKeyboardHOC'
@@ -19,26 +19,13 @@ type Props = {
   navStore: any
 }
 
-type ImageData = {
-  source: {
-    isStatic: boolean
-    name: string
-    type: string
-    uri: string
-  }
-  size: number
-  width: number
-  height: number
-}
-
 @inject('notificationStore', 'wocky', 'navStore')
 @observer
 class AddBotPost extends React.Component<Props> {
   @observable imageURI?: string
-  image?: ImageData
+  image?: PickerImage
   @observable text: string = ''
   @observable focused: boolean = false
-  // TODO: add `publishing` and `published` props on wocky-client botpost
   @observable sendingPost: boolean = false
   post?: IBotPost | null
   textInput: any
@@ -57,7 +44,7 @@ class AddBotPost extends React.Component<Props> {
     try {
       this.post = bot.createPost(this.text.trim())
       if (this.image) {
-        await this.post!.upload({size: this.image.size, file: this.image.source})
+        await this.post!.upload({size: this.image.size, file: this.image})
       }
       await this.post!.publish()
       this.post = null
@@ -73,24 +60,21 @@ class AddBotPost extends React.Component<Props> {
           ? 'Cannot publish, bot is private now'
           : 'Something went wrong, please try again'
       notificationStore.flash(message)
-      // TODO: clean up local state by removing bad post? Maybe in componentWillUnmount?
-      // https://github.com/hippware/rn-chat/issues/1828
     } finally {
       this.sendingPost = false
     }
   }
 
-  onAttach = () => {
-    showImagePicker({
-      callback: (source, response) => {
-        const {size, width, height} = response
-        this.imageURI = source.uri
-        this.image = {source, size, width, height}
-        if (this.textInput) {
-          this.textInput.focus()
-        }
-      },
-    })
+  onAttach = async () => {
+    const image = await showImagePicker()
+    if (image) {
+      // todo: fix uri here
+      this.imageURI = image.uri
+      this.image = image
+      if (this.textInput) {
+        this.textInput.focus()
+      }
+    }
   }
 
   render() {

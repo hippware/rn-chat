@@ -1,12 +1,13 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, Platform} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {inject} from 'mobx-react/native'
 import {CameraKitCameraScreen} from 'react-native-camera-kit'
 import {width, height} from './Global'
+import {PickerImage} from './ImagePicker'
 
 type Props = {
-  callback: any
+  afterImagePicked: (imageSource: PickerImage) => void
   store?: any
 }
 
@@ -17,11 +18,16 @@ class CameraScreen extends React.Component<Props> {
       return Actions.pop()
     } else {
       const source = event.captureImages[0]
-      const response = await this.props.store.getImageSize(source.uri)
-      this.props.callback(
-        {...source, type: 'image/jpeg', isStatic: true},
-        {size: source.size, ...response}
+      const {width: photoWidth, height: photoHeight} = await this.props.store.getImageSize(
+        source.uri
       )
+      this.props.afterImagePicked({
+        ...source,
+        uri: Platform.select({android: 'file://' + source.uri, ios: source.uri}),
+        type: 'image/jpeg',
+        width: photoWidth,
+        height: photoHeight,
+      })
       Actions.pop()
     }
   }

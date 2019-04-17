@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity} from 'react-native'
+import {TouchableOpacity, ImageURISource} from 'react-native'
 import {avatarScale} from './Global'
 import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
@@ -17,7 +17,7 @@ const AVATAR_DIMENSION = 80 * avatarScale
 @inject('wocky', 'warn')
 @observer
 class SignUpAvatar extends React.Component<Props> {
-  @observable imgSrc
+  @observable imgSrc?: ImageURISource
 
   render() {
     const {profile} = this.props.wocky!
@@ -33,12 +33,7 @@ class SignUpAvatar extends React.Component<Props> {
     return (
       <TouchableOpacity
         style={{alignItems: 'center', justifyContent: 'center'}}
-        onPress={() =>
-          showImagePicker({
-            title: 'Select Avatar',
-            callback: this.imageSelected,
-          })
-        }
+        onPress={this.selectImage}
       >
         {avatar && (avatar.loading || profile.uploading) ? (
           <Spinner />
@@ -49,21 +44,19 @@ class SignUpAvatar extends React.Component<Props> {
     )
   }
 
-  imageSelected = async (src, response) => {
-    const {profile, username, profiles} = this.props.wocky
-    try {
-      await profile.upload({
-        file: src,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-      })
-      // change data within profiles cache!
-      profiles.get(username, {...profile})
-      this.imgSrc = src
-    } catch (err) {
-      // TODO handle upload error
-      this.props.warn('upload error', err)
+  selectImage = async () => {
+    const image = await showImagePicker()
+    if (image) {
+      const {profile, username, profiles} = this.props.wocky
+      try {
+        await profile.upload({size: image.size, file: image})
+        // change data within profiles cache!
+        profiles.get(username, {...profile})
+        this.imgSrc = image
+      } catch (err) {
+        // TODO handle upload error
+        this.props.warn('upload error', err)
+      }
     }
   }
 }
