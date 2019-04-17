@@ -130,15 +130,19 @@ const CodePushStore = types
     checkCurrentStatus: flow(function*() {
       try {
         const autoDeployKey = self.channels[0][keyProp]
+        const isLocal = self.channels[0].name === 'Local'
         self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
         // check for update that exists but hasn't been downloaded yet (but will be downloaded automatically in the background)
-        const metadataPending: RemotePackage = yield codePush.checkForUpdate(autoDeployKey)
+        let metadataPending: RemotePackage | null = null
+        if (!isLocal) {
+          metadataPending = yield codePush.checkForUpdate(autoDeployKey)
+        }
         // check for update that has been downloaded but not installed yet (will be installed on next app start)
         const metadataDownloaded: LocalPackage = yield codePush.getUpdateMetadata(
           codePush.UpdateState.PENDING
         )
 
-        if ((metadataPending || metadataDownloaded) && self.channels[0].name !== 'Local') {
+        if (metadataPending || metadataDownloaded) {
           // signal that we need to start with a clean cache on next app load
           self.pendingUpdate = true
         }
