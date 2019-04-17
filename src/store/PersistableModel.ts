@@ -25,7 +25,7 @@ const PersistableModel = types
     hydrated: false,
   }))
   .actions(self => {
-    const {logger, storage, analytics, appInfo} = getEnv(self)
+    const {logger, storage, analytics} = getEnv(self)
 
     function loadFromStorage(key: string): Promise<string> {
       return new Promise((resolve, reject) => {
