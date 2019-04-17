@@ -16,10 +16,9 @@ import alert from '../utils/alert'
 type Props = {
   wocky?: IWocky
   analytics?: any
-  warn?: any
 }
 
-@inject('wocky', 'analytics', 'warn')
+@inject('wocky', 'analytics')
 @observer
 class SignUp extends React.Component<Props> {
   @observable vProfile: ValidatableProfile | null = null

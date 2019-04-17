@@ -6,7 +6,6 @@ import analytics from './utils/analytics'
 import store, {iconStore, notificationStore, reportStore, contactStore} from './store'
 import NotificationBanner from './components/NotificationBanner'
 import Connectivity from './components/Connectivity'
-import * as logger from './utils/log'
 // import TinyRobotRouter from './components/RouterTest';
 import ErrorHandler from './components/common/ErrorHandler'
 import geocodingStore from './store/geocodingService'
@@ -25,7 +24,6 @@ const App = () => (
     iconStore={iconStore}
     geocodingStore={geocodingStore}
     contactStore={contactStore}
-    {...logger}
   >
     <View style={{flex: 1}} testID="wrapper">
       <ErrorHandler>

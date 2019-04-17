@@ -4,8 +4,7 @@ import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport} from 'wocky-client'
-import * as logger from '../utils/log'
-import analytics, {Analytics} from '../utils/analytics'
+import analytics from '../utils/analytics'
 import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
@@ -42,23 +41,19 @@ export type IEnv = {
   storage: AsyncStorage
   auth: RNFirebase.auth.Auth
   firebase: Firebase
-  logger: any
   geocodingStore: any
   fileService: any
   geolocation: Geolocation
-  analytics: Analytics
 }
 
-const env = {
+const env: IEnv = {
   transport,
   storage: AsyncStorage,
   auth,
   firebase,
-  logger,
   geocodingStore,
   fileService,
   geolocation,
-  analytics,
 }
 
 const Store = types

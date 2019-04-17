@@ -1,4 +1,5 @@
-import {types, getEnv, flow} from 'mobx-state-tree'
+import {types, flow} from 'mobx-state-tree'
+import {log, error} from '../utils/logger'
 
 const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json'
 const apiKey = 'AIzaSyDwMqs1HqgdqtrrPkiBYu93XoYIgvIhKko'
@@ -7,7 +8,6 @@ const googlePlacesAutocompleteUrl = `https://maps.googleapis.com/maps/api/place/
 const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?key=${googlePlacesKey}&placeid=`
 
 const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
-  const {logger} = getEnv(self)
   const details = flow(function*(placeId: string) {
     try {
       const url = `${googlePlacesDetailsUrl}${placeId}`
@@ -27,7 +27,7 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
         }
       }
     } catch (e) {
-      logger.log(`FETCH ERROR:${e}`)
+      error(`FETCH ERROR:${e}`)
       return Promise.reject(new Error(`Error fetching data${e}`))
     }
   })
@@ -58,11 +58,11 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
             }))
           : []
       } else {
-        logger.log(`geoquery: Server returned status code ${json.status}`)
+        log(`geoquery: Server returned status code ${json.status}`)
         return []
       }
     } catch (e) {
-      logger.log(`FETCH ERROR:${e}`)
+      error(`FETCH ERROR:${e}`)
       return []
     }
   })
@@ -110,7 +110,7 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
           meta: {city: '', country: '', state: ''},
         }
       } else {
-        logger.log(`Server returned status code ${json.status}`)
+        log(`Server returned status code ${json.status}`)
         return null
         //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
       }

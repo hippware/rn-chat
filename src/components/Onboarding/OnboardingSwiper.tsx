@@ -16,14 +16,14 @@ import {IOnceStore} from 'src/store/OnceStore'
 import PushNotification from 'react-native-push-notification'
 import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
+import {log} from '../../utils/logger'
 
 type Props = {
-  log?: (...args) => void
   onceStore?: IOnceStore
   contactStore?: ContactStore
 }
 
-@inject('log', 'onceStore', 'contactStore')
+@inject('onceStore', 'contactStore')
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
@@ -81,7 +81,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   private checkAccelerometerPermissions = async () => {
     // NOTE: this will return 'restricted' on a simulator
     const check = await this.getPermission('motion')
-    this.props.log!(`Accelerometer check result is ${check}`)
+    log(`Accelerometer check result is ${check}`)
     this.swiper.scrollBy(1)
   }
 
@@ -90,7 +90,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
     if (!PushNotification.isPermissionsRequestPending) {
       const {alert, badge, sound} = await PushNotification.requestPermissions()
       // todo, what if they deny permissions?
-      this.props.log!(alert, badge, sound)
+      log(alert, badge, sound)
       this.swiper.scrollBy(1)
     }
   }

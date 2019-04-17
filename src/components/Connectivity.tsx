@@ -3,7 +3,7 @@ import {AppState, NetInfo} from 'react-native'
 import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
-import * as log from '../utils/log'
+import {log} from '../utils/logger'
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
@@ -15,7 +15,6 @@ type Props = {
   homeStore?: IHomeStore
   notificationStore?: any
   locationStore?: ILocationStore
-  log?: any
   analytics?: any
   authStore?: IAuthStore
   store?: IStore
@@ -26,7 +25,6 @@ type Props = {
   'homeStore',
   'notificationStore',
   'locationStore',
-  'log',
   'analytics',
   'authStore',
   'store'
@@ -43,7 +41,7 @@ export default class Connectivity extends React.Component<Props> {
     AppState.addEventListener('change', this._handleAppStateChange)
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
     NetInfo.getConnectionInfo().then(reach => {
-      this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO})
+      log('NETINFO INITIAL:', reach)
       this._handleConnectionInfoChange(reach)
     })
     // todo: refactor. Since interval is hardcoded here exponential backoff won't work...it checks every second regardless of changes to retryDelay
@@ -116,7 +114,7 @@ export default class Connectivity extends React.Component<Props> {
   //   the background on a switch from wifi to cellular (and vice versa)
   _handleConnectionInfoChange = connectionInfo => {
     const oldInfo = this.connectionInfo || {}
-    this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
+    log('CONNECTIVITY:', connectionInfo)
     this.connectionInfo = connectionInfo
     if (connectionInfo.type === 'unknown') {
       // @TODO: mixpanel submit info?
@@ -140,9 +138,7 @@ export default class Connectivity extends React.Component<Props> {
   _handleAppStateChange = async currentAppState => {
     this.retryDelay = 1000
     const {notificationStore, locationStore, homeStore, wocky} = this.props
-    this.props.log('CURRENT APPSTATE:', currentAppState, {
-      level: log.levels.INFO,
-    })
+    log('CURRENT APPSTATE:', currentAppState)
     // reconnect automatically
     if (currentAppState === 'active') {
       this.isActive = true

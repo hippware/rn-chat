@@ -26,6 +26,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
 import alert from '../../utils/alert'
+import {log} from '../../utils/logger'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -56,14 +57,13 @@ type Props = {
   homeStore?: IHomeStore
   notificationStore?: any
   locationStore?: any
-  log?: any
   analytics?: any
   keyboardShowing?: boolean
 }
 
 const emojiKeyboardHeight = height / 2
 
-@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'log', 'locationStore')
+@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'locationStore')
 @observer
 export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
@@ -264,7 +264,7 @@ export class BotCompose extends React.Component<Props> {
     } catch (e) {
       this.props.notificationStore.flash('Something went wrong, please try again.')
       this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot!), error: e})
-      this.props.log('BotCompose save problem', e)
+      log('BotCompose save problem', e)
     } finally {
       this.isLoading = false
     }
