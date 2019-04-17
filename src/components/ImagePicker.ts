@@ -1,8 +1,8 @@
-import {Alert, Keyboard, Platform} from 'react-native'
+import {Keyboard, Platform} from 'react-native'
 import ImagePicker, {Image} from 'react-native-image-crop-picker'
 import {Actions} from 'react-native-router-flux'
-import {CameraKitCamera, CameraKitGallery} from 'react-native-camera-kit'
 import ActionSheet from 'react-native-action-sheet'
+import Permissions from 'react-native-permissions'
 
 export type PickerImage = {
   height: number
@@ -23,27 +23,44 @@ function getImageUri(rawUri: string) {
   return uri
 }
 
+async function photoPermissionsGranted(includeCamera: boolean = false): Promise<boolean> {
+  const perms = [
+    includeCamera ? await Permissions.request('camera') : 'authorized',
+    await Permissions.request('photo'),
+    Platform.OS === 'android' ? await Permissions.request('storage') : 'authorized',
+  ]
+
+  perms.forEach(p => {
+    if (p !== 'authorized') {
+      return false
+    }
+  })
+  return true
+}
+
 async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void> {
   try {
-    const result = await ImagePicker.openPicker({
-      width: IMG_DEFAULT_SIZE,
-      height: IMG_DEFAULT_SIZE,
-      cropping,
-      mediaType: 'photo',
-      // cropperCircleOverlay: false,
-      // compressImageMaxWidth: 640,
-      // compressImageMaxHeight: 480,
-      // compressImageQuality: 0.5,
-    })
-    const image: Image = result[0] || result
+    if (await photoPermissionsGranted()) {
+      const result = await ImagePicker.openPicker({
+        width: IMG_DEFAULT_SIZE,
+        height: IMG_DEFAULT_SIZE,
+        cropping,
+        mediaType: 'photo',
+        // cropperCircleOverlay: false,
+        // compressImageMaxWidth: 640,
+        // compressImageMaxHeight: 480,
+        // compressImageQuality: 0.5,
+      })
+      const image: Image = result[0] || result
 
-    return {
-      uri: getImageUri(image.path),
-      type: image.mime,
-      name: image.path.substring(image.path.lastIndexOf('/') + 1),
-      width: image.width,
-      height: image.height,
-      size: image.size,
+      return {
+        uri: getImageUri(image.path),
+        type: image.mime,
+        name: image.path.substring(image.path.lastIndexOf('/') + 1),
+        width: image.width,
+        height: image.height,
+        size: image.size,
+      }
     }
   } catch (err) {
     // disable error log because normal user picker cancelling is interpreted as error
@@ -52,26 +69,12 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
 }
 
 async function launchCamera(): Promise<PickerImage | void> {
-  const isCameraAuthorized = await CameraKitCamera.checkDeviceCameraAuthorizationStatus()
-  if (!isCameraAuthorized) {
-    const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization()
-    if (!isUserAuthorizedCamera) {
-      Alert.alert('Cannot use camera')
-      return
-    }
+  if (await photoPermissionsGranted(true)) {
+    Keyboard.dismiss()
+    return new Promise(resolve => {
+      Actions.camera({afterImagePicked: image => resolve(image)})
+    })
   }
-  const isPhotosAuthorized = await CameraKitGallery.checkDevicePhotosAuthorizationStatus()
-  if (!isPhotosAuthorized) {
-    const isUserAuthorizedPhotos = await CameraKitGallery.requestDevicePhotosAuthorization()
-    if (!isUserAuthorizedPhotos) {
-      Alert.alert('Cannot open photo gallery')
-      return
-    }
-  }
-  Keyboard.dismiss()
-  return new Promise(resolve => {
-    Actions.camera({afterImagePicked: image => resolve(image)})
-  })
 }
 
 const photoActions = [
