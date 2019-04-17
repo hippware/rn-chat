@@ -37,16 +37,6 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
-const codePushStore = CodepushStore.create({})
-export const appInfo = AppInfo.create({
-  nativeVersion: DeviceInfo.getVersion(),
-  systemName: DeviceInfo.getSystemName(),
-  systemVersion: DeviceInfo.getSystemVersion(),
-  deviceId: DeviceInfo.getDeviceId(),
-  uniqueId: DeviceInfo.getUniqueID(),
-  jsVersion,
-  codepushVersion: codePushStore.updateInfo,
-})
 export type IEnv = {
   transport: Transport
   storage: AsyncStorage
@@ -107,8 +97,10 @@ export interface IStore extends Instance<typeof PersistableStore> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
-    appInfo,
-    codePushStore,
+    appInfo: {
+      nativeVersion: DeviceInfo.getVersion(),
+      jsVersion,
+    },
     wocky: {host: settings.host},
   },
   env

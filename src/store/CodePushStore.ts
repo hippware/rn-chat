@@ -197,7 +197,6 @@ const CodePushStore = types
   .actions(self => ({
     afterAttach() {
       self.syncStatus.clear()
-      self.metadata = null
       self.channelUpdates.clear()
       codePush.notifyAppReady()
       self.checkCurrentStatus()
