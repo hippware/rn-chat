@@ -28,14 +28,13 @@ class EditNote extends React.Component<Props> {
     return (
       <View>
         <TextInput
-          style={[styles.textStyle, {width, height: 120, paddingTop: 15}]}
+          style={[styles.textStyle, {width, height: 150, paddingTop: 15}]}
           placeholder="Tell us about this place!"
           ref={r => (this.note = r)}
           onChangeText={text => this.bot!.load({description: text})}
           value={this.bot!.description}
           autoFocus
           multiline
-          onBlur={() => Actions.pop()}
           selectionColor={colors.COVER_BLUE}
         />
         <GradientButton
