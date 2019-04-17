@@ -25,6 +25,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
 import globalStyles from '../styles'
+import alert from '../../utils/alert'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -32,7 +33,18 @@ const photoIcon = require('../../../images/attachPhotoPlus.png')
 const photoIconDone = require('../../../images/photoAdded.png')
 
 export function backAction(iconStore: IconStore) {
-  iconStore!.isEmojiKeyboardShown ? iconStore!.toggleEmojiKeyboard() : Actions.pop()
+  iconStore!.isEmojiKeyboardShown
+    ? iconStore!.toggleEmojiKeyboard()
+    : alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Discard',
+          style: 'destructive',
+          onPress: async () => {
+            Actions.pop()
+          },
+        },
+      ])
 }
 
 type Props = {

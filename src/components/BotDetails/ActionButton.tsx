@@ -9,6 +9,7 @@ import {ILocationStore} from '../../store/LocationStore'
 // import {settings} from '../../globals'
 import {IHomeStore} from '../../store/HomeStore'
 import {isAlive} from 'mobx-state-tree'
+import alert from '../../utils/alert'
 
 type Props = {
   bot: IBot
@@ -166,8 +167,17 @@ const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
 const unfollow = {
   name: 'Unfollow Location',
   action: ({bot, wocky}: Props) => {
-    Actions.pop()
-    ;(bot as IBot).unsubscribe()
-    wocky!.removeBot(bot.id)
+    alert(null, 'Are you sure you want to unfollow this location?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Unfollow',
+        style: 'destructive',
+        onPress: async () => {
+          Actions.pop()
+          ;(bot as IBot).unsubscribe()
+          wocky!.deleteBot(bot.id)
+        },
+      },
+    ])
   },
 }
