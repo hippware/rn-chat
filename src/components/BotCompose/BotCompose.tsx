@@ -40,7 +40,7 @@ export function backAction(iconStore: IconStore) {
         {
           text: 'Discard',
           style: 'destructive',
-          onPress: async () => {
+          onPress: () => {
             Actions.pop()
           },
         },

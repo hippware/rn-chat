@@ -172,7 +172,7 @@ const unfollow = {
       {
         text: 'Unfollow',
         style: 'destructive',
-        onPress: async () => {
+        onPress: () => {
           Actions.pop()
           ;(bot as IBot).unsubscribe()
           wocky!.deleteBot(bot.id)
