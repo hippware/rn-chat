@@ -406,7 +406,7 @@ export function convertNotification(edge: any): IEventData | null {
         time,
         bot,
         sender: data.user.id,
-        isResponse: __typename === 'InvitationResponseNotification',
+        isResponse: __typename === 'BotInvitationResponseNotification',
         isAccepted: data.accepted,
         inviteId: data.invitation.id,
       }
