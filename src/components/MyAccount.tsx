@@ -5,7 +5,6 @@ import {observable} from 'mobx'
 import {minHeight} from './Global'
 import SignUpAvatar from './SignUpAvatar'
 import {Actions} from 'react-native-router-flux'
-import {error} from '../utils/logger'
 import Cell from './Cell'
 import FormTextInput from './FormTextInput'
 import {colors} from '../constants'
@@ -57,7 +56,7 @@ class MyAccount extends React.Component<Props> {
     const {wocky} = this.props
     const {profile} = wocky!
     if (!profile || !this.vProfile) {
-      error('NULL PROFILE')
+      // error('NULL PROFILE')
       return <View style={{flex: 1, backgroundColor: 'white'}} />
     }
     return (
