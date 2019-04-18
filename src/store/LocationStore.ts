@@ -9,6 +9,7 @@ import _ from 'lodash'
 import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
 import {log, warn} from '../utils/logger'
+import analytics from '../utils/analytics'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -176,7 +177,7 @@ const LocationStore = types
     }),
   }))
   .actions(self => {
-    const {analytics, transport} = getEnv(self)
+    const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     let watcherID
 

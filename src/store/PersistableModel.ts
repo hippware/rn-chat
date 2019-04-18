@@ -4,6 +4,8 @@ import codePush from 'react-native-code-push'
 import {Wocky, IWocky} from 'wocky-client'
 import {settings} from '../globals'
 import DeviceInfo from 'react-native-device-info'
+import analytics from '../utils/analytics'
+import {log, warn} from '../utils/logger'
 
 export const cleanState = {
   firebaseStore: {},
@@ -26,7 +28,7 @@ const PersistableModel = types
     hydrated: false,
   }))
   .actions(self => {
-    const {logger, storage, analytics} = getEnv(self)
+    const {storage} = getEnv(self)
 
     function loadFromStorage(key: string): Promise<string> {
       return new Promise((resolve, reject) => {
@@ -38,12 +40,12 @@ const PersistableModel = types
     }
 
     function loadMinimal(parsed: any) {
-      logger.log('loadMinimal', parsed)
+      log('loadMinimal', parsed)
       try {
         // todo: try rehydrating onceStore to prevent going through onboarding after a cache reset?
         applySnapshot((self as any).authStore, parsed.authStore)
       } catch (err) {
-        logger.warn('Minimal hydration error', err)
+        warn('Minimal hydration error', err)
         analytics.track('loadMinimal_fail', parsed)
         throw err
       }
@@ -70,7 +72,7 @@ const PersistableModel = types
           applySnapshot(self, parsed)
         }
       } catch (err) {
-        logger.log('hydration error', modelName, err, parsed)
+        log('hydration error', modelName, err, parsed)
         if (modelName === STORE_NAME && parsed && parsed.authStore) {
           loadMinimal(parsed)
         }
