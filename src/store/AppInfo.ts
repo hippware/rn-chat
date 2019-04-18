@@ -21,12 +21,12 @@ export const AppInfo = types
     return {
       get longVersion(): string {
         return `${self.jsVersion}${
-          codePushStore ? ` (${self.nativeVersion}-${codePushStore.updateInfo})` : ''
+          codePushStore.updateInfo ? ` (${self.nativeVersion}-${codePushStore.updateInfo})` : ''
         }`
       },
       get uaString(): string {
         const extras: string[] = [`${systemName} ${systemVersion}`, deviceId]
-        if (codePushStore) {
+        if (codePushStore.updateInfo) {
           extras.push(`${self.nativeVersion}-${codePushStore.updateInfo}`)
         }
         return `TinyRobot/${self.jsVersion} (${extras.join('; ')})`

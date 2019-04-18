@@ -57,8 +57,11 @@ const PersistableModel = types
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
-        const oldBinaryVersion =
+
+        // parsed.version (pre-appInfo) or parsed.appInfo.version (post-appInfo)
+        const oldBinaryVersion: string | undefined =
           (parsed && parsed.version) || (parsed && parsed.appInfo && parsed.appInfo.nativeVersion)
+
         const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersion()
         if (pendingCodepush || isNewBinaryVersion) {
           parsed.codePushStore.pendingUpdate = false
