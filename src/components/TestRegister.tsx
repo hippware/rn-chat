@@ -13,7 +13,6 @@ type Props = {
   analytics?: any
   navStore?: INavStore
   name: string
-  warn?: any
   authStore: IAuthStore
 }
 
@@ -21,7 +20,7 @@ type State = {
   text: string
 }
 
-@inject('wocky', 'analytics', 'warn', 'navStore', 'authStore')
+@inject('wocky', 'analytics', 'navStore', 'authStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {

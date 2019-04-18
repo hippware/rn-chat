@@ -1,6 +1,6 @@
 import {types, flow} from 'mobx-state-tree'
 import {settings} from '../globals'
-import * as log from '../utils/log'
+import {log} from '../utils/logger'
 import codePush, {RemotePackage, LocalPackage} from 'react-native-code-push'
 import {Platform} from 'react-native'
 
@@ -160,7 +160,7 @@ const CodePushStore = types
           codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
         }
       } catch (err) {
-        log.log('Codepush syncImmediate error', err)
+        log('Codepush syncImmediate error', err)
         // mixpanel call?
       }
     }),

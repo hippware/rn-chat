@@ -1,4 +1,4 @@
-import {log} from './log'
+import {log} from './logger'
 import PushNotification from 'react-native-push-notification'
 import {Linking, Platform} from 'react-native'
 import analytics from './analytics'

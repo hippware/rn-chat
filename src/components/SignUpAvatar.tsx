@@ -5,16 +5,16 @@ import {showImagePicker} from './ImagePicker'
 import {observer, inject} from 'mobx-react/native'
 import {Spinner, Avatar} from './common'
 import {observable} from 'mobx'
-import {colors} from 'src/constants'
+import {colors} from '../constants'
+import {warn} from '../utils/logger'
 
 type Props = {
   wocky?: any
-  warn?: any
 }
 
 const AVATAR_DIMENSION = 80 * avatarScale
 
-@inject('wocky', 'warn')
+@inject('wocky')
 @observer
 class SignUpAvatar extends React.Component<Props> {
   @observable imgSrc?: ImageURISource
@@ -55,7 +55,7 @@ class SignUpAvatar extends React.Component<Props> {
         this.imgSrc = image
       } catch (err) {
         // TODO handle upload error
-        this.props.warn('upload error', err)
+        warn('upload error', err)
       }
     }
   }

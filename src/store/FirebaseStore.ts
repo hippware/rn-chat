@@ -5,6 +5,8 @@ import {IEnv} from '.'
 import {IAuthStore} from './AuthStore'
 import {Credentials} from './AppInfo'
 import {settings} from '../globals'
+import analytics from '../utils/analytics'
+import {warn, log} from '../utils/logger'
 
 type State = {
   resource?: string
@@ -44,14 +46,13 @@ const FirebaseStore = types
   .actions(self => ({
     registerWithToken: flow(function*() {
       const {authStore} = getParent<any>(self)
-      const {logger, analytics} = getEnv(self)
       try {
         self.setState({buttonText: 'Connecting...'})
         authStore.register(self.phone, 'firebase')
         yield (authStore as IAuthStore).login()
         self.setState({buttonText: 'Verify', registered: true})
       } catch (err) {
-        logger.warn('RegisterWithToken error', err)
+        warn('RegisterWithToken error', err)
         self.setState({errorMessage: 'Error registering, please try again'})
         analytics.track('error_firebase_register', {error: err})
       } finally {
@@ -64,7 +65,7 @@ const FirebaseStore = types
     }),
   }))
   .actions(self => {
-    const {firebase, auth, logger, analytics}: IEnv = getEnv(self)
+    const {firebase, auth}: IEnv = getEnv(self)
     let wocky: IWocky
     let confirmResult: any
     let unsubscribe: any
@@ -115,8 +116,8 @@ const FirebaseStore = types
 
     // NOTE: this is not a MST action
     async function processFirebaseAuthChange(user: any) {
-      logger.log('FIREBASESTORE: AUTH STATE CHANGED', !!user)
-      logger.log(user)
+      log('FIREBASESTORE: AUTH STATE CHANGED', !!user)
+      log(user)
       if (user) {
         try {
           await auth!.currentUser!.reload()
@@ -126,7 +127,7 @@ const FirebaseStore = types
           if (disposer) disposer()
           disposer = when(() => !!self.token && self.phone, self.registerWithToken)
         } catch (err) {
-          logger.warn('Firebase onAuthStateChanged error:', err)
+          warn('Firebase onAuthStateChanged error:', err)
           analytics.track('auth_error_firebase', {error: err})
           if (wocky && wocky.profile && wocky.connected) {
             wocky.logout()
@@ -166,7 +167,7 @@ const FirebaseStore = types
           yield auth.signOut()
         } catch (err) {
           analytics.track('error_firebase_logout', {error: err})
-          logger.warn('firebase logout error', err)
+          warn('firebase logout error', err)
         }
       }
 
@@ -215,7 +216,7 @@ const FirebaseStore = types
         analytics.track('verify_confirmation_success')
       } catch (err) {
         analytics.track('verify_confirmation_fail', {error: err, code})
-        logger.warn('confirmation fail', err)
+        warn('confirmation fail', err)
         self.errorMessage = 'Error confirming code, please try again or resend code'
         self.buttonText = 'Verify'
         throw err

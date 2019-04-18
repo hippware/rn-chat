@@ -67,10 +67,9 @@ type Props = {
   onceStore?: IOnceStore
   authStore?: IAuthStore
   analytics?: any
-  log?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'log', 'onceStore', 'authStore')
+@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'onceStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
