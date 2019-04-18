@@ -3,6 +3,7 @@ import {reaction} from 'mobx'
 import codePush from 'react-native-code-push'
 import {Wocky, IWocky} from 'wocky-client'
 import {settings} from '../globals'
+import DeviceInfo from 'react-native-device-info'
 
 export const cleanState = {
   firebaseStore: {},
@@ -25,7 +26,7 @@ const PersistableModel = types
     hydrated: false,
   }))
   .actions(self => {
-    const {logger, storage, analytics, appInfo} = getEnv(self)
+    const {logger, storage, analytics} = getEnv(self)
 
     function loadFromStorage(key: string): Promise<string> {
       return new Promise((resolve, reject) => {
@@ -56,9 +57,13 @@ const PersistableModel = types
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
-        const newBinaryVersion =
-          parsed && parsed.version && parsed.version !== appInfo.nativeVersion
-        if (pendingCodepush || newBinaryVersion) {
+
+        // parsed.version (pre-appInfo) or parsed.appInfo.version (post-appInfo)
+        const oldBinaryVersion: string | undefined =
+          (parsed && parsed.version) || (parsed && parsed.appInfo && parsed.appInfo.nativeVersion)
+
+        const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersion()
+        if (pendingCodepush || isNewBinaryVersion) {
           parsed.codePushStore.pendingUpdate = false
           loadMinimal(parsed)
         } else {
