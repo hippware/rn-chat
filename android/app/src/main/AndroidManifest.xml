@@ -15,7 +15,7 @@
   <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 
 
-  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
+  <application android:name=".MainApplication" android:screenOrientation="portrait" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
 
     <!-- https://stackoverflow.com/a/50779232/476228
         todo: remove this if we target a higher Google Maps SDK (after a rn-maps update perhaps)
