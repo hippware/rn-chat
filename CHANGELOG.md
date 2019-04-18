@@ -9,6 +9,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Avatars blink during start and can't be loaded sometimes (#3617)
 * Improve: [android] open app location settings (#3585, PR #3624)
 * [android] Firebase dynamic links/invitations (#3567)
+* [dev] Refactor wocky-client - move AppInfo away (#3631)
+* [android] Take Photo does not function (#3619)
+* Missing popups (#3630)
+* User can still see bot after unfollowing a location (#3146)
+* Remove double Actions.pop and adjust UI (PR #3638)
+  * Add Note takes the user back to Pin Location screen (#3049)
 
 # 4.6.0 - 2019 Apr 11
 
