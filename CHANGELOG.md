@@ -15,6 +15,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * User can still see bot after unfollowing a location (#3146)
 * Remove double Actions.pop and adjust UI (PR #3638)
   * Add Note takes the user back to Pin Location screen (#3049)
+* User receives incorrect notification with following a location (#3260)
+* [android] Lock portrait orientation (#3581)
 
 # 4.6.0 - 2019 Apr 11
 
