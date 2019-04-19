@@ -6,6 +6,7 @@ import {InvitationPaginableList, Invitation} from './Invitation'
 import {ContactPaginableList, Contact} from './Contact'
 import {BlockedUserPaginableList, BlockedUser} from './BlockedUser'
 import {LocationSharePaginableList, LocationShare} from './LocationShare'
+import ClientData, {createClientData} from './ClientData'
 
 const Hidden = types
   .model('HiddenType', {
@@ -50,6 +51,7 @@ export const OwnProfile = types
       blocked: types.optional(BlockedUserPaginableList, {}),
       locationShares: types.optional(LocationSharePaginableList, {}),
       locationSharers: types.optional(LocationSharePaginableList, {}),
+      clientData: types.optional(ClientData, {}),
     })
   )
   .postProcessSnapshot(snapshot => {
@@ -192,9 +194,14 @@ export const OwnProfile = types
       friends = [],
       locationShares = [],
       locationSharers = [],
+      clientData,
       ...data
     }: any) {
       Object.assign(self, data)
+      if (clientData) {
+        console.log('CLIENT DATA:', clientData)
+        self.clientData = createClientData(clientData)
+      }
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)
       }
