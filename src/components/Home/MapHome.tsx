@@ -2,7 +2,7 @@ import React from 'react'
 import MapView from 'react-native-maps'
 import {StyleSheet, Text, Image, View, MapViewRegion} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {observable, action, reaction} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {IWocky, ILocation} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
@@ -16,6 +16,7 @@ import YouMarker from './map-markers/YouMarker'
 import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
+import _ from 'lodash'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -72,14 +73,13 @@ export default class MapHome extends React.Component<Props> {
     this.reactions = []
   }
 
-  @action
-  onRegionChange = ({latitudeDelta}: MapViewRegion) => {
-    // NOTE: this runs _very_ often while panning/scrolling the map
+  // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
+  onRegionChange = _.throttle(({latitudeDelta}: MapViewRegion) => {
     if (!this.animating) this.props.homeStore!.stopFollowingUserOnMap()
     if (latitudeDelta) {
       this.props.homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
     }
-  }
+  }, 1000)
 
   onRegionChangeComplete = async (region: MapViewRegion) => {
     this.animating = false
@@ -93,7 +93,6 @@ export default class MapHome extends React.Component<Props> {
         await this.props.wocky!.loadLocalBots(region)
         this.areaTooLarge = false
       } catch (e) {
-        // TODO display UI for area too large
         this.areaTooLarge = true
       }
     }
