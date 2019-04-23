@@ -1,15 +1,16 @@
 import React, {ReactElement} from 'react'
-import {View, Image, ImageRequireSource, TouchableWithoutFeedback} from 'react-native'
-import {Avatar, RText} from '../common'
-import {k, avatarScale} from '../Global'
+import {View, TouchableWithoutFeedback} from 'react-native'
+import {ActionAvatar, RText} from '../common'
+import {k} from '../Global'
 import {colors} from '../../constants'
 import {IProfile} from 'wocky-client'
 import {observer} from 'mobx-react/native'
+import {AvatarIcon} from '../common/ActionAvatar'
 
 type Props = {
   profile: IProfile
   timestamp: string
-  icon: ImageRequireSource
+  iconType: AvatarIcon
   action: string
   line2?: string | null
   rightColumnElement?: ReactElement<any>
@@ -18,7 +19,7 @@ type Props = {
 }
 
 const EventCardTemplate = observer(
-  ({profile, timestamp, icon, action, line2, rightColumnElement, onPress, children}: Props) => {
+  ({profile, timestamp, action, line2, rightColumnElement, onPress, children, iconType}: Props) => {
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View
@@ -30,19 +31,12 @@ const EventCardTemplate = observer(
             backgroundColor: 'white',
           }}
         >
-          <View style={{paddingRight: 13 * k, marginRight: '3%'}}>
-            <Avatar size={47} profile={profile} hideDot />
-            <Image
-              source={icon}
-              style={{
-                position: 'absolute',
-                right: 0,
-                bottom: 5 * k,
-                width: 26 * avatarScale,
-                height: 26 * avatarScale,
-              }}
-            />
-          </View>
+          <ActionAvatar
+            profile={profile}
+            type={iconType}
+            size={47}
+            outerStyle={{marginRight: '3%'}}
+          />
 
           <View
             style={{

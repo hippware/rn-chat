@@ -8,8 +8,6 @@ import {RText} from '../common'
 import {colors} from '../../constants'
 import GradientButton from '../common/GradientButton'
 
-const geoIcon = require('../../../images/notificationFollow.png')
-
 type Props = {
   item: IEventFriendInvite
   user: IProfile
@@ -19,7 +17,7 @@ const EventFriendInviteRequestCard = observer(({item}: Props) => (
   <EventCardTemplate
     timestamp={item.relativeDateAsString}
     action={'wants to connect with you.'}
-    icon={geoIcon}
+    iconType="geo"
     profile={item.user}
     rightColumnElement={<ConnectButton item={item} />}
   />

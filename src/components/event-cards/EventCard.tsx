@@ -11,9 +11,6 @@ import {RText, GradientButton} from '../common'
 import {TouchableOpacity} from 'react-native'
 import {colors} from 'src/constants'
 
-const geoIcon = require('../../../images/notificationGeo.png')
-const notificationIcon = require('../../../images/notificationMessage.png')
-const shareLocationIcon = require('../../../images/notificationLocation.png')
 const EventBotInviteCard = observer(
   ({
     item: {bot, relativeDateAsString, sender, isAccepted, isResponse},
@@ -22,7 +19,7 @@ const EventBotInviteCard = observer(
   }) => (
     <EventCardTemplate
       profile={sender}
-      icon={geoIcon}
+      iconType="geo"
       timestamp={relativeDateAsString}
       action={
         isResponse
@@ -45,7 +42,7 @@ export const EventBotPostCard = observer(
     return (
       <EventCardTemplate
         profile={post.profile!}
-        icon={notificationIcon}
+        iconType="notification"
         timestamp={relativeDateAsString}
         action="commented on"
         line2={bot.title}
@@ -59,7 +56,7 @@ const EventBotGeofenceCard = observer(
   ({item: {bot, relativeDateAsString, profile, isEnter}}: {item: IEventBotGeofence}) => (
     <EventCardTemplate
       profile={profile}
-      icon={geoIcon}
+      iconType="geo"
       timestamp={relativeDateAsString}
       action={isEnter ? 'is at' : 'left'}
       line2={bot.title}
@@ -107,7 +104,7 @@ const EventLocationShareCard = observer(
   ({item: {sharedWith, relativeDateAsString}}: {item: IEventLocationShare}) => (
     <EventCardTemplate
       profile={sharedWith}
-      icon={shareLocationIcon}
+      iconType="share"
       timestamp={relativeDateAsString}
       action={'is sharing location with you'}
     >
