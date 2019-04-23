@@ -3,6 +3,9 @@ import {reaction} from 'mobx'
 import codePush from 'react-native-code-push'
 import {Wocky, IWocky} from 'wocky-client'
 import {settings} from '../globals'
+import DeviceInfo from 'react-native-device-info'
+import analytics from '../utils/analytics'
+import {log, warn} from '../utils/logger'
 
 export const cleanState = {
   firebaseStore: {},
@@ -25,7 +28,7 @@ const PersistableModel = types
     hydrated: false,
   }))
   .actions(self => {
-    const {logger, storage, analytics, appInfo} = getEnv(self)
+    const {storage} = getEnv(self)
 
     function loadFromStorage(key: string): Promise<string> {
       return new Promise((resolve, reject) => {
@@ -37,12 +40,12 @@ const PersistableModel = types
     }
 
     function loadMinimal(parsed: any) {
-      logger.log('loadMinimal', parsed)
+      log('loadMinimal', parsed)
       try {
         // todo: try rehydrating onceStore to prevent going through onboarding after a cache reset?
         applySnapshot((self as any).authStore, parsed.authStore)
       } catch (err) {
-        logger.warn('Minimal hydration error', err)
+        warn('Minimal hydration error', err)
         analytics.track('loadMinimal_fail', parsed)
         throw err
       }
@@ -56,16 +59,20 @@ const PersistableModel = types
         parsed = JSON.parse(data)
         // throw new Error('Hydrate minimally')
         const pendingCodepush = parsed && parsed.codePushStore && parsed.codePushStore.pendingUpdate
-        const newBinaryVersion =
-          parsed && parsed.version && parsed.version !== appInfo.nativeVersion
-        if (pendingCodepush || newBinaryVersion) {
+
+        // parsed.version (pre-appInfo) or parsed.appInfo.version (post-appInfo)
+        const oldBinaryVersion: string | undefined =
+          (parsed && parsed.version) || (parsed && parsed.appInfo && parsed.appInfo.nativeVersion)
+
+        const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersion()
+        if (pendingCodepush || isNewBinaryVersion) {
           parsed.codePushStore.pendingUpdate = false
           loadMinimal(parsed)
         } else {
           applySnapshot(self, parsed)
         }
       } catch (err) {
-        logger.log('hydration error', modelName, err, parsed)
+        log('hydration error', modelName, err, parsed)
         if (modelName === STORE_NAME && parsed && parsed.authStore) {
           loadMinimal(parsed)
         }

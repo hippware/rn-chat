@@ -1,7 +1,7 @@
 // mixpanel JS API docs: https://mixpanel.com/help/reference/javascript
 import {settings} from '../globals'
 import {when} from 'mobx'
-import * as log from '../utils/log'
+import {log} from './logger'
 import {IWocky} from 'wocky-client'
 import Mixpanel from 'react-native-mixpanel'
 import bsClient from './bugsnagConfig'
@@ -18,7 +18,7 @@ export class Analytics {
 
   identify = (wocky: IWocky) => {
     if (__DEV__) {
-      log.log('IDENTIFY', wocky)
+      log('IDENTIFY', wocky)
       return
     }
     when(
@@ -40,7 +40,7 @@ export class Analytics {
 
   track = (name: string, properties?: {[name: string]: any}): void => {
     if (__DEV__) {
-      log.log('TRACK', name, properties)
+      log('TRACK', name, properties)
       return
     }
     try {
@@ -50,7 +50,7 @@ export class Analytics {
         Mixpanel.trackWithProperties(name, properties)
       }
     } catch (err) {
-      log.log('Mixpanel tracking error', err)
+      log('Mixpanel tracking error', err)
       bsClient.notify(err, report => {
         // metadata gets discarded like in https://github.com/bugsnag/bugsnag-react-native/issues/132
         report.metadata = err
@@ -60,7 +60,7 @@ export class Analytics {
 
   sessionStart = () => {
     if (__DEV__) {
-      log.log('SESSION START')
+      log('SESSION START')
       return
     }
     if (this.inSession) return
@@ -70,7 +70,7 @@ export class Analytics {
 
   sessionEnd = () => {
     if (__DEV__) {
-      log.log('SESSION END')
+      log('SESSION END')
       return
     }
     Mixpanel.track('session')

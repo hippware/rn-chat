@@ -3,19 +3,20 @@ import {AppState, NetInfo} from 'react-native'
 import {reaction, observable} from 'mobx'
 import {inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
-import * as log from '../utils/log'
+import {log} from '../utils/logger'
 import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
 import {IAuthStore} from 'src/store/AuthStore'
 import {IStore} from 'src/store'
+import _ from 'lodash'
+import NotificationStore from 'src/store/NotificationStore'
 
 type Props = {
   wocky?: IWocky
   homeStore?: IHomeStore
-  notificationStore?: any
+  notificationStore?: NotificationStore
   locationStore?: ILocationStore
-  log?: any
   analytics?: any
   authStore?: IAuthStore
   store?: IStore
@@ -26,7 +27,6 @@ type Props = {
   'homeStore',
   'notificationStore',
   'locationStore',
-  'log',
   'analytics',
   'authStore',
   'store'
@@ -38,12 +38,13 @@ export default class Connectivity extends React.Component<Props> {
   handler: any
   intervalId: any
   connectionInfo: any
+  disconnectHandler: any
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange)
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange)
     NetInfo.getConnectionInfo().then(reach => {
-      this.props.log('NETINFO INITIAL:', reach, {level: log.levels.INFO})
+      log('NETINFO INITIAL:', reach)
       this._handleConnectionInfoChange(reach)
     })
     // todo: refactor. Since interval is hardcoded here exponential backoff won't work...it checks every second regardless of changes to retryDelay
@@ -116,13 +117,14 @@ export default class Connectivity extends React.Component<Props> {
   //   the background on a switch from wifi to cellular (and vice versa)
   _handleConnectionInfoChange = connectionInfo => {
     const oldInfo = this.connectionInfo || {}
-    this.props.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO})
+    log('CONNECTIVITY:', connectionInfo)
     this.connectionInfo = connectionInfo
     if (connectionInfo.type === 'unknown') {
       // @TODO: mixpanel submit info?
       return
     }
     if (connectionInfo.type !== 'none') {
+      this.debouncedDisconnect.cancel()
       setTimeout(
         () =>
           this.tryReconnect(
@@ -133,28 +135,27 @@ export default class Connectivity extends React.Component<Props> {
         500
       )
     } else if (this.props.wocky!.connected && !this.props.wocky!.connecting) {
-      this.props.wocky!.disconnect()
+      this.debouncedDisconnect()
     }
   }
 
   _handleAppStateChange = async currentAppState => {
     this.retryDelay = 1000
-    const {notificationStore, locationStore, homeStore, wocky} = this.props
-    this.props.log('CURRENT APPSTATE:', currentAppState, {
-      level: log.levels.INFO,
-    })
+    const {notificationStore, locationStore, homeStore} = this.props
+    log('CURRENT APPSTATE:', currentAppState)
     // reconnect automatically
     if (currentAppState === 'active') {
+      this.debouncedDisconnect.cancel()
       this.isActive = true
-      notificationStore.start()
+      notificationStore!.start()
       locationStore!.start()
       homeStore!.start()
       await this.tryReconnect('currentAppState: active')
     }
     if (currentAppState === 'background') {
       this.isActive = false
-      wocky!.disconnect()
-      notificationStore.finish()
+      this.debouncedDisconnect()
+      notificationStore!.finish()
       locationStore!.finish()
       homeStore!.finish()
     }
@@ -163,4 +164,16 @@ export default class Connectivity extends React.Component<Props> {
   public render() {
     return null
   }
+
+  debouncedDisconnect = _.debounce(
+    () => {
+      if (!this.isActive) {
+        this.props.wocky!.disconnect()
+      }
+    },
+    60000,
+    {
+      trailing: true,
+    }
+  )
 }

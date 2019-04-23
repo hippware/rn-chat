@@ -1,6 +1,6 @@
 import {types, flow} from 'mobx-state-tree'
 import {settings} from '../globals'
-import * as log from '../utils/log'
+import {log} from '../utils/logger'
 import codePush, {RemotePackage, LocalPackage} from 'react-native-code-push'
 import {Platform} from 'react-native'
 
@@ -130,15 +130,19 @@ const CodePushStore = types
     checkCurrentStatus: flow(function*() {
       try {
         const autoDeployKey = self.channels[0][keyProp]
+        const isLocal = self.channels[0].name === 'Local'
         self.metadata = yield codePush.getUpdateMetadata(codePush.UpdateState.RUNNING)
         // check for update that exists but hasn't been downloaded yet (but will be downloaded automatically in the background)
-        const metadataPending: RemotePackage = yield codePush.checkForUpdate(autoDeployKey)
+        let metadataPending: RemotePackage | null = null
+        if (!isLocal) {
+          metadataPending = yield codePush.checkForUpdate(autoDeployKey)
+        }
         // check for update that has been downloaded but not installed yet (will be installed on next app start)
         const metadataDownloaded: LocalPackage = yield codePush.getUpdateMetadata(
           codePush.UpdateState.PENDING
         )
 
-        if ((metadataPending || metadataDownloaded) && self.channels[0].name !== 'Local') {
+        if (metadataPending || metadataDownloaded) {
           // signal that we need to start with a clean cache on next app load
           self.pendingUpdate = true
         }
@@ -156,7 +160,7 @@ const CodePushStore = types
           codePush.sync(syncOptions, self.onSyncStatusChanged, self.onDownloadDidProgress)
         }
       } catch (err) {
-        log.log('Codepush syncImmediate error', err)
+        log('Codepush syncImmediate error', err)
         // mixpanel call?
       }
     }),
@@ -197,7 +201,6 @@ const CodePushStore = types
   .actions(self => ({
     afterAttach() {
       self.syncStatus.clear()
-      self.metadata = null
       self.channelUpdates.clear()
       codePush.notifyAppReady()
       self.checkCurrentStatus()

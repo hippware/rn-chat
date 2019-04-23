@@ -23,7 +23,7 @@
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
     <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDjvPNa8X4sVI9-jUb8BrN08nwCa9Hp128"/>
-    <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize">
+    <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize" android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

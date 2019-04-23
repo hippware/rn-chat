@@ -4,17 +4,32 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Debounced disconnect (PR #3648)
+  * [android] Disconnect/reconnect on separate Activity (#3634)
+
+# 4.7.1 - 2019 Apr 18
+
+* Offline Banner does not go away; Logged out with kill/reload (#3647)
+  * Regression from PR #3641.
+
+# 4.7.0 - 2019 Apr 18
+
 * Don't download existing file, check cache (PR #3623)
   * Flashing Avatar when coming from background (#3258)
   * Avatars blink during start and can't be loaded sometimes (#3617)
 * Improve: [android] open app location settings (#3585, PR #3624)
 * [android] Firebase dynamic links/invitations (#3567)
 * [dev] Refactor wocky-client - move AppInfo away (#3631)
+  * appInfo/codepush reactivity (PR #3640)
+  * CodePushStore.updateInfo is incorrect during app startup (#3636)
 * [android] Take Photo does not function (#3619)
 * Missing popups (#3630)
 * User can still see bot after unfollowing a location (#3146)
 * Remove double Actions.pop and adjust UI (PR #3638)
   * Add Note takes the user back to Pin Location screen (#3049)
+* User receives incorrect notification with following a location (#3260)
+* [android] Lock portrait orientation (#3581)
+* [dev] `env` cleanup (PR #3641)
 
 # 4.6.0 - 2019 Apr 11
 

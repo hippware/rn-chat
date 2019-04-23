@@ -4,7 +4,7 @@ import {colors} from '../constants'
 import {IWocky} from 'wocky-client'
 import Notification from './Notification'
 
-class NotificationStore {
+export class NotificationStore {
   @observable stack: IObservableArray<Notification> = observable([])
   disposer?: () => void
   started: boolean = false

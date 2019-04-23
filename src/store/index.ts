@@ -4,8 +4,7 @@ import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport} from 'wocky-client'
-import * as logger from '../utils/log'
-import analytics, {Analytics} from '../utils/analytics'
+import analytics from '../utils/analytics'
 import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
@@ -37,38 +36,24 @@ const {geolocation} = navigator
 // }
 
 const auth = firebase.auth()
-const codePushStore = CodepushStore.create({})
-export const appInfo = AppInfo.create({
-  nativeVersion: DeviceInfo.getVersion(),
-  systemName: DeviceInfo.getSystemName(),
-  systemVersion: DeviceInfo.getSystemVersion(),
-  deviceId: DeviceInfo.getDeviceId(),
-  uniqueId: DeviceInfo.getUniqueID(),
-  jsVersion,
-  codepushVersion: codePushStore.updateInfo,
-})
 export type IEnv = {
   transport: Transport
   storage: AsyncStorage
   auth: RNFirebase.auth.Auth
   firebase: Firebase
-  logger: any
   geocodingStore: any
   fileService: any
   geolocation: Geolocation
-  analytics: Analytics
 }
 
-const env = {
+const env: IEnv = {
   transport,
   storage: AsyncStorage,
   auth,
   firebase,
-  logger,
   geocodingStore,
   fileService,
   geolocation,
-  analytics,
 }
 
 const Store = types
@@ -107,8 +92,10 @@ export interface IStore extends Instance<typeof PersistableStore> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
-    appInfo,
-    codePushStore,
+    appInfo: {
+      nativeVersion: DeviceInfo.getVersion(),
+      jsVersion,
+    },
     wocky: {host: settings.host},
   },
   env

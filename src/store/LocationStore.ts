@@ -8,6 +8,8 @@ import {Location, IWocky} from 'wocky-client'
 import _ from 'lodash'
 import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
+import {log, warn} from '../utils/logger'
+import analytics from '../utils/analytics'
 
 const MAX_DATE1 = '2030-01-01-17:00'
 const MAX_DATE2 = '2030-01-01-18:00'
@@ -152,7 +154,6 @@ const LocationStore = types
 
     // Set reset to true to reset to defaults
     configure: flow(function*(reset = false) {
-      const {logger} = getEnv(self)
       const config = {
         batchSync: true,
         maxRecordsToPersist: 20,
@@ -168,20 +169,20 @@ const LocationStore = types
 
       if (reset) {
         yield BackgroundGeolocation.reset(config)
-        logger.log(prefix, 'Reset and configure')
+        log(prefix, 'Reset and configure')
       } else {
         yield BackgroundGeolocation.setConfig(config)
-        logger.log(prefix, 'Configure')
+        log(prefix, 'Configure')
       }
     }),
   }))
   .actions(self => {
-    const {logger, analytics, transport} = getEnv(self)
+    const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
     let watcherID
 
     function onLocation(position) {
-      logger.log(prefix, 'location: ', JSON.stringify(position))
+      log(prefix, 'location: ', JSON.stringify(position))
       self.setPosition(position.coords)
     }
 
@@ -191,13 +192,13 @@ const LocationStore = types
         self.enabled = false
       }
 
-      logger.warn(prefix, 'location error', err)
+      warn(prefix, 'location error', err)
       BackgroundGeolocation.logger.error(`${prefix} onLocationError ${err}`)
       if (self.debugSounds) BackgroundGeolocation.playSound(1024) // descent
     }
 
     function onHttp(response) {
-      logger.log(prefix, 'on http', response)
+      log(prefix, 'on http', response)
       if (response.status >= 200 && response.status < 300) {
         if (self.debugSounds) BackgroundGeolocation.playSound(1016) // tweet sent
         // analytics.track('location_bg_success', {location: self.location})
@@ -213,15 +214,15 @@ const LocationStore = types
     }
 
     function onMotionChange(location) {
-      logger.log(prefix, 'motionchanged:', location)
+      log(prefix, 'motionchanged:', location)
     }
 
     function onActivityChange(activityName) {
-      logger.log(prefix, 'Current motion activity:', activityName)
+      log(prefix, 'Current motion activity:', activityName)
     }
 
     function onProviderChange(provider) {
-      logger.log(prefix, 'Location provider changed:', provider)
+      log(prefix, 'Location provider changed:', provider)
       const info = JSON.stringify(provider)
       BackgroundGeolocation.logger.info(`${prefix} onProviderChange(${info})`)
       self.setAlwaysOn(provider.status === BackgroundGeolocation.AUTHORIZATION_STATUS_ALWAYS)
@@ -240,10 +241,10 @@ const LocationStore = types
             device: transport.resource,
           },
         })
-        logger.log(prefix, `refreshCredentials token: ${token}`)
+        log(prefix, `refreshCredentials token: ${token}`)
         BackgroundGeolocation.logger.info(`${prefix} refreshCredentials`)
       } catch (err) {
-        logger.log(prefix, 'refreshCredentials error', err)
+        log(prefix, 'refreshCredentials error', err)
         BackgroundGeolocation.logger.error(`${prefix} refreshCredentials ${err}`)
       }
     })
@@ -254,12 +255,12 @@ const LocationStore = types
         params: {},
         url: '',
       })
-      logger.log(prefix, 'invalidateCredentials')
+      log(prefix, 'invalidateCredentials')
       BackgroundGeolocation.logger.info(`${prefix} invalidateCredentials`)
     })
 
     const getCurrentPosition = flow(function*() {
-      logger.log(prefix, 'get current position')
+      log(prefix, 'get current position')
       yield BackgroundGeolocation.getCurrentPosition({
         timeout: 20,
         maximumAge: 1000,
@@ -281,7 +282,7 @@ const LocationStore = types
     function startStandaloneGeolocation() {
       stopStandaloneGeolocation()
       watcherID = navigator.geolocation.watchPosition(onLocation, error =>
-        logger.warn('GPS ERROR:', error)
+        warn('GPS ERROR:', error)
       )
     }
 
@@ -295,10 +296,7 @@ const LocationStore = types
     function emailLog(email) {
       // emailLog doesn't work in iOS simulator so fetch and dump instead
       if (DeviceInfo.isEmulator()) {
-        BackgroundGeolocation.getLog(log => {
-          // tslint:disable-next-line
-          console.log(log)
-        })
+        BackgroundGeolocation.getLog(log)
       } else {
         BackgroundGeolocation.emailLog(email)
       }
@@ -324,7 +322,6 @@ const LocationStore = types
     // const {wocky, onceStore} = getRoot<IStore>(self)
     const {wocky, onceStore} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
-    const {logger} = getEnv(self)
 
     const start = flow(function*() {
       const resp1 = yield Permissions.check('location', {type: 'always'})
@@ -346,14 +343,14 @@ const LocationStore = types
                 if (!wocky.profile.hidden.enabled) {
                   await BackgroundGeolocation.start()
                   await self.getCurrentPosition()
-                  logger.log(prefix, 'Start')
+                  log(prefix, 'Start')
                 } else {
-                  logger.log(prefix, 'Not started because user has invisible mode')
+                  log(prefix, 'Not started because user has invisible mode')
                   self.startStandaloneGeolocation()
                 }
               } catch (err) {
                 // prevent unhandled promise rejection
-                logger.log(prefix, 'Start onConnected reaction error', err)
+                log(prefix, 'Start onConnected reaction error', err)
                 BackgroundGeolocation.logger.error(
                   `${prefix} Start onConnected reaction error ${err}`
                 )
@@ -384,7 +381,7 @@ const LocationStore = types
       if (self.alwaysOn) {
         yield self.configure()
         const config = yield BackgroundGeolocation.ready({})
-        logger.log(prefix, 'Ready: ', config)
+        log(prefix, 'Ready: ', config)
         self.updateBackgroundConfigSuccess(config)
       }
     })
@@ -403,7 +400,7 @@ const LocationStore = types
       yield self.invalidateCredentials()
       yield BackgroundGeolocation.stopSchedule()
       yield BackgroundGeolocation.stop()
-      logger.log(prefix, 'Stop')
+      log(prefix, 'Stop')
     })
 
     return {

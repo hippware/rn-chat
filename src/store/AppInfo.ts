@@ -1,33 +1,38 @@
-import {types, Instance} from 'mobx-state-tree'
+import {types, Instance, getParent} from 'mobx-state-tree'
 import jsrsasign from 'jsrsasign'
 import uuid from 'uuid/v1'
+import {IStore} from '.'
+import DeviceInfo from 'react-native-device-info'
+
+const systemName = DeviceInfo.getSystemName()
+const systemVersion = DeviceInfo.getSystemVersion()
+const deviceId = DeviceInfo.getDeviceId()
+const uniqueId = DeviceInfo.getUniqueID()
 
 export type Credentials = {typ: string; sub: string; phone_number?: string}
 
 export const AppInfo = types
-  .model({
+  .model('AppInfo', {
     nativeVersion: types.string,
     jsVersion: types.string,
-    systemName: types.string,
-    systemVersion: types.string,
-    deviceId: types.string,
-    uniqueId: types.string,
-    codepushVersion: '',
   })
-  .views(self => ({
-    get longVersion(): string {
-      return `${self.jsVersion}${
-        self.codepushVersion ? ` (${self.nativeVersion}-${self.codepushVersion})` : ''
-      }`
-    },
-    get uaString(): string {
-      const extras: string[] = [`${self.systemName} ${self.systemVersion}`, self.deviceId]
-      if (self.codepushVersion) {
-        extras.push(`${self.nativeVersion}-${self.codepushVersion}`)
-      }
-      return `TinyRobot/${self.jsVersion} (${extras.join('; ')})`
-    },
-  }))
+  .views(self => {
+    const {codePushStore} = getParent<IStore>(self)
+    return {
+      get longVersion(): string {
+        return `${self.jsVersion}${
+          codePushStore.updateInfo ? ` (${self.nativeVersion}-${codePushStore.updateInfo})` : ''
+        }`
+      },
+      get uaString(): string {
+        const extras: string[] = [`${systemName} ${systemVersion}`, deviceId]
+        if (codePushStore.updateInfo) {
+          extras.push(`${self.nativeVersion}-${codePushStore.updateInfo}`)
+        }
+        return `TinyRobot/${self.jsVersion} (${extras.join('; ')})`
+      },
+    }
+  })
   .actions(self => ({
     token(credentials: Credentials) {
       // HACK: short circuit login in case of no credentials. This sometimes happens with reconnect in Connectivity.tsx
@@ -39,7 +44,7 @@ export const AppInfo = types
         aud: 'Wocky',
         jti: uuid(),
         iss: self.uaString,
-        dvc: self.uniqueId,
+        dvc: uniqueId,
         ...credentials,
       }
 
