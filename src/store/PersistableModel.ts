@@ -15,7 +15,6 @@ export const cleanState = {
   profileValidationStore: {},
   homeStore: {},
   navStore: {},
-  onceStore: {},
   codePushStore: {},
 }
 
@@ -42,7 +41,6 @@ const PersistableModel = types
     function loadMinimal(parsed: any) {
       log('loadMinimal', parsed)
       try {
-        // todo: try rehydrating onceStore to prevent going through onboarding after a cache reset?
         applySnapshot((self as any).authStore, parsed.authStore)
       } catch (err) {
         warn('Minimal hydration error', err)

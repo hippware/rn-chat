@@ -134,7 +134,7 @@ export class Transport {
               ${PROFILE_PROPS}
               ${
                 id === this.username
-                  ? `... on CurrentUser { email phoneNumber 
+                  ? `... on CurrentUser { email phoneNumber clientData
                   sentInvitations(first:100) {
                     edges {
                       node {
@@ -607,7 +607,7 @@ export class Transport {
   }
 
   async updateProfile(d: any): Promise<void> {
-    const fields = ['handle', 'email', 'firstName', 'tagline', 'lastName']
+    const fields = ['handle', 'email', 'firstName', 'tagline', 'lastName', 'clientData']
     const values: any = {}
     fields.forEach(field => {
       if (d[field]) {
@@ -616,6 +616,9 @@ export class Transport {
     })
     if (d.avatar) {
       values.imageUrl = d.avatar
+    }
+    if (d.clientData) {
+      values.clientData = JSON.stringify(values.clientData)
     }
 
     return this.voidMutation({

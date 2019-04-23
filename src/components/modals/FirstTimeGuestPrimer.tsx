@@ -7,12 +7,10 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
 import {IWocky} from 'wocky-client'
-import {IOnceStore} from 'src/store/OnceStore'
 
 const footprint = require('../../../images/footprintWarning.png')
 
 type Props = {
-  onceStore?: IOnceStore
   wocky?: IWocky
 }
 
@@ -20,7 +18,7 @@ type Props = {
 @observer
 class FirstTimeGuestPrimer extends React.Component<Props> {
   dismiss = () => {
-    this.props.onceStore!.flip('guestOnce')
+    this.props.wocky!.profile!.clientData.flip('guestOnce')
     Actions.pop()
   }
 

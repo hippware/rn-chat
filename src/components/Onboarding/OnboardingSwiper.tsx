@@ -12,18 +12,18 @@ import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject} from 'mobx-react/native'
 import {minHeight} from '../Global'
-import {IOnceStore} from 'src/store/OnceStore'
+import {IWocky} from 'wocky-client'
 import PushNotification from 'react-native-push-notification'
 import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
 import {log} from '../../utils/logger'
 
 type Props = {
-  onceStore?: IOnceStore
+  wocky?: IWocky
   contactStore?: ContactStore
 }
 
-@inject('onceStore', 'contactStore')
+@inject('wocky', 'contactStore')
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
@@ -116,7 +116,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   private done = () => {
-    this.props.onceStore!.flip('onboarded')
+    this.props.wocky!.profile!.clientData.flip('onboarded')
     Actions.logged()
   }
 }

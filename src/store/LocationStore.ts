@@ -319,8 +319,7 @@ const LocationStore = types
     }
   })
   .actions(self => {
-    // const {wocky, onceStore} = getRoot<IStore>(self)
-    const {wocky, onceStore} = getRoot<any>(self)
+    const {wocky} = getRoot<any>(self)
     let reactions: IReactionDisposer[] = []
 
     const start = flow(function*() {
@@ -337,7 +336,12 @@ const LocationStore = types
       reactions = [
         autorun(
           async () => {
-            if (wocky.connected && onceStore.onboarded && wocky.profile && self.alwaysOn) {
+            if (
+              wocky.connected &&
+              wocky.profile &&
+              wocky.profile.clientData.onboarded &&
+              self.alwaysOn
+            ) {
               try {
                 await self.refreshCredentials()
                 if (!wocky.profile.hidden.enabled) {

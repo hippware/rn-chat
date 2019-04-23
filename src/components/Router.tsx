@@ -43,11 +43,10 @@ import BotCompose, {backAction} from './BotCompose/BotCompose'
 import EditNote from './BotCompose/EditNote'
 import Notifications from './Notifications'
 import Attribution from './Attribution'
-import { navBarStyle } from './styles'
+import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
-import { IOnceStore } from 'src/store/OnceStore'
-import { IStore } from 'src/store'
-import { IPersistable } from 'src/store/PersistableModel'
+import {IStore} from 'src/store'
+import {IPersistable} from 'src/store/PersistableModel'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import ChatTitle from './Chats/ChatTitle'
 import {IAuthStore} from 'src/store/AuthStore'
@@ -64,22 +63,21 @@ type Props = {
   navStore?: INavStore
   iconStore?: IconStore
   store?: IStore & IPersistable
-  onceStore?: IOnceStore
   authStore?: IAuthStore
   analytics?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'onceStore', 'authStore')
+@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    const {locationStore, navStore, onceStore} = this.props
+    const {locationStore, navStore, wocky} = this.props
 
     reaction(() => this.props.navStore!.scene, () => Keyboard.dismiss())
 
     autorun(
       () => {
-        const {onboarded} = onceStore!
+        const onboarded = wocky!.profile && wocky!.profile.clientData.onboarded
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
         if (onboarded && !alwaysOn) {
@@ -93,7 +91,7 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, iconStore, wocky, navStore, onceStore, authStore} = this.props
+    const {store, iconStore, wocky, navStore, authStore} = this.props
 
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
@@ -104,7 +102,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => onceStore!.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => wocky!.profile!.clientData.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>

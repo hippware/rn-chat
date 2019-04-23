@@ -55,6 +55,16 @@ describe('New GraphQL profile tests', () => {
     await user2.profile!.save()
   })
 
+  it('update clientData', async () => {
+    expect(user.profile!.clientData.locationPrimed).toBeFalsy()
+    await user.profile!.clientData!.flip('locationPrimed')
+    expect(user.profile!.clientData.locationPrimed).toBeTruthy()
+    await sleep(1000)
+    const data: any = await user.transport.loadProfile(user.username!)
+    const clientData = JSON.parse(data.clientData)
+    expect(clientData.locationPrimed).toBeTruthy()
+  })
+
   it('user1 sent friend invite to user2', async () => {
     expect(user.profile!.sortedFriends.length).toBe(0)
     expect(user2.profile!.sortedFriends.length).toBe(0)
