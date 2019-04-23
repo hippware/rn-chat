@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Debounced disconnect (PR #3648)
+  * [android] Disconnect/reconnect on separate Activity (#3634)
+
 # 4.7.1 - 2019 Apr 18
 
 * Offline Banner does not go away; Logged out with kill/reload (#3647)
