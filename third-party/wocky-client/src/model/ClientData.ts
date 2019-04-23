@@ -1,11 +1,11 @@
-import {types, getSnapshot, Instance, onSnapshot} from 'mobx-state-tree'
+import {types, getSnapshot, Instance, onSnapshot, applySnapshot} from 'mobx-state-tree'
 import {Base} from './Base'
 
 const ClientData = types
   .compose(
     Base,
     types
-      .model('OnceStore', {
+      .model({
         locationPrimed: false,
         sharePresencePrimed: false,
         guestOnce: false,
@@ -17,11 +17,15 @@ const ClientData = types
         },
       }))
   )
+  .named('ClientData')
   .actions(self => ({
     afterAttach() {
       onSnapshot(self, clientData => {
         self.transport.updateProfile({clientData})
       })
+    },
+    clear: () => {
+      applySnapshot(self, {})
     },
     flip: (property: 'locationPrimed' | 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
       self[property] = true

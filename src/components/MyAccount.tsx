@@ -174,6 +174,17 @@ class MyAccount extends React.Component<Props> {
           >
             Logout
           </LinkButton>
+          {settings.allowBypassLogin && (
+            <LinkButton
+              style={{marginTop: 50}}
+              onPress={() => {
+                wocky!.profile!.clientData.clear()
+                Actions.logout()
+              }}
+            >
+              Clear Client Data
+            </LinkButton>
+          )}
           {settings.allowProfileDelete && (
             <LinkButton
               style={{marginTop: 50}}

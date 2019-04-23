@@ -35,7 +35,6 @@ storiesOf('Touch Through View + Flatlist', module)
 
 storiesOf('Onboarding', module)
   // tslint:disable-next-line
-  // .add('Main Swiper', () => <OnboardingSwiper log={console.log} onceStore={{flip: emptyFn}} />)
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
   .add('1a - Location Warning IOS', () => <LocationWarningIOS onPress={emptyFn} />)
   .add('1b - Location Warning Android', () => <LocationWarningAndroid onPress={emptyFn} />)

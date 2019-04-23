@@ -22,7 +22,6 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import {AppInfo} from './AppInfo'
-import OnceStore from './OnceStore'
 import ContactStore from './ContactStore'
 import {settings} from '../globals'
 const jsVersion = require('../../package.json').version
@@ -66,7 +65,6 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
-    onceStore: OnceStore,
     appInfo: AppInfo,
   })
   .views(self => ({

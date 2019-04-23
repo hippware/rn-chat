@@ -6,21 +6,21 @@ import {RText, GradientButton} from '../common'
 import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import ModalContainer from './ModalContainer'
-import {IOnceStore} from 'src/store/OnceStore'
+import {IWocky} from 'wocky-client'
 
 type Props = {
-  onceStore?: IOnceStore
+  wocky?: IWocky
 }
 
 const icon = require('../../../images/footOpaqueGradient.png')
 
-@inject('onceStore')
+@inject('wocky')
 @observer
 class SharePresencePrimer extends React.Component<Props> {
   handler: any
 
   dismiss = () => {
-    this.props.onceStore!.flip('sharePresencePrimed')
+    this.props.wocky!.profile!.clientData.flip('sharePresencePrimed')
     Actions.pop()
   }
 

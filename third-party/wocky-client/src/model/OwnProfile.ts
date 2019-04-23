@@ -199,7 +199,6 @@ export const OwnProfile = types
     }: any) {
       Object.assign(self, data)
       if (clientData) {
-        console.log('CLIENT DATA:', clientData)
         self.clientData = createClientData(clientData)
       }
       if (avatar) {

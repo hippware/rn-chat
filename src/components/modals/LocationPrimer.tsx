@@ -7,17 +7,17 @@ import {Actions} from 'react-native-router-flux'
 import {observer, inject} from 'mobx-react/native'
 import {autorun} from 'mobx'
 import ModalContainer from './ModalContainer'
-import {IOnceStore} from 'src/store/OnceStore'
+import {IWocky} from 'wocky-client'
 import {ILocationStore} from 'src/store/LocationStore'
 
 const footprint = require('../../../images/footprint.png')
 
 type Props = {
   locationStore?: ILocationStore
-  onceStore?: IOnceStore
+  wocky?: IWocky
 }
 
-@inject('locationStore', 'onceStore')
+@inject('locationStore', 'wocky')
 @observer
 class LocationPrimer extends React.Component<Props> {
   handler: any
@@ -25,7 +25,7 @@ class LocationPrimer extends React.Component<Props> {
   componentDidMount() {
     this.handler = autorun(() => {
       if (this.props.locationStore!.alwaysOn) {
-        this.props.onceStore!.flip('locationPrimed')
+        this.props.wocky!.profile!.clientData.flip('locationPrimed')
         Actions.pop()
       }
     })
@@ -36,7 +36,7 @@ class LocationPrimer extends React.Component<Props> {
   }
 
   dismiss = () => {
-    this.props.onceStore!.flip('locationPrimed')
+    this.props.wocky!.profile!.clientData.flip('locationPrimed')
     Actions.pop()
   }
 
