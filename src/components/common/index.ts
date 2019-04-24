@@ -1,5 +1,6 @@
 export {default as RText} from './RText'
 export {default as Avatar} from './Avatar'
+export {default as ActionAvatar} from './ActionAvatar'
 export {default as AutoExpandingTextInput} from './AutoExpandingTextInput'
 export {default as ProfileHandle} from './ProfileHandle'
 export {default as Spinner} from './Spinner'

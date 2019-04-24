@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, TouchableOpacity, Alert, Image, FlatList} from 'react-native'
-import {RText, Separator, Switch, Avatar} from '../common'
+import {RText, Separator, Switch, ActionAvatar} from '../common'
 import {minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import LinearGradient from 'react-native-linear-gradient'
@@ -116,7 +116,7 @@ const ProfileLocationShare = observer(
   ({locationShare: {forDuration, sharedWith}}: {locationShare: ILocationShare}) => {
     return (
       <PersonRow
-        imageComponent={<Avatar profile={sharedWith} size={48} hideDot />}
+        imageComponent={<ActionAvatar profile={sharedWith} size={48} type="geo" />}
         handleComponent={
           <RText size={15} weight="Bold" color={colors.DARK_PURPLE}>
             {`@${sharedWith.handle}`}
