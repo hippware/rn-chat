@@ -129,7 +129,7 @@ export const Wocky = types
     createProfile: (id: string, data: {[key: string]: any} = {}) => {
       return self.profiles.get(id, processMap(data))
     },
-    getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
+    getBot: ({id, ...data}: {id: string; owner?: string | null; isSubscribed?: boolean}): IBot => {
       return self.bots.get(id, data)
     },
     _addMessage: (message?: IMessageIn, unread = false): void => {
@@ -202,7 +202,7 @@ export const Wocky = types
       createBot: flow(function*() {
         yield waitFor(() => self.connected)
         const id = yield self.transport.generateId()
-        const bot = self.getBot({id, owner: self.username})
+        const bot = self.getBot({id, owner: self.username, isSubscribed: true})
         bot.setNew(true)
         return bot
       }),
