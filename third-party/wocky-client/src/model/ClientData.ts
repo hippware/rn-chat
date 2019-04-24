@@ -6,7 +6,6 @@ const ClientData = types
     Base,
     types
       .model({
-        locationPrimed: false,
         sharePresencePrimed: false,
         guestOnce: false,
         onboarded: false,
@@ -27,7 +26,7 @@ const ClientData = types
     clear: () => {
       applySnapshot(self, {})
     },
-    flip: (property: 'locationPrimed' | 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
+    flip: (property: 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
       self[property] = true
     },
   }))
