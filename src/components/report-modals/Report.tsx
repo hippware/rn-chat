@@ -17,6 +17,7 @@ type Props = {
 export default class Report extends React.Component<Props> {
   mounted: boolean = false
   keyboardHeight: number = 0
+  text: any
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
@@ -25,6 +26,8 @@ export default class Report extends React.Component<Props> {
 
   componentDidMount() {
     this.mounted = true
+    // hack for Android. Something about autoFocus inside Modals has been weird off for a while with no clear solutions.
+    setTimeout(() => this.text.focus(), 200)
   }
 
   keyboardWillShow = e => {
@@ -58,14 +61,19 @@ export default class Report extends React.Component<Props> {
         </View>
         <View style={[styles.row, {flex: 1, paddingBottom: 5}]}>
           <TextInput
-            style={{flex: 1, fontSize: 15, fontFamily: 'Roboto-Regular'}}
-            autoFocus
+            style={{
+              flex: 1,
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+              textAlignVertical: 'top',
+            }}
             multiline
             value={reportStore.text}
             onChangeText={text => (reportStore.text = text)}
             placeholder={placeholder}
             maxLength={1000}
             editable={!reportStore.submitting}
+            ref={r => (this.text = r)}
           />
         </View>
       </View>

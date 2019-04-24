@@ -16,7 +16,6 @@ import NotificationStore from './NotificationStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import NavStore from './NavStore'
-import rs from './ReportStore'
 import initializePushNotifications from '../utils/pushNotifications'
 import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
@@ -99,7 +98,7 @@ const theStore = PersistableStore.create(
   env
 )
 
-export const reportStore = rs
+export {default as reportStore} from './ReportStore'
 export const iconStore = new IconStore()
 export const notificationStore = new NotificationStore(theStore.wocky)
 export const contactStore = new ContactStore(theStore.wocky)
