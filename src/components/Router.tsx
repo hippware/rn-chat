@@ -32,10 +32,8 @@ import SplitRenderer from './custom-navigators/SplitRenderer'
 import BottomMenu from './BottomMenu'
 import DebugScreen from './DebugScreen'
 import LocationGeofenceWarning from './modals/LocationGeofenceWarning'
-import LocationPrimer from './modals/LocationPrimer'
 import LocationWarning from './modals/LocationWarning'
 import SharePresencePrimer from './modals/SharePresencePrimer'
-import FirstTimeGuestPrimer from './modals/FirstTimeGuestPrimer'
 import InvisibleExpirationSelector from './modals/InvisibleExpirationSelector'
 import GeoHeaderPrimer from './modals/GeoHeaderPrimer'
 import CreationHeader from './Home/CreationHeader'
@@ -172,9 +170,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
             <Scene key="geofenceWarning" component={LocationGeofenceWarning} />
-            <Scene key="locationPrimer" component={LocationPrimer} />
             <Scene key="sharePresencePrimer" component={SharePresencePrimer} />
-            <Scene key="firstTimeGuest" component={FirstTimeGuestPrimer} />
             <Scene key="invisibleExpirationSelector" component={InvisibleExpirationSelector} />
             <Scene key="geoHeaderPrimer" component={GeoHeaderPrimer} />
           </Lightbox>
