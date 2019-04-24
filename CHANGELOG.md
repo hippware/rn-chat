@@ -6,6 +6,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Debounced disconnect (PR #3648)
   * [android] Disconnect/reconnect on separate Activity (#3634)
+* [android] Lock portrait orientation (Rework #3581)
+* Throttle excessive calls to HomeStore (PR #3660)
+* [dev] Support storage of client-side props on the server (#3645)
 
 # 4.7.1 - 2019 Apr 18
 
