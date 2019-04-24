@@ -45,9 +45,12 @@ class GeofenceShare extends React.Component<Props> {
 
       await this.bot!.invite(shareSelect)
 
-      const num = shareSelect.length
+      const firstFriend = this.props.wocky!.profiles.get(shareSelect[0])
+      const numOthers = shareSelect.length - 1
       this.props.notificationStore.flash(
-        `Presence shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`
+        `Invited ${firstFriend.handle}${
+          numOthers > 0 ? `and ${numOthers} ${numOthers > 1 ? 'others' : 'other'}` : ''
+        } to follow the location`
       )
       Actions.popTo('home')
       Actions.botDetails({botId: this.props.botId, isNew: true})
