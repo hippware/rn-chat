@@ -98,9 +98,16 @@ export const Bot = types
       self.isSubscribed = true
       self.service.profile!.subscribedBots.addToTop(self)
       self.service.geofenceBots.addToTop(self)
+      self.service.localBots.add(self.id)
     }),
     unsubscribe: flow(function*() {
       self.isSubscribed = false
+      self.service.localBots.remove(self.id)
+      self.service.notifications!.result.forEach((event: any) => {
+        if (event.bot && event.bot.id === self.id && !event.isRequest) {
+          event.remove(event.id)
+        }
+      })
       self.service.profile!.subscribedBots.remove(self.id)
       self.service.geofenceBots.remove(self.id)
       yield self.service._unsubscribeBot(self.id)

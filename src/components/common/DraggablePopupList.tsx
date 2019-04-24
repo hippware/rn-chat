@@ -60,7 +60,7 @@ const DraggablePopupListHeader = ({inner, offset}) => (
     {offset ? (
       <View style={{width, height: offset}} />
     ) : (
-      <TouchThroughView style={{width, height: height / 2}} />
+      <TouchThroughView style={{width, height: height / 2 - 50}} />
     )}
     <BottomPopup>
       <View

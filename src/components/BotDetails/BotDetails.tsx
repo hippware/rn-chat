@@ -108,7 +108,9 @@ export default class BotDetails extends React.Component<Props> {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
-          data={this.bot && !this.bot.error ? this.bot.posts.list.slice() : []}
+          data={
+            this.bot && !this.bot.error && this.bot.isSubscribed ? this.bot.posts.list.slice() : []
+          }
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
@@ -129,10 +131,7 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {bot &&
-          (!bot.invitation || bot.invitation.accepted) && (
-            <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
-          )}
+        {bot && bot.isSubscribed && <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />}
       </View>
     )
   }

@@ -166,7 +166,7 @@ const cancel = {name: 'Cancel', action: () => {}} // tslint:disable-line
 
 const unfollow = {
   name: 'Unfollow Location',
-  action: ({bot, wocky}: Props) => {
+  action: ({bot}: Props) => {
     alert(null, 'Are you sure you want to unfollow this location?', [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -175,7 +175,6 @@ const unfollow = {
         onPress: () => {
           Actions.pop()
           ;(bot as IBot).unsubscribe()
-          wocky!.deleteBot(bot.id)
         },
       },
     ])

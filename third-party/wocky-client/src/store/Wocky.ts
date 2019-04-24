@@ -151,14 +151,13 @@ export const Wocky = types
     deleteBot: (id: string) => {
       self.notifications!.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
-          self.notifications.remove(event.id)
+          event.remove(event.id)
         }
       })
       self.profile!.subscribedBots.remove(id)
       self.profiles.get(self.username!)!.subscribedBots.remove(id)
       self.geofenceBots.remove(id)
       self.localBots.remove(id)
-      // self.geoBots.delete(id)
       self.bots.delete(id)
     },
   }))
