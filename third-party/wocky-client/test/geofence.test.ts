@@ -124,7 +124,7 @@ describe('Geofence', () => {
     loadedBot = await user2.loadBot(bot.id)
     await waitFor(() => !loadedBot.loading, 'bot to load')
     expect(loadedBot.followersSize).toEqual(0)
-    expect(loadedBot.isSubscribed).toEqual(true)
+    expect(loadedBot.isSubscribed).toEqual(false)
   })
 
   it('user2 accepts invitation to bot', async () => {
@@ -135,6 +135,7 @@ describe('Geofence', () => {
 
   it('user2 checks follower count after reloading bot', async () => {
     loadedBot = await user2.loadBot(bot.id)
+    expect(loadedBot.isSubscribed).toEqual(true)
     expect(loadedBot.followersSize).toEqual(1)
     expect(loadedBot.subscribers.list.length).toEqual(0)
   })

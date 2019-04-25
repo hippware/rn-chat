@@ -274,15 +274,6 @@ export class Transport {
         query loadBot($id: String!, $ownUsername: String!){
           bot(id: $id) {
             ${BOT_PROPS}
-            subscribers: subscribers(first: 10, type: SUBSCRIBER) {
-              totalCount
-              edges {
-                cursor
-                node {
-                  ${PROFILE_PROPS}
-                }
-              }
-            }
             visitors: subscribers(first: 10, type: VISITOR) {
               totalCount
               edges {

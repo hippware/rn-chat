@@ -129,7 +129,7 @@ export const Wocky = types
     createProfile: (id: string, data: {[key: string]: any} = {}) => {
       return self.profiles.get(id, processMap(data))
     },
-    getBot: ({id, ...data}: {id: string; owner?: string | null}): IBot => {
+    getBot: ({id, ...data}: {id: string; owner?: string | null; isSubscribed?: boolean}): IBot => {
       return self.bots.get(id, data)
     },
     _addMessage: (message?: IMessageIn, unread = false): void => {
@@ -151,14 +151,13 @@ export const Wocky = types
     deleteBot: (id: string) => {
       self.notifications!.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
-          self.notifications.remove(event.id)
+          event.remove(event.id)
         }
       })
       self.profile!.subscribedBots.remove(id)
       self.profiles.get(self.username!)!.subscribedBots.remove(id)
       self.geofenceBots.remove(id)
       self.localBots.remove(id)
-      // self.geoBots.delete(id)
       self.bots.delete(id)
     },
   }))
@@ -203,7 +202,7 @@ export const Wocky = types
       createBot: flow(function*() {
         yield waitFor(() => self.connected)
         const id = yield self.transport.generateId()
-        const bot = self.getBot({id, owner: self.username})
+        const bot = self.getBot({id, owner: self.username, isSubscribed: true})
         bot.setNew(true)
         return bot
       }),

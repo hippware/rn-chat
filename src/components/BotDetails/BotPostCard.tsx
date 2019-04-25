@@ -14,7 +14,7 @@ type Props = {
 }
 
 const BotPostCard = observer(({bot, item: post}: Props) => {
-  if (!isAlive(bot) || (bot.invitation && !bot.invitation.accepted)) {
+  if (!isAlive(bot) || (bot.invitation && !bot.invitation.accepted) || !bot.isSubscribed) {
     return null
   }
   return (

@@ -112,7 +112,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <Pill>{locationStore!.distanceFromBot(bot.location)}</Pill>
         </View>
 
-        {bot.invitation && !bot.invitation.accepted ? (
+        {bot.invitation && (!bot.invitation.accepted || !bot.isSubscribed) ? (
           <FollowLocationView onFollow={this.acceptInvitation} />
         ) : (
           <View>
@@ -202,18 +202,17 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   return (
     <VisitorsWrapper>
       {inner}
-      {bot.owner &&
-        bot.owner.isOwn && (
-          <TouchableOpacity
-            style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
-            onPress={() => Actions.geofenceShare({botId: bot.id})}
-          >
-            <Image source={shareIcon} />
-            <RText size={16} pink style={{marginLeft: 12}}>
-              Invite
-            </RText>
-          </TouchableOpacity>
-        )}
+      {bot.owner && bot.owner.isOwn && (
+        <TouchableOpacity
+          style={[styles.invite, {marginTop: list ? 5 * k : 20 * k, marginBottom: 30}]}
+          onPress={() => Actions.geofenceShare({botId: bot.id})}
+        >
+          <Image source={shareIcon} />
+          <RText size={16} pink style={{marginLeft: 12}}>
+            Invite
+          </RText>
+        </TouchableOpacity>
+      )}
       {!((bot.owner && bot.owner.isOwn) || list) && <View style={{height: 17}} />}
     </VisitorsWrapper>
   )

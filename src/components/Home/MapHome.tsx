@@ -17,6 +17,7 @@ import ProfileMarker from './map-markers/ProfileMarker'
 import {INavStore} from '../../store/NavStore'
 import {k} from '../Global'
 import _ from 'lodash'
+import {warn} from '../../utils/logger'
 
 const INIT_DELTA = 0.04
 const DEFAULT_DELTA = 0.00522
@@ -93,6 +94,7 @@ export default class MapHome extends React.Component<Props> {
         await this.props.wocky!.loadLocalBots(region)
         this.areaTooLarge = false
       } catch (e) {
+        warn(e)
         this.areaTooLarge = true
       }
     }
