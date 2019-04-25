@@ -13,6 +13,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] `NotificationAvatar` (#3365)
 * Change message to 'Invited ... to follow the location' (#3644)
 * Remove unnecessary primer modals (#3666)
+* User is seeing multiple lines below the Follow Location button (#3586)
+* [dev] Error: Mixpanel instance was not initialized yet. (#3375)
 
 # 4.7.1 - 2019 Apr 18
 
