@@ -18,7 +18,7 @@ import {navBarStyle} from '../styles'
 type Props = {
   botId: string
   // server?: string
-  isNew: boolean
+  isNew?: boolean
   params?: any
   wocky?: IWocky
   analytics?: any
@@ -104,11 +104,12 @@ export default class BotDetails extends React.Component<Props> {
     if (bot && !isAlive(bot)) {
       return null
     }
+    const isPendingAccept = this.bot && this.bot.invitation && !this.bot.invitation.accepted
 
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
-          data={this.bot && !this.bot.error ? this.bot.posts.list.slice() : []}
+          data={this.bot && !this.bot.error && !isPendingAccept ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
@@ -129,10 +130,7 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {bot &&
-          (!bot.invitation || bot.invitation.accepted) && (
-            <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
-          )}
+        {!isPendingAccept && <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />}
       </View>
     )
   }
