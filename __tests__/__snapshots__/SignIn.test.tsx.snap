@@ -135,225 +135,225 @@ your phone number.
             }
           }
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "height": 10,
-                }
-              }
-            />
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "paddingBottom": 13,
-                    "paddingHorizontal": 10,
-                    "paddingTop": 9,
-                  },
-                  Object {
-                    "justifyContent": "center",
-                    "paddingTop": 2,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                  }
-                }
-              >
-                <Image
-                  source={
-                    Object {
-                      "testUri": "../../../images/globe.png",
-                    }
-                  }
-                  style={
-                    Array [
-                      Object {
-                        "marginLeft": 16,
-                        "marginRight": 13,
-                      },
-                      undefined,
-                    ]
-                  }
-                />
-              </View>
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  clearButtonMode="while-editing"
-                  editable={false}
-                  icon={
-                    Object {
-                      "testUri": "../../../images/globe.png",
-                    }
-                  }
-                  label="Country Code"
-                  onChangeText={[Function]}
-                  placeholder="Country Code"
-                  placeholderTextColor="rgb(212,212,212)"
-                  pointerEvents="none"
-                  returnKeyType="next"
-                  style={
-                    Object {
-                      "color": "rgb(63,50,77)",
-                      "flex": 1,
-                      "fontFamily": "Roboto-Regular",
-                      "fontSize": 18,
-                    }
-                  }
-                  underlineColorAndroid="transparent"
-                  value="United States +1"
-                />
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "width": 30,
-                    }
-                  }
-                />
-              </View>
-            </View>
-            <View
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "rgba(63, 50, 77, .2)",
-                    "height": 0.5,
-                  },
-                  undefined,
-                ]
-              }
-            />
-          </View>
-        </View>
-      </CountryPicker>
-      <View>
-        <View
-          style={
-            Object {
-              "height": 10,
-            }
-          }
-        />
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "paddingBottom": 13,
-                "paddingHorizontal": 10,
-                "paddingTop": 9,
-              },
-              Object {
-                "justifyContent": "center",
-                "paddingTop": 2,
-              },
-            ]
-          }
-        >
           <View
             style={
               Object {
-                "alignItems": "center",
+                "height": 10,
               }
             }
-          >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/phone.png",
-                }
-              }
-              style={
-                Array [
-                  Object {
-                    "marginLeft": 16,
-                    "marginRight": 13,
-                  },
-                  undefined,
-                ]
-              }
-            />
-          </View>
+          />
           <View
             style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "paddingBottom": 13,
+                  "paddingHorizontal": 10,
+                  "paddingTop": 9,
+                },
+                Object {
+                  "justifyContent": "center",
+                  "paddingTop": 2,
+                },
+              ]
             }
           >
-            <TextInput
-              autoCorrect={false}
-              autoFocus={true}
-              clearButtonMode="while-editing"
-              icon={
-                Object {
-                  "testUri": "../../../images/phone.png",
-                }
-              }
-              keyboardType="phone-pad"
-              label="Phone Number"
-              onChangeText={[Function]}
-              placeholder="Phone Number"
-              placeholderTextColor="rgb(212,212,212)"
-              returnKeyType="next"
-              style={
-                Object {
-                  "color": "rgb(63,50,77)",
-                  "flex": 1,
-                  "fontFamily": "Roboto-Regular",
-                  "fontSize": 18,
-                }
-              }
-              underlineColorAndroid="transparent"
-              value=""
-            />
             <View
               style={
                 Object {
                   "alignItems": "center",
-                  "justifyContent": "center",
-                  "width": 30,
                 }
               }
-            />
+            >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../images/globe.png",
+                  }
+                }
+                style={
+                  Array [
+                    Object {
+                      "marginLeft": 16,
+                      "marginRight": 13,
+                    },
+                    undefined,
+                  ]
+                }
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                editable={false}
+                icon={
+                  Object {
+                    "testUri": "../../../images/globe.png",
+                  }
+                }
+                label="Country Code"
+                onChangeText={[Function]}
+                placeholder="Country Code"
+                placeholderTextColor="rgb(212,212,212)"
+                pointerEvents="none"
+                returnKeyType="next"
+                style={
+                  Object {
+                    "color": "rgb(63,50,77)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 18,
+                    "padding": 0,
+                    "paddingLeft": 10,
+                    "width": "100%",
+                  }
+                }
+                underlineColorAndroid="transparent"
+                value="United States +1"
+              />
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "width": 30,
+                  }
+                }
+              />
+            </View>
           </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "rgba(63, 50, 77, .2)",
+                  "height": 0.5,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </CountryPicker>
+      <View
+        style={
+          Object {
+            "height": 10,
+          }
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "paddingBottom": 13,
+              "paddingHorizontal": 10,
+              "paddingTop": 9,
+            },
+            Object {
+              "justifyContent": "center",
+              "paddingTop": 2,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+            }
+          }
+        >
+          <Image
+            source={
+              Object {
+                "testUri": "../../../images/phone.png",
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "marginLeft": 16,
+                  "marginRight": 13,
+                },
+                undefined,
+              ]
+            }
+          />
         </View>
         <View
           style={
-            Array [
-              Object {
-                "backgroundColor": "rgba(63, 50, 77, .2)",
-                "height": 0.5,
-              },
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
           }
-        />
+        >
+          <TextInput
+            autoCorrect={false}
+            autoFocus={true}
+            clearButtonMode="while-editing"
+            icon={
+              Object {
+                "testUri": "../../../images/phone.png",
+              }
+            }
+            keyboardType="phone-pad"
+            label="Phone Number"
+            onChangeText={[Function]}
+            placeholder="Phone Number"
+            placeholderTextColor="rgb(212,212,212)"
+            returnKeyType="next"
+            style={
+              Object {
+                "color": "rgb(63,50,77)",
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 18,
+                "padding": 0,
+                "paddingLeft": 10,
+                "width": "100%",
+              }
+            }
+            underlineColorAndroid="transparent"
+            value=""
+          />
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "width": 30,
+              }
+            }
+          />
+        </View>
       </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "rgba(63, 50, 77, .2)",
+              "height": 0.5,
+            },
+            undefined,
+          ]
+        }
+      />
       <View
         style={
           Object {

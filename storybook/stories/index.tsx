@@ -19,6 +19,7 @@ import {
   MockFriendSearch,
 } from './rn-touch-through-view/ListOnMap'
 import BotDetailsStory from './BotDetailsStory'
+import SignUpStory from './SignUpStory'
 
 function emptyFn() {
   /* noop */
@@ -40,3 +41,4 @@ storiesOf('Onboarding', module)
   .add('3 - Notifications', () => <OnboardingNotifications onPress={emptyFn} />)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
   .add('5 - FindFriendsList', () => <MockFindFriends />)
+  .add('6 - SignUp', () => <SignUpStory />)
