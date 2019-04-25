@@ -1,6 +1,8 @@
 import {observable, action, computed} from 'mobx'
 import {IWocky, IProfile} from 'wocky-client'
 import RNContacts, {Contact, PhoneNumber} from 'react-native-contacts'
+import {log} from 'src/utils/logger'
+import {PermissionsAndroid, Platform} from 'react-native'
 
 // todo: revisit these labels with the Android port
 const labelPrecedence = ['main', 'mobile', 'iPhone', 'home', 'work', 'other']
@@ -109,16 +111,40 @@ class ContactStore {
     })
   }
 
-  requestPermission = async () => {
-    return new Promise<void>((resolve, reject) => {
+  private requestPermissionIOS = async () => {
+    return new Promise<boolean>((resolve, reject) => {
       RNContacts.requestPermission((error, result) => {
-        if (!error && result === 'authorized') {
-          resolve()
-        } else {
+        if (error) {
           reject(error)
+        } else {
+          resolve(result === 'authorized')
         }
       })
     })
+  }
+
+  private requestPermissionAndroid = async () => {
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+      title: 'Access Contacts',
+      message: 'The contacts in your address book will be used to find friends on the app.',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    })
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      log('Contacts permissions granted')
+      return true
+    } else {
+      return false
+    }
+  }
+
+  requestPermission = async (): Promise<boolean> => {
+    if (Platform.OS === 'ios') {
+      return this.requestPermissionIOS()
+    } else {
+      return this.requestPermissionAndroid()
+    }
   }
 
   loadContacts = async () => {
