@@ -10,10 +10,13 @@ export const analyticsGeoWidgetTap = 'geofence_widget_tap'
 
 export class Analytics {
   inSession: boolean = false
+  initialized: boolean = false
 
   constructor() {
     if (__DEV__ || !Mixpanel) return
-    Mixpanel.sharedInstanceWithToken(settings.mixPanelApiToken)
+    Mixpanel.sharedInstanceWithToken(settings.mixPanelApiToken).then(() => {
+      this.initialized = true
+    })
   }
 
   identify = (wocky: IWocky) => {
@@ -22,7 +25,8 @@ export class Analytics {
       return
     }
     when(
-      () => wocky && wocky.connected && !!wocky.profile && !!wocky.profile.handle,
+      () =>
+        wocky && wocky.connected && !!wocky.profile && !!wocky.profile.handle && this.initialized,
       () => {
         const {id, email, firstName, lastName, phoneNumber, handle} = wocky!.profile!
         Mixpanel.identify(id)
@@ -39,7 +43,7 @@ export class Analytics {
   }
 
   track = (name: string, properties?: {[name: string]: any}): void => {
-    if (__DEV__) {
+    if (__DEV__ || !this.initialized) {
       log('TRACK', name, properties)
       return
     }
@@ -58,7 +62,7 @@ export class Analytics {
     }
   }
 
-  sessionStart = () => {
+  private sessionStart = () => {
     if (__DEV__) {
       log('SESSION START')
       return
@@ -68,14 +72,15 @@ export class Analytics {
     Mixpanel.timeEvent('session')
   }
 
-  sessionEnd = () => {
-    if (__DEV__) {
-      log('SESSION END')
-      return
-    }
-    Mixpanel.track('session')
-    this.inSession = false
-  }
+  // todo: currently unused
+  // sessionEnd = () => {
+  //   if (__DEV__ || !this.initialized) {
+  //     log('SESSION END')
+  //     return
+  //   }
+  //   Mixpanel.track('session')
+  //   this.inSession = false
+  // }
 }
 
 export default new Analytics()
