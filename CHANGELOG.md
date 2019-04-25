@@ -9,6 +9,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Lock portrait orientation (Rework #3581)
 * Throttle excessive calls to HomeStore (PR #3660)
 * [dev] Support storage of client-side props on the server (#3645)
+* [android] Report User screen tweaks (#3529)
+* [dev] `NotificationAvatar` (#3365)
+* Change message to 'Invited ... to follow the location' (#3644)
+* Remove unnecessary primer modals (#3666)
 
 # 4.7.1 - 2019 Apr 18
 
