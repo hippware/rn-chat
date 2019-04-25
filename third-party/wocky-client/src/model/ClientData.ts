@@ -35,10 +35,12 @@ export default ClientData
 
 export interface IClientData extends Instance<typeof ClientData> {}
 export function createClientData(data: string) {
-  let result = {}
+  let result: any = {}
   if (data) {
     try {
       result = JSON.parse(data)
+      // ignore onboarded flag
+      delete result.onboarded
     } catch (e) {
       // ignore error
     }
