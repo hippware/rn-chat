@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.8.0 - 2019 Apr 25
+
 * Debounced disconnect (PR #3648)
   * [android] Disconnect/reconnect on separate Activity (#3634)
 * [android] Lock portrait orientation (Rework #3581)
@@ -15,6 +17,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove unnecessary primer modals (#3666)
 * User is seeing multiple lines below the Follow Location button (#3586)
 * [dev] Error: Mixpanel instance was not initialized yet. (#3375)
+* User can still see bot after unfollowing a location (#3146)
+* WIP: Show Invite Friends page to existing users (#3358)
 
 # 4.7.1 - 2019 Apr 18
 
