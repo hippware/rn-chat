@@ -9,10 +9,10 @@ const noop = () => {
 const stores = {
   wocky: {
     profile: {
-      id: '1234',
+      id: '32',
       handle: '',
-      firstName: 'Eric',
-      lastName: 'Kirkham',
+      firstName: 'Earvin',
+      lastName: 'Johnson',
     },
   },
   analytics: {

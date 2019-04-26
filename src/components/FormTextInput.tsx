@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View, TextInput, TextInputProperties} from 'react-native'
+import {Image, View, TextInput, TextInputProperties, TouchableOpacity, Platform} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react/native'
@@ -67,6 +67,16 @@ export default class FormTextInput extends React.Component<IProps> {
             autoCorrect={false}
             {...this.props}
           />
+          {Platform.OS === 'android' && !!store && !!store!.value && store!.value.length > 0 && (
+            <TouchableOpacity
+              onPress={() => {
+                if (store) store.value = ''
+              }}
+              style={{position: 'absolute', right: 15}}
+            >
+              <Image source={require('../../images/deleteAllText.png')} />
+            </TouchableOpacity>
+          )}
           <View style={{width: 15 * k, justifyContent: 'center', alignItems: 'center'}}>
             {store && store.isValid !== undefined ? (
               store.isValid ? (
