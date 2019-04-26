@@ -49,7 +49,7 @@ class GeofenceShare extends React.Component<Props> {
       const numOthers = shareSelect.length - 1
       this.props.notificationStore.flash(
         `Invited @${firstFriend.handle}${
-          numOthers > 0 ? `and ${numOthers} ${numOthers > 1 ? 'others' : 'other'}` : ''
+          numOthers > 0 ? ` and ${numOthers} ${numOthers > 1 ? 'others' : 'other'}` : ''
         } to follow the location`
       )
       Actions.popTo('home')
