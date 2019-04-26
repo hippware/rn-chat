@@ -21,6 +21,8 @@ import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
 import geocodingStore from './geocodingService'
 import {AppInfo} from './AppInfo'
+import {PermissionStore} from './PermissionStore'
+
 import ContactStore from './ContactStore'
 import {settings} from '../globals'
 const jsVersion = require('../../package.json').version
@@ -65,6 +67,7 @@ const Store = types
     codePushStore: CodepushStore,
     navStore: NavStore,
     appInfo: AppInfo,
+    permissionStore: PermissionStore,
   })
   .views(self => ({
     get getImageSize() {
@@ -89,6 +92,7 @@ export interface IStore extends Instance<typeof PersistableStore> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
+    permissionStore: {},
     appInfo: {
       nativeVersion: DeviceInfo.getVersion(),
       jsVersion,
