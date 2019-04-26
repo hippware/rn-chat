@@ -22,7 +22,9 @@ export function createFactory<T>(type: IType<any, any, T>) {
         data = _.cloneDeep(data)
 
         if (!self.storage.get(id)) {
-          self.storage.put(type.create({id}, getEnv(self)))
+          if (data && data.isBlocked)
+            self.storage.put(type.create({id, isBlocked: data.isBlocked}, getEnv(self)))
+          else self.storage.put(type.create({id}, getEnv(self)))
         }
         const entity: any = self.storage.get(id)!
         if (entity.load && data && Object.keys(data).length) {
