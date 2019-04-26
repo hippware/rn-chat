@@ -16,7 +16,7 @@ import {IWocky} from 'wocky-client'
 import PushNotification from 'react-native-push-notification'
 import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
-import {log} from '../../utils/logger'
+import {log, warn} from '../../utils/logger'
 
 type Props = {
   wocky?: IWocky
@@ -111,6 +111,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
       this.swiper.scrollBy(1)
       this.props.contactStore!.loadContacts()
     } catch (err) {
+      warn(err)
       this.done()
     }
   }
