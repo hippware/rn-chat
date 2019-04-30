@@ -53,6 +53,7 @@ class AnimatedPushScene extends React.Component<Props> {
       route: {
         params: {fromTop},
       },
+      isActive,
     } = this.props.scene
     const Scene = getComponent()
     return (
@@ -77,7 +78,7 @@ class AnimatedPushScene extends React.Component<Props> {
           },
         }) => (this.viewHeight = viewHeight)}
       >
-        <Scene navigation={navigation} />
+        <Scene navigation={navigation} isActive={isActive} />
       </Animated.View>
     )
   }

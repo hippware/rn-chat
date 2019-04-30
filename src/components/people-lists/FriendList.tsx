@@ -13,6 +13,7 @@ import {placeholderStyle} from '../styles'
 
 type Props = {
   wocky?: IWocky
+  isActive: boolean
 }
 
 const searchIcon = require('../../../images/search.png')
@@ -40,6 +41,7 @@ class FriendList extends React.Component<Props> {
         }}
         data={this.props.wocky!.profile!.friends.list.slice()}
         keyboardShouldPersistTaps="handled"
+        isActive={this.props.isActive}
         // keyboardDismissMode="interactive"
       />
     )
