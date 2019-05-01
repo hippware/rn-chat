@@ -8,9 +8,7 @@ import {TouchThroughWrapper} from 'react-native-touch-through-view'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
-  // fadeNavHeader?: ReactElement<any>
   fadeNavConfig?: NavConfig
-  // offset?: number
   isActive: boolean
 }
 

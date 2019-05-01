@@ -18,7 +18,14 @@ class AnimatedMainScene extends React.Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {index, scene: {route: {params: {fromTop}}}} = nextProps.transitionProps
+    const {
+      index,
+      scene: {
+        route: {
+          params: {fromTop},
+        },
+      },
+    } = nextProps.transitionProps
     if (index > 0 && !fromTop && !this.isOffset) {
       // shift the scene up 150
       this.slideSceneTo(-150)
@@ -45,8 +52,8 @@ class AnimatedMainScene extends React.Component<Props> {
           position: 'absolute',
           left: 0,
           right: 0,
-          top: this.isOffset ? -85 : 0,
-          height: this.isOffset ? height + 150 : height,
+          top: 0,
+          height,
           transform: [
             {
               translateY: this.state.yOffset,
