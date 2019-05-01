@@ -73,13 +73,13 @@ class FriendSearch extends React.Component<Props> {
             fontFamily: 'Roboto-Regular',
             color: colors.PURPLE,
           }}
-          // autoFocus
+          autoFocus
           ref={r => (this.input = r)}
           onChangeText={searchStore!.setGlobal}
           value={searchStore!.global}
           returnKeyType="search"
           clearButtonMode="while-editing"
-          // onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}
+          onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}
           placeholder="Search by name or username"
           selectionColor={colors.COVER_BLUE}
         />
