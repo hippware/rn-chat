@@ -42,6 +42,7 @@ const stores = {
 const props = {
   botId: '1234',
   navigation: {state: {params: {}}},
+  isActive: true,
 }
 
 export default () => (
