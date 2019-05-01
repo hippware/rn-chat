@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View, TextInput, TextInputProperties} from 'react-native'
+import {Image, View, TextInput, TextInputProperties, TouchableOpacity, Platform} from 'react-native'
 import {k} from './Global'
 import {colors} from '../constants'
 import {observer} from 'mobx-react/native'
@@ -30,7 +30,7 @@ export default class FormTextInput extends React.Component<IProps> {
     const {icon, label, store, imageStyle} = this.props
 
     return (
-      <View>
+      <>
         {store && store.errorMessage ? (
           <RText size={12} color={colors.PINK} style={{marginLeft: 50, marginTop: 10}}>
             {store.errorMessage}
@@ -47,10 +47,12 @@ export default class FormTextInput extends React.Component<IProps> {
           {icon ? null : <View style={{width: 40}} />}
           <TextInput
             style={{
-              flex: 1,
+              width: '100%',
               color: colors.DARK_PURPLE,
               fontFamily: 'Roboto-Regular',
               fontSize: 18,
+              padding: 0,
+              paddingLeft: 10,
             }}
             placeholder={label}
             clearButtonMode="while-editing"
@@ -65,6 +67,16 @@ export default class FormTextInput extends React.Component<IProps> {
             autoCorrect={false}
             {...this.props}
           />
+          {Platform.OS === 'android' && !!store && !!store!.value && store!.value.length > 0 && (
+            <TouchableOpacity
+              onPress={() => {
+                if (store) store.value = ''
+              }}
+              style={{position: 'absolute', right: 15}}
+            >
+              <Image source={require('../../images/deleteAllText.png')} />
+            </TouchableOpacity>
+          )}
           <View style={{width: 15 * k, justifyContent: 'center', alignItems: 'center'}}>
             {store && store.isValid !== undefined ? (
               store.isValid ? (
@@ -76,7 +88,7 @@ export default class FormTextInput extends React.Component<IProps> {
           </View>
         </Cell>
         <Separator backgroundColor={'rgba(63, 50, 77, .2)'} />
-      </View>
+      </>
     )
   }
 }

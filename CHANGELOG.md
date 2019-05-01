@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [android] Find Friends does not work (#3564)
+* Wrong text? Presence shared with 1 friend (Rework #3644)
+  * Fix yet another typo. (PR #3678)
+* [android] Onboarding: Username screen tweaks (#3558)
+
 # 4.8.0 - 2019 Apr 25
 
 * Debounced disconnect (PR #3648)

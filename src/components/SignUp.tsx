@@ -105,11 +105,14 @@ class SignUp extends React.Component<Props> {
               style={{width: 60 * avatarScale, height: 69 * avatarScale}}
               source={require('../../images/pink.png')}
             />
-            <View style={{paddingLeft: 20 * k}}>
-              <RText weight="Light" size={30} color={colors.PINK} style={{height: 80}}>
-                Let's get{'\r\n'}started!
-              </RText>
-            </View>
+            <RText
+              weight="Light"
+              size={30}
+              color={colors.PINK}
+              style={{height: 80, paddingLeft: 20 * k}}
+            >
+              Let's get{'\r\n'}started!
+            </RText>
           </View>
           <View
             style={{

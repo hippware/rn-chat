@@ -65,33 +65,26 @@ exports[`Signup renders 1`] = `
             }
           }
         />
-        <View
+        <Text
           style={
-            Object {
-              "paddingLeft": 40,
-            }
+            Array [
+              Object {
+                "color": "rgb(253,95,108)",
+                "fontFamily": "Roboto-Light",
+                "fontSize": 30,
+              },
+              Object {
+                "height": 80,
+                "paddingLeft": 40,
+              },
+            ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "rgb(253,95,108)",
-                  "fontFamily": "Roboto-Light",
-                  "fontSize": 30,
-                },
-                Object {
-                  "height": 80,
-                },
-              ]
-            }
-          >
-            Let's get
-            
+          Let's get
+          
 
-            started!
-          </Text>
-        </View>
+          started!
+        </Text>
       </View>
       <View
         style={
@@ -103,126 +96,126 @@ exports[`Signup renders 1`] = `
           }
         }
       >
-        <View>
+        <View
+          style={
+            Object {
+              "height": 10,
+            }
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "paddingBottom": 13,
+                "paddingHorizontal": 10,
+                "paddingTop": 9,
+              },
+              Object {
+                "justifyContent": "center",
+                "paddingTop": 2,
+              },
+            ]
+          }
+        >
           <View
             style={
               Object {
-                "height": 10,
+                "alignItems": "center",
               }
-            }
-          />
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "paddingBottom": 13,
-                  "paddingHorizontal": 10,
-                  "paddingTop": 9,
-                },
-                Object {
-                  "justifyContent": "center",
-                  "paddingTop": 2,
-                },
-              ]
             }
           >
-            <View
-              style={
+            <Image
+              source={
                 Object {
-                  "alignItems": "center",
+                  "testUri": "../../../images/iconUsernameNew.png",
                 }
               }
-            >
-              <Image
-                source={
-                  Object {
-                    "testUri": "../../../images/iconUsernameNew.png",
-                  }
-                }
-                style={
-                  Array [
-                    Object {
-                      "marginLeft": 16,
-                      "marginRight": 13,
-                    },
-                    undefined,
-                  ]
-                }
-              />
-            </View>
-            <View
               style={
-                Object {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
+                Array [
+                  Object {
+                    "marginLeft": 16,
+                    "marginRight": 13,
+                  },
+                  undefined,
+                ]
               }
-            >
-              <TextInput
-                allowFontScaling={true}
-                autoCapitalize="none"
-                autoCorrect={false}
-                clearButtonMode="while-editing"
-                icon={
-                  Object {
-                    "testUri": "../../../images/iconUsernameNew.png",
-                  }
-                }
-                label="Username"
-                onChangeText={[Function]}
-                onSubmitEditing={[Function]}
-                placeholder="Username"
-                placeholderTextColor="rgb(212,212,212)"
-                rejectResponderTermination={true}
-                returnKeyType="next"
-                selectionColor="rgb(89, 176, 242)"
-                store={
-                  ValidateItem {
-                    "errorMessage": "",
-                    "isValid": undefined,
-                    "key": "handle",
-                    "value": "southerneer",
-                  }
-                }
-                style={
-                  Object {
-                    "color": "rgb(63,50,77)",
-                    "flex": 1,
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 18,
-                  }
-                }
-                testID="signUpUsername"
-                underlineColorAndroid="transparent"
-                value="southerneer"
-              />
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "justifyContent": "center",
-                    "width": 30,
-                  }
-                }
-              />
-            </View>
+            />
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "backgroundColor": "rgba(63, 50, 77, .2)",
-                  "height": 0.5,
-                },
-                undefined,
-              ]
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
             }
-          />
+          >
+            <TextInput
+              allowFontScaling={true}
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              icon={
+                Object {
+                  "testUri": "../../../images/iconUsernameNew.png",
+                }
+              }
+              label="Username"
+              onChangeText={[Function]}
+              onSubmitEditing={[Function]}
+              placeholder="Username"
+              placeholderTextColor="rgb(212,212,212)"
+              rejectResponderTermination={true}
+              returnKeyType="next"
+              selectionColor="rgb(89, 176, 242)"
+              store={
+                ValidateItem {
+                  "errorMessage": "",
+                  "isValid": undefined,
+                  "key": "handle",
+                  "value": "southerneer",
+                }
+              }
+              style={
+                Object {
+                  "color": "rgb(63,50,77)",
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 18,
+                  "padding": 0,
+                  "paddingLeft": 10,
+                  "width": "100%",
+                }
+              }
+              testID="signUpUsername"
+              underlineColorAndroid="transparent"
+              value="southerneer"
+            />
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "width": 30,
+                }
+              }
+            />
+          </View>
         </View>
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "rgba(63, 50, 77, .2)",
+                "height": 0.5,
+              },
+              undefined,
+            ]
+          }
+        />
       </View>
       <Text
         style={
