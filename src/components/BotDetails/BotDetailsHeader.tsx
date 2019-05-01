@@ -112,7 +112,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <Pill>{locationStore!.distanceFromBot(bot.location)}</Pill>
         </View>
 
-        {bot.invitation && (!bot.invitation.accepted || !bot.isSubscribed) ? (
+        {!bot.isSubscribed && bot.invitation && !bot.invitation.accepted ? (
           <FollowLocationView onFollow={this.acceptInvitation} />
         ) : (
           <View>
