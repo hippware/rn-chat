@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, TextInput, Image, Platform} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
-import {height} from '../Global'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'
@@ -11,6 +10,7 @@ import {ISearchStore} from '../../store/SearchStore'
 
 type Props = {
   searchStore?: ISearchStore
+  isActive: boolean
 }
 
 export const KeyboardAwareDraggablePopupList: any =
@@ -30,7 +30,6 @@ class FriendSearch extends React.Component<Props> {
     const {searchStore} = this.props
     return (
       <KeyboardAwareDraggablePopupList
-        offset={Platform.OS === 'android' ? height / 2 + 100 : undefined}
         ref={r => (this.list = r)}
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
@@ -45,6 +44,7 @@ class FriendSearch extends React.Component<Props> {
         }}
         data={searchStore!.globalResult.filteredList.map(p => p.profile)}
         keyboardShouldPersistTaps="handled"
+        isActive={this.props.isActive}
         // keyboardDismissMode="interactive"
       />
     )

@@ -25,6 +25,7 @@ type Props = {
   notificationStore?: any
   homeStore?: any
   navigation: any
+  isActive: boolean
 }
 
 @inject('wocky', 'analytics', 'notificationStore', 'homeStore')
@@ -109,6 +110,7 @@ export default class BotDetails extends React.Component<Props> {
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
+          isActive={this.props.isActive}
           data={!bot.error && !isPendingAccept && bot.isSubscribed ? bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{

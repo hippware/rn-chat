@@ -22,7 +22,56 @@ exports[`BotDetails renders with no data 1`] = `
       ListFooterComponent={[Function]}
       ListHeaderComponent={
         <DraggablePopupListHeader
-          inner={
+          ItemSeparatorComponent={[Function]}
+          ListFooterComponent={[Function]}
+          bounces={false}
+          contentContainerStyle={
+            Object {
+              "flexGrow": 1,
+            }
+          }
+          data={Array []}
+          fadeNavConfig={
+            Object {
+              "back": true,
+              "backAction": [Function],
+              "title": <NavTitle
+                bot={
+                  Object {
+                    "address": "",
+                    "addressData": Object {
+                      "city": "",
+                      "country": "",
+                      "county": "",
+                      "state": "",
+                    },
+                    "description": "",
+                    "followersSize": 0,
+                    "icon": "",
+                    "id": "1234",
+                    "image": null,
+                    "invitation": null,
+                    "isSubscribed": false,
+                    "location": null,
+                    "owner": null,
+                    "radius": 100,
+                    "server": null,
+                    "title": null,
+                    "totalItems": 0,
+                    "visitor": false,
+                    "visitors": Object {
+                      "count": 0,
+                      "cursor": null,
+                      "result": Array [],
+                    },
+                    "visitorsSize": 0,
+                  }
+                }
+                onLongPress={[Function]}
+              />,
+            }
+          }
+          headerInner={
             <inject-BotDetailsHeader-with-notificationStore-analytics-locationStore
               analytics={
                 Object {
@@ -62,6 +111,7 @@ exports[`BotDetails renders with no data 1`] = `
               }
               botId="1234"
               homeStore={Object {}}
+              isActive={true}
               isNew={false}
               navigation={
                 Object {
@@ -123,6 +173,11 @@ exports[`BotDetails renders with no data 1`] = `
               }
             />
           }
+          initialNumToRender={8}
+          isActive={true}
+          keyExtractor={[Function]}
+          keyboardDismissMode="on-drag"
+          renderItem={[Function]}
         />
       }
       bounces={false}
@@ -169,243 +224,202 @@ exports[`BotDetails renders with no data 1`] = `
         <View
           onLayout={[Function]}
         >
-          <View>
-            <R2RTouchThroughView
+          <R2RTouchThroughView
+            style={
+              Object {
+                "height": 667,
+                "width": 750,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "paddingTop": 50,
+              }
+            }
+          >
+            <Image
+              resizeMode="stretch"
+              source={
+                Object {
+                  "testUri": "../../../images/bottomPopup.png",
+                }
+              }
               style={
                 Object {
-                  "height": 617,
-                  "width": 750,
+                  "position": "absolute",
+                  "width": "100%",
                 }
               }
             />
             <View
               style={
                 Object {
-                  "paddingTop": 50,
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "marginTop": 20,
+                  "paddingHorizontal": 40,
                 }
               }
             >
-              <Image
-                resizeMode="stretch"
-                source={
-                  Object {
-                    "testUri": "../../../images/bottomPopup.png",
+              <View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
                   }
-                }
-                style={
-                  Object {
-                    "position": "absolute",
-                    "width": "100%",
+                >
+                  <Text
+                    ellipsizeMode="tail"
+                    numberOfLines={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(63,50,77)",
+                          "fontFamily": "Roboto-Regular",
+                          "fontSize": 21,
+                        },
+                        Object {
+                          "fontFamily": "Roboto-Medium",
+                          "textAlign": "center",
+                          "width": "75%",
+                        },
+                      ]
+                    }
+                  />
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "marginTop": 20,
+                    }
                   }
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "white",
-                    "flex": 1,
-                    "marginTop": 20,
-                    "paddingHorizontal": 40,
-                  }
-                }
-              >
-                <View>
+                >
                   <View
                     style={
                       Object {
                         "flexDirection": "row",
-                        "justifyContent": "center",
+                        "justifyContent": "flex-start",
                       }
                     }
                   >
-                    <Text
-                      ellipsizeMode="tail"
-                      numberOfLines={2}
-                      style={
+                    <BVLinearGradient
+                      colors={
                         Array [
-                          Object {
-                            "color": "rgb(63,50,77)",
-                            "fontFamily": "Roboto-Regular",
-                            "fontSize": 21,
-                          },
-                          Object {
-                            "fontFamily": "Roboto-Medium",
-                            "textAlign": "center",
-                            "width": "75%",
-                          },
+                          "rgb(242,68,191)",
+                          "rgb(254,110,98)",
+                          "rgb(254,92,108)",
                         ]
                       }
-                    />
+                      end={
+                        Object {
+                          "x": 1,
+                          "y": 0.5,
+                        }
+                      }
+                      start={
+                        Object {
+                          "x": 0,
+                          "y": 0.5,
+                        }
+                      }
+                      style={
+                        Object {
+                          "borderRadius": 5,
+                          "marginRight": 10,
+                          "paddingHorizontal": 20,
+                          "paddingVertical": 6,
+                        }
+                      }
+                    >
+                      <Text
+                        style={
+                          Array [
+                            Object {
+                              "color": "rgb(255,255,255)",
+                              "fontFamily": "Roboto-Medium",
+                              "fontSize": 13,
+                            },
+                            undefined,
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </BVLinearGradient>
                   </View>
                   <View
                     style={
                       Object {
                         "flexDirection": "row",
-                        "justifyContent": "center",
-                        "marginTop": 20,
+                        "justifyContent": "flex-start",
                       }
                     }
                   >
-                    <View
+                    <BVLinearGradient
+                      colors={
+                        Array [
+                          "rgb(242,68,191)",
+                          "rgb(254,110,98)",
+                          "rgb(254,92,108)",
+                        ]
+                      }
+                      end={
+                        Object {
+                          "x": 1,
+                          "y": 0.5,
+                        }
+                      }
+                      start={
+                        Object {
+                          "x": 0,
+                          "y": 0.5,
+                        }
+                      }
                       style={
                         Object {
-                          "flexDirection": "row",
-                          "justifyContent": "flex-start",
+                          "borderRadius": 5,
+                          "marginRight": 10,
+                          "paddingHorizontal": 20,
+                          "paddingVertical": 6,
                         }
                       }
                     >
-                      <BVLinearGradient
-                        colors={
-                          Array [
-                            "rgb(242,68,191)",
-                            "rgb(254,110,98)",
-                            "rgb(254,92,108)",
-                          ]
-                        }
-                        end={
-                          Object {
-                            "x": 1,
-                            "y": 0.5,
-                          }
-                        }
-                        start={
-                          Object {
-                            "x": 0,
-                            "y": 0.5,
-                          }
-                        }
-                        style={
-                          Object {
-                            "borderRadius": 5,
-                            "marginRight": 10,
-                            "paddingHorizontal": 20,
-                            "paddingVertical": 6,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            Array [
-                              Object {
-                                "color": "rgb(255,255,255)",
-                                "fontFamily": "Roboto-Medium",
-                                "fontSize": 13,
-                              },
-                              undefined,
-                            ]
-                          }
-                        >
-                          
-                        </Text>
-                      </BVLinearGradient>
-                    </View>
-                    <View
-                      style={
-                        Object {
-                          "flexDirection": "row",
-                          "justifyContent": "flex-start",
-                        }
-                      }
-                    >
-                      <BVLinearGradient
-                        colors={
-                          Array [
-                            "rgb(242,68,191)",
-                            "rgb(254,110,98)",
-                            "rgb(254,92,108)",
-                          ]
-                        }
-                        end={
-                          Object {
-                            "x": 1,
-                            "y": 0.5,
-                          }
-                        }
-                        start={
-                          Object {
-                            "x": 0,
-                            "y": 0.5,
-                          }
-                        }
-                        style={
-                          Object {
-                            "borderRadius": 5,
-                            "marginRight": 10,
-                            "paddingHorizontal": 20,
-                            "paddingVertical": 6,
-                          }
-                        }
-                      >
-                        <Text
-                          style={
-                            Array [
-                              Object {
-                                "color": "rgb(255,255,255)",
-                                "fontFamily": "Roboto-Medium",
-                                "fontSize": 13,
-                              },
-                              undefined,
-                            ]
-                          }
-                        />
-                      </BVLinearGradient>
-                    </View>
-                  </View>
-                  <View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "height": 17,
-                          }
-                        }
-                      />
-                      <View
+                      <Text
                         style={
                           Array [
                             Object {
-                              "backgroundColor": "rgb(222,222,222)",
-                              "height": 0.5,
-                              "marginHorizontal": 40,
-                              "marginVertical": 40,
-                            },
-                            Object {
-                              "marginHorizontal": 5,
-                              "marginTop": 0,
-                              "width": "100%",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "rgb(255,255,255)",
-                          "flexDirection": "row",
-                          "marginBottom": 10,
-                        }
-                      }
-                    >
-                      <View
-                        style={
-                          Array [
-                            Object {
-                              "alignItems": "center",
-                              "height": 40,
+                              "color": "rgb(255,255,255)",
+                              "fontFamily": "Roboto-Medium",
+                              "fontSize": 13,
                             },
                             undefined,
                           ]
                         }
                       />
-                    </View>
+                    </BVLinearGradient>
+                  </View>
+                </View>
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "height": 17,
+                        }
+                      }
+                    />
                     <View
                       style={
                         Array [
@@ -417,11 +431,50 @@ exports[`BotDetails renders with no data 1`] = `
                           },
                           Object {
                             "marginHorizontal": 5,
+                            "marginTop": 0,
+                            "width": "100%",
                           },
                         ]
                       }
                     />
                   </View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "rgb(255,255,255)",
+                        "flexDirection": "row",
+                        "marginBottom": 10,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "height": 40,
+                          },
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "rgb(222,222,222)",
+                          "height": 0.5,
+                          "marginHorizontal": 40,
+                          "marginVertical": 40,
+                        },
+                        Object {
+                          "marginHorizontal": 5,
+                        },
+                      ]
+                    }
+                  />
                 </View>
               </View>
             </View>

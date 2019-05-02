@@ -73,7 +73,7 @@ const SimulatedSplitRenderer = ({children}) => {
 // this one works fine
 export const DraggableOnMap = () => (
   <SimulatedSplitRenderer>
-    <DraggablePopupList data={data} renderItem={renderItem} keyExtractor={keyExtractor} />
+    <DraggablePopupList data={data} renderItem={renderItem} keyExtractor={keyExtractor} isActive />
   </SimulatedSplitRenderer>
 )
 
@@ -123,7 +123,7 @@ export const KeyboardAwareDraggableOnMap = () => (
 export const MockFriendSearch = () => {
   return (
     <SimulatedSplitRenderer>
-      <FriendSearch />
+      <FriendSearch isActive />
     </SimulatedSplitRenderer>
   )
 }
