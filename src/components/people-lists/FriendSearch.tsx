@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, TextInput, Image, Platform} from 'react-native'
+import {View, TextInput, Image, Platform, Keyboard} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
@@ -7,6 +7,7 @@ import {RText} from '../common'
 import DraggablePopupList from '../common/DraggablePopupList'
 import withKeyboardHOC from '../common/withKeyboardHOC'
 import {ISearchStore} from '../../store/SearchStore'
+import {Actions} from 'react-native-router-flux'
 
 type Props = {
   searchStore?: ISearchStore
@@ -24,7 +25,15 @@ class FriendSearch extends React.Component<Props> {
   input: any
   list: any
 
-  renderItem = ({item}) => <FriendCard profile={item} />
+  renderItem = ({item: profile}) => (
+    <FriendCard
+      profile={profile}
+      onPress={() => {
+        Keyboard.dismiss()
+        Actions.profileDetails({item: profile.id})
+      }}
+    />
+  )
 
   render() {
     const {searchStore} = this.props
@@ -73,7 +82,7 @@ class FriendSearch extends React.Component<Props> {
             fontFamily: 'Roboto-Regular',
             color: colors.PURPLE,
           }}
-          autoFocus
+          autoFocus={this.props.isActive}
           ref={r => (this.input = r)}
           onChangeText={searchStore!.setGlobal}
           value={searchStore!.global}
