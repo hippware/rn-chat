@@ -68,11 +68,28 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
   }
 }
 
+async function cropImage(image: PickerImage): Promise<PickerImage> {
+  const croppedImage = await ImagePicker.openCropper({
+    path: image.uri,
+    width: IMG_DEFAULT_SIZE,
+    height: IMG_DEFAULT_SIZE,
+  })
+  return {
+    ...croppedImage,
+    uri: croppedImage.path,
+    type: image.type,
+    name: image.name,
+  }
+}
+
 async function launchCamera(): Promise<PickerImage | void> {
   if (await photoPermissionsGranted(true)) {
     Keyboard.dismiss()
     return new Promise(resolve => {
-      Actions.camera({afterImagePicked: image => resolve(image)})
+      Actions.camera({
+        afterImagePicked: image =>
+          resolve(Platform.select({android: cropImage(image), ios: image})),
+      })
     })
   }
 }
