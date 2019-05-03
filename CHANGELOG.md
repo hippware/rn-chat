@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.9.0 - 2019 May 2
+
 * [android] Find Friends does not work (#3564)
 * Wrong text? Presence shared with 1 friend (#3644, PR #3678, PR #3688)
 * [android] Onboarding: Username screen tweaks (#3558)
@@ -12,6 +14,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Get react-native-touch-through-view to work (PR #3629)
   * [android] FriendSearch dragging up on map scrolls the list (#3608)
   * [android] Back Caret or tapping on map does not function ... (#3587)
+* HOTFIX: dismiss keyboard on nav to ProfileDetails from FriendSearch
 
 # 4.8.0 - 2019 Apr 25
 
