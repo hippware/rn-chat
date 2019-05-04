@@ -405,61 +405,15 @@ exports[`BotDetails renders with no data 1`] = `
                     </BVLinearGradient>
                   </View>
                 </View>
-                <View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                      }
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "width": "100%",
                     }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "height": 17,
-                        }
-                      }
-                    />
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "rgb(222,222,222)",
-                            "height": 0.5,
-                            "marginHorizontal": 40,
-                            "marginVertical": 40,
-                          },
-                          Object {
-                            "marginHorizontal": 5,
-                            "marginTop": 0,
-                            "width": "100%",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "rgb(255,255,255)",
-                        "flexDirection": "row",
-                        "marginBottom": 10,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "height": 40,
-                          },
-                          undefined,
-                        ]
-                      }
-                    />
-                  </View>
+                  }
+                >
                   <View
                     style={
                       Array [
@@ -470,11 +424,78 @@ exports[`BotDetails renders with no data 1`] = `
                           "marginVertical": 40,
                         },
                         Object {
-                          "marginHorizontal": 5,
+                          "width": "100%",
                         },
                       ]
                     }
                   />
+                  <Image
+                    source={
+                      Object {
+                        "testUri": "../../../images/shoesPink.png",
+                      }
+                    }
+                    style={
+                      Object {
+                        "marginVertical": 30,
+                      }
+                    }
+                  />
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(117,117,117)",
+                          "fontFamily": "Roboto-Light",
+                          "fontSize": 15,
+                        },
+                        Object {
+                          "textAlign": "center",
+                        },
+                      ]
+                    }
+                  >
+                    Know when friends arrive
+and depart this location.
+                  </Text>
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "borderColor": "rgb(253,95,108)",
+                        "borderRadius": 20,
+                        "borderWidth": 1,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "marginTop": 30,
+                        "opacity": 1,
+                        "width": 170,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "color": "rgb(253,95,108)",
+                            "fontFamily": "Roboto-Regular",
+                            "fontSize": 16.8,
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      Follow Location
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>

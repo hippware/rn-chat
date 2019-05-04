@@ -105,13 +105,12 @@ export default class BotDetails extends React.Component<Props> {
     if (!bot || !isAlive(bot)) {
       return null
     }
-    const isPendingAccept = bot.invitation && !bot.invitation.accepted
 
     return (
       <View pointerEvents="box-none" style={{flex: 1}}>
         <DraggablePopupList
           isActive={this.props.isActive}
-          data={!bot.error && !isPendingAccept && bot.isSubscribed ? bot.posts.list.slice() : []}
+          data={!bot.error && bot.isSubscribed ? bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{
             flexGrow: 1,
@@ -132,9 +131,7 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {bot.isSubscribed && !isPendingAccept && (
-          <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />
-        )}
+        {bot.isSubscribed && <AddBotPost bot={bot} scrollToEnd={this.scrollToEnd} />}
       </View>
     )
   }
