@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [android] Add post-crop of camera photos (Android only) (PR #3695)
+  * [android] Photos taken from camera aren't cropped (#3635)
+* Better bot display logic using `isSubscribed` (PR #3694)
+  * 'Follow Location' on an owners location profile (Rework #3682)
+  * User can still see bot after unfollowing a location (Rework #3146)
+
 # 4.9.0 - 2019 May 2
 
 * [android] Find Friends does not work (#3564)
