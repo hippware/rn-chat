@@ -28,8 +28,10 @@ export const PermissionStore = types
   .actions(self => ({
     afterAttach: flow(function*() {
       let check: string = yield Permissions.check('location', {type: 'always'})
+      console.log('& check 1', check)
       self.setAllowsLocation(check === AUTHORIZED)
       check = yield Permissions.check('motion', {type: 'always'})
+      console.log('& check 2', check)
       self.setAllowsAccelerometer(check === AUTHORIZED)
 
       PushNotification.checkPermissions(({alert, badge, sound}) => {

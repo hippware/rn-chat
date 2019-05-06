@@ -20,6 +20,7 @@ const ClientData = types
   .actions(self => ({
     afterAttach() {
       onSnapshot(self, clientData => {
+        console.log('& onsnapshot', clientData)
         self.transport.updateProfile({clientData})
       })
     },

@@ -210,6 +210,7 @@ export class Transport {
     }
     const result: any = convertProfile(res.data.user)
     if (id === this.username) {
+      console.log('& loadProfile', result.clientData)
       result.receivedInvitations = res.data.user.receivedInvitations.edges.map(
         ({node: {createdAt, sender}}) => ({
           createdAt: iso8601toDate(createdAt).getTime(),
@@ -609,6 +610,7 @@ export class Transport {
       values.imageUrl = d.avatar
     }
     if (d.clientData) {
+      console.log('& client data', d.clientData)
       values.clientData = JSON.stringify(values.clientData)
     }
 

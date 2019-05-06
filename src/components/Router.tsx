@@ -100,7 +100,10 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => wocky!.profile!.clientData.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => {
+              console.log('& onboarded?', wocky!.profile!.clientData.onboarded)
+              return wocky!.profile!.clientData.onboarded
+            }} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>

@@ -18,6 +18,7 @@ import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
 import {log, warn} from '../../utils/logger'
 import {IPermissionStore} from 'src/store/PermissionStore'
+import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
   wocky?: IWocky
@@ -30,6 +31,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
   render() {
+    console.log('& render onboarding', getSnapshot(this.props.permissionStore!))
     const pages: ReactElement[] = []
     if (!this.props.permissionStore!.allowsLocation) {
       pages.push(<OnboardingLocation key="0" onPress={this.checkLocationPermissions} />)

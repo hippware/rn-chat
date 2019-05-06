@@ -200,6 +200,7 @@ export const OwnProfile = types
       Object.assign(self, data)
       if (clientData) {
         self.clientData = createClientData(clientData)
+        console.log('& load client data', getSnapshot(self.clientData), clientData)
       }
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)
