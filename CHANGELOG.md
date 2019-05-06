@@ -18,6 +18,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * 'Follow Location' on an owners location profile (#3682)
 * Improve VS Code + Typescript interaction on console.log (PR #3693)
 * [android] Get react-native-touch-through-view to work (PR #3629)
+  * [android] FriendSearch back button in front of the list (#3607)
   * [android] FriendSearch dragging up on map scrolls the list (#3608)
   * [android] Back Caret or tapping on map does not function ... (#3587)
 * HOTFIX: dismiss keyboard on nav to ProfileDetails from FriendSearch
