@@ -1,5 +1,6 @@
 import {types, Instance, flow} from 'mobx-state-tree'
 import Permissions from 'react-native-permissions'
+import PushNotification from 'react-native-push-notification'
 
 const AUTHORIZED = 'authorized'
 
@@ -31,8 +32,14 @@ export const PermissionStore = types
       check = yield Permissions.check('motion', {type: 'always'})
       self.setAllowsAccelerometer(check === AUTHORIZED)
 
-      // TODO: add push notification check
+      PushNotification.checkPermissions(({alert, badge, sound}) => {
+        self.setAllowsNotification(!!(alert || badge || sound))
+      })
     }),
   }))
+  .postProcessSnapshot(() => {
+    // No need to persist this store
+    return {}
+  })
 
 export interface IPermissionStore extends Instance<typeof PermissionStore> {}
