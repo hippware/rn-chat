@@ -21,7 +21,6 @@ export default class SplitRenderer extends React.Component<Props> {
         <AnimatedMainScene transitionProps={transitionProps} key={scene.route.key} scene={scene} />
       )
     } else {
-      const showButton = Platform.OS === 'android' && scene.route.params.backButtonOverlay
       return (
         <View
           style={{
@@ -37,9 +36,8 @@ export default class SplitRenderer extends React.Component<Props> {
           key={scene.route.key}
           pointerEvents="box-none"
         >
-          {!showButton && <BackButton transitionProps={transitionProps} scene={scene} />}
+          <BackButton transitionProps={transitionProps} scene={scene} />
           <AnimatedPushScene transitionProps={transitionProps} scene={scene} />
-          {showButton && <BackButton transitionProps={transitionProps} scene={scene} />}
         </View>
       )
     }

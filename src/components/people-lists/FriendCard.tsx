@@ -10,15 +10,16 @@ import {k} from '../Global'
 type Props = {
   profile: any
   children?: any
+  onPress?: () => void
 }
 
-const FriendCard = observer(({profile, children}: Props) => {
+const FriendCard = observer(({profile, children, onPress}: Props) => {
   assert(profile, 'Profile is not defined')
   const backgroundColor = backgroundColorCardDay
   return (
     <View style={{backgroundColor: 'white'}}>
       <TouchableOpacity
-        onPress={() => Actions.profileDetails({item: profile.id})}
+        onPress={onPress || (() => Actions.profileDetails({item: profile.id}))}
         style={{width: '90%', paddingHorizontal: 15 * k, alignSelf: 'center'}}
       >
         <ProfileItem profile={profile} style={{backgroundColor}}>

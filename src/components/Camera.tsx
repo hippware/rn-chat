@@ -48,6 +48,8 @@ class CameraScreen extends React.Component<Props> {
             flashMode: 'auto',
             focusMode: 'on',
             zoomMode: 'on',
+
+            // these options have no effect on Android: https://github.com/wix/react-native-camera-kit/issues/11
             ratioOverlay: '1:1',
             ratioOverlayColor: 'black',
           }}

@@ -4,6 +4,25 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [android] Add post-crop of camera photos (Android only) (PR #3695)
+  * [android] Photos taken from camera aren't cropped (#3635)
+* Better bot display logic using `isSubscribed` (PR #3694)
+  * 'Follow Location' on an owners location profile (Rework #3682)
+  * User can still see bot after unfollowing a location (Rework #3146)
+
+# 4.9.0 - 2019 May 2
+
+* [android] Find Friends does not work (#3564)
+* Wrong text? Presence shared with 1 friend (#3644, PR #3678, PR #3688)
+* [android] Onboarding: Username screen tweaks (#3558)
+* 'Follow Location' on an owners location profile (#3682)
+* Improve VS Code + Typescript interaction on console.log (PR #3693)
+* [android] Get react-native-touch-through-view to work (PR #3629)
+  * [android] FriendSearch back button in front of the list (#3607)
+  * [android] FriendSearch dragging up on map scrolls the list (#3608)
+  * [android] Back Caret or tapping on map does not function ... (#3587)
+* HOTFIX: dismiss keyboard on nav to ProfileDetails from FriendSearch
+
 # 4.8.0 - 2019 Apr 25
 
 * Debounced disconnect (PR #3648)

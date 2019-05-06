@@ -8,9 +8,8 @@ import {TouchThroughWrapper} from 'react-native-touch-through-view'
 
 interface IProps<T> extends FlatListProps<T> {
   headerInner?: ReactElement<any>
-  // fadeNavHeader?: ReactElement<any>
   fadeNavConfig?: NavConfig
-  offset?: number
+  isActive: boolean
 }
 
 export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
@@ -18,12 +17,12 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
   scrollY = new Animated.Value(0)
 
   render() {
-    const {headerInner, fadeNavConfig, style, offset, ...listProps} = this.props
+    const {headerInner, fadeNavConfig, style, isActive, ...listProps} = this.props
     const opacity = this.scrollY.interpolate({
       inputRange: [0, height / 2 - 80, height / 2],
       outputRange: [0, 0, 1],
     })
-    const Wrapper = offset ? View : TouchThroughWrapper
+    const Wrapper = isActive ? TouchThroughWrapper : View
     return (
       <Wrapper style={{width, height}}>
         <FlatList
@@ -33,9 +32,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
           ListFooterComponent={<View style={{backgroundColor: 'white', height: 250}} />}
           {...listProps}
           style={[{flex: 1}, style]}
-          ListHeaderComponent={
-            <DraggablePopupListHeader inner={this.props.headerInner} offset={offset} />
-          }
+          ListHeaderComponent={<DraggablePopupListHeader {...this.props} />}
           showsVerticalScrollIndicator={false}
         />
         {fadeNavConfig && (
@@ -55,19 +52,18 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
 /**
  * This list header wrapper ensures that the user can "touch through" to the map behind the list
  */
-const DraggablePopupListHeader = ({inner, offset}) => (
-  <View>
-    {offset ? (
-      <View style={{width, height: offset}} />
-    ) : (
-      <TouchThroughView style={{width, height: height / 2 - 50}} />
-    )}
-    <BottomPopup>
-      <View
-        style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
-      >
-        {inner}
-      </View>
-    </BottomPopup>
-  </View>
-)
+const DraggablePopupListHeader = ({headerInner, isActive}: IProps<any>) => {
+  const Filler = isActive ? TouchThroughView : View
+  return (
+    <>
+      <Filler style={{width, height: height / 2}} />
+      <BottomPopup>
+        <View
+          style={{flex: 1, paddingHorizontal: 20 * k, backgroundColor: 'white', marginTop: 10 * k}}
+        >
+          {headerInner}
+        </View>
+      </BottomPopup>
+    </>
+  )
+}

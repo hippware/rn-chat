@@ -9,7 +9,12 @@ describe('BotDetails', () => {
   it('renders with no data', () => {
     const toRender = (
       <Provider {...mockStore}>
-        <BotDetails botId={'1234'} isNew={false} navigation={{state: {params: {isNew: false}}}} />
+        <BotDetails
+          botId={'1234'}
+          isNew={false}
+          navigation={{state: {params: {isNew: false}}}}
+          isActive
+        />
       </Provider>
     )
     const tree = renderer.create(toRender).toJSON()

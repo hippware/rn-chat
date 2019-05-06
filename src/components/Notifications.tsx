@@ -14,6 +14,7 @@ import {PINK, WHITE} from '../constants/colors'
 
 type Props = {
   wocky?: IWocky
+  isActive: boolean
 }
 
 @inject('wocky')
@@ -37,6 +38,7 @@ class Notifications extends React.Component<Props> {
     }
     return (
       <DraggablePopupList
+        isActive={this.props.isActive}
         fadeNavConfig={{
           back: true,
           title: <RText style={navBarStyle.titleStyle}>{notifications.title}</RText>,
