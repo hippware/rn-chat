@@ -34,16 +34,16 @@ const ClientData = types
 export default ClientData
 
 export interface IClientData extends Instance<typeof ClientData> {}
-export function createClientData(data: string) {
+export function createClientData(data: string, existingData?: object) {
   let result: any = {}
   if (data) {
     try {
       result = JSON.parse(data)
-      // ignore onboarded flag
+      // ignore onboarded flag...only cache locally
       delete result.onboarded
     } catch (e) {
       // ignore error
     }
   }
-  return ClientData.create(result)
+  return ClientData.create({...existingData, ...result})
 }
