@@ -1,5 +1,6 @@
-import {types, Instance, flow} from 'mobx-state-tree'
+import {types, Instance, flow, getParent} from 'mobx-state-tree'
 import Permissions from 'react-native-permissions'
+import {autorun} from 'mobx'
 
 const AUTHORIZED = 'authorized'
 
@@ -47,10 +48,17 @@ export const PermissionStore = types
     }),
   }))
   .actions(self => ({
-    afterAttach: flow(function*() {
-      yield self.checkAllPermissions()
-      self.setLoaded(true)
-    }),
+    afterAttach() {
+      const {wocky} = getParent<any>(self)
+      autorun(async () => {
+        if (wocky.profile) {
+          await self.checkAllPermissions()
+          self.setLoaded(true)
+        } else {
+          self.setLoaded(false)
+        }
+      })
+    },
   }))
   .postProcessSnapshot(() => {
     // No need to persist this store
