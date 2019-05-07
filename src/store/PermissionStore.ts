@@ -47,9 +47,10 @@ export const PermissionStore = types
     }),
   }))
   .actions(self => ({
-    afterAttach() {
-      self.checkAllPermissions().then(() => self.setLoaded(true))
-    },
+    afterAttach: flow(function*() {
+      yield self.checkAllPermissions()
+      self.setLoaded(true)
+    }),
   }))
   .postProcessSnapshot(() => {
     // No need to persist this store
