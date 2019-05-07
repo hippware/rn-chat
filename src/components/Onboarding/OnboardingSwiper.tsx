@@ -10,7 +10,7 @@ import OnboardingAccelerometer from './OnboardingAccelerometer'
 import OnboardingNotifications from './OnboardingNotifications'
 import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
-import {inject} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react/native'
 import {minHeight} from '../Global'
 import {IWocky} from 'wocky-client'
 import PushNotification from 'react-native-push-notification'
@@ -26,19 +26,31 @@ type Props = {
 }
 
 @inject('wocky', 'contactStore', 'permissionStore')
+@observer
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
   render() {
     const pages: ReactElement[] = []
-    if (!this.props.permissionStore!.allowsLocation) {
+    const {
+      allowsLocation,
+      allowsAccelerometer,
+      allowsNotification,
+      loaded,
+    } = this.props.permissionStore!
+
+    if (!loaded) {
+      return null
+    }
+
+    if (!allowsLocation) {
       pages.push(<OnboardingLocation key="0" onPress={this.checkLocationPermissions} />)
     }
     if (Platform.OS === 'ios') {
-      if (!this.props.permissionStore!.allowsAccelerometer) {
+      if (!allowsAccelerometer) {
         pages.push(<OnboardingAccelerometer key="1" onPress={this.checkAccelerometerPermissions} />)
       }
-      if (!this.props.permissionStore!.allowsNotification) {
+      if (!allowsNotification) {
         pages.push(<OnboardingNotifications key="2" onPress={this.checkNotificationPermissions} />)
       }
     }
