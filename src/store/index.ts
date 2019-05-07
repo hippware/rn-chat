@@ -92,7 +92,6 @@ export interface IStore extends Instance<typeof PersistableStore> {}
 const theStore = PersistableStore.create(
   {
     ...cleanState,
-    permissionStore: {},
     appInfo: {
       nativeVersion: DeviceInfo.getVersion(),
       jsVersion,
