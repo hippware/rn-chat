@@ -1,11 +1,11 @@
-import {types, getEnv, addMiddleware, Instance} from 'mobx-state-tree'
+import {types, getEnv, addMiddleware, Instance, getSnapshot, applySnapshot} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
+// todo: use react-native-community version instead
 import {AsyncStorage} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
-import {Transport} from 'wocky-client'
+import {Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
-import PersistableModel from './PersistableModel'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
 import fileService from './fileService'
@@ -17,45 +17,58 @@ import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import NavStore from './NavStore'
 import initializePushNotifications from '../utils/pushNotifications'
-import {cleanState, STORE_NAME} from './PersistableModel'
 import IconStore from './IconStore'
-import geocodingStore from './geocodingService'
+import GeocodingStore from './geocodingService'
 import {AppInfo} from './AppInfo'
 import ContactStore from './ContactStore'
+import reportStore from './ReportStore'
+import {log} from 'src/utils/logger'
+import {autorun} from 'mobx'
 import {settings} from '../globals'
+
 const jsVersion = require('../../package.json').version
 const transport = new Transport(DeviceInfo.getUniqueID())
 const {geolocation} = navigator
-
-// NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
-// Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
-// if (__DEV__) {
-//   connectReduxDevtools(require('remotedev'), service);
-// }
-
 const auth = firebase.auth()
+
+const appInfo = {
+  nativeVersion: DeviceInfo.getVersion(),
+  jsVersion,
+}
+
+const STORE_NAME = 'MainStore'
+
 export type IEnv = {
   transport: Transport
-  storage: AsyncStorage
   auth: RNFirebase.auth.Auth
   firebase: Firebase
-  geocodingStore: any
   fileService: any
   geolocation: Geolocation
 }
 
 const env: IEnv = {
   transport,
-  storage: AsyncStorage,
   auth,
   firebase,
-  geocodingStore,
   fileService,
   geolocation,
 }
 
+const cleanState = {
+  firebaseStore: {},
+  authStore: {},
+  locationStore: {},
+  searchStore: {},
+  profileValidationStore: {},
+  homeStore: {},
+  navStore: {},
+  codePushStore: {},
+  geocodingStore: {},
+}
+
 const Store = types
-  .model('Store', {
+  .model(STORE_NAME, {
+    wocky: Wocky,
     homeStore: HomeStore,
     firebaseStore: FirebaseStore,
     authStore: AuthStore,
@@ -64,6 +77,7 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     codePushStore: CodepushStore,
     navStore: NavStore,
+    geocodingStore: GeocodingStore,
     appInfo: AppInfo,
   })
   .views(self => ({
@@ -71,44 +85,100 @@ const Store = types
       return getEnv(self).fileService.getImageSize
     },
   }))
-
-const PersistableStore = types
-  .compose(
-    PersistableModel,
-    Store
-  )
-  .named(STORE_NAME)
   .actions(self => ({
     afterCreate() {
       analytics.identify(self.wocky)
     },
   }))
 
-export interface IStore extends Instance<typeof PersistableStore> {}
+export interface IStore extends Instance<typeof Store> {}
 
-const theStore = PersistableStore.create(
-  {
+/**
+ * Return only the mstStore data needed to prevent logout
+ * @param data - serialized mstStore object
+ */
+function getMinimalStoreData(data?: {authStore: object}): object {
+  log('loadMinimal', data)
+  return {authStore: data && data.authStore}
+}
+
+let mstStore: IStore | undefined
+
+export async function resetCache() {
+  if (!mstStore) return
+  const data = await AsyncStorage.getItem(STORE_NAME)
+  const parsed = data && JSON.parse(data)
+  const {wocky} = mstStore
+  // shut down wocky
+  wocky.clearCache()
+  wocky.disposeReactions()
+
+  const newState = {
     ...cleanState,
-    appInfo: {
-      nativeVersion: DeviceInfo.getVersion(),
-      jsVersion,
-    },
+    ...getMinimalStoreData(parsed),
     wocky: {host: settings.host},
-  },
-  env
-)
+    appInfo,
+  }
+  // wipe out old state and apply clean
+  applySnapshot(mstStore, newState)
+  wocky.startReactions()
+  await AsyncStorage.setItem(STORE_NAME, JSON.stringify(newState))
+}
 
-export {default as reportStore} from './ReportStore'
-export const iconStore = new IconStore()
-export const notificationStore = new NotificationStore(theStore.wocky)
-export const contactStore = new ContactStore(theStore.wocky)
+/**
+ * Pull store data from the cache (if any) and return a store hydrated with that data
+ */
+export async function createStore() {
+  if (!!mstStore) return
+  let storeData
+  try {
+    const data = await AsyncStorage.getItem(STORE_NAME)
+    storeData = data && JSON.parse(data)
 
-initializePushNotifications(theStore.wocky.enablePush)
+    // throw new Error('Hydrate minimally')
 
-// simple logging
-addMiddleware(theStore, simpleActionLogger)
+    const pendingCodepush =
+      storeData && storeData.codePushStore && storeData.codePushStore.pendingUpdate
 
-// verbose action logging
-// addMiddleware(theStore, actionLogger);
+    // parsed.version (pre-appInfo) or parsed.appInfo.version (post-appInfo)
+    const oldBinaryVersion: string | undefined =
+      (storeData && storeData.version) ||
+      (storeData && storeData.appInfo && storeData.appInfo.nativeVersion)
+    const isNewBinaryVersion = oldBinaryVersion && oldBinaryVersion !== DeviceInfo.getVersion()
 
-export default theStore
+    // on a codepush update or new binary version, reset the cache
+    if (pendingCodepush || isNewBinaryVersion) {
+      // todo: can we move this out of persistence and into codepushStore?
+      storeData = {...getMinimalStoreData(storeData), codePushStore: {pendingUpdate: false}}
+    }
+  } catch (err) {
+    log('hydration error', err, storeData)
+    storeData = getMinimalStoreData(storeData)
+  }
+  mstStore = Store.create(
+    {
+      ...cleanState,
+      ...storeData,
+      appInfo,
+    },
+    env
+  )
+
+  initializePushNotifications(mstStore.wocky.enablePush)
+  addMiddleware(mstStore, simpleActionLogger)
+  autorun(
+    () => {
+      const state = getSnapshot(mstStore!)
+      AsyncStorage.setItem(STORE_NAME, JSON.stringify(state))
+    },
+    {delay: 1000}
+  )
+
+  return {
+    ...mstStore,
+    reportStore,
+    iconStore: new IconStore(),
+    notificationStore: new NotificationStore(mstStore.wocky),
+    contactStore: new ContactStore(mstStore.wocky),
+  }
+}

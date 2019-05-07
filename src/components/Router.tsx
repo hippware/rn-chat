@@ -44,7 +44,6 @@ import Attribution from './Attribution'
 import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import {IStore} from 'src/store'
-import {IPersistable} from 'src/store/PersistableModel'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
 import ChatTitle from './Chats/ChatTitle'
 import {IAuthStore} from 'src/store/AuthStore'
@@ -60,12 +59,12 @@ type Props = {
   locationStore?: ILocationStore
   navStore?: INavStore
   iconStore?: IconStore
-  store?: IStore & IPersistable
+  store?: IStore
   authStore?: IAuthStore
   analytics?: any
 }
 
-@inject('store', 'wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'authStore')
+@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -89,14 +88,13 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   render() {
-    const {store, iconStore, wocky, navStore, authStore} = this.props
+    const {iconStore, wocky, navStore, authStore} = this.props
 
     return (
       <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
-            <Scene key="load" component={Launch} on={store!.hydrate} success="checkCredentials" failure="preConnection" />
-            <Scene key="checkCredentials" on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
+            <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
