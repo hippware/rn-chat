@@ -122,4 +122,4 @@ const GeocodingStore = types.model('GeocodingStore', {}).actions(self => {
   return {reverse, details, query}
 })
 
-export default GeocodingStore.create({})
+export default GeocodingStore

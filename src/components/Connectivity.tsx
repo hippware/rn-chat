@@ -8,7 +8,6 @@ import {IWocky} from 'wocky-client'
 import {IHomeStore} from '../store/HomeStore'
 import {ILocationStore} from '../store/LocationStore'
 import {IAuthStore} from 'src/store/AuthStore'
-import {IStore} from 'src/store'
 import _ from 'lodash'
 import NotificationStore from 'src/store/NotificationStore'
 
@@ -19,18 +18,9 @@ type Props = {
   locationStore?: ILocationStore
   analytics?: any
   authStore?: IAuthStore
-  store?: IStore
 }
 
-@inject(
-  'wocky',
-  'homeStore',
-  'notificationStore',
-  'locationStore',
-  'analytics',
-  'authStore',
-  'store'
-)
+@inject('wocky', 'homeStore', 'notificationStore', 'locationStore', 'analytics', 'authStore')
 export default class Connectivity extends React.Component<Props> {
   @observable lastDisconnected = Date.now()
   retryDelay = 1000
@@ -83,13 +73,8 @@ export default class Connectivity extends React.Component<Props> {
   tryReconnect = async reason => {
     const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
-    const {authStore, store} = this.props
-    if (
-      AppState.currentState === 'active' &&
-      !model.connected &&
-      !model.connecting &&
-      store!.hydrated
-    ) {
+    const {authStore} = this.props
+    if (AppState.currentState === 'active' && !model.connected && !model.connecting) {
       try {
         this.props.analytics.track('reconnect_try', {
           ...info,

@@ -1,7 +1,7 @@
 import {types, Instance, getParent} from 'mobx-state-tree'
 import jsrsasign from 'jsrsasign'
 import uuid from 'uuid/v1'
-import {IStore} from '.'
+import {IStore} from './store'
 import DeviceInfo from 'react-native-device-info'
 
 const systemName = DeviceInfo.getSystemName()

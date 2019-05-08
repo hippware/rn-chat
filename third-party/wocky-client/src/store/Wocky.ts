@@ -593,10 +593,6 @@ export const Wocky = types
         self.sessionCount = 0
         self.username = null
       }),
-      afterCreate: () => {
-        self.geofenceBots.setRequest(self._loadGeofenceBots as any)
-        startReactions()
-      },
       startReactions,
       disposeReactions: () => {
         reactions.forEach(disposer => disposer())
@@ -604,5 +600,15 @@ export const Wocky = types
       },
     }
   })
+  .actions(self => ({
+    afterCreate: () => {
+      self.geofenceBots.setRequest(self._loadGeofenceBots as any)
+      self.startReactions()
+    },
+    beforeDestroy: () => {
+      self.disposeReactions()
+      self.clearCache()
+    },
+  }))
 
 export interface IWocky extends Instance<typeof Wocky> {}
