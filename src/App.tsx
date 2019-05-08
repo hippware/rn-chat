@@ -12,11 +12,16 @@ const App = () => {
   const [store, setStore] = useState()
 
   useEffect(() => {
-    createStore().then(s => setStore(s))
+    createStore().then(s => {
+      setStore(s)
+    })
   }, [])
 
-  return store ? (
-    <Provider store={store} {...store} analytics={analytics}>
+  if (!store) return null
+  const {mstStore, ...rest} = store
+
+  return (
+    <Provider store={mstStore} {...mstStore} {...rest} analytics={analytics}>
       <View style={{flex: 1}} testID="wrapper">
         <ErrorHandler>
           <TinyRobotRouter />
@@ -25,7 +30,7 @@ const App = () => {
         </ErrorHandler>
       </View>
     </Provider>
-  ) : null
+  )
 }
 
 export default App

@@ -1,4 +1,12 @@
-import {types, getEnv, addMiddleware, Instance, getSnapshot, applySnapshot} from 'mobx-state-tree'
+import {
+  types,
+  getEnv,
+  addMiddleware,
+  Instance,
+  getSnapshot,
+  applySnapshot,
+  flow,
+} from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 // todo: use react-native-community version instead
 import {AsyncStorage} from 'react-native'
@@ -89,6 +97,19 @@ const Store = types
     afterCreate() {
       analytics.identify(self.wocky)
     },
+    resetCache: flow(function*() {
+      const data = yield AsyncStorage.getItem(STORE_NAME)
+      const parsed = data && JSON.parse(data)
+      const newState = {
+        ...cleanState,
+        ...getMinimalStoreData(parsed),
+        appInfo,
+      }
+      self.wocky.beforeDestroy()
+      applySnapshot(self, newState)
+      self.wocky.afterCreate()
+      yield AsyncStorage.setItem(STORE_NAME, JSON.stringify(newState))
+    }),
   }))
 
 export interface IStore extends Instance<typeof Store> {}
@@ -99,37 +120,16 @@ export interface IStore extends Instance<typeof Store> {}
  */
 function getMinimalStoreData(data?: {authStore: object}): object {
   log('loadMinimal', data)
-  return {authStore: data && data.authStore}
-}
-
-let mstStore: IStore | undefined
-
-export async function resetCache() {
-  if (!mstStore) return
-  const data = await AsyncStorage.getItem(STORE_NAME)
-  const parsed = data && JSON.parse(data)
-  const {wocky} = mstStore
-  // shut down wocky
-  wocky.clearCache()
-  wocky.disposeReactions()
-
-  const newState = {
-    ...cleanState,
-    ...getMinimalStoreData(parsed),
+  return {
+    authStore: data && data.authStore,
     wocky: {host: settings.host},
-    appInfo,
   }
-  // wipe out old state and apply clean
-  applySnapshot(mstStore, newState)
-  wocky.startReactions()
-  await AsyncStorage.setItem(STORE_NAME, JSON.stringify(newState))
 }
 
 /**
  * Pull store data from the cache (if any) and return a store hydrated with that data
  */
 export async function createStore() {
-  if (!!mstStore) return
   let storeData
   try {
     const data = await AsyncStorage.getItem(STORE_NAME)
@@ -155,7 +155,7 @@ export async function createStore() {
     log('hydration error', err, storeData)
     storeData = getMinimalStoreData(storeData)
   }
-  mstStore = Store.create(
+  const mstStore = Store.create(
     {
       ...cleanState,
       ...storeData,
@@ -175,7 +175,7 @@ export async function createStore() {
   )
 
   return {
-    ...mstStore,
+    mstStore,
     reportStore,
     iconStore: new IconStore(),
     notificationStore: new NotificationStore(mstStore.wocky),
