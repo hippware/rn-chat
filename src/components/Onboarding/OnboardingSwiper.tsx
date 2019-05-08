@@ -10,29 +10,49 @@ import OnboardingAccelerometer from './OnboardingAccelerometer'
 import OnboardingNotifications from './OnboardingNotifications'
 import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
-import {inject} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react/native'
 import {minHeight} from '../Global'
 import {IWocky} from 'wocky-client'
 import PushNotification from 'react-native-push-notification'
 import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
 import {log, warn} from '../../utils/logger'
+import {IPermissionStore} from 'src/store/PermissionStore'
 
 type Props = {
   wocky?: IWocky
   contactStore?: ContactStore
+  permissionStore?: IPermissionStore
 }
 
-@inject('wocky', 'contactStore')
+@inject('wocky', 'contactStore', 'permissionStore')
+@observer
 export default class OnboardingSwiper extends React.Component<Props> {
   swiper: any
 
   render() {
     const pages: ReactElement[] = []
-    pages.push(<OnboardingLocation key="0" onPress={this.checkLocationPermissions} />)
+    const {
+      allowsLocation,
+      allowsAccelerometer,
+      allowsNotification,
+      loaded,
+    } = this.props.permissionStore!
+
+    if (!loaded) {
+      return null
+    }
+
+    if (!allowsLocation) {
+      pages.push(<OnboardingLocation key="0" onPress={this.checkLocationPermissions} />)
+    }
     if (Platform.OS === 'ios') {
-      pages.push(<OnboardingAccelerometer key="1" onPress={this.checkAccelerometerPermissions} />)
-      pages.push(<OnboardingNotifications key="2" onPress={this.checkNotificationPermissions} />)
+      if (!allowsAccelerometer) {
+        pages.push(<OnboardingAccelerometer key="1" onPress={this.checkAccelerometerPermissions} />)
+      }
+      if (!allowsNotification) {
+        pages.push(<OnboardingNotifications key="2" onPress={this.checkNotificationPermissions} />)
+      }
     }
     pages.push(<OnboardingFindFriends key="3" onPress={this.findFriends} onSkip={this.done} />)
     pages.push(<OnboardingFindFriendsList key="4" onPress={this.done} />)

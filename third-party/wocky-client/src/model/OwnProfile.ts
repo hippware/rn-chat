@@ -199,7 +199,7 @@ export const OwnProfile = types
     }: any) {
       Object.assign(self, data)
       if (clientData) {
-        self.clientData = createClientData(clientData)
+        self.clientData = createClientData(clientData, self.clientData)
       }
       if (avatar) {
         self.avatar = self.service.files.get(avatar.id, avatar)

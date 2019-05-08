@@ -21,6 +21,7 @@ import LocationStore from './LocationStore'
 import SearchStore from './SearchStore'
 import ProfileValidationStore from './ProfileValidationStore'
 import NotificationStore from './NotificationStore'
+import {PermissionStore} from './PermissionStore'
 import CodepushStore from './CodePushStore'
 import HomeStore from './HomeStore'
 import NavStore from './NavStore'
@@ -72,6 +73,7 @@ const cleanState = {
   navStore: {},
   codePushStore: {},
   geocodingStore: {},
+  permissionStore: {},
 }
 
 const Store = types
@@ -86,6 +88,7 @@ const Store = types
     codePushStore: CodepushStore,
     navStore: NavStore,
     geocodingStore: GeocodingStore,
+    permissionStore: PermissionStore,
     appInfo: AppInfo,
   })
   .views(self => ({
