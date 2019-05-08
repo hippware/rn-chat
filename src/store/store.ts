@@ -74,6 +74,7 @@ const cleanState = {
   codePushStore: {},
   geocodingStore: {},
   permissionStore: {},
+  wocky: {host: settings.host},
 }
 
 const Store = types
@@ -124,8 +125,7 @@ export interface IStore extends Instance<typeof Store> {}
 function getMinimalStoreData(data?: {authStore: object}): object {
   log('loadMinimal', data)
   return {
-    authStore: data && data.authStore,
-    wocky: {host: settings.host},
+    authStore: data && data.authStore ? data.authStore : {},
   }
 }
 
