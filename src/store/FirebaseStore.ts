@@ -1,7 +1,7 @@
 import {types, getEnv, flow, getParent} from 'mobx-state-tree'
 import {when} from 'mobx'
 import {IWocky} from 'wocky-client'
-import {IEnv} from '.'
+import {IEnv} from './store'
 import {IAuthStore} from './AuthStore'
 import {Credentials} from './AppInfo'
 import {settings} from '../globals'

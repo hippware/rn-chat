@@ -4,9 +4,11 @@ import {Actions} from 'react-native-router-flux'
 import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import {RText} from './common'
+import codePush from 'react-native-code-push'
+import {IStore} from '../store/store'
 
 const DebugScreen = inject('store')(
-  observer(({store}) => (
+  observer(({store}: {store: IStore}) => (
     <View style={{flex: 1, padding: 40}}>
       <ScreenLink onPress={Actions.codePush}>GO TO CODEPUSH</ScreenLink>
       <ScreenLink onPress={Actions.locationDebug}>GO TO LOCATION DEBUG</ScreenLink>
@@ -15,7 +17,7 @@ const DebugScreen = inject('store')(
           // reset nav to 'reload' screen while resetting cache (prevent errors from screens/components listening to MST observables)
           Actions.reset('reload')
           await store.resetCache()
-          Actions.logged()
+          codePush.restartApp()
         }}
       >
         RESET CACHE

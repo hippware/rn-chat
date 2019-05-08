@@ -1,7 +1,7 @@
 /* tslint:disable:max-classes-per-file */
 import {types, applySnapshot, getRoot} from 'mobx-state-tree'
 import {IBot, IProfile, Location, ILocation} from 'wocky-client'
-import {IStore} from './index'
+import {IStore} from './store'
 import {autorun} from 'mobx'
 
 export class Card {

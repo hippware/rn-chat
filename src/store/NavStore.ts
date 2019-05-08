@@ -1,6 +1,6 @@
 import {types, getParent} from 'mobx-state-tree'
 import {reaction} from 'mobx'
-import {IStore} from './index'
+import {IStore} from './store'
 
 // navigation store for the app, all navigation-conditional logic should be placed here
 const NavStore = types
