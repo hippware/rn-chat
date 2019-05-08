@@ -5,7 +5,7 @@ import {colors} from '../constants'
 import {observer, inject} from 'mobx-react/native'
 import {RText} from './common'
 import codePush from 'react-native-code-push'
-import {IStore} from '../store/'
+import {IStore} from '../store/store'
 
 const DebugScreen = inject('store')(
   observer(({store}: {store: IStore}) => (
