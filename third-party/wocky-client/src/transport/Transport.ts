@@ -90,6 +90,8 @@ export class Transport {
       return res
     } catch (e) {
       this.disconnect()
+      e.token = token
+      e.host = host
       throw e
     }
   }
