@@ -51,6 +51,20 @@ export class Analytics {
       if (!properties) {
         Mixpanel.track(name)
       } else {
+        // Send events (which are errors) to bugsnag as well
+        if (properties.error) {
+          bsClient.notify(properties.error, report => {
+            report.errorClass = name
+            report.metadata = {
+              mixpanel: {
+                event: name,
+                properties,
+              },
+              ...properties.error,
+            }
+          })
+        }
+
         Mixpanel.trackWithProperties(name, properties)
       }
     } catch (err) {
