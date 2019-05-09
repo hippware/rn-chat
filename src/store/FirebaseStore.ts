@@ -7,6 +7,7 @@ import {Credentials} from './AppInfo'
 import {settings} from '../globals'
 import analytics from '../utils/analytics'
 import {warn, log} from '../utils/logger'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 type State = {
   resource?: string
@@ -54,6 +55,7 @@ const FirebaseStore = types
       } catch (err) {
         warn('RegisterWithToken error', err)
         self.setState({errorMessage: 'Error registering, please try again'})
+        bugsnagNotify(err, 'error_firebase_register')
         analytics.track('error_firebase_register', {error: err})
       } finally {
         self.setState({
@@ -128,6 +130,7 @@ const FirebaseStore = types
           disposer = when(() => !!self.token && self.phone, self.registerWithToken)
         } catch (err) {
           warn('Firebase onAuthStateChanged error:', err)
+          bugsnagNotify(err, 'auth_error_firebase')
           analytics.track('auth_error_firebase', {error: err})
           if (wocky && wocky.profile && wocky.connected) {
             wocky.logout()
@@ -166,6 +169,7 @@ const FirebaseStore = types
         try {
           yield auth.signOut()
         } catch (err) {
+          bugsnagNotify(err, 'error_firebase_logout')
           analytics.track('error_firebase_logout', {error: err})
           warn('firebase logout error', err)
         }
@@ -186,6 +190,7 @@ const FirebaseStore = types
         // register/login occurs as a reaction in processFirebaseAuthChange
         return true
       } catch (err) {
+        bugsnagNotify(err, 'sms_confirmation_fail', {phone})
         analytics.track('sms_confirmation_fail', {error: err, phone})
         switch (err.code) {
           case 'auth/too-many-requests':
@@ -215,6 +220,7 @@ const FirebaseStore = types
         register()
         analytics.track('verify_confirmation_success')
       } catch (err) {
+        bugsnagNotify(err, 'verify_confirmation_fail', {code})
         analytics.track('verify_confirmation_fail', {error: err, code})
         warn('confirmation fail', err)
         self.errorMessage = 'Error confirming code, please try again or resend code'

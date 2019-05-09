@@ -1,6 +1,7 @@
 import {types, Instance, getParent, flow, applySnapshot} from 'mobx-state-tree'
 import analytics from 'src/utils/analytics'
 import strategies, {AuthStrategy, Strategy} from './authStrategies'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 const AuthStore = types
   .model('AuthStore', {
@@ -31,6 +32,7 @@ const AuthStore = types
           strategy = strategies[self.strategyName]
           return strategy.login(store)
         } catch (error) {
+          bugsnagNotify(error, 'error_connection')
           analytics.track('error_connection', {error})
           return Promise.reject(error)
         }

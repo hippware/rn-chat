@@ -14,3 +14,15 @@ if (!__DEV__ && Platform.OS === 'android' && settings.isStaging) config.releaseS
 
 const client = new Client(config)
 export default client
+
+export const bugsnagNotify = (e: Error, name?: string, extra?: {[name: string]: any}): void => {
+  client.notify(e, report => {
+    if (name) report.errorClass = name
+
+    // metadata gets discarded like in https://github.com/bugsnag/bugsnag-react-native/issues/132
+    report.metadata = {
+      ...e,
+      extra: {...extra},
+    }
+  })
+}
