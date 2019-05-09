@@ -52,6 +52,7 @@ export const OwnProfile = types
       locationShares: types.optional(LocationSharePaginableList, {}),
       locationSharers: types.optional(LocationSharePaginableList, {}),
       clientData: types.optional(ClientData, {}),
+      onboarded: false,
     })
   )
   .postProcessSnapshot(snapshot => {
@@ -186,6 +187,9 @@ export const OwnProfile = types
     }
   })
   .actions(self => ({
+    setOnboarded: (value: boolean) => {
+      self.onboarded = value
+    },
     load({
       avatar,
       blocked = [],

@@ -8,7 +8,6 @@ const ClientData = types
       .model({
         sharePresencePrimed: false,
         guestOnce: false,
-        onboarded: false,
       })
       .views(self => ({
         get toJSON(): string {
@@ -26,7 +25,7 @@ const ClientData = types
     clear: () => {
       applySnapshot(self, {})
     },
-    flip: (property: 'sharePresencePrimed' | 'guestOnce' | 'onboarded') => {
+    flip: (property: 'sharePresencePrimed' | 'guestOnce') => {
       self[property] = true
     },
   }))
@@ -39,8 +38,6 @@ export function createClientData(data: string, existingData?: object) {
   if (data) {
     try {
       result = JSON.parse(data)
-      // ignore onboarded flag...only cache locally
-      delete result.onboarded
     } catch (e) {
       // ignore error
     }
