@@ -1,6 +1,7 @@
 import {types, Instance, flow, getParent} from 'mobx-state-tree'
 import Permissions from 'react-native-permissions'
 import {autorun} from 'mobx'
+import {Platform} from 'react-native'
 
 const AUTHORIZED = 'authorized'
 
@@ -36,14 +37,18 @@ export const PermissionStore = types
         Permissions.check('location', {type: 'always'}).then(check =>
           self.setAllowsLocation(check === AUTHORIZED)
         ),
-        Permissions.check('motion').then(check =>
-          // NOTE: accelerometer checks always come back as "restricted" on a simulator
-          self.setAllowsAccelerometer(check === AUTHORIZED)
-        ),
-        Permissions.check('notification').then(check =>
-          self.setAllowsNotification(check === AUTHORIZED)
-        ),
       ]
+      if (Platform.OS === 'ios') {
+        checkPromises.push(
+          Permissions.check('motion').then(check =>
+            // NOTE: accelerometer checks always come back as "restricted" on a simulator
+            self.setAllowsAccelerometer(check === AUTHORIZED)
+          ),
+          Permissions.check('notification').then(check =>
+            self.setAllowsNotification(check === AUTHORIZED)
+          )
+        )
+      }
       yield Promise.all(checkPromises)
     }),
   }))
