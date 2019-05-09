@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Refactor persistence (#3637, PR #3708)
 * Rework onboarding logic and variables (PR #3680)
   * Show Invite Friends page to existing users (#3358)
+  * Onboarding screens appear upon kill/reload (#3685)
 * Fix cache persistence for fresh installs
 
 # 4.9.0 - 2019 May 2
