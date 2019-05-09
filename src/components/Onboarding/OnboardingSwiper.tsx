@@ -137,7 +137,7 @@ export default class OnboardingSwiper extends React.Component<Props> {
   }
 
   private done = () => {
-    this.props.wocky!.profile!.clientData.flip('onboarded')
+    this.props.wocky!.profile!.setOnboarded(true)
     Actions.logged()
   }
 }

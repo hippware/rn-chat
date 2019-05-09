@@ -74,7 +74,7 @@ class TinyRobotRouter extends React.Component<Props> {
 
     autorun(
       () => {
-        const onboarded = wocky!.profile && wocky!.profile.clientData.onboarded
+        const onboarded = wocky!.profile && wocky!.profile.onboarded
         const {scene} = navStore!
         const {alwaysOn} = locationStore!
         if (onboarded && !alwaysOn) {
@@ -98,72 +98,70 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key="connect" on={authStore!.login} success="checkHandle" failure="preConnection" />
             <Scene key="checkProfile" on={() => wocky!.profile} success="checkHandle" failure="connect" />
             <Scene key="checkHandle" on={() => wocky!.profile!.handle} success="checkOnboarded" failure="signUp" />
-            <Scene key="checkOnboarded" on={() => wocky!.profile!.clientData.onboarded} success="logged" failure="onboarding" />
+            <Scene key="checkOnboarded" on={() => wocky!.profile!.onboarded} success="logged" failure="onboarding" />
             <Scene key="logout" on={authStore!.logout} success="preConnection" />
             <Scene key="liveLocationShare" on={() => wocky!.profile!.isLocationShared} success='liveLocationSettings' failure='liveLocationSelectFriends'/>
           </Lightbox>
           <Lightbox>
             <Stack initial hideNavBar key="main">
-              <Stack hideNavBar>
-                <Stack key="preConnection" navTransparent type="replace">
-                  <Scene key="slideshow" component={OnboardingSlideshow} onSignIn="signIn" onBypass="testRegisterScene" />
-                  <Scene key="signIn" component={SignIn} back />
-                  <Scene key="verifyCode" component={VerifyCode} />
-                  <Scene key="testRegisterScene" component={TestRegister} success="connect" />
-                </Stack>
-                <Scene key="signUp" component={SignUp} hideNavBar />
-                <Scene key="onboarding" component={OnboardingSwiper} hideNavBar />
-                <Scene key="camera" component={Camera} />
-                <Modal key="logged" hideNavBar headerMode="screen" type="replace">
-                  <Stack>
-                    <Stack hideNavBar renderer={SplitRenderer}>
-                      <Scene key="home" component={Home} hideNavBar />
-                      <Scene key="bottomMenu" component={BottomMenu} />
-                      <Scene key="createBot" component={CreationHeader} fromTop />
-                      <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
-                      <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
-                      <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
-                      <Scene key="editNote" component={EditNote} />
-                      <Scene key="notifications" component={Notifications} />
-                      <Scene key="friends" component={peopleLists.FriendList} />
-                      <Scene key="friendSearch" component={FriendSearch} />
-                      <Scene key="visitors" component={VisitorList} />
-                      <Scene key="profileDetails" component={ProfileDetail} />
-                      <Scene key="liveLocationCompose" component={LiveLocationCompose} />
-                      <Scene key="liveLocationSettings" component={LiveLocationSettings} />
-                    </Stack>
-                    <Scene key="chats" component={ChatListScreen} title="Messages" />
-                    <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
-                    <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
-                    <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
-                    {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
-                    <Scene key="myAccount" component={MyAccount} editMode back />
-                    <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
-                    <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
-                    <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
-                    <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-                    {settings.allowDebugScreen && [
-                      <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
-                      <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
-                      <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
-                    ]}
-                    {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
-                  </Stack>
-                  <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-                  <Scene
-                    key="searchUsers"
-                    component={peopleLists.SearchUsers}
-                    leftButtonImage={iconClose}
-                    onLeft={this.resetSearchStore}
-                    title="Search Users"
-                    rightButtonImage={null}
-                    wrap
-                  />
-                  <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-                  <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-
-                </Modal>
+              <Stack key="preConnection" navTransparent type="replace">
+                <Scene key="slideshow" component={OnboardingSlideshow} onSignIn="signIn" onBypass="testRegisterScene" />
+                <Scene key="signIn" component={SignIn} back />
+                <Scene key="verifyCode" component={VerifyCode} />
+                <Scene key="testRegisterScene" component={TestRegister} success="connect" />
               </Stack>
+              <Scene key="signUp" component={SignUp} hideNavBar />
+              <Scene key="onboarding" component={OnboardingSwiper} hideNavBar />
+              <Scene key="camera" component={Camera} />
+              <Modal key="logged" hideNavBar headerMode="screen" type="replace">
+                <Stack>
+                  <Stack hideNavBar renderer={SplitRenderer}>
+                    <Scene key="home" component={Home} hideNavBar />
+                    <Scene key="bottomMenu" component={BottomMenu} />
+                    <Scene key="createBot" component={CreationHeader} fromTop />
+                    <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
+                    <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
+                    <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
+                    <Scene key="editNote" component={EditNote} />
+                    <Scene key="notifications" component={Notifications} />
+                    <Scene key="friends" component={peopleLists.FriendList} />
+                    <Scene key="friendSearch" component={FriendSearch} />
+                    <Scene key="visitors" component={VisitorList} />
+                    <Scene key="profileDetails" component={ProfileDetail} />
+                    <Scene key="liveLocationCompose" component={LiveLocationCompose} />
+                    <Scene key="liveLocationSettings" component={LiveLocationSettings} />
+                  </Stack>
+                  <Scene key="chats" component={ChatListScreen} title="Messages" />
+                  <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
+                  <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
+                  <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
+                  {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
+                  <Scene key="myAccount" component={MyAccount} editMode back />
+                  <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
+                  <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
+                  <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
+                  <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                  {settings.allowDebugScreen && [
+                    <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
+                    <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
+                    <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
+                  ]}
+                  {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
+                </Stack>
+                <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                <Scene
+                  key="searchUsers"
+                  component={peopleLists.SearchUsers}
+                  leftButtonImage={iconClose}
+                  onLeft={this.resetSearchStore}
+                  title="Search Users"
+                  rightButtonImage={null}
+                  wrap
+                />
+                <Scene key="reportUser" component={ReportUser} title="Report User" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                <Scene key="reportBot" component={ReportBot} title="Report Bot" wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+
+              </Modal>
             </Stack>
             <Scene key="reload" hideNavBar type="replace" component={Launch} />
             <Scene key="locationWarning" component={LocationWarning} />
