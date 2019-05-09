@@ -10,6 +10,7 @@ import {ILocationStore} from '../store/LocationStore'
 import {IAuthStore} from 'src/store/AuthStore'
 import _ from 'lodash'
 import NotificationStore from 'src/store/NotificationStore'
+import {bugsnagNotify} from 'src/utils/bugsnagConfig'
 
 type Props = {
   wocky?: IWocky
@@ -85,6 +86,7 @@ export default class Connectivity extends React.Component<Props> {
         this.props.analytics.track('reconnect_success', {...info})
         this.retryDelay = 1000
       } catch (e) {
+        bugsnagNotify(e, 'reconnect_fail', info)
         this.props.analytics.track('reconnect_fail', {...info, error: e})
         // todo: error message will be different with GraphQL (?)
         if (e.toString().indexOf('invalid') !== -1) {
