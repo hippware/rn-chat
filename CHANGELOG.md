@@ -9,6 +9,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Better bot display logic using `isSubscribed` (PR #3694)
   * 'Follow Location' on an owners location profile (Rework #3682)
   * User can still see bot after unfollowing a location (Rework #3146)
+* Insert JWT token, host in Transport.login() exceptions (PR #3710)
+* Refactor persistence (#3637, PR #3708)
+* Rework onboarding logic and variables (PR #3680)
+  * Show Invite Friends page to existing users (#3358)
+* Fix cache persistence for fresh installs
 
 # 4.9.0 - 2019 May 2
 
