@@ -16,12 +16,11 @@ type Props = {
   botId: string
   wocky: IWocky
   notificationStore: any // TODO proper
-  store: any // TODO proper type
   analytics?: any
   searchStore?: ISearchStore
 }
 
-@inject('wocky', 'notificationStore', 'store', 'analytics', 'searchStore')
+@inject('wocky', 'notificationStore', 'analytics', 'searchStore')
 @observer
 class GeofenceShare extends React.Component<Props> {
   static rightButton = (props: Props) => <RightButton {...props} />
@@ -31,7 +30,7 @@ class GeofenceShare extends React.Component<Props> {
     const {getBot, profile} = this.props.wocky!
     this.bot = getBot({id: this.props.botId})
     this.props.searchStore!.localResult.setList(profile!.sortedFriends.map(f => ({profile: f})))
-    if (!this.props.store.sharePresencePrimed) {
+    if (!this.props.wocky!.profile!.clientData!.sharePresencePrimed) {
       // NOTE: had to add a delay to prevent immediately closing
       setTimeout(() => Actions.sharePresencePrimer(), 2000)
     }
