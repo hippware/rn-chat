@@ -130,6 +130,7 @@ function getMinimalStoreData(data?: {authStore: object}): object {
 }
 
 // migrate 3.9.3 users to 4.x.x
+// ToDo: Remove this migration once 3.9.3 is no longer supported and/or most/all users have updated to 4.x.x
 function tryMigrate(parsed): object {
   // get phone from old FirebaseStore and put it in new AuthStore
   if (parsed && parsed.firebaseStore && parsed.firebaseStore.phone) {
