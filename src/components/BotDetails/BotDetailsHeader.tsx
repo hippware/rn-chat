@@ -157,16 +157,16 @@ class BotDetailsHeader extends React.Component<Props, State> {
 }
 
 const VisitorsArea = observer(({bot}: {bot: IBot}) => {
-  let list: IProfile[] | null = null,
-    text: string,
-    onPress
-  if (bot.visitors.list.length > 0) {
+  let list: IProfile[] | undefined, text: string, count: number, onPress
+  if (bot.visitorsSize > 0) {
     list = bot.visitors.list
-    const prefix = list!.length > 1 ? 'are' : 'is'
+    count = bot.visitorsSize
+    const prefix = bot.visitorsSize > 1 ? 'are' : 'is'
     text = prefix + ' currently here!'
     onPress = () => Actions.visitors({botId: bot.id})
-  } else if (bot.subscribers.list.length > 1) {
+  } else if (bot.subscribers.count > 1) {
     list = bot.subscribers.list.filter((g: IProfile) => g.id !== bot.owner!.id)
+    count = bot.subscribers.count
     text = 'accepted the invite!'
   }
   let inner: Array<ReactElement<any>> | null = null
@@ -187,7 +187,7 @@ const VisitorsArea = observer(({bot}: {bot: IBot}) => {
       >
         <ProfileStack
           firstProfile={list[0]}
-          stackSize={list.length}
+          stackSize={count!}
           circleSize={45}
           textSize={16.5}
           fontFamily="bold"
