@@ -2,7 +2,7 @@ import {
   types,
   flow,
   getSnapshot,
-  getEnv,
+  getRoot,
   isAlive,
   IAnyModelType,
   Instance,
@@ -169,9 +169,9 @@ export const Bot = types
     return res
   })
   .actions(self => {
-    const {geocodingStore} = getEnv(self)
     return {
       save: flow(function*() {
+        const {geocodingStore} = getRoot(self)
         if (geocodingStore) {
           const data = yield geocodingStore.reverse(self.location)
           self.load({addressData: data.meta, address: data.address})
