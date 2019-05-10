@@ -129,6 +129,16 @@ function getMinimalStoreData(data?: {authStore: object}): object {
   }
 }
 
+// migrate 3.9.3 users to 4.x.x
+function tryMigrate(parsed): object {
+  // get phone from old FirebaseStore and put it in new AuthStore
+  if (parsed && parsed.firebaseStore && parsed.firebaseStore.phone) {
+    // if this is a 3.9.3 user then we want to start with just enough information to login and an otherwise clean cache
+    return {authStore: {phone: parsed.firebaseStore.phone, stategyName: 'firebase'}}
+  }
+  return parsed
+}
+
 /**
  * Pull store data from the cache (if any) and return a store hydrated with that data
  */
@@ -137,6 +147,7 @@ export async function createStore() {
   try {
     const data = await AsyncStorage.getItem(STORE_NAME)
     storeData = data && JSON.parse(data)
+    storeData = tryMigrate(storeData)
 
     // throw new Error('Hydrate minimally')
 
