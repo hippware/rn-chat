@@ -4,6 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.9.2 - 2019 May 9
+
+* Generic router and onboarding improvements (PR #3714)
+  * [dev] Remove onboarded from clientData (#3713)
+  * Logout doesn't return to the start screen (#3709)
+  * User taken to the "Let's get started!" screen with back caret (#3653)
+* HOTFIX: Check for motion and notification perms only on ios
+
+# 4.9.1 - 2019 May 9
+
 * [android] Add post-crop of camera photos (Android only) (PR #3695)
   * [android] Photos taken from camera aren't cropped (#3635)
 * Better bot display logic using `isSubscribed` (PR #3694)
@@ -15,6 +25,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Show Invite Friends page to existing users (#3358)
   * Onboarding screens appear upon kill/reload (#3685)
 * Fix cache persistence for fresh installs
+* Post some errors to bugsnag (PR #3712)
 
 # 4.9.0 - 2019 May 2
 
