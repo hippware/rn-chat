@@ -15,6 +15,7 @@ type Props = {
   botId: string
   wocky?: IWocky
   locationStore?: ILocationStore
+  isActive: boolean
 }
 
 const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
@@ -50,6 +51,9 @@ export default class VisitorList extends React.Component<Props> {
             </RText>
           ),
         }}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => this!.bot!.visitors.load()}
+        isActive={this.props.isActive}
       />
     )
   }
