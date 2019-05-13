@@ -16,6 +16,7 @@ const client = new Client(config)
 export default client
 
 export const bugsnagNotify = (e: Error, name?: string, extra?: {[name: string]: any}): void => {
+  if (__DEV__) return
   client.notify(e, report => {
     if (name) report.errorClass = name
 
