@@ -4,6 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Migrate users from 3.9.3 to 4.x.x without forced relogin (#3266)
+* "Know when friends arrive and depart" should only appear once (#3432)
+* Fix geocodingStore access (PR #3719)
+  * City, State field is blank after creation flow (Rework #3221)
+* Logout doesn't return to the start screen (Rework #3709)
+
 # 4.9.2 - 2019 May 9
 
 * Generic router and onboarding improvements (PR #3714)
