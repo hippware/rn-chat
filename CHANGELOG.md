@@ -9,6 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix geocodingStore access (PR #3719)
   * City, State field is blank after creation flow (Rework #3221)
 * Logout doesn't return to the start screen (Rework #3709)
+* Who's Here list and count on location does not exceed 10 users (#3683)
+* Back caret doesn't work on Who's Here screen (#3721)
 
 # 4.9.2 - 2019 May 9
 
