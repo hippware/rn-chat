@@ -1,5 +1,5 @@
 import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
-import {reaction, IReactionDisposer} from 'mobx'
+import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
@@ -577,6 +577,16 @@ export const Wocky = types
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.rosterItem, self._onRosterItem),
         reaction(() => self.transport.botVisitor, self._onBotVisitor),
+        autorun(
+          () => {
+            if (self.connected && !!self.profile && !!self.profile.hidden) {
+              self.transport.setPresenceStatusOnline(!self.profile.hidden.enabled)
+            }
+          },
+          {
+            delay: 1000,
+          }
+        ),
       ]
     }
 
