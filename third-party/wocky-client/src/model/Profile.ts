@@ -134,6 +134,9 @@ export const Profile = types
             self.subscribedBots.setRequest(
               self.service._loadSubscribedBots.bind(self.service, self.id)
             )
+            if (!self.loaded && !self.isBlocked) {
+              self.service.loadProfile(self.id)
+            }
           }
         },
         setStatus: (status: 'ONLINE' | 'OFFLINE') => {
