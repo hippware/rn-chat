@@ -11,16 +11,17 @@ import {Actions} from 'react-native-router-flux'
 type Props = {
   profile: IProfile
   children: any
+  showAvatarDot?: boolean
 }
 
-const ProfileCard = observer(({profile, children}: Props) => {
+const ProfileCard = observer(({profile, children, showAvatarDot}: Props) => {
   return (
     <Card onPress={() => Actions.profileDetails({item: profile!.id})}>
       <View style={styles.imageContainer}>
         <Avatar
           profile={profile}
           size={47}
-          hideDot
+          hideDot={!showAvatarDot}
           borderColor={colors.PINK}
           fontSize="large"
           fontFamily="regular"
