@@ -234,6 +234,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-json-web-token')
   implementation project(':react-native-action-sheet')
     implementation project(':react-native-image-crop-picker')
   implementation project(':react-native-android-open-settings')

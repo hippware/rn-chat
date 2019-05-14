@@ -96,6 +96,7 @@
     "react-native-fs": "^2.13.3",
     "react-native-gesture-handler": "github:kmagiera/react-native-gesture-handler#ff74e0edadd62518b45d85f251f527307457ab9e",
     "react-native-image-crop-picker": "^0.21.3",
+    "react-native-json-web-token": "github:hippware/react-native-json-web-token",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-localize": "^1.1.0",

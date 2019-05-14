@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.odemolliens.rn.jwt.ODJsonWebTokenPackage;
 import com.actionsheet.ActionSheetPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ODJsonWebTokenPackage(),
           new ActionSheetPackage(),
           new PickerPackage(),
           new AndroidOpenSettingsPackage(),
