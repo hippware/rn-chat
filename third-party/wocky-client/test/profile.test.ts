@@ -2,7 +2,10 @@ import {createUser, sleep, waitFor} from './support/testuser'
 import {IWocky, IProfile} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
 
-let user: IWocky, user2: IWocky, user1user2Profile, user2user1Profile: IProfile
+let user: IWocky,
+  user2: IWocky,
+  user1user2Profile: IProfile | undefined,
+  user2user1Profile: IProfile | undefined
 let user1phone, user2phone: string
 
 describe('New GraphQL profile tests', () => {
@@ -76,15 +79,15 @@ describe('New GraphQL profile tests', () => {
     user2user1Profile = await user2.loadProfile(user.username!)
     expect(user1user2Profile).toBeTruthy()
     expect(user2user1Profile).toBeTruthy()
-    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
-    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
-    expect(user1user2Profile.hasSentInvite).toBeFalsy()
-    expect(user2user1Profile.hasSentInvite).toBeFalsy()
-    await user1user2Profile.invite()
+    expect(user1user2Profile!.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile!.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile!.hasSentInvite).toBeFalsy()
+    expect(user2user1Profile!.hasSentInvite).toBeFalsy()
+    await user1user2Profile!.invite()
     expect(user.profile!.sentInvitations.length).toBe(1)
     expect(user.profile!.sentInvitations.list[0].id).toBe(user2.username)
-    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
-    await waitFor(() => user2user1Profile.hasSentInvite)
+    expect(user1user2Profile!.hasReceivedInvite).toBeTruthy()
+    await waitFor(() => user2user1Profile!.hasSentInvite)
     expect(user2.profile!.receivedInvitations.list[0].id).toBe(user.username)
   })
 
@@ -99,21 +102,21 @@ describe('New GraphQL profile tests', () => {
     expect(user2.profile!.sentInvitations.length).toBe(0)
     user1user2Profile = await user.loadProfile(user2.username!)
     user2user1Profile = await user2.loadProfile(user.username!)
-    expect(user1user2Profile.hasReceivedInvite).toBeTruthy()
-    expect(user2user1Profile.hasSentInvite).toBeTruthy()
+    expect(user1user2Profile!.hasReceivedInvite).toBeTruthy()
+    expect(user2user1Profile!.hasSentInvite).toBeTruthy()
   })
 
   it('accept invite', async () => {
-    expect(user2user1Profile.isFriend).toBeFalsy()
-    await user2user1Profile.invite() // became friends!
-    expect(user2user1Profile.hasReceivedInvite).toBeFalsy()
-    expect(user2user1Profile.isFriend).toBeTruthy()
+    expect(user2user1Profile!.isFriend).toBeFalsy()
+    await user2user1Profile!.invite() // became friends!
+    expect(user2user1Profile!.hasReceivedInvite).toBeFalsy()
+    expect(user2user1Profile!.isFriend).toBeTruthy()
     expect(user2.profile!.friends.length).toBe(1)
     expect(user2.profile!.friends.list[0].id).toBe(user.username)
   })
 
   it('check for notification', async () => {
-    await waitFor(() => user1user2Profile.isFriend)
+    await waitFor(() => user1user2Profile!.isFriend)
     expect(user.profile!.friends.length).toBe(1)
     expect(user.profile!.friends.list[0].id).toBe(user2.username)
     expect(user.profile!.receivedInvitations.length).toBe(0)
@@ -136,19 +139,29 @@ describe('New GraphQL profile tests', () => {
     user2user1Profile = await user2.loadProfile(user.username!)
     // console.log('PROFILE12', JSON.stringify(user1user2Profile))
     // console.log('PROFILE21', JSON.stringify(user1user2Profile))
-    expect(user1user2Profile.isFriend).toBeTruthy()
-    expect(user2user1Profile.isFriend).toBeTruthy()
+    expect(user1user2Profile!.isFriend).toBeTruthy()
+    expect(user2user1Profile!.isFriend).toBeTruthy()
+    await waitFor(
+      () => user1user2Profile!.status === 'ONLINE',
+      'user2 didnt come online in time',
+      2000
+    )
+    await waitFor(
+      () => user2user1Profile!.status === 'ONLINE',
+      'user1 didnt come online in time',
+      2000
+    )
   })
 
   it('unfriend, check notification', async () => {
     expect(user2.profile!.friends.length).toBe(1)
-    await user1user2Profile.unfriend()
-    expect(user1user2Profile.isFriend).toBeFalsy()
+    await user1user2Profile!.unfriend()
+    expect(user1user2Profile!.isFriend).toBeFalsy()
     expect(user.profile!.friends.length).toBe(0)
     // wait for 'NONE' contact notification processing
-    await waitFor(() => !user2user1Profile.isFriend)
+    await waitFor(() => !user2user1Profile!.isFriend)
     expect(user2.profile!.friends.length).toBe(0)
-    expect(user2user1Profile.isFriend).toBeFalsy()
+    expect(user2user1Profile!.isFriend).toBeFalsy()
   })
 
   it('relogin, check empty friends lists for both accounts', async () => {
@@ -163,9 +176,9 @@ describe('New GraphQL profile tests', () => {
     user2user1Profile = await user2.loadProfile(user.username!)
     // console.log('PROFILE12', JSON.stringify(user1user2Profile))
     // console.log('PROFILE21', JSON.stringify(user1user2Profile))
-    expect(user1user2Profile.hasReceivedInvite).toBeFalsy()
-    expect(user1user2Profile.hasSentInvite).toBeFalsy()
-    expect(user1user2Profile.isFriend).toBeFalsy()
+    expect(user1user2Profile!.hasReceivedInvite).toBeFalsy()
+    expect(user1user2Profile!.hasSentInvite).toBeFalsy()
+    expect(user1user2Profile!.isFriend).toBeFalsy()
   })
 
   // // TODO: check profile is online after presence enabled
@@ -204,9 +217,9 @@ describe('New GraphQL profile tests', () => {
 
   it('block and unblock', async () => {
     expect(user.profile!.blocked.length).toBe(0)
-    await user1user2Profile.block()
+    await user1user2Profile!.block()
     expect(user.profile!.blocked.length).toBe(1)
-    await user1user2Profile.unblock()
+    await user1user2Profile!.unblock()
     expect(user.profile!.blocked.length).toBe(0)
   })
 
@@ -219,6 +232,8 @@ describe('New GraphQL profile tests', () => {
     expect(user.profile!.hidden!.expires).toBe(null)
     expect(user.profile!.hidden!.enabled).toEqual(false)
   })
+
+  it('toggles presence', async () => {})
 
   // // TODO deal with verification of search?
   // // it('searches users', async done => {
