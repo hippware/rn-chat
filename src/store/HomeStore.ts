@@ -74,6 +74,7 @@ const HomeStore = types
     mapCenterLocation: types.maybeNull(Location),
     selectedId: types.maybe(types.string),
     mapType: types.optional(types.enumeration(['hybrid', 'standard']), 'standard'),
+    followingUser: false,
   })
   .views(self => {
     const {navStore, wocky} = getRoot<IStore>(self)
@@ -166,6 +167,7 @@ const HomeStore = types
     return {
       followUserOnMap(user: IProfile) {
         if (disposer) disposer()
+        self.followingUser = true
         disposer = autorun(() => self.setFocusedLocation(user.location), {
           name: 'FollowUserOnMap',
         })
@@ -175,6 +177,7 @@ const HomeStore = types
           disposer()
           disposer = null
         }
+        self.followingUser = false
       },
     }
   })
