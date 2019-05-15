@@ -22,7 +22,6 @@ function token(credentials: any) {
     ...credentials,
   }
 
-  // const password = generateWockyToken(payload)
   const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
   const header = {alg: 'HS512', typ: 'JWT'}
   const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
