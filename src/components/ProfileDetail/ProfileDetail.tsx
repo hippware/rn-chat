@@ -66,7 +66,6 @@ export default class ProfileDetail extends React.Component<Props> {
             tappable={false}
             fontFamily="regular"
             fontSize="large"
-            hideDot
             messageBtn={true}
           />
           <RText

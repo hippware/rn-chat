@@ -1126,6 +1126,23 @@ export class Transport {
     })
   }
 
+  async setPresenceStatusOnline(online: boolean): Promise<void> {
+    return this.voidMutation({
+      mutation: gql`
+        mutation presenceStatus(
+          $status: PresenceStatus!
+        ) {
+          presenceStatus(
+            input: {status: $status}
+          ) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {status: online ? 'ONLINE' : 'OFFLINE'},
+    })
+  }
+
   /******************************** SUBSCRIPTIONS ********************************/
 
   subscribeSharedLocations() {
