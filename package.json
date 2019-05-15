@@ -98,7 +98,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-localize": "^1.1.0",
-    "react-native-maps": "react-native-community/react-native-maps#f0027855d2bf9a740a99d42bac62c87973f000ed",
+    "react-native-maps": "^0.24.2",
     "react-native-mixpanel": "^1.1.1",
     "react-native-permissions": "^1.1.1",
     "react-native-pure-jwt": "github:hippware/react-native-pure-jwt#52c422d027c3e2aa9a3638c1b0386062d7634806",
