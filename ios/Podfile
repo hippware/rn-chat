@@ -42,6 +42,8 @@ def testing_pods
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 
   # Add new pods below this line
+  pod 'RNPureJwt', :path => '../node_modules/react-native-pure-jwt'
+
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'

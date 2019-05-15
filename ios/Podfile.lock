@@ -210,6 +210,9 @@ PODS:
     - RSKImageCropper
   - RNLocalize (1.1.0):
     - React
+  - RNPureJwt (2.0.1):
+    - JWT (= 3.0.0-beta.11)
+    - React
   - RSKImageCropper (2.2.1)
   - SSZipArchive (2.1.4)
   - yoga (0.59.2.React)
@@ -254,6 +257,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - RNPureJwt (from `../node_modules/react-native-pure-jwt`)
   - RSKImageCropper
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -325,6 +329,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-crop-picker"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNPureJwt:
+    :path: "../node_modules/react-native-pure-jwt"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -371,10 +377,11 @@ SPEC CHECKSUMS:
   RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98
   RNImageCropPicker: 754299983d07c450aec0834c0efe0ed114131ff3
   RNLocalize: 079a659b6ac62d98ac76e1050353a51a8e06f5bd
+  RNPureJwt: f3415c6ab61dbbca3f68444c7fdf6a07823a7a8b
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: e8a46e61744b8aef5898062f49772b9b442605d4
+PODFILE CHECKSUM: 34307960be1ba759a580a7e7ee7ce054f5f504bb
 
 COCOAPODS: 1.6.1

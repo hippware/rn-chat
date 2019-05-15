@@ -10370,10 +10370,6 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
   integrity sha512-xIeTo4s77wwKgBZLVRIZC9tM9/PkXS46Ul76NXmvmixEb3ZwqGdQesR3zRiLMOoIdfOURB6N9bba9po7+x9Bag==
 
-"react-native-json-web-token@github:hippware/react-native-json-web-token":
-  version "1.0.8"
-  resolved "https://codeload.github.com/hippware/react-native-json-web-token/tar.gz/0142b245371965d96a33b9287ceafd79eefec8f9"
-
 react-native-keyboard-aware-scroll-view@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.8.0.tgz#00bcaa38c91323913bb7a733059ad2bc4875f88c"
@@ -10405,6 +10401,10 @@ react-native-permissions@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
   integrity sha512-t0Ujm177bagjUOSzhpmkSz+LqFW04HnY9TeZFavDCmV521fQvFz82aD+POXqWsAdsJVOK3umJYBNNqCjC3g0hQ==
+
+"react-native-pure-jwt@github:hippware/react-native-pure-jwt#52c422d027c3e2aa9a3638c1b0386062d7634806":
+  version "2.0.1"
+  resolved "git+ssh://git@github.com/hippware/react-native-pure-jwt.git#52c422d027c3e2aa9a3638c1b0386062d7634806"
 
 react-native-push-notification@^3.1.2:
   version "3.1.2"

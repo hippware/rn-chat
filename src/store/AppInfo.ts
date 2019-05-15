@@ -1,9 +1,8 @@
 import {types, Instance, getParent, flow} from 'mobx-state-tree'
-import jsrsasign from 'jsrsasign'
 import uuid from 'uuid/v1'
 import {IStore} from './store'
 import DeviceInfo from 'react-native-device-info'
-import ODJsonWebToken from 'react-native-json-web-token'
+const jwt = require('react-native-pure-jwt').default
 
 const systemName = DeviceInfo.getSystemName()
 const systemVersion = DeviceInfo.getSystemVersion()
@@ -51,12 +50,11 @@ export const AppInfo = types
 
       // const password = generateWockyToken(payload)
       const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
-      const jwt = yield ODJsonWebToken.encodeDic('HS512', payload, magicKey)
+      const res = yield jwt.sign(payload, magicKey, {alg: 'HS512'})
       // const header = {alg: 'HS512', typ: 'JWT'}
       // const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-      console.log('GENERATED JWT:', jwt)
       // const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-      return jwt
+      return res
     }),
   }))
 

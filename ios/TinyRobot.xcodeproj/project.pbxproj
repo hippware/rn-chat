@@ -40,7 +40,6 @@
 		57786A3E7DB44B328862DF0B /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D547D421BC54B89BA838270 /* AppCenter-Config.plist */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		8741D90C228AC793000FD614 /* libODJsonWebToken.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8741D90B228AC62D000FD614 /* libODJsonWebToken.a */; };
 		87C4125C20E634FF0044AF0A /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C4124020E634EE0044AF0A /* libRCTPushNotification.a */; };
 		87C412A920E636620044AF0A /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87C4129620E636620044AF0A /* Roboto-Medium.ttf */; };
 		87C412AA20E636620044AF0A /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87C4129720E636620044AF0A /* Roboto-Light.ttf */; };
@@ -385,13 +384,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		8741D90A228AC62D000FD614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B4E97501A914DD299910655 /* ODJsonWebToken.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = ODJsonWebToken;
-		};
 		87AD9B4E21FF5DB80057F54C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -517,7 +509,6 @@
 		87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
 		87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
 		8DC8670C553D4D9C89ECE7CC /* libODJsonWebToken.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libODJsonWebToken.a; sourceTree = "<group>"; };
-		9B4E97501A914DD299910655 /* ODJsonWebToken.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ODJsonWebToken.xcodeproj; path = "../node_modules/react-native-json-web-token/ios/ODJsonWebToken.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D566D496818469DD8AB46D55 /* Pods-tinyrobot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot.debug.xcconfig"; sourceTree = "<group>"; };
@@ -588,7 +579,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8741D90C228AC793000FD614 /* libODJsonWebToken.a in Frameworks */,
 				398E6D8A2231EAEF00A8A69E /* libReactNativeConfig.a in Frameworks */,
 				3974AC9721F943EA003612BB /* libRCTContacts.a in Frameworks */,
 				397A73F0211A5D17008AC2EF /* libReactNativeTouchThroughView.a in Frameworks */,
@@ -805,7 +795,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				E98E347677DC41FFB677E379 /* AppCenterReactNative.xcodeproj */,
 				FC136934107845E4B59116F3 /* ReactNativeTouchThroughView.xcodeproj */,
-				9B4E97501A914DD299910655 /* ODJsonWebToken.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -848,14 +837,6 @@
 				2D02E47B1E0B4A5D006451C7 /* tinyrobot-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* tinyrobot-tvOSTests.xctest */,
 				87C414AF20E669F90044AF0A /* tinyrobotStaging.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8741D907228AC62D000FD614 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8741D90B228AC62D000FD614 /* libODJsonWebToken.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1120,10 +1101,6 @@
 				{
 					ProductGroup = 87C4138F20E65A9D0044AF0A /* Products */;
 					ProjectRef = E98E347677DC41FFB677E379 /* AppCenterReactNative.xcodeproj */;
-				},
-				{
-					ProductGroup = 8741D907228AC62D000FD614 /* Products */;
-					ProjectRef = 9B4E97501A914DD299910655 /* ODJsonWebToken.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -1456,13 +1433,6 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8741D90B228AC62D000FD614 /* libODJsonWebToken.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libODJsonWebToken.a;
-			remoteRef = 8741D90A228AC62D000FD614 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87AD9B4F21FF5DB80057F54C /* libjsi.a */ = {
