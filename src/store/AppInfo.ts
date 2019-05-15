@@ -53,7 +53,6 @@ export const AppInfo = types
       const res = yield jwt.sign(payload, magicKey, {alg: 'HS512'})
       // const header = {alg: 'HS512', typ: 'JWT'}
       // const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-      // const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
       return res
     }),
   }))
