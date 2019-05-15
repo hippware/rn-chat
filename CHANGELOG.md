@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* 'GraphQL error: User not found' (#3370)
+
 # 4.10.0 - 2019 May 14
 
 * Point Staging app back to `staging.dev.tinyrobot.com`
