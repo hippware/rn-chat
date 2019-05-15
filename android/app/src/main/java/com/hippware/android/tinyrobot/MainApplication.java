@@ -3,6 +3,8 @@ package com.hippware.android.tinyrobot;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.zaguiini.RNPureJwt.RNPureJwtPackage;
+//import com.zaguini.rnjwt.RNJwtPackage;
 import com.actionsheet.ActionSheetPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
@@ -50,32 +52,16 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new ActionSheetPackage(),
-          new PickerPackage(),
-          new AndroidOpenSettingsPackage(),
-          new ExtraDimensionsPackage(),
-          new RNLocalizePackage(),
-          new RNBackgroundGeolocation(),
-          BugsnagReactNative.getPackage(),
-          new ReactNativePushNotificationPackage(),
-          new LinearGradientPackage(),
-          new RNFSPackage(),
-          new TouchThroughViewPackage(),
-          new RNMixpanel(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
+          new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
+          new RNBackgroundGeolocation(), BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(),
+          new LinearGradientPackage(), new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(),
           new RNDeviceInfo(),
-          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
-          new RNGestureHandlerPackage(),
-          new RNFirebasePackage(),
-          new RNFirebaseAuthPackage(),
-          new RNFirebaseMessagingPackage(),
-          new RNFirebaseLinksPackage(),
-          new MapsPackage(),
-          new ReactNativeConfigPackage(),
-          new RNCameraKitPackage(),
-          new ReactNativeContacts()
-      );
+          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
+              getApplicationContext(), BuildConfig.DEBUG),
+          new RNGestureHandlerPackage(), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
+          new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage(),
+          new ReactNativeConfigPackage(), new RNCameraKitPackage(), new ReactNativeContacts());
     }
 
     @Override
