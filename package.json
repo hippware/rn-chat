@@ -101,7 +101,7 @@
     "react-native-maps": "^0.24.2",
     "react-native-mixpanel": "^1.1.1",
     "react-native-permissions": "^1.1.1",
-    "react-native-pure-jwt": "github:hippware/react-native-pure-jwt#52c422d027c3e2aa9a3638c1b0386062d7634806",
+    "react-native-pure-jwt": "github:hippware/react-native-pure-jwt#3115006",
     "react-native-push-notification": "^3.1.2",
     "react-native-router-flux": "^4.1.0-beta.5",
     "react-native-snap-carousel": "^3.7.5",
