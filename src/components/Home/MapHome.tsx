@@ -76,7 +76,6 @@ export default class MapHome extends React.Component<Props> {
 
   // NOTE: this runs _very_ often while panning/scrolling the map...thus the throttling
   onRegionChange = _.throttle(({latitudeDelta}: MapViewRegion) => {
-    if (!this.animating) this.props.homeStore!.stopFollowingUserOnMap()
     if (latitudeDelta) {
       this.props.homeStore!.setMapType(latitudeDelta <= TRANS_DELTA ? 'hybrid' : 'standard')
     }
@@ -85,7 +84,7 @@ export default class MapHome extends React.Component<Props> {
   onRegionChangeComplete = async (region: MapViewRegion) => {
     this.animating = false
     const {creationMode, setMapCenter, setFocusedLocation} = this.props.homeStore!
-    setMapCenter(region)
+    setMapCenter(region as any)
     setFocusedLocation(null) // reset bot focused location, otherwise 'current location' CTA will not work
 
     // don't add bot during creation mode (to avoid replacing of new location)
@@ -122,6 +121,15 @@ export default class MapHome extends React.Component<Props> {
     }
   }
 
+  // HACK: more details at https://github.com/hippware/rn-chat/issues/3692#issuecomment-492857934
+  onMapTapOrPan = event => {
+    const {followingUser, stopFollowingUserOnMap} = this.props.homeStore!
+    if (followingUser) {
+      stopFollowingUserOnMap()
+    }
+    return false
+  }
+
   render() {
     const {locationStore, homeStore} = this.props
     const {list, detailsMode, creationMode, fullScreenMode, mapType} = homeStore!
@@ -150,7 +158,8 @@ export default class MapHome extends React.Component<Props> {
           style={commonStyles.absolute}
           customMapStyle={mapStyle}
           scrollEnabled={!detailsMode}
-          mapType={mapType}
+          onStartShouldSetResponder={this.onMapTapOrPan}
+          mapType={mapType as any}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
           rotateEnabled={false}

@@ -124,11 +124,11 @@ PODS:
     - React/Core (= 0.59.2)
   - react-native-blur (0.8.0):
     - React
-  - react-native-google-maps (0.23.0):
+  - react-native-google-maps (0.24.2):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 2.5.0)
     - React
-  - react-native-maps (0.23.0):
+  - react-native-maps (0.24.2):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
@@ -365,8 +365,8 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 9d063e2f356c8cd2f54dd550d4507740037cbabe
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  react-native-google-maps: dd3cee2ea5d77ffba4f03b1fd64891e5113b3193
-  react-native-maps: 7525a32bcd025af8cf3b6c469af9b8758245db72
+  react-native-google-maps: 568cb03d0eae7fef93626f65d05be55642404ed4
+  react-native-maps: 0316ed017dbb64b33b227751fa810e2454fcfa39
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee

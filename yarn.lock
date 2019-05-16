@@ -10388,9 +10388,10 @@ react-native-localize@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.1.0.tgz#d0a0cd3edab969fbba0b426f3a5674684b74c0bb"
   integrity sha512-bHXmycxmSdUPXDEvMKJAhJnN6e/ozrXKP4Vlbs9+Vq/iv3X76EHMqYpTOj/+D38IONVhS5lYZmRs8tcimyegiA==
 
-react-native-maps@react-native-community/react-native-maps#f0027855d2bf9a740a99d42bac62c87973f000ed:
-  version "0.23.0"
-  resolved "https://codeload.github.com/react-native-community/react-native-maps/tar.gz/f0027855d2bf9a740a99d42bac62c87973f000ed"
+react-native-maps@^0.24.2:
+  version "0.24.2"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.24.2.tgz#19974f967cb0c2e24dab74ca879118e0932571b2"
+  integrity sha512-1iNIDikp2dkCG+8DguaEviYZiMSYyvwqYT7pO2YTZvuFRDSc/P9jXMhTUnSh4wNDlEeQ47OJ09l0pwWVBZ7wxg==
 
 react-native-mixpanel@^1.1.1:
   version "1.1.1"
