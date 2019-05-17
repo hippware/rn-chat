@@ -75,7 +75,12 @@ export default class Connectivity extends React.Component<Props> {
     const info = {reason, currentState: AppState.currentState}
     const model = this.props.wocky!
     const {authStore} = this.props
-    if (AppState.currentState === 'active' && !model.connected && !model.connecting) {
+    if (
+      AppState.currentState === 'active' &&
+      !model.connected &&
+      !model.connecting &&
+      authStore!.canLogin
+    ) {
       try {
         this.props.analytics.track('reconnect_try', {
           ...info,
