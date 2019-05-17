@@ -48,12 +48,7 @@ export const AppInfo = types
         ...credentials,
       }
 
-      // const password = generateWockyToken(payload)
-      const magicKey = '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH'
-      const res = yield jwt.sign(payload, magicKey, {alg: 'HS512'})
-      // const header = {alg: 'HS512', typ: 'JWT'}
-      // const jwt = jsrsasign.jws.JWS.sign('HS512', header, payload, {utf8: magicKey})
-      return res
+      return yield jwt.sign(payload, null, {alg: 'HS512'})
     }),
   }))
 
