@@ -4,10 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.11.0 - 2019 May 16
+
 * 'GraphQL error: User not found' (#3370)
 * Implement new available/unavailable presence behaviour (#3663)
   * Bringing back 'blue dot' online presence indicator (#3657)
 * Use native tweaked react-native-pure-jwt for JWT signing (PR #3730)
+* Auto-center with auto-follow feature isn't staying centered (#3692)
 
 # 4.10.0 - 2019 May 14
 
