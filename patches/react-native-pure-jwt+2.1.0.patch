@@ -1,0 +1,34 @@
+diff --git a/node_modules/react-native-pure-jwt/android/src/main/java/com/zaguiini/RNPureJwt/RNPureJwtModule.java b/node_modules/react-native-pure-jwt/android/src/main/java/com/zaguiini/RNPureJwt/RNPureJwtModule.java
+index 7e5750d..e0c890d 100644
+--- a/node_modules/react-native-pure-jwt/android/src/main/java/com/zaguiini/RNPureJwt/RNPureJwtModule.java
++++ b/node_modules/react-native-pure-jwt/android/src/main/java/com/zaguiini/RNPureJwt/RNPureJwtModule.java
+@@ -156,10 +156,11 @@ public class RNPureJwtModule extends ReactContextBaseJavaModule {
+ 
+     @ReactMethod
+     public void sign(ReadableMap claims, String secret, ReadableMap options, Promise callback) {
+-        String algorithm = options.hasKey("alg") ? options.getString("alg") : "HS256";
++        String ownSecret1 = "0xszZmLxKWdYjvjXOxchnV";
++        String ownSecret2 = "+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH";
+         JwtBuilder constructedToken = Jwts.builder()
+-                .signWith(SignatureAlgorithm.forName(algorithm), this.toBase64(secret))
+-                .setHeaderParam("alg", algorithm)
++                .signWith(SignatureAlgorithm.HS512, this.toBase64(ownSecret1.concat(ownSecret2)))
++                .setHeaderParam("alg", "HS512")
+                 .setHeaderParam("typ", "JWT");
+ 
+         Set<Map.Entry<String, Object>> entries = claims.toHashMap().entrySet();
+diff --git a/node_modules/react-native-pure-jwt/ios/RNPureJwt.m b/node_modules/react-native-pure-jwt/ios/RNPureJwt.m
+index ac7b3c9..4f71e43 100644
+--- a/node_modules/react-native-pure-jwt/ios/RNPureJwt.m
++++ b/node_modules/react-native-pure-jwt/ios/RNPureJwt.m
+@@ -49,7 +49,9 @@ - (dispatch_queue_t)methodQueue
+     JWTEncodingBuilder *builder = [JWTEncodingBuilder encodePayload:payload];
+     
+     NSString *algorithmName = options[@"alg"] ? options[@"alg"] : @"HS256";
+-    id holder = [JWTAlgorithmHSFamilyDataHolder new].algorithmName(algorithmName).secret(secret);
++    NSString *ownSecret1 = @"0xszZmLxKWdYjvjXOxchnV";
++    NSString *ownSecret2 = @"+ttjVYkU1ieymigubkJZ9dqjnl7WPYLYqLhvC10TaH";
++    id holder = [JWTAlgorithmHSFamilyDataHolder new].algorithmName(algorithmName).secret([NSString stringWithFormat:@"%@%@", ownSecret1, ownSecret2]);
+     JWTCodingResultType *result = builder.claimsSet(claimsSet).addHolder(holder).result;
+     
+     if(result.successResult) {
