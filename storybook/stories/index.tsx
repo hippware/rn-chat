@@ -20,6 +20,7 @@ import {
 } from './rn-touch-through-view/ListOnMap'
 import BotDetailsStory from './BotDetailsStory'
 import SignUpStory from './SignUpStory'
+import CameraStory from './CameraStory'
 
 function emptyFn() {
   /* noop */
@@ -42,3 +43,7 @@ storiesOf('Onboarding', module)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
   .add('5 - FindFriendsList', () => <MockFindFriends />)
   .add('6 - SignUp', () => <SignUpStory />)
+
+storiesOf('Camera', module)
+  // tslint:disable-next-line
+  .add('1 - Default', () => <CameraStory />)
