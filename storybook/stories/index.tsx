@@ -20,6 +20,7 @@ import {
 } from './rn-touch-through-view/ListOnMap'
 import BotDetailsStory from './BotDetailsStory'
 import SignUpStory from './SignUpStory'
+import ImagePickerStory from './ImagePickerStory'
 
 function emptyFn() {
   /* noop */
@@ -33,7 +34,6 @@ storiesOf('Touch Through View + Flatlist', module)
   .add('Friend Search', () => <MockFriendSearch />)
 
 storiesOf('Onboarding', module)
-  // tslint:disable-next-line
   .add('1 - Location', () => <OnboardingLocation onPress={emptyFn} />)
   .add('1a - Location Warning IOS', () => <LocationWarningIOS onPress={emptyFn} />)
   .add('1b - Location Warning Android', () => <LocationWarningAndroid onPress={emptyFn} />)
@@ -42,3 +42,5 @@ storiesOf('Onboarding', module)
   .add('4 - FindFriends', () => <OnboardingFindFriends onPress={emptyFn} onSkip={emptyFn} />)
   .add('5 - FindFriendsList', () => <MockFindFriends />)
   .add('6 - SignUp', () => <SignUpStory />)
+
+storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)

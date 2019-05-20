@@ -87,8 +87,12 @@ async function launchCamera(): Promise<PickerImage | void> {
     Keyboard.dismiss()
     return new Promise(resolve => {
       Actions.camera({
-        afterImagePicked: image =>
-          resolve(Platform.select({android: cropImage(image), ios: image})),
+        afterImagePicked: async image => {
+          if (Platform.OS === 'android') {
+            image = await cropImage(image)
+          }
+          resolve(image)
+        },
       })
     })
   }
