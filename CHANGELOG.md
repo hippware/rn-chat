@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Only try login() if canLogin is true. (PR #3741)
+  * Fixes: error_connection in src/store/AuthStore.ts:30 (#3724)
+* [dev] Obfuscate wocky magic key (#3104)
+
 # 4.11.0 - 2019 May 16
 
 * 'GraphQL error: User not found' (#3370)
