@@ -179,12 +179,20 @@ export async function createStore() {
     env
   )
 
-  initializePushNotifications(mstStore.wocky.enablePush)
+  const requestPushPermissions = initializePushNotifications(mstStore.wocky.enablePush)
   addMiddleware(mstStore, simpleActionLogger)
   autorun(
     () => {
       const state = getSnapshot(mstStore!)
       AsyncStorage.setItem(STORE_NAME, JSON.stringify(state))
+    },
+    {delay: 1000}
+  )
+  autorun(
+    async () => {
+      const {wocky, permissionStore} = mstStore
+      if (wocky.connected && !!wocky.profile && permissionStore.allowsNotification)
+        requestPushPermissions()
     },
     {delay: 1000}
   )
