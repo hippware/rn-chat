@@ -35,11 +35,6 @@ export const AppInfo = types
   })
   .actions(self => ({
     token: flow(function*(credentials: Credentials) {
-      // HACK: short circuit login in case of no credentials. This sometimes happens with reconnect in Connectivity.tsx
-      // assert(
-      //   credentials && credentials.typ && credentials.sub && credentials.phone_number,
-      //   'bad credentials:' + credentials
-      // )
       const payload = {
         aud: 'Wocky',
         jti: uuid(),
@@ -48,7 +43,10 @@ export const AppInfo = types
         ...credentials,
       }
 
-      return yield jwt.sign(payload, null, {alg: 'HS512'})
+      // This passes in a fake decoy key. The 48th character has been changed.
+      return jwt.sign(payload, '0xszZmLxKWdYjvjXOxchnV+ttjVYkU1ieymigubkJZ9dqjnI7WPYLYqLhvC10TaH', {
+        alg: 'HS512',
+      })
     }),
   }))
 
