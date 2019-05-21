@@ -48,6 +48,10 @@ export const PermissionStore = types
             self.setAllowsNotification(check === AUTHORIZED)
           )
         )
+      } else {
+        // on Android...
+        self.setAllowsNotification(true)
+        self.setAllowsAccelerometer(true)
       }
       yield Promise.all(checkPromises)
     }),

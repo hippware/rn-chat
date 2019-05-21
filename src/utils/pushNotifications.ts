@@ -3,7 +3,9 @@ import PushNotification from 'react-native-push-notification'
 import {Linking, Platform} from 'react-native'
 import analytics from './analytics'
 
-export default (onRegistered: (token: string, platform: 'FCM' | 'APNS') => void) => {
+export default (
+  onRegistered: (token: string, platform: 'FCM' | 'APNS') => void
+): (() => Promise<any>) => {
   PushNotification.configure({
     onRegister({token}) {
       onRegistered(token, Platform.OS === 'android' ? 'FCM' : 'APNS')
@@ -36,4 +38,6 @@ export default (onRegistered: (token: string, platform: 'FCM' | 'APNS') => void)
       PushNotification.setApplicationIconBadgeNumber(0)
     }
   })
+
+  return () => PushNotification.requestPermissions()
 }
