@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Only try login() if canLogin is true. (PR #3741)
   * Fixes: error_connection in src/store/AuthStore.ts:30 (#3724)
 * [dev] Obfuscate wocky magic key (#3104)
+* [ios] Take Photo flow has extra step, user stuck in screen (#3717)
 
 # 4.11.0 - 2019 May 16
 
