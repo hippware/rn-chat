@@ -44,7 +44,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
     )
   }
 
-  scrollToEnd = () => this.list.scrollToEnd()
+  scrollToIndex = (...args) => this.list.scrollToIndex(...args)
 
   scrollToOffset = ({offset, animated}) => this.list.scrollToOffset({offset, animated})
 }
