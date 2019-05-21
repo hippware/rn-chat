@@ -18,7 +18,7 @@ import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
 import {createPaginable} from './PaginableList'
 import {Base} from './Base'
-import {IPagingList} from '../transport/types'
+import {IPaginableList} from '../transport/types'
 
 const Invitation = types.model('BotInvitation', {
   id: types.string,
@@ -148,7 +148,7 @@ export const Bot = types
 
       // load visitors/guests/subscribers
       if (data.visitors) {
-        ;(self.visitors as IPagingList<any>).loadWithData({
+        ;(self.visitors as IPaginableList<any>).loadWithData({
           list: data.visitors,
           count: data.visitors.length,
           force: true,
@@ -157,7 +157,7 @@ export const Bot = types
       }
       delete data.visitors
       if (data.posts) {
-        ;(self.posts as IPagingList<IBotPost>).loadWithData({
+        ;(self.posts as IPaginableList<IBotPost>).loadWithData({
           list: data.posts,
           count: data.posts.length,
           force: true,

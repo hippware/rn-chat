@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Clipboard, TouchableOpacity} from 'react-native'
-import {when, observable, runInAction} from 'mobx'
+import {observable, runInAction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {k} from '../Global'
 import {colors} from '../../constants'

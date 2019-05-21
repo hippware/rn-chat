@@ -4,6 +4,9 @@ export interface IPagingList<T> {
   list: T[]
   cursor?: string
   count: number
+}
+
+export interface IPaginableList<T> extends IPagingList<T> {
   loading: boolean
   finished: boolean
   remove: (id: string) => void
