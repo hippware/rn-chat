@@ -20,7 +20,7 @@ import {
   BOT_POST_LIST_PROPS,
   MESSAGE_PROPS,
   AREA_TOO_LARGE,
-  LOCATION_PROPS,
+  USER_LOCATION_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -325,9 +325,11 @@ export class Transport {
           $longitude: Float!
           $accuracy: Float!
           $device: String!
+          $activity: String
+          $activityConfidence: Int
         ) {
           userLocationUpdate(
-            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, device: $device}
+            input: {accuracy: $accuracy, lat: $latitude, lon: $longitude, activity: $activity, activityConfidence: $activityConfidence, device: $device}
           ) {
             ${VOID_PROPS}
           }
@@ -336,6 +338,7 @@ export class Transport {
       variables: {...params, device: this.resource},
     })
   }
+
   async userLocationShare(userId: string, expiresAt: Date): Promise<void> {
     return this.voidMutation({
       mutation: gql`
@@ -1154,7 +1157,7 @@ export class Transport {
               id
             }
             location {
-              ${LOCATION_PROPS}
+              ${USER_LOCATION_PROPS}
             }
           }
         }

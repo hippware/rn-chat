@@ -1,4 +1,4 @@
-import {types, Instance, SnapshotIn} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, getSnapshot} from 'mobx-state-tree'
 import moment from 'moment'
 
 export const createLocation = ({
@@ -6,14 +6,26 @@ export const createLocation = ({
   lon,
   accuracy,
   createdAt,
+  activity,
+  activityConfidence,
 }: {
   lat: number
   lon: number
   accuracy: number
   createdAt: Date
+  activity: string | null
+  activityConfidence: number | null
 }) => {
-  return Location.create({latitude: lat, longitude: lon, accuracy, createdAt})
+  return Location.create({
+    latitude: lat,
+    longitude: lon,
+    accuracy,
+    createdAt,
+    activity: activity || undefined,
+    activityConfidence: activityConfidence || undefined,
+  })
 }
+
 export const Location = types
   .model('Location', {
     latitude: types.number,
@@ -21,6 +33,9 @@ export const Location = types
     accuracy: types.maybeNull(types.number),
     createdAt: types.maybe(types.Date),
     fromNow: '',
+    // todo: make this an enumeration?
+    activity: types.maybe(types.string),
+    activityConfidence: types.maybe(types.number),
   })
   .volatile(() => ({
     isCurrent: false,
