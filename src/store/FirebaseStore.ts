@@ -8,6 +8,7 @@ import {settings} from '../globals'
 import analytics from '../utils/analytics'
 import {warn, log} from '../utils/logger'
 import {bugsnagNotify} from 'src/utils/bugsnagConfig'
+import firebase0 from 'react-native-firebase'
 
 type State = {
   resource?: string
@@ -216,7 +217,14 @@ const FirebaseStore = types
           throw new Error('Phone not verified')
         }
         analytics.track('verify_confirmation_try', {code, resource})
-        yield confirmResult.confirm(code)
+
+        // Work-around for rn-chat#3750 instead of calling .confirm(code)
+        const credential = firebase0.auth.PhoneAuthProvider.credential(
+          confirmResult.verificationId,
+          code
+        )
+        yield auth.signInWithCredential(credential)
+
         register()
         analytics.track('verify_confirmation_success')
       } catch (err) {
