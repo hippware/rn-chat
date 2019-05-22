@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Fixes: error_connection in src/store/AuthStore.ts:30 (#3724)
 * [dev] Obfuscate wocky magic key (#3104)
 * [ios] Take Photo flow has extra step, user stuck in screen (#3717)
+* [ios] New push token not generated with login (#3737)
+* Scroll to image uploaded on location profile (#3300)
 
 # 4.11.0 - 2019 May 16
 
