@@ -11,13 +11,14 @@ import {
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
 import {FileRef} from './File'
 import {Location, ILocation} from './Location'
-import {BotPostPaginableList, BotPost} from './BotPost'
+import {BotPostPaginableList, BotPost, IBotPost} from './BotPost'
 import {Address} from './Address'
 import * as utils from '../transport/utils'
 import {createUploadable} from './Uploadable'
 import {createUpdatable} from './Updatable'
 import {createPaginable} from './PaginableList'
 import {Base} from './Base'
+import {IPaginableList} from '../transport/types'
 
 const Invitation = types.model('BotInvitation', {
   id: types.string,
@@ -147,15 +148,21 @@ export const Bot = types
 
       // load visitors/guests/subscribers
       if (data.visitors) {
-        self.visitors.refresh()
-        data.visitors.forEach(p => self.visitors.add(self.service.profiles.get(p.id, p)))
+        ;(self.visitors as IPaginableList<any>).loadWithData({
+          list: data.visitors,
+          count: data.visitors.length,
+          force: true,
+          addMiddleware: p => self.service.profiles.get(p.id, p),
+        })
       }
       delete data.visitors
       if (data.posts) {
-        self.posts.refresh()
-        data.posts.forEach((p: any) =>
-          self.posts.add(BotPost.create({id: p.id}).load({service: self.service, ...p}))
-        )
+        ;(self.posts as IPaginableList<IBotPost>).loadWithData({
+          list: data.posts,
+          count: data.posts.length,
+          force: true,
+          addMiddleware: p => BotPost.create({id: p.id}).load({service: self.service, ...p}),
+        })
       }
       delete data.posts
       Object.assign(self, data)

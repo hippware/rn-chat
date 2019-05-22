@@ -6,6 +6,29 @@ export interface IPagingList<T> {
   count: number
 }
 
+export interface IPaginableList<T> extends IPagingList<T> {
+  loading: boolean
+  finished: boolean
+  remove: (id: string) => void
+  add: (item) => void
+  addToTop: (item) => void
+  loadWithData: (params: LoadWithDataParams) => void
+  length: number
+  first: T | null
+  last: T | null
+  exists: (id: string) => boolean
+  refresh: () => void
+  load: (params: {force?: boolean}) => Promise<T[]>
+}
+
+export type LoadWithDataParams = {
+  list: any[]
+  count: number
+  cursor?: string
+  force?: boolean
+  addMiddleware?: (p: any) => any
+}
+
 export type MediaUploadParams = {
   access?: string
   file: {

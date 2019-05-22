@@ -1,4 +1,5 @@
 import {types, flow, isAlive, IType} from 'mobx-state-tree'
+import {LoadWithDataParams} from '../transport/types'
 
 export function createPaginable<T>(type: IType<any, any, T>, name: string) {
   return types
@@ -28,6 +29,17 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
       addToTop: (item: any) => {
         self.remove(item.id)
         self.result.unshift(item)
+      },
+    }))
+    .actions(self => ({
+      loadWithData: ({list, count, cursor, force, addMiddleware}: LoadWithDataParams) => {
+        self.count = count
+        self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
+        if (force) {
+          self.result.clear()
+        }
+        list.forEach((el: any) => self.add(addMiddleware ? addMiddleware(el) : el))
+        self.finished = list.length === 0 || count === self.result.length
       },
     }))
     .extend(self => {
@@ -68,14 +80,8 @@ export function createPaginable<T>(type: IType<any, any, T>, name: string) {
             self.loading = true
             try {
               const {list, count, cursor, ...data}: any = yield request(self.cursor)
-              self.count = count
-              self.cursor = cursor || (list.length ? list[list.length - 1].id : null)
               Object.assign(self, data)
-              if (force) {
-                self.result.clear()
-              }
-              list.forEach((el: any) => self.add(el))
-              self.finished = list.length === 0 || count === self.result.length
+              self.loadWithData({list, count, cursor, force})
             } finally {
               self.loading = false
             }

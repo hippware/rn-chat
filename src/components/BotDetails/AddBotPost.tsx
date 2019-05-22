@@ -14,7 +14,7 @@ const IMAGE_HEIGHT = 70 * k
 type Props = {
   bot: IBot
   wocky?: IWocky
-  scrollToEnd: () => void
+  afterPostSent: () => void
   notificationStore?: any // TODO proper type
   navStore: any
 }
@@ -53,7 +53,7 @@ class AddBotPost extends React.Component<Props> {
       this.image = undefined
       this.textInput.blur()
       Keyboard.dismiss()
-      this.props.scrollToEnd()
+      this.props.afterPostSent()
     } catch (e) {
       const message =
         e.code === '403'
