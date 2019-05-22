@@ -6,6 +6,7 @@ import {createPaginable} from './PaginableList'
 import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
+import {UserActivityType} from '../transport/types'
 
 export const Profile = types
   .compose(
@@ -161,6 +162,14 @@ export const Profile = types
           } else {
             return ' (Not completed) '
           }
+        },
+        get currentActivity(): UserActivityType | null {
+          return self.location &&
+            self.location.activity &&
+            self.location.activityConfidence &&
+            self.location.activityConfidence >= 50
+            ? self.location.activity
+            : null
         },
       },
     }

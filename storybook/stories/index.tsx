@@ -21,6 +21,7 @@ import {
 import BotDetailsStory from './BotDetailsStory'
 import SignUpStory from './SignUpStory'
 import ImagePickerStory from './ImagePickerStory'
+import UserActivityStory from './UserActivityStory'
 
 function emptyFn() {
   /* noop */
@@ -44,3 +45,5 @@ storiesOf('Onboarding', module)
   .add('6 - SignUp', () => <SignUpStory />)
 
 storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
+
+storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)

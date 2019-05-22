@@ -1,6 +1,7 @@
 import {createUser, sleep, timestamp, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {getSnapshot} from 'mobx-state-tree'
+import {UserActivityType} from '../src/transport/types'
 
 describe('Live Locations', () => {
   let alice: IWocky, bob: IWocky
@@ -10,14 +11,14 @@ describe('Live Locations', () => {
     latitude: 1.1,
     longitude: 2.1,
     accuracy: 1,
-    activity: 'walking',
+    activity: 'on_foot' as UserActivityType,
     activityConfidence: 75,
   }
   const differentLocation = {
     longitude: 1.1,
     latitude: 1.1,
     accuracy: 1,
-    activity: 'still',
+    activity: 'still' as UserActivityType,
     activityConfidence: 75,
   }
 

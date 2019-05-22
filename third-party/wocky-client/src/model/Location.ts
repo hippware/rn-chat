@@ -1,5 +1,6 @@
-import {types, Instance, SnapshotIn, getSnapshot} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn} from 'mobx-state-tree'
 import moment from 'moment'
+import {UserActivityType} from '../transport/types'
 
 export const createLocation = ({
   lat,
@@ -13,7 +14,7 @@ export const createLocation = ({
   lon: number
   accuracy: number
   createdAt: Date
-  activity: string | null
+  activity: UserActivityType | null
   activityConfidence: number | null
 }) => {
   return Location.create({
@@ -34,7 +35,9 @@ export const Location = types
     createdAt: types.maybe(types.Date),
     fromNow: '',
     // todo: make this an enumeration?
-    activity: types.maybe(types.string),
+    activity: types.maybe(
+      types.enumeration(['still', 'on_foot', 'in_vehicle', 'on_bicycle', 'running'])
+    ),
     activityConfidence: types.maybe(types.number),
   })
   .volatile(() => ({
