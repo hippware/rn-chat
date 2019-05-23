@@ -10,6 +10,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [ios] Take Photo flow has extra step, user stuck in screen (#3717)
 * [ios] New push token not generated with login (#3737)
 * Scroll to image uploaded on location profile (#3300)
+* Showing user activity via user activity indicator (#3672)
 
 # 4.11.0 - 2019 May 16
 
