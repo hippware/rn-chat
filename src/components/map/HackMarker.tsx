@@ -1,10 +1,8 @@
 import React from 'react'
 import {Marker, MarkerProps} from 'react-native-maps'
-import {observer} from 'mobx-react/native'
 
 interface IProps extends MarkerProps {}
 
-@observer
 export default class HackMarker extends React.Component<IProps> {
   mounted = false
   state = {tracking: true}
@@ -25,6 +23,8 @@ export default class HackMarker extends React.Component<IProps> {
     if (!previousState.tracking && this.state.tracking) {
       return
     }
+
+    // open up a 0.5 sec window to allow re-rendering
     if (this.mounted && !this.state.tracking) {
       this.setState({tracking: true})
       setTimeout(() => this.mounted && this.setState({tracking: false}), 500)
@@ -38,7 +38,7 @@ export default class HackMarker extends React.Component<IProps> {
         {...props}
         anchor={{x: 0.5, y: 0.5}}
         tracksViewChanges={this.state.tracking}
-        style={[{borderWidth: 1, borderColor: 'red'}, style]}
+        style={style}
       >
         {children}
       </Marker>
