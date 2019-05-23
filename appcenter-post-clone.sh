@@ -30,6 +30,14 @@ echo "Detecting applesimutils"
 which applesimutils
 # npm install -g detox-cli@7.2.0
 echo 'Detox install'
-# set -ex
+set -ex
 
-yarn detox
+# yarn detox
+
+echo '====== Detox Build ========='
+detox build --configuration ios.sim.release
+echo '====== Detox Build Complete ========='
+
+echo '====== Detox Test ========='
+detox test --configuration ios.sim.release
+echo '====== Detox Test Complete ========='
