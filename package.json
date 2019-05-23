@@ -26,31 +26,13 @@
     "codepush": "ts-node -P tsconfig.script.json ./scripts/codepush/codepush.ts",
     "versionBump": "ts-node -P tsconfig.script.json ./scripts/version-increment.ts",
     "bugsnag": "ts-node -P tsconfig.script.json ./scripts/sendBugsnagSymbols.ts",
-    "detox": "detox build --configuration ios.sim.release && TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' detox test --configuration ios.sim.release",
+    "detox": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
     "fetchGraphQLSchema": "ts-node -P tsconfig.script.json scripts/fetchGraphQLInfo.ts",
     "syncWockyClient": "git subtree push --prefix=\"third-party/wocky-client\" https://github.com/hippware/wocky-client master",
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start",
     "postinstall": "patch-package",
     "logcat": "adb logcat -e com.hippware"
-  },
-  "detox": {
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/tinyrobotStaging.app",
-        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.simulator",
-        "name": "iPhone 8 Plus"
-      },
-      "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/tinyrobotStaging.app",
-        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.simulator",
-        "name": "iPhone 8 Plus"
-      }
-    },
-    "test-runner": "jest",
-    "runner-config": "e2e/config.json"
   },
   "dependencies": {
     "@absinthe/socket-apollo-link": "^0.2.0",
@@ -155,6 +137,24 @@
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333",
     "websocket": "^1.0.28"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/tinyrobotStaging.app",
+        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 8 Plus"
+      },
+      "ios.sim.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/tinyrobotStaging.app",
+        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 8 Plus"
+      }
+    },
+    "test-runner": "jest",
+    "runner-config": "e2e/config.json"
   },
   "husky": {
     "hooks": {
