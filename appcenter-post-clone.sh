@@ -10,34 +10,26 @@ sudo installer -store -pkg "$HOME/Downloads/node-installer.pkg" -target "/"
 echo "Node version..."
 node --version
 
-yarn
+# yarn
 # these tests run on CircleCI
 # yarn test
 
-echo "Installing applesimutils"
-brew tap wix/brew
-brew install applesimutils
+# echo "Installing applesimutils"
+# brew tap wix/brew
+# brew install applesimutils
 
-# mkdir simutils
-# cd simutils
-# curl https://raw.githubusercontent.com/wix/homebrew-brew/master/AppleSimulatorUtils-0.5.22.tar.gz -o applesimutils.tar.gz
-# tar xzvf applesimutils.tar.gz
-# sh buildForBrew.sh 
-# cd ..
-# export PATH=$PATH:./simutils/build/Build/Products/Release
+# # mkdir simutils
+# # cd simutils
+# # curl https://raw.githubusercontent.com/wix/homebrew-brew/master/AppleSimulatorUtils-0.5.22.tar.gz -o applesimutils.tar.gz
+# # tar xzvf applesimutils.tar.gz
+# # sh buildForBrew.sh 
+# # cd ..
+# # export PATH=$PATH:./simutils/build/Build/Products/Release
 
-echo "Detecting applesimutils"
-which applesimutils
-# npm install -g detox-cli@7.2.0
-echo 'Detox install'
-# set -ex
+# echo "Detecting applesimutils"
+# which applesimutils
+# # npm install -g detox-cli@7.2.0
+# echo 'Detox install'
+# # set -ex
 
-# yarn detox
-
-# echo '====== Detox Build ========='
-# detox build --configuration ios.sim.release
-# echo '====== Detox Build Complete ========='
-
-# echo '====== Detox Test ========='
-# detox test --configuration ios.sim.release
-# echo '====== Detox Test Complete ========='
+# # yarn detox
