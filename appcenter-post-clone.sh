@@ -14,8 +14,10 @@ yarn
 # these tests run on CircleCI
 # yarn test
 
-# TODO: re-enable detox
-# echo "Installing applesimutils"
+echo "Installing applesimutils"
+brew tap wix/brew
+brew install applesimutils
+
 # mkdir simutils
 # cd simutils
 # curl https://raw.githubusercontent.com/wix/homebrew-brew/master/AppleSimulatorUtils-0.5.22.tar.gz -o applesimutils.tar.gz
@@ -24,10 +26,10 @@ yarn
 # cd ..
 # export PATH=$PATH:./simutils/build/Build/Products/Release
 
-# echo "Detecting applesimutils"
-# which applesimutils
+echo "Detecting applesimutils"
+which applesimutils
 # npm install -g detox-cli@7.2.0
-# echo 'Detox install'
+echo 'Detox install'
 # set -ex
 
-# yarn detox
+yarn detox
