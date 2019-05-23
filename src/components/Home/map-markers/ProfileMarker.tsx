@@ -3,6 +3,7 @@ import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IHomeStore, LocationSharerCard} from '../../../store/HomeStore'
 import LocationAvatar from '../LocationAvatar'
+import {View} from 'react-native'
 
 type Props = {
   card: LocationSharerCard
@@ -28,7 +29,14 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         }}
         stopPropagation
       >
-        <LocationAvatar profile={profile} sharesLocation={profile.sharesLocation} />
+        {/* extra padding here for the activity icon */}
+        <View style={{paddingRight: 4, paddingTop: 9}}>
+          <LocationAvatar
+            profile={profile}
+            sharesLocation={profile.sharesLocation}
+            currentActivity={profile.currentActivity}
+          />
+        </View>
       </HackMarker>
     )
   )

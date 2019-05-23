@@ -1,10 +1,8 @@
 import React from 'react'
-import {MarkerAnimated, Marker, MarkerProps} from 'react-native-maps'
+import {Marker, MarkerProps} from 'react-native-maps'
 import {observer} from 'mobx-react/native'
 
-interface IProps extends MarkerProps {
-  scale?: number
-}
+interface IProps extends MarkerProps {}
 
 @observer
 export default class HackMarker extends React.Component<IProps> {
@@ -34,18 +32,16 @@ export default class HackMarker extends React.Component<IProps> {
   }
 
   render() {
-    const {scale, children, style, ...props} = this.props
-    const y = scale === 1 ? 0.5 : 1 // fullMap ? -35 : -106
-    const Wrapper = !!scale ? MarkerAnimated : Marker
+    const {children, style, ...props} = this.props
     return (
-      <Wrapper
+      <Marker
         {...props}
-        anchor={{x: 0.5, y}}
+        anchor={{x: 0.5, y: 0.5}}
         tracksViewChanges={this.state.tracking}
-        style={[{top: -2000}, style]} // DIRTY workaround to catch all onPress events for the marker.
+        style={[{borderWidth: 1, borderColor: 'red'}, style]}
       >
         {children}
-      </Wrapper>
+      </Marker>
     )
   }
 }

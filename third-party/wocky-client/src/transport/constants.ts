@@ -119,5 +119,11 @@ export const MESSAGE_PROPS = `
     ${PROFILE_PROPS}
   }
 `
-export const LOCATION_PROPS = `lat lon capturedAt accuracy
+export const USER_LOCATION_PROPS = `
+  lat
+  lon
+  capturedAt
+  accuracy
+  activity
+  activityConfidence
 `

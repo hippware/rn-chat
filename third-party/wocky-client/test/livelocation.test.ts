@@ -1,12 +1,26 @@
 import {createUser, sleep, timestamp, waitFor} from './support/testuser'
 import {IWocky} from '../src'
+import {getSnapshot} from 'mobx-state-tree'
+import {UserActivityType} from '../src/transport/types'
 
 describe('Live Locations', () => {
   let alice: IWocky, bob: IWocky
   let alicesPhone: string
 
-  const theLocation = {latitude: 1.1, longitude: 2.1, accuracy: 1}
-  const differentLocation = {longitude: 1.1, latitude: 1.1, accuracy: 1}
+  const theLocation = {
+    latitude: 1.1,
+    longitude: 2.1,
+    accuracy: 1,
+    activity: 'on_foot' as UserActivityType,
+    activityConfidence: 75,
+  }
+  const differentLocation = {
+    longitude: 1.1,
+    latitude: 1.1,
+    accuracy: 1,
+    activity: 'still' as UserActivityType,
+    activityConfidence: 75,
+  }
 
   beforeAll(async () => {
     timestamp()
@@ -38,9 +52,7 @@ describe('Live Locations', () => {
     // update location
     await bob.setLocation(theLocation)
     await waitFor(() => !!alicesBobProfile.location)
-    expect(alicesBobProfile.location!.latitude).toBe(theLocation.latitude)
-    expect(alicesBobProfile.location!.longitude).toBe(theLocation.longitude)
-    expect(alicesBobProfile.location!.accuracy).toBe(theLocation.accuracy)
+    expect(getSnapshot(alicesBobProfile.location!)).toEqual(theLocation)
   })
 
   it('expect live location share notification', async () => {
