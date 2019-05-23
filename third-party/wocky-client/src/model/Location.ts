@@ -14,7 +14,7 @@ export const createLocation = ({
   lon: number
   accuracy: number
   createdAt: Date
-  activity: UserActivityType | null
+  activity: UserActivityType | '' | null
   activityConfidence: number | null
 }) => {
   return Location.create({
@@ -22,7 +22,7 @@ export const createLocation = ({
     longitude: lon,
     accuracy,
     createdAt,
-    activity: activity || undefined,
+    activity: activity && activity.length ? activity : undefined,
     activityConfidence: activityConfidence || undefined,
   })
 }
@@ -36,7 +36,7 @@ export const Location = types
     fromNow: '',
     // todo: make this an enumeration?
     activity: types.maybe(
-      types.enumeration(['still', 'on_foot', 'in_vehicle', 'on_bicycle', 'running'])
+      types.enumeration(['still', 'on_foot', 'walking', 'in_vehicle', 'on_bicycle', 'running'])
     ),
     activityConfidence: types.maybe(types.number),
   })

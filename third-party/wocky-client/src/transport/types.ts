@@ -17,4 +17,10 @@ export type MediaUploadParams = {
 
 export type UserContactRelationship = 'FRIEND' | 'INVITED' | 'INVITED_BY' | 'NONE' | 'SELF' | null
 
-export type UserActivityType = 'still' | 'on_foot' | 'in_vehicle' | 'on_bicycle' | 'running'
+export type UserActivityType =
+  | 'still'
+  | 'on_foot'
+  | 'walking'
+  | 'in_vehicle'
+  | 'on_bicycle'
+  | 'running'
