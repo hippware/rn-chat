@@ -6,7 +6,6 @@
  */
 
 #import "AppDelegate.h"
-#import <AppCenterReactNative/AppCenterReactNative.h>
 
 #import <React/RCTRootView.h>
 #import <React/RCTAssert.h>
@@ -71,8 +70,6 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
   NSURL *jsCodeLocation;
-
-  [AppCenterReactNative register];  // Initialize AppCenter 
 
   #ifdef DEBUG
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];

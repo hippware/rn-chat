@@ -1,7 +1,4 @@
 PODS:
-  - AppCenter/Core (1.11.0)
-  - AppCenterReactNativeShared (1.10.0):
-    - AppCenter/Core (= 1.11.0)
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
   - BugsnagReactNative (2.15.0):
@@ -210,7 +207,7 @@ PODS:
     - RSKImageCropper
   - RNLocalize (1.1.0):
     - React
-  - RNPureJwt (2.0.1):
+  - RNPureJwt (2.1.0):
     - JWT (= 3.0.0-beta.11)
     - React
   - RSKImageCropper (2.2.1)
@@ -218,7 +215,6 @@ PODS:
   - yoga (0.59.2.React)
 
 DEPENDENCIES:
-  - AppCenterReactNativeShared
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - CodePush (from `../node_modules/react-native-code-push`)
@@ -263,8 +259,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - AppCenter
-    - AppCenterReactNativeShared
     - Base64
     - boost-for-react-native
     - CocoaLumberjack
@@ -335,8 +329,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 3bccf8d733e337d0db574dd4cb0e33ab9637b7f2
-  AppCenterReactNativeShared: a77b000c2ac6dc2e44472621d7d0770f196e5822
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 0acbd9b570c54a41a836f145f788ff28e652c831
@@ -377,11 +369,11 @@ SPEC CHECKSUMS:
   RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98
   RNImageCropPicker: 754299983d07c450aec0834c0efe0ed114131ff3
   RNLocalize: 079a659b6ac62d98ac76e1050353a51a8e06f5bd
-  RNPureJwt: f3415c6ab61dbbca3f68444c7fdf6a07823a7a8b
+  RNPureJwt: 720616d8e6d5c60f322a2af17c087d98080bd5c3
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: 34307960be1ba759a580a7e7ee7ce054f5f504bb
+PODFILE CHECKSUM: fc0e418a613a2b05a1b3c96c254acdd5fa12de81
 
 COCOAPODS: 1.6.1
