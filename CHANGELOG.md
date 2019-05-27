@@ -4,7 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 4.11.0 - 2019 May 23
+* Red boxes in top left corner of map (#3757)
+
+# 4.12.0 - 2019 May 23
 
 * Only try login() if canLogin is true. (PR #3741)
   * Fixes: error_connection in src/store/AuthStore.ts:30 (#3724)
