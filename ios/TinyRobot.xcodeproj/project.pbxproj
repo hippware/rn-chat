@@ -77,7 +77,6 @@
 		87C4148A20E669F90044AF0A /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87C4148B20E669F90044AF0A /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		87C4148C20E669F90044AF0A /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		87C4148F20E669F90044AF0A /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDA564826954DAC982E2628 /* libAppCenterReactNative.a */; };
 		87C4149320E669F90044AF0A /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87C4129D20E636620044AF0A /* RobotoCondensed-BoldItalic.ttf */; };
 		87C4149420E669F90044AF0A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87C412C120E637870044AF0A /* Images.xcassets */; };
 		87C4149520E669F90044AF0A /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87C412A620E636620044AF0A /* Roboto-Bold.ttf */; };
@@ -597,7 +596,6 @@
 				87C4148A20E669F90044AF0A /* libRCTText.a in Frameworks */,
 				87C4148B20E669F90044AF0A /* libRCTVibration.a in Frameworks */,
 				87C4148C20E669F90044AF0A /* libRCTWebSocket.a in Frameworks */,
-				87C4148F20E669F90044AF0A /* libAppCenterReactNative.a in Frameworks */,
 				090CD41B58918D0575B60DE8 /* libPods-tinyrobotStaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,16 +1,14 @@
-require('./init')
 import takeScreenshot from './helpers'
 import chalk from 'chalk'
 
-const navLeftButtonCoords = {x: 35, y: 35}
-
-function sleep(delay) {
-  return new Promise(resolve => setTimeout(() => resolve(), delay))
-}
 describe('Detox', () => {
+  // beforeEach(async () => {
+  //   await device.reloadReactNative()
+  // })
+
   it('shows onboarding screen', async () => {
     takeScreenshot('first-open')
-    await expect(element(by.id('onboarding'))).toBeVisible()
+    await expect(element(by.id('preConnection'))).toBeVisible()
     takeScreenshot('onboarding-visible')
   })
 
@@ -105,12 +103,8 @@ describe('Detox', () => {
   // })
 })
 
-function makeid(length) {
-  let text = ''
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+const navLeftButtonCoords = {x: 35, y: 35}
 
-  for (let i = 0; i < length; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
-
-  return text
+function sleep(delay) {
+  return new Promise(resolve => setTimeout(() => resolve(), delay))
 }
