@@ -8,6 +8,7 @@ YellowBox.ignoreWarnings([
   'Warning: NetInfo', // todo: see #3424,
   'Warning: ViewPagerAndroid', // todo: see #3424,
   'Warning: Async Storage has been extracted',
+  'RCTBridge required dispatch_sync to load',
 ])
 
 // Uncomment for storybook

@@ -535,6 +535,7 @@ exports[`Home renders with no data 1`] = `
             "opacity": 1,
           }
         }
+        testID="bottomMenuButton"
       >
         <Image
           source={

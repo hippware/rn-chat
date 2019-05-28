@@ -3,10 +3,6 @@ import chalk from 'chalk'
 import {expect} from 'detox'
 
 describe('Detox', () => {
-  // beforeEach(async () => {
-  //   await device.reloadReactNative()
-  // })
-
   it('shows onboarding screen', async () => {
     takeScreenshot('first-open')
     await expect(element(by.id('preConnection'))).toBeVisible()
@@ -54,7 +50,6 @@ describe('Detox', () => {
       // await element(by.id('signUpDone')).tap()
     } catch (err) {
       // todo: catch specific error
-      console.log('& err', err.message, err.code, err)
       console.warn('Warning: No sign-up page, this user already exists')
     }
   })
@@ -76,52 +71,45 @@ describe('Detox', () => {
     // await expect(element(by.id('screenHome'))).toBeVisible()
     await waitFor(element(by.id('screenHome')))
       .toBeVisible()
-      .withTimeout(4000)
+      .withTimeout(3000)
     takeScreenshot('home-screen')
   })
 
-  // it('opens sidemenu', async () => {
-  //   await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
-  //   takeScreenshot('sidemenu-opening')
-  //   await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
-  //   takeScreenshot('sidemenu-open')
-  // })
+  it('opens bottom menu', async () => {
+    await element(by.id('bottomMenuButton')).tap()
+    // takeScreenshot('bottom-menu-opening')
+    await expect(element(by.id('myAccountMenuItem'))).toBeVisible()
+    takeScreenshot('bottom-menu-open')
+  })
 
-  // it('navs to ProfileDetail screen', async () => {
-  //   await element(by.id('myAccountMenuItem')).tap()
-  //   // await expect(element(by.id('profileDetail'))).toBeVisible()
-  //   await waitFor(element(by.id('profileDetail')))
-  //     .toBeVisible()
-  //     .withTimeout(1000)
-  //   takeScreenshot('profile-detail')
-  // })
+  it('navs to ProfileDetail screen', async () => {
+    await element(by.id('myAccountMenuItem')).tap()
+    await expect(element(by.id('profileDetail'))).toBeVisible()
+    await expect(element(by.id('editProfileButton'))).toBeVisible()
+    takeScreenshot('profile-detail')
+  })
 
-  // it('navs to MyAccount screen', async () => {
-  //   await element(by.id('myAccountEdit')).tap()
-  //   await expect(element(by.id('profileInfo'))).toBeVisible()
-  //   takeScreenshot('my-account')
-  // })
+  it('navs to MyAccount screen', async () => {
+    await element(by.id('editProfileButton')).tap()
+    await expect(element(by.id('profileInfo'))).toBeVisible()
+    takeScreenshot('my-account')
+  })
 
-  // it('logs out and deletes profile', async () => {
-  //   await element(by.id('myAccountScrollView')).scrollTo('bottom')
-  //   await element(by.id('deleteProfile')).tap()
-  //   takeScreenshot('delete-tap')
+  it('logs out and deletes profile', async () => {
+    await element(by.id('myAccountScrollView')).scrollTo('bottom')
+    await expect(element(by.id('deleteProfile'))).toBeVisible()
+    await element(by.id('deleteProfile')).tap()
+    takeScreenshot('delete-tap')
 
-  //   // NOTE: apparently 2 dialogs are created (?) so we must use `atIndex` to match just one
-  //   await element(by.text('Delete Profile'))
-  //     .atIndex(1)
-  //     .tap()
-  //   takeScreenshot('delete-profile-confirm')
+    // NOTE: apparently 2 dialogs are created (?) so we must use `atIndex` to match just one
+    await element(by.text('Delete Profile'))
+      .atIndex(1)
+      .tap()
+    takeScreenshot('delete-profile-confirm')
 
-  //   await waitFor(element(by.id('onboarding')))
-  //     .toBeVisible()
-  //     .withTimeout(2000)
-  //   takeScreenshot('onboarding-after-delete')
-  // })
+    await waitFor(element(by.id('preConnection')))
+      .toBeVisible()
+      .withTimeout(2000)
+    takeScreenshot('onboarding-after-delete')
+  })
 })
-
-const navLeftButtonCoords = {x: 35, y: 35}
-
-function sleep(delay) {
-  return new Promise(resolve => setTimeout(() => resolve(), delay))
-}

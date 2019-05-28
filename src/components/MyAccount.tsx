@@ -1,5 +1,12 @@
 import React from 'react'
-import {TouchableOpacity, View, StyleSheet, Linking, Alert} from 'react-native'
+import {
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Linking,
+  Alert,
+  TouchableOpacityProps,
+} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {observable} from 'mobx'
 import {minHeight} from './Global'
@@ -65,14 +72,9 @@ class MyAccount extends React.Component<Props> {
           <SignUpAvatar />
         </View>
 
-        <View style={styles.body}>
+        <View style={styles.body} testID="profileInfo">
           <View style={{width: '80%'}}>
-            <RText
-              size={17}
-              weight="Medium"
-              style={{color: colors.navBarTextColorDay}}
-              testID="profileInfo"
-            >
+            <RText size={17} weight="Medium" style={{color: colors.navBarTextColorDay}}>
               About
             </RText>
 
@@ -104,7 +106,6 @@ class MyAccount extends React.Component<Props> {
               size={17}
               weight="Medium"
               style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
-              testID="profileInfo"
             >
               Info
             </RText>
@@ -130,7 +131,6 @@ class MyAccount extends React.Component<Props> {
               size={17}
               weight="Medium"
               style={{color: colors.navBarTextColorDay, marginTop: 30, marginBottom: 7}}
-              testID="profileInfo"
             >
               Settings
             </RText>
@@ -205,6 +205,7 @@ class MyAccount extends React.Component<Props> {
                   ]
                 )
               }}
+              testID="deleteProfile"
             >
               Delete Profile
             </LinkButton>
@@ -219,14 +220,10 @@ export default MyAccount
 
 const LinkButton = ({
   children,
-  onPress,
   style,
-}: {
-  children: any
-  onPress: () => void
-  style?: any
-}) => (
-  <TouchableOpacity onPress={onPress}>
+  ...rest
+}: TouchableOpacityProps & {children: React.ReactNode}) => (
+  <TouchableOpacity {...rest}>
     <RText size={16} color={colors.PINK} style={[styles.text, style]}>
       {children}
     </RText>

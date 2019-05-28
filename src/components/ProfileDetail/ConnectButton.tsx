@@ -82,6 +82,7 @@ class ConnectButton extends React.Component<Props> {
         style={{
           marginTop: 15,
         }}
+        testID="editProfileButton"
       >
         <View style={[styles.profileButton, styles.editProfileButton]}>
           <RText size={15} color={'#757575'} weight={'Medium'}>

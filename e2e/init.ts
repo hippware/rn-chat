@@ -18,6 +18,10 @@ beforeAll(async () => {
     newInstance: true,
     permissions: {location: 'always', notifications: 'YES', motion: 'YES'},
   })
+
+  // todo: install fbsimctl with brew? If we want tests for screens that depend on specific locations this would be mandatory
+  // https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicesetlocationlat-lon
+  // await device.setLocation(34.078169, -118.3870989)
 })
 
 beforeEach(async () => {
