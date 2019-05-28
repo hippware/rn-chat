@@ -5,6 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Red boxes in top left corner of map (#3757)
+* [dev] Re-enable detox (#2597)
 
 # 4.12.0 - 2019 May 23
 
