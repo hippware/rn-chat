@@ -3,6 +3,7 @@ package com.hippware.android.tinyrobot;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.zaguiini.RNPureJwt.RNPureJwtPackage;
 //import com.zaguini.rnjwt.RNJwtPackage;
 import com.actionsheet.ActionSheetPackage;
@@ -52,7 +53,8 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new SplashScreenReactPackage(), new RNPureJwtPackage(), new ActionSheetPackage(),
           new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
           new RNBackgroundGeolocation(), BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(),
           new LinearGradientPackage(), new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(),

@@ -130,6 +130,8 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
+  - react-native-splash-screen (3.2.0):
+    - React
   - React/Core (0.59.2):
     - yoga (= 0.59.2.React)
   - React/CxxBridge (0.59.2):
@@ -230,6 +232,7 @@ DEPENDENCIES:
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -305,6 +308,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   ReactNativePermissions:
     :path: "../node_modules/react-native-permissions"
   RNBackgroundFetch:
@@ -360,6 +365,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: 568cb03d0eae7fef93626f65d05be55642404ed4
   react-native-maps: 0316ed017dbb64b33b227751fa810e2454fcfa39
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
   RNBackgroundGeolocation: 3a5bf961801125a88b00dbb4d620b815fb4d39dc
@@ -374,6 +380,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: 3768a3026ade0fb46a68f3a31a917cf86bc34fc4
 
-PODFILE CHECKSUM: fc0e418a613a2b05a1b3c96c254acdd5fa12de81
+PODFILE CHECKSUM: d8e8272276cb2af7de298d172425f2d9c14d8bda
 
 COCOAPODS: 1.6.1

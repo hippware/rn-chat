@@ -50,6 +50,7 @@ import {IAuthStore} from 'src/store/AuthStore'
 import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
+import SplashScreen from 'react-native-splash-screen'
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -85,6 +86,8 @@ class TinyRobotRouter extends React.Component<Props> {
       },
       {delay: 1000}
     )
+
+    SplashScreen.hide()
   }
 
   render() {

@@ -14,6 +14,7 @@
 #import <CodePush/CodePush.h>
 #import <React/RCTLinkingManager.h>
 #import "RNFirebaseLinks.h"
+#import "RNSplashScreen.h"
 
 @import GoogleMaps;
 
@@ -98,6 +99,7 @@
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [self loadBundle:launchOptions initialProps:env];
+  [RNSplashScreen show];
   return YES;
 }
 
