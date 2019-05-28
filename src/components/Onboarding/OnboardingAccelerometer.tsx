@@ -39,6 +39,7 @@ class OnboardingAccelerometer extends React.Component<Props> {
           isPink
           style={{height: 50, width: '80%', borderRadius: 4}}
           onPress={this.props.onPress}
+          testID="accelerometerPermissionButton"
         >
           <RText color={WHITE} size={18.5}>
             Allow Accelerometer

@@ -143,7 +143,7 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/tinyrobotStaging.app",
-        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "xcodebuild -UseModernBuildSystem=NO -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone 8 Plus"
       },

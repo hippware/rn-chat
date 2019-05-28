@@ -13,6 +13,11 @@ jest.setTimeout(120000)
 
 beforeAll(async () => {
   await detox.init(config)
+  // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
+  await device.launchApp({
+    newInstance: true,
+    permissions: {location: 'always', notifications: 'YES', motion: 'YES'},
+  })
 })
 
 beforeEach(async () => {
@@ -23,22 +28,3 @@ afterAll(async () => {
   await adapter.afterAll()
   await detox.cleanup()
 })
-
-// todo: create and destroy test user after each full test run
-// before(async () => {
-//   await clearTestUser()
-//   await detox1.init(config)
-//   // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
-//   await device.launchApp({permissions: {location: 'always', notifications: 'YES'}})
-// })
-
-// after(async () => {
-//   await clearTestUser()
-//   await detox1.cleanup()
-// })
-
-// async function clearTestUser(): Promise<void> {
-//   // full phone number = +155500000044
-//   const testUser = await createXmpp(44)
-//   await testUser.remove()
-// }

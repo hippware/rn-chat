@@ -35,34 +35,50 @@ describe('Detox', () => {
     await element(by.id('bypassRegisterButton')).tap()
     takeScreenshot('register-tap')
 
-    // await waitFor(element(by.id('signUpTopRow')))
-    //   .toBeVisible()
-    //   .withTimeout(5000)
+    await waitFor(element(by.id('signUpTopRow')))
+      .toBeVisible()
+      .withTimeout(5000)
 
-    // takeScreenshot('signup-visible')
+    takeScreenshot('signup-visible')
   })
 
-  // it('registers new bypass user and navs to home screen', async () => {
-  //   // fill out the form and hit return on the last entry
-  //   await element(by.id('signUpUsername')).tap()
-  //   await element(by.id('signUpUsername')).typeText(makeid(8))
-  //   await element(by.id('signUpFirstName')).tap()
-  //   await element(by.id('signUpFirstName')).typeText('four')
-  //   await element(by.id('signUpLastName')).tap()
-  //   await element(by.id('signUpLastName')).typeText('four')
-  //   await element(by.id('signUpEmail')).tap()
-  //   await element(by.id('signUpEmail')).typeText('email@email.com\n')
-  //   takeScreenshot('signup-form-filled')
+  it('registers new bypass user and navs to home screen', async () => {
+    try {
+      // fill out the form and hit return
+      await element(by.id('signUpUsername')).tap()
+      // todo: something more random?
+      await element(by.id('signUpUsername')).typeText('jklajiopas\n')
+      takeScreenshot('signup-form-filled')
 
-  //   // TODO: what is the next "visible" element/screen before we eventually make it to the home screen?
-  //   // using `waitFor` is kind of a hack until we figure this out
-  //   // https://github.com/wix/detox/blob/master/docs/APIRef.waitFor.md
-  //   // await expect(element(by.id('screenHome'))).toBeVisible()
-  //   await waitFor(element(by.id('screenHome')))
-  //     .toBeVisible()
-  //     .withTimeout(4000)
-  //   takeScreenshot('home-screen')
-  // })
+      // since we have the '\n' above we don't need to tap the 'done' button here
+      // await element(by.id('signUpDone')).tap()
+    } catch (err) {
+      // todo: catch specific error
+      console.log('& err', err.message, err.code, err)
+      console.warn('Warning: No sign-up page, this user already exists')
+    }
+  })
+
+  it('shows the onboarding swiper', async () => {
+    await expect(element(by.id('onboardingSwiper'))).toBeVisible()
+
+    // we must tap "Allow Accelerometer" since accelerometer checks always come back as "restricted" on a simulator
+    await element(by.id('accelerometerPermissionButton')).tap()
+    // onboardingFindFriends
+    await expect(element(by.id('onboardingFindFriends'))).toBeVisible()
+    await element(by.id('onboardingSkipFindFriends')).tap()
+  })
+
+  it('navs to home screen', async () => {
+    // TODO: what is the next "visible" element/screen before we eventually make it to the home screen?
+    // using `waitFor` is kind of a hack until we figure this out
+    // https://github.com/wix/detox/blob/master/docs/APIRef.waitFor.md
+    // await expect(element(by.id('screenHome'))).toBeVisible()
+    await waitFor(element(by.id('screenHome')))
+      .toBeVisible()
+      .withTimeout(4000)
+    takeScreenshot('home-screen')
+  })
 
   // it('opens sidemenu', async () => {
   //   await element(by.id('wrapper')).tapAtPoint(navLeftButtonCoords)
