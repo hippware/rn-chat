@@ -1421,9 +1421,11 @@ export class Transport {
       logger: process.env.WOCKY_VERBOSE
         ? (kind, msg, data) => {
             if (msg !== 'close') {
-              console.log('& socket:' + `${kind}: ${msg}`, new Date(), JSON.stringify(data))
+              console.log(
+                `${new Date().toISOString()} | socket:${kind} | ${msg} | ${JSON.stringify(data)}`
+              )
             } else {
-              console.log('close')
+              console.log(`${new Date().toISOString()} | close`)
             }
           }
         : undefined,
