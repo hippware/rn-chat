@@ -106,6 +106,7 @@
     "@storybook/addon-links": "^4.1.16",
     "@storybook/addons": "^4.1.16",
     "@storybook/react-native": "^4.1.16",
+    "@types/detox": "^9.0.5",
     "@types/jest": "^24.0.9",
     "@types/lodash": "^4.14.122",
     "@types/phoenix": "^0.0.4",

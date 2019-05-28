@@ -1,5 +1,6 @@
 import takeScreenshot from './helpers'
 import chalk from 'chalk'
+import {expect} from 'detox'
 
 describe('Detox', () => {
   // beforeEach(async () => {

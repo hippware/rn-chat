@@ -58,5 +58,12 @@
     "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
-  "include": ["src/**/*", "storybook/**/*", "third-party/**/*", "__tests__/**/*", "test/**/*"]
+  "include": [
+    "src/**/*",
+    "storybook/**/*",
+    "third-party/**/*",
+    "__tests__/**/*",
+    "test/**/*",
+    "e2e/**/*"
+  ]
 }
