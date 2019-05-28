@@ -12,29 +12,19 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity implements TouchThroughTouchHandlerInterface {
     private ReactRootView mReactRootView;
     private ReactInstanceManager mReactInstanceManager;
     private TouchThroughTouchHandler touchThroughTouchHandler = new TouchThroughTouchHandler();
 
-    // @Override
-    // protected void onCreate(Bundle savedInstanceState) {
-    // mReactInstanceManager = ReactInstanceManager.builder()
-    // // ...
-    // // Add CodePush package
-    // .addPackage(new CodePush("aKbSrov0EFd-mvtC31iYca_W0EtFS1jJ7ITUE",
-    // getApplicationContext(), BuildConfig.DEBUG))
-    // // Get the JS Bundle File via Code Push
-    // .setJSBundleFile(CodePush.getJSBundleFile())
-    // // ...
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);
+        super.onCreate(savedInstanceState);
+    }
 
-    // .build();
-    // mReactRootView.startReactApplication(mReactInstanceManager,
-    // "MyReactNativeApp", null);
-
-    // setContentView(mReactRootView);
-    // }
     /**
      * Returns the name of the main component registered from JavaScript. This is
      * used to schedule rendering of the component.
