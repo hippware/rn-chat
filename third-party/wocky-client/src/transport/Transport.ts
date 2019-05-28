@@ -1412,16 +1412,21 @@ export class Transport {
     const socketEndpoint = process.env.WOCKY_LOCAL
       ? 'ws://localhost:8080/graphql'
       : `wss://${this.host}/graphql`
+
+    // uncomment to see all graphql messages!
+    // process.env.WOCKY_VERBOSE = true
+
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
-      // uncomment to see all graphql messages!
-      // logger: (kind, msg, data) => {
-      //   if (msg !== 'close') {
-      //     console.log('& socket:' + `${kind}: ${msg}`, new Date(), JSON.stringify(data))
-      //   } else {
-      //     console.log('close')
-      //   }
-      // },
+      logger: process.env.WOCKY_VERBOSE
+        ? (kind, msg, data) => {
+            if (msg !== 'close') {
+              console.log('& socket:' + `${kind}: ${msg}`, new Date(), JSON.stringify(data))
+            } else {
+              console.log('close')
+            }
+          }
+        : undefined,
     })
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
