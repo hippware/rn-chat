@@ -9,7 +9,7 @@ import {
 } from 'mobx-state-tree'
 import {simpleActionLogger} from 'mst-middlewares'
 // todo: use react-native-community version instead
-import {AsyncStorage} from 'react-native'
+import {AsyncStorage, Geolocation} from 'react-native'
 import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, Wocky} from 'wocky-client'

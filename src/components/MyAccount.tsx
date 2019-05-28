@@ -34,7 +34,7 @@ class MyAccount extends React.Component<Props> {
       // need to force refresh of ProfileDetails after this change
       setTimeout(() => Actions.refresh({refresh: new Date()}))
     } catch (e) {
-      alert(e)
+      Alert.alert(e)
     }
   }
 
