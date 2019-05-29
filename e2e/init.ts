@@ -5,14 +5,23 @@ import specReporter from 'detox/runners/jest/specReporter'
 
 // Set the default timeout
 jest.setTimeout(120000)
-jasmine.getEnv().addReporter(adapter)
+;(jasmine as any).getEnv().addReporter(adapter)
 
 // This takes care of generating status logs on a per-spec basis. By default, jest only reports at file-level.
 // This is strictly optional.
-jasmine.getEnv().addReporter(specReporter)
+;(jasmine as any).getEnv().addReporter(specReporter)
 
 beforeAll(async () => {
   await detox.init(config)
+  // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
+  await device.launchApp({
+    newInstance: true,
+    permissions: {location: 'always', notifications: 'YES', motion: 'YES'},
+  })
+
+  // todo: install fbsimctl with brew? If we want tests for screens that depend on specific locations this would be mandatory
+  // https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicesetlocationlat-lon
+  // await device.setLocation(34.078169, -118.3870989)
 })
 
 beforeEach(async () => {
@@ -23,22 +32,3 @@ afterAll(async () => {
   await adapter.afterAll()
   await detox.cleanup()
 })
-
-// todo: create and destroy test user after each full test run
-// before(async () => {
-//   await clearTestUser()
-//   await detox1.init(config)
-//   // set permissions before running any tests: https://github.com/wix/detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams
-//   await device.launchApp({permissions: {location: 'always', notifications: 'YES'}})
-// })
-
-// after(async () => {
-//   await clearTestUser()
-//   await detox1.cleanup()
-// })
-
-// async function clearTestUser(): Promise<void> {
-//   // full phone number = +155500000044
-//   const testUser = await createXmpp(44)
-//   await testUser.remove()
-// }

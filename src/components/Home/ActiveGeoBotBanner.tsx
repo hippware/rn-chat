@@ -136,6 +136,7 @@ const Buttons = ({mapType}) => (
     <TouchableOpacity
       onPress={() => Actions.bottomMenu()}
       onLongPress={() => settings.allowDebugScreen && Actions.debugScreen()}
+      testID="bottomMenuButton"
     >
       <Image source={settingsImg} />
     </TouchableOpacity>

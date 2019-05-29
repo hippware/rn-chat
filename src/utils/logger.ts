@@ -13,5 +13,5 @@ export function error(...args) {
 }
 export function assert(...args) {
   if (!__DEV__) return
-  console.assert(...args)
+  ;(console as any).assert(...args)
 }

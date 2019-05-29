@@ -18,6 +18,7 @@ const OnboardingFindFriends = ({onPress, onSkip}: Props) => (
       justifyContent: 'center',
       marginTop: 30,
     }}
+    testID="onboardingFindFriends"
   >
     <View style={{width: '80%', marginBottom: 33 * s}}>
       <RText style={styles.onboardingH1}>Find Friends</RText>
@@ -44,7 +45,11 @@ const OnboardingFindFriends = ({onPress, onSkip}: Props) => (
       </RText>
     </GradientButton>
 
-    <TouchableOpacity onPress={onSkip} style={{marginBottom: 34 * minHeight}}>
+    <TouchableOpacity
+      onPress={onSkip}
+      style={{marginBottom: 34 * minHeight}}
+      testID="onboardingSkipFindFriends"
+    >
       <View>
         <RText color={PINK} size={18.5}>
           Skip

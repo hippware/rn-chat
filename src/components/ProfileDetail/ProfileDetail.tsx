@@ -56,6 +56,7 @@ export default class ProfileDetail extends React.Component<Props> {
             paddingBottom: 46 * minHeight,
             paddingTop: 20,
           }}
+          testID="profileDetail"
         >
           <BlockReport profile={this.profile} />
           <ProfileAvatar

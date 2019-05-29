@@ -159,6 +159,7 @@ class SignUp extends React.Component<Props> {
             </RText>
           </RText>
           <TouchableOpacity
+            testID="signUpDone"
             disabled={buttonDisabled || !this.props.wocky!.connected}
             onPress={this.done}
             style={styles.submitButton}

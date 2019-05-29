@@ -107,6 +107,7 @@
     "@storybook/addon-links": "^4.1.16",
     "@storybook/addons": "^4.1.16",
     "@storybook/react-native": "^4.1.16",
+    "@types/detox": "^9.0.5",
     "@types/jest": "^24.0.9",
     "@types/lodash": "^4.14.122",
     "@types/phoenix": "^0.0.4",
@@ -143,7 +144,7 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/tinyrobotStaging.app",
-        "build": "xcodebuild -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "xcodebuild -UseModernBuildSystem=NO -workspace ios/tinyrobot.xcworkspace -scheme tinyrobotStaging -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone 8 Plus"
       },

@@ -310,6 +310,7 @@ exports[`Signup renders 1`] = `
             "width": "80%",
           }
         }
+        testID="signUpDone"
       >
         <Text
           style={
