@@ -43,6 +43,9 @@ export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
 
 export class Transport {
+  static instances = 0
+
+  instance: number
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -62,6 +65,7 @@ export class Transport {
 
   constructor(resource: string) {
     this.resource = resource
+    this.instance = Transport.instances++
   }
 
   @action
@@ -1420,13 +1424,11 @@ export class Transport {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       logger: process.env.WOCKY_VERBOSE
         ? (kind, msg, data) => {
-            if (msg !== 'close') {
-              console.log(
-                `${new Date().toISOString()} | socket:${kind} | ${msg} | ${JSON.stringify(data)}`
-              )
-            } else {
-              console.log(`${new Date().toISOString()} | close`)
-            }
+            console.log(
+              `${new Date().toISOString()} | socket(${
+                this.instance
+              }):${kind} | ${msg} | ${JSON.stringify(data)}`
+            )
           }
         : undefined,
     })
