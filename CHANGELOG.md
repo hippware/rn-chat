@@ -6,6 +6,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Red boxes in top left corner of map (#3757)
 * [dev] Re-enable detox (#2597)
+* Splash screen with react-native-splash-screen (PR #3762)
+  * Related: Loading screen missing (#3743)
 
 # 4.12.0 - 2019 May 23
 
