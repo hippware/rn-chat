@@ -1,4 +1,4 @@
-import {types, Instance, SnapshotIn} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
 import moment from 'moment'
 import {UserActivityType} from '../transport/types'
 
@@ -14,7 +14,7 @@ export const createLocation = ({
   lon: number
   accuracy: number
   createdAt: Date
-  activity: UserActivityType | '' | null
+  activity: UserActivityType | 'unknown' | '' | null
   activityConfidence: number | null
 }) => {
   return Location.create({
@@ -22,7 +22,7 @@ export const createLocation = ({
     longitude: lon,
     accuracy,
     createdAt,
-    activity: activity && activity.length ? activity : undefined,
+    activity: activity && activity.length && activity !== 'unknown' ? activity : undefined,
     activityConfidence: activityConfidence || undefined,
   })
 }
@@ -33,8 +33,6 @@ export const Location = types
     longitude: types.number,
     accuracy: types.maybeNull(types.number),
     createdAt: types.maybe(types.Date),
-    fromNow: '',
-    // todo: make this an enumeration?
     activity: types.maybe(
       types.enumeration(['still', 'on_foot', 'walking', 'in_vehicle', 'on_bicycle', 'running'])
     ),
@@ -43,40 +41,28 @@ export const Location = types
   .volatile(() => ({
     isCurrent: false,
   }))
-  .actions(self => ({
-    setFromNow() {
+  .views(self => ({
+    get fromNow(): string {
+      const now: Date = (getRoot(self) as any).wocky.timer.minute
       if (self.createdAt) {
-        self.fromNow = moment(self.createdAt).fromNow(true) + ' ago'
+        let diff = moment(self.createdAt).diff(now)
+
+        // correct for server timestamps ahead of `now`
+        if (diff > 0) diff = 0
+
+        return moment.duration(diff).humanize(true)
       }
+      return ''
     },
   }))
-  .actions(self => {
-    let timer
-    return {
-      load: (data: any) => {
-        Object.assign(self, data)
-        self.setFromNow()
-      },
-      // use setInterval to update self.fromNow time once per minute
-      afterAttach() {
-        if (self.createdAt) {
-          timer = setInterval(() => {
-            self.setFromNow()
-          }, 1000 * 60)
-          self.setFromNow()
-        }
-      },
-      beforeDestroy() {
-        if (timer !== undefined) {
-          clearInterval(timer)
-        }
-      },
-    }
-  })
+  .actions(self => ({
+    load: (data: any) => {
+      Object.assign(self, data)
+    },
+  }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
     delete res.createdAt
-    delete res.fromNow
     return res
   })
 

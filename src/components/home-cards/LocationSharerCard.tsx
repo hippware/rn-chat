@@ -12,9 +12,6 @@ const LocationSharerCard = observer(({profile}: Props) => {
   return (
     <ProfileCard profile={profile!} showAvatarDot>
       <View style={{flexDirection: 'row'}}>
-        {/* todo: proper implementation for these placeholders.
-        https://github.com/hippware/rn-chat/issues/3371#issue-413385816 */}
-        {/* <Pill>Driving</Pill> */}
         {profile.location && !!profile.location!.fromNow && (
           <Pill>{profile.location!.fromNow}</Pill>
         )}

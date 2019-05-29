@@ -5,6 +5,7 @@ import {IProfile, IProfilePartial} from '../model/Profile'
 import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
+import Timer from './Timer'
 import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
@@ -33,6 +34,7 @@ export const Wocky = types
       // geoBots: types.optional(types.map(types.reference(Bot)), {} as ObservableMap),
       chats: types.optional(Chats, {}),
       localBots: types.optional(BotPaginableList, {}),
+      timer: types.optional(Timer, {}),
     })
   )
   .named(SERVICE_NAME)
