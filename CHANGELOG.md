@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Red boxes in top left corner of map (#3757)
-* [dev] Re-enable detox (#2597)
+* [dev] Re-enable detox (#2597, PR #3759, PR #3764)
 * Splash screen with react-native-splash-screen (PR #3762)
   * Related: Loading screen missing (#3743)
 
