@@ -1,4 +1,4 @@
-import {types, flow, IAnyModelType, Instance, SnapshotIn} from 'mobx-state-tree'
+import {types, flow, IAnyModelType, Instance, SnapshotIn, getRoot} from 'mobx-state-tree'
 import {FileRef} from './File'
 import {Base} from './Base'
 import {Loadable} from './Loadable'
@@ -7,6 +7,7 @@ import {BotPaginableList} from './Bot'
 import {waitFor} from '../transport/utils'
 import {Location, ILocationSnapshot} from './Location'
 import {UserActivityType} from '../transport/types'
+import moment from 'moment'
 
 export const Profile = types
   .compose(
@@ -164,12 +165,20 @@ export const Profile = types
           }
         },
         get currentActivity(): UserActivityType | null {
-          return self.location &&
+          const now: Date = (getRoot(self) as any).wocky.timer.minute
+          const activity =
+            self.location &&
             self.location.activity &&
             self.location.activityConfidence &&
             self.location.activityConfidence >= 50
-            ? self.location.activity
-            : null
+              ? self.location.activity
+              : null
+          if (activity === 'still') {
+            // delay 5 minutes before showing a user as 'still'
+            const diff = moment(now).diff(self.location!.createdAt, 'minutes')
+            return diff > 5 ? activity : null
+          }
+          return activity
         },
       },
     }

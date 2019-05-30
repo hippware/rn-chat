@@ -21,22 +21,23 @@ const activityImages = {
   on_bicycle: walking,
   running: walking,
   in_vehicle: require('../../../images/driving.png'),
-  still: require('../../../images/still.png'),
 }
 
 const LocationAvatar = ({profile, sharesLocation, hidden, tappable, currentActivity}: Props) => {
-  const color = hidden ? colors.DARK_GREY : colors.PINK
+  const isStill = currentActivity === 'still'
+  const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
   return (
     <View
       style={{
         alignItems: 'center',
         borderColor: color,
-        borderWidth: sharesLocation ? 1 : 0,
+        borderWidth: sharesLocation && !isStill ? 1 : 0,
         borderRadius: 50,
         paddingTop: 3.3,
         paddingHorizontal: 3.3,
         height: 63.6,
         width: 63.6,
+        opacity: isStill ? 0.4 : 1,
       }}
     >
       <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
