@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] Re-enable detox (#2597, PR #3759, PR #3764)
 * Splash screen with react-native-splash-screen (PR #3762)
   * Related: Loading screen missing (#3743)
+* Expressing user activity via color/faded avatar (#3658)
+  * Set "master" timer (PR #3770)
 
 # 4.12.0 - 2019 May 23
 
