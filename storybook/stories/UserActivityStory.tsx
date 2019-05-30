@@ -4,22 +4,38 @@ import LocationAvatar from 'src/components/Home/LocationAvatar'
 import {IProfile, Profile, Location} from 'wocky-client'
 import {observer} from 'mobx-react/native'
 import {RText} from 'src/components/common'
+import {types} from 'mobx-state-tree'
+import Timer from '../../third-party/wocky-client/src/store/Timer'
 
-const profile = Profile.create({
-  id: '1234',
-  handle: 'jennyong',
-  status: 'ONLINE',
-  location: Location.create({
-    latitude: 1,
-    longitude: 1,
-    accuracy: 1,
-    activity: 'on_foot',
-    activityConfidence: 75,
-  }),
-})
+const store = types
+  .model({
+    wocky: types.model({
+      timer: Timer,
+    }),
+    profile: Profile,
+  })
+  .create({
+    wocky: {
+      timer: {},
+    },
+    profile: {
+      id: '1234',
+      handle: 'jennyong',
+      status: 'ONLINE',
+      location: Location.create({
+        latitude: 1,
+        longitude: 1,
+        accuracy: 1,
+        activity: 'on_foot',
+        activityConfidence: 75,
+        createdAt: Date.now(),
+      }),
+      avatar: null,
+    },
+  })
 
 function toggle() {
-  profile.location!.load({activity: 'still'})
+  store.profile.location!.load({activity: 'still', createdAt: Date.now()})
 }
 
 export default observer(() => (
@@ -37,10 +53,13 @@ export default observer(() => (
     >
       <RText>Toggle</RText>
     </TouchableOpacity>
+
+    <RText style={{marginBottom: 20}}>Current Activity: {store.profile.currentActivity}</RText>
+
     <LocationAvatar
-      profile={profile as IProfile}
+      profile={store.profile as IProfile}
       sharesLocation
-      currentActivity={profile.currentActivity}
+      currentActivity={store.profile.currentActivity}
     />
   </View>
 ))
