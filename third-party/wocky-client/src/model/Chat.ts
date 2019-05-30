@@ -1,19 +1,25 @@
-import {types, Instance, SnapshotIn, getParentOfType} from 'mobx-state-tree'
+import {types, flow, Instance, SnapshotIn} from 'mobx-state-tree'
 import {Message, MessagePaginableList} from './Message'
-import {Wocky} from '../store/Wocky'
 import {Profile} from './Profile'
 const moment = require('moment')
 import uuid from 'uuid/v1'
+import {Base} from './Base'
+import {IChat} from '../model/Chat'
+import {createMessage, IMessageIn} from '../model/Message'
+import {PaginableLoadPromise} from '../transport/Transport'
 
 export const Chat = types
-  .model('Chat', {
-    id: types.string, // NOTE: id === otherUser.id
-    loaded: false,
-    otherUser: types.reference(Profile),
-    messages: types.optional(MessagePaginableList, {}),
-    message: types.maybeNull(Message),
-    active: false,
-  })
+  .compose(
+    Base,
+    types.model('Chat', {
+      id: types.string, // NOTE: id === otherUser.id
+      loaded: false,
+      otherUser: types.reference(Profile),
+      messages: types.optional(MessagePaginableList, {}),
+      message: types.maybeNull(Message),
+      active: false,
+    })
+  )
   .volatile(() => ({
     loading: false,
   }))
@@ -35,28 +41,41 @@ export const Chat = types
       return moment(self.time).calendar()
     },
   }))
-  .actions(self => {
-    return {
-      setActive: (active: boolean) => (self.active = active),
-      readAll: () => self.messages.list.forEach(msg => msg.setUnread(false)),
-    }
-  })
+  .actions(self => ({
+    setActive: (active: boolean) => (self.active = active),
+    readAll: () => self.messages.list.forEach(msg => msg.setUnread(false)),
+    _loadMessages: flow(function*(lastId?: string, max: number = 20) {
+      const {list, count, cursor} = yield self.transport.loadChatMessages(self.id, lastId, max)
+      return {
+        count,
+        cursor,
+        list: list.map(m => createMessage(m, self.service)),
+      }
+    }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
+  }))
   .actions((self: any) => ({
     afterAttach: () => {
-      // todo: strong typing
-      const service: any = getParentOfType(self, Wocky)
       self.message = Message.create({
-        // todo
         id: uuid(),
         otherUser: self.id,
         isOutgoing: true,
       })
-      self.messages.setRequest(service._loadChatMessages.bind(service, self.id))
+      self.messages.setRequest(self._loadMessages)
+    },
+    sendMessage() {
+      self.message.send()
+      self.messages.addToTop({
+        ...self.message,
+        id: Date.now() + '',
+        otherUser: self.message.otherUser.id,
+      })
+      self.message.clear()
     },
   }))
   .postProcessSnapshot((snapshot: any) => {
     const res: any = {...snapshot}
     delete res.active
+    // delete res.messages
     return res
   })
 

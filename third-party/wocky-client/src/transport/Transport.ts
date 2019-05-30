@@ -773,6 +773,7 @@ export class Transport {
   }
 
   async loadChatMessages(userId, lastId, max): PaginableLoadPromise<IMessageIn> {
+    await waitFor(() => this.connected)
     const res = await this.client!.query<any>({
       query: gql`
           query loadChat($otherUser: UUID, $after: String, $first: Int) {
@@ -805,6 +806,7 @@ export class Transport {
   }
 
   async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
+    await waitFor(() => this.connected)
     const res = await this.client!.query<any>({
       query: gql`
           query loadChats($max: Int) {

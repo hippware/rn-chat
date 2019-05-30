@@ -9,13 +9,10 @@ import Timer from './Timer'
 import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
-import {IChat} from '../model/Chat'
-import {createMessage, IMessage, IMessageIn} from '../model/Message'
 import {iso8601toDate, processMap, waitFor} from '../transport/utils'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {PaginableLoadPromise} from '../transport/Transport'
 import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 
@@ -95,13 +92,6 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        createChat: (otherUserId: string): IChat => {
-          let chat: IChat | undefined = self.chats.get(otherUserId)
-          if (!chat) {
-            chat = self.chats.add({id: otherUserId, otherUser: otherUserId})
-          }
-          return chat
-        },
       },
     }
   })
@@ -134,22 +124,6 @@ export const Wocky = types
     getBot: ({id, ...data}: {id: string; owner?: string | null; isSubscribed?: boolean}): IBot => {
       return self.bots.get(id, data)
     },
-    _addMessage: (message?: IMessageIn, unread = false): void => {
-      if (!message) return
-      const {otherUser} = message
-      const otherUserId = (otherUser as any).id || otherUser
-      let existingChat = self.chats.get(otherUserId)
-      const msg = createMessage(message, self)
-      if (existingChat) {
-        existingChat.messages.addToTop(msg)
-      } else {
-        existingChat = self.createChat(otherUserId)
-        existingChat.messages.addToTop({...message, otherUser: otherUserId})
-      }
-      if (!existingChat.active) {
-        msg!.setUnread(unread)
-      }
-    },
     deleteBot: (id: string) => {
       self.notifications!.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
@@ -164,17 +138,6 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    loadChats: flow(function*(max: number = 50) {
-      yield waitFor(() => self.connected)
-      const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
-        max
-      )
-      items.forEach(item => {
-        const msg = createMessage(item.message, self)
-        const chat = self.createChat(item.chatId)
-        chat.messages.addToTop(msg)
-      })
-    }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const bot = self.getBot({id})
@@ -286,26 +249,6 @@ export const Wocky = types
           self.localBots.add(self.getBot(bot))
         })
       }),
-      _sendMessage: flow(function*(msg: IMessage) {
-        // console.log('& sendMessage', JSON.stringify(msg))
-        yield self.transport.sendMessage(
-          (msg.otherUser!.id || msg.otherUser!) as string,
-          msg.content.length ? msg.content : undefined,
-          msg.media ? msg.media.id : undefined
-        )
-        // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
-        // TODO better IMessage to IMessageIn conversion?
-        self._addMessage({...msg, id: Date.now() + ''} as any, false)
-      }),
-      _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
-        yield waitFor(() => self.connected)
-        const {list, count, cursor} = yield self.transport.loadChatMessages(userId, lastId, max)
-        return {
-          count,
-          cursor,
-          list: list.map(m => createMessage(m, self)),
-        }
-      }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
       getLocationUploadToken: flow(function*() {
         return yield self.transport.getLocationUploadToken()
       }),
@@ -574,7 +517,7 @@ export const Wocky = types
         ),
         reaction(
           () => self.transport.message,
-          message => self._addMessage({...message} as any, true)
+          message => self.chats.addMessage({...message} as any, true)
         ),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.rosterItem, self._onRosterItem),

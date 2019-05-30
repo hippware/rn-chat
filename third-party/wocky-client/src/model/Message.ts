@@ -1,19 +1,30 @@
-import {types, Instance, SnapshotIn, flow, getParent} from 'mobx-state-tree'
+import {types, Instance, SnapshotIn, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
 import {FileRef} from './File'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable} from './PaginableList'
 import _ from 'lodash'
+import {Base} from './Base'
 
-const MessageBase = types.model('MessageBase', {
-  id: types.identifier,
-  otherUser: types.reference(Profile),
-  content: '',
-  media: FileRef,
-  unread: false,
-  isOutgoing: types.boolean,
-})
+enum Status {
+  Init = 0,
+  Sending = 1,
+  Sent = 2,
+  Error = 3,
+}
+
+const MessageBase = types.compose(
+  Base,
+  types.model('MessageBase', {
+    id: types.identifier,
+    otherUser: types.reference(Profile),
+    content: '',
+    media: FileRef,
+    unread: false,
+    isOutgoing: types.boolean,
+  })
+)
 
 export function createMessage(params: any, service: any): IMessage {
   if (params.otherUser) {
@@ -31,10 +42,17 @@ export const Message = types
     createUploadable('media', (self: any) => `user:${self.otherUser.id}@${self.service.host}`),
     MessageBase
   )
+  .volatile(self => ({
+    status: Status.Init,
+  }))
   .named('Message')
   .actions(self => ({
+    setStatus: (state: Status) => {
+      self.status = state
+    },
     setUnread: (unread: boolean) => (self.unread = unread),
     clear: () => {
+      self.status = Status.Init
       self.media = null
       self.content = ''
     },
@@ -44,10 +62,18 @@ export const Message = types
   }))
   .actions(self => ({
     send: flow(function*() {
-      self.time = Date.now()
-      const wocky: any = getParent(self, 4)
-      yield wocky._sendMessage(self)
-      self.clear()
+      try {
+        self.setStatus(Status.Sending)
+        yield self.transport.sendMessage(
+          (self.otherUser!.id || self.otherUser!) as string,
+          self.content.length ? self.content : undefined,
+          self.media ? self.media.id : undefined
+        )
+        self.setStatus(Status.Sent)
+        self.time = Date.now()
+      } catch (e) {
+        self.setStatus(Status.Error)
+      }
     }),
   }))
 

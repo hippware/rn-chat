@@ -12,6 +12,12 @@ export default {
     chats: {
       list: [],
       unread: 0,
+      loadChats: jest.fn(),
+      createChat: () =>
+        Chat.create({
+          id: '1234',
+          otherUser: '1234',
+        }),
     },
     files: {} as any,
     profiles: {} as any,
@@ -41,12 +47,6 @@ export default {
     followed: {},
     getProfile: jest.fn(),
     getBot: () => Bot.create({id: '1234'}),
-    createChat: () =>
-      Chat.create({
-        id: '1234',
-        otherUser: '1234',
-      }),
-    loadChats: jest.fn(),
   } as any,
   analytics: {
     track: jest.fn(),

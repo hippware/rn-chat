@@ -6,6 +6,8 @@ type UploadType = {
     name: string
     type: string
     uri?: string
+    height?: number
+    width?: number
     fileName?: string
   }
   size: number
@@ -21,6 +23,12 @@ export function createUploadable(property: string, access: string | ((self) => v
     }))
     .actions((self: any) => ({
       upload: flow(function*({file, size, height, width}: UploadType) {
+        if (!height) {
+          height = file.height
+        }
+        if (!width) {
+          width = file.width
+        }
         if (!self.uploading) {
           try {
             self.uploaded = false
