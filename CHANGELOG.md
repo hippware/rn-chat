@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.13.0 - 2019 May 30
+
 * Red boxes in top left corner of map (#3757)
 * [dev] Re-enable detox (#2597, PR #3759, PR #3764)
 * Splash screen with react-native-splash-screen (PR #3762)
