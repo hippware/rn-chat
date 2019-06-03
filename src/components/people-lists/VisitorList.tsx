@@ -23,6 +23,17 @@ const KeyboardAwareDraggablePopupList: any = withKeyboardHOC(DraggablePopupList)
 @inject('wocky', 'locationStore')
 @observer
 export default class VisitorList extends React.Component<Props> {
+  static navigationOptions = {
+    fadeNavConfig: {
+      back: true,
+      title: (
+        <RText size={18} color={colors.PURPLE}>
+          Who's Here
+        </RText>
+      ),
+    },
+  }
+
   @observable bot?: IBot
 
   componentWillMount() {
@@ -43,14 +54,6 @@ export default class VisitorList extends React.Component<Props> {
         keyExtractor={item => item.id}
         data={this.bot && isAlive(this.bot) ? this!.bot!.visitors.list.slice() : []}
         keyboardShouldPersistTaps="handled"
-        fadeNavConfig={{
-          back: true,
-          title: (
-            <RText size={18} color={colors.PURPLE}>
-              Who's Here
-            </RText>
-          ),
-        }}
         onEndReachedThreshold={0.5}
         onEndReached={() => this!.bot!.visitors.load()}
         isActive={this.props.isActive}

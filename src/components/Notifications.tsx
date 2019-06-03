@@ -15,13 +15,26 @@ import {PINK, WHITE} from '../constants/colors'
 type Props = {
   wocky?: IWocky
   isActive: boolean
+  navigation: any
 }
 
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
+  static navigationOptions = ({navigation}) => {
+    const {wocky} = navigation.state.params
+    return {
+      fadeNavConfig: {
+        back: true,
+        title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+      },
+    }
+  }
+
   componentWillMount() {
     this.props.wocky!.notifications.setMode(1)
+    // send all injected props + bot "up" to static context
+    this.props.navigation.setParams(this.props)
   }
   componentDidMount() {
     this.props.wocky!.notifications.readAll()
@@ -39,10 +52,6 @@ class Notifications extends React.Component<Props> {
     return (
       <DraggablePopupList
         isActive={this.props.isActive}
-        fadeNavConfig={{
-          back: true,
-          title: <RText style={navBarStyle.titleStyle}>{notifications.title}</RText>,
-        }}
         headerInner={
           <View style={{flex: 1, alignItems: 'center'}}>
             <SwitchButton
