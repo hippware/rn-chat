@@ -31,46 +31,6 @@ exports[`BotDetails renders with no data 1`] = `
             }
           }
           data={Array []}
-          fadeNavConfig={
-            Object {
-              "back": true,
-              "backAction": [Function],
-              "title": <NavTitle
-                bot={
-                  Object {
-                    "address": "",
-                    "addressData": Object {
-                      "city": "",
-                      "country": "",
-                      "county": "",
-                      "state": "",
-                    },
-                    "description": "",
-                    "followersSize": 0,
-                    "icon": "",
-                    "id": "1234",
-                    "image": null,
-                    "invitation": null,
-                    "isSubscribed": false,
-                    "location": null,
-                    "owner": null,
-                    "radius": 100,
-                    "server": null,
-                    "title": null,
-                    "totalItems": 0,
-                    "visitor": false,
-                    "visitors": Object {
-                      "count": 0,
-                      "cursor": null,
-                      "result": Array [],
-                    },
-                    "visitorsSize": 0,
-                  }
-                }
-                onLongPress={[Function]}
-              />,
-            }
-          }
           headerInner={
             <inject-BotDetailsHeader-with-notificationStore-analytics-locationStore
               analytics={
@@ -178,6 +138,7 @@ exports[`BotDetails renders with no data 1`] = `
           keyExtractor={[Function]}
           keyboardDismissMode="on-drag"
           renderItem={[Function]}
+          scrollY={0}
         />
       }
       bounces={false}
@@ -205,7 +166,8 @@ exports[`BotDetails renders with no data 1`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={100}
+      scrollY={0}
       showsVerticalScrollIndicator={false}
       stickyHeaderIndices={Array []}
       style={
@@ -515,150 +477,6 @@ and depart this location.
         </View>
       </View>
     </RCTScrollView>
-    <View
-      style={
-        Object {
-          "left": 0,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "white",
-            "borderBottomWidth": 0.5,
-            "borderColor": "rgb(212,212,212)",
-            "elevation": 1,
-            "flex": 1,
-            "flexDirection": "row",
-            "height": 140.8,
-            "justifyContent": "space-between",
-            "paddingHorizontal": 10,
-            "paddingTop": 44,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "width": 23,
-            }
-          }
-        >
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <Image
-              source={
-                Object {
-                  "testUri": "../../../images/iconBackGrayNew.png",
-                }
-              }
-              style={
-                Object {
-                  "height": 21,
-                  "marginLeft": 10,
-                  "tintColor": "rgb(28,247,39)",
-                  "width": 13,
-                }
-              }
-            />
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "marginHorizontal": 16,
-                "opacity": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "color": "rgb(63,50,77)",
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 16,
-                  },
-                  Array [
-                    Object {
-                      "color": "rgb(63,50,77)",
-                      "fontFamily": "Roboto-Medium",
-                      "fontSize": 17,
-                      "fontWeight": undefined,
-                      "letterSpacing": 0.5,
-                    },
-                    Object {
-                      "textAlign": "center",
-                    },
-                  ],
-                ]
-              }
-            />
-            <Text
-              numberOfLines={1}
-              style={
-                Array [
-                  Object {
-                    "color": "rgb(63,50,77)",
-                    "fontFamily": "Roboto-Light",
-                    "fontSize": 12,
-                  },
-                  Object {
-                    "textAlign": "center",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "marginRight": 20,
-            }
-          }
-        />
-      </View>
-    </View>
   </R2RTouchThroughWrapper>
 </View>
 `;

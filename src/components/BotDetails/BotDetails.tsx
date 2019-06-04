@@ -14,15 +14,15 @@ import Separator from './Separator'
 import DraggablePopupList from '../common/DraggablePopupList'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
+import NotificationStore from '../../store/NotificationStore'
 
 type Props = {
   botId: string
-  // server?: string
   isNew?: boolean
   params?: any
   wocky?: IWocky
   analytics?: any
-  notificationStore?: any
+  notificationStore?: NotificationStore
   homeStore?: any
   navigation: any
   isActive: boolean
@@ -38,8 +38,23 @@ export default class BotDetails extends React.Component<Props> {
   viewTimeout: any
 
   static navigationOptions = ({navigation}) => {
+    const {isNew, bot, notificationStore} = navigation.state.params
+    const backAction = isNew ? () => Actions.popTo('home') : Actions.pop
     return {
-      backAction: navigation.state.params.isNew ? () => Actions.popTo('home') : Actions.pop,
+      backAction,
+      fadeNavConfig: {
+        back: true,
+        backAction,
+        title: bot && (
+          <NavTitle
+            bot={bot}
+            onLongPress={() => {
+              Clipboard.setString(bot.address)
+              notificationStore.flash('Address copied to clipboard 👍')
+            }}
+          />
+        ),
+      },
     }
   }
 
@@ -60,6 +75,9 @@ export default class BotDetails extends React.Component<Props> {
     if (!this.bot) {
       return
     }
+
+    // send all injected props + bot "up" to static context
+    this.props.navigation.setParams({...this.props, bot: this.bot})
 
     homeStore.select(this.bot.id)
     homeStore.setFocusedLocation(this.bot.location)
@@ -92,11 +110,6 @@ export default class BotDetails extends React.Component<Props> {
     </View>
   )
 
-  onNavLongPress = () => {
-    Clipboard.setString(this.bot!.address)
-    this.props.notificationStore.flash('Address copied to clipboard 👍')
-  }
-
   render() {
     const {bot} = this
     if (!bot || !isAlive(bot)) {
@@ -115,13 +128,6 @@ export default class BotDetails extends React.Component<Props> {
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}
           headerInner={<Header bot={this.bot!} {...this.props} />}
-          fadeNavConfig={{
-            back: true,
-            backAction: this.props.navigation.state.params.isNew
-              ? () => Actions.popTo('home')
-              : Actions.pop,
-            title: <NavTitle bot={bot} onLongPress={this.onNavLongPress} />,
-          }}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}

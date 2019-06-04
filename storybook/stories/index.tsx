@@ -22,6 +22,7 @@ import BotDetailsStory from './BotDetailsStory'
 import SignUpStory from './SignUpStory'
 import ImagePickerStory from './ImagePickerStory'
 import UserActivityStory from './UserActivityStory'
+import CustomTransitionerStory from './CustomTransitionerStory'
 
 function emptyFn() {
   /* noop */
@@ -47,3 +48,5 @@ storiesOf('Onboarding', module)
 storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
 
 storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)
+
+storiesOf('Custom Transitioner', module).add('1 - Default', () => <CustomTransitionerStory />)
