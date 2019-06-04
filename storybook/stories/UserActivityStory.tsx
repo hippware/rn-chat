@@ -37,7 +37,7 @@ const store = types
   })
 
 function toggle() {
-  const choices = ['still', 'on_foot', 'walking', 'in_vehicle']
+  const choices = ['still', 'on_foot', 'walking', 'on_bicycle', 'in_vehicle']
   store.profile.location!.load({activity: choices[index], createdAt: Date.now()})
   index = (index + 1) % choices.length
 }
