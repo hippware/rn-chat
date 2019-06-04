@@ -1,3 +1,5 @@
+// tslint:disable:no-console
+
 import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
