@@ -35,6 +35,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
             profile={profile}
             sharesLocation={profile.sharesLocation}
             currentActivity={profile.currentActivity}
+            noFade={homeStore!.mapType === 'hybrid'}
           />
         </View>
       </HackMarker>
