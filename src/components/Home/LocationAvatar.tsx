@@ -12,6 +12,7 @@ type Props = {
   tappable?: boolean
   sharesLocation: boolean
   currentActivity?: UserActivityType | null
+  noFade?: boolean
 }
 
 const walking = require('../../../images/walking.png')
@@ -23,7 +24,14 @@ const activityImages = {
   in_vehicle: require('../../../images/driving.png'),
 }
 
-const LocationAvatar = ({profile, sharesLocation, hidden, tappable, currentActivity}: Props) => {
+const LocationAvatar = ({
+  profile,
+  sharesLocation,
+  hidden,
+  tappable,
+  currentActivity,
+  noFade,
+}: Props) => {
   const isStill = currentActivity === 'still'
   const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
   return (
@@ -37,7 +45,7 @@ const LocationAvatar = ({profile, sharesLocation, hidden, tappable, currentActiv
         paddingHorizontal: 3.3,
         height: 63.6,
         width: 63.6,
-        opacity: isStill ? 0.4 : 1,
+        opacity: isStill && !noFade ? 0.4 : 1,
       }}
     >
       <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
