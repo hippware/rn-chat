@@ -173,12 +173,14 @@ export const Profile = types
             self.location.activityConfidence >= 50
               ? self.location.activity
               : null
+          const minsSinceLastUpdate = moment(now).diff(self.location!.createdAt, 'minutes')
           if (activity === 'still') {
             // delay 5 minutes before showing a user as 'still'
-            const diff = moment(now).diff(self.location!.createdAt, 'minutes')
-            return diff > 5 ? activity : null
+            return minsSinceLastUpdate > 5 ? 'still' : null
           }
-          return activity
+
+          // return null activity if no updates in last 5 mins
+          return minsSinceLastUpdate > 5 ? null : activity
         },
       },
     }
