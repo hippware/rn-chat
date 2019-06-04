@@ -13,11 +13,11 @@ export const LocationShare = types
   .views(self => ({
     get forDuration(): string {
       const now: Date = (getRoot(self) as any).wocky.timer.minute
-      return self.expiresAt.getTime() - now.getTime() > 1000 * 3600 * 72
+      const diff = moment.duration(moment(self.expiresAt).diff(now))
+      return diff.hours() > 72
         ? 'Until you turn it off'
         : 'for ' +
-            moment
-              .duration(moment(self.expiresAt).diff(moment(now)))
+            diff
               .humanize()
               .replace('d', ' days')
               .replace('h', ' hours')
