@@ -1,5 +1,3 @@
-// tslint:disable:no-console
-
 import {ApolloClient, MutationOptions} from 'apollo-client'
 import {InMemoryCache, IntrospectionFragmentMatcher} from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
@@ -1426,6 +1424,7 @@ export class Transport {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       logger: process.env.WOCKY_VERBOSE
         ? (kind, msg, data) => {
+            // tslint:disable-next-line
             console.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
