@@ -34,6 +34,7 @@ const LocationAvatar = ({
 }: Props) => {
   const isStill = currentActivity === 'still'
   const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
+  const theActivity = activityEmojis[currentActivity || '']
   return (
     <View
       style={{
@@ -49,20 +50,22 @@ const LocationAvatar = ({
       }}
     >
       <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
-      <View
-        style={{
-          position: 'absolute',
-          top: -12,
-          right: -7,
-          height: 35,
-          width: 35,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Image source={activity} style={{position: 'absolute'}} resizeMode="contain" />
-        <Text style={{bottom: 3, left: 1}}>{activityEmojis[currentActivity || '']}</Text>
-      </View>
+      {theActivity && (
+        <View
+          style={{
+            position: 'absolute',
+            top: -12,
+            right: -7,
+            height: 35,
+            width: 35,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Image source={activity} style={{position: 'absolute'}} resizeMode="contain" />
+          <Text style={{bottom: 3, left: 1}}>{theActivity}</Text>
+        </View>
+      )}
       <Triangle width={8} height={8} color={color} direction="down" />
     </View>
   )
