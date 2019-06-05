@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import {View, Image, Text} from 'react-native'
 import {colors} from '../../constants'
 import {Avatar} from '../common'
 import Triangle from '../map/Triangle'
@@ -15,13 +15,13 @@ type Props = {
   noFade?: boolean
 }
 
-const walking = require('../../../images/walking.png')
-const activityImages = {
-  walking,
-  on_foot: walking,
-  on_bicycle: walking,
-  running: walking,
-  in_vehicle: require('../../../images/driving.png'),
+const activity = require('../../../images/activity-outer.png')
+const activityEmojis = {
+  walking: '🚶',
+  on_foot: '🚶',
+  on_bicycle: '🚴',
+  running: '🏃',
+  in_vehicle: '🚗',
 }
 
 const LocationAvatar = ({
@@ -49,12 +49,20 @@ const LocationAvatar = ({
       }}
     >
       <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
-      {currentActivity && activityImages[currentActivity] && (
-        <Image
-          source={activityImages[currentActivity]}
-          style={{position: 'absolute', top: -12, right: -7, height: 35, width: 35}}
-        />
-      )}
+      <View
+        style={{
+          position: 'absolute',
+          top: -12,
+          right: -7,
+          height: 35,
+          width: 35,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Image source={activity} style={{position: 'absolute'}} resizeMode="contain" />
+        <Text style={{bottom: 3, left: 1}}>{activityEmojis[currentActivity || '']}</Text>
+      </View>
       <Triangle width={8} height={8} color={color} direction="down" />
     </View>
   )
