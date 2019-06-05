@@ -1,5 +1,7 @@
 import {flow} from 'mobx-state-tree'
 import {Base} from './Base'
+import {upload} from '../transport/FileService'
+import {MediaUploadParams} from '../transport/types'
 
 type UploadType = {
   file: {
@@ -15,11 +17,23 @@ type UploadType = {
   width?: number
 }
 
-export function createUploadable(property: string, access: string | ((self) => void)) {
+export function createUploadable(property: string, accessParam: string | ((self) => void)) {
   return Base.named('Uploadable')
     .volatile(() => ({
       uploading: false,
       uploaded: false,
+    }))
+    .actions(self => ({
+      requestUpload: flow(function*({file, size, access}) {
+        const data = yield self.transport.requestUpload({file, size, access})
+        try {
+          yield upload(data)
+          return data.reference_url
+        } catch (e) {
+          yield self.transport.removeUpload(data.reference_url)
+          throw e
+        }
+      }) as ({file, size, access}: MediaUploadParams) => Promise<string>,
     }))
     .actions((self: any) => ({
       upload: flow(function*({file, size, height, width}: UploadType) {
@@ -33,10 +47,10 @@ export function createUploadable(property: string, access: string | ((self) => v
           try {
             self.uploaded = false
             self.uploading = true
-            const url = yield self.service._requestUpload({
+            const url = yield self.requestUpload({
               file,
               size,
-              access: typeof access === 'function' ? access(self) : access,
+              access: typeof accessParam === 'function' ? accessParam(self) : accessParam,
             })
             self.uploaded = true
             const fileRef = self.service.files.get(url)

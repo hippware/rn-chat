@@ -2,7 +2,6 @@ import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {IProfile, IProfilePartial} from '../model/Profile'
-import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import Timer from './Timer'
@@ -13,7 +12,6 @@ import {iso8601toDate, processMap, waitFor} from '../transport/utils'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 
 export const Wocky = types
@@ -258,21 +256,6 @@ export const Wocky = types
       getLocationsVisited: (limit?: number): Promise<object[]> => {
         return self.transport.getLocationsVisited(limit)
       },
-      _requestUpload: flow(function*({file, size, access}) {
-        yield waitFor(() => self.connected)
-        const data = yield self.transport.requestUpload({file, size, access})
-        try {
-          yield upload(data)
-          return data.reference_url
-        } catch (e) {
-          yield self.transport.removeUpload(data.reference_url)
-          throw e
-        }
-      }) as ({file, size, access}: MediaUploadParams) => Promise<string>,
-      _removeUpload: flow(function*(tros: string) {
-        yield waitFor(() => self.connected)
-        yield self.transport.removeUpload(tros)
-      }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
@@ -389,79 +372,51 @@ export const Wocky = types
       }),
     }
   })
-  .actions(self => {
-    const fs: IFileService = getEnv(self).fileService
-    return {
-      _loadNewNotifications: flow(function*() {
-        yield waitFor(() => self.connected)
-        const mostRecentNotification = self.notifications.first
-        const limit = 20
-        const {list} = yield self.transport.loadNotifications({
-          afterId: mostRecentNotification && (mostRecentNotification.id as any),
-          limit,
-          types: undefined,
-        })
-        if (list.length === limit) {
-          // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
-          self.notifications.refresh()
-        }
-        list.reverse().forEach(self._onNotification)
-        self.notifications.cursor = self.notifications.last && self.notifications.last.id
-        // console.log(
-        //   '& notifications list after initial load',
-        //   self.notifications.list.map(n => n.id)
-        // )
-      }),
-      downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
-        const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
-        if (!(yield fs.fileExists(folder))) {
-          yield fs.mkdir(folder)
-        }
-        // check main cached picture first
-        let fileName = `${folder}/main.jpeg`
-        let cached = yield fs.fileExists(fileName)
-
-        // check thumbnail
-        if (!cached && name !== 'main') {
-          fileName = `${folder}/${name}.jpeg`
-          cached = yield fs.fileExists(fileName)
-        }
-        if (!cached) {
-          yield fs.downloadHttpFile(sourceUrl, fileName, {})
-        }
-        const {width, height} = yield fs.getImageSize(fileName)
-        return {uri: 'file://' + fileName, width, height}
-      }),
-      userInviteMakeCode(): Promise<string> {
-        return self.transport.userInviteMakeCode()
-      },
-      userInviteRedeemCode(code: string): Promise<void> {
-        return self.transport.userInviteRedeemCode(code)
-      },
-      userBulkLookup: flow(function*(phoneNumbers: string[]) {
-        yield waitFor(() => self.connected)
-        const data = yield self.transport.userBulkLookup(phoneNumbers)
-        data.forEach(d => {
-          if (d.user) {
-            const profile = self.profiles.get(d.user.id, d.user)
-            // if (d.relationship === 'FRIEND') {
-            //   profile.setFriend(true)
-            //   self.profile!.addFriend(profile, new Date())
-            // }
-            d.user = profile
-          }
-        })
-
-        return data
-      }) as (phoneNumbers: string[]) => Promise<any[]>,
-      friendSmsInvite: (phoneNumber: string): Promise<void> => {
-        return self.transport.friendSmsInvite(phoneNumber)
-      },
-    }
-  })
   .actions(self => ({
-    downloadThumbnail(url: string, tros: string) {
-      return self.downloadFile(tros, 'thumbnail', url)
+    _loadNewNotifications: flow(function*() {
+      yield waitFor(() => self.connected)
+      const mostRecentNotification = self.notifications.first
+      const limit = 20
+      const {list} = yield self.transport.loadNotifications({
+        afterId: mostRecentNotification && (mostRecentNotification.id as any),
+        limit,
+        types: undefined,
+      })
+      if (list.length === limit) {
+        // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
+        self.notifications.refresh()
+      }
+      list.reverse().forEach(self._onNotification)
+      self.notifications.cursor = self.notifications.last && self.notifications.last.id
+      // console.log(
+      //   '& notifications list after initial load',
+      //   self.notifications.list.map(n => n.id)
+      // )
+    }),
+    userInviteMakeCode(): Promise<string> {
+      return self.transport.userInviteMakeCode()
+    },
+    userInviteRedeemCode(code: string): Promise<void> {
+      return self.transport.userInviteRedeemCode(code)
+    },
+    userBulkLookup: flow(function*(phoneNumbers: string[]) {
+      yield waitFor(() => self.connected)
+      const data = yield self.transport.userBulkLookup(phoneNumbers)
+      data.forEach(d => {
+        if (d.user) {
+          const profile = self.profiles.get(d.user.id, d.user)
+          // if (d.relationship === 'FRIEND') {
+          //   profile.setFriend(true)
+          //   self.profile!.addFriend(profile, new Date())
+          // }
+          d.user = profile
+        }
+      })
+
+      return data
+    }) as (phoneNumbers: string[]) => Promise<any[]>,
+    friendSmsInvite: (phoneNumber: string): Promise<void> => {
+      return self.transport.friendSmsInvite(phoneNumber)
     },
   }))
   .actions(self => {

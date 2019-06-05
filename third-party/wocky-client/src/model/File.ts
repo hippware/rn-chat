@@ -1,5 +1,6 @@
 import {types, isAlive, flow, Instance, getEnv} from 'mobx-state-tree'
 import {Base} from './Base'
+import {IFileService} from '../transport/FileService'
 
 export const FileSource = types.model('FileSource', {
   uri: types.string,
@@ -36,6 +37,32 @@ export const File = types
     return res
   })
   .actions(self => {
+    const fs: IFileService = getEnv(self).fileService
+    return {
+      downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
+        const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
+        if (!(yield fs.fileExists(folder))) {
+          yield fs.mkdir(folder)
+        }
+        // check main cached picture first
+        let fileName = `${folder}/main.jpeg`
+        let cached = yield fs.fileExists(fileName)
+
+        // check thumbnail
+        if (!cached && name !== 'main') {
+          fileName = `${folder}/${name}.jpeg`
+          cached = yield fs.fileExists(fileName)
+        }
+        console.log('downloadFile:', tros, sourceUrl, cached)
+        if (!cached) {
+          yield fs.downloadHttpFile(sourceUrl, fileName, {})
+        }
+        const {width, height} = yield fs.getImageSize(fileName)
+        return {uri: 'file://' + fileName, width, height}
+      }),
+    }
+  })
+  .actions(self => {
     return {
       setURL: (url: string) => {
         self.url = url
@@ -49,7 +76,7 @@ export const File = types
           try {
             self.error = ''
             self.loading = true
-            self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
+            self.thumbnail = yield self.downloadFile(self.id, 'thumbnail', self.url)
             self.url = ''
             self.loading = false
           } catch (e) {

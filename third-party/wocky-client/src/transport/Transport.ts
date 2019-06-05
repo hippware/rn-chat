@@ -658,6 +658,7 @@ export class Transport {
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
+    await waitFor(() => this.connected)
     const res = await this.client!.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
