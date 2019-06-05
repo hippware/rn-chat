@@ -53,7 +53,6 @@ export const File = types
           fileName = `${folder}/${name}.jpeg`
           cached = yield fs.fileExists(fileName)
         }
-        console.log('downloadFile:', tros, sourceUrl, cached)
         if (!cached) {
           yield fs.downloadHttpFile(sourceUrl, fileName, {})
         }
