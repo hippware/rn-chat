@@ -43,6 +43,9 @@ export type PaginableLoadType<T> = {list: T[]; count: number; cursor?: string}
 export type PaginableLoadPromise<T> = Promise<PaginableLoadType<T>>
 
 export class Transport {
+  static instances = 0
+
+  instance: number
   resource: string
   client?: ApolloClient<any>
   socket?: PhoenixSocket
@@ -62,6 +65,7 @@ export class Transport {
 
   constructor(resource: string) {
     this.resource = resource
+    this.instance = Transport.instances++
   }
 
   @action
@@ -1412,16 +1416,22 @@ export class Transport {
     const socketEndpoint = process.env.WOCKY_LOCAL
       ? 'ws://localhost:8080/graphql'
       : `wss://${this.host}/graphql`
+
+    // uncomment to see all graphql messages!
+    // process.env.WOCKY_VERBOSE = true
+
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
-      // uncomment to see all graphql messages!
-      // logger: (kind, msg, data) => {
-      //   if (msg !== 'close') {
-      //     console.log('& socket:' + `${kind}: ${msg}`, new Date(), JSON.stringify(data))
-      //   } else {
-      //     console.log('close')
-      //   }
-      // },
+      logger: process.env.WOCKY_VERBOSE
+        ? (kind, msg, data) => {
+            // tslint:disable-next-line
+            console.log(
+              `${new Date().toISOString()} | socket(${
+                this.instance
+              }):${kind} | ${msg} | ${JSON.stringify(data)}`
+            )
+          }
+        : undefined,
     })
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
