@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Better fade header nav config (PR #3787)
   * Back caret missing on friends search (#3738)
   * Missing Header on Location Profile (#3748)
+* Split out bicycle and running for user activity (#3756)
+* Traffic dumps for client side tests (PR #3790)
 
 # 4.13.0 - 2019 May 30
 
