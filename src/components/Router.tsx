@@ -133,8 +133,8 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="profileDetails" component={ProfileDetail} />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
+                    <Scene key="chats" component={ChatListScreen} title="Messages" />
                   </Stack>
-                  <Scene key="chats" component={ChatListScreen} title="Messages" />
                   <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
