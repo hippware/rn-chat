@@ -14,7 +14,7 @@ export const LocationShare = types
     get forDuration(): string {
       const now: Date = (getRoot(self) as any).wocky.timer.minute
       const diff = moment.duration(moment(self.expiresAt).diff(now))
-      return diff.hours() > 72
+      return diff.asHours() > 72
         ? 'Until you turn it off'
         : 'for ' +
             diff
