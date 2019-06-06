@@ -30,7 +30,7 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
         stopPropagation
       >
         {/* extra padding here for the activity icon */}
-        <View style={{paddingRight: 4, paddingTop: 9}}>
+        <View style={{paddingRight: 9, paddingTop: 15}}>
           <LocationAvatar
             profile={profile}
             sharesLocation={profile.sharesLocation}
