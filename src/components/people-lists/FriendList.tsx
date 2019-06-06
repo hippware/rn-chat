@@ -21,6 +21,16 @@ const searchIcon = require('../../../images/search.png')
 @inject('wocky')
 @observer
 class FriendList extends React.Component<Props> {
+  static navigationOptions = {
+    fadeNavConfig: {
+      back: true,
+      title: (
+        <RText size={16} color={colors.DARK_PURPLE}>
+          Friends
+        </RText>
+      ),
+    },
+  }
   list: any
 
   renderItem = ({item}) => <FriendCard profile={item.user} />
@@ -31,14 +41,6 @@ class FriendList extends React.Component<Props> {
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.user.id}
-        fadeNavConfig={{
-          back: true,
-          title: (
-            <RText size={16} color={colors.DARK_PURPLE}>
-              Friends
-            </RText>
-          ),
-        }}
         data={this.props.wocky!.profile!.friends.list.slice()}
         keyboardShouldPersistTaps="handled"
         isActive={this.props.isActive}

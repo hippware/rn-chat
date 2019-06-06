@@ -7,6 +7,8 @@ import {RText} from 'src/components/common'
 import {types} from 'mobx-state-tree'
 import Timer from '../../third-party/wocky-client/src/store/Timer'
 
+let index = 0
+
 const store = types
   .model({
     wocky: types.model({
@@ -35,7 +37,9 @@ const store = types
   })
 
 function toggle() {
-  store.profile.location!.load({activity: 'still', createdAt: Date.now()})
+  const choices = ['still', 'on_foot', 'walking', 'on_bicycle', 'in_vehicle']
+  store.profile.location!.load({activity: choices[index], createdAt: Date.now()})
+  index = (index + 1) % choices.length
 }
 
 export default observer(() => (

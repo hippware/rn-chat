@@ -25,6 +25,17 @@ class FriendSearch extends React.Component<Props> {
   input: any
   list: any
 
+  static navigationOptions = {
+    fadeNavConfig: {
+      back: true,
+      title: (
+        <RText size={16} color={colors.DARK_PURPLE}>
+          Friends
+        </RText>
+      ),
+    },
+  }
+
   renderItem = ({item: profile}) => (
     <FriendCard
       profile={profile}
@@ -43,14 +54,6 @@ class FriendSearch extends React.Component<Props> {
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
-        fadeNavConfig={{
-          back: true,
-          title: (
-            <RText size={16} color={colors.DARK_PURPLE}>
-              Friends
-            </RText>
-          ),
-        }}
         data={searchStore!.globalResult.filteredList.map(p => p.profile)}
         keyboardShouldPersistTaps="handled"
         isActive={this.props.isActive}
@@ -88,7 +91,9 @@ class FriendSearch extends React.Component<Props> {
           value={searchStore!.global}
           returnKeyType="search"
           clearButtonMode="while-editing"
-          onFocus={() => this.list.scrollToOffset({offset: 0, animated: false})}
+          onFocus={() =>
+            this.list.scrollToOffset && this.list.scrollToOffset({offset: 0, animated: false})
+          }
           placeholder="Search by name or username"
           selectionColor={colors.COVER_BLUE}
         />

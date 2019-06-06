@@ -1,5 +1,6 @@
 import {IFirebaseStore} from 'src/store/FirebaseStore'
 import {Bot, Chat} from 'wocky-client'
+import {Animated} from 'react-native'
 
 export default {
   wocky: {
@@ -89,4 +90,5 @@ export default {
     setEmoji: jest.fn(),
   },
   notificationStore: {},
+  scrollY: new Animated.Value(0),
 }

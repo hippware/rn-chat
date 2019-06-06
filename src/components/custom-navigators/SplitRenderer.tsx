@@ -1,9 +1,12 @@
 import React from 'react'
 import {Transitioner} from 'react-navigation-stack'
-import {View, Platform} from 'react-native'
+import {View, Platform, Animated} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'
 import BackButton from './BackButton'
+import NavBarHeader from './NavBarHeader'
+import {height} from '../Global'
+import {Provider} from 'mobx-react'
 
 type Props = {
   navigation: any
@@ -13,6 +16,8 @@ type Props = {
 }
 
 export default class SplitRenderer extends React.Component<Props> {
+  scrollY = new Animated.Value(0)
+
   _renderScene = (transitionProps, scene) => {
     const {index} = scene
     if (index === 0) {
@@ -43,9 +48,29 @@ export default class SplitRenderer extends React.Component<Props> {
     }
   }
 
+  _renderHeader = fadeNavConfig => {
+    const opacity = this.scrollY.interpolate({
+      inputRange: [0, 80, height / 2 - 80],
+      outputRange: [0, 0, 1],
+    })
+    return fadeNavConfig ? (
+      <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
+        <NavBarHeader config={fadeNavConfig} />
+      </Animated.View>
+    ) : null
+  }
+
   _render = (transitionProps, prevTransitionProps) => {
-    const scenes = transitionProps.scenes.map(scene => this._renderScene(transitionProps, scene))
-    return <View style={{flex: 1}}>{scenes}</View>
+    const {scenes, scene} = transitionProps
+    const theScenes = scenes.map(s => this._renderScene(transitionProps, s))
+    return (
+      <Provider scrollY={this.scrollY}>
+        <View style={{flex: 1}}>
+          {theScenes}
+          {this._renderHeader(scene.descriptor.options.fadeNavConfig)}
+        </View>
+      </Provider>
+    )
   }
   onTransitionStart = () => null
   onTransitionEnd = () => null
