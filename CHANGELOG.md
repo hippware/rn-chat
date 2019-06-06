@@ -4,7 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-* Expressing user activity via color/faded avatar (Rework #3658, PR #3788)
+* Expressing user activity via color/faded avatar (Rework #3658)
+  * (PR #3788, PR #3791)
 * Better fade header nav config (PR #3787)
   * Back caret missing on friends search (#3738)
   * Missing Header on Location Profile (#3748)
