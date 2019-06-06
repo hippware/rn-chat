@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "4.13.0",
+  "version": "4.13.1",
   "private": true,
   "scripts": {
     "start": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js start",
