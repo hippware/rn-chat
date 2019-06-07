@@ -49,7 +49,7 @@ class ChatListScreen extends React.Component<Props> {
         headerInner={
           <>
             <TouchableOpacity
-              onPress={() => null}
+              onPress={() => Actions.selectChatUser()}
               style={{
                 borderColor: colors.PINK,
                 borderWidth: 1,

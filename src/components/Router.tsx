@@ -144,6 +144,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                  <Scene key="selectChatUser" component={CreateMessage} title="Message" />
                   {settings.allowDebugScreen && [
                     <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
@@ -151,7 +152,6 @@ class TinyRobotRouter extends React.Component<Props> {
                   ]}
                   {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                 </Stack>
-                <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                 <Scene
                   key="searchUsers"
                   component={peopleLists.SearchUsers}

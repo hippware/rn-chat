@@ -8,17 +8,26 @@ import {RText} from 'src/components/common'
 import ChatListScreen from 'src/components/Chats/ChatListScreen'
 import {Wocky} from 'wocky-client'
 import {types} from 'mobx-state-tree'
+import CreateMessage from 'src/components/Chats/CreateMessage'
+import SelectableProfileList from 'src/store/SelectableProfileList'
 
 const store = types
   .model({
     homeStore: types.model({}),
+    searchStore: types.model({
+      localResult: types.optional(SelectableProfileList, {}),
+    }),
     wocky: Wocky,
   })
   .create(
     {
       homeStore: {},
+      searchStore: {},
       wocky: {
         host: 'host',
+        profile: {
+          id: '1',
+        },
         profiles: {
           storage: {
             1: {id: '1', handle: 'andy_sims'},
@@ -58,16 +67,20 @@ const store = types
         rosterItem: {},
         botVisitor: {},
         downloadTROS: async () => '1',
+        loadChats: async () => [],
       },
     }
   )
 
-export default () => (
+export const MessagesRouterStory = () => (
   <Provider {...store}>
     <Router {...navBarStyle}>
-      <Stack renderer={SplitRenderer}>
-        <Scene key="home" component={Home} />
-        <Scene key="chats" component={ChatListScreen} />
+      <Stack>
+        <Stack renderer={SplitRenderer}>
+          <Scene key="home" component={Home} />
+          <Scene key="chats" component={ChatListScreen} />
+        </Stack>
+        <Scene key="selectChatUser" component={CreateMessage} title="Message" />
       </Stack>
     </Router>
   </Provider>
