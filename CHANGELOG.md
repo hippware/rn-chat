@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.13.1 - 2019 Jun 6
+
 * Expressing user activity via color/faded avatar (Rework #3658)
   * (PR #3788, PR #3791)
 * Better fade header nav config (PR #3787)
@@ -11,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Missing Header on Location Profile (#3748)
 * Split out bicycle and running for user activity (#3756)
 * Traffic dumps for client side tests (PR #3790)
+* HOTFIX: forDuration calculation
 
 # 4.13.0 - 2019 May 30
 
