@@ -8,7 +8,7 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 import Camera from './Camera'
-import CreateMessage from './Chats/CreateMessage'
+import SelectChatUser from './Chats/SelectChatUser'
 import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
@@ -144,7 +144,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
-                  <Scene key="selectChatUser" component={CreateMessage} title="Message" />
+                  <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
                   {settings.allowDebugScreen && [
                     <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,

@@ -8,7 +8,7 @@ import {RText} from 'src/components/common'
 import ChatListScreen from 'src/components/Chats/ChatListScreen'
 import {Wocky} from 'wocky-client'
 import {types} from 'mobx-state-tree'
-import CreateMessage from 'src/components/Chats/CreateMessage'
+import SelectChatUser from 'src/components/Chats/SelectChatUser'
 import SelectableProfileList from 'src/store/SelectableProfileList'
 
 const store = types
@@ -80,7 +80,7 @@ export const MessagesRouterStory = () => (
           <Scene key="home" component={Home} />
           <Scene key="chats" component={ChatListScreen} />
         </Stack>
-        <Scene key="selectChatUser" component={CreateMessage} title="Message" />
+        <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
       </Stack>
     </Router>
   </Provider>
