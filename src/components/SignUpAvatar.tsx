@@ -49,7 +49,8 @@ class SignUpAvatar extends React.Component<Props> {
     if (image) {
       const {profile, username, profiles} = this.props.wocky
       try {
-        await profile.upload({size: image.size, file: image})
+        profile.setFile(image)
+        await profile.upload()
         // change data within profiles cache!
         profiles.get(username, {...profile})
         this.imgSrc = image

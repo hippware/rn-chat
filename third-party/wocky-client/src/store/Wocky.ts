@@ -2,21 +2,16 @@ import {types, getParent, getEnv, flow, Instance} from 'mobx-state-tree'
 import {reaction, IReactionDisposer, autorun} from 'mobx'
 import {OwnProfile} from '../model/OwnProfile'
 import {IProfile, IProfilePartial} from '../model/Profile'
-import {IFileService, upload} from '../transport/FileService'
 import {Storages} from './Factory'
 import {Base, SERVICE_NAME} from '../model/Base'
 import Timer from './Timer'
 import {IBot, BotPaginableList} from '../model/Bot'
 import {BotPost, IBotPost} from '../model/BotPost'
 import {Chats} from '../model/Chats'
-import {IChat} from '../model/Chat'
-import {createMessage, IMessage, IMessageIn} from '../model/Message'
 import {iso8601toDate, processMap, waitFor} from '../transport/utils'
 import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
-import {PaginableLoadPromise} from '../transport/Transport'
-import {MediaUploadParams} from '../transport/types'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
 
 export const Wocky = types
@@ -95,13 +90,6 @@ export const Wocky = types
         _updateProfile: flow(function*(d: any) {
           yield self.transport.updateProfile(d)
         }),
-        createChat: (otherUserId: string): IChat => {
-          let chat: IChat | undefined = self.chats.get(otherUserId)
-          if (!chat) {
-            chat = self.chats.add({id: otherUserId, otherUser: otherUserId})
-          }
-          return chat
-        },
       },
     }
   })
@@ -134,22 +122,6 @@ export const Wocky = types
     getBot: ({id, ...data}: {id: string; owner?: string | null; isSubscribed?: boolean}): IBot => {
       return self.bots.get(id, data)
     },
-    _addMessage: (message?: IMessageIn, unread = false): void => {
-      if (!message) return
-      const {otherUser} = message
-      const otherUserId = (otherUser as any).id || otherUser
-      let existingChat = self.chats.get(otherUserId)
-      const msg = createMessage(message, self)
-      if (existingChat) {
-        existingChat.messages.addToTop(msg)
-      } else {
-        existingChat = self.createChat(otherUserId)
-        existingChat.messages.addToTop({...message, otherUser: otherUserId})
-      }
-      if (!existingChat.active) {
-        msg!.setUnread(unread)
-      }
-    },
     deleteBot: (id: string) => {
       self.notifications!.result.forEach((event: any) => {
         if (event.bot && event.bot.id === id) {
@@ -164,17 +136,6 @@ export const Wocky = types
     },
   }))
   .actions(self => ({
-    loadChats: flow(function*(max: number = 50) {
-      yield waitFor(() => self.connected)
-      const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
-        max
-      )
-      items.forEach(item => {
-        const msg = createMessage(item.message, self)
-        const chat = self.createChat(item.chatId)
-        chat.messages.addToTop(msg)
-      })
-    }) as (max?: number) => Promise<void>,
     loadBot: flow(function*(id: string) {
       yield waitFor(() => self.connected)
       const bot = self.getBot({id})
@@ -286,26 +247,6 @@ export const Wocky = types
           self.localBots.add(self.getBot(bot))
         })
       }),
-      _sendMessage: flow(function*(msg: IMessage) {
-        // console.log('& sendMessage', JSON.stringify(msg))
-        yield self.transport.sendMessage(
-          (msg.otherUser!.id || msg.otherUser!) as string,
-          msg.content.length ? msg.content : undefined,
-          msg.media ? msg.media.id : undefined
-        )
-        // console.log('& sendMessage, add', msg.media ? msg.media.id : 'no media', getSnapshot(msg))
-        // TODO better IMessage to IMessageIn conversion?
-        self._addMessage({...msg, id: Date.now() + ''} as any, false)
-      }),
-      _loadChatMessages: flow(function*(userId: string, lastId?: string, max: number = 20) {
-        yield waitFor(() => self.connected)
-        const {list, count, cursor} = yield self.transport.loadChatMessages(userId, lastId, max)
-        return {
-          count,
-          cursor,
-          list: list.map(m => createMessage(m, self)),
-        }
-      }) as (userId: string, lastId?: string, max?: number) => PaginableLoadPromise<IMessageIn>,
       getLocationUploadToken: flow(function*() {
         return yield self.transport.getLocationUploadToken()
       }),
@@ -315,21 +256,6 @@ export const Wocky = types
       getLocationsVisited: (limit?: number): Promise<object[]> => {
         return self.transport.getLocationsVisited(limit)
       },
-      _requestUpload: flow(function*({file, size, access}) {
-        yield waitFor(() => self.connected)
-        const data = yield self.transport.requestUpload({file, size, access})
-        try {
-          yield upload(data)
-          return data.reference_url
-        } catch (e) {
-          yield self.transport.removeUpload(data.reference_url)
-          throw e
-        }
-      }) as ({file, size, access}: MediaUploadParams) => Promise<string>,
-      _removeUpload: flow(function*(tros: string) {
-        yield waitFor(() => self.connected)
-        yield self.transport.removeUpload(tros)
-      }),
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
@@ -446,79 +372,51 @@ export const Wocky = types
       }),
     }
   })
-  .actions(self => {
-    const fs: IFileService = getEnv(self).fileService
-    return {
-      _loadNewNotifications: flow(function*() {
-        yield waitFor(() => self.connected)
-        const mostRecentNotification = self.notifications.first
-        const limit = 20
-        const {list} = yield self.transport.loadNotifications({
-          afterId: mostRecentNotification && (mostRecentNotification.id as any),
-          limit,
-          types: undefined,
-        })
-        if (list.length === limit) {
-          // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
-          self.notifications.refresh()
-        }
-        list.reverse().forEach(self._onNotification)
-        self.notifications.cursor = self.notifications.last && self.notifications.last.id
-        // console.log(
-        //   '& notifications list after initial load',
-        //   self.notifications.list.map(n => n.id)
-        // )
-      }),
-      downloadFile: flow(function*(tros: string, name: string, sourceUrl: string) {
-        const folder = `${fs.tempDir}/${tros.split('/').slice(-1)[0]}`
-        if (!(yield fs.fileExists(folder))) {
-          yield fs.mkdir(folder)
-        }
-        // check main cached picture first
-        let fileName = `${folder}/main.jpeg`
-        let cached = yield fs.fileExists(fileName)
-
-        // check thumbnail
-        if (!cached && name !== 'main') {
-          fileName = `${folder}/${name}.jpeg`
-          cached = yield fs.fileExists(fileName)
-        }
-        if (!cached) {
-          yield fs.downloadHttpFile(sourceUrl, fileName, {})
-        }
-        const {width, height} = yield fs.getImageSize(fileName)
-        return {uri: 'file://' + fileName, width, height}
-      }),
-      userInviteMakeCode(): Promise<string> {
-        return self.transport.userInviteMakeCode()
-      },
-      userInviteRedeemCode(code: string): Promise<void> {
-        return self.transport.userInviteRedeemCode(code)
-      },
-      userBulkLookup: flow(function*(phoneNumbers: string[]) {
-        yield waitFor(() => self.connected)
-        const data = yield self.transport.userBulkLookup(phoneNumbers)
-        data.forEach(d => {
-          if (d.user) {
-            const profile = self.profiles.get(d.user.id, d.user)
-            // if (d.relationship === 'FRIEND') {
-            //   profile.setFriend(true)
-            //   self.profile!.addFriend(profile, new Date())
-            // }
-            d.user = profile
-          }
-        })
-
-        return data
-      }) as (phoneNumbers: string[]) => Promise<any[]>,
-      friendSmsInvite: (phoneNumber: string): Promise<void> => {
-        return self.transport.friendSmsInvite(phoneNumber)
-      },
-    }
-  })
   .actions(self => ({
-    downloadThumbnail(url: string, tros: string) {
-      return self.downloadFile(tros, 'thumbnail', url)
+    _loadNewNotifications: flow(function*() {
+      yield waitFor(() => self.connected)
+      const mostRecentNotification = self.notifications.first
+      const limit = 20
+      const {list} = yield self.transport.loadNotifications({
+        afterId: mostRecentNotification && (mostRecentNotification.id as any),
+        limit,
+        types: undefined,
+      })
+      if (list.length === limit) {
+        // there are potentially more new notifications so purge the old ones (to ensure paging works as expected)
+        self.notifications.refresh()
+      }
+      list.reverse().forEach(self._onNotification)
+      self.notifications.cursor = self.notifications.last && self.notifications.last.id
+      // console.log(
+      //   '& notifications list after initial load',
+      //   self.notifications.list.map(n => n.id)
+      // )
+    }),
+    userInviteMakeCode(): Promise<string> {
+      return self.transport.userInviteMakeCode()
+    },
+    userInviteRedeemCode(code: string): Promise<void> {
+      return self.transport.userInviteRedeemCode(code)
+    },
+    userBulkLookup: flow(function*(phoneNumbers: string[]) {
+      yield waitFor(() => self.connected)
+      const data = yield self.transport.userBulkLookup(phoneNumbers)
+      data.forEach(d => {
+        if (d.user) {
+          const profile = self.profiles.get(d.user.id, d.user)
+          // if (d.relationship === 'FRIEND') {
+          //   profile.setFriend(true)
+          //   self.profile!.addFriend(profile, new Date())
+          // }
+          d.user = profile
+        }
+      })
+
+      return data
+    }) as (phoneNumbers: string[]) => Promise<any[]>,
+    friendSmsInvite: (phoneNumber: string): Promise<void> => {
+      return self.transport.friendSmsInvite(phoneNumber)
     },
   }))
   .actions(self => {
@@ -574,7 +472,7 @@ export const Wocky = types
         ),
         reaction(
           () => self.transport.message,
-          message => self._addMessage({...message} as any, true)
+          message => self.chats.addMessage({...message} as any, true)
         ),
         reaction(() => self.transport.notification, self._onNotification),
         reaction(() => self.transport.rosterItem, self._onRosterItem),

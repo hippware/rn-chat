@@ -1,10 +1,15 @@
-import {types, Instance} from 'mobx-state-tree'
+import {types, Instance, flow} from 'mobx-state-tree'
 import {Chat, IChat, IChatIn} from './Chat'
+import {createMessage, IMessageIn} from '../model/Message'
+import {Base} from './Base'
 
 export const Chats = types
-  .model('Chats', {
-    _list: types.optional(types.array(Chat), []),
-  })
+  .compose(
+    Base,
+    types.model('Chats', {
+      _list: types.optional(types.array(Chat), []),
+    })
+  )
   .named('Chats')
   .views(self => ({
     get _filteredList() {
@@ -33,6 +38,43 @@ export const Chats = types
       }
       return toReturn!
     },
+  }))
+  .actions(self => ({
+    createChat: (otherUserId: string): IChat => {
+      let chat: IChat | undefined = self.get(otherUserId)
+      if (!chat) {
+        chat = self.add({id: otherUserId, otherUser: otherUserId})
+      }
+      return chat
+    },
+  }))
+  .actions(self => ({
+    addMessage: (message?: IMessageIn, unread = false): void => {
+      if (!message) return
+      const {otherUser} = message
+      const otherUserId = (otherUser as any).id || otherUser
+      let existingChat = self.get(otherUserId)
+      const msg = createMessage(message, self.service)
+      if (existingChat) {
+        existingChat.messages.addToTop(msg)
+      } else {
+        existingChat = self.createChat(otherUserId)
+        existingChat.messages.addToTop({...message, otherUser: otherUserId})
+      }
+      if (!existingChat.active) {
+        msg!.setUnread(unread)
+      }
+    },
+    loadChats: flow(function*(max: number = 50) {
+      const items: Array<{chatId: string; message: IMessageIn}> = yield self.transport.loadChats(
+        max
+      )
+      items.forEach(item => {
+        const msg = createMessage(item.message, self.service)
+        const chat = self.createChat(item.chatId)
+        chat.messages.addToTop(msg)
+      })
+    }) as (max?: number) => Promise<void>,
   }))
 
 export interface IChats extends Instance<typeof Chats> {}

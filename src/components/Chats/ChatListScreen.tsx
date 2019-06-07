@@ -26,7 +26,7 @@ class ChatListScreen extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.props.wocky!.loadChats()
+    this.props.wocky!.chats.loadChats()
   }
 
   renderItem = ({item}) => <ChatCard chat={item} onPress={i => Actions.chat({item: i.id})} />

@@ -34,12 +34,12 @@ describe('New GraphQL conversation tests', () => {
   })
 
   it('alice creates and sends messages to bob', async () => {
-    chat = alice.createChat(bob.username!)
+    chat = alice.chats.createChat(bob.username!)
     chat.message!.setBody('hello')
-    await chat.message!.send()
+    chat.sendMessage()
     chat.message!.setBody('hello2')
-    await chat.message!.send()
-    expect(alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
+    chat.sendMessage()
+    await waitFor(() => alice.chats.list.length === 1 && alice.chats.list[0].messages.length === 2)
   })
 
   it("bob receives alice's messages via subscription", async () => {
@@ -55,7 +55,7 @@ describe('New GraphQL conversation tests', () => {
   it("bob can load alice's chat messages", async () => {
     bob.chats.clear()
     expect(bob.chats.list.length).toBe(0)
-    await bob.loadChats()
+    await bob.chats.loadChats()
     expect(bob.chats.list.length).toBe(1)
     // loadChats only loads the first message in each chat
     expect(bob.chats.list[0].messages.list.length).toBe(1)
@@ -64,7 +64,7 @@ describe('New GraphQL conversation tests', () => {
   it('bob can load all of his chats from alice', async () => {
     bob.chats.clear()
     expect(bob.chats.list.length).toBe(0)
-    await bob.loadChats()
+    await bob.chats.loadChats()
     expect(bob.chats.list.length).toBe(1)
     await bob.chats.list[0].messages.load({force: true})
     expect(bob.chats.list[0].messages.list.length).toBe(2)
@@ -79,7 +79,7 @@ describe('New GraphQL conversation tests', () => {
     }
     await sleep(1000)
     bob.chats.clear()
-    await bob.loadChats()
+    await bob.chats.loadChats()
     expect(bob.chats.list.length).toBe(1)
     await bob.chats.list[0].messages.load({force: true})
     expect(bob.chats.list[0].messages.list.length).toBe(20)

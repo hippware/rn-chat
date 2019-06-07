@@ -15,11 +15,17 @@ export default class extends React.Component<Props, State> {
 
   render() {
     return this.props.image ? (
-      <View onLayout={({nativeEvent: {layout: {width}}}) => this.setState({dwidth: width})}>
+      <View
+        onLayout={({
+          nativeEvent: {
+            layout: {width},
+          },
+        }) => this.setState({dwidth: width})}
+      >
         <Image
           style={{
             width: this.state.dwidth,
-            height: this.props.image.height * this.state.dwidth / this.props.image.width,
+            height: (this.props.image.height * this.state.dwidth) / this.props.image.width,
           }}
           resizeMode="contain"
           source={this.props.image}
