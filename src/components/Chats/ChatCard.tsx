@@ -27,7 +27,7 @@ export default class ChatCard extends React.Component<Props> {
     const {otherUser} = chat
     let media: any = null
     try {
-      media = msg!.media && msg!.media!.thumbnail ? msg!.media : null
+      media = msg!.getUpload()
     } catch (err) {
       // console.log('TODO: Fix msg.media reference error', err)
     }

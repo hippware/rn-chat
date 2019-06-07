@@ -12,8 +12,9 @@ type Props = {
   wocky?: IWocky
 }
 
-const ChatMessage = observer(({message: {isOutgoing, media, content}}: Props) => {
+const ChatMessage = observer(({message: {isOutgoing, getUpload, content}}: Props) => {
   const left = !isOutgoing
+  const media = getUpload()
   return (
     <View
       style={[

@@ -62,13 +62,18 @@ export const Chat = types
       })
       self.messages.setRequest(self._loadMessages)
     },
-    sendMessage() {
-      self.message.send()
+    sendMessage(file?: any) {
+      const id = Date.now() + ''
       self.messages.addToTop({
         ...self.message,
-        id: Date.now() + '',
+        id,
+        time: Date.now(),
         otherUser: self.message.otherUser.id,
       })
+      if (file) {
+        self.messages.first.setFile(file)
+      }
+      self.messages.first.send()
       self.message.clear()
     },
   }))

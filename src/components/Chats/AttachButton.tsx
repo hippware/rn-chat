@@ -32,22 +32,10 @@ class AttachButton extends React.Component<Props> {
   }
 
   onAttach = async () => {
-    const {chat, notificationStore} = this.props
+    const {chat} = this.props
     const image = await showImagePicker()
     if (image) {
-      try {
-        this.uploading = true
-        // TODO handle failures for upload
-        await chat.message!.upload({
-          size: image.size,
-          file: image,
-        })
-        chat.sendMessage()
-      } catch (e) {
-        notificationStore.flash(e.message)
-      } finally {
-        this.uploading = false
-      }
+      chat.sendMessage(image)
     }
   }
 }

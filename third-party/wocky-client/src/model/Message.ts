@@ -64,14 +64,18 @@ export const Message = types
     send: flow(function*() {
       try {
         self.setStatus(Status.Sending)
+        // check if file is not uploaded
+        if (self.file && !self.uploaded) {
+          yield self.upload()
+        }
         yield self.transport.sendMessage(
           (self.otherUser!.id || self.otherUser!) as string,
           self.content.length ? self.content : undefined,
           self.media ? self.media.id : undefined
         )
         self.setStatus(Status.Sent)
-        self.time = Date.now()
       } catch (e) {
+        throw e
         self.setStatus(Status.Error)
       }
     }),

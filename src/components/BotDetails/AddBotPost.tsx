@@ -44,7 +44,8 @@ class AddBotPost extends React.Component<Props> {
     try {
       this.post = bot.createPost(this.text.trim())
       if (this.image) {
-        await this.post!.upload({size: this.image.size, file: this.image})
+        this.post!.setFile(this.image)
+        await this.post!.upload()
       }
       await this.post!.publish()
       this.post = null
