@@ -17,12 +17,12 @@ type Props = {
 const ChatCard = observer(({chat, style, onPress}: Props) => {
   if (!chat || !isAlive(chat)) return null
   const {otherUser, messages} = chat
-  let media: any = null
-  try {
-    media = messages.first!.getUpload()
-  } catch (err) {
-    // console.log('TODO: Fix msg.media reference error', err)
-  }
+  // let media: any = null
+  // try {
+  //   media = messages.first!.getUpload()
+  // } catch (err) {
+  //   // console.log('TODO: Fix msg.media reference error', err)
+  // }
   return (
     <TouchableOpacity onPress={onPress}>
       <PersonRow

@@ -76,7 +76,7 @@ export const MessagesRouterStory = () => (
   <Provider {...store}>
     <Router {...navBarStyle}>
       <Stack>
-        <Stack renderer={SplitRenderer}>
+        <Stack hideNavBar renderer={SplitRenderer}>
           <Scene key="home" component={Home} />
           <Scene key="chats" component={ChatListScreen} />
         </Stack>
@@ -85,6 +85,8 @@ export const MessagesRouterStory = () => (
     </Router>
   </Provider>
 )
+
+export const ChatUserSearchScreen = () => <SelectChatUser {...store as any} />
 
 const Home = () => {
   useEffect(() => {
