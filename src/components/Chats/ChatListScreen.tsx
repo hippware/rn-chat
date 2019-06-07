@@ -31,7 +31,7 @@ class ChatListScreen extends React.Component<Props> {
 
   // todo: convert to functional component with hooks, but mobx-react 6+ required
   componentDidMount() {
-    this.props.wocky!.loadChats()
+    this.props.wocky!.chats.loadChats()
   }
 
   renderItem = ({item}) => <ChatCard chat={item} onPress={i => Actions.chat({item: i.id})} />

@@ -2,12 +2,12 @@ import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
 import {inject, observer} from 'mobx-react/native'
 import {showImagePicker} from '../ImagePicker'
-import {IMessage} from 'wocky-client'
+import {IChat} from 'wocky-client'
 import {observable} from 'mobx'
 import {Spinner} from '../common'
 
 type Props = {
-  message: IMessage
+  chat: IChat
   notificationStore?: any
 }
 
@@ -32,18 +32,10 @@ class AttachButton extends React.Component<Props> {
   }
 
   onAttach = async () => {
-    const {message, notificationStore} = this.props
+    const {chat} = this.props
     const image = await showImagePicker()
     if (image) {
-      try {
-        this.uploading = true
-        await message.upload({size: image.size, file: image})
-        message.send()
-      } catch (e) {
-        notificationStore.flash(e.message)
-      } finally {
-        this.uploading = false
-      }
+      chat.sendMessage(image)
     }
   }
 }

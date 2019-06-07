@@ -13,7 +13,7 @@ type InputProps = {
 const InputArea = observer(({chat}: InputProps) => {
   return chat.message ? (
     <View style={styles.textInputContainer}>
-      <AttachButton message={chat.message} />
+      <AttachButton chat={chat} />
       <AutoExpandingTextInput
         style={styles.textInput}
         placeholder="Write a message"
@@ -32,7 +32,7 @@ const InputArea = observer(({chat}: InputProps) => {
         disabled={!chat.message.content.trim()}
         onPress={() => {
           if (chat.message!.content.trim()) {
-            chat.message!.send()
+            chat.sendMessage()
           }
         }}
       >

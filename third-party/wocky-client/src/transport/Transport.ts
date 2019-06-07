@@ -662,6 +662,7 @@ export class Transport {
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
+    await waitFor(() => this.connected)
     const res = await this.client!.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
@@ -777,6 +778,7 @@ export class Transport {
   }
 
   async loadChatMessages(userId, lastId, max): PaginableLoadPromise<IMessageIn> {
+    await waitFor(() => this.connected)
     const res = await this.client!.query<any>({
       query: gql`
           query loadChat($otherUser: UUID, $after: String, $first: Int) {
@@ -809,6 +811,7 @@ export class Transport {
   }
 
   async loadChats(max: number = 50): Promise<Array<{chatId: string; message: IMessageIn}>> {
+    await waitFor(() => this.connected)
     const res = await this.client!.query<any>({
       query: gql`
           query loadChats($max: Int) {

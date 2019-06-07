@@ -1,10 +1,11 @@
 import React from 'react'
 import {observer} from 'mobx-react/native'
-import {Avatar, ProfileHandle} from '../common'
+import {Avatar, ProfileHandle, RText} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {IChat} from 'wocky-client'
 import PersonRow from '../people-lists/PersonRow'
 import {View, TouchableOpacity} from 'react-native'
+import {colors} from 'src/constants'
 
 type Props = {
   chat: IChat
@@ -15,7 +16,13 @@ type Props = {
 
 const ChatCard = observer(({chat, style, onPress}: Props) => {
   if (!chat || !isAlive(chat)) return null
-  const {otherUser} = chat
+  const {otherUser, messages} = chat
+  let media: any = null
+  try {
+    media = messages.first!.getUpload()
+  } catch (err) {
+    // console.log('TODO: Fix msg.media reference error', err)
+  }
   return (
     <TouchableOpacity onPress={onPress}>
       <PersonRow
@@ -23,7 +30,9 @@ const ChatCard = observer(({chat, style, onPress}: Props) => {
         handleComponent={
           <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
             <ProfileHandle profile={otherUser} size={15} />
-            {/* todo: add timestamp (hopefully coming in API changes?) */}
+            <RText weight="Light" size={12} color={colors.DARK_GREY}>
+              {messages.first!.dateAsString}
+            </RText>
           </View>
         }
         displayName={chat.messages.first ? chat.messages.first.content : ''}

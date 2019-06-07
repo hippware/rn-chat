@@ -227,7 +227,8 @@ export class BotCompose extends React.Component<Props> {
     if (image) {
       try {
         this.uploadingPhoto = true
-        await this.bot!.upload({size: image.size, file: image})
+        this.bot!.setFile(image)
+        await this.bot!.upload()
       } catch (e) {
         this.props.notificationStore.flash(`Upload error: ${e}`)
       } finally {

@@ -24,7 +24,7 @@ class ChatScreen extends React.Component<Props> {
   async componentDidMount() {
     const {item, wocky} = this.props
     // console.log('& chat', this.props.item)
-    this.chat = wocky!.createChat(item)
+    this.chat = wocky!.chats.createChat(item)
     await this.chat!.messages.load({force: true})
     this.chat!.readAll()
     this.chat!.setActive(true)
@@ -38,7 +38,7 @@ class ChatScreen extends React.Component<Props> {
 
   onSend = () => {
     if (this.chat!.message!.content.trim()) {
-      this.chat!.message!.send()
+      this.chat!.sendMessage()
     }
   }
 
