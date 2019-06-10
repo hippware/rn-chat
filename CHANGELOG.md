@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Adjust padding for activity icons (PR #3796)
+* Messaging: Business logic (#3691, PR #3781)
+
 # 4.13.1 - 2019 Jun 6
 
 * Expressing user activity via color/faded avatar (Rework #3658)
