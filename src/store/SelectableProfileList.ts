@@ -25,7 +25,18 @@ const SelectableProfileList = types
     },
 
     get filteredList(): ISelectableProfile[] {
-      return self.list.filter(el => _filterFn(el, self.filter))
+      return self.list.filter(el => {
+        const {isOwn, firstName, lastName, handle} = el.profile
+        return (
+          !isOwn &&
+          (!self.filter ||
+            (firstName &&
+              firstName.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())) ||
+            (lastName &&
+              lastName.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())) ||
+            (handle && handle.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())))
+        )
+      })
     },
   }))
   .actions(self => ({
@@ -73,17 +84,6 @@ const SelectableProfileList = types
 
     return {selectAll, switchRowSelected, replace, clear, setFilter, setList}
   })
-
-function _filterFn(el: ISelectableProfile, filter: string) {
-  const {isOwn, firstName, lastName, handle} = el.profile
-  return (
-    !isOwn &&
-    (!filter ||
-      (firstName && firstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())) ||
-      (lastName && lastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())) ||
-      (handle && handle.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())))
-  )
-}
 
 export default SelectableProfileList
 export type ISelectableProfileList = typeof SelectableProfile.Type

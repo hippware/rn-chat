@@ -1,30 +1,35 @@
 import React from 'react'
-import {View, StyleSheet, FlatList, Image} from 'react-native'
+import {View, Image, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {Actions} from 'react-native-router-flux'
-import Screen from '../Screen'
-import MessageButton from '../MessageButton'
 import ChatCard from './ChatCard'
-import ListFooter from '../ListFooter'
 import {RText} from '../common'
 import {colors} from '../../constants'
 import {IWocky} from 'wocky-client'
+import DraggablePopupList from '../common/DraggablePopupList'
 
-const footerImage = require('../../../images/graphicEndMsgs.png')
+const sendMessageImg = require('../../../images/sendMessage.png')
 
 type Props = {
   wocky?: IWocky
+  isActive: boolean
 }
 
 @inject('wocky')
 @observer
 class ChatListScreen extends React.Component<Props> {
-  list: any
-
-  scrollTo = params => {
-    this.list.scrollTo(params)
+  static navigationOptions = {
+    fadeNavConfig: {
+      back: true,
+      title: (
+        <RText size={16} color={colors.DARK_PURPLE}>
+          Messages
+        </RText>
+      ),
+    },
   }
 
+  // todo: convert to functional component with hooks, but mobx-react 6+ required
   componentDidMount() {
     this.props.wocky!.chats.loadChats()
   }
@@ -34,69 +39,64 @@ class ChatListScreen extends React.Component<Props> {
   keyExtractor = item => `${item.id}`
 
   render() {
-    const {chats} = this.props.wocky!
+    const {wocky, isActive} = this.props
+    const {chats} = wocky!
     return (
-      <Screen>
-        <FlatList
-          style={{flex: 1}}
-          ref={l => (this.list = l)}
-          contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
-          data={chats.list.slice()}
-          initialNumToRender={6}
-          ListFooterComponent={
-            chats.list.length ? (
-              <ListFooter
-                footerImage={footerImage}
-                finished
-                style={{backgroundColor: 'transparent'}}
-              />
-            ) : null
-          }
-          ListEmptyComponent={EmptyComponent}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-        />
-        <MessageButton />
-        {chats.unreadCount > 0 && (
-          <View style={styles.button}>
-            <RText weight="Italic" color="white">
-              New Messages
+      <DraggablePopupList
+        contentContainerStyle={{marginTop: chats.unreadCount > 0 ? 47 : 10}}
+        data={chats.list.slice()}
+        initialNumToRender={6}
+        headerInner={
+          <>
+            <TouchableOpacity
+              onPress={() => Actions.selectChatUser()}
+              style={{
+                borderColor: colors.PINK,
+                borderWidth: 1,
+                borderRadius: 12,
+                flexDirection: 'row',
+                padding: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                // todo: how do I do this with flex?
+                width: 200,
+                alignSelf: 'center',
+              }}
+            >
+              <Image source={sendMessageImg} style={{marginRight: 8}} />
+              <RText color={colors.PINK} size={14} style={{}}>
+                Send Message
+              </RText>
+            </TouchableOpacity>
+            <RText
+              weight="Medium"
+              size={16}
+              style={{paddingLeft: 10, paddingTop: 25, paddingBottom: 10}}
+            >
+              Messages
+            </RText>
+          </>
+        }
+        // todo: figure out a flexible height setting
+        ListEmptyComponent={
+          <View style={{height: 200, alignItems: 'center', justifyContent: 'center'}}>
+            <RText color={colors.DARK_GREY} size={16}>
+              No messages
             </RText>
           </View>
+        }
+        renderItem={({item}) => (
+          <ChatCard
+            chat={item}
+            onPress={() => Actions.chat({item: item.id})}
+            style={{paddingHorizontal: 30}}
+          />
         )}
-      </Screen>
+        keyExtractor={({id}) => id}
+        isActive={isActive}
+      />
     )
   }
 }
 
 export default ChatListScreen
-
-const EmptyComponent = () => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 150,
-      backgroundColor: 'transparent',
-    }}
-  >
-    <RText size={18} color={colors.PINKISH_GREY} style={{textAlign: 'center'}}>
-      {'No messages yet\r\nWhy not start a conversation?'}
-    </RText>
-    <Image source={require('../../../images/botGray.png')} style={{marginTop: 20}} />
-  </View>
-)
-
-const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    top: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 47,
-    backgroundColor: 'rgba(254,92,108, 0.9)',
-  },
-})

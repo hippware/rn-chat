@@ -2,6 +2,7 @@ import React from 'react'
 import BotDetails from 'src/components/BotDetails/BotDetails'
 import {Provider} from 'mobx-react/native'
 import {Bot, IBot} from 'wocky-client'
+import {Animated} from 'react-native'
 
 const stores = {
   wocky: {
@@ -37,6 +38,7 @@ const stores = {
     distanceFromBot: () => '0.0mi',
   },
   navStore: {},
+  scrollY: new Animated.Value(0),
 }
 
 const props = {
@@ -47,6 +49,6 @@ const props = {
 
 export default () => (
   <Provider {...stores}>
-    <BotDetails {...props} />
+    <BotDetails {...props} navigation={{setParams: () => null}} />
   </Provider>
 )

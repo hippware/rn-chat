@@ -8,7 +8,7 @@ import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
 import Camera from './Camera'
-import CreateMessage from './Chats/CreateMessage'
+import SelectChatUser from './Chats/SelectChatUser'
 import Launch from './Launch'
 import SignUp from './SignUp'
 import Home from './Home/Home'
@@ -133,8 +133,8 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="profileDetails" component={ProfileDetail} />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
+                    <Scene key="chats" component={ChatListScreen} title="Messages" />
                   </Stack>
-                  <Scene key="chats" component={ChatListScreen} title="Messages" />
                   <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
@@ -144,6 +144,7 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
+                  <Scene key="selectChatUser" component={SelectChatUser} title="Message" />
                   {settings.allowDebugScreen && [
                     <Scene key="locationDebug" component={LocationDebug} title="Location Debug" back />,
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
@@ -151,7 +152,6 @@ class TinyRobotRouter extends React.Component<Props> {
                   ]}
                   {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                 </Stack>
-                <Scene key="selectFriends" component={CreateMessage} title="Select Friend" wrap leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                 <Scene
                   key="searchUsers"
                   component={peopleLists.SearchUsers}
