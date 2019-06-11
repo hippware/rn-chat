@@ -18,14 +18,11 @@ class AttachButton extends React.Component<Props> {
 
   render() {
     return (
-      <TouchableOpacity
-        style={{borderWidth: 0, borderColor: 'transparent', paddingVertical: 15}}
-        onPress={this.onAttach}
-      >
+      <TouchableOpacity style={{marginHorizontal: 15}} onPress={this.onAttach}>
         {this.uploading ? (
           <Spinner />
         ) : (
-          <Image source={require('../../../images/iconAttach.png')} />
+          <Image source={require('../../../images/cameraPink.png')} />
         )}
       </TouchableOpacity>
     )

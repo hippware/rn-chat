@@ -5,6 +5,7 @@ import {AutoExpandingTextInput} from '../common'
 import {colors} from '../../constants'
 import {IChat} from 'wocky-client'
 import AttachButton from './AttachButton'
+import {addAlpha} from 'src/constants/colors'
 
 type InputProps = {
   chat: IChat
@@ -12,12 +13,13 @@ type InputProps = {
 
 const InputArea = observer(({chat}: InputProps) => {
   return chat.message ? (
-    <View style={styles.textInputContainer}>
+    <View style={styles.container}>
       <AttachButton chat={chat} />
       <AutoExpandingTextInput
         style={styles.textInput}
-        placeholder="Write a message"
-        placeholderTextColor={colors.DARK_GREY}
+        height={37}
+        placeholder="Write a message..."
+        placeholderTextColor={addAlpha(colors.DARK_GREY, 0.5)}
         multiline
         autoFocus
         returnKeyType="default"
@@ -28,22 +30,6 @@ const InputArea = observer(({chat}: InputProps) => {
         maxHeight={100}
         maxLength={500}
       />
-      <TouchableOpacity
-        disabled={!chat.message.content.trim()}
-        onPress={() => {
-          if (chat.message!.content.trim()) {
-            chat.sendMessage()
-          }
-        }}
-      >
-        <Image
-          source={
-            chat.message.content.trim()
-              ? require('../../../images/iconSendActive.png')
-              : require('../../../images/iconSendInactive.png')
-          }
-        />
-      </TouchableOpacity>
     </View>
   ) : null
 })
@@ -51,22 +37,26 @@ const InputArea = observer(({chat}: InputProps) => {
 export default InputArea
 
 const styles = StyleSheet.create({
-  textInputContainer: {
+  container: {
     backgroundColor: 'white',
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
+    paddingVertical: 7,
     alignItems: 'center',
-    justifyContent: 'center',
+    borderTopWidth: 1,
+    borderColor: colors.GREY,
   },
   textInput: {
-    width: 100,
     fontFamily: 'Roboto-Regular',
     flex: 1,
     margin: 0,
-    padding: 0,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     fontSize: 15,
     color: colors.DARK_PURPLE,
+    borderWidth: 1,
+    borderRadius: 22,
+    borderColor: colors.GREY,
+    alignItems: 'center',
   },
 })
