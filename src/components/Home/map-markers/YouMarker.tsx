@@ -45,6 +45,11 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
             sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
           />
         )}
+
+        <Image
+          source={require('../../../../images/invisibleIconWhite.png')}
+          style={{opacity: 0.8}}
+        />
       </HackMarker>
     )
   )
