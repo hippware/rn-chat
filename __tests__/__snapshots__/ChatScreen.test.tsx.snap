@@ -16,118 +16,72 @@ exports[`ChatScreen renders with no data 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        undefined,
-      ]
+      Object {
+        "flex": 1,
+      }
     }
   >
-    <BVLinearGradient
-      colors={
-        Array [
-          "rgb(255,255,255)",
-          "rgb(241,242,244)",
-          "rgb(243,244,246)",
-        ]
-      }
-      locations={
-        Array [
-          0,
-          0.2,
-          1,
-        ]
-      }
-      style={
+    <RCTScrollView
+      ListFooterComponent={null}
+      automaticallyAdjustContentInsets={false}
+      contentInset={
         Object {
           "bottom": 0,
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
         }
       }
-    />
-    <View
+      data={Array []}
+      disableVirtualization={false}
+      enableAutomaticScroll={true}
+      enableOnAndroid={false}
+      enableResetScrollToCoords={true}
+      extraHeight={75}
+      extraScrollHeight={0}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      getScrollResponder={[Function]}
+      handleOnScroll={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      invertStickyHeaders={true}
+      inverted={true}
+      keyExtractor={[Function]}
+      keyboardDismissMode="interactive"
+      keyboardOpeningTime={250}
+      keyboardSpace={0}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.5}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      resetKeyboardSpace={[Function]}
+      scrollEventThrottle={1}
+      scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
+      scrollToEnd={[Function]}
+      scrollToFocusedInput={[Function]}
+      scrollToPosition={[Function]}
+      showsVerticalScrollIndicator={true}
+      stickyHeaderIndices={Array []}
       style={
-        Array [
-          Object {
-            "flex": 1,
-          },
-        ]
-      }
-    >
-      <RCTScrollView
-        ListFooterComponent={[Function]}
-        automaticallyAdjustContentInsets={false}
-        contentInset={
-          Object {
-            "bottom": 0,
-          }
+        Object {
+          "paddingHorizontal": 10,
         }
-        data={Array []}
-        disableVirtualization={false}
-        enableAutomaticScroll={true}
-        enableOnAndroid={false}
-        enableResetScrollToCoords={true}
-        extraHeight={75}
-        extraScrollHeight={0}
-        getItem={[Function]}
-        getItemCount={[Function]}
-        getScrollResponder={[Function]}
-        handleOnScroll={[Function]}
-        horizontal={false}
-        initialNumToRender={10}
-        invertStickyHeaders={true}
-        inverted={true}
-        keyExtractor={[Function]}
-        keyboardDismissMode="interactive"
-        keyboardOpeningTime={250}
-        keyboardSpace={0}
-        maxToRenderPerBatch={10}
-        numColumns={1}
-        onContentSizeChange={[Function]}
-        onEndReached={[Function]}
-        onEndReachedThreshold={0.5}
-        onLayout={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        resetKeyboardSpace={[Function]}
-        scrollEventThrottle={1}
-        scrollForExtraHeightOnAndroid={[Function]}
-        scrollIntoView={[Function]}
-        scrollToEnd={[Function]}
-        scrollToFocusedInput={[Function]}
-        scrollToPosition={[Function]}
-        showsVerticalScrollIndicator={true}
-        stickyHeaderIndices={Array []}
-        update={[Function]}
-        updateCellsBatchingPeriod={50}
-        viewIsInsideTabBar={false}
-        viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
-      >
-        <View>
-          <View
-            onLayout={[Function]}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "scaleY": -1,
-                  },
-                ],
-              }
-            }
-          />
-        </View>
-      </RCTScrollView>
-    </View>
+      }
+      update={[Function]}
+      updateCellsBatchingPeriod={50}
+      viewIsInsideTabBar={false}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
   </View>
 </View>
 `;

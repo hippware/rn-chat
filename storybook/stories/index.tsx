@@ -23,7 +23,7 @@ import SignUpStory from './SignUpStory'
 import ImagePickerStory from './ImagePickerStory'
 import UserActivityStory from './UserActivityStory'
 import CustomTransitionerStory from './CustomTransitionerStory'
-import {MessagesRouterStory, ChatUserSearchScreen} from './MessagesStory'
+import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
 
 function emptyFn() {
   /* noop */
@@ -50,7 +50,9 @@ storiesOf('ImagePicker', module).add('1 - Default', () => <ImagePickerStory />)
 
 storiesOf('UserActivity', module).add('1 - Default', () => <UserActivityStory />)
 
-storiesOf('Custom Transitioner', module)
-  .add('1 - Default', () => <CustomTransitionerStory />)
-  .add('2 - Messages flow in router', () => <MessagesRouterStory />)
-  .add('3 - Chat user search screen', () => <ChatUserSearchScreen />)
+storiesOf('Custom Transitioner', module).add('1 - Default', () => <CustomTransitionerStory />)
+
+storiesOf('Chat', module)
+  .add('1 - Messages flow in router', () => <MessagesRouterStory />)
+  .add('2 - Chat user search screen', () => <ChatUserSearchScreen />)
+  .add('3 - Chat', () => <ChatViewStory />)

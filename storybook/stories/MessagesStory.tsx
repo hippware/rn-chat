@@ -10,6 +10,8 @@ import {Wocky} from 'wocky-client'
 import {types} from 'mobx-state-tree'
 import SelectChatUser from 'src/components/Chats/SelectChatUser'
 import SelectableProfileList from 'src/store/SelectableProfileList'
+import {ChatView} from 'src/components/Chats/ChatScreen'
+import moment from 'moment'
 
 const store = types
   .model({
@@ -87,6 +89,57 @@ export const MessagesRouterStory = () => (
 )
 
 export const ChatUserSearchScreen = () => <SelectChatUser {...store as any} />
+
+const otherUser = {
+  id: '1',
+  handle: 'otherUser',
+  firstName: 'other',
+  lastName: 'user',
+  displayName: 'Other User',
+}
+
+const notificationStore = {}
+
+export const ChatViewStory = () => (
+  <Provider notificationStore={notificationStore}>
+    <ChatView
+      chat={
+        {
+          message: {
+            content: '',
+          },
+          messages: {
+            load: () => null,
+          },
+          sortedMessages: [
+            {
+              id: '1',
+              content: 'hello!',
+              unread: false,
+              isOutgoing: false,
+              getUpload: () => null,
+              date: moment()
+                .add(5, 'minutes')
+                .toDate(),
+              otherUser,
+            },
+            {
+              id: '2',
+              content: 'hello to you!',
+              unread: false,
+              isOutgoing: true,
+              getUpload: () => null,
+              date: moment()
+                .subtract(10, 'hours')
+                .toDate(),
+              otherUser,
+            },
+          ],
+        } as any
+      }
+    />
+  </Provider>
+)
 
 const Home = () => {
   useEffect(() => {

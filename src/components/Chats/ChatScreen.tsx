@@ -36,14 +36,19 @@ class ChatScreen extends React.Component<Props> {
     }
   }
 
-  onSend = () => {
-    if (this.chat!.message!.content.trim()) {
-      this.chat!.sendMessage()
-    }
+  render() {
+    return this.chat && isAlive(this.chat) ? <ChatView chat={this.chat} /> : <Screen />
+  }
+}
+
+export const ChatView = observer(({chat}: {chat: IChat}) => {
+  function getPreviousMessage(index: number): IMessage | null {
+    const {sortedMessages: messages} = chat
+    return messages.length > index + 1 ? messages[index + 1] : null
   }
 
-  renderDate = (message: IMessage, index: number) => {
-    const diffMessage = this.getPreviousMessage(index)
+  function renderDate(message: IMessage, index: number) {
+    const diffMessage = getPreviousMessage(index)
     if (!diffMessage) {
       return <Text style={styles.date as any}>{message.dateAsString}</Text>
     } else if (diffMessage.date) {
@@ -55,41 +60,29 @@ class ChatScreen extends React.Component<Props> {
     return null
   }
 
-  getPreviousMessage = (index: number): IMessage | null => {
-    const {sortedMessages: messages} = this.chat!
-    return messages.length > index + 1 ? messages[index + 1] : null
-  }
-
-  renderItem = ({item, index}: {item: IMessage; index: number}) => (
-    <View>
-      {this.renderDate(item, index)}
-      <ChatMessage message={item} diffMessage={this.getPreviousMessage(index)} />
+  return (
+    <View style={{flex: 1}}>
+      <KeyboardAwareFlatList
+        style={{paddingHorizontal: 10}}
+        inverted
+        data={chat.sortedMessages.slice()}
+        renderItem={({item, index}: {item: IMessage; index: number}) => (
+          <>
+            {renderDate(item, index)}
+            <ChatMessage message={item} diffMessage={getPreviousMessage(index)} />
+          </>
+        )}
+        keyExtractor={i => i.id}
+        onEndReached={() => chat.messages.load()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
+        }
+      />
+      <InputArea chat={chat} />
     </View>
   )
-
-  _footerComponent: any = observer(() =>
-    this.chat!.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
-  )
-
-  render() {
-    return this.chat && isAlive(this.chat) ? (
-      <Screen>
-        <KeyboardAwareFlatList
-          inverted
-          data={this.chat.sortedMessages.slice()}
-          renderItem={this.renderItem}
-          keyExtractor={i => i.id}
-          onEndReached={() => this.chat!.messages.load()}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={this._footerComponent}
-        />
-        <InputArea chat={this.chat} />
-      </Screen>
-    ) : (
-      <Screen />
-    )
-  }
-}
+})
 
 export default withKeyboardHOC(ChatScreen)
 
