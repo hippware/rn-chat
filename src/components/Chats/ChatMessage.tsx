@@ -1,9 +1,7 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IMessage, IWocky, IFile} from 'wocky-client'
-import ResizedImage from './ResizedImage'
-import {width, k} from '../Global'
+import {IMessage, IWocky} from 'wocky-client'
 import {RText, Avatar} from '../common'
 import Triangle from '../map/Triangle'
 
@@ -19,7 +17,7 @@ const triangleSize = 12
 
 const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
   const left = !isOutgoing
-  const media = getUpload()
+  const media = getUpload
   const triangleStyle = left ? {left: -triangleSize} : {right: -triangleSize}
   return (
     <View
@@ -32,15 +30,24 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
       ]}
     >
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
-      <View
-        style={[
-          styles.bubble,
-          // media && media.thumbnail && styles.mediaBubble,
-          left ? styles.bubbleLeft : styles.bubbleRight,
-        ]}
-      >
-        {!!content && <RText size={15}>{content}</RText>}
-        {!!media && <MessageMedia media={media} left={left} />}
+      <View style={{borderWidth: 0}}>
+        <View
+          style={[
+            styles.bubble,
+            media && media.thumbnail && styles.mediaBubble,
+            left ? styles.bubbleLeft : styles.bubbleRight,
+          ]}
+        >
+          {!!media ? (
+            <Image
+              style={styles.mediaMessage}
+              resizeMode="contain"
+              source={media.thumbnail as ImageSourcePropType}
+            />
+          ) : (
+            <RText size={15}>{content}</RText>
+          )}
+        </View>
         <Triangle
           width={triangleSize}
           height={triangleSize}
@@ -49,16 +56,6 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
           style={{position: 'absolute', bottom: triangleSize, ...triangleStyle}}
         />
       </View>
-    </View>
-  )
-})
-
-const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => {
-  const w = left ? width - 150 * k : width - 93
-  // , height: w * media.source.height / media.source.width
-  return (
-    <View style={{width: w}}>
-      <ResizedImage image={media.thumbnail} />
     </View>
   )
 })
@@ -72,18 +69,22 @@ const styles = StyleSheet.create({
   bubbleRight: {
     backgroundColor: pink,
   },
-  // mediaBubble: {
-  //   paddingLeft: 0,
-  //   paddingRight: 0,
-  //   paddingBottom: 0,
-  //   paddingTop: 0,
-  // },
+  mediaBubble: {
+    padding: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   bubble: {
     borderRadius: 8,
     padding: 12,
+    overflow: 'hidden',
   },
   rowContainer: {
     flexDirection: 'row',
     marginBottom: 10,
+  },
+  mediaMessage: {
+    height: 200,
+    width: 200,
   },
 })

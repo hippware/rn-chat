@@ -78,6 +78,7 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
         ListFooterComponent={
           chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
         }
+        showsVerticalScrollIndicator={false}
       />
       <InputArea chat={chat} />
     </View>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {AutoExpandingTextInput} from '../common'
 import {colors} from '../../constants'

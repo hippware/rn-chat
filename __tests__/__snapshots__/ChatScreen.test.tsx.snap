@@ -67,7 +67,7 @@ exports[`ChatScreen renders with no data 1`] = `
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
-      showsVerticalScrollIndicator={true}
+      showsVerticalScrollIndicator={false}
       stickyHeaderIndices={Array []}
       style={
         Object {

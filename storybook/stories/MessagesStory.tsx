@@ -107,6 +107,7 @@ export const ChatViewStory = () => (
         {
           message: {
             content: '',
+            setBody: () => null,
           },
           messages: {
             load: () => null,
@@ -117,7 +118,7 @@ export const ChatViewStory = () => (
               content: 'hello!',
               unread: false,
               isOutgoing: false,
-              getUpload: () => null,
+              getUpload: null,
               date: moment()
                 .add(5, 'minutes')
                 .toDate(),
@@ -128,7 +129,52 @@ export const ChatViewStory = () => (
               content: 'hello to you!',
               unread: false,
               isOutgoing: true,
-              getUpload: () => null,
+              getUpload: null,
+              date: moment()
+                .subtract(10, 'hours')
+                .toDate(),
+              otherUser,
+            },
+            {
+              id: '3',
+              content: 'image message?',
+              unread: false,
+              isOutgoing: true,
+              getUpload: {
+                id: '1file',
+                thumbnail: require('../../images/fillMurray300.jpg'),
+                url: '',
+              },
+              date: moment()
+                .subtract(10, 'hours')
+                .toDate(),
+              otherUser,
+            },
+            {
+              id: '4',
+              content: 'crazy Nick Cage',
+              unread: false,
+              isOutgoing: false,
+              getUpload: {
+                id: '2file',
+                thumbnail: require('../../images/placecagecrazy460.jpg'),
+                url: '',
+              },
+              date: moment()
+                .subtract(10, 'hours')
+                .toDate(),
+              otherUser,
+            },
+            {
+              id: '5',
+              content: 'crazy Nick Cage 2',
+              unread: false,
+              isOutgoing: true,
+              getUpload: {
+                id: '3file',
+                thumbnail: require('../../images/placecagecrazy325.jpg'),
+                url: '',
+              },
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
