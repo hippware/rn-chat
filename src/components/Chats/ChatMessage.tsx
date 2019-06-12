@@ -4,6 +4,7 @@ import {observer} from 'mobx-react/native'
 import {IMessage, IWocky} from 'wocky-client'
 import {RText, Avatar} from '../common'
 import Triangle from '../map/Triangle'
+import {width} from '../Global'
 
 type Props = {
   message: IMessage
@@ -30,24 +31,14 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
       ]}
     >
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
-      <View style={{borderWidth: 0}}>
-        <View
-          style={[
-            styles.bubble,
-            media && media.thumbnail && styles.mediaBubble,
-            left ? styles.bubbleLeft : styles.bubbleRight,
-          ]}
-        >
-          {!!media ? (
-            <Image
-              style={styles.mediaMessage}
-              resizeMode="contain"
-              source={media.thumbnail as ImageSourcePropType}
-            />
-          ) : (
-            <RText size={15}>{content}</RText>
-          )}
-        </View>
+      <View>
+        {!!media && media.thumbnail ? (
+          <ImageMessage image={media.thumbnail} left={left} />
+        ) : (
+          <RText style={[styles.bubble, left ? styles.bubbleLeft : styles.bubbleRight]} size={15}>
+            {content}
+          </RText>
+        )}
         <Triangle
           width={triangleSize}
           height={triangleSize}
@@ -60,31 +51,49 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
   )
 })
 
+const ImageMessage = ({image, left}: {image: ImageSourcePropType; left: boolean}) => {
+  const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
+  const maxDim = width * 0.75
+  const dimensions =
+    iWidth / iHeight < 1
+      ? {height: maxDim, width: (maxDim / iHeight) * iWidth}
+      : {width: maxDim, height: (maxDim / iWidth) * iHeight}
+  return (
+    <Image
+      style={[
+        styles.bubble,
+        styles.mediaBubble,
+        dimensions,
+        left ? styles.bubbleLeft : styles.bubbleRight,
+      ]}
+      resizeMode="contain"
+      source={image as ImageSourcePropType}
+    />
+  )
+}
+
 export default ChatMessage
 
 const styles = StyleSheet.create({
   bubbleLeft: {
     backgroundColor: lightPink,
+    borderColor: lightPink,
   },
   bubbleRight: {
     backgroundColor: pink,
+    borderColor: pink,
   },
   mediaBubble: {
     padding: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   bubble: {
     borderRadius: 8,
     padding: 12,
     overflow: 'hidden',
+    borderWidth: 1,
   },
   rowContainer: {
     flexDirection: 'row',
     marginBottom: 10,
-  },
-  mediaMessage: {
-    height: 200,
-    width: 200,
   },
 })
