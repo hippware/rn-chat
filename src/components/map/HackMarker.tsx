@@ -36,7 +36,7 @@ export default class HackMarker extends React.Component<IProps> {
     return (
       <Marker
         {...props}
-        anchor={{x: 0.5, y: 0.5}}
+        anchor={{x: 0.5, y: 1}}
         tracksViewChanges={this.state.tracking}
         style={style}
       >
