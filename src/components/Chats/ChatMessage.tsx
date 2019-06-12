@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IMessage, IWocky} from 'wocky-client'
+import {IMessage, IWocky, IProfile} from 'wocky-client'
 import {RText, Avatar} from '../common'
 import Triangle from '../map/Triangle'
 import {width} from '../Global'
@@ -16,9 +16,32 @@ const lightPink = 'rgb(255, 228, 231)'
 const pink = 'rgb(254, 173, 181)'
 const triangleSize = 12
 
-const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
-  const left = !isOutgoing
-  const media = getUpload
+const ChatMessageWrapper = observer(
+  ({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
+    const left = !isOutgoing
+    const media = getUpload
+
+    // NOTE: since Messages can have both image + text we need to render them as "separate" messages here
+    return (
+      <>
+        {!!media && <ChatMessage left={left} image={media.thumbnail} otherUser={otherUser} />}
+        {!!content && <ChatMessage left={left} text={content} otherUser={otherUser} />}
+      </>
+    )
+  }
+)
+
+const ChatMessage = ({
+  left,
+  image,
+  text,
+  otherUser,
+}: {
+  left: boolean
+  image?: ImageSourcePropType
+  text?: string
+  otherUser: IProfile
+}) => {
   const triangleStyle = left ? {left: -triangleSize} : {right: -triangleSize}
   return (
     <View
@@ -32,11 +55,11 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
     >
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
       <View>
-        {!!media && media.thumbnail ? (
-          <ImageMessage image={media.thumbnail} left={left} />
+        {!!image ? (
+          <ImageMessage image={image} left={left} />
         ) : (
           <RText style={[styles.bubble, left ? styles.bubbleLeft : styles.bubbleRight]} size={15}>
-            {content}
+            {text}
           </RText>
         )}
         <Triangle
@@ -49,7 +72,7 @@ const ChatMessage = observer(({message: {isOutgoing, getUpload, content, otherUs
       </View>
     </View>
   )
-})
+}
 
 const ImageMessage = ({image, left}: {image: ImageSourcePropType; left: boolean}) => {
   const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
@@ -72,7 +95,7 @@ const ImageMessage = ({image, left}: {image: ImageSourcePropType; left: boolean}
   )
 }
 
-export default ChatMessage
+export default ChatMessageWrapper
 
 const styles = StyleSheet.create({
   bubbleLeft: {
