@@ -5,7 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Adjust padding for activity icons (PR #3796)
-* Messaging: Business logic (#3691, PR #3781)
+* Messaging Business logic (#3691, PR #3781)
+* Update Messages screen to new design (#3689, PR #3799, PR #3803)
 
 # 4.13.1 - 2019 Jun 6
 
