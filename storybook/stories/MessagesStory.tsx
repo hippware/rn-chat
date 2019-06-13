@@ -136,32 +136,32 @@ export const ChatViewStory = () => (
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
-              dateAsString: moment()
-                .subtract(10, 'hours')
-                .calendar(),
               otherUser,
             },
+            // {
+            //   id: '3',
+            //   content: 'image message?',
+            //   unread: false,
+            //   isOutgoing: true,
+            //   getUpload: {
+            //     id: '1file',
+            //     thumbnail: require('../../images/fillMurray300.jpg'),
+            //     url: '',
+            //   },
+            //   otherUser,
+            // },
             {
               id: '3',
               content: 'image message?',
               unread: false,
               isOutgoing: true,
               getUpload: {
-                id: '1file',
-                thumbnail: require('../../images/fillMurray300.jpg'),
-                url: '',
+                loading: true,
               },
-              date: moment()
-                .subtract(10, 'hours')
-                .toDate(),
-              dateAsString: moment()
-                .subtract(10, 'hours')
-                .calendar(),
               otherUser,
             },
             {
               id: '4',
-              content: 'crazy Nick Cage',
               unread: false,
               isOutgoing: false,
               getUpload: {
@@ -169,17 +169,10 @@ export const ChatViewStory = () => (
                 thumbnail: require('../../images/placecagecrazy460.jpg'),
                 url: '',
               },
-              date: moment()
-                .subtract(10, 'hours')
-                .toDate(),
-              dateAsString: moment()
-                .subtract(10, 'hours')
-                .calendar(),
               otherUser,
             },
             {
               id: '5',
-              content: 'crazy Nick Cage 2',
               unread: false,
               isOutgoing: true,
               getUpload: {
@@ -187,12 +180,6 @@ export const ChatViewStory = () => (
                 thumbnail: require('../../images/placecagecrazy325.jpg'),
                 url: '',
               },
-              date: moment()
-                .subtract(10, 'hours')
-                .toDate(),
-              dateAsString: moment()
-                .subtract(10, 'hours')
-                .calendar(),
               otherUser,
             },
           ],

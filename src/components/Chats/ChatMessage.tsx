@@ -1,10 +1,11 @@
 import React from 'react'
 import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IMessage, IWocky, IProfile} from 'wocky-client'
-import {RText, Avatar} from '../common'
+import {IMessage, IWocky, IProfile, IFile} from 'wocky-client'
+import {RText, Avatar, Spinner} from '../common'
 import Triangle from '../map/Triangle'
 import {width} from '../Global'
+import {colors} from 'src/constants'
 
 type Props = {
   message: IMessage
@@ -19,12 +20,11 @@ const triangleSize = 12
 const ChatMessageWrapper = observer(
   ({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
     const left = !isOutgoing
-    const media = getUpload
 
     // NOTE: since Messages can have both image + text we need to render them as "separate" messages here
     return (
       <>
-        {!!media && <ChatMessage left={left} image={media.thumbnail} otherUser={otherUser} />}
+        {!!getUpload && <ChatMessage left={left} media={getUpload} otherUser={otherUser} />}
         {!!content && <ChatMessage left={left} text={content} otherUser={otherUser} />}
       </>
     )
@@ -33,15 +33,17 @@ const ChatMessageWrapper = observer(
 
 const ChatMessage = ({
   left,
-  image,
+  media,
   text,
   otherUser,
 }: {
   left: boolean
-  image?: ImageSourcePropType
+  media?: IFile
   text?: string
   otherUser: IProfile
 }) => {
+  // TODO: media.loading doesn't work well here...there's a delay before `loading` gets set
+  const color = media && !media.thumbnail ? colors.GREY : left ? lightPink : pink
   const triangleStyle = left ? {left: -triangleSize} : {right: -triangleSize}
   return (
     <View
@@ -55,17 +57,26 @@ const ChatMessage = ({
     >
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
       <View>
-        {!!image ? (
-          <ImageMessage image={image} left={left} />
+        {!!media ? (
+          <ImageMessage media={media} left={left} color={color} />
         ) : (
-          <RText style={[styles.bubble, left ? styles.bubbleLeft : styles.bubbleRight]} size={15}>
+          <RText
+            style={[
+              styles.bubble,
+              {
+                backgroundColor: color,
+                borderColor: color,
+              },
+            ]}
+            size={15}
+          >
             {text}
           </RText>
         )}
         <Triangle
           width={triangleSize}
           height={triangleSize}
-          color={left ? lightPink : pink}
+          color={color}
           direction={left ? 'left' : 'right'}
           style={{position: 'absolute', bottom: triangleSize, ...triangleStyle}}
         />
@@ -74,7 +85,27 @@ const ChatMessage = ({
   )
 }
 
-const ImageMessage = ({image, left}: {image: ImageSourcePropType; left: boolean}) => {
+const ImageMessage = observer(({media, color}: {media: IFile; left: boolean; color: string}) => {
+  if (media && !media.thumbnail) {
+    return (
+      <View
+        style={[
+          styles.bubble,
+          {
+            backgroundColor: color,
+            borderColor: color,
+            width: 80,
+            alignItems: 'center',
+          },
+        ]}
+      >
+        <Spinner color="white" />
+      </View>
+    )
+  }
+
+  const image = media.thumbnail as ImageSourcePropType
+
   const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
   const maxDim = width * 0.75
   const dimensions =
@@ -87,25 +118,20 @@ const ImageMessage = ({image, left}: {image: ImageSourcePropType; left: boolean}
         styles.bubble,
         styles.mediaBubble,
         dimensions,
-        left ? styles.bubbleLeft : styles.bubbleRight,
+        {
+          backgroundColor: color,
+          borderColor: color,
+        },
       ]}
       resizeMode="contain"
       source={image as ImageSourcePropType}
     />
   )
-}
+})
 
 export default ChatMessageWrapper
 
 const styles = StyleSheet.create({
-  bubbleLeft: {
-    backgroundColor: lightPink,
-    borderColor: lightPink,
-  },
-  bubbleRight: {
-    backgroundColor: pink,
-    borderColor: pink,
-  },
   mediaBubble: {
     padding: 0,
   },
