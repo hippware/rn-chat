@@ -80,6 +80,7 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
           chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
         }
         showsVerticalScrollIndicator={false}
+        keyboardDismissMode="on-drag"
       />
       <InputArea chat={chat} />
     </View>

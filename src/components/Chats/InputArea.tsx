@@ -21,7 +21,6 @@ const InputArea = observer(({chat}: InputProps) => {
         placeholder="Write a message..."
         placeholderTextColor={addAlpha(colors.DARK_GREY, 0.5)}
         multiline
-        autoFocus
         returnKeyType="default"
         enablesReturnKeyAutomatically
         onChangeText={t => chat.message!.setBody(t)}
