@@ -6,10 +6,11 @@ import {observer, inject} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import Screen from '../Screen'
 import ChatMessage from './ChatMessage'
-import {withKeyboardHOC} from '../common'
+import {withKeyboardHOC, RText} from '../common'
 import {IWocky, IChat, IMessage} from 'wocky-client'
 import InputArea from './InputArea'
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view'
+import {colors} from 'src/constants'
 
 type Props = {
   item: string
@@ -43,8 +44,8 @@ class ChatScreen extends React.Component<Props> {
 
 export const ChatView = observer(({chat}: {chat: IChat}) => {
   function getPreviousMessage(index: number): IMessage | null {
-    const {sortedMessages: messages} = chat
-    return messages.length > index + 1 ? messages[index + 1] : null
+    const {sortedMessages} = chat
+    return sortedMessages.length > index + 1 ? sortedMessages[index + 1] : null
   }
 
   function renderDate(message: IMessage, index: number) {
@@ -54,7 +55,7 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
     } else if (diffMessage.date) {
       const diff = moment(message.date).diff(diffMessage.date, 'minutes')
       if (diff > 5) {
-        return <Text style={styles.date as any}>{message.dateAsString}</Text>
+        return <RText style={styles.date as any}>{message.dateAsString}</RText>
       }
     }
     return null
@@ -68,8 +69,8 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
         data={chat.sortedMessages.slice()}
         renderItem={({item, index}: {item: IMessage; index: number}) => (
           <>
-            {renderDate(item, index)}
             <ChatMessage message={item} diffMessage={getPreviousMessage(index)} />
+            {renderDate(item, index)}
           </>
         )}
         keyExtractor={i => i.id}
@@ -89,10 +90,9 @@ export default withKeyboardHOC(ChatScreen)
 
 const styles = StyleSheet.create({
   date: {
-    color: '#aaaaaa',
-    fontSize: 12,
+    color: colors.DARK_GREY,
+    fontSize: 13,
     textAlign: 'center',
-    fontWeight: 'bold',
     marginBottom: 8,
   },
 })

@@ -122,6 +122,9 @@ export const ChatViewStory = () => (
               date: moment()
                 .add(5, 'minutes')
                 .toDate(),
+              dateAsString: moment()
+                .subtract(10, 'hours')
+                .calendar(),
               otherUser,
             },
             {
@@ -133,6 +136,9 @@ export const ChatViewStory = () => (
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
+              dateAsString: moment()
+                .subtract(10, 'hours')
+                .calendar(),
               otherUser,
             },
             {
@@ -148,6 +154,9 @@ export const ChatViewStory = () => (
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
+              dateAsString: moment()
+                .subtract(10, 'hours')
+                .calendar(),
               otherUser,
             },
             {
@@ -163,6 +172,9 @@ export const ChatViewStory = () => (
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
+              dateAsString: moment()
+                .subtract(10, 'hours')
+                .calendar(),
               otherUser,
             },
             {
@@ -178,6 +190,9 @@ export const ChatViewStory = () => (
               date: moment()
                 .subtract(10, 'hours')
                 .toDate(),
+              dateAsString: moment()
+                .subtract(10, 'hours')
+                .calendar(),
               otherUser,
             },
           ],
