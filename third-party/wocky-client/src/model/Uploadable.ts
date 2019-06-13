@@ -34,13 +34,15 @@ export function createUploadable(property: string, accessParam: string | ((self)
         }
       }) as ({file, size, access}: MediaUploadParams) => Promise<string>,
     }))
+    .views(self => ({
+      get getUpload() {
+        return self[property] || (self.file && {thumbnail: self.file})
+      },
+    }))
     .actions(self => {
       return {
         setFile(fileParam: FileType) {
           self.file = fileParam
-        },
-        getUpload() {
-          return self[property] || (self.file && {thumbnail: self.file})
         },
       }
     })

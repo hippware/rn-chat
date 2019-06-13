@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
 import {observer} from 'mobx-react/native'
 import {colors} from '../../constants'
-import {isAlive} from 'mobx-state-tree'
+import {isAlive, isStateTreeNode} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'
 import PresenceDot from './PresenceDot'
 import LazyImage from './LazyImage'
@@ -49,7 +49,7 @@ const Avatar = observer(
     fontFamily,
     noScale = false,
   }: Props) => {
-    if ((!profile || !isAlive(profile)) && (!image && !displayName)) {
+    if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
       return null
     }
     const showMask =

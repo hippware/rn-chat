@@ -16,13 +16,11 @@ type Props = {
 
 const ChatCard = observer(({chat, style, onPress}: Props) => {
   if (!chat || !isAlive(chat)) return null
-  const {otherUser, messages} = chat
-  // let media: any = null
-  // try {
-  //   media = messages.first!.getUpload()
-  // } catch (err) {
-  //   // console.log('TODO: Fix msg.media reference error', err)
-  // }
+  const {
+    otherUser,
+    messages: {first},
+  } = chat
+  const text = first ? (first.getUpload ? 'Image Attached' : first.content) : ''
   return (
     <TouchableOpacity onPress={onPress}>
       <PersonRow
@@ -30,12 +28,12 @@ const ChatCard = observer(({chat, style, onPress}: Props) => {
         handleComponent={
           <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
             <ProfileHandle profile={otherUser} size={15} />
-            <RText weight="Light" size={12} color={colors.DARK_GREY}>
-              {messages.first!.dateAsString}
+            <RText weight="Light" size={12} color={colors.DARK_GREY} style={{marginLeft: 5}}>
+              {first!.dateAsString}
             </RText>
           </View>
         }
-        displayName={chat.messages.first ? chat.messages.first.content : ''}
+        displayName={text}
         style={style}
       />
     </TouchableOpacity>

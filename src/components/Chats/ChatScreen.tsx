@@ -6,10 +6,11 @@ import {observer, inject} from 'mobx-react/native'
 import {isAlive} from 'mobx-state-tree'
 import Screen from '../Screen'
 import ChatMessage from './ChatMessage'
-import {withKeyboardHOC} from '../common'
+import {withKeyboardHOC, RText} from '../common'
 import {IWocky, IChat, IMessage} from 'wocky-client'
 import InputArea from './InputArea'
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view'
+import {colors} from 'src/constants'
 
 type Props = {
   item: string
@@ -36,69 +37,63 @@ class ChatScreen extends React.Component<Props> {
     }
   }
 
-  onSend = () => {
-    if (this.chat!.message!.content.trim()) {
-      this.chat!.sendMessage()
-    }
+  render() {
+    return this.chat && isAlive(this.chat) ? <ChatView chat={this.chat} /> : <Screen />
+  }
+}
+
+export const ChatView = observer(({chat}: {chat: IChat}) => {
+  function getPreviousMessage(index: number): IMessage | null {
+    const {sortedMessages} = chat
+    return sortedMessages.length > index + 1 ? sortedMessages[index + 1] : null
   }
 
-  renderDate = (message: IMessage, index: number) => {
-    const diffMessage = this.getPreviousMessage(index)
+  function renderDate(message: IMessage, index: number) {
+    const diffMessage = getPreviousMessage(index)
     if (!diffMessage) {
       return <Text style={styles.date as any}>{message.dateAsString}</Text>
     } else if (diffMessage.date) {
       const diff = moment(message.date).diff(diffMessage.date, 'minutes')
       if (diff > 5) {
-        return <Text style={styles.date as any}>{message.dateAsString}</Text>
+        return <RText style={styles.date as any}>{message.dateAsString}</RText>
       }
     }
     return null
   }
 
-  getPreviousMessage = (index: number): IMessage | null => {
-    const {sortedMessages: messages} = this.chat!
-    return messages.length > index + 1 ? messages[index + 1] : null
-  }
-
-  renderItem = ({item, index}: {item: IMessage; index: number}) => (
-    <View>
-      {this.renderDate(item, index)}
-      <ChatMessage message={item} diffMessage={this.getPreviousMessage(index)} />
+  return (
+    <View style={{flex: 1}}>
+      <KeyboardAwareFlatList
+        style={{paddingHorizontal: 10}}
+        inverted
+        data={chat.sortedMessages.slice()}
+        renderItem={({item, index}: {item: IMessage; index: number}) => (
+          <>
+            <ChatMessage message={item} diffMessage={getPreviousMessage(index)} />
+            {renderDate(item, index)}
+          </>
+        )}
+        keyExtractor={i => i.id}
+        onEndReached={() => chat.messages.load()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
+        }
+        showsVerticalScrollIndicator={false}
+        keyboardDismissMode="on-drag"
+      />
+      <InputArea chat={chat} />
     </View>
   )
-
-  _footerComponent: any = observer(() =>
-    this.chat!.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null
-  )
-
-  render() {
-    return this.chat && isAlive(this.chat) ? (
-      <Screen>
-        <KeyboardAwareFlatList
-          inverted
-          data={this.chat.sortedMessages.slice()}
-          renderItem={this.renderItem}
-          keyExtractor={i => i.id}
-          onEndReached={() => this.chat!.messages.load()}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={this._footerComponent}
-        />
-        <InputArea chat={this.chat} />
-      </Screen>
-    ) : (
-      <Screen />
-    )
-  }
-}
+})
 
 export default withKeyboardHOC(ChatScreen)
 
 const styles = StyleSheet.create({
   date: {
-    color: '#aaaaaa',
-    fontSize: 12,
+    color: colors.DARK_GREY,
+    fontSize: 13,
     textAlign: 'center',
-    fontWeight: 'bold',
     marginBottom: 8,
   },
 })

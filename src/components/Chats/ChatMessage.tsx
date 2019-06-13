@@ -1,10 +1,11 @@
 import React from 'react'
-import {View, StyleSheet, Image} from 'react-native'
+import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IMessage, IWocky, IFile} from 'wocky-client'
-import ResizedImage from './ResizedImage'
-import {width, k} from '../Global'
-import {RText} from '../common'
+import {IMessage, IWocky, IProfile, IFile} from 'wocky-client'
+import {RText, Avatar, Spinner} from '../common'
+import Triangle from '../map/Triangle'
+import {width} from '../Global'
+import {colors} from 'src/constants'
 
 type Props = {
   message: IMessage
@@ -12,83 +13,133 @@ type Props = {
   wocky?: IWocky
 }
 
-const ChatMessage = observer(({message: {isOutgoing, getUpload, content}}: Props) => {
-  const left = !isOutgoing
-  const media = getUpload()
+const lightPink = 'rgb(255, 228, 231)'
+const pink = 'rgb(254, 173, 181)'
+const triangleSize = 12
+
+const ChatMessageWrapper = observer(
+  ({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
+    const left = !isOutgoing
+
+    // NOTE: since Messages can have both image + text we need to render them as "separate" messages here
+    return (
+      <>
+        {!!getUpload && <ChatMessage left={left} media={getUpload} otherUser={otherUser} />}
+        {!!content && <ChatMessage left={left} text={content} otherUser={otherUser} />}
+      </>
+    )
+  }
+)
+
+const ChatMessage = ({
+  left,
+  media,
+  text,
+  otherUser,
+}: {
+  left: boolean
+  media?: IFile
+  text?: string
+  otherUser: IProfile
+}) => {
+  // TODO: media.loading doesn't work well here...there's a delay before `loading` gets set
+  const color = media && !media.thumbnail ? colors.GREY : left ? lightPink : pink
+  const triangleStyle = left ? {left: -triangleSize} : {right: -triangleSize}
   return (
     <View
       style={[
         styles.rowContainer,
         {
           justifyContent: left ? 'flex-start' : 'flex-end',
+          paddingRight: left ? 0 : triangleSize,
         },
       ]}
     >
+      {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
+      <View>
+        {!!media ? (
+          <ImageMessage media={media} left={left} color={color} />
+        ) : (
+          <RText
+            style={[
+              styles.bubble,
+              {
+                backgroundColor: color,
+                borderColor: color,
+              },
+            ]}
+            size={15}
+          >
+            {text}
+          </RText>
+        )}
+        <Triangle
+          width={triangleSize}
+          height={triangleSize}
+          color={color}
+          direction={left ? 'left' : 'right'}
+          style={{position: 'absolute', bottom: triangleSize, ...triangleStyle}}
+        />
+      </View>
+    </View>
+  )
+}
+
+const ImageMessage = observer(({media, color}: {media: IFile; left: boolean; color: string}) => {
+  if (media && !media.thumbnail) {
+    return (
       <View
         style={[
-          media && media.thumbnail ? styles.mediaBubble : styles.bubble,
-          left ? styles.bubbleLeft : styles.bubbleRight,
+          styles.bubble,
+          {
+            backgroundColor: color,
+            borderColor: color,
+            width: 80,
+            alignItems: 'center',
+          },
         ]}
       >
-        {!!content && <RText size={15}>{content}</RText>}
-        {!!media && <MessageMedia media={media} left={left} />}
+        <Spinner color="white" />
       </View>
-      <Triangle left={left} />
-    </View>
-  )
-})
+    )
+  }
 
-const MessageMedia = observer(({media, left}: {media: IFile; left: boolean}) => {
-  const w = left ? width - 150 * k : width - 93
-  // , height: w * media.source.height / media.source.width
+  const image = media.thumbnail as ImageSourcePropType
+
+  const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
+  const maxDim = width * 0.75
+  const dimensions =
+    iWidth / iHeight < 1
+      ? {height: maxDim, width: (maxDim / iHeight) * iWidth}
+      : {width: maxDim, height: (maxDim / iWidth) * iHeight}
   return (
-    <View style={{width: w}}>
-      <ResizedImage image={media.thumbnail} />
-    </View>
+    <Image
+      style={[
+        styles.bubble,
+        styles.mediaBubble,
+        dimensions,
+        {
+          backgroundColor: color,
+          borderColor: color,
+        },
+      ]}
+      resizeMode="contain"
+      source={image as ImageSourcePropType}
+    />
   )
 })
 
-const Triangle = ({left}) =>
-  left ? (
-    <Image
-      style={{position: 'absolute', bottom: 12, left: 2}}
-      source={require('../../../images/triangleWhite.png')}
-    />
-  ) : (
-    <Image
-      style={{position: 'absolute', bottom: 5, right: 2}}
-      source={require('../../../images/triangleYellow.png')}
-    />
-  )
-
-export default ChatMessage
+export default ChatMessageWrapper
 
 const styles = StyleSheet.create({
-  bubbleLeft: {
-    marginLeft: 14,
-    marginRight: 70,
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    alignSelf: 'flex-start',
-  },
-  bubbleRight: {
-    marginRight: 14,
-    marginLeft: 70,
-    backgroundColor: 'rgba(255,254,227,0.9)',
-    alignSelf: 'flex-end',
-  },
   mediaBubble: {
-    borderRadius: 2,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingTop: 0,
+    padding: 0,
   },
   bubble: {
-    borderRadius: 2,
-    paddingLeft: 14,
-    paddingRight: 14,
-    paddingBottom: 12,
-    paddingTop: 5,
+    borderRadius: 8,
+    padding: 12,
+    overflow: 'hidden',
+    borderWidth: 1,
   },
   rowContainer: {
     flexDirection: 'row',
