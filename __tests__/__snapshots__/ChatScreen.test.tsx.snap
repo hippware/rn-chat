@@ -16,72 +16,48 @@ exports[`ChatScreen renders with no data 1`] = `
 >
   <View
     style={
-      Object {
-        "flex": 1,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
     }
   >
-    <RCTScrollView
-      ListFooterComponent={null}
-      automaticallyAdjustContentInsets={false}
-      contentInset={
-        Object {
-          "bottom": 0,
-        }
+    <BVLinearGradient
+      colors={
+        Array [
+          "rgb(255,255,255)",
+          "rgb(241,242,244)",
+          "rgb(243,244,246)",
+        ]
       }
-      data={Array []}
-      disableVirtualization={false}
-      enableAutomaticScroll={true}
-      enableOnAndroid={false}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      getScrollResponder={[Function]}
-      handleOnScroll={[Function]}
-      horizontal={false}
-      initialNumToRender={10}
-      invertStickyHeaders={true}
-      inverted={true}
-      keyExtractor={[Function]}
-      keyboardDismissMode="on-drag"
-      keyboardOpeningTime={250}
-      keyboardSpace={0}
-      maxToRenderPerBatch={10}
-      numColumns={1}
-      onContentSizeChange={[Function]}
-      onEndReached={[Function]}
-      onEndReachedThreshold={0.5}
-      onLayout={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      removeClippedSubviews={false}
-      renderItem={[Function]}
-      resetKeyboardSpace={[Function]}
-      scrollEventThrottle={1}
-      scrollForExtraHeightOnAndroid={[Function]}
-      scrollIntoView={[Function]}
-      scrollToEnd={[Function]}
-      scrollToFocusedInput={[Function]}
-      scrollToPosition={[Function]}
-      showsVerticalScrollIndicator={false}
-      stickyHeaderIndices={Array []}
+      locations={
+        Array [
+          0,
+          0.2,
+          1,
+        ]
+      }
       style={
         Object {
-          "paddingHorizontal": 10,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         }
       }
-      update={[Function]}
-      updateCellsBatchingPeriod={50}
-      viewIsInsideTabBar={false}
-      viewabilityConfigCallbackPairs={Array []}
-      windowSize={21}
-    >
-      <View />
-    </RCTScrollView>
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    />
   </View>
 </View>
 `;

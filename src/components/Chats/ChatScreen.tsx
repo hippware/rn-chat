@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native'
 import moment from 'moment'
-import {observable} from 'mobx'
-import {observer, inject} from 'mobx-react/native'
+import {useLocalStore, observer} from 'mobx-react-lite'
+import {inject} from 'mobx-react'
 import {isAlive} from 'mobx-state-tree'
 import Screen from '../Screen'
 import ChatMessage from './ChatMessage'
@@ -17,30 +17,34 @@ type Props = {
   wocky?: IWocky
 }
 
-@inject('wocky')
-@observer
-class ChatScreen extends React.Component<Props> {
-  @observable chat?: IChat
+type StoreShape = {chat?: IChat; setChat: (c) => void}
 
-  async componentDidMount() {
-    const {item, wocky} = this.props
-    // console.log('& chat', this.props.item)
-    this.chat = wocky!.chats.createChat(item)
-    await this.chat!.messages.load({force: true})
-    this.chat!.readAll()
-    this.chat!.setActive(true)
-  }
+const ChatScreen = inject('wocky')(
+  observer(({item, wocky}: Props) => {
+    const store = useLocalStore<StoreShape>(() => ({
+      chat: undefined,
+      setChat(c) {
+        store.chat = c
+      },
+    }))
 
-  componentWillUnmount() {
-    if (this.chat) {
-      this.chat.setActive(false)
-    }
-  }
+    useEffect(() => {
+      store.setChat(wocky!.chats.createChat(item))
+      store.chat!.messages.load({force: true}).then(() => {
+        store.chat!.readAll()
+      })
+      store.chat!.setActive(true)
 
-  render() {
-    return this.chat && isAlive(this.chat) ? <ChatView chat={this.chat} /> : <Screen />
-  }
-}
+      return function cleanup() {
+        if (store.chat) {
+          store.chat.setActive(false)
+        }
+      }
+    }, [])
+
+    return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
+  })
+)
 
 export const ChatView = observer(({chat}: {chat: IChat}) => {
   function getPreviousMessage(index: number): IMessage | null {
