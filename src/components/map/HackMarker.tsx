@@ -34,12 +34,7 @@ export default class HackMarker extends React.Component<IProps> {
   render() {
     const {children, style, ...props} = this.props
     return (
-      <Marker
-        {...props}
-        anchor={{x: 0.5, y: 1}}
-        tracksViewChanges={this.state.tracking}
-        style={style}
-      >
+      <Marker {...props} tracksViewChanges={this.state.tracking} style={style}>
         {children}
       </Marker>
     )
