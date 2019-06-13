@@ -1,7 +1,7 @@
 import React from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {AutoExpandingTextInput} from '../common'
+import {AutoExpandingTextInput, RText} from '../common'
 import {colors} from '../../constants'
 import {IChat} from 'wocky-client'
 import AttachButton from './AttachButton'
@@ -17,7 +17,6 @@ const InputArea = observer(({chat}: InputProps) => {
       <AttachButton chat={chat} />
       <AutoExpandingTextInput
         style={styles.textInput}
-        height={37}
         placeholder="Write a message..."
         placeholderTextColor={addAlpha(colors.DARK_GREY, 0.5)}
         multiline
@@ -29,6 +28,19 @@ const InputArea = observer(({chat}: InputProps) => {
         maxHeight={100}
         maxLength={500}
       />
+      {chat.message.content.trim().length > 0 && (
+        <TouchableOpacity
+          onPress={() => {
+            chat!.sendMessage()
+          }}
+          hitSlop={{top: 5, right: 5, bottom: 5, left: 5}}
+          style={{position: 'absolute', right: 20, borderWidth: 0}}
+        >
+          <RText size={16} color={colors.PINK}>
+            Send
+          </RText>
+        </TouchableOpacity>
+      )}
     </View>
   ) : null
 })
@@ -50,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     paddingHorizontal: 20,
+    paddingRight: 55,
     paddingVertical: 10,
     fontSize: 15,
     color: colors.DARK_PURPLE,

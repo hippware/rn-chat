@@ -106,6 +106,7 @@ export const ChatViewStory = () => (
       chat={
         {
           message: {
+            // content: 'helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
             content: '',
             setBody: () => null,
           },

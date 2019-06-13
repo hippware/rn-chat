@@ -1,7 +1,7 @@
 import React from 'react'
-import {TextInput, TextInputProperties} from 'react-native'
+import {TextInput, TextInputProps} from 'react-native'
 
-interface IProps extends TextInputProperties {
+interface IProps extends TextInputProps {
   height?: number
   maxHeight?: number
 }
