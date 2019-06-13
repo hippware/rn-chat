@@ -30,7 +30,7 @@ const ChatCard = observer(({chat, style, onPress}: Props) => {
         handleComponent={
           <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
             <ProfileHandle profile={otherUser} size={15} />
-            <RText weight="Light" size={12} color={colors.DARK_GREY}>
+            <RText weight="Light" size={12} color={colors.DARK_GREY} style={{marginLeft: 5}}>
               {messages.first!.dateAsString}
             </RText>
           </View>
