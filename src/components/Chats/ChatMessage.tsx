@@ -26,6 +26,7 @@ const ChatMessageWrapper = observer(
       <>
         {!!getUpload && <ChatMessage left={left} media={getUpload} otherUser={otherUser} />}
         {!!content && <ChatMessage left={left} text={content} otherUser={otherUser} />}
+        {!left && <RText>Sending...</RText>}
       </>
     )
   }
