@@ -4,9 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.13.2 - 2019 Jun 13
+
 * Adjust padding for activity icons (PR #3796)
 * Messaging Business logic (#3691, PR #3781)
 * Update Messages screen to new design (#3689, PR #3799, PR #3803)
+* Actual location should be at the point of the pin (#3763)
 
 # 4.13.1 - 2019 Jun 6
 
