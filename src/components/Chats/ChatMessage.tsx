@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
 import {observer} from 'mobx-react/native'
-import {IMessage, IWocky, IProfile, IFile} from 'wocky-client'
+import {IMessage, IWocky, IProfile, IFile, MessageStatus} from 'wocky-client'
 import {RText, Avatar, Spinner} from '../common'
 import Triangle from '../map/Triangle'
 import {width} from '../Global'
@@ -18,14 +18,18 @@ const pink = 'rgb(254, 173, 181)'
 const triangleSize = 12
 
 const ChatMessageWrapper = observer(
-  ({message: {isOutgoing, getUpload, content, otherUser}}: Props) => {
+  ({message: {isOutgoing, getUpload, content, otherUser, status}}: Props) => {
     const left = !isOutgoing
 
     // NOTE: since Messages can have both image + text we need to render them as "separate" messages here
     return (
       <>
-        {!!getUpload && <ChatMessage left={left} media={getUpload} otherUser={otherUser} />}
-        {!!content && <ChatMessage left={left} text={content} otherUser={otherUser} />}
+        {!!getUpload && (
+          <ChatMessage left={left} media={getUpload} otherUser={otherUser} status={status} />
+        )}
+        {!!content && (
+          <ChatMessage left={left} text={content} otherUser={otherUser} status={status} />
+        )}
       </>
     )
   }
@@ -36,11 +40,13 @@ const ChatMessage = ({
   media,
   text,
   otherUser,
+  status,
 }: {
   left: boolean
   media?: IFile
   text?: string
   otherUser: IProfile
+  status: MessageStatus
 }) => {
   // TODO: media.loading doesn't work well here...there's a delay before `loading` gets set
   const color = media && !media.thumbnail ? colors.GREY : left ? lightPink : pink
@@ -58,7 +64,7 @@ const ChatMessage = ({
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
       <View>
         {!!media ? (
-          <ImageMessage media={media} left={left} color={color} />
+          <ImageMessage media={media} left={left} color={color} status={status} />
         ) : (
           <RText
             style={[
@@ -85,53 +91,72 @@ const ChatMessage = ({
   )
 }
 
-const ImageMessage = observer(({media, color}: {media: IFile; left: boolean; color: string}) => {
-  if (media && !media.thumbnail) {
+const ImageMessage = observer(
+  ({media, color, status}: {media: IFile; left: boolean; color: string; status: MessageStatus}) => {
+    if (media && !media.thumbnail) {
+      return (
+        <View
+          style={[
+            styles.bubble,
+            {
+              backgroundColor: color,
+              borderColor: color,
+              width: 80,
+              alignItems: 'center',
+            },
+          ]}
+        >
+          <Spinner color="white" />
+        </View>
+      )
+    }
+
+    const image = media.thumbnail as ImageSourcePropType
+
+    const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
+    const maxDim = width * 0.75
+    const dimensions =
+      iWidth / iHeight < 1
+        ? {height: maxDim, width: (maxDim / iHeight) * iWidth}
+        : {width: maxDim, height: (maxDim / iWidth) * iHeight}
     return (
-      <View
-        style={[
-          styles.bubble,
-          {
-            backgroundColor: color,
-            borderColor: color,
-            width: 80,
-            alignItems: 'center',
-          },
-        ]}
-      >
-        <Spinner color="white" />
+      <View>
+        <Image
+          style={[
+            styles.bubble,
+            styles.mediaBubble,
+            dimensions,
+            {
+              backgroundColor: color,
+              borderColor: color,
+            },
+          ]}
+          resizeMode="contain"
+          source={image as ImageSourcePropType}
+        />
+        {status === MessageStatus.Sending && (
+          <View style={styles.overlay}>
+            <Spinner color="white" />
+          </View>
+        )}
       </View>
     )
   }
-
-  const image = media.thumbnail as ImageSourcePropType
-
-  const {width: iWidth, height: iHeight} = Image.resolveAssetSource(image)
-  const maxDim = width * 0.75
-  const dimensions =
-    iWidth / iHeight < 1
-      ? {height: maxDim, width: (maxDim / iHeight) * iWidth}
-      : {width: maxDim, height: (maxDim / iWidth) * iHeight}
-  return (
-    <Image
-      style={[
-        styles.bubble,
-        styles.mediaBubble,
-        dimensions,
-        {
-          backgroundColor: color,
-          borderColor: color,
-        },
-      ]}
-      resizeMode="contain"
-      source={image as ImageSourcePropType}
-    />
-  )
-})
+)
 
 export default ChatMessageWrapper
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
   mediaBubble: {
     padding: 0,
   },

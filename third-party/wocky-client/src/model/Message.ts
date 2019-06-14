@@ -7,7 +7,7 @@ import {createPaginable} from './PaginableList'
 import _ from 'lodash'
 import {Base} from './Base'
 
-enum Status {
+export enum Status {
   Init = 0,
   Sending = 1,
   Sent = 2,
