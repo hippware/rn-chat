@@ -12,7 +12,7 @@ YellowBox.ignoreWarnings([
 ])
 
 // Uncomment for storybook
-// export default from './storybook'
+export default from './storybook'
 
 // Comment for storybook
-AppRegistry.registerComponent('App', () => App)
+// AppRegistry.registerComponent('App', () => App)
