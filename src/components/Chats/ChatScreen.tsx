@@ -26,7 +26,7 @@ class ChatScreen extends React.Component<Props> {
     const {item, wocky} = this.props
     // console.log('& chat', this.props.item)
     this.chat = wocky!.chats.createChat(item)
-    await this.chat!.messages.load({force: true})
+    await this.chat!.messages.load()
     this.chat!.readAll()
     this.chat!.setActive(true)
   }
