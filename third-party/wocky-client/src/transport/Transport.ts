@@ -1427,11 +1427,25 @@ export class Transport {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       logger: process.env.WOCKY_VERBOSE
         ? (kind, msg, data) => {
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value#Examples
+            const getCircularReplacer = () => {
+              const seen = new WeakSet()
+              return (key, value) => {
+                if (typeof value === 'object' && value !== null) {
+                  if (seen.has(value)) {
+                    return
+                  }
+                  seen.add(value)
+                }
+                return value
+              }
+            }
+
             // tslint:disable-next-line
             console.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
-              }):${kind} | ${msg} | ${JSON.stringify(data)}`
+              }):${kind} | ${msg} | ${JSON.stringify(data, getCircularReplacer)}`
             )
           }
         : undefined,
