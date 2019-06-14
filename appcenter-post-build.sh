@@ -14,7 +14,7 @@ else
   which applesimutils
 
   echo 'Running detox'
-#  yarn detox
+#   yarn detox
 fi
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "production" ]
