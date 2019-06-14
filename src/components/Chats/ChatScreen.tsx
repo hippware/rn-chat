@@ -30,7 +30,7 @@ const ChatScreen = inject('wocky')(
 
     useEffect(() => {
       store.setChat(wocky!.chats.createChat(item))
-      store.chat!.messages.load({force: true}).then(() => {
+      store.chat!.messages.load().then(() => {
         store.chat!.readAll()
       })
       store.chat!.setActive(true)
