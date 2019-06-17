@@ -8,6 +8,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Temporarily disable detox
 * Incorporate mobx-react-lite (PR #3812)
 * Messaging: Loader for messages (#3807)
+* Update detox, applesimutils (PR #3821)
 
 # 4.13.2 - 2019 Jun 13
 
