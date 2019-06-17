@@ -53,6 +53,7 @@ export class Transport {
   username?: string
   token?: string
   host?: string
+  onCloseCallback?: () => void
 
   @observable connected: boolean = false
   @observable connecting: boolean = false
@@ -66,6 +67,11 @@ export class Transport {
   constructor(resource: string) {
     this.resource = resource
     this.instance = Transport.instances++
+  }
+
+  @action
+  async onClose(f: () => void) {
+    this.onCloseCallback = f
   }
 
   @action
@@ -1421,7 +1427,7 @@ export class Transport {
       : `wss://${this.host}/graphql`
 
     // uncomment to see all graphql messages!
-    // process.env.WOCKY_VERBOSE = true
+    // process.env.WOCKY_VERBOSE = '1'
 
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
@@ -1452,13 +1458,17 @@ export class Transport {
     })
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
-      this.connected = false
-      this.connecting = false
+      this.disconnect()
+      if (this.onCloseCallback) {
+        this.onCloseCallback()
+      }
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
-      this.connected = false
-      this.connecting = false
+      this.disconnect()
+      if (this.onCloseCallback) {
+        this.onCloseCallback()
+      }
     })
     socket.onOpen(() => {
       // console.log('& graphql open')

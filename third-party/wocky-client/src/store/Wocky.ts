@@ -84,6 +84,12 @@ export const Wocky = types
           }
           yield self.transport.disconnect()
         }),
+        onClose: () => {
+          // Do the same as disconnect() but don't call transport.disconnect()
+          if (self.profile) {
+            self.profile!.status = 'OFFLINE'
+          }
+        },
         remove: flow(function*() {
           yield self.transport.remove()
         }),
@@ -512,6 +518,7 @@ export const Wocky = types
   })
   .actions(self => ({
     afterCreate: () => {
+      self.transport.onClose(self.onClose)
       self.geofenceBots.setRequest(self._loadGeofenceBots as any)
       self.startReactions()
     },
