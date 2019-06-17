@@ -97,7 +97,7 @@ export class Transport {
         this.subscribePresence()
         this.subscribeSharedLocations()
       }
-      return res
+      return !!res
     } catch (e) {
       this.disconnect()
       e.token = token
