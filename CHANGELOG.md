@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Image message uploads lost after nav'ing to other screen (#3810)
+  * Temporarily disable detox
+* Incorporate mobx-react-lite (PR #3812)
+* Messaging: Loader for messages (#3807)
+
 # 4.13.2 - 2019 Jun 13
 
 * Adjust padding for activity icons (PR #3796)
