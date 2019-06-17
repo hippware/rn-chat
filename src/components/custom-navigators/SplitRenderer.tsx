@@ -72,7 +72,9 @@ export default class SplitRenderer extends React.Component<Props> {
       </Provider>
     )
   }
-  onTransitionStart = () => null
+  onTransitionStart = () => {
+    this.scrollY.setValue(0)
+  }
   onTransitionEnd = () => null
   render() {
     const TransitionerAny = Transitioner as any
