@@ -607,6 +607,10 @@ export class Transport {
     this.subscriptions = []
     if (this.socket && this.socket.isConnected()) {
       await this.socketDisconnect(this.socket)
+
+      if (this.onCloseCallback) {
+        this.onCloseCallback()
+      }
     }
     this.socket = undefined
     this.client = undefined
@@ -1459,16 +1463,10 @@ export class Transport {
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
       this.disconnect()
-      if (this.onCloseCallback) {
-        this.onCloseCallback()
-      }
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
       this.disconnect()
-      if (this.onCloseCallback) {
-        this.onCloseCallback()
-      }
     })
     socket.onOpen(() => {
       // console.log('& graphql open')
