@@ -165,6 +165,8 @@ export const Profile = types
           }
         },
         get currentActivity(): UserActivityType | null {
+          if (!self.location) return null
+
           const now: Date = (getRoot(self) as any).wocky.timer.minute
           const activity =
             self.location &&
