@@ -4,7 +4,7 @@ import Permissions from 'react-native-permissions'
 import BackgroundGeolocation from 'react-native-background-geolocation'
 import DeviceInfo from 'react-native-device-info'
 import {settings} from '../globals'
-import {Location, IWocky} from 'wocky-client'
+import {Location, createLocation, IWocky} from 'wocky-client'
 import _ from 'lodash'
 import * as RNLocalize from 'react-native-localize'
 import moment from 'moment'
@@ -179,11 +179,23 @@ const LocationStore = types
   .actions(self => {
     const {transport} = getEnv(self)
     const wocky: IWocky = (getParent(self) as any).wocky
+    const {profile} = wocky
     let watcherID
 
     function onLocation(position) {
       log(prefix, 'location: ', JSON.stringify(position))
       self.setPosition(position.coords)
+
+      const data = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        createdAt: new Date(position.timestamp),
+        // .activity does not exist if called from navigator.geolocation
+        activity: position.activity ? position.activity.type : null,
+        activityConfidence: position.activity ? position.activity.confidence : null,
+      }
+      profile!.setLocation(createLocation(data))
     }
 
     function onLocationError(err) {
