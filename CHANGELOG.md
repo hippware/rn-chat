@@ -9,6 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Incorporate mobx-react-lite (PR #3812)
 * Messaging: Loader for messages (#3807)
 * Update detox, applesimutils (PR #3821)
+* Connecting/Offline Banner (#3744)
+  * Properly disconnect if socket is closed (PR #3823)
 
 # 4.13.2 - 2019 Jun 13
 
