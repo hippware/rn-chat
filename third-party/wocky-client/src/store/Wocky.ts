@@ -79,13 +79,10 @@ export const Wocky = types
           return true
         }) as (token: string) => Promise<boolean>,
         disconnect: flow(function*() {
-          if (self.profile) {
-            self.profile!.status = 'OFFLINE'
-          }
           yield self.transport.disconnect()
         }),
+        // Called by transport upon disconnection
         onClose: () => {
-          // Do the same as disconnect() but don't call transport.disconnect()
           if (self.profile) {
             self.profile!.status = 'OFFLINE'
           }

@@ -610,6 +610,10 @@ export class Transport {
     }
     this.socket = undefined
     this.client = undefined
+
+    if (this.onCloseCallback) {
+      this.onCloseCallback()
+    }
   }
 
   async updateProfile(d: any): Promise<void> {
@@ -1459,16 +1463,10 @@ export class Transport {
     socket.onError(err => {
       // console.warn('& graphql Phoenix socket error', err)
       this.disconnect()
-      if (this.onCloseCallback) {
-        this.onCloseCallback()
-      }
     })
     socket.onClose(() => {
       // console.log('& graphql Phoenix socket closed')
       this.disconnect()
-      if (this.onCloseCallback) {
-        this.onCloseCallback()
-      }
     })
     socket.onOpen(() => {
       // console.log('& graphql open')
