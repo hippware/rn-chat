@@ -607,13 +607,13 @@ export class Transport {
     this.subscriptions = []
     if (this.socket && this.socket.isConnected()) {
       await this.socketDisconnect(this.socket)
-
-      if (this.onCloseCallback) {
-        this.onCloseCallback()
-      }
     }
     this.socket = undefined
     this.client = undefined
+
+    if (this.onCloseCallback) {
+      this.onCloseCallback()
+    }
   }
 
   async updateProfile(d: any): Promise<void> {
