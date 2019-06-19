@@ -38,16 +38,13 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
       >
         {/* extra padding here for the activity icon */}
         <View style={{paddingLeft: 9, paddingRight: 9, paddingTop: 15}}>
-          {!profile.avatar && !profile.hidden.enabled ? (
-            <Image source={require('../../../../images/you.png')} />
-          ) : (
-            <LocationAvatar
-              profile={profile}
-              hidden={profile.hidden.enabled}
-              sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
-              currentActivity={profile.currentActivity}
-            />
-          )}
+          <LocationAvatar
+            profile={profile}
+            hidden={profile.hidden.enabled}
+            sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
+            currentActivity={profile.currentActivity}
+            isYou
+          />
         </View>
       </HackMarker>
     )

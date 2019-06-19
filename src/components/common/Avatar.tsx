@@ -32,6 +32,7 @@ type Props = {
   hideDot?: boolean
   borderColor?: string
   noScale?: boolean
+  isYou?: boolean
 }
 
 const Avatar = observer(
@@ -48,6 +49,7 @@ const Avatar = observer(
     fontSize,
     fontFamily,
     noScale = false,
+    isYou = false,
   }: Props) => {
     if ((!profile || (isStateTreeNode(profile) && !isAlive(profile))) && (!image && !displayName)) {
       return null
@@ -90,6 +92,7 @@ const Avatar = observer(
               fontFamily={fontFamily}
               letter={title.length > 1 ? title[0] : title}
               showMask={showMask}
+              isYou={isYou}
             />
           )}
           {!hideDot && profile && <PresenceDot profile={profile} size={size} />}
@@ -112,7 +115,7 @@ const AvatarImage = observer(({avatar, style, size, showMask}) => (
   </View>
 ))
 
-const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontFamily}) => {
+const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontFamily, isYou}) => {
   const start = showMask ? {x: 0.5, y: 0} : {x: 0, y: 1}
   const end = showMask ? {x: 0.5, y: 1} : {x: 1, y: 0}
   const theColors = showMask
@@ -133,12 +136,14 @@ const AvatarLetterPlaceholder = ({size, style, fontSize, letter, showMask, fontF
             style={[
               styles.title,
               {
-                fontSize: fontSize === 'small' ? 13.5 : fontSize === 'large' ? 25 : 20,
-                fontFamily: fontFamily === 'bold' ? 'Roboto-Bold' : 'Roboto-Regular',
+                fontSize: isYou ? 18 : fontSize === 'small' ? 13.5 : fontSize === 'large' ? 25 : 20,
+                fontFamily: isYou || fontFamily === 'bold' ? 'Roboto-Bold' : 'Roboto-Regular',
+                // For some reason, it's not quite centered perfectly
+                paddingLeft: 3,
               },
             ]}
           >
-            {letter.toUpperCase()}
+            {isYou ? 'YOU' : letter.toUpperCase()}
           </Text>
         )}
       </View>
