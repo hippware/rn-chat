@@ -23,7 +23,7 @@ type StatusProps = {
   send: () => Promise<void>
 }
 
-const StatusText = observer(({isImage, status, send}: StatusProps) => {
+const StatusText = ({isImage, status, send}: StatusProps) => {
   if (status === MessageStatus.Sending) {
     return <RText style={styles.statusText}>Sending...</RText>
   }
@@ -37,7 +37,7 @@ const StatusText = observer(({isImage, status, send}: StatusProps) => {
     )
   }
   return null
-})
+}
 
 const ChatMessageWrapper = observer(
   ({message: {isOutgoing, getUpload, content, otherUser, status, send}}: Props) => {
@@ -203,6 +203,6 @@ const styles = StyleSheet.create({
     marginTop: -5,
     marginBottom: 3,
     fontSize: 13,
-    color: colors.WARM_GREY_SOLID,
+    color: colors.DARK_GREY,
   },
 })

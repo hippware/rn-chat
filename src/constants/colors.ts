@@ -40,8 +40,6 @@ export const DARK_GREY = 'rgb(155,155,155)'
 
 export const WARM_GREY = 'rgba(155,155,155,0.15)'
 
-export const WARM_GREY_SOLID = 'rgb(155,155,155)'
-
 export const WARM_GREY_2 = 'rgb(117,117,117)'
 
 export const ANOTHER_GREY = 'rgb(186,186,186)'
