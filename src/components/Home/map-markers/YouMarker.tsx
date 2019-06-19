@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image} from 'react-native'
+import {Image, View} from 'react-native'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
@@ -36,15 +36,19 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         }}
         stopPropagation
       >
-        {!profile.avatar && !profile.hidden.enabled ? (
-          <Image source={require('../../../../images/you.png')} />
-        ) : (
-          <LocationAvatar
-            profile={profile}
-            hidden={profile.hidden.enabled}
-            sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
-          />
-        )}
+        {/* extra padding here for the activity icon */}
+        <View style={{paddingLeft: 9, paddingRight: 9, paddingTop: 15}}>
+          {!profile.avatar && !profile.hidden.enabled ? (
+            <Image source={require('../../../../images/you.png')} />
+          ) : (
+            <LocationAvatar
+              profile={profile}
+              hidden={profile.hidden.enabled}
+              sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
+              currentActivity={profile.currentActivity}
+            />
+          )}
+        </View>
       </HackMarker>
     )
   )
