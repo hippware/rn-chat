@@ -1,0 +1,728 @@
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json b/node_modules/react-native-maps/lib/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json
+index fa1ec82..bc52958 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json
+@@ -1 +1 @@
+-[{"outputType":{"type":"AAPT_FRIENDLY_MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":-1,"enabled":true,"outputFile":"react-native-maps-lib-debug.aar","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.airbnb.android.react.maps","split":""}}]
+\ No newline at end of file
++[{"outputType":{"type":"AAPT_FRIENDLY_MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":-1,"enabled":true,"outputFile":"react-native-maps-debug.aar","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.airbnb.android.react.maps","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-maps/lib/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar
+index b7253c5..11ed6fd 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar and b/node_modules/react-native-maps/lib/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+index c10eeda..d14a056 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/debug/shaders"/></dataSet></merger>
+\ No newline at end of file
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/debug/shaders"/></dataSet></merger>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml
+index c08b87a..259c9bd 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml
+@@ -606,7 +606,7 @@
+         <item name="isLightTheme">true</item>
+     </style>
+     <style name="Base.V7.Theme.AppCompat" parent="Platform.AppCompat">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+         <item name="windowActionBarOverlay">false</item>
+@@ -800,7 +800,7 @@
+         <item name="android:windowCloseOnTouchOutside">true</item>
+     </style>
+     <style name="Base.V7.Theme.AppCompat.Light" parent="Platform.AppCompat.Light">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+ 
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merger.xml b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merger.xml
+index 4133e82..6b938bf 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merger.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/mergeReleaseResources/merger.xml
+@@ -1786,7 +1786,7 @@
+         
+         <item name="isLightTheme">true</item>
+     </style><style name="Base.V7.Theme.AppCompat" parent="Platform.AppCompat">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+         <item name="windowActionBarOverlay">false</item>
+@@ -1977,7 +1977,7 @@
+         <item name="android:borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+         <item name="android:windowCloseOnTouchOutside">true</item>
+     </style><style name="Base.V7.Theme.AppCompat.Light" parent="Platform.AppCompat.Light">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+ 
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+index 2e52142..74bc47c 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugAssets/merger.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/assets"><file name="ula.kml" path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/assets/ula.kml"/></source><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/debug/assets"/></dataSet></merger>
+\ No newline at end of file
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/assets"><file name="ula.kml" path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/assets/ula.kml"/></source><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/debug/assets"/></dataSet></merger>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+index 3e61400..ee9594a 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+@@ -1 +1 @@
+-#Fri Apr 12 17:58:38 PDT 2019
++#Wed Jun 19 17:21:44 MSK 2019
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/merger.xml
+index 3867005..f202636 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/merger.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/incremental/packageDebugResources/merger.xml
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/res"/><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/build/generated/res/rs/debug"/><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/res"/><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/build/generated/res/rs/debug"/><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/debug/res"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/res"/><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/build/generated/res/rs/debug"/><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/res"/><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/build/generated/res/rs/debug"/><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/debug/res"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/intermediate-jars/debug/classes.jar b/node_modules/react-native-maps/lib/android/build/intermediates/intermediate-jars/debug/classes.jar
+index f4a6a8f..3223a07 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/intermediate-jars/debug/classes.jar and b/node_modules/react-native-maps/lib/android/build/intermediates/intermediate-jars/debug/classes.jar differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapLocalTile$AIRMapLocalTileProvider.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapLocalTile$AIRMapLocalTileProvider.class
+index c2e2298..baaa1b2 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapLocalTile$AIRMapLocalTileProvider.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapLocalTile$AIRMapLocalTileProvider.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapManager.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapManager.class
+index 5b74fa6..6f7e3ad 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapManager.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapManager.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$1.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$1.class
+index 650656b..dc8c97a 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$1.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$1.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$2.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$2.class
+index 7b04dc6..0a53b93 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$2.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker$2.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker.class
+index 445378f..974068c 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarker.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarkerManager.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarkerManager.class
+index 48e4c65..8f102b4 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarkerManager.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapMarkerManager.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapView.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapView.class
+index 2dfcf64..8c130a4 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapView.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/AirMapView.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/FileUtil.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/FileUtil.class
+index 2872c96..10e7ef7 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/FileUtil.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/FileUtil.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader$1.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader$1.class
+index d2ed009..fdf268d 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader$1.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader$1.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader.class
+index 28d20ca..bb53114 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/ImageReader.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/LatLngBoundsUtils.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/LatLngBoundsUtils.class
+index 14f7364..c68d5d1 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/LatLngBoundsUtils.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/LatLngBoundsUtils.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/MapsPackage.class b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/MapsPackage.class
+index 4a8699d..32f4175 100644
+Binary files a/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/MapsPackage.class and b/node_modules/react-native-maps/lib/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/airbnb/android/react/maps/MapsPackage.class differ
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifests/debug/output.json b/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifests/debug/output.json
+index 245c805..a69fb79 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifests/debug/output.json
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifests/debug/output.json
+@@ -1 +1 @@
+-[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":-1,"enabled":true,"outputFile":"react-native-maps-lib-debug.aar","fullName":"debug","baseName":"debug"},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"com.airbnb.android.react.maps","split":""}}]
+\ No newline at end of file
++[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":-1,"enabled":true,"outputFile":"react-native-maps-debug.aar","fullName":"debug","baseName":"debug"},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"com.airbnb.android.react.maps","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml
+index 26704ac..25412ba 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.ActionBarOverlayLayout
++<androidx.appcompat.widget.ActionBarOverlayLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/decor_content_parent"
+@@ -24,7 +24,7 @@
+ 
+     <include layout="@layout/abc_screen_content_include"/>
+ 
+-    <android.support.v7.widget.ActionBarContainer
++    <androidx.appcompat.widget.ActionBarContainer
+         android:id="@+id/action_bar_container"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+@@ -34,14 +34,14 @@
+         android:keyboardNavigationCluster="true"
+         android:gravity="top">
+ 
+-        <android.support.v7.widget.Toolbar
++        <androidx.appcompat.widget.Toolbar
+             android:id="@+id/action_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:navigationContentDescription="@string/abc_action_bar_up_description"
+             style="?attr/toolbarStyle"/>
+ 
+-        <android.support.v7.widget.ActionBarContextView
++        <androidx.appcompat.widget.ActionBarContextView
+             android:id="@+id/action_context_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+@@ -49,6 +49,6 @@
+             android:theme="?attr/actionBarTheme"
+             style="?attr/actionModeStyle"/>
+ 
+-    </android.support.v7.widget.ActionBarContainer>
++    </androidx.appcompat.widget.ActionBarContainer>
+ 
+-</android.support.v7.widget.ActionBarOverlayLayout>
++</androidx.appcompat.widget.ActionBarOverlayLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml
+index c411de6..773065d 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml
+@@ -15,7 +15,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.ButtonBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.appcompat.widget.ButtonBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                            android:id="@+id/buttonPanel"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+@@ -48,4 +48,4 @@
+         android:layout_height="wrap_content"
+         android:layout_weight="1"/>
+ 
+-</android.support.v7.widget.ButtonBarLayout>
++</androidx.appcompat.widget.ButtonBarLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml
+index 6fa46ba..b4efb43 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml
+@@ -41,7 +41,7 @@
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+ 
+-        <android.support.v7.widget.DialogTitle
++        <androidx.appcompat.widget.DialogTitle
+             android:id="@+id/alertTitle"
+             style="?android:attr/windowTitleStyle"
+             android:layout_width="match_parent"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_item_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_item_layout.xml
+index aadd5d4..05c6904 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_item_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_item_layout.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.view.menu.ActionMenuItemView
++<androidx.appcompat.view.menu.ActionMenuItemView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_layout.xml
+index 4918d2f..43b134a 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_menu_layout.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.ActionMenuView
++<androidx.appcompat.widget.ActionMenuView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         android:layout_width="wrap_content"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_mode_bar.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_mode_bar.xml
+index dc1f1ba..76f34f4 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_mode_bar.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_action_mode_bar.xml
+@@ -16,7 +16,7 @@
+ ** limitations under the License.
+ */
+ -->
+-<android.support.v7.widget.ActionBarContextView
++<androidx.appcompat.widget.ActionBarContextView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_activity_chooser_view.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_activity_chooser_view.xml
+index 7e2da5c..de897b6 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_activity_chooser_view.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_activity_chooser_view.xml
+@@ -17,7 +17,7 @@
+ */
+ -->
+ <view xmlns:android="http://schemas.android.com/apk/res/android"
+-    class="android.support.v7.widget.ActivityChooserView$InnerLayout"
++    class="androidx.appcompat.widget.ActivityChooserView$InnerLayout"
+     android:id="@+id/activity_chooser_view_content"
+     android:layout_width="wrap_content"
+     android:layout_height="match_parent"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_button_bar_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_button_bar_material.xml
+index 9f13789..719f022 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_button_bar_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_button_bar_material.xml
+@@ -23,7 +23,7 @@
+             android:fillViewport="true"
+             android:scrollIndicators="top|bottom">
+ 
+-    <android.support.v7.widget.ButtonBarLayout
++    <androidx.appcompat.widget.ButtonBarLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="bottom"
+@@ -59,6 +59,6 @@
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+ 
+-    </android.support.v7.widget.ButtonBarLayout>
++    </androidx.appcompat.widget.ButtonBarLayout>
+ 
+ </ScrollView>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_material.xml
+index cee2d0e..38071a7 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_material.xml
+@@ -15,7 +15,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.AlertDialogLayout
++<androidx.appcompat.widget.AlertDialogLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/parentPanel"
+     android:layout_width="match_parent"
+@@ -38,7 +38,7 @@
+               android:background="?attr/colorControlHighlight"
+               android:visibility="gone"/>
+ 
+-        <android.support.v4.widget.NestedScrollView
++        <androidx.core.widget.NestedScrollView
+             android:id="@+id/scrollView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+@@ -69,7 +69,7 @@
+                     android:layout_height="@dimen/abc_dialog_padding_top_material"
+                     android:visibility="gone"/>
+             </LinearLayout>
+-        </android.support.v4.widget.NestedScrollView>
++        </androidx.core.widget.NestedScrollView>
+ 
+         <View android:id="@+id/scrollIndicatorDown"
+               android:layout_width="match_parent"
+@@ -96,4 +96,4 @@
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+ 
+-</android.support.v7.widget.AlertDialogLayout>
+\ No newline at end of file
++</androidx.appcompat.widget.AlertDialogLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_title_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_title_material.xml
+index 43eedee..cb19212 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_title_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_alert_dialog_title_material.xml
+@@ -42,7 +42,7 @@
+             android:scaleType="fitCenter"
+             android:src="@null"/>
+ 
+-        <android.support.v7.widget.DialogTitle
++        <androidx.appcompat.widget.DialogTitle
+             android:id="@+id/alertTitle"
+             style="?android:attr/windowTitleStyle"
+             android:layout_width="match_parent"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_cascading_menu_item_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_cascading_menu_item_layout.xml
+index aab7b4c..f711884 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_cascading_menu_item_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_cascading_menu_item_layout.xml
+@@ -17,7 +17,7 @@
+ 
+ <!-- Keep in sync with abc_popup_menu_item_layout.xml (which only differs in the title and shortcut
+     position). -->
+-<android.support.v7.view.menu.ListMenuItemView
++<androidx.appcompat.view.menu.ListMenuItemView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+@@ -79,4 +79,4 @@
+ 
+     </LinearLayout>
+ 
+-</android.support.v7.view.menu.ListMenuItemView>
++</androidx.appcompat.view.menu.ListMenuItemView>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_dialog_title_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_dialog_title_material.xml
+index 1ea20c5..7be7a96 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_dialog_title_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_dialog_title_material.xml
+@@ -19,7 +19,7 @@ This is an optimized layout for a screen, with the minimum set of features
+ enabled.
+ -->
+ 
+-<android.support.v7.widget.FitWindowsLinearLayout
++<androidx.appcompat.widget.FitWindowsLinearLayout
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+@@ -44,4 +44,4 @@ enabled.
+             android:layout_height="wrap_content"
+             android:layout_weight="1"/>
+ 
+-</android.support.v7.widget.FitWindowsLinearLayout>
+\ No newline at end of file
++</androidx.appcompat.widget.FitWindowsLinearLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml
+index 560ada6..ef53055 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_expanded_menu_layout.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.view.menu.ExpandedMenuView
++<androidx.appcompat.view.menu.ExpandedMenuView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:id="@+id/expanded_menu"
+         android:layout_width="?attr/panelMenuListWidth"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_list_menu_item_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_list_menu_item_layout.xml
+index c85469d..c84e04e 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_list_menu_item_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_list_menu_item_layout.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.view.menu.ListMenuItemView
++<androidx.appcompat.view.menu.ListMenuItemView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="match_parent"
+         android:layout_height="?attr/listPreferredItemHeightSmall">
+@@ -57,4 +57,4 @@
+ 
+     <!-- Checkbox, and/or radio button will be inserted here. -->
+ 
+-</android.support.v7.view.menu.ListMenuItemView>
++</androidx.appcompat.view.menu.ListMenuItemView>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_popup_menu_item_layout.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_popup_menu_item_layout.xml
+index 6df3127..5b6b87b 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_popup_menu_item_layout.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_popup_menu_item_layout.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.view.menu.ListMenuItemView
++<androidx.appcompat.view.menu.ListMenuItemView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+@@ -85,4 +85,4 @@
+ 
+     </LinearLayout>
+ 
+-</android.support.v7.view.menu.ListMenuItemView>
++</androidx.appcompat.view.menu.ListMenuItemView>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_content_include.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_content_include.xml
+index 1c30338..9d079f7 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_content_include.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_content_include.xml
+@@ -16,7 +16,7 @@
+ 
+ <merge xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+-    <android.support.v7.widget.ContentFrameLayout
++    <androidx.appcompat.widget.ContentFrameLayout
+             android:id="@id/action_bar_activity_content"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple.xml
+index 2783187..894fbda 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.FitWindowsLinearLayout
++<androidx.appcompat.widget.FitWindowsLinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/action_bar_root"
+     android:layout_width="match_parent"
+@@ -22,7 +22,7 @@
+     android:orientation="vertical"
+     android:fitsSystemWindows="true">
+ 
+-    <android.support.v7.widget.ViewStubCompat
++    <androidx.appcompat.widget.ViewStubCompat
+         android:id="@+id/action_mode_bar_stub"
+         android:inflatedId="@+id/action_mode_bar"
+         android:layout="@layout/abc_action_mode_bar"
+@@ -31,4 +31,4 @@
+ 
+     <include layout="@layout/abc_screen_content_include" />
+ 
+-</android.support.v7.widget.FitWindowsLinearLayout>
++</androidx.appcompat.widget.FitWindowsLinearLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml
+index c02c2aa..1a269d4 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_simple_overlay_action_mode.xml
+@@ -20,7 +20,7 @@ This is an optimized layout for a screen, with the minimum set of features
+ enabled.
+ -->
+ 
+-<android.support.v7.widget.FitWindowsFrameLayout
++<androidx.appcompat.widget.FitWindowsFrameLayout
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:id="@+id/action_bar_root"
+         android:layout_width="match_parent"
+@@ -29,11 +29,11 @@ enabled.
+ 
+     <include layout="@layout/abc_screen_content_include" />
+ 
+-    <android.support.v7.widget.ViewStubCompat
++    <androidx.appcompat.widget.ViewStubCompat
+             android:id="@+id/action_mode_bar_stub"
+             android:inflatedId="@+id/action_mode_bar"
+             android:layout="@layout/abc_action_mode_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />
+ 
+-</android.support.v7.widget.FitWindowsFrameLayout>
+\ No newline at end of file
++</androidx.appcompat.widget.FitWindowsFrameLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_toolbar.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_toolbar.xml
+index 96412c1..5c0dbcd 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_toolbar.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_screen_toolbar.xml
+@@ -14,7 +14,7 @@
+      limitations under the License.
+ -->
+ 
+-<android.support.v7.widget.ActionBarOverlayLayout
++<androidx.appcompat.widget.ActionBarOverlayLayout
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         android:id="@+id/decor_content_parent"
+@@ -24,7 +24,7 @@
+ 
+     <include layout="@layout/abc_screen_content_include"/>
+ 
+-    <android.support.v7.widget.ActionBarContainer
++    <androidx.appcompat.widget.ActionBarContainer
+             android:id="@+id/action_bar_container"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+@@ -33,14 +33,14 @@
+             android:touchscreenBlocksFocus="true"
+             android:gravity="top">
+ 
+-        <android.support.v7.widget.Toolbar
++        <androidx.appcompat.widget.Toolbar
+                 android:id="@+id/action_bar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 app:navigationContentDescription="@string/abc_action_bar_up_description"
+                 style="?attr/toolbarStyle"/>
+ 
+-        <android.support.v7.widget.ActionBarContextView
++        <androidx.appcompat.widget.ActionBarContextView
+                 android:id="@+id/action_context_bar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+@@ -48,6 +48,6 @@
+                 android:theme="?attr/actionBarTheme"
+                 style="?attr/actionModeStyle"/>
+ 
+-    </android.support.v7.widget.ActionBarContainer>
++    </androidx.appcompat.widget.ActionBarContainer>
+ 
+-</android.support.v7.widget.ActionBarOverlayLayout>
++</androidx.appcompat.widget.ActionBarOverlayLayout>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_search_view.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_search_view.xml
+index 1d9a98b..33d25d9 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_search_view.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_search_view.xml
+@@ -72,7 +72,7 @@
+                 android:layout_gravity="center_vertical"
+                 android:orientation="horizontal">
+ 
+-            <view class="android.support.v7.widget.SearchView$SearchAutoComplete"
++            <view class="androidx.appcompat.widget.SearchView$SearchAutoComplete"
+                   android:id="@+id/search_src_text"
+                   android:layout_height="36dip"
+                   android:layout_width="0dp"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_select_dialog_material.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_select_dialog_material.xml
+index ae4b268..965c83f 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_select_dialog_material.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/layout/abc_select_dialog_material.xml
+@@ -24,7 +24,7 @@
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:id="@+id/select_dialog_listview"
+       style="@style/Widget.AppCompat.ListView"
+-      class="android.support.v7.app.AlertController$RecycleListView"
++      class="androidx.appcompat.app.AlertController$RecycleListView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:cacheColorHint="@null"
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/values/values.xml b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/values/values.xml
+index c08b87a..259c9bd 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/values/values.xml
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/merged/release/values/values.xml
+@@ -606,7 +606,7 @@
+         <item name="isLightTheme">true</item>
+     </style>
+     <style name="Base.V7.Theme.AppCompat" parent="Platform.AppCompat">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+         <item name="windowActionBarOverlay">false</item>
+@@ -800,7 +800,7 @@
+         <item name="android:windowCloseOnTouchOutside">true</item>
+     </style>
+     <style name="Base.V7.Theme.AppCompat.Light" parent="Platform.AppCompat.Light">
+-        <item name="viewInflaterClass">android.support.v7.app.AppCompatViewInflater</item>
++        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+ 
+         <item name="windowNoTitle">false</item>
+         <item name="windowActionBar">true</item>
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt b/node_modules/react-native-maps/lib/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+index f8375f0..913e820 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+@@ -518,6 +518,10 @@ dimen notification_small_icon_size_as_large
+ dimen notification_subtext_size
+ dimen notification_top_pad
+ dimen notification_top_pad_large_text
++dimen subtitle_corner_radius
++dimen subtitle_outline_width
++dimen subtitle_shadow_offset
++dimen subtitle_shadow_radius
+ dimen tooltip_corner_radius
+ dimen tooltip_horizontal_padding
+ dimen tooltip_margin
+diff --git a/node_modules/react-native-maps/lib/android/build/intermediates/symbols/debug/R.txt b/node_modules/react-native-maps/lib/android/build/intermediates/symbols/debug/R.txt
+index f43de51..8407763 100644
+--- a/node_modules/react-native-maps/lib/android/build/intermediates/symbols/debug/R.txt
++++ b/node_modules/react-native-maps/lib/android/build/intermediates/symbols/debug/R.txt
+@@ -517,14 +517,18 @@ int dimen notification_small_icon_size_as_large 0x7f070067
+ int dimen notification_subtext_size 0x7f070068
+ int dimen notification_top_pad 0x7f070069
+ int dimen notification_top_pad_large_text 0x7f07006a
+-int dimen tooltip_corner_radius 0x7f07006b
+-int dimen tooltip_horizontal_padding 0x7f07006c
+-int dimen tooltip_margin 0x7f07006d
+-int dimen tooltip_precise_anchor_extra_offset 0x7f07006e
+-int dimen tooltip_precise_anchor_threshold 0x7f07006f
+-int dimen tooltip_vertical_padding 0x7f070070
+-int dimen tooltip_y_offset_non_touch 0x7f070071
+-int dimen tooltip_y_offset_touch 0x7f070072
++int dimen subtitle_corner_radius 0x7f07006b
++int dimen subtitle_outline_width 0x7f07006c
++int dimen subtitle_shadow_offset 0x7f07006d
++int dimen subtitle_shadow_radius 0x7f07006e
++int dimen tooltip_corner_radius 0x7f07006f
++int dimen tooltip_horizontal_padding 0x7f070070
++int dimen tooltip_margin 0x7f070071
++int dimen tooltip_precise_anchor_extra_offset 0x7f070072
++int dimen tooltip_precise_anchor_threshold 0x7f070073
++int dimen tooltip_vertical_padding 0x7f070074
++int dimen tooltip_y_offset_non_touch 0x7f070075
++int dimen tooltip_y_offset_touch 0x7f070076
+ int drawable abc_ab_share_pack_mtrl_alpha 0x7f080001
+ int drawable abc_action_bar_item_background_material 0x7f080002
+ int drawable abc_btn_borderless_material 0x7f080003
+diff --git a/node_modules/react-native-maps/lib/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-maps/lib/android/build/outputs/logs/manifest-merger-debug-report.txt
+index 71b2f3c..383c06c 100644
+--- a/node_modules/react-native-maps/lib/android/build/outputs/logs/manifest-merger-debug-report.txt
++++ b/node_modules/react-native-maps/lib/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -1,33 +1,33 @@
+ -- Merging decision tree log ---
+ manifest
+-ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
++ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:1-6:12
+ 	package
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:3:5-44
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:3:5-44
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
+ 	xmlns:android
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:2:11-69
+ uses-permission#android.permission.INTERNET
+-ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:4:5-67
++ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:4:5-67
+ 	android:name
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:4:22-64
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:4:22-64
+ uses-permission#android.permission.ACCESS_COARSE_LOCATION
+-ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:5:5-81
++ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:5:5-81
+ 	android:name
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml:5:22-78
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml:5:22-78
+ uses-sdk
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
+ 	android:targetSdkVersion
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
+ 	android:minSdkVersion
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-		ADDED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
+-		INJECTED from /Users/christopherdro/Desktop/OSS/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		ADDED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/aksonov/Documents/rn-chat/node_modules/react-native-maps/lib/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/react-native-maps/lib/android/src/main/java/com/airbnb/android/react/maps/AirMapView.java b/node_modules/react-native-maps/lib/android/src/main/java/com/airbnb/android/react/maps/AirMapView.java
+index d70fd4a..9608319 100644
+--- a/node_modules/react-native-maps/lib/android/src/main/java/com/airbnb/android/react/maps/AirMapView.java
++++ b/node_modules/react-native-maps/lib/android/src/main/java/com/airbnb/android/react/maps/AirMapView.java
+@@ -9,8 +9,8 @@ import android.graphics.Point;
+ import android.graphics.PorterDuff;
+ import android.graphics.Rect;
+ import android.os.Build;
+-import android.support.v4.view.GestureDetectorCompat;
+-import android.support.v4.view.MotionEventCompat;
++import androidx.core.view.GestureDetectorCompat;
++import androidx.core.view.MotionEventCompat;
+ import android.view.GestureDetector;
+ import android.view.MotionEvent;
+ import android.view.View;
+@@ -68,7 +68,7 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.ExecutionException;
+ 
+-import static android.support.v4.content.PermissionChecker.checkSelfPermission;
++import static androidx.core.content.PermissionChecker.checkSelfPermission;
+ 
+ public class AirMapView extends MapView implements GoogleMap.InfoWindowAdapter,
+     GoogleMap.OnMarkerDragListener, OnMapReadyCallback, GoogleMap.OnPoiClickListener, GoogleMap.OnIndoorStateChangeListener {
