@@ -60,10 +60,6 @@ export default observer(() => (
 
     <RText style={{marginBottom: 20}}>Current Activity: {store.profile.currentActivity}</RText>
 
-    <LocationAvatar
-      profile={store.profile as IProfile}
-      sharesLocation
-      currentActivity={store.profile.currentActivity}
-    />
+    <LocationAvatar profile={store.profile as IProfile} sharesLocation />
   </View>
 ))
