@@ -28,7 +28,7 @@ export default class DraggablePopupList<T> extends React.Component<IProps<T>> {
           ListFooterComponent={<View style={{backgroundColor: 'white', height: 250}} />}
           {...listProps}
           onScroll={Animated.event([{nativeEvent: {contentOffset: {y: this.props.scrollY!}}}])}
-          scrollEventThrottle={100}
+          scrollEventThrottle={60}
           style={[{flex: 1}, style]}
           ListHeaderComponent={<DraggablePopupListHeader {...this.props} />}
           showsVerticalScrollIndicator={false}

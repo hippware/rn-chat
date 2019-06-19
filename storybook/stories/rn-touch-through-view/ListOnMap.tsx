@@ -2,7 +2,7 @@ import React from 'react'
 import MapHome from 'src/components/Home/MapHome'
 import {Provider} from 'mobx-react/native'
 import DraggablePopupList from 'src/components/common/DraggablePopupList'
-import {View, Text, TextInput} from 'react-native'
+import {View, Text, TextInput, Animated} from 'react-native'
 import FriendSearch, {
   KeyboardAwareDraggablePopupList,
 } from 'src/components/people-lists/FriendSearch'
@@ -61,6 +61,7 @@ const SimulatedSplitRenderer = ({children}) => {
       homeStore={mockHomeStore}
       navStore={mockNavStore}
       searchStore={mockSearchStore}
+      scrollY={new Animated.Value(0)}
     >
       <View style={{flex: 1}}>
         <MapHome />
