@@ -186,16 +186,18 @@ const LocationStore = types
       log(prefix, 'location: ', JSON.stringify(position))
       self.setPosition(position.coords)
 
-      const data = {
-        lat: position.coords.latitude,
-        lon: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-        createdAt: new Date(position.timestamp),
-        // .activity does not exist if called from navigator.geolocation
-        activity: position.activity ? position.activity.type : null,
-        activityConfidence: position.activity ? position.activity.confidence : null,
+      if (profile) {
+        const data = createLocation({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+          createdAt: new Date(position.timestamp),
+          // .activity does not exist if called from navigator.geolocation
+          activity: position.activity ? position.activity.type : null,
+          activityConfidence: position.activity ? position.activity.confidence : null,
+        })
+        profile.setLocation(data)
       }
-      profile!.setLocation(createLocation(data))
     }
 
     function onLocationError(err) {
