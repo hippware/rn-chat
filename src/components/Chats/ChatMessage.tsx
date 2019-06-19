@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, ImageSourcePropType} from 'react-native'
+import {View, StyleSheet, Image, ImageSourcePropType, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react/native'
 import {IMessage, IWocky, IProfile, IFile, MessageStatus} from 'wocky-client'
 import {RText, Avatar, Spinner} from '../common'
@@ -17,20 +17,43 @@ const lightPink = 'rgb(255, 228, 231)'
 const pink = 'rgb(254, 173, 181)'
 const triangleSize = 12
 
+type StatusProps = {
+  isImage: boolean
+  status: MessageStatus
+  send: () => Promise<void>
+}
+
+const StatusText = ({isImage, status, send}: StatusProps) => {
+  if (status === MessageStatus.Sending) {
+    return <RText style={styles.statusText}>Sending...</RText>
+  }
+  if (status === MessageStatus.Error) {
+    return (
+      <TouchableOpacity onPress={() => send()}>
+        <RText style={styles.statusText}>
+          {isImage ? 'Image not sent.' : 'Message not sent'} Tap to retry.
+        </RText>
+      </TouchableOpacity>
+    )
+  }
+  return null
+}
+
 const ChatMessageWrapper = observer(
-  ({message: {isOutgoing, getUpload, content, otherUser, status}}: Props) => {
+  ({message: {isOutgoing, getUpload, content, otherUser, status, send}}: Props) => {
     const left = !isOutgoing
 
     // NOTE: since Messages can have both image + text we need to render them as "separate" messages here
     return (
-      <>
+      <View>
         {!!getUpload && (
           <ChatMessage left={left} media={getUpload} otherUser={otherUser} status={status} />
         )}
         {!!content && (
           <ChatMessage left={left} text={content} otherUser={otherUser} status={status} />
         )}
-      </>
+        <StatusText isImage={!!getUpload} status={status} send={send} />
+      </View>
     )
   }
 )
@@ -139,6 +162,11 @@ const ImageMessage = observer(
             <Spinner color="white" />
           </View>
         )}
+        {status === MessageStatus.Error && (
+          <View style={styles.overlay}>
+            <Image source={require('../../../images/uploadError.png')} />
+          </View>
+        )}
       </View>
     )
   }
@@ -169,5 +197,12 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     marginBottom: 10,
+  },
+  statusText: {
+    textAlign: 'right',
+    marginTop: -5,
+    marginBottom: 3,
+    fontSize: 13,
+    color: colors.DARK_GREY,
   },
 })
