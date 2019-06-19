@@ -34,7 +34,6 @@ const ProfileMarker = observer(({homeStore, card}: Props) => {
           <LocationAvatar
             profile={profile}
             sharesLocation={profile.sharesLocation}
-            currentActivity={profile.currentActivity}
             noFade={homeStore!.mapType === 'hybrid'}
           />
         </View>

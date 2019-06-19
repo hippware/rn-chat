@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View} from 'react-native'
+import {View} from 'react-native'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
@@ -42,7 +42,6 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
             profile={profile}
             hidden={profile.hidden.enabled}
             sharesLocation={profile.isLocationShared} // computed isLocationShared must be used for OwnProfile instances
-            currentActivity={profile.currentActivity}
             isYou
           />
         </View>

@@ -4,14 +4,12 @@ import {colors} from '../../constants'
 import {Avatar} from '../common'
 import Triangle from '../map/Triangle'
 import {IProfile} from 'wocky-client'
-import {UserActivityType} from 'third-party/wocky-client/src/transport/types'
 
 type Props = {
   profile: IProfile
   hidden?: boolean
   tappable?: boolean
   sharesLocation: boolean
-  currentActivity?: UserActivityType | null
   noFade?: boolean
   isYou?: boolean
 }
@@ -25,18 +23,10 @@ const activityEmojis = {
   in_vehicle: '🚗',
 }
 
-const LocationAvatar = ({
-  profile,
-  sharesLocation,
-  hidden,
-  tappable,
-  currentActivity,
-  noFade,
-  isYou,
-}: Props) => {
-  const isStill = currentActivity === 'still'
+const LocationAvatar = ({profile, sharesLocation, hidden, tappable, noFade, isYou}: Props) => {
+  const isStill = profile.currentActivity === 'still'
   const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
-  const theActivity = activityEmojis[currentActivity || '']
+  const theActivity = activityEmojis[profile.currentActivity || '']
   return (
     <View
       style={{
