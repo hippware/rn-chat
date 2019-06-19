@@ -111,6 +111,7 @@ exports[`EventBotPostCard renders 1`] = `
                   Object {
                     "fontFamily": "Roboto-Regular",
                     "fontSize": 20,
+                    "paddingLeft": 3,
                   },
                 ]
               }
