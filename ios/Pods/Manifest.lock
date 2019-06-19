@@ -1,10 +1,10 @@
 PODS:
   - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
-  - BugsnagReactNative (2.15.0):
-    - BugsnagReactNative/Core (= 2.15.0)
+  - BugsnagReactNative (2.21.0):
+    - BugsnagReactNative/Core (= 2.21.0)
     - React
-  - BugsnagReactNative/Core (2.15.0):
+  - BugsnagReactNative/Core (2.21.0):
     - React
   - BVLinearGradient (2.5.3):
     - React
@@ -19,7 +19,10 @@ PODS:
     - JWT (~> 3.0.0-beta.7)
     - React
     - SSZipArchive (~> 2.1)
+  - Crashlytics (3.13.1):
+    - Fabric (~> 1.10.1)
   - DoubleConversion (1.1.6)
+  - Fabric (1.10.1)
   - Firebase/Auth (5.14.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.1.0)
@@ -194,9 +197,15 @@ PODS:
   - RNBackgroundGeolocation (3.0.0-rc.5):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNDeviceInfo (0.9.3):
+  - RNDeviceInfo (2.1.2):
     - React
-  - RNFirebase (5.2.3):
+  - RNFirebase (5.5.2):
+    - Firebase/Core
+    - React
+    - RNFirebase/Crashlytics (= 5.5.2)
+  - RNFirebase/Crashlytics (5.5.2):
+    - Crashlytics
+    - Fabric
     - Firebase/Core
     - React
   - RNFS (2.13.3):
@@ -265,6 +274,8 @@ SPEC REPOS:
     - Base64
     - boost-for-react-native
     - CocoaLumberjack
+    - Crashlytics
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -336,11 +347,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  BugsnagReactNative: 0acbd9b570c54a41a836f145f788ff28e652c831
+  BugsnagReactNative: 9f273f292378a016977f578e4467cf84b7182b07
   BVLinearGradient: 0d985ec461359c82bc254f26d11008bdae50d17a
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   CodePush: 300e90b3481fa82569090406165b83745de3613a
+  Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
+  Fabric: f6f21452846788bb44595d73e9909d79d328e617
   Firebase: 963d5685fae888a56d6d4d9cfce6b9c976958798
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
   FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
@@ -369,8 +382,8 @@ SPEC CHECKSUMS:
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
   RNBackgroundGeolocation: 3a5bf961801125a88b00dbb4d620b815fb4d39dc
-  RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
+  RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
+  RNFirebase: cc67f35cecbd47a57878ecf34c2facac30ac4a81
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
   RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98
   RNImageCropPicker: 754299983d07c450aec0834c0efe0ed114131ff3
