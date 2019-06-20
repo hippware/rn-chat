@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, View} from 'react-native'
+import {View} from 'react-native'
 import {observer} from 'mobx-react/native'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
@@ -37,7 +37,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         stopPropagation
       >
         {/* extra padding here for the activity icon */}
-        <View style={{paddingLeft: 9, paddingRight: 9, paddingTop: 15}}>
+        <View style={{paddingHorizontal: 9, paddingTop: 15}}>
           <LocationAvatar
             profile={profile}
             hidden={profile.hidden.enabled}
