@@ -1,8 +1,8 @@
 import React from 'react'
-import {Text, TextProperties} from 'react-native'
+import {Text, TextProps} from 'react-native'
 import {colors} from '../../constants'
 
-interface IProps extends TextProperties {
+interface IProps extends TextProps {
   size?: number
   color?: string
   weight?: 'Regular' | 'Bold' | 'Light' | 'Medium' | 'Italic'

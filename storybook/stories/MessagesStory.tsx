@@ -70,6 +70,7 @@ const store = types
         botVisitor: {},
         downloadTROS: async () => '1',
         loadChats: async () => [],
+        onClose: () => null,
       },
     }
   )
@@ -116,7 +117,8 @@ export const ChatViewStory = () => (
           sortedMessages: [
             {
               id: '1',
-              content: 'hello!',
+              content:
+                'hello! This is a long message that should wrap but doesnt appear to according to this issue.',
               unread: false,
               isOutgoing: false,
               getUpload: null,
@@ -130,7 +132,9 @@ export const ChatViewStory = () => (
             },
             {
               id: '2',
-              content: 'hello to you!',
+              // content: 'hello to you!',
+              content:
+                'hello to you! This is another long message intend to demonstrate how well lengthy messages render on the right side of the chat view screen',
               unread: false,
               isOutgoing: true,
               getUpload: null,
