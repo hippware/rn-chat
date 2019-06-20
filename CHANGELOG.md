@@ -6,7 +6,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Messaging: Refresh conversation screen (#3690)
 * Image message uploads lost after nav'ing to other screen (#3810)
-  * Temporarily disable detox
 * Incorporate mobx-react-lite (PR #3812)
 * Messaging: Loader for messages (#3807)
 * Update detox, applesimutils (PR #3821)
@@ -14,6 +13,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Properly disconnect if socket is closed (PR #3823, PR #3826)
 * App crash with live location share (#3798)
 * Message status displaying (#3818)
+* [android] Fix AndroidX build issue (#3832)
+* Messages: Text running off the screen for receiving user (#3811)
+* Back caret missing on friends search (#3738)
+* Header doesn't go away with back caret (#3797)
+* Mode of transport should be visible for self. (#3767)
+* [android] Pin changes to google pin when invisible (#3777)
 
 # 4.13.2 - 2019 Jun 13
 
