@@ -24,7 +24,12 @@ const ActiveLocationSharer = inject('homeStore')(
           homeStore!.select(sharer.sharedWith.id)
         }}
       >
-        <LocationAvatar profile={sharer.sharedWith} sharesLocation tappable={false} />
+        <LocationAvatar
+          profile={sharer.sharedWith}
+          sharesLocation
+          tappable={false}
+          currentActivity={sharer.sharedWith.currentActivity}
+        />
         <RText
           size={13}
           style={{textAlign: 'center', marginTop: 2 * minHeight}}
