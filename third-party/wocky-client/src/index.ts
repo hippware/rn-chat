@@ -20,7 +20,7 @@ export {
 export {EventBotInvite, IEventBotInvite} from './model/EventBotInvite'
 export {File, IFile, FileRef} from './model/File'
 export {IFileService} from './transport/FileService'
-export {Location, ILocationSnapshot, ILocation} from './model/Location'
+export {Location, ILocationSnapshot, ILocation, createLocation} from './model/Location'
 export {Message, IMessage, Status as MessageStatus} from './model/Message'
 export {OwnProfile, IOwnProfile} from './model/OwnProfile'
 export {Transport} from './transport/Transport'

@@ -13,6 +13,7 @@ type Props = {
   sharesLocation: boolean
   currentActivity?: UserActivityType | null
   noFade?: boolean
+  isYou?: boolean
 }
 
 const activity = require('../../../images/activity-outer.png')
@@ -31,6 +32,7 @@ const LocationAvatar = ({
   tappable,
   currentActivity,
   noFade,
+  isYou,
 }: Props) => {
   const isStill = currentActivity === 'still'
   const color = hidden || isStill ? colors.DARK_GREY : colors.PINK
@@ -40,7 +42,7 @@ const LocationAvatar = ({
       style={{
         alignItems: 'center',
         borderColor: color,
-        borderWidth: sharesLocation && !isStill ? 1 : 0,
+        borderWidth: isYou || (sharesLocation && !isStill) ? 1 : 0,
         borderRadius: 50,
         paddingTop: 3.3,
         paddingHorizontal: 3.3,
@@ -49,7 +51,15 @@ const LocationAvatar = ({
         opacity: isStill && !noFade ? 0.4 : 1,
       }}
     >
-      <Avatar noScale size={54} profile={profile} hideDot borderColor={color} tappable={tappable} />
+      <Avatar
+        noScale
+        size={54}
+        profile={profile}
+        hideDot
+        borderColor={color}
+        tappable={tappable}
+        isYou={isYou}
+      />
       {theActivity && (
         <View
           style={{
