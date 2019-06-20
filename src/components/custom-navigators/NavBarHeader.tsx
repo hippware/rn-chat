@@ -1,9 +1,11 @@
-import React, {ReactElement} from 'react'
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
+import React, {ReactElement, useEffect, useState} from 'react'
+import {View, Image, TouchableOpacity, StyleSheet, Animated, Keyboard} from 'react-native'
 import {k, minHeight} from '../Global'
 import {Actions} from 'react-native-router-flux'
 import {colors} from '../../constants'
 import {navBarStyle} from '../styles'
+import {inject} from 'mobx-react'
+import {height} from '../Global'
 
 export type NavConfig = {
   title?: ReactElement<any>
@@ -15,12 +17,42 @@ export type NavConfig = {
 
 type Props = {
   config: NavConfig
+  scrollY?: Animated.Value
 }
 
-const NavBarHeader = ({config: {title, back, backAction, right, left}}: Props) => {
+const NavBarHeader = inject('scrollY')(({config, scrollY}: Props) => {
+  if (!config) {
+    return null
+  }
+  const {title, back, backAction, right, left} = config
   const {backButtonImage, navBarButtonColor} = navBarStyle
+
+  const [keyboardHeight, setKeyboardHeight] = useState(0)
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', ({endCoordinates}) =>
+      setKeyboardHeight(endCoordinates.height)
+    )
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardHeight(0)
+    )
+
+    return function cleanup() {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
+  // todo: need a better way to calculate the height of the popup screen. Maybe a global constant calculated once based on screen height
+  const listHeight = height / 2 + keyboardHeight
+
+  const opacity = scrollY!.interpolate({
+    inputRange: [-1000, height - listHeight - 120, height - listHeight],
+    outputRange: [0, 0, 1],
+  })
+
   return (
-    <View style={styles.header}>
+    <Animated.View style={[{opacity}, styles.header]}>
       <View style={{width: 23}}>
         {back ? (
           <TouchableOpacity onPress={() => (backAction ? backAction() : Actions.pop())}>
@@ -37,14 +69,18 @@ const NavBarHeader = ({config: {title, back, backAction, right, left}}: Props) =
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>{title}</View>
 
       <View style={{marginRight: 10 * k}}>{right}</View>
-    </View>
+    </Animated.View>
   )
-}
+})
 
 export default NavBarHeader
 
 const styles = StyleSheet.create({
   header: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
     height: 64 * minHeight,
     flex: 1,
     backgroundColor: 'white',

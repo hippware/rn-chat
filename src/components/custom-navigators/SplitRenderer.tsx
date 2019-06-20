@@ -1,11 +1,10 @@
 import React from 'react'
 import {Transitioner} from 'react-navigation-stack'
-import {View, Platform, Animated} from 'react-native'
+import {View, Platform, Animated, StyleSheet} from 'react-native'
 import AnimatedPushScene from './AnimatedPushScene'
 import AnimatedMainScene from './AnimatedMainScene'
 import BackButton from './BackButton'
 import NavBarHeader from './NavBarHeader'
-import {height} from '../Global'
 import {Provider} from 'mobx-react'
 
 type Props = {
@@ -29,11 +28,7 @@ export default class SplitRenderer extends React.Component<Props> {
       return (
         <View
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            ...StyleSheet.absoluteFillObject,
             // todo: remove borderWidth on Android (appears around edge of Bottom Menu screens)
             borderWidth: Platform.OS === 'android' ? 1 : 0, // workaround to display 'Back' button for android
             borderColor: 'transparent',
@@ -48,18 +43,6 @@ export default class SplitRenderer extends React.Component<Props> {
     }
   }
 
-  _renderHeader = fadeNavConfig => {
-    const opacity = this.scrollY.interpolate({
-      inputRange: [0, 80, height / 2 - 80],
-      outputRange: [0, 0, 1],
-    })
-    return fadeNavConfig ? (
-      <Animated.View style={{opacity, position: 'absolute', top: 0, right: 0, left: 0}}>
-        <NavBarHeader config={fadeNavConfig} />
-      </Animated.View>
-    ) : null
-  }
-
   _render = (transitionProps, prevTransitionProps) => {
     const {scenes, scene} = transitionProps
     const theScenes = scenes.map(s => this._renderScene(transitionProps, s))
@@ -67,17 +50,18 @@ export default class SplitRenderer extends React.Component<Props> {
       <Provider scrollY={this.scrollY}>
         <View style={{flex: 1}}>
           {theScenes}
-          {this._renderHeader(scene.descriptor.options.fadeNavConfig)}
+          <NavBarHeader config={scene.descriptor.options.fadeNavConfig} />
         </View>
       </Provider>
     )
   }
-  onTransitionStart = () => null
+  onTransitionStart = () => {
+    this.scrollY.setValue(0)
+  }
   onTransitionEnd = () => null
   render() {
-    const TransitionerAny = Transitioner as any
     return (
-      <TransitionerAny
+      <Transitioner
         screenProps={this.props.screenProps}
         descriptors={this.props.descriptors}
         // NOTE: our transition animations don't need to be configurable

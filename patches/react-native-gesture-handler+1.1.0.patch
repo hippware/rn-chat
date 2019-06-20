@@ -1,0 +1,480 @@
+diff --git a/node_modules/react-native-gesture-handler/AndroidNativeExample/app/src/main/java/com/swmansion/gesturehandler/example/MainActivity.java b/node_modules/react-native-gesture-handler/AndroidNativeExample/app/src/main/java/com/swmansion/gesturehandler/example/MainActivity.java
+index a293839..5b5054c 100644
+--- a/node_modules/react-native-gesture-handler/AndroidNativeExample/app/src/main/java/com/swmansion/gesturehandler/example/MainActivity.java
++++ b/node_modules/react-native-gesture-handler/AndroidNativeExample/app/src/main/java/com/swmansion/gesturehandler/example/MainActivity.java
+@@ -1,7 +1,7 @@
+ package com.swmansion.gesturehandler.example;
+ 
+ import android.os.Bundle;
+-import android.support.v7.app.AppCompatActivity;
++import androidx.appcompat.app.AppCompatActivity;
+ import android.view.MotionEvent;
+ import android.view.View;
+ import android.widget.Button;
+diff --git a/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java b/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java
+new file mode 100644
+index 0000000..5eedac7
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java
+@@ -0,0 +1,13 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package com.swmansion.gesturehandler.react;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String APPLICATION_ID = "com.swmansion.gesturehandler.react";
++  public static final String BUILD_TYPE = "debug";
++  public static final String FLAVOR = "";
++  public static final int VERSION_CODE = 1;
++  public static final String VERSION_NAME = "1.0";
++}
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..ff3611b
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.swmansion.gesturehandler.react"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="16"
++        android:targetSdkVersion="28" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json
+new file mode 100644
+index 0000000..fe5e791
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json
+@@ -0,0 +1 @@
++[{"outputType":{"type":"AAPT_FRIENDLY_MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1,"versionName":"1.0","enabled":true,"outputFile":"react-native-gesture-handler-debug.aar","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.swmansion.gesturehandler.react","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json b/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..6fa5569
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/full_jar/debug/createFullJarDebug/full.jar b/node_modules/react-native-gesture-handler/android/build/intermediates/full_jar/debug/createFullJarDebug/full.jar
+new file mode 100644
+index 0000000..483ba14
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/full_jar/debug/createFullJarDebug/full.jar differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state
+new file mode 100644
+index 0000000..cb07ef5
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+new file mode 100644
+index 0000000..4102d67
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/debug/jniLibs"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+new file mode 100644
+index 0000000..a6a7710
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/debug/shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+new file mode 100644
+index 0000000..e55fb1e
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/assets"/><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/debug/assets"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..e433a2e
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Wed Jun 19 12:58:39 PDT 2019
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..0e63a50
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/res"/><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/build/generated/res/rs/debug"/><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/res"/><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/build/generated/res/rs/debug"/><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/debug/res"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/classes.jar b/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/classes.jar
+new file mode 100644
+index 0000000..483ba14
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/classes.jar differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/res.jar b/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/res.jar
+new file mode 100644
+index 0000000..15cb0ec
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/intermediate-jars/debug/res.jar differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/BaseGestureHandlerInteractionController.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/BaseGestureHandlerInteractionController.class
+new file mode 100644
+index 0000000..e8696d8
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/BaseGestureHandlerInteractionController.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler$1.class
+new file mode 100644
+index 0000000..36cceab
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler.class
+new file mode 100644
+index 0000000..60f3fbc
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/FlingGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandler.class
+new file mode 100644
+index 0000000..69583b0
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerInteractionController.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerInteractionController.class
+new file mode 100644
+index 0000000..33609a9
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerInteractionController.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator$1.class
+new file mode 100644
+index 0000000..79107fe
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator.class
+new file mode 100644
+index 0000000..aba2800
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerOrchestrator.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistry.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistry.class
+new file mode 100644
+index 0000000..b161f9d
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistry.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistryImpl.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistryImpl.class
+new file mode 100644
+index 0000000..8a23a3f
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureHandlerRegistryImpl.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureUtils.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureUtils.class
+new file mode 100644
+index 0000000..d72d1dc
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/GestureUtils.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler$1.class
+new file mode 100644
+index 0000000..e93b978
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler.class
+new file mode 100644
+index 0000000..666faed
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/LongPressGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/NativeViewGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/NativeViewGestureHandler.class
+new file mode 100644
+index 0000000..5a6c9ba
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/NativeViewGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/OnTouchEventListener.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/OnTouchEventListener.class
+new file mode 100644
+index 0000000..db48cc5
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/OnTouchEventListener.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PanGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PanGestureHandler.class
+new file mode 100644
+index 0000000..d8e6aa0
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PanGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler$1.class
+new file mode 100644
+index 0000000..9550130
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler.class
+new file mode 100644
+index 0000000..e4643af
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PinchGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEvents.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEvents.class
+new file mode 100644
+index 0000000..de24767
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEvents.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsConfig.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsConfig.class
+new file mode 100644
+index 0000000..2b97e34
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsConfig.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsSpec.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsSpec.class
+new file mode 100644
+index 0000000..f577746
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/PointerEventsSpec.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector$OnRotationGestureListener.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector$OnRotationGestureListener.class
+new file mode 100644
+index 0000000..d7e5a9a
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector$OnRotationGestureListener.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector.class
+new file mode 100644
+index 0000000..6dc4f0f
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureDetector.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler$1.class
+new file mode 100644
+index 0000000..ab3ec78
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler.class
+new file mode 100644
+index 0000000..e660b56
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/RotationGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler$1.class
+new file mode 100644
+index 0000000..0b686e8
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler.class
+new file mode 100644
+index 0000000..7148813
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/TapGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/ViewConfigurationHelper.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/ViewConfigurationHelper.class
+new file mode 100644
+index 0000000..65bdd41
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/ViewConfigurationHelper.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/BuildConfig.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/BuildConfig.class
+new file mode 100644
+index 0000000..d8aaba7
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/BuildConfig.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager$ButtonViewGroup.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager$ButtonViewGroup.class
+new file mode 100644
+index 0000000..baa4f81
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager$ButtonViewGroup.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.class
+new file mode 100644
+index 0000000..dd9933f
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerButtonViewManager.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEnabledRootView.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEnabledRootView.class
+new file mode 100644
+index 0000000..ac52db1
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEnabledRootView.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.class
+new file mode 100644
+index 0000000..70775c0
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEventDataExtractor.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEventDataExtractor.class
+new file mode 100644
+index 0000000..b7c8de0
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerEventDataExtractor.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerInteractionManager.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerInteractionManager.class
+new file mode 100644
+index 0000000..d625fd3
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerInteractionManager.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$1.class
+new file mode 100644
+index 0000000..1cb726d
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$2.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$2.class
+new file mode 100644
+index 0000000..cc31a71
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$2.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$FlingGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$FlingGestureHandlerFactory.class
+new file mode 100644
+index 0000000..4e394e1
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$FlingGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$HandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$HandlerFactory.class
+new file mode 100644
+index 0000000..715906d
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$HandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$LongPressGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$LongPressGestureHandlerFactory.class
+new file mode 100644
+index 0000000..fe41478
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$LongPressGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$NativeViewGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$NativeViewGestureHandlerFactory.class
+new file mode 100644
+index 0000000..af1c5c6
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$NativeViewGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PanGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PanGestureHandlerFactory.class
+new file mode 100644
+index 0000000..931469f
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PanGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PinchGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PinchGestureHandlerFactory.class
+new file mode 100644
+index 0000000..2994167
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$PinchGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$RotationGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$RotationGestureHandlerFactory.class
+new file mode 100644
+index 0000000..6b1ea64
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$RotationGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$TapGestureHandlerFactory.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$TapGestureHandlerFactory.class
+new file mode 100644
+index 0000000..8924917
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule$TapGestureHandlerFactory.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule.class
+new file mode 100644
+index 0000000..8f99be6
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerModule.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerPackage.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerPackage.class
+new file mode 100644
+index 0000000..9647ed0
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerPackage.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRegistry.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRegistry.class
+new file mode 100644
+index 0000000..0f34ccc
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRegistry.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$1.class
+new file mode 100644
+index 0000000..75044ae
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$RootViewGestureHandler.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$RootViewGestureHandler.class
+new file mode 100644
+index 0000000..e6c2e19
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper$RootViewGestureHandler.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper.class
+new file mode 100644
+index 0000000..94c3559
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootHelper.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootInterface.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootInterface.class
+new file mode 100644
+index 0000000..705915b
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootInterface.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootView.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootView.class
+new file mode 100644
+index 0000000..c3045ce
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootView.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootViewManager.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootViewManager.class
+new file mode 100644
+index 0000000..bee0e51
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerRootViewManager.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.class
+new file mode 100644
+index 0000000..c42b3e7
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper$1.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper$1.class
+new file mode 100644
+index 0000000..9356b58
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper$1.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper.class b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper.class
+new file mode 100644
+index 0000000..41b2282
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/swmansion/gesturehandler/react/RNViewConfigurationHelper.class differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
+new file mode 100644
+index 0000000..ff3611b
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.swmansion.gesturehandler.react"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="16"
++        android:targetSdkVersion="28" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json b/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json
+new file mode 100644
+index 0000000..eb313dc
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json
+@@ -0,0 +1 @@
++[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1,"versionName":"1.0","enabled":true,"outputFile":"react-native-gesture-handler-debug.aar","fullName":"debug","baseName":"debug"},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"com.swmansion.gesturehandler.react","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt b/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+new file mode 100644
+index 0000000..369dc84
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+@@ -0,0 +1 @@
++com.swmansion.gesturehandler.react
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/symbols/debug/R.txt b/node_modules/react-native-gesture-handler/android/build/intermediates/symbols/debug/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json
+new file mode 100644
+index 0000000..49b1382
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json
+@@ -0,0 +1 @@
++[{"name":"resources","index":0,"scopes":["PROJECT"],"types":["NATIVE_LIBS"],"format":"DIRECTORY","present":false}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..2c5aa4f
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,37 @@
++-- Merging decision tree log ---
++manifest
++ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++	package
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:2:5-49
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:versionName
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:versionCode
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	xmlns:android
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:11-69
++uses-sdk
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/kirkham/dev/rn-chat/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
+index 85dca41..43f0e6a 100644
+--- a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
++++ b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
+@@ -1,6 +1,6 @@
+ package com.swmansion.gesturehandler.react;
+ 
+-import android.support.v4.util.Pools;
++import androidx.core.util.Pools;
+ 
+ import com.facebook.react.bridge.Arguments;
+ import com.facebook.react.bridge.WritableMap;
+diff --git a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
+index 5912a45..8559366 100644
+--- a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
++++ b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
+@@ -1,6 +1,6 @@
+ package com.swmansion.gesturehandler.react;
+ 
+-import android.support.v4.util.Pools;
++import androidx.core.util.Pools;
+ 
+ import com.facebook.react.bridge.Arguments;
+ import com.facebook.react.bridge.WritableMap;
+diff --git a/node_modules/react-native-gesture-handler/e2e/android/app/src/androidTest/java/com/swmansion/gesturehandler/react/example/DetoxTest.java b/node_modules/react-native-gesture-handler/e2e/android/app/src/androidTest/java/com/swmansion/gesturehandler/react/example/DetoxTest.java
+index 5709e38..9bbc714 100644
+--- a/node_modules/react-native-gesture-handler/e2e/android/app/src/androidTest/java/com/swmansion/gesturehandler/react/example/DetoxTest.java
++++ b/node_modules/react-native-gesture-handler/e2e/android/app/src/androidTest/java/com/swmansion/gesturehandler/react/example/DetoxTest.java
+@@ -1,8 +1,8 @@
+ package com.swmansion.gesturehandler.react.example;
+ 
+-import android.support.test.filters.LargeTest;
+-import android.support.test.rule.ActivityTestRule;
+-import android.support.test.runner.AndroidJUnit4;
++import androidx.test.filters.LargeTest;
++import androidx.test.rule.ActivityTestRule;
++import androidx.test.runner.AndroidJUnit4;
+ 
+ import com.wix.detox.Detox;
+ 
