@@ -85,7 +85,7 @@ const ChatMessage = ({
       ]}
     >
       {left && <Avatar size={40} profile={otherUser} style={{marginRight: 10}} tappable={false} />}
-      <View>
+      <View style={{flex: 1, alignItems: left ? 'flex-start' : 'flex-end'}}>
         {!!media ? (
           <ImageMessage media={media} left={left} color={color} status={status} />
         ) : (
