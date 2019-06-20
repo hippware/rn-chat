@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.14.0 - 2019 Jun 20
+
 * Messaging: Refresh conversation screen (#3690)
 * Image message uploads lost after nav'ing to other screen (#3810)
 * Incorporate mobx-react-lite (PR #3812)
