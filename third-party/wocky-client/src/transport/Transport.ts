@@ -772,17 +772,27 @@ export class Transport {
     })
   }
 
-  async sendMessage(otherUserId: string, content?: string, imageUrl?: string): Promise<void> {
+  async sendMessage(
+    otherUserId: string,
+    content?: string,
+    imageUrl?: string,
+    clientData?: any
+  ): Promise<void> {
     return this.voidMutation({
       mutation: gql`
-        mutation sendMessage($input: SendMessageInput!) {
-          sendMessage(input: $input) {
+        mutation messageSend($input: SendMessageInput!) {
+          messageSend(input: $input) {
             ${VOID_PROPS}
           }
         }
       `,
       variables: {
-        input: {content, recipientId: otherUserId, imageUrl},
+        input: {
+          content,
+          recipientId: otherUserId,
+          imageUrl,
+          clientData: JSON.stringify(clientData),
+        },
       },
     })
   }

@@ -465,9 +465,18 @@ export function convertLocation({longitude, latitude, accuracy}: ILocation, devi
   }
 }
 
-export function convertMessage({id, direction, content, otherUser, createdAt, media}): IMessageIn {
+export function convertMessage({
+  id,
+  direction,
+  content,
+  otherUser,
+  createdAt,
+  media,
+  clientData,
+}): IMessageIn {
+  const data = clientData ? JSON.parse(clientData) : {}
   return {
-    id: id.toString(),
+    id: data.id || id.toString(),
     otherUser,
     time: iso8601toDate(createdAt).getTime(),
     media: convertImage(media) as any,

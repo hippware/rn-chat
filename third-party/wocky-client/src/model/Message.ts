@@ -71,7 +71,8 @@ export const Message = types
         yield self.transport.sendMessage(
           (self.otherUser!.id || self.otherUser!) as string,
           self.content.length ? self.content : undefined,
-          self.media ? self.media.id : undefined
+          self.media ? self.media.id : undefined,
+          {id: self.id}
         )
         self.setStatus(Status.Sent)
       } catch (e) {
