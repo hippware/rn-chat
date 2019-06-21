@@ -25,7 +25,7 @@ const PersonRow = ({imageComponent, handleComponent, displayName, style, childre
     <View style={{marginRight: 13}}>{imageComponent}</View>
     <View style={{flex: 1}}>
       {handleComponent}
-      <RText color="#757575" size={16}>
+      <RText color="#757575" size={16} numberOfLines={1} ellipsizeMode="tail">
         {displayName}
       </RText>
     </View>

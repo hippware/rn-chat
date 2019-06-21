@@ -68,13 +68,15 @@ class ChatListScreen extends React.Component<Props> {
                 Send Message
               </RText>
             </TouchableOpacity>
-            <RText
-              weight="Medium"
-              size={16}
-              style={{paddingLeft: 10, paddingTop: 25, paddingBottom: 10}}
-            >
-              Messages
-            </RText>
+            {chats.list.length ? (
+              <RText
+                weight="Medium"
+                size={16}
+                style={{paddingLeft: 10, paddingTop: 25, paddingBottom: 10}}
+              >
+                Messages
+              </RText>
+            ) : null}
           </>
         }
         // todo: figure out a flexible height setting

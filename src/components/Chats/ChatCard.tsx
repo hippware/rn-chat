@@ -22,7 +22,7 @@ const ChatCard = observer(({chat, style, onPress}: Props) => {
   } = chat
   const text = first ? (first.getUpload ? 'Image Attached' : first.content) : ''
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={{backgroundColor: 'white'}}>
       <PersonRow
         imageComponent={<Avatar size={44} profile={otherUser} tappable={false} />}
         handleComponent={
