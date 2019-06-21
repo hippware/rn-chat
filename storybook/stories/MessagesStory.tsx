@@ -42,9 +42,7 @@ const store = types
               id: '1',
               otherUser: '1',
               messages: {
-                result: [
-                  {id: '1', otherUser: '1', media: '1', isOutgoing: false, content: 'hello!'},
-                ],
+                result: [{id: '1', otherUser: '1', isOutgoing: false, content: 'hello!'}],
                 count: 1,
               },
             },
@@ -52,7 +50,31 @@ const store = types
               id: '2',
               otherUser: '2',
               messages: {
-                result: [{id: '2', otherUser: '2', media: '1', isOutgoing: true, content: 'hi!'}],
+                result: [{id: '2', otherUser: '2', isOutgoing: true, content: 'hi!'}],
+                count: 1,
+              },
+            },
+            {
+              id: '3',
+              otherUser: '2',
+              messages: {
+                result: [{id: '2', otherUser: '2', isOutgoing: true, content: 'hi!'}],
+                count: 1,
+              },
+            },
+            {
+              id: '4',
+              otherUser: '2',
+              messages: {
+                result: [{id: '2', otherUser: '2', isOutgoing: true, content: 'hi!'}],
+                count: 1,
+              },
+            },
+            {
+              id: '5',
+              otherUser: '2',
+              messages: {
+                result: [{id: '2', otherUser: '2', isOutgoing: true, content: 'hi!'}],
                 count: 1,
               },
             },
@@ -200,7 +222,7 @@ const Home = () => {
   }, [])
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red'}}>
       <RText size={50}>Home Screen</RText>
       <TouchableOpacity style={{padding: 10, borderWidth: 1}} onPress={() => Actions.chats()}>
         <RText>Press me</RText>
