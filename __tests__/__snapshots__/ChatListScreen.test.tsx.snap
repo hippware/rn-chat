@@ -28,16 +28,6 @@ exports[`ChatListScreen renders with no data 1`] = `
         </RText>
       </View>
     }
-    ListFooterComponent={
-      <View
-        style={
-          Object {
-            "backgroundColor": "white",
-            "height": 250,
-          }
-        }
-      />
-    }
     ListHeaderComponent={
       <DraggablePopupListHeader
         ListEmptyComponent={
@@ -103,19 +93,6 @@ exports[`ChatListScreen renders with no data 1`] = `
                 Send Message
               </RText>
             </TouchableOpacity>
-            <RText
-              size={16}
-              style={
-                Object {
-                  "paddingBottom": 10,
-                  "paddingLeft": 10,
-                  "paddingTop": 25,
-                }
-              }
-              weight="Medium"
-            >
-              Messages
-            </RText>
           </React.Fragment>
         }
         initialNumToRender={6}
@@ -260,24 +237,6 @@ exports[`ChatListScreen renders with no data 1`] = `
                 Send Message
               </Text>
             </View>
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontFamily": "Roboto-Medium",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "paddingBottom": 10,
-                    "paddingLeft": 10,
-                    "paddingTop": 25,
-                  },
-                ]
-              }
-            >
-              Messages
-            </Text>
           </View>
         </View>
       </View>
@@ -308,18 +267,6 @@ exports[`ChatListScreen renders with no data 1`] = `
         >
           No messages
         </Text>
-      </View>
-      <View
-        onLayout={[Function]}
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "white",
-              "height": 250,
-            }
-          }
-        />
       </View>
     </View>
   </RCTScrollView>

@@ -42,7 +42,15 @@ const store = types
               id: '1',
               otherUser: '1',
               messages: {
-                result: [{id: '1', otherUser: '1', isOutgoing: false, content: 'hello!'}],
+                result: [
+                  {
+                    id: '1',
+                    otherUser: '1',
+                    isOutgoing: false,
+                    content:
+                      'hello! This is a really long message that demonstrates the 1 line with ellipsis on Chat Message preview',
+                  },
+                ],
                 count: 1,
               },
             },
