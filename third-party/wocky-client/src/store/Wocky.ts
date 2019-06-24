@@ -332,7 +332,8 @@ export const Wocky = types
           self.notifications.addToTop(item)
           item.process()
         } catch (e) {
-          getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
+          // tslint:disable-next-line
+          console.log('& ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
       },
