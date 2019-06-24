@@ -62,7 +62,7 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     </TouchableOpacity>
   )
   state = {
-    option: 0,
+    option: 1,
     duration: 2,
   }
   share = async () => {
