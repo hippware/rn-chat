@@ -19,7 +19,7 @@ class ProfileList extends React.Component<Props> {
 
   renderI = ({item}: {item: any}) => <SelectableProfileItem row={item} {...this.props} />
 
-  separator = () => <Separator />
+  separator = () => <Separator width={2} />
 
   render() {
     const {selection, renderItem} = this.props
