@@ -76,7 +76,6 @@ export const Message = types
         )
         self.setStatus(Status.Sent)
       } catch (e) {
-        // throw e
         self.setStatus(Status.Error)
       }
     }),

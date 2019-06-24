@@ -75,15 +75,15 @@ describe('New GraphQL conversation tests', () => {
   it('bob can load chat messages with paging', async () => {
     for (let i = 0; i < 22; i += 1) {
       chat.message!.setBody('hello' + i)
-      await chat.message!.send()
+      await chat.sendMessage()
     }
     await sleep(1000)
     bob.chats.clear()
     await bob.chats.loadChats()
     expect(bob.chats.list.length).toBe(1)
     await bob.chats.list[0].messages.load({force: true})
-    expect(bob.chats.list[0].messages.list.length).toBe(20)
     expect(bob.chats.list[0].messages.count).toBe(24)
+    expect(bob.chats.list[0].messages.list.length).toBe(20)
     await bob.chats.list[0].messages.load()
     expect(bob.chats.list[0].messages.list.length).toBe(24)
   })
