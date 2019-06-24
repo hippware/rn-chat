@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Messages Title should be removed if the user has no messages (#3808)
+* Map visible with scroll on Message List (#3809)
+* Messages: Message preview needs to be limited to 1 line (#3813)
+
 # 4.14.0 - 2019 Jun 20
 
 * Messaging: Refresh conversation screen (#3690)
