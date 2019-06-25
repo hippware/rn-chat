@@ -13,6 +13,7 @@ import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
+import {log} from '../logger'
 
 export const Wocky = types
   .compose(
@@ -332,7 +333,7 @@ export const Wocky = types
           self.notifications.addToTop(item)
           item.process()
         } catch (e) {
-          getEnv(self).logger.log('& ONNOTIFICATION ERROR: ' + e.message)
+          log('ONNOTIFICATION ERROR: ' + e.message)
         }
         // }
       },
