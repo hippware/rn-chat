@@ -7,13 +7,15 @@ import LinearGradient from 'react-native-linear-gradient'
 import {observer, inject} from 'mobx-react/native'
 import {ISearchStore} from '../../store/SearchStore'
 import {ILocationStore} from '../../store/LocationStore'
-import {IWocky} from 'wocky-client'
+import {IWocky, IProfile} from 'wocky-client'
 import moment from 'moment'
 
 type Props = {
   wocky?: IWocky
   searchStore?: ISearchStore
   locationStore?: ILocationStore
+  profile?: IProfile
+  duration?: number
 }
 
 type State = {
@@ -66,8 +68,8 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     duration: 2,
   }
   share = async () => {
-    const {locationStore, searchStore, wocky} = this.props
-    const selection = searchStore!.localResult
+    const {locationStore, searchStore, wocky, profile} = this.props
+    const selection = profile ? {selected: [profile]} : searchStore!.localResult
     const expireAt = new Date(
       this.state.option ? UNTIL_OFF : Date.now() + CHOICES[this.state.duration].value
     )
@@ -76,8 +78,8 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
       await wocky!.profile!.hide(false, undefined)
     }
     // TODO modify server-side API to pass array of usr_ids ?
-    for (const profile of selection.selected) {
-      await profile.shareLocation(expireAt)
+    for (const el of selection.selected) {
+      await el.shareLocation(expireAt)
     }
     // send location
     if (locationStore!.location) {
@@ -86,10 +88,11 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
     Actions.popTo('home')
   }
   render() {
-    const selection = this.props.searchStore!.localResult
+    const {profile} = this.props
+    const selection = profile ? {selected: [profile]} : this.props.searchStore!.localResult
     const selected = selection.selected.length
     if (!selected) {
-      throw new Error('No profile is selected') // it should never happen
+      throw new Error(' No profile is selected') // it should never happen
     }
     const untilDate =
       moment(Date.now()).format('L') ===
