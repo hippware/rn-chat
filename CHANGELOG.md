@@ -7,6 +7,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Messages Title should be removed if the user has no messages (#3808)
 * Map visible with scroll on Message List (#3809)
 * Messages: Message preview needs to be limited to 1 line (#3813)
+* Make "until I turn this off" the default option for LL. (#3768)
+* Image message uploads lost after nav'ing to other screen (#3810)
 
 # 4.14.0 - 2019 Jun 20
 
