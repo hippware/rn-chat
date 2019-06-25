@@ -13,7 +13,7 @@ import {EventList, createEvent} from '../model/EventList'
 import _ from 'lodash'
 import {RequestType} from '../model/PaginableList'
 import {ILocation, ILocationSnapshot, createLocation} from '../model/Location'
-import {log} from '../../../../src/utils/logger'
+import {log} from '../logger'
 
 export const Wocky = types
   .compose(
