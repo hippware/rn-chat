@@ -8,6 +8,7 @@ import {showImagePicker, PickerImage} from '../ImagePicker'
 import {k, minHeight} from '../Global'
 import {IWocky, IBot, IBotPost} from 'wocky-client'
 import withKeyboardHOC from '../common/withKeyboardHOC'
+import {log} from '../../utils/logger'
 
 const IMAGE_HEIGHT = 70 * k
 
@@ -56,6 +57,7 @@ class AddBotPost extends React.Component<Props> {
       Keyboard.dismiss()
       this.props.afterPostSent()
     } catch (e) {
+      log('AddBotPost error', e)
       const message =
         e.code === '403'
           ? 'Cannot publish, bot is private now'

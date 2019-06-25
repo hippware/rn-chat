@@ -121,7 +121,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="home" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
-                    <Scene key="botDetails" path="bot/:server/:botId/:params*" component={BotDetails} />
+                    <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} />
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
@@ -134,7 +134,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                   </Stack>
-                  <Scene key="chat" path="conversation/:server/:item" component={ChatScreen} />
+                  <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
