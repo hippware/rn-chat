@@ -96,7 +96,7 @@ export default class BotDetails extends React.Component<Props> {
   }
 
   scrollToNewestPost = () => {
-    this.list.scrollToIndex({
+    this.list.wrappedInstance.scrollToIndex({
       index: 0,
       viewPosition: 0.5,
     })
