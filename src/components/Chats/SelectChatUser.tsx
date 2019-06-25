@@ -8,7 +8,7 @@ import {IWocky} from 'wocky-client'
 import {ISearchStore} from '../../store/SearchStore'
 import SearchBar from '../people-lists/SearchBar'
 import {Separator} from '../common'
-import {colors} from '../../constants'
+import {gray} from '../../constants/colors'
 
 type Props = {
   wocky: IWocky
@@ -30,7 +30,7 @@ const SelectChatUser = inject('wocky', 'searchStore')(
           value={searchStore!.localResult.filter}
           placeholder="Search name or username"
         />
-        <Separator width={1} backgroundColor={colors.DARK_GREY} />
+        <Separator width={1} backgroundColor={gray(172)} />
         <ProfileList
           selection={searchStore!.localResult}
           onSelect={profile => {
