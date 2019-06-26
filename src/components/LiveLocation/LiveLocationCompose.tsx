@@ -152,7 +152,9 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
             </this.Checkbox>
             <View style={{position: 'absolute', flexDirection: 'row', right: 0}}>
               <TouchableOpacity
-                onPress={() => this.setState({duration: Math.max(0, this.state.duration - 1)})}
+                onPress={() =>
+                  this.setState({option: 0, duration: Math.max(0, this.state.duration - 1)})
+                }
               >
                 <Image
                   style={{marginHorizontal: 10}}
@@ -161,7 +163,10 @@ export default class LiveLocationCompose extends React.Component<Props, State> {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
-                  this.setState({duration: Math.min(this.state.duration + 1, CHOICES.length - 1)})
+                  this.setState({
+                    option: 0,
+                    duration: Math.min(this.state.duration + 1, CHOICES.length - 1),
+                  })
                 }
               >
                 <Image
