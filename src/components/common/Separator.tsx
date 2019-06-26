@@ -1,6 +1,5 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
-import {k} from '../Global'
 
 type Props = {
   width?: number
@@ -12,7 +11,7 @@ const Separator = ({width, backgroundColor, style, ...rest}: Props) => (
   <View
     style={[
       {
-        height: width ? width * k : StyleSheet.hairlineWidth,
+        height: width ? width : StyleSheet.hairlineWidth,
         backgroundColor: backgroundColor || 'rgba(155,155,155,0.15)',
       },
       style,

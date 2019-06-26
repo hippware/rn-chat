@@ -15,36 +15,48 @@ import {colors} from 'src/constants'
 type Props = {
   item: string
   wocky?: IWocky
+  navigation: any
 }
 
 type StoreShape = {chat?: IChat; setChat: (c) => void}
 
-const ChatScreen = inject('wocky')(
-  observer(({item, wocky}: Props) => {
-    const store = useLocalStore<StoreShape>(() => ({
-      chat: undefined,
-      setChat(c) {
-        store.chat = c
-      },
-    }))
+const ChatScreen = withKeyboardHOC(
+  inject('wocky')(
+    observer((props: Props) => {
+      const {item, wocky, navigation} = props
 
-    useEffect(() => {
-      store.setChat(wocky!.chats.createChat(item))
-      store.chat!.messages.load().then(() => {
-        store.chat!.readAll()
-      })
-      store.chat!.setActive(true)
+      const store = useLocalStore<StoreShape>(() => ({
+        chat: undefined,
+        setChat(c) {
+          store.chat = c
+        },
+      }))
 
-      return function cleanup() {
-        if (store.chat) {
-          store.chat.setActive(false)
+      useEffect(() => {
+        store.setChat(wocky!.chats.createChat(item))
+        store.chat!.messages.load().then(() => {
+          store.chat!.readAll()
+        })
+        store.chat!.setActive(true)
+        navigation.setParams({...props, chat: store.chat})
+
+        return function cleanup() {
+          if (store.chat) {
+            store.chat.setActive(false)
+          }
         }
-      }
-    }, [])
+      }, [])
 
-    return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
-  })
+      return store.chat && isAlive(store.chat) ? <ChatView chat={store.chat} /> : <Screen />
+    })
+  )
 )
+;(ChatScreen as any).navigationOptions = ({navigation}) => {
+  const chat = navigation.getParam('chat')
+  return {
+    title: chat && chat.otherUser ? `@${chat.otherUser.handle}` : '',
+  }
+}
 
 export const ChatView = observer(({chat}: {chat: IChat}) => {
   function getPreviousMessage(index: number): IMessage | null {
@@ -91,7 +103,7 @@ export const ChatView = observer(({chat}: {chat: IChat}) => {
   )
 })
 
-export default withKeyboardHOC(ChatScreen)
+export default ChatScreen
 
 const styles = StyleSheet.create({
   date: {
