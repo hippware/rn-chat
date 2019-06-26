@@ -68,7 +68,7 @@ export default class BotDetails extends React.Component<Props> {
   })
 
   async componentWillMount() {
-    const {wocky, analytics, botId, homeStore} = this.props
+    const {wocky, analytics, botId, homeStore, navigation} = this.props
     runInAction(() => {
       this.bot = wocky!.getBot({id: botId})
     })
@@ -87,6 +87,12 @@ export default class BotDetails extends React.Component<Props> {
       if (this.bot && isAlive(this.bot))
         analytics.track('bot_view', {id: this.bot.id, title: this.bot.title})
     }, 7000)
+
+    // deep-linking to visitors
+    if (navigation.state.params.params === 'visitors') {
+      // todo: why doesn't Botdetails pop back down when nav'ing to visitors?
+      Actions.visitors({botId})
+    }
   }
 
   componentWillUnmount() {

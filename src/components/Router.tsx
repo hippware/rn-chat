@@ -119,7 +119,7 @@ class TinyRobotRouter extends React.Component<Props> {
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
                   <Stack hideNavBar renderer={SplitRenderer}>
-                    <Scene key="home" component={Home} hideNavBar />
+                    <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} />
@@ -130,7 +130,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" component={ProfileDetail} />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
@@ -138,7 +138,6 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
-                  {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                   <Scene key="myAccount" component={MyAccount} editMode back />
                   <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
@@ -150,7 +149,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
-                  {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                 </Stack>
                 <Scene
                   key="searchUsers"
