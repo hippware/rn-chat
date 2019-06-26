@@ -50,6 +50,7 @@ import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import SplashScreen from 'react-native-splash-screen'
+import  {IHomeStore} from 'src/store/HomeStore';
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -58,13 +59,14 @@ type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   navStore?: INavStore
+  homeStore?: IHomeStore
   iconStore?: IconStore
   store?: IStore
   authStore?: IAuthStore
   analytics?: any
 }
 
-@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'authStore')
+@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -176,8 +178,13 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   onDeepLink = async ({action, params}) => {
-    const {analytics} = this.props
+    const {analytics, homeStore} = this.props
     analytics.track('deeplink', {action, params})
+    if (action === 'home') {
+      const userId = params.userId
+      homeStore!.select(userId)
+      Actions.reset('home', {userId})
+    } else
     if (Actions[action]) {
       // wait until connected
       when(

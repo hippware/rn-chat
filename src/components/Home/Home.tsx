@@ -8,6 +8,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {INavStore} from '../../store/NavStore'
 import {width, height} from '../Global'
 import {inject} from 'mobx-react'
+import alert from 'src/utils/alert'
 
 type Props = {
   homeStore?: IHomeStore
