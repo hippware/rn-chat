@@ -8,17 +8,15 @@ import {IHomeStore} from '../../store/HomeStore'
 import {INavStore} from '../../store/NavStore'
 import {width, height} from '../Global'
 import {inject} from 'mobx-react'
-import alert from 'src/utils/alert'
 
 type Props = {
   homeStore?: IHomeStore
   navStore?: INavStore
   name: string
-  userId?: string
 }
 
 const Home = inject('homeStore', 'navStore')(
-  observer(({homeStore, navStore, name, userId}: Props) => {
+  observer(({homeStore, navStore, name}: Props) => {
     const {fullScreenMode, setIndex, list, index} = homeStore!
     const isCurrent = navStore!.scene === name
     return (
