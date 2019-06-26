@@ -183,7 +183,7 @@ class TinyRobotRouter extends React.Component<Props> {
     if (action === 'home') {
       const userId = params.userId
       homeStore!.select(userId)
-      Actions.reset('home', {userId})
+      Actions.reset('home')
     } else
     if (Actions[action]) {
       // wait until connected
