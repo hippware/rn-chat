@@ -9,6 +9,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Messages: Message preview needs to be limited to 1 line (#3813)
 * Make "until I turn this off" the default option for LL. (#3768)
 * Image message uploads lost after nav'ing to other screen (#3810)
+* Fix scrolling after bot post (#3754, PR #3849)
+* Remove 'server' from deeplink paths (PR #3850)
+* Logger is null (#3844)
+* Live location - share back (#3769)
 
 # 4.14.0 - 2019 Jun 20
 
