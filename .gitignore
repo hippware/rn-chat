@@ -67,5 +67,3 @@ ios/tinyrobot.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 
 coverage/
 .vscode/launch.json
-
-*.ts-e
