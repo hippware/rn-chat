@@ -157,7 +157,7 @@ const NavTitle = ({bot, onLongPress}) => {
         style={[titleStyle, {textAlign: 'center'}]}
         numberOfLines={1}
       >
-        {bot.error ? 'Bot Unavailable' : bot.title}
+        {bot.error ? 'Unavailable' : bot.title}
       </RText>
       <RText
         // minimumFontScale={0.6}

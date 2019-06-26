@@ -54,7 +54,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 
   unsubscribe = () => {
-    Alert.alert('', 'Are you sure you want to remove this from your saved bots?', [
+    Alert.alert('', 'Are you sure you want to remove this from your saved locations?', [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Remove',
@@ -244,7 +244,9 @@ const BotUnavailable = () => (
   <View style={{alignItems: 'center'}}>
     <RText size={17} style={{textAlign: 'center'}}>
       <Text style={{color: 'red'}}>Oops. </Text>
-      <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+      <Text style={{color: colors.ANOTHER_GREY}}>
+        {"Oops! We can't find what\r\nyou're looking for"}
+      </Text>
     </RText>
     <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
   </View>

@@ -84,7 +84,7 @@ class BotButtons extends React.Component<Props> {
         {
           name: 'Delete',
           action: () => {
-            Alert.alert('', 'Are you sure you want to delete this bot?', [
+            Alert.alert('', 'Are you sure you want to delete this location?', [
               {text: 'Cancel', style: 'cancel'},
               {
                 text: 'Delete',
