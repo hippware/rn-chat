@@ -60,7 +60,7 @@ class AddBotPost extends React.Component<Props> {
       log('AddBotPost error', e)
       const message =
         e.code === '403'
-          ? 'Cannot publish, bot is private now'
+          ? 'Cannot publish, access denied'
           : 'Something went wrong, please try again'
       notificationStore.flash(message)
     } finally {

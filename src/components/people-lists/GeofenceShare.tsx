@@ -53,7 +53,7 @@ class GeofenceShare extends React.Component<Props> {
       Actions.botDetails({botId: this.props.botId, isNew: true})
       this.props.analytics.track('bot_share_geo')
     } catch (e) {
-      Alert.alert('There was a problem sharing the bot.')
+      Alert.alert('There was a problem sharing the location.')
       // console.warn(e)
     }
   }
