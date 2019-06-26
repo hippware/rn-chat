@@ -1,45 +1,38 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Screen from '../Screen'
 import {ProfileList} from '../people-lists'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react/native'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {IWocky} from 'wocky-client'
 import {ISearchStore} from '../../store/SearchStore'
 import SearchBar from '../people-lists/SearchBar'
+import {Separator} from '../common'
+import {gray} from '../../constants/colors'
 
 type Props = {
   wocky: IWocky
   searchStore?: ISearchStore
 }
 
-@inject('wocky', 'searchStore')
-@observer
-class SelectChatUser extends React.Component<Props> {
-  componentDidMount() {
-    this.props.searchStore!.localResult.setList(
-      this.props.wocky.profile!.friends.list.map(f => ({profile: f.id}))
-    )
-  }
+const SelectChatUser = inject('wocky', 'searchStore')(
+  observer(({wocky, searchStore}: Props) => {
+    useEffect(() => {
+      searchStore!.localResult.setList(wocky.profile!.friends.list.map(f => ({profile: f.id})))
+    }, [])
 
-  render() {
-    const selection = this.props.searchStore!.localResult
     return (
       <Screen>
         <SearchBar
           autoCorrect={false}
           autoCapitalize="none"
-          onChangeText={text => selection.setFilter(text)}
-          value={selection.filter}
+          onChangeText={text => searchStore!.localResult.setFilter(text)}
+          value={searchStore!.localResult.filter}
           placeholder="Search name or username"
-          style={{
-            fontSize: 14,
-            fontFamily: 'Roboto-Light',
-            flex: 1,
-            backgroundColor: 'rgb(247, 247, 247)',
-          }}
         />
+        <Separator width={1} backgroundColor={gray(172)} />
         <ProfileList
-          selection={selection}
+          selection={searchStore!.localResult}
           onSelect={profile => {
             Actions.pop()
             Actions.chat({item: profile.id})
@@ -47,7 +40,7 @@ class SelectChatUser extends React.Component<Props> {
         />
       </Screen>
     )
-  }
-}
+  })
+)
 
 export default SelectChatUser

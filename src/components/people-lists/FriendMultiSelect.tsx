@@ -18,7 +18,6 @@ const FriendMultiSelect = observer(({selection, botTitle, inviteMessage}: Props)
       <SearchBar
         autoCorrect={false}
         autoCapitalize="none"
-        // tslint:disable-next-line
         onChangeText={(text: string) => selection.setFilter(text)}
         value={selection.filter}
         placeholder="Search name or username"

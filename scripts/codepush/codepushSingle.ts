@@ -38,7 +38,7 @@ export default async (
 async function injectBugsnagReleaseId(releaseId: string) {
   return new Promise((resolve, reject) => {
     exec(
-      `sed -i -e "2s/.*/const codeBundleId = '${releaseId}'/" src/utils/bugsnagCodeBundleId.ts`,
+      `sed -e "2s/.*/const codeBundleId = '${releaseId}'/" -i '' src/utils/bugsnagCodeBundleId.ts`,
       (error, stdout) => {
         if (error) reject(error)
         // console.log('Bugsnag inject result:', positive(stdout))

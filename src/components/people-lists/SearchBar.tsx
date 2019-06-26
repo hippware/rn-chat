@@ -7,8 +7,6 @@ import {
   ImageSourcePropType,
   TextInputProperties,
 } from 'react-native'
-import {k} from '../Global'
-import {colors} from '../../constants'
 
 interface IProps extends TextInputProperties {
   image?: ImageSourcePropType
@@ -18,7 +16,7 @@ const SearchBar = ({style, image, ...rest}: IProps) => (
   <View style={styles.searchBar}>
     <Image
       source={image || require('../../../images/iconSearchGray.png')}
-      style={{margin: 5, height: 12}}
+      style={{margin: 5, height: 13}}
       resizeMode="contain"
     />
     <TextInput
@@ -35,13 +33,14 @@ export default SearchBar
 
 const styles = StyleSheet.create({
   searchBar: {
-    marginHorizontal: 10 * k,
-    marginBottom: 5 * k,
-    backgroundColor: colors.LIGHT_GREY,
-    borderRadius: 2 * k,
+    marginHorizontal: 10,
+    marginBottom: 5,
+    backgroundColor: 'rgb(247, 247, 247)',
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    padding: 5,
   },
-  text: {fontFamily: 'Roboto-Light', fontSize: 14, margin: 5 * k, flex: 1},
+  text: {fontFamily: 'Roboto-Light', fontSize: 14, margin: 5, flex: 1},
 })

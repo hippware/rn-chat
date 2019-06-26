@@ -45,7 +45,6 @@ import {navBarStyle} from './styles'
 import IconStore from '../store/IconStore'
 import {IStore} from 'src/store/store'
 import OnboardingSwiper from './Onboarding/OnboardingSwiper'
-import ChatTitle from './Chats/ChatTitle'
 import {IAuthStore} from 'src/store/AuthStore'
 import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
@@ -135,7 +134,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
                   </Stack>
-                  <Scene key="chat" path="conversation/:item" component={ChatScreen} renderTitle={({item}) => <ChatTitle item={item} />}/>
+                  <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
