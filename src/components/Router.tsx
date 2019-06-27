@@ -189,6 +189,7 @@ class TinyRobotRouter extends React.Component<Props> {
             analytics.track('deeplink_try', {action, params})
             if (action === 'home') {
               homeStore!.select(params.userId)
+              Actions.reset('home')
               const user = await wocky!.getProfile(params.userId)
               when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
             } else if (action === 'notifications') {
