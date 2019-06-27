@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.14.1 - 2019 Jun 26
+
 * Messages Title should be removed if the user has no messages (#3808)
 * Map visible with scroll on Message List (#3809)
 * Messages: Message preview needs to be limited to 1 line (#3813)
@@ -13,6 +15,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove 'server' from deeplink paths (PR #3850)
 * Logger is null (#3844)
 * Live location - share back (#3769)
+* Messages: Message UI tweaks (#3820)
+* Temporarily disable detox. (PR #3857)
+* Live Location: Tapping on +/- should move marker to duration (#3853)
+* Missing Location: UI changes for "Oops" screen (#3846)
 
 # 4.14.0 - 2019 Jun 20
 
