@@ -51,7 +51,10 @@ export function createEvent(params: any, service: any): IEventEntity {
 }
 
 export const EventList = types
-  .compose(Base, createPaginable<IEventEntity>(EventEntity, 'EventList'))
+  .compose(
+    Base,
+    createPaginable<IEventEntity>(EventEntity, 'EventList')
+  )
   .postProcessSnapshot(snapshot => {
     if (snapshot.result.length > 20) {
       const result = snapshot.result.slice(0, 20)
@@ -60,9 +63,9 @@ export const EventList = types
     }
     return snapshot
   })
-  .props({
+  .volatile(self => ({
     mode: 1,
-  })
+  }))
   .views(self => ({
     get updates() {
       return self.list.filter(x => !x.isRequest)

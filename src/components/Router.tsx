@@ -50,6 +50,7 @@ import LiveLocationCompose from './LiveLocation/LiveLocationCompose'
 import LiveLocationSettings from './LiveLocation/LiveLocationSettings'
 import LiveLocationShare from './LiveLocation/LiveLocationShare'
 import SplashScreen from 'react-native-splash-screen'
+import  {IHomeStore} from 'src/store/HomeStore';
 
 const iconClose = require('../../images/iconClose.png')
 const sendActive = require('../../images/sendActive.png')
@@ -58,13 +59,14 @@ type Props = {
   wocky?: IWocky
   locationStore?: ILocationStore
   navStore?: INavStore
+  homeStore?: IHomeStore
   iconStore?: IconStore
   store?: IStore
   authStore?: IAuthStore
   analytics?: any
 }
 
-@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'navStore', 'authStore')
+@inject('wocky', 'locationStore', 'iconStore', 'analytics', 'homeStore', 'navStore', 'authStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
@@ -118,18 +120,18 @@ class TinyRobotRouter extends React.Component<Props> {
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
                   <Stack hideNavBar renderer={SplitRenderer}>
-                    <Scene key="home" component={Home} hideNavBar />
+                    <Scene key="home" path="livelocation/:userId" component={Home} hideNavBar />
                     <Scene key="bottomMenu" component={BottomMenu} />
                     <Scene key="createBot" component={CreationHeader} fromTop />
                     <Scene key="botDetails" path="bot/:botId/:params*" component={BotDetails} />
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
-                    <Scene key="notifications" component={Notifications} />
+                    <Scene key="notifications" path="invitations/:params*" component={Notifications} />
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
-                    <Scene key="profileDetails" component={ProfileDetail} />
+                    <Scene key="profileDetails" path="user/:item" component={ProfileDetail} />
                     <Scene key="liveLocationCompose" component={LiveLocationCompose} />
                     <Scene key="liveLocationSettings" component={LiveLocationSettings} />
                     <Scene key="chats" component={ChatListScreen} title="Messages" />
@@ -137,7 +139,6 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="chat" path="conversation/:item" component={ChatScreen} />
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
-                  {/* <Scene key="subscribers" component={peopleLists.BotSubscriberList} back right={() => null} navTransparent={false} title="Favorites" /> */}
                   <Scene key="myAccount" component={MyAccount} editMode back />
                   <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
@@ -149,7 +150,6 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="debugScreen" component={DebugScreen} title="Debug" back />,
                     <Scene key="codePush" component={CodePushScene} title="CodePush" back />,
                   ]}
-                  {/* <Scene key="reload" hideNavBar lightbox type="replace" component={Launch} clone /> */}
                 </Stack>
                 <Scene
                   key="searchUsers"
@@ -178,16 +178,26 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   onDeepLink = async ({action, params}) => {
-    const {analytics} = this.props
+    const {analytics, homeStore, wocky} = this.props
     analytics.track('deeplink', {action, params})
     if (Actions[action]) {
       // wait until connected
       when(
         () => this.props.wocky!.connected,
-        () => {
+        async () => {
           try {
             analytics.track('deeplink_try', {action, params})
-            Actions[action](params)
+            if (action === 'home') {
+              homeStore!.select(params.userId)
+              Actions.reset('home')
+              const user = await wocky!.getProfile(params.userId)
+              when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
+            } else if (action === 'notifications') {
+              wocky!.notifications.setMode(2)
+              Actions.notifications()
+            } else {
+              Actions[action](params)
+            }
             analytics.track('deeplink_success', {action, params})
           } catch (err) {
             analytics.track('deeplink_fail', {error: err, action, params})

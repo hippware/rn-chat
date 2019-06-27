@@ -1,12 +1,13 @@
 import React from 'react'
 import {View} from 'react-native'
-import {inject, observer} from 'mobx-react/native'
+import {observer} from 'mobx-react-lite'
 import MapHome from './MapHome'
 import HorizontalCardList from './HorizontalCardList'
 import ActiveGeoBotBanner from './ActiveGeoBotBanner'
 import {IHomeStore} from '../../store/HomeStore'
 import {INavStore} from '../../store/NavStore'
 import {width, height} from '../Global'
+import {inject} from 'mobx-react'
 
 type Props = {
   homeStore?: IHomeStore
@@ -14,13 +15,10 @@ type Props = {
   name: string
 }
 
-@inject('homeStore', 'navStore')
-@observer
-export default class Home extends React.Component<Props> {
-  render() {
-    const {homeStore, navStore} = this.props
+const Home = inject('homeStore', 'navStore')(
+  observer(({homeStore, navStore, name}: Props) => {
     const {fullScreenMode, setIndex, list, index} = homeStore!
-    const isCurrent = navStore!.scene === this.props.name
+    const isCurrent = navStore!.scene === name
     return (
       <View
         style={{
@@ -42,5 +40,7 @@ export default class Home extends React.Component<Props> {
         )}
       </View>
     )
-  }
-}
+  })
+)
+
+export default Home

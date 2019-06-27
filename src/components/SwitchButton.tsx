@@ -4,6 +4,7 @@ import RText from '../components/common/RText'
 import {observer} from 'mobx-react/native'
 
 type Props = {
+  value?: 1 | 2
   switchSpeedChange?: number
   disabled?: boolean
   onValueChange: (index: number) => void
@@ -25,6 +26,10 @@ type Props = {
 
 type State = {
   activeSwitch: number
+  sbWidth: number
+  sbHeight: number
+  direction: string
+  offsetX: any
 }
 
 @observer
@@ -33,12 +38,16 @@ export default class SwitchButton extends Component<Props, State> {
     switchSpeedChange: 100,
   }
 
-  state = {
-    activeSwitch: 1,
-    sbWidth: 100,
-    sbHeight: 44,
-    direction: 'ltr',
-    offsetX: new Animated.Value(0),
+  constructor(props) {
+    super(props)
+    const value = props.value === 2 ? props.switchWidth / 2 - (props.btnHeight ? 0 : 6) : 0
+    this.state = {
+      activeSwitch: props.value || 1,
+      sbWidth: 100,
+      sbHeight: 44,
+      direction: 'ltr',
+      offsetX: new Animated.Value(value),
+    }
   }
 
   _switchDirection(direction: string): 'row' | 'row-reverse' {
