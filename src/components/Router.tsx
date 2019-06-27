@@ -127,7 +127,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
-                    <Scene key="notifications" path="invitations" component={Notifications} />
+                    <Scene key="notifications" path="invitations/:params*" component={Notifications} />
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
