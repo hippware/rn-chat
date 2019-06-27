@@ -242,9 +242,8 @@ const FollowLocationView = ({onFollow}) => (
 
 const BotUnavailable = () => (
   <View style={{alignItems: 'center'}}>
-    <RText size={17} style={{textAlign: 'center'}}>
-      <Text style={{color: 'red'}}>Oops. </Text>
-      <Text style={{color: colors.ANOTHER_GREY}}>
+    <RText size={16} style={{textAlign: 'center'}}>
+      <Text style={{color: colors.DARK_GREY}}>
         {"Oops! We can't find what\r\nyou're looking for"}
       </Text>
     </RText>
