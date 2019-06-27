@@ -35,12 +35,13 @@ class Notifications extends React.Component<Props> {
     // send all injected props + bot "up" to static context
     this.props.navigation.setParams(this.props)
   }
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.wocky!.notifications.load()
     this.props.wocky!.notifications.readAll()
   }
 
   componentWillUnmount() {
-    this.props.wocky!.notifications.readAll()
+    this.props.wocky!.notifications.setMode(1) // reset
   }
 
   render() {
@@ -54,7 +55,7 @@ class Notifications extends React.Component<Props> {
         headerInner={
           <View style={{flex: 1, alignItems: 'center'}}>
             <SwitchButton
-              value={notifications.mode}
+              value={notifications.mode as 1 | 2 | undefined}
               text1="Updates"
               text2="Requests"
               switchWidth={220}

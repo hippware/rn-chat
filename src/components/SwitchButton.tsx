@@ -4,7 +4,7 @@ import RText from '../components/common/RText'
 import {observer} from 'mobx-react/native'
 
 type Props = {
-  value?: number
+  value?: 1 | 2
   switchSpeedChange?: number
   disabled?: boolean
   onValueChange: (index: number) => void
@@ -36,7 +36,6 @@ type State = {
 export default class SwitchButton extends Component<Props, State> {
   static defaultProps = {
     switchSpeedChange: 100,
-    activeSwitch: 1,
   }
 
   constructor(props) {
