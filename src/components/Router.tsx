@@ -127,7 +127,7 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Scene key="botCompose" component={BotCompose} backAction={() => backAction(iconStore!)} />
                     <Scene key="botEdit" component={BotCompose} edit backAction={() => backAction(iconStore!)} />
                     <Scene key="editNote" component={EditNote} />
-                    <Scene key="notifications" component={Notifications} />
+                    <Scene key="notifications" path="invitations" component={Notifications} />
                     <Scene key="friends" component={peopleLists.FriendList} />
                     <Scene key="friendSearch" component={FriendSearch} />
                     <Scene key="visitors" component={VisitorList} />
@@ -180,19 +180,23 @@ class TinyRobotRouter extends React.Component<Props> {
   onDeepLink = async ({action, params}) => {
     const {analytics, homeStore, wocky} = this.props
     analytics.track('deeplink', {action, params})
-    if (action === 'home') {
-      homeStore!.select(params.userId)
-      const user = await wocky!.getProfile(params.userId)
-      when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
-    } else
     if (Actions[action]) {
       // wait until connected
       when(
         () => this.props.wocky!.connected,
-        () => {
+        async () => {
           try {
             analytics.track('deeplink_try', {action, params})
-            Actions[action](params)
+            if (action === 'home') {
+              homeStore!.select(params.userId)
+              const user = await wocky!.getProfile(params.userId)
+              when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
+            } else if (action === 'notifications') {
+              wocky!.notifications.setMode(2)
+              Actions.notifications()
+            } else {
+              Actions[action](params)
+            }
             analytics.track('deeplink_success', {action, params})
           } catch (err) {
             analytics.track('deeplink_fail', {error: err, action, params})
