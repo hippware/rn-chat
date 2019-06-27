@@ -178,12 +178,12 @@ class TinyRobotRouter extends React.Component<Props> {
   }
 
   onDeepLink = async ({action, params}) => {
-    const {analytics, homeStore} = this.props
+    const {analytics, homeStore, wocky} = this.props
     analytics.track('deeplink', {action, params})
     if (action === 'home') {
-      const userId = params.userId
-      homeStore!.select(userId)
-      Actions.reset('home')
+      homeStore!.select(params.userId)
+      const user = await wocky!.getProfile(params.userId)
+      when(() => !!(user && user.location), () => homeStore!.followUserOnMap(user))
     } else
     if (Actions[action]) {
       // wait until connected
