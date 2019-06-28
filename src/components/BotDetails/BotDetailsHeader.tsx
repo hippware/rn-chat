@@ -248,6 +248,23 @@ const BotUnavailable = () => (
       </Text>
     </RText>
     <Image source={require('../../../images/surpriseBot.png')} style={{marginTop: 30 * k}} />
+    <TouchableOpacity
+      onPress={() => Actions.pop()}
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 160,
+        height: 39,
+        marginTop: 30 * k,
+        borderWidth: 1,
+        borderRadius: 19.5,
+        borderColor: colors.DARK_GREY,
+      }}
+    >
+      <RText size={16} style={{textAlign: 'center', color: colors.DARK_GREY}}>
+        {'Go Back'}
+      </RText>
+    </TouchableOpacity>
   </View>
 )
 
