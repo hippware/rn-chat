@@ -69,6 +69,12 @@ export class Transport {
     this.instance = Transport.instances++
   }
 
+  private connectionCheck() {
+    if (!this.client || !this.connected) {
+      throw new Error('Client is not connected')
+    }
+  }
+
   @action
   async onClose(f: () => void) {
     this.onCloseCallback = f
@@ -672,7 +678,7 @@ export class Transport {
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
-    await waitFor(() => this.connected)
+    this.connectionCheck()
     const res = await this.client!.mutate({
       mutation: gql`
         mutation mediaUpload($input: MediaUploadParams!) {
@@ -1367,6 +1373,7 @@ export class Transport {
    * Reduce boilerplate for pass/fail gql mutations.
    */
   private async voidMutation({mutation, variables}: MutationOptions): Promise<void> {
+    this.connectionCheck()
     let name: string = '',
       res: any
     // todo: use the name as defined by the Wocky mutation (not the name given to the wrapper)
