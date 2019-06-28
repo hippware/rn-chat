@@ -42,9 +42,9 @@ export const Message = types
     createUploadable('media', (self: any) => `user:${self.otherUser.id}@${self.service.host}`),
     MessageBase
   )
-  .volatile(self => ({
+  .props({
     status: Status.Init,
-  }))
+  })
   .named('Message')
   .actions(self => ({
     setStatus: (state: Status) => {
@@ -61,6 +61,11 @@ export const Message = types
     },
   }))
   .actions(self => ({
+    afterAttach() {
+      if (self.status === Status.Sending) {
+        self.status = Status.Error
+      }
+    },
     send: flow(function*() {
       try {
         self.setStatus(Status.Sending)
