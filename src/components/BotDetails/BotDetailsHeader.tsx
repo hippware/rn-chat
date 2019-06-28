@@ -247,7 +247,7 @@ const BotUnavailable = () => (
         {"Oops! We can't find what\r\nyou're looking for"}
       </Text>
     </RText>
-    <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
+    <Image source={require('../../../images/surpriseBot.png')} style={{marginTop: 30 * k}} />
   </View>
 )
 
