@@ -61,4 +61,6 @@ storiesOf('Chat', module)
   .add('2 - Chat user search screen', () => <ChatUserSearchScreen />)
   .add('3 - Chat', () => <ChatViewStory />)
 
-storiesOf('Codepush Brick', module).add('Default', () => <UpdateBrick />)
+storiesOf('Codepush Brick', module)
+  .add('Update', () => <UpdateBrick />)
+  .add('Waiting', () => <UpdateBrick waiting />)
