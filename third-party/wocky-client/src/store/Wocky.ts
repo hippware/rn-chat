@@ -257,9 +257,6 @@ export const Wocky = types
       setLocation: flow(function*(location: ILocationSnapshot) {
         return yield self.transport.setLocation(location)
       }),
-      getLocationsVisited: (limit?: number): Promise<object[]> => {
-        return self.transport.getLocationsVisited(limit)
-      },
       _onBotVisitor: flow(function*({bot, action, visitor}: any) {
         // console.log('ONBOTVISITOR', action, visitor.id, bot.visitorsSize)
         const id = visitor.id
