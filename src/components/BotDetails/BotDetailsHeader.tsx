@@ -1,14 +1,5 @@
 import React, {ReactElement} from 'react'
-import {
-  View,
-  Animated,
-  Alert,
-  Image,
-  StyleSheet,
-  Clipboard,
-  TouchableOpacity,
-  Text,
-} from 'react-native'
+import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
