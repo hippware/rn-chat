@@ -140,7 +140,9 @@ export default class BotDetails extends React.Component<Props> {
           bounces={false}
           keyboardDismissMode="on-drag"
         />
-        {bot.isSubscribed && <AddBotPost bot={bot} afterPostSent={this.scrollToNewestPost} />}
+        {!bot.error && bot.isSubscribed && (
+          <AddBotPost bot={bot} afterPostSent={this.scrollToNewestPost} />
+        )}
       </View>
     )
   }
