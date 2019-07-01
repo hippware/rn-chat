@@ -17,7 +17,7 @@ else
   # yarn detox
 fi
 
-if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "production" ]
-then
-#  yarn bugsnag
-fi
+# if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "production" ]
+# then
+# #  yarn bugsnag
+# fi
