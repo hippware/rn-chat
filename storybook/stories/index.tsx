@@ -27,6 +27,7 @@ import ImagePickerStory from './ImagePickerStory'
 import UserActivityStory from './UserActivityStory'
 import CustomTransitionerStory from './CustomTransitionerStory'
 import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
+import UpdateBrick from 'src/components/UpdateBrick'
 
 function emptyFn() {
   /* noop */
@@ -59,3 +60,7 @@ storiesOf('Chat', module)
   .add('1 - Messages flow in router', () => <MessagesRouterStory />)
   .add('2 - Chat user search screen', () => <ChatUserSearchScreen />)
   .add('3 - Chat', () => <ChatViewStory />)
+
+storiesOf('Codepush Brick', module)
+  .add('Update', () => <UpdateBrick />)
+  .add('Waiting', () => <UpdateBrick waiting />)
