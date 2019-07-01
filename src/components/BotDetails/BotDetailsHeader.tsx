@@ -242,10 +242,8 @@ const FollowLocationView = ({onFollow}) => (
 
 const BotUnavailable = () => (
   <View style={{alignItems: 'center'}}>
-    <RText size={16} style={{textAlign: 'center'}}>
-      <Text style={{color: colors.DARK_GREY}}>
-        {"Oops! We can't find what\r\nyou're looking for"}
-      </Text>
+    <RText size={16} style={{textAlign: 'center'}} color={colors.DARK_GREY}>
+      {"Oops! We can't find what\r\nyou're looking for"}
     </RText>
     <Image source={require('../../../images/surpriseBot.png')} style={{marginTop: 30 * k}} />
     <TouchableOpacity
@@ -261,7 +259,7 @@ const BotUnavailable = () => (
         borderColor: colors.DARK_GREY,
       }}
     >
-      <RText size={16} style={{textAlign: 'center', color: colors.DARK_GREY}}>
+      <RText size={16} style={{textAlign: 'center'}} color={colors.DARK_GREY}>
         {'Go Back'}
       </RText>
     </TouchableOpacity>
