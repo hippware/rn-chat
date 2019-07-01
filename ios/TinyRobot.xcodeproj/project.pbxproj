@@ -105,8 +105,6 @@
 		87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */; };
 		A209EBAE998C0817ADCE8325 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		DF782B6416EF45968732384A /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDA564826954DAC982E2628 /* libAppCenterReactNative.a */; };
-		E5CAEA1C79F0407AB51553DF /* libODJsonWebToken.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC8670C553D4D9C89ECE7CC /* libODJsonWebToken.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,8 +545,6 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				A209EBAE998C0817ADCE8325 /* libPods-tinyrobot.a in Frameworks */,
-				DF782B6416EF45968732384A /* libAppCenterReactNative.a in Frameworks */,
-				E5CAEA1C79F0407AB51553DF /* libODJsonWebToken.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
