@@ -13,6 +13,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Missing Location: UI changes for "Oops" screen (#3846)
 * Clear out old references for prod iOS builds (PR #3871)
 
+4.15.0 (25) - Production only build
+
+* Include rn-config binary in build phases of prod app.
+* Add rn-touch-through-view linked binary.
+
 # 4.14.2 - 2019 Jun 27
 
 * [ios] Push Notifications & Deep Linking (#3829)
