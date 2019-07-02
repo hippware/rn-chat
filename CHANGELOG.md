@@ -4,7 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.15.0 - 2019 Jul 1
+
 * Fix "Image not sent. Tap to retry." (#3839)
+* Temporarily disable bugsnag
+* Remove 'latest locations' from location debug screen (#3825)
+* 'Codepush brick' plumbing (PR #3864)
+* Missing Location: UI changes for "Oops" screen (#3846)
+* Clear out old references for prod iOS builds (PR #3871)
 
 # 4.14.2 - 2019 Jun 27
 
