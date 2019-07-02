@@ -7,7 +7,8 @@ import {PINK, DARK_GREY, WHITE} from '../constants/colors'
 const background = require('../../images/codepushBackground.png')
 const icon = require('../../images/codePushIcon.png')
 
-const UpdateBrick = ({waiting}: {waiting?: boolean}) => {
+const UpdateBrick = () => {
+  const waiting = true
   useEffect(() => {
     codePush.notifyAppReady()
   }, [])
