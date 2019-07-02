@@ -33,6 +33,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* tinyrobotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tinyrobotTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		393F1ADE22CAE56E0006A803 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 398E6D862231EAB100A8A69E /* libReactNativeConfig.a */; };
 		3974AC9721F943EA003612BB /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3974AC7321F943CE003612BB /* libRCTContacts.a */; };
 		3974AC9821F943F7003612BB /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3974AC7321F943CE003612BB /* libRCTContacts.a */; };
 		397A73F0211A5D17008AC2EF /* libReactNativeTouchThroughView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 397A73EF211A5611008AC2EF /* libReactNativeTouchThroughView.a */; };
@@ -528,6 +529,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				393F1ADE22CAE56E0006A803 /* libReactNativeConfig.a in Frameworks */,
 				3974AC9821F943F7003612BB /* libRCTContacts.a in Frameworks */,
 				87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */,
 				87C4125C20E634FF0044AF0A /* libRCTPushNotification.a in Frameworks */,
