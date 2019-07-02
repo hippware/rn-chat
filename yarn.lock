@@ -1810,10 +1810,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/detox@^9.0.5":
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-9.0.5.tgz#7f47dde33b1b7bd8cb1d63c8f830288545ba3d3d"
-  integrity sha512-4nbHjo4GRK3oUneeVL6Qbrd4FRNiDp+pwHZLFjGFKcxmV61jMkSatONYdDN9GGe9dKddVR4NIkPd9HMf/gt1vA==
+"@types/detox@^12.8.2":
+  version "12.8.2"
+  resolved "https://registry.yarnpkg.com/@types/detox/-/detox-12.8.2.tgz#b206fee84d6d225bb8913308170d58e40edb7e6a"
+  integrity sha512-OXiix5255GRVchHUeLSh9EBy57bAjM4MFLhSSEj5I0JztYEiTctnmazgK099gdKJjNmEmQMMMf51Waxzh1fY3w==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.1"
@@ -5022,10 +5022,10 @@ detect-port@^1.2.3:
     address "^1.0.1"
     debug "^2.6.0"
 
-detox@^12.11.1:
-  version "12.11.1"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-12.11.1.tgz#d383a92d69c1ed0a4acea1c70b835bdc9a268f43"
-  integrity sha512-9TMG8Q0s+eBv9prUkdFJ5qaHmBkq1PjvOhb0B0j2G3MzSfUGS63Ld+tK96zy/95+1uFDjxsBqZSwMyv+ol57vQ==
+detox@^13.0.2:
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-13.0.2.tgz#16dfe484882e45bbbb420331add03898f1d18222"
+  integrity sha512-90fet0CNSmM+tS0rxoPhfvLrkHW5WyD1HmZiId6xN4P+8+6xw/eDBUsFp2rtSOKT2UsA/x0Em9vngqzdHUI6OA==
   dependencies:
     "@babel/core" "^7.4.5"
     bunyan "^1.8.12"
@@ -5033,6 +5033,7 @@ detox@^12.11.1:
     chalk "^2.4.2"
     child-process-promise "^2.2.0"
     fs-extra "^4.0.2"
+    funpermaproxy "^1.0.1"
     get-port "^2.1.0"
     ini "^1.3.4"
     lodash "^4.17.5"
@@ -6178,6 +6179,11 @@ function.prototype.name@^1.1.0:
     define-properties "^1.1.2"
     function-bind "^1.1.1"
     is-callable "^1.1.3"
+
+funpermaproxy@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/funpermaproxy/-/funpermaproxy-1.0.1.tgz#4650e69b7c334d9717c06beba9b339cc08ac3335"
+  integrity sha512-9pEzs5vnNtR7ZGihly98w/mQ7blsvl68Wj30ZCDAXy7qDN4CWLLjdfjtH/P2m6whsnaJkw15hysCNHMXue+wdA==
 
 fuse.js@2.6.2:
   version "2.6.2"
