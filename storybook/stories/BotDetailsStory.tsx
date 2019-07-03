@@ -49,6 +49,6 @@ const props = {
 
 export default () => (
   <Provider {...stores}>
-    <BotDetails {...props} navigation={{setParams: () => null}} />
+    <BotDetails {...props} navigation={{setParams: () => null, state: {params: {}}}} />
   </Provider>
 )
