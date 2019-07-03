@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Re-enable bugsnag sourcemaps (PR #3875)
+* Re-enable detox (PR #3860)
+
 # 4.15.0 - 2019 Jul 1
 
 * Fix "Image not sent. Tap to retry." (#3839)
