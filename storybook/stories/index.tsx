@@ -28,7 +28,6 @@ import UserActivityStory from './UserActivityStory'
 import CustomTransitionerStory from './CustomTransitionerStory'
 import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
 import UpdateBrick from 'src/components/UpdateBrick'
-import CameraStory from './CameraStory'
 
 function emptyFn() {
   /* noop */
@@ -65,5 +64,3 @@ storiesOf('Chat', module)
 storiesOf('Codepush Brick', module)
   .add('Update', () => <UpdateBrick />)
   .add('Waiting', () => <UpdateBrick waiting />)
-
-storiesOf('Camera Experiments', module).add('Image crop picker camera', () => <CameraStory />)

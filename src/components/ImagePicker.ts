@@ -68,20 +68,6 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
   }
 }
 
-// async function cropImage(image: PickerImage): Promise<PickerImage> {
-//   const croppedImage = await ImagePicker.openCropper({
-//     path: image.uri,
-//     width: IMG_DEFAULT_SIZE,
-//     height: IMG_DEFAULT_SIZE,
-//   })
-//   return {
-//     ...croppedImage,
-//     uri: croppedImage.path,
-//     type: image.type,
-//     name: image.name,
-//   }
-// }
-
 async function launchCamera(): Promise<PickerImage | void> {
   Keyboard.dismiss()
   try {
@@ -95,7 +81,7 @@ async function launchCamera(): Promise<PickerImage | void> {
       ...image,
       uri: image.path,
       type: image.mime,
-      name: image.name,
+      name: image.path,
     }
   } catch (err) {
     warn('camera error:', err)
