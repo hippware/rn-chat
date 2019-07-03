@@ -69,12 +69,6 @@ export class Transport {
     this.instance = Transport.instances++
   }
 
-  private connectionCheck() {
-    if (!this.client || !this.connected) {
-      throw new Error('Client is not connected')
-    }
-  }
-
   @action
   async onClose(f: () => void) {
     this.onCloseCallback = f
@@ -1413,6 +1407,12 @@ export class Transport {
     }
     this.socket = this.makeSocket()
     this.client = this.makeClient(this.socket)
+  }
+
+  private connectionCheck() {
+    if (!this.client || !this.connected) {
+      throw new Error('Client is not connected')
+    }
   }
 
   private makeSocket() {
