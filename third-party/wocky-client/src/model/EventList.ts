@@ -41,6 +41,13 @@ export function createEvent(params: any, service: any): IEventEntity {
   if (params.profile) {
     params.profile = service.profiles.get(params.profile.id, params.profile)
   }
+  if (params.sharedWith) {
+    params.sharedWith = service.profiles.get(params.sharedWith.id, params.sharedWith)
+  }
+  if (params.sharedEndWith) {
+    params.sharedEndWith = service.profiles.get(params.sharedEndWith.id, params.sharedEndWith)
+  }
+
   if (params.bot) {
     params.bot = service.bots.get(params.bot.id, params.bot)
   }

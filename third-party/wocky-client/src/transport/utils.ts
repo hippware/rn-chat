@@ -425,7 +425,7 @@ export function convertNotification(edge: any): IEventData | null {
     case 'LocationShareEndNotification':
       const locationShareEndNotification: IEventLocationShareEndData = {
         time,
-        sharedEndWith: data.user.id,
+        sharedEndWith: convertProfile(data.user),
         id,
       }
       return locationShareEndNotification
@@ -433,7 +433,7 @@ export function convertNotification(edge: any): IEventData | null {
       const locationShareNotification: IEventLocationShareData = {
         time,
         expiresAt: data.expiresAt ? iso8601toDate(data.expiresAt) : new Date(), // workaround for old notifications with null expiresAt
-        sharedWith: data.user.id,
+        sharedWith: convertProfile(data.user),
         id,
       }
       return locationShareNotification
