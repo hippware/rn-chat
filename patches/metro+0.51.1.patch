@@ -1,0 +1,37 @@
+diff --git a/node_modules/metro/src/lib/polyfills/require.js b/node_modules/metro/src/lib/polyfills/require.js
+index a1901a1..0dd12f8 100644
+--- a/node_modules/metro/src/lib/polyfills/require.js
++++ b/node_modules/metro/src/lib/polyfills/require.js
+@@ -110,12 +110,28 @@ function metroRequire(moduleId) {
+           return modules[id].verboseName;
+         }); // We want to show A -> B -> A:
+ 
+-      cycle.push(cycle[0]);
+-      console.warn(
+-        "Require cycle: ".concat(cycle.join(" -> "), "\n\n") +
++      // cycle.push(cycle[0]);
++      // console.warn(
++      //   "Require cycle: ".concat(cycle.join(" -> "), "\n\n") +
++      //     "Require cycles are allowed, but can result in uninitialized values. " +
++      //     "Consider refactoring to remove the need for a cycle."
++      // );
++
++      var isExternalOnlyOrMST = cycle.every(function(cycleWarning) {
++        return cycleWarning.includes("node_modules") || cycleWarning.includes('third-party/wocky-client/src/model')
++      })
++            
++      if (!isExternalOnlyOrMST) {
++        // We want to show A -> B -> A:
++        cycle.push(cycle[0]);
++        console.warn(
++          "Require cycle: " +
++          cycle.join(" -> ") +
++          "\n\n" +
+           "Require cycles are allowed, but can result in uninitialized values. " +
+           "Consider refactoring to remove the need for a cycle."
+-      );
++        );
++      }
+     }
+   }
+ 
