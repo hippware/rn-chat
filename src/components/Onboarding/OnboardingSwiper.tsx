@@ -8,15 +8,15 @@ import {Actions} from 'react-native-router-flux'
 import OnboardingLocation from './OnboardingLocation'
 import OnboardingAccelerometer from './OnboardingAccelerometer'
 import OnboardingNotifications from './OnboardingNotifications'
-// import OnboardingFindFriends from './OnboardingFindFriends'
+import OnboardingFindFriends from './OnboardingFindFriends'
 import {RText} from '../common'
 import {inject, observer} from 'mobx-react/native'
 import {minHeight} from '../Global'
 import {IWocky} from 'wocky-client'
 import PushNotification from 'react-native-push-notification'
-// import OnboardingFindFriendsList from './OnboardingFindFriendsList'
+import OnboardingFindFriendsList from './OnboardingFindFriendsList'
 import ContactStore from 'src/store/ContactStore'
-import {log} from '../../utils/logger'
+import {log, warn} from '../../utils/logger'
 import {IPermissionStore} from 'src/store/PermissionStore'
 
 type Props = {
@@ -54,13 +54,9 @@ export default class OnboardingSwiper extends React.Component<Props> {
         pages.push(<OnboardingNotifications key="2" onPress={this.checkNotificationPermissions} />)
       }
     }
-    // pages.push(<OnboardingFindFriends key="3" onPress={this.findFriends} onSkip={this.done} />)
-    // pages.push(<OnboardingFindFriendsList key="4" onPress={this.done} />)
 
-    if (!pages.length) {
-      this.done()
-    }
-
+    pages.push(<OnboardingFindFriends key="3" onPress={this.findFriends} onSkip={this.done} />)
+    pages.push(<OnboardingFindFriendsList key="4" onPress={this.done} />)
     return (
       <View style={{flex: 1}} testID="onboardingSwiper">
         <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
@@ -85,10 +81,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
     const check = await this.getPermission('location', {type: 'always'})
     if (check === 'authorized') {
       this.swiper.scrollBy(1)
-
-      if (Platform.OS === 'android') {
-        this.done()
-      }
     } else {
       // TODO: show overlay with instructions for changing location settings. https://zpl.io/bPdleyl
       Alert.alert('', "We need your location to show you what's nearby!", [
@@ -99,10 +91,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
               afterLocationAlwaysOn: () => {
                 Actions.pop()
                 this.swiper.scrollBy(1)
-
-                if (Platform.OS === 'android') {
-                  this.done()
-                }
               },
             })
           },
@@ -116,10 +104,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
     const check = await this.getPermission('motion')
     log(`Accelerometer check result is ${check}`)
     this.swiper.scrollBy(1)
-
-    if (this.props.permissionStore!.allowsNotification) {
-      this.done()
-    }
   }
 
   // NOTE: no need to check this permission on Android
@@ -130,8 +114,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
       log(alert, badge, sound)
       this.swiper.scrollBy(1)
     }
-
-    this.done()
   }
 
   private getPermission = async (perm: string, extra?: any): Promise<any> => {
@@ -144,7 +126,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
     return check
   }
 
-  /*
   private findFriends = async () => {
     try {
       await this.props.contactStore!.requestPermission()
@@ -155,7 +136,6 @@ export default class OnboardingSwiper extends React.Component<Props> {
       this.done()
     }
   }
-  */
 
   private done = () => {
     this.props.wocky!.profile!.setOnboarded(true)
