@@ -6,6 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Re-enable bugsnag sourcemaps (PR #3875)
 * Re-enable detox (PR #3860)
+* Temporarily remove onboarding Find Friends screen (#3894)
 
 # 4.15.0 - 2019 Jul 1
 
