@@ -1,142 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>BugsnagAPIKey</key>
-	<string>f108fb997359e5519815d5fc58c79ad3</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>tinyrobotS</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>4.15.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.hippware.tinyrobot</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>tinyrobotStaging</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.548019610697-uhugcd91bvgpbbui93s57m14j97amt78</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>120</string>
-	<key>Fabric</key>
 	<dict>
-		<key>APIKey</key>
-		<string>2c26edd537d6142e372672914153970108c65238</string>
-		<key>Kits</key>
+		<key>BugsnagAPIKey</key>
+		<string>f108fb997359e5519815d5fc58c79ad3</string>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>en</string>
+		<key>CFBundleDisplayName</key>
+		<string>tinyrobotS</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>$(PRODUCT_NAME)</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>4.15.0</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
-				<key>KitInfo</key>
-				<dict>
-					<key>consumerKey</key>
-					<string>e527IQiWSXZ5WHNxROUZk87uV</string>
-					<key>consumerSecret</key>
-					<string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
-				</dict>
-				<key>KitName</key>
-				<string>Digits</string>
+				<key>CFBundleURLName</key>
+				<string>com.hippware.tinyrobot</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>tinyrobotStaging</string>
+				</array>
 			</dict>
 			<dict>
-				<key>KitInfo</key>
-				<dict>
-					<key>accessToken</key>
-					<string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
-				</dict>
-				<key>KitName</key>
-				<string>MGLAccountManager</string>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.548019610697-uhugcd91bvgpbbui93s57m14j97amt78</string>
+				</array>
 			</dict>
 		</array>
-	</dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
-	<string>YES</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
+		<key>CFBundleVersion</key>
+		<string>120</string>
+		<key>Fabric</key>
+		<dict>
+			<key>APIKey</key>
+			<string>2c26edd537d6142e372672914153970108c65238</string>
+			<key>Kits</key>
+			<array>
+				<dict>
+					<key>KitInfo</key>
+					<dict>
+						<key>consumerKey</key>
+						<string>e527IQiWSXZ5WHNxROUZk87uV</string>
+						<key>consumerSecret</key>
+						<string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
+					</dict>
+					<key>KitName</key>
+					<string>Digits</string>
+				</dict>
+				<dict>
+					<key>KitInfo</key>
+					<dict>
+						<key>accessToken</key>
+						<string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
+					</dict>
+					<key>KitName</key>
+					<string>MGLAccountManager</string>
+				</dict>
+			</array>
+		</dict>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
+		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+		<string>YES</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
+		<key>NSAppleMusicUsageDescription</key>
+		<string>This application requires access to library to work</string>
+		<key>NSBluetoothPeripheralUsageDescription</key>
+		<string>This application requires access to bluetooth to work</string>
+		<key>NSCalendarsUsageDescription</key>
+		<string>This application requires access to calendars to work</string>
+		<key>NSCameraUsageDescription</key>
+		<string>This will let you take photos.</string>
+		<key>NSContactsUsageDescription</key>
+		<string>We upload your contacts so you can choose who to add as friends. Check out our Privacy Policy for more information.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+		<key>NSLocationUsageDescription</key>
+		<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>This application requires access to microfone to work</string>
+		<key>NSMotionUsageDescription</key>
+		<string>Using the accelerometer increases battery-efficiency by intelligently toggling location-tracking only while moving.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>This will let you choose and upload photos.</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>This application requires speech recognition access to work</string>
+		<key>UIAppFonts</key>
+		<array>
+			<string>Roboto-Bold.ttf</string>
+			<string>Roboto-Regular.ttf</string>
+			<string>Roboto-Light.ttf</string>
+			<string>Roboto-Italic.ttf</string>
+			<string>Roboto-Medium.ttf</string>
+		</array>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>audio</string>
+			<string>fetch</string>
+			<string>location</string>
+			<string>remote-notification</string>
+		</array>
+		<key>UIRequiredDeviceCapabilities</key>
+		<array>
+			<string>gps</string>
+			<string>magnetometer</string>
+			<string>telephony</string>
+			<string>sms</string>
+		</array>
+		<key>UIStatusBarStyle</key>
+		<string>UIStatusBarStyleDefault</string>
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
 	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>This application requires access to library to work</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This application requires access to bluetooth to work</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>This application requires access to calendars to work</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This will let you take photos.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>The contacts in your address book will be used to find friends on the app.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your current location is used to provide presence alerts via in-app &amp; push notifications when you or your friends/family visit locations where you've explicitly agreed to share presence.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This application requires access to microfone to work</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Using the accelerometer increases battery-efficiency by intelligently toggling location-tracking only while moving.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This will let you choose and upload photos.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>This application requires speech recognition access to work</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Roboto-Bold.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Light.ttf</string>
-		<string>Roboto-Italic.ttf</string>
-		<string>Roboto-Medium.ttf</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>fetch</string>
-		<string>location</string>
-		<string>remote-notification</string>
-	</array>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>gps</string>
-		<string>magnetometer</string>
-		<string>telephony</string>
-		<string>sms</string>
-	</array>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDefault</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-</dict>
 </plist>
