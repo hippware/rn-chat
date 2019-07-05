@@ -56,6 +56,11 @@ export default class OnboardingSwiper extends React.Component<Props> {
     }
     // pages.push(<OnboardingFindFriends key="3" onPress={this.findFriends} onSkip={this.done} />)
     // pages.push(<OnboardingFindFriendsList key="4" onPress={this.done} />)
+
+    if (!pages.length) {
+      this.done()
+    }
+
     return (
       <View style={{flex: 1}} testID="onboardingSwiper">
         <RText style={{width: '100%', textAlign: 'center', marginTop: 40 * minHeight}} size={18}>
