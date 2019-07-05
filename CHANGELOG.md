@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.15.1 - 2019 Jul 5
+
 * Re-enable bugsnag sourcemaps (PR #3875)
 * Re-enable detox (PR #3860)
 * Temporarily remove onboarding Find Friends screen (#3894)
