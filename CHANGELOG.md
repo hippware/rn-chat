@@ -4,12 +4,17 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.16.0 - 2019 Jul 5
+
+* [dev] Supress excessive circular dependency warnings (#3885)
+* Scrolling on the Notification/Updates screen crashes the app (#3765)
+* Update contacts permission text
+* Revert disabling "find friends" (Revert #3894)
+
 # 4.15.1 - 2019 Jul 5
 
 * Re-enable bugsnag sourcemaps (PR #3875)
 * Re-enable detox (PR #3860)
-* [dev] Supress excessive circular dependency warnings (#3885)
-* Scrolling on the Notification/Updates screen crashes the app (#3765)
 * Temporarily remove onboarding Find Friends screen (#3894)
 
 # 4.15.0 - 2019 Jul 1
