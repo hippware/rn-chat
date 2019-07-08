@@ -5,9 +5,6 @@ export const PROFILE_PROPS = `id firstName lastName handle
   bots(first:0, relationship: OWNED) { totalCount }
   presenceStatus
 `
-// TODO: switch FOLLOWER & FOLLOWING to INVITED & INVITED_BY
-// followers: contacts(first: 0 relationship: FOLLOWER) { totalCount }
-// followed: contacts(first: 0 relationship: FOLLOWING) { totalCount }
 
 export const BOT_PROPS = `id icon title address addressData description radius shortname 
   media { thumbnailUrl fullUrl trosUrl }
