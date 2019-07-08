@@ -3,7 +3,6 @@ import {StyleSheet, View, ViewStyle, Platform} from 'react-native'
 import {BlurView} from 'react-native-blur'
 import {k} from '../Global'
 import {CloseButton} from '../common'
-import globalStyles from '../styles'
 import {TRANSLUCENT_WHITE} from 'src/constants/colors'
 
 type Props = {
@@ -15,7 +14,7 @@ type Props = {
 const PopupBlur = ({children, containerStyle, showCloseButton}: Props) => (
   <View
     style={[
-      globalStyles.absolute,
+      StyleSheet.absoluteFill,
       {backgroundColor: Platform.select({ios: 'transparent', android: TRANSLUCENT_WHITE})},
     ]}
   >
@@ -25,7 +24,7 @@ const PopupBlur = ({children, containerStyle, showCloseButton}: Props) => (
         blurAmount={15}
         style={
           [
-            globalStyles.absolute,
+            StyleSheet.absoluteFill,
             {
               alignItems: 'stretch',
               justifyContent: 'center',

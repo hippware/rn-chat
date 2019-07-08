@@ -8,7 +8,6 @@ import {ILocationStore} from '../../store/LocationStore'
 import {IHomeStore} from '../../store/HomeStore'
 import {Spinner} from '../common'
 import mapStyle from '../map/mapStyle'
-import commonStyles from '../styles'
 import UberMarker from './UberMarker'
 import {Actions} from 'react-native-router-flux'
 import BotMarker from './map-markers/BotMarker'
@@ -136,14 +135,14 @@ export default class MapHome extends React.Component<Props> {
     const {location} = locationStore!
     if (!location) {
       return (
-        <View style={[commonStyles.absolute, {bottom: -50 * k}, styles.container]}>
+        <View style={[StyleSheet.absoluteFill, {bottom: -50 * k}, styles.container]}>
           <Spinner />
         </View>
       )
     }
     const {latitude, longitude} = location
     return (
-      <View style={[commonStyles.absolute, {bottom: -50 * k}]}>
+      <View style={[StyleSheet.absoluteFill, {bottom: -50 * k}]}>
         <MapView
           provider={'google'}
           ref={r => (this.mapRef = r)}
@@ -155,7 +154,7 @@ export default class MapHome extends React.Component<Props> {
             latitudeDelta: INIT_DELTA,
             longitudeDelta: INIT_DELTA,
           }}
-          style={commonStyles.absolute}
+          style={StyleSheet.absoluteFill}
           customMapStyle={mapStyle}
           scrollEnabled={!detailsMode}
           onStartShouldSetResponder={this.onMapTapOrPan}
