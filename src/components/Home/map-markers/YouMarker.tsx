@@ -32,7 +32,7 @@ const YouMarker = observer(({wocky, locationStore, homeStore, card}: ICardProps)
         coordinate={{latitude, longitude}}
         onPress={() => {
           homeStore!.select(card.id)
-          homeStore!.setFocusedLocation(location)
+          homeStore!.followUserOnMap(profile)
         }}
         stopPropagation
       >
