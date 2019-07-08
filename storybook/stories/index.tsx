@@ -28,6 +28,8 @@ import UserActivityStory from './UserActivityStory'
 import CustomTransitionerStory from './CustomTransitionerStory'
 import {MessagesRouterStory, ChatUserSearchScreen, ChatViewStory} from './MessagesStory'
 import UpdateBrick from 'src/components/UpdateBrick'
+import {Spinner} from 'src/components/common'
+import {View} from 'react-native'
 
 function emptyFn() {
   /* noop */
@@ -64,3 +66,9 @@ storiesOf('Chat', module)
 storiesOf('Codepush Brick', module)
   .add('Update', () => <UpdateBrick />)
   .add('Waiting', () => <UpdateBrick waiting />)
+
+storiesOf('Android Spinner', module).add('Default', () => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <Spinner size={50} />
+  </View>
+))
