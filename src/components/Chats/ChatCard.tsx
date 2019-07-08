@@ -22,21 +22,23 @@ const ChatCard = observer(({chat, style, onPress}: Props) => {
   } = chat
   const text = first ? (first.getUpload ? 'Image Attached' : first.content) : ''
   return (
-    <TouchableOpacity onPress={onPress} style={{backgroundColor: 'white'}}>
-      <PersonRow
-        imageComponent={<Avatar size={44} profile={otherUser} tappable={false} />}
-        handleComponent={
-          <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-            <ProfileHandle profile={otherUser} size={15} />
-            <RText weight="Light" size={12} color={colors.DARK_GREY} style={{marginLeft: 5}}>
-              {first!.dateAsString}
-            </RText>
-          </View>
-        }
-        displayName={text}
-        style={style}
-      />
-    </TouchableOpacity>
+    <View style={{backgroundColor: 'white'}}>
+      <TouchableOpacity onPress={onPress}>
+        <PersonRow
+          imageComponent={<Avatar size={44} profile={otherUser} tappable={false} />}
+          handleComponent={
+            <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+              <ProfileHandle profile={otherUser} size={15} />
+              <RText weight="Light" size={12} color={colors.DARK_GREY} style={{marginLeft: 5}}>
+                {first!.dateAsString}
+              </RText>
+            </View>
+          }
+          displayName={text}
+          style={style}
+        />
+      </TouchableOpacity>
+    </View>
   )
 })
 
