@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Replace react-native-camera-kit (#3836)
+* [dev] improve absinthe-socket error messages (#3888)
+
 # 4.16.0 - 2019 Jul 5
 
 * [dev] Supress excessive circular dependency warnings (#3885)
