@@ -1,16 +1,16 @@
 import React from 'react'
-import Camera from '../../src/components/Camera'
+// import Camera from '../../src/components/Camera'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import {TouchableOpacity, View, Alert, Text} from 'react-native'
 import {showImagePicker} from 'src/components/ImagePicker'
-import fileService from 'src/store/fileService'
+// import fileService from 'src/store/fileService'
 
 export default () => (
   <Router>
     <Stack hideNavBar>
       <Scene key="screen" component={Screen} />
       <Stack hideNavBar key="camera">
-        <Scene key="cameraScreen" component={CameraScreen} />
+        {/* <Scene key="cameraScreen" component={CameraScreen} /> */}
       </Stack>
     </Stack>
   </Router>
@@ -30,6 +30,6 @@ const Screen = () => (
   </View>
 )
 
-const CameraScreen = (props: any) => (
-  <Camera store={{getImageSize: fileService.getImageSize}} {...props} />
-)
+// const CameraScreen = (props: any) => (
+//   <Camera store={{getImageSize: fileService.getImageSize}} {...props} />
+// )

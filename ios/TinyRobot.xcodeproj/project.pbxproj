@@ -103,8 +103,6 @@
 		87C414B520E66A1A0044AF0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B220E66A190044AF0A /* GoogleService-Info.plist */; };
 		87C414B620E66A1A0044AF0A /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B320E66A190044AF0A /* AppCenter-Config.plist */; };
 		87C414B720E66A1A0044AF0A /* tinyrobotStaging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */; };
-		87C414BE20E66C8E0044AF0A /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */; };
-		87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */; };
 		A209EBAE998C0817ADCE8325 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -432,13 +430,6 @@
 			remoteGlobalIDString = C35AEC211EF91F9300931F0C;
 			remoteInfo = AppCenterReactNative;
 		};
-		87C414BC20E66C7D0044AF0A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2646934E1CFB2A6B00F3A740;
-			remoteInfo = ReactNativeCameraKit;
-		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -506,7 +497,6 @@
 		87C414B220E66A190044AF0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87C414B320E66A190044AF0A /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		87C414B420E66A1A0044AF0A /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
-		87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
 		8DC8670C553D4D9C89ECE7CC /* libODJsonWebToken.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libODJsonWebToken.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BBC1632892499F05338C8E16 /* libPods-tinyrobot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -533,7 +523,6 @@
 				393F1B2822CAEF7D0006A803 /* libReactNativeTouchThroughView.a in Frameworks */,
 				393F1ADE22CAE56E0006A803 /* libReactNativeConfig.a in Frameworks */,
 				3974AC9821F943F7003612BB /* libRCTContacts.a in Frameworks */,
-				87C414BF20E66C990044AF0A /* libReactNativeCameraKit.a in Frameworks */,
 				87C4125C20E634FF0044AF0A /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -581,7 +570,6 @@
 				398E6D8A2231EAEF00A8A69E /* libReactNativeConfig.a in Frameworks */,
 				3974AC9721F943EA003612BB /* libRCTContacts.a in Frameworks */,
 				397A73F0211A5D17008AC2EF /* libReactNativeTouchThroughView.a in Frameworks */,
-				87C414BE20E66C8E0044AF0A /* libReactNativeCameraKit.a in Frameworks */,
 				87C4148020E669F90044AF0A /* libRCTPushNotification.a in Frameworks */,
 				87C4148120E669F90044AF0A /* libRCTBlob.a in Frameworks */,
 				87C4148220E669F90044AF0A /* libRCTAnimation.a in Frameworks */,
@@ -777,7 +765,6 @@
 			children = (
 				398E6D562231EAB100A8A69E /* ReactNativeConfig.xcodeproj */,
 				3974AC6721F943CE003612BB /* RCTContacts.xcodeproj */,
-				87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */,
 				87C4122D20E634EE0044AF0A /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -907,14 +894,6 @@
 				87C414B320E66A190044AF0A /* AppCenter-Config.plist */,
 			);
 			path = Staging;
-			sourceTree = "<group>";
-		};
-		87C414B920E66C7D0044AF0A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		928FD6E88E0494F19660D1C7 /* Pods */ = {
@@ -1083,7 +1062,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1155,10 +1134,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = 87C414B920E66C7D0044AF0A /* Products */;
-					ProjectRef = 87C414B820E66C7D0044AF0A /* ReactNativeCameraKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 398E6D572231EAB100A8A69E /* Products */;
@@ -1480,13 +1455,6 @@
 			fileType = archive.ar;
 			path = libAppCenterReactNative.a;
 			remoteRef = 87C4139220E65A9E0044AF0A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87C414BD20E66C7D0044AF0A /* libReactNativeCameraKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeCameraKit.a;
-			remoteRef = 87C414BC20E66C7D0044AF0A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {
@@ -2397,7 +2365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

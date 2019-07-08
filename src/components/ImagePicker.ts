@@ -1,8 +1,8 @@
 import {Keyboard, Platform} from 'react-native'
 import ImagePicker, {Image} from 'react-native-image-crop-picker'
-import {Actions} from 'react-native-router-flux'
 import ActionSheet from 'react-native-action-sheet'
 import Permissions from 'react-native-permissions'
+import {warn} from 'src/utils/logger'
 
 export type PickerImage = {
   height: number
@@ -68,33 +68,23 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
   }
 }
 
-async function cropImage(image: PickerImage): Promise<PickerImage> {
-  const croppedImage = await ImagePicker.openCropper({
-    path: image.uri,
-    width: IMG_DEFAULT_SIZE,
-    height: IMG_DEFAULT_SIZE,
-  })
-  return {
-    ...croppedImage,
-    uri: croppedImage.path,
-    type: image.type,
-    name: image.name,
-  }
-}
-
 async function launchCamera(): Promise<PickerImage | void> {
-  if (await photoPermissionsGranted(true)) {
-    Keyboard.dismiss()
-    return new Promise(resolve => {
-      Actions.camera({
-        afterImagePicked: async image => {
-          if (Platform.OS === 'android') {
-            image = await cropImage(image)
-          }
-          resolve(image)
-        },
-      })
+  Keyboard.dismiss()
+  try {
+    const image: any = await ImagePicker.openCamera({
+      width: IMG_DEFAULT_SIZE,
+      height: IMG_DEFAULT_SIZE,
+      cropping: true,
+      cropperToolbarTitle: 'Crop Image',
     })
+    return {
+      ...image,
+      uri: image.path,
+      type: image.mime,
+      name: image.path,
+    }
+  } catch (err) {
+    warn('camera error:', err)
   }
 }
 

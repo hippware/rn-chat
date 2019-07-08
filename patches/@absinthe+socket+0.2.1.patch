@@ -1,0 +1,16 @@
+diff --git a/node_modules/@absinthe/socket/src/pushRequestUsing.js b/node_modules/@absinthe/socket/src/pushRequestUsing.js
+index 9e5f12d..2c38c75 100644
+--- a/node_modules/@absinthe/socket/src/pushRequestUsing.js
++++ b/node_modules/@absinthe/socket/src/pushRequestUsing.js
+@@ -27,7 +27,10 @@ const setNotifierRequestStatusSending = (absintheSocket, notifier) =>
+     requestStatus: requestStatuses.sending
+   });
+ 
+-const createRequestError = message => new Error(`request: ${message}`);
++const createRequestError = message => {
++  message = typeof message === 'object' ? JSON.stringify(message) : message
++  return new Error(`request: ${message}`);
++}
+ 
+ const onTimeout = (absintheSocket, notifier) =>
+   notifierNotifyActive(

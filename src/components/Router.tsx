@@ -7,7 +7,6 @@ import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
 import {INavStore} from '../store/NavStore'
-import Camera from './Camera'
 import SelectChatUser from './Chats/SelectChatUser'
 import Launch from './Launch'
 import SignUp from './SignUp'
@@ -116,7 +115,6 @@ class TinyRobotRouter extends React.Component<Props> {
               </Stack>
               <Scene key="signUp" component={SignUp} hideNavBar type="replace" />
               <Scene key="onboarding" component={OnboardingSwiper} hideNavBar type="replace" />
-              <Scene key="camera" component={Camera} />
               <Modal key="logged" hideNavBar headerMode="screen" type="replace">
                 <Stack>
                   <Stack hideNavBar renderer={SplitRenderer}>
