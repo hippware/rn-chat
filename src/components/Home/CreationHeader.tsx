@@ -40,13 +40,9 @@ export default class CreationHeader extends React.Component<Props> {
     this.bot = await this.props.wocky!.createBot()
   }
 
-  next = () => {
+  onLocation = (data?: object) => {
     this.props.analytics.track('botcreate_chooselocation', getSnapshot(this.bot!))
     Actions.botCompose({botId: this.bot!.id})
-  }
-
-  onLocation = data => {
-    this.next()
   }
 
   render() {
@@ -61,7 +57,12 @@ export default class CreationHeader extends React.Component<Props> {
           </RText>
           <View style={{width: 100}}>
             {this.bot && (
-              <TouchableOpacity onPress={this.next} style={{alignSelf: 'flex-end'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.onLocation()
+                }}
+                style={{alignSelf: 'flex-end'}}
+              >
                 <RText size={17} color={colors.PINK}>
                   Next
                 </RText>
