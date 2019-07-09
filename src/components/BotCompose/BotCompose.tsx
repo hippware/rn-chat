@@ -50,6 +50,7 @@ export function backAction(iconStore: IconStore) {
 type Props = {
   botId: string
   edit?: boolean
+  location?: any
   titleBlurred?: boolean
   wocky?: IWocky
   iconStore?: IconStore
@@ -83,7 +84,14 @@ export class BotCompose extends React.Component<Props> {
       this.bot!.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
     }
     if (this.bot) {
-      this.text = this.bot.title || ''
+      if (this.bot.title) {
+        this.text = this.bot.title
+      } else if (this.props.location) {
+        this.text = this.props.location.isPlace
+          ? this.props.location.placeName
+          : this.props.location.address
+      }
+
       this.props.iconStore!.setEmoji(this.bot.icon)
     }
   }
