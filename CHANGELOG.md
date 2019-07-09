@@ -8,6 +8,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [dev] improve absinthe-socket error messages (#3888)
 * Message List: Map visible on user field (#3877)
 * Don't upload bugsnag sourcemaps on Prod builds. (PR #3891)
+* Auto-follow should work for self (#3766)
+* [android] Loader doesn't spin when adding an image (#3620)
+* Use StyleSheet.absoluteFill and remove redundancy (PR #3898)
+* Upgrade bugsnag (PR #3899)
 
 # 4.16.0 - 2019 Jul 5
 
