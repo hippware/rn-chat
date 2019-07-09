@@ -7,22 +7,15 @@ import UseCurrentLocation from './UseCurrentLocation'
 import {RText, Separator} from '../common'
 import {observable, reaction, computed} from 'mobx'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-// import {Actions} from 'react-native-router-flux'
-import {Actions} from 'react-native-router-flux'
-import {getSnapshot} from 'mobx-state-tree'
 import {IHomeStore} from '../../store/HomeStore'
 import {formatText} from '../../utils/maps'
-import {IBot} from 'wocky-client'
-
-// import {getSnapshot} from 'mobx-state-tree'
 
 type Props = {
-  bot: IBot
-  edit?: boolean
   geocodingStore?: any
   analytics?: any
   homeStore?: IHomeStore
   focused?: boolean
+  onLocation: (data: any) => void
 }
 
 @inject('geocodingStore', 'analytics', 'homeStore')
@@ -74,13 +67,15 @@ class AddressBar extends React.Component<Props> {
 
   onLocationSelect = async data => {
     const {location} = data
-    const {analytics, bot, homeStore} = this.props
+    const {homeStore} = this.props
     this.searchEnabled = false
     this.text = data.address
     this.input.blur()
     homeStore!.setFocusedLocation(location)
-    Actions.botCompose({botId: bot.id})
-    analytics.track('botcreate_chooselocation', getSnapshot(bot))
+
+    if (this.props.onLocation) {
+      this.props.onLocation(data)
+    }
   }
 
   suggestion = ({item}) => {

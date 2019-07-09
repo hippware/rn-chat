@@ -45,6 +45,10 @@ export default class CreationHeader extends React.Component<Props> {
     Actions.botCompose({botId: this.bot!.id})
   }
 
+  onLocation = data => {
+    this.next()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,7 +69,7 @@ export default class CreationHeader extends React.Component<Props> {
             )}
           </View>
         </View>
-        <AddressBar focused={this.props.focused} bot={this.bot!} />
+        <AddressBar focused={this.props.focused} onLocation={this.onLocation} />
       </View>
     )
   }
