@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
 import {observer, inject} from 'mobx-react/native'
 import Bubble from '../map/Bubble'
-import commonStyles from '../styles'
 import IconStore from 'src/store/IconStore'
 import {BotIcon} from '../common'
 import {IHomeStore} from 'src/store/HomeStore'
@@ -23,7 +22,7 @@ const UberMarker = inject('iconStore', 'homeStore')(
       <View
         pointerEvents="box-none"
         style={[
-          commonStyles.absolute,
+          StyleSheet.absoluteFill,
           {
             justifyContent: 'center',
             alignItems: 'center',
@@ -45,8 +44,9 @@ const UberMarker = inject('iconStore', 'homeStore')(
           >
             <BotIcon icon={emoji || '❔'} size={30} />
           </Bubble>
-          {isIconEditable &&
-            !isEmojiKeyboardShown && <Image source={tapToChange} style={styles.changeCTA as any} />}
+          {isIconEditable && !isEmojiKeyboardShown && (
+            <Image source={tapToChange} style={styles.changeCTA as any} />
+          )}
         </Wrapper>
         {!isEmojiKeyboardShown && <Image source={dragTheMap} />}
       </View>

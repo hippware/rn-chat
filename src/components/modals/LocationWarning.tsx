@@ -5,7 +5,6 @@ import {k, s, minHeight} from '../Global'
 import {when} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {BlurView} from 'react-native-blur'
-import globalStyles from '../styles'
 import {GradientButton, RText, Separator} from '../common'
 import {WHITE, TRANSLUCENT_WHITE} from 'src/constants/colors'
 import AndroidOpenSettings from 'react-native-android-open-settings'
@@ -63,7 +62,7 @@ class LocationWarning extends React.Component<Props> {
 export const LocationWarningIOS = ({onPress}) => (
   <View
     style={[
-      globalStyles.absolute,
+      StyleSheet.absoluteFill,
       {
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,7 +70,7 @@ export const LocationWarningIOS = ({onPress}) => (
       },
     ]}
   >
-    <BlurView blurType="xlight" blurAmount={10} style={globalStyles.absolute} />
+    <BlurView blurType="xlight" blurAmount={10} style={StyleSheet.absoluteFill as any} />
     <Text style={styles.title}>
       Tap “<Text style={{fontFamily: 'Roboto-Medium'}}>Always</Text>” to let tinyrobot work
       perfectly.
@@ -99,7 +98,7 @@ export const LocationWarningIOS = ({onPress}) => (
 export const LocationWarningAndroid = ({onPress}) => (
   <View
     style={[
-      globalStyles.absolute,
+      StyleSheet.absoluteFill,
       {
         alignItems: 'center',
         backgroundColor: TRANSLUCENT_WHITE,

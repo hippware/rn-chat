@@ -24,7 +24,6 @@ import EmojiSelector from 'react-native-emoji-selector'
 import LinearGradient from 'react-native-linear-gradient'
 import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
-import globalStyles from '../styles'
 import alert from '../../utils/alert'
 import {log} from '../../utils/logger'
 
@@ -150,7 +149,7 @@ export class BotCompose extends React.Component<Props> {
               blurAmount={5}
               style={
                 [
-                  globalStyles.absolute,
+                  StyleSheet.absoluteFill,
                   {
                     backgroundColor: 'rgba(255,255,255,0.5)',
                     overflow: 'hidden',
