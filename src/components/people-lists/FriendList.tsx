@@ -36,12 +36,13 @@ class FriendList extends React.Component<Props> {
   renderItem = ({item}) => <FriendCard profile={item.user} />
 
   render() {
+    // Sometimes wocky.profile is null. Race condition?
     return (
       <DraggablePopupList
-        headerInner={this.renderHeader()}
+        headerInner={this.props.wocky!.profile ? this.renderHeader() : undefined}
         renderItem={this.renderItem}
         keyExtractor={item => item.user.id}
-        data={this.props.wocky!.profile!.friends.list.slice()}
+        data={this.props.wocky!.profile ? this.props.wocky!.profile!.friends.list.slice() : []}
         keyboardShouldPersistTaps="handled"
         isActive={this.props.isActive}
         // keyboardDismissMode="interactive"
