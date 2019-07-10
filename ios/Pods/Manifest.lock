@@ -8,12 +8,9 @@ PODS:
     - React
   - BVLinearGradient (2.5.3):
     - React
-  - CocoaLumberjack (3.4.2):
-    - CocoaLumberjack/Default (= 3.4.2)
-    - CocoaLumberjack/Extensions (= 3.4.2)
-  - CocoaLumberjack/Default (3.4.2)
-  - CocoaLumberjack/Extensions (3.4.2):
-    - CocoaLumberjack/Default
+  - CocoaLumberjack (3.5.3):
+    - CocoaLumberjack/Core (= 3.5.3)
+  - CocoaLumberjack/Core (3.5.3)
   - CodePush (5.6.0):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.7)
@@ -189,10 +186,10 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNBackgroundFetch (2.5.1):
+  - RNBackgroundFetch (2.6.1):
     - React
-  - RNBackgroundGeolocation (3.0.0-rc.5):
-    - CocoaLumberjack (~> 3.0)
+  - RNBackgroundGeolocation (3.0.9):
+    - CocoaLumberjack (~> 3.5.1)
     - React
   - RNDeviceInfo (2.2.2):
     - React
@@ -338,7 +335,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: 3ece9f1c9c8b5ac0eba71f1ddb5b08f4865dab26
   BVLinearGradient: 0d985ec461359c82bc254f26d11008bdae50d17a
-  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
+  CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   CodePush: 300e90b3481fa82569090406165b83745de3613a
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 963d5685fae888a56d6d4d9cfce6b9c976958798
@@ -367,8 +364,8 @@ SPEC CHECKSUMS:
   react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
-  RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
-  RNBackgroundGeolocation: 3a5bf961801125a88b00dbb4d620b815fb4d39dc
+  RNBackgroundFetch: 7c84c5bc191885588538fd65d568e9b833cd89fb
+  RNBackgroundGeolocation: 4d0af84b16f77102288ef236616a055b1e070fe2
   RNDeviceInfo: 1215084f45c1059b031c530281442dc7079ccf0a
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1

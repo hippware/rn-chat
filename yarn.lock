@@ -4358,11 +4358,6 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
 
-cocoa-lumberjack@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/cocoa-lumberjack/-/cocoa-lumberjack-3.0.5.tgz#0b29683272ad426974a2c71c86d4de9a81029e6d"
-  integrity sha512-zwzRb4hhObx8nLBo8QcE1TvJfHdE1vdQRxYT6Zyh8yLB8yYz4u/FCkHeVNhUNVxyXopkWL53m2rEwpvjm9q+Yw==
-
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
@@ -11068,24 +11063,23 @@ react-native-animated-linear-gradient@^1.2.0:
     prop-types "^15.6.0"
     rgb2hex "^0.1.0"
 
-react-native-background-fetch@~2.5.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.5.1.tgz#d02663fd71d7a5cabc574f2ca5267d56b46f2a61"
-  integrity sha512-6s5k2APVkcgZTavDAUbo6MQJJGaNkQbWSR5h2AgArl5EaA7aEnqFMLl8YoTIvygmUPH+VpTuTbUq11SlFJPDSw==
+react-native-background-fetch@~2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.6.1.tgz#a38c298cf748ba332e51c724ad4d7af8677929af"
+  integrity sha512-/P6GceM1/OvTeHmnwEYJl89FAY2ExpAJfMC4Z1eYUIMwR93Vv2ZLEYa5FHyhItMMeg2ZzlEXmiZTVZ6IbYeb+A==
   dependencies:
     fast-plist "^0.1.2"
-    plist "^2.0.1"
-    xcode "^0.9.1"
+    plist "^3.0.1"
+    xcode "^2.0.0"
 
-react-native-background-geolocation@^3.0.0-rc.5:
-  version "3.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.0.0-rc.5.tgz#fbec893cc5a324eaf3c9455110a9fa8ce02b93d0"
-  integrity sha512-+dAAy1B87ZjwReBeB2hmVpZ5qkAyB5M2AK+rK0QjtDG+Ztww/Pmavd/igXltqkL9tqc1UIJZDE2yBtdq3HPRcg==
+react-native-background-geolocation@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-3.0.9.tgz#636f2e11660a904a68c4cb3fbebd10a3cf3e9e43"
+  integrity sha512-mpLUbaj9XaW1Q8GUz2xGoOAOy5jN2UyFkxzFmsfgI/WSDopGWRhZL8OLYjCVKVktjxqNbnIatMFEyrfAD/skLw==
   dependencies:
-    cocoa-lumberjack "^3.0.5"
     fast-plist "^0.1.2"
     plist "^2.0.1"
-    react-native-background-fetch "~2.5.0"
+    react-native-background-fetch "~2.6.1"
     xcode "^0.9.1"
 
 react-native-blur@^3.2.2:
