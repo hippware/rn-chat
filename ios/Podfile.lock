@@ -110,7 +110,7 @@ PODS:
   - GTMSessionFetcher/Core (1.2.1)
   - JWT (3.0.0-beta.11):
     - Base64 (~> 1.1.2)
-  - Mixpanel (3.3.7)
+  - Mixpanel (3.4.7)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -128,7 +128,7 @@ PODS:
   - react-native-maps (0.24.2):
     - React
   - react-native-mixpanel (0.0.6):
-    - Mixpanel
+    - Mixpanel (~> 3.4.5)
     - React
   - react-native-splash-screen (3.2.0):
     - React
@@ -357,14 +357,14 @@ SPEC CHECKSUMS:
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
-  Mixpanel: 1e94d1d29dfc3d3c66f734d10e29ad86420889fe
+  Mixpanel: 696e0a1c7f2685aa06bb23829b7a58ab7203d6c7
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 9d063e2f356c8cd2f54dd550d4507740037cbabe
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-google-maps: 568cb03d0eae7fef93626f65d05be55642404ed4
   react-native-maps: 0316ed017dbb64b33b227751fa810e2454fcfa39
-  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
