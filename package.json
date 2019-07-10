@@ -79,7 +79,7 @@
     "react-native-image-crop-picker": "^0.21.3",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-linear-gradient": "^2.5.3",
-    "react-native-localize": "^1.1.0",
+    "react-native-localize": "^1.1.4",
     "react-native-maps": "^0.24.2",
     "react-native-mixpanel": "^1.1.1",
     "react-native-permissions": "^1.1.1",

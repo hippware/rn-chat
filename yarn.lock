@@ -11215,10 +11215,10 @@ react-native-linear-gradient@^2.5.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.3.tgz#d90cf19a13fcccfa8bb32025ac40a15ae1b49e99"
   integrity sha512-XdusrOXXlkI+yQpUW7YLeiq9cZiBwkvQX4XEkHPVrJ9H47gsKmdgBwObkZBzBQUP0dKK/Sg6aVpETEis4w43bQ==
 
-react-native-localize@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.1.0.tgz#d0a0cd3edab969fbba0b426f3a5674684b74c0bb"
-  integrity sha512-bHXmycxmSdUPXDEvMKJAhJnN6e/ozrXKP4Vlbs9+Vq/iv3X76EHMqYpTOj/+D38IONVhS5lYZmRs8tcimyegiA==
+react-native-localize@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.1.4.tgz#d48aa4f75afd39a42dcd0bdf40f7f44a8ccd604c"
+  integrity sha512-NHsA812yvoH9ktPl1IqIxwDDwykipyH7K4zeW/nnipZuQb2g73SQEB3ryqKHmRASWD0DZl0hIxHr9IszzG5W5w==
 
 react-native-maps@^0.24.2:
   version "0.24.2"
