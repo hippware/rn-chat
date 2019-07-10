@@ -194,7 +194,7 @@ PODS:
   - RNBackgroundGeolocation (3.0.0-rc.5):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNDeviceInfo (0.9.3):
+  - RNDeviceInfo (2.2.2):
     - React
   - RNFirebase (5.2.3):
     - Firebase/Core
@@ -369,7 +369,7 @@ SPEC CHECKSUMS:
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNBackgroundFetch: f123aec9c3fdb946785452a56faae50d28e63aee
   RNBackgroundGeolocation: 3a5bf961801125a88b00dbb4d620b815fb4d39dc
-  RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
+  RNDeviceInfo: 1215084f45c1059b031c530281442dc7079ccf0a
   RNFirebase: fb4f66d93810b53aa4d1cc50c9fb91ee3548abe2
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
   RNGestureHandler: 8a75e1d2f83d73aba148653252953e4bcf363b98

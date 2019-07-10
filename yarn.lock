@@ -11140,10 +11140,10 @@ react-native-contacts@^5.0.1:
     prop-types "15.6.0"
     world-countries "1.8.0"
 
-react-native-device-info@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.12.1.tgz#659ed145caa5a86a4815904381b25e9ebe0c24f6"
-  integrity sha1-ZZ7RRcqlqGpIFZBDgbJenr4MJPY=
+react-native-device-info@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.2.2.tgz#777388b8cff4594c8db2ea3a53f2f1f9e2c611a1"
+  integrity sha512-2b0TycUJbW/9T7L070L6q4+ce8guD4c0c8mWWjiVNuvCrZVf7VNomvNk1BqIVXcnYbZO43V0SVN6z1fvp2HTyg==
 
 react-native-emoji-selector@^0.1.6:
   version "0.1.6"
