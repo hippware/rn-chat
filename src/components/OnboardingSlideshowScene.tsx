@@ -18,9 +18,10 @@ const maskLeft = require('../../images/maskLeft.png')
 const maskCenter = require('../../images/maskCenter.png')
 const maskRight = require('../../images/maskRight.png')
 
-class Onboarding extends React.Component {
-  render() {
-    const SwiperAny = Swiper as any // TODO: swiper types broken
+    async function logoutAndNavTo(sceneName: string) {
+      firebaseStore!.logout().catch(err => warn('logout error', err))
+      Actions[sceneName]()
+    }
     return (
       <View style={{flex: 1}} testID="preConnection">
         <SwiperAny
