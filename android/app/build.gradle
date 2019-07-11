@@ -99,7 +99,7 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -148,7 +148,7 @@ android {
     versionName name
 
     ndk {
-      abiFilters "armeabi-v7a", "x86"
+      // abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
     }
     // because of firestore:
     multiDexEnabled true
@@ -178,10 +178,20 @@ android {
   }
   splits {
     abi {
-      reset()
+      // https://developer.android.com/studio/build/configure-apk-splits.html
+      // https://proandroiddev.com/reducing-apk-size-by-using-abi-filters-and-apk-split-74a68a885f4e
+
       enable enableSeparateBuildPerCPUArchitecture
-      universalApk false  // If true, also generate a universal APK
-      include "armeabi-v7a", "x86"
+
+      // By default all ABIs are included, so use reset() and include to specify that we only
+      // want APKs for x86, armeabi-v7a, and mips.
+      reset()
+      
+      // Specifies that we want to also generate a universal APK that includes all ABIs.
+      universalApk true  // If true, also generate a universal APK
+
+      // Specifies a list of ABIs that Gradle should create APKs for.
+      include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
     }
   }
   buildTypes {
@@ -222,12 +232,13 @@ android {
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
       // For each separate APK per architecture, set a unique version code as described here:
-      // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-      def versionCodes = ["armeabi-v7a": 1, "x86": 2]
+      // https://developer.android.com/studio/build/configure-apk-splits.html#configure-APK-versions
+      // Also see https://developer.android.com/google/play/publishing/multiple-apks.html#using-a-version-code-scheme
+      def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
       def abi = output.getFilter(OutputFile.ABI)
       if (abi != null) {  // null for the universal-debug, universal-release variants
         output.versionCodeOverride =
-          versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+          versionCodes.get(abi) * 1000000 + defaultConfig.versionCode
       }
     }
   }
