@@ -56,13 +56,19 @@ public class MainApplication extends Application implements ReactApplication {
           new PickerPackage(), new AndroidOpenSettingsPackage(), new ExtraDimensionsPackage(), new RNLocalizePackage(),
           new RNBackgroundGeolocation(), BugsnagReactNative.getPackage(), new ReactNativePushNotificationPackage(),
           new LinearGradientPackage(), new RNFSPackage(), new TouchThroughViewPackage(), new RNMixpanel(),
-          new RNDeviceInfo(),
+          new RNDeviceInfo(true),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
               getApplicationContext(), BuildConfig.DEBUG),
           new RNGestureHandlerPackage(), new RNFirebasePackage(), new RNFirebaseAuthPackage(),
           new RNFirebaseMessagingPackage(), new RNFirebaseLinksPackage(), new MapsPackage(),
           new ReactNativeConfigPackage(), new ReactNativeContacts());
     }
+
+    // todo: this is available...but how do we use it?
+    // @Override
+    // public List<ReactPackage> createAdditionalReactPackages() {
+    //     return Arrays.<ReactPackage>asList(...);
+    // }
 
     @Override
     protected String getJSMainModuleName() {

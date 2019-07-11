@@ -393,7 +393,7 @@ const LocationStore = types
       yield start()
       if (self.alwaysOn) {
         yield self.configure()
-        const config = yield BackgroundGeolocation.ready({})
+        const config = yield BackgroundGeolocation.ready({reset: false})
         log(prefix, 'Ready: ', config)
         self.updateBackgroundConfigSuccess(config)
       }
