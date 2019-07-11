@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import {View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
-import {observable} from 'mobx'
+import {inject} from 'mobx-react'
+
 import {RText} from './common'
 import {colors} from '../constants'
 import {k} from './Global'
@@ -9,11 +9,10 @@ import FormTextInput from './FormTextInput'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal'
 import {Actions} from 'react-native-router-flux'
-import {parse, AsYouType as asYouType} from 'libphonenumber-js'
+import {parse, AsYouType as asYouType, CountryCode} from 'libphonenumber-js'
 import {IFirebaseStore} from 'src/store/FirebaseStore'
 import {PINK} from 'src/constants/colors'
-
-// TODO: inject this dependency
+import {observer, useLocalStore} from 'mobx-react-lite'
 const CarrierInfo = NativeModules.RNCarrierInfo
 
 const countryMap = {}
@@ -23,60 +22,72 @@ type Props = {
   firebaseStore?: IFirebaseStore
 }
 
-@inject('firebaseStore')
-@observer
-class SignIn extends React.Component<Props> {
-  picker: any
-  @observable cca2: any = 'US'
-  @observable callingCode: string = '1'
-  @observable countryName: string = 'United States'
-  @observable phoneValue: string = ''
-  @observable submitting: boolean = false
-  @observable sendText: string = 'Send Confirmation'
-  phoneText: any
+type State = {
+  cca2: CountryCode
+  callingCode: string
+  countryName: string
+  phoneValue: string
+  submitting: boolean
+  sendText: string
+  phoneValid: boolean
+}
 
-  componentDidMount() {
-    if (CarrierInfo)
-      CarrierInfo.isoCountryCode(result => {
-        if (result && result !== 'nil') {
-          this.cca2 = result.toUpperCase()
-          const data = countryMap[this.cca2]
-          this.callingCode = data.callingCode
-          this.countryName = data.name.common
-        }
+type Setter = (state: Partial<State>) => void
+
+const SignIn = inject('firebaseStore')(
+  observer(({firebaseStore}: Props) => {
+    const picker: any = useRef(null)
+
+    const store = useLocalStore<State & {set: Setter}>(() => ({
+      cca2: 'US',
+      callingCode: '1',
+      countryName: 'United States',
+      phoneValue: '',
+      submitting: false,
+      sendText: 'Send Confirmation',
+      phoneValid: false,
+      set(state) {
+        Object.assign(store, {...store, ...state})
+      },
+    }))
+
+    useEffect(() => {
+      if (CarrierInfo)
+        CarrierInfo.isoCountryCode(result => {
+          if (result && result !== 'nil') {
+            const cca2 = result.toUpperCase()
+            const data = countryMap[cca2]
+            store.set({
+              cca2,
+              callingCode: data.callingCode,
+              countryName: data.name.common,
+            })
+          }
+        })
+    }, [])
+
+    function processText(text: string) {
+      const parsed = parse(text, store.cca2)
+      store.set({
+        phoneValid: !!(parsed.country && parsed.phone),
+        phoneValue: /\d{4,}/.test(text) ? new asYouType(store.cca2).input(text) : text,
       })
-  }
-
-  processText = (text: string) => {
-    const parsed = parse(text, this.cca2)
-    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text // eslint-disable-line
-    if (parsed.country && parsed.phone) {
-      // TODO: fix phonetext validation
-      this.phoneText.valid = true
-    } else {
-      this.phoneText.valid = false
     }
-  }
 
-  submit = async (): Promise<void> => {
-    if (!this.phoneText.valid) {
-      this.phoneText.message = 'Please check your phone number and try again'
-    } else {
-      this.submitting = true
-      this.phoneText.message = ''
-      const verified = await this.props.firebaseStore!.verifyPhone(
-        `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`
-      )
-      if (verified) {
-        Actions.verifyCode()
+    async function submit(): Promise<void> {
+      if (store.phoneValid) {
+        store.set({submitting: true})
+        const verified = await firebaseStore!.verifyPhone(
+          `+${store.callingCode}${store.phoneValue!.replace(/\D/g, '')}`
+        )
+        if (verified) {
+          Actions.verifyCode()
+        }
+
+        store.set({submitting: false})
       }
-
-      this.submitting = false
     }
-  }
 
-  render() {
-    const {firebaseStore} = this.props
     return (
       <KeyboardAwareScrollView
         style={{flex: 1, backgroundColor: colors.WHITE}}
@@ -100,23 +111,25 @@ class SignIn extends React.Component<Props> {
         <View style={{marginTop: 20 * k}}>
           <CountryPicker
             onChange={value => {
-              this.cca2 = value.cca2
-              this.callingCode = value.callingCode
-              this.countryName = value.name
+              store.set({
+                cca2: value.cca2,
+                callingCode: value.callingCode,
+                countryName: value.name,
+              })
             }}
-            cca2={this.cca2}
+            cca2={store.cca2}
             translation="eng"
             filterable
             closeable
-            ref={r => (this.picker = r)}
+            ref={picker}
           >
-            <TouchableOpacity onPress={() => this.picker.openModal()}>
+            <TouchableOpacity onPress={() => (picker.current as any).openModal()}>
               <FormTextInput
                 icon={require('../../images/globe.png')}
                 label="Country Code"
                 autoCapitalize="none"
                 // validate={() => {}}
-                value={`${this.countryName} +${this.callingCode}`}
+                value={`${store.countryName} +${store.callingCode}`}
                 editable={false}
                 pointerEvents="none"
               />
@@ -129,9 +142,8 @@ class SignIn extends React.Component<Props> {
             autoFocus
             autoCorrect={false}
             keyboardType="phone-pad"
-            ref={r => (this.phoneText = r)}
-            onChangeText={this.processText}
-            value={this.phoneValue}
+            onChangeText={processText}
+            value={store.phoneValue}
           />
 
           <View style={{marginHorizontal: 36 * k, marginVertical: 20 * k}}>
@@ -142,11 +154,11 @@ class SignIn extends React.Component<Props> {
             )}
             <TouchableOpacity
               style={styles.button}
-              disabled={this.submitting || !this.phoneText || !this.phoneText.valid}
-              onPress={this.submit}
+              disabled={store.submitting || !store.phoneValid}
+              onPress={submit}
             >
               <RText style={styles.text}>
-                {this.submitting ? 'Sending...' : 'Send Confirmation'}
+                {store.submitting ? 'Sending...' : 'Send Confirmation'}
               </RText>
             </TouchableOpacity>
             <RText
@@ -162,8 +174,8 @@ class SignIn extends React.Component<Props> {
         </View>
       </KeyboardAwareScrollView>
     )
-  }
-}
+  })
+)
 
 export default SignIn
 
