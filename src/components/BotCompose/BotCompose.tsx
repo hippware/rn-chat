@@ -15,7 +15,7 @@ import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
-import {observable, reaction, computed} from 'mobx'
+import {observable, computed, autorun} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconStore from '../../store/IconStore'
@@ -25,7 +25,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
 import alert from '../../utils/alert'
-import {log} from '../../utils/logger'
+import {log, warn} from '../../utils/logger'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -56,25 +56,34 @@ type Props = {
   homeStore?: IHomeStore
   notificationStore?: any
   locationStore?: any
+  geocodingStore?: any
   analytics?: any
   keyboardShowing?: boolean
 }
 
 const emojiKeyboardHeight = height / 2
 
-@inject('wocky', 'homeStore', 'iconStore', 'notificationStore', 'analytics', 'locationStore')
+@inject(
+  'wocky',
+  'homeStore',
+  'iconStore',
+  'notificationStore',
+  'analytics',
+  'locationStore',
+  'geocodingStore'
+)
 @observer
 export class BotCompose extends React.Component<Props> {
   @observable isLoading: boolean = false
   @observable bot?: IBot
   @observable uploadingPhoto: boolean = false
   @observable text: string = ''
+  @observable textReactsToLocation: boolean = true
   controls: any
   botTitle: any
   note: any
   accessoryText?: any
-  handler: any
-  handler2: any
+  disposer: any
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
@@ -83,25 +92,37 @@ export class BotCompose extends React.Component<Props> {
       this.bot!.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
     }
     if (this.bot) {
-      this.text = this.bot.title || ''
+      if (this.bot.title) {
+        this.text = this.bot.title
+        this.textReactsToLocation = false
+      }
+
       this.props.iconStore!.setEmoji(this.bot.icon)
     }
-  }
 
-  componentDidMount() {
-    this.handler = reaction(
-      () => ({...this.props.homeStore!.mapCenterLocation}),
-      location => {
-        if (this.props.homeStore!.creationMode) {
-          this.bot!.load({location})
+    this.disposer = autorun(
+      () => {
+        try {
+          const {creationMode, mapCenterLocation} = this.props.homeStore!
+          if (creationMode) {
+            this.bot!.load({location: {...mapCenterLocation}})
+            if (this.textReactsToLocation) {
+              this.props.geocodingStore!.reverse(mapCenterLocation).then(data => {
+                this.text = data.address
+              })
+            }
+          }
+        } catch (err) {
+          warn('autorun error', err)
         }
-      }
+      },
+      {name: 'Update location on map move'}
     )
   }
 
   componentWillUnmount() {
     this.props.iconStore!.reset()
-    this.handler()
+    this.disposer()
   }
 
   @computed
@@ -171,7 +192,10 @@ export class BotCompose extends React.Component<Props> {
               style={styles.textStyle}
               placeholder="Name this place"
               ref={r => (this.botTitle = r)}
-              onChangeText={text => (this.text = text)}
+              onChangeText={text => {
+                this.textReactsToLocation = false
+                this.text = text
+              }}
               value={this.text}
               selectionColor={colors.COVER_BLUE}
             />
