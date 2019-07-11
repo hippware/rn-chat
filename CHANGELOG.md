@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Loader doesn't spin when adding an image (#3620)
 * Use StyleSheet.absoluteFill and remove redundancy (PR #3898)
 * Upgrade bugsnag (PR #3899)
+* Offline Banner with logout and app froze (#3819)
 
 # 4.16.0 - 2019 Jul 5
 
