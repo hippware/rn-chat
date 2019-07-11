@@ -7,6 +7,9 @@ import {settings} from '../globals'
 import {RText, GradientButton} from './common'
 import {width, height, k} from './Global'
 import {inject} from 'mobx-react/native'
+import {Analytics} from 'src/utils/analytics'
+import {IFirebaseStore} from 'src/store/FirebaseStore'
+import {warn} from 'src/utils/logger'
 
 const bg1 = require('../../images/slide1.png')
 const livelocation = require('../../images/livelocation.png')
@@ -18,10 +21,19 @@ const maskLeft = require('../../images/maskLeft.png')
 const maskCenter = require('../../images/maskCenter.png')
 const maskRight = require('../../images/maskRight.png')
 
-    async function logoutAndNavTo(sceneName: string) {
+type Props = {
+  analytics?: Analytics
+  firebaseStore?: IFirebaseStore
+}
+
+const OnboardingSlideshowScene = inject('analytics', 'firebaseStore')(
+  ({analytics, firebaseStore}: Props) => {
+    function logoutAndNavTo(sceneName: string) {
       firebaseStore!.logout().catch(err => warn('logout error', err))
       Actions[sceneName]()
     }
+
+    const SwiperAny = Swiper as any
     return (
       <View style={{flex: 1}} testID="preConnection">
         <SwiperAny
@@ -43,12 +55,33 @@ const maskRight = require('../../images/maskRight.png')
             {'See who’s at your\r\nfavorite locations!'}
           </Slide>
         </SwiperAny>
-        <Buttons />
-        <BypassButton />
+        <View style={styles.footerButtons}>
+          <GradientButton
+            isPink
+            style={[styles.button]}
+            onPress={() => {
+              analytics!.track('signup')
+              logoutAndNavTo('signIn')
+            }}
+          >
+            <RText size={17.5} color={colors.WHITE}>
+              Get Started
+            </RText>
+          </GradientButton>
+        </View>
+        {settings.allowBypassLogin && (
+          <TouchableOpacity
+            onPress={() => logoutAndNavTo('testRegisterScene')}
+            style={styles.bypassButton}
+            testID="bypassButton"
+          >
+            <RText color={colors.PINK}>Bypass</RText>
+          </TouchableOpacity>
+        )}
       </View>
     )
   }
-}
+)
 
 const BG_IMG_RATIO = 667 / 375 // height / width of background images
 const FLEX = 55
@@ -79,37 +112,7 @@ const Slide = ({bgImg, iconImg, left, center, children}: any) => {
   )
 }
 
-const BypassButton = () => {
-  return settings.allowBypassLogin ? (
-    <TouchableOpacity
-      onPress={Actions.testRegisterScene}
-      style={styles.bypassButton}
-      testID="bypassButton"
-    >
-      <RText color={colors.PINK}>Bypass</RText>
-    </TouchableOpacity>
-  ) : null
-}
-
-const Buttons = inject('analytics')(({analytics}) => (
-  <View style={styles.footerButtons}>
-    <GradientButton
-      isPink
-      style={[styles.button]}
-      onPress={() => {
-        analytics.track('signup')
-        Actions.signIn()
-      }}
-    >
-      <RText size={17.5} color={colors.WHITE}>
-        Get Started
-      </RText>
-    </GradientButton>
-    {/* TODO: Add Facebook button */}
-  </View>
-))
-
-export default Onboarding
+export default OnboardingSlideshowScene
 
 const FOOTER_HEIGHT = 100 * k
 
