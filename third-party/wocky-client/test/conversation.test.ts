@@ -50,6 +50,10 @@ describe('New GraphQL conversation tests', () => {
     expect(bob.chats.list.length).toBe(1)
     expect(bob.chats.list[0].messages.list.length).toBe(2)
     expect(bob.chats.list[0].messages.last!.content).toBe('hello')
+    expect(bob.chats.list[0].messages.first!.content).toBe('hello2')
+    expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(2)
+    await bob.chats.list[0].readAll()
+    expect(bob.chats.list[0].messages.list.filter(x => x.unread).length).toBe(0)
   })
 
   it("bob can load alice's chat messages", async () => {

@@ -770,6 +770,24 @@ export class Transport {
     })
   }
 
+  async messageMarkRead(messageIds: string[]) {
+    const messages = messageIds.map(id => ({id, read: true}))
+    return this.voidMutation({
+      mutation: gql`
+        mutation messageMarkRead($input: MessageMarkReadInput!) {
+          messageMarkRead(input: $input) {
+            ${VOID_PROPS}
+          }
+        }
+      `,
+      variables: {
+        input: {
+          messages,
+        },
+      },
+    })
+  }
+
   async loadChatMessages(userId, lastId, max): PaginableLoadPromise<IMessageIn> {
     await waitFor(() => this.connected)
     const res = await this.client!.query<any>({
@@ -1421,31 +1439,31 @@ export class Transport {
       : `wss://${this.host}/graphql`
 
     // uncomment to see all graphql messages!
-    // process.env.WOCKY_VERBOSE = '1'
+    process.env.WOCKY_VERBOSE = '1'
 
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect
       logger: process.env.WOCKY_VERBOSE
         ? (kind, msg, data) => {
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value#Examples
-            const getCircularReplacer = () => {
-              const seen = new WeakSet()
-              return (key, value) => {
-                if (typeof value === 'object' && value !== null) {
-                  if (seen.has(value)) {
-                    return
-                  }
-                  seen.add(value)
-                }
-                return value
-              }
-            }
+            // const getCircularReplacer = () => {
+            //   const seen = new WeakSet()
+            //   return (key, value) => {
+            //     // if (typeof value === 'object' && value !== null) {
+            //     //   if (seen.has(value)) {
+            //     //     return
+            //     //   }
+            //     //   seen.add(value)
+            //     // }
+            //     return value
+            //   }
+            // }
 
             // tslint:disable-next-line
             console.log(
               `${new Date().toISOString()} | socket(${
                 this.instance
-              }):${kind} | ${msg} | ${JSON.stringify(data, getCircularReplacer)}`
+              }):${kind} | ${msg} | ${JSON.stringify(data)}`
             )
           }
         : undefined,
