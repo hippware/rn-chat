@@ -7,10 +7,19 @@ import {PINK, DARK_GREY, WHITE} from '../constants/colors'
 const background = require('../../images/codepushBackground.png')
 const icon = require('../../images/codePushIcon.png')
 
-const UpdateBrick = ({waiting}: {waiting?: boolean}) => {
+const UpdateBrick = () => {
   useEffect(() => {
+    try {
+      // this is necessary for native binaries that include splash screen, but since older builds may not have this module included, we wrap it in a try/catch
+      const SplashScreen = require('react-native-splash-screen')
+      SplashScreen.hide()
+    } catch (err) {
+      // noop
+    }
     codePush.notifyAppReady()
   }, [])
+
+  const waiting = false
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -52,11 +61,7 @@ const UpdateBrick = ({waiting}: {waiting?: boolean}) => {
             marginTop: 30,
             borderRadius: 4,
           }}
-          onPress={() =>
-            Linking.openURL(
-              'itms-apps://itunes.apple.com/us/app/id1295678402?mt=8&action=write-review'
-            )
-          }
+          onPress={() => Linking.openURL('itms-apps://itunes.apple.com/us/app/id1295678402?mt=8')}
         >
           <RText size={18} color={WHITE}>
             Update
