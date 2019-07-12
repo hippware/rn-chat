@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Firebase testing number was previously logged account (#3873)
+* Tweak to location creation - Auto populate the location name (#3094)
+
 # 4.17.0 - 2019 Jul 11
 
 * Replace react-native-camera-kit (#3836)
