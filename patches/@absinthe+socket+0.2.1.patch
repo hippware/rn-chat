@@ -1,3 +1,159 @@
+diff --git a/node_modules/@absinthe/socket/compat/cjs/cancel.js b/node_modules/@absinthe/socket/compat/cjs/cancel.js
+index 31e3e06..83327f5 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/cancel.js
++++ b/node_modules/@absinthe/socket/compat/cjs/cancel.js
+@@ -371,7 +371,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$k);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/compat/cjs/index.js b/node_modules/@absinthe/socket/compat/cjs/index.js
+index 0c8d521..f380a04 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/index.js
++++ b/node_modules/@absinthe/socket/compat/cjs/index.js
+@@ -377,7 +377,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$k);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/compat/cjs/joinChannel.js b/node_modules/@absinthe/socket/compat/cjs/joinChannel.js
+index 1f715c3..4e23ac4 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/joinChannel.js
++++ b/node_modules/@absinthe/socket/compat/cjs/joinChannel.js
+@@ -317,7 +317,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$g);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/compat/cjs/pushRequest.js b/node_modules/@absinthe/socket/compat/cjs/pushRequest.js
+index 440b183..9567cab 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/pushRequest.js
++++ b/node_modules/@absinthe/socket/compat/cjs/pushRequest.js
+@@ -317,7 +317,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$g);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/compat/cjs/pushRequestUsing.js b/node_modules/@absinthe/socket/compat/cjs/pushRequestUsing.js
+index 48b5670..a66fb4e 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/pushRequestUsing.js
++++ b/node_modules/@absinthe/socket/compat/cjs/pushRequestUsing.js
+@@ -303,7 +303,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$e);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/compat/cjs/send.js b/node_modules/@absinthe/socket/compat/cjs/send.js
+index d8f1c1d..0deb500 100644
+--- a/node_modules/@absinthe/socket/compat/cjs/send.js
++++ b/node_modules/@absinthe/socket/compat/cjs/send.js
+@@ -317,7 +317,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$g);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/cancel.js b/node_modules/@absinthe/socket/dist/cancel.js
+index 2e0b107..18bc5af 100644
+--- a/node_modules/@absinthe/socket/dist/cancel.js
++++ b/node_modules/@absinthe/socket/dist/cancel.js
+@@ -367,7 +367,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$k);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/index.js b/node_modules/@absinthe/socket/dist/index.js
+index fadee32..40919cd 100644
+--- a/node_modules/@absinthe/socket/dist/index.js
++++ b/node_modules/@absinthe/socket/dist/index.js
+@@ -371,7 +371,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$k);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/pushRequest.js b/node_modules/@absinthe/socket/dist/pushRequest.js
+index f527fc4..5d8e7a2 100644
+--- a/node_modules/@absinthe/socket/dist/pushRequest.js
++++ b/node_modules/@absinthe/socket/dist/pushRequest.js
+@@ -313,7 +313,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$g);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/pushRequestUsing.js b/node_modules/@absinthe/socket/dist/pushRequestUsing.js
+index d6e4d3f..62c80d3 100644
+--- a/node_modules/@absinthe/socket/dist/pushRequestUsing.js
++++ b/node_modules/@absinthe/socket/dist/pushRequestUsing.js
+@@ -297,7 +297,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$e);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/send.js b/node_modules/@absinthe/socket/dist/send.js
+index 92b2c71..9a29433 100644
+--- a/node_modules/@absinthe/socket/dist/send.js
++++ b/node_modules/@absinthe/socket/dist/send.js
+@@ -313,7 +313,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$g);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
+diff --git a/node_modules/@absinthe/socket/dist/subscription.js b/node_modules/@absinthe/socket/dist/subscription.js
+index 705bd03..7821a7e 100644
+--- a/node_modules/@absinthe/socket/dist/subscription.js
++++ b/node_modules/@absinthe/socket/dist/subscription.js
+@@ -350,7 +350,7 @@ var setNotifierRequestStatusSending = function setNotifierRequestStatusSending(a
+ var createRequestError = function createRequestError(message) {
+   _newArrowCheck(this, _this$j);
+ 
+-  return new Error("request: ".concat(message));
++  return new Error("request: ".concat(JSON.stringify(message)));
+ }.bind(undefined);
+ 
+ var onTimeout = function onTimeout(absintheSocket, notifier) {
 diff --git a/node_modules/@absinthe/socket/src/pushRequestUsing.js b/node_modules/@absinthe/socket/src/pushRequestUsing.js
 index 9e5f12d..2c38c75 100644
 --- a/node_modules/@absinthe/socket/src/pushRequestUsing.js

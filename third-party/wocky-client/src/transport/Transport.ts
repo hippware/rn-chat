@@ -770,7 +770,7 @@ export class Transport {
     })
   }
 
-  async messageMarkRead(messageIds: string[]) {
+  async messageMarkRead(messageIds: number[]) {
     const messages = messageIds.map(id => ({id, read: true}))
     return this.voidMutation({
       mutation: gql`
@@ -1439,7 +1439,7 @@ export class Transport {
       : `wss://${this.host}/graphql`
 
     // uncomment to see all graphql messages!
-    process.env.WOCKY_VERBOSE = '1'
+    // process.env.WOCKY_VERBOSE = '1'
 
     const socket = new PhoenixSocket(socketEndpoint, {
       reconnectAfterMs: () => 100000000, // disable auto-reconnect

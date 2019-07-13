@@ -44,11 +44,11 @@ export const Chat = types
   .actions(self => ({
     setActive: (active: boolean) => (self.active = active),
     readAll: flow(function*() {
-      const ids: string[] = []
+      const ids: number[] = []
       self.messages.list.forEach(msg => {
         if (msg.unread) {
           msg.setUnread(false)
-          ids.push(msg.id)
+          ids.push(parseInt(msg.id)) // server accepts only numbers
         }
       })
       yield self.transport.messageMarkRead(ids)
