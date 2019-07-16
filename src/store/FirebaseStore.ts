@@ -126,6 +126,9 @@ const FirebaseStore = types
           self.setState({
             token: await auth!.currentUser!.getIdToken(true),
           })
+
+          analytics.track('firebase_auth_change', {isUserTrue: true, user, token: !!self.token})
+
           if (disposer) disposer()
           disposer = when(() => !!self.token && self.phone, self.registerWithToken)
         } catch (err) {
@@ -136,8 +139,12 @@ const FirebaseStore = types
             wocky.logout()
           }
         }
-      } else if (wocky && wocky.profile && wocky.connected) {
-        wocky.logout()
+      } else {
+        analytics.track('firebase_auth_change', {isUserTrue: false})
+
+        if (wocky && wocky.profile && wocky.connected) {
+          wocky.logout()
+        }
       }
     }
 
