@@ -7,6 +7,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Firebase testing number was previously logged account (#3873)
 * Tweak to location creation - Auto populate the location name (#3094)
 * [android] Revert back to single APK. (PR #3912)
+* Codepush brick update (PR #3913)
+* [android] Firebase dynamic links/invitations (#3567)
 
 # 4.17.0 - 2019 Jul 11
 
