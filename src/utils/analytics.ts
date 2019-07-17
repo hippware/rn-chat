@@ -49,10 +49,9 @@ export class Analytics {
     }
     try {
       if (!properties) {
-        Mixpanel.track(name)
-      } else {
-        Mixpanel.trackWithProperties(name, properties)
+        properties = {}
       }
+      Mixpanel.trackWithProperties(name, {...properties, occurredAt: new Date().toISOString()})
     } catch (err) {
       log('Mixpanel tracking error', err)
       bsClient.notify(err, report => {
