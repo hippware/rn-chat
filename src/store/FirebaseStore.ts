@@ -127,7 +127,11 @@ const FirebaseStore = types
             token: await auth!.currentUser!.getIdToken(true),
           })
 
-          analytics.track('firebase_auth_change', {isUserTrue: true, user, token: !!self.token})
+          analytics.track('firebase_auth_change', {
+            isUserTrue: true,
+            user: JSON.stringify(user),
+            token: !!self.token,
+          })
 
           if (disposer) disposer()
           disposer = when(() => !!self.token && self.phone, self.registerWithToken)
