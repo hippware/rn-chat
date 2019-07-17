@@ -36,8 +36,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
-        <!-- todo: split out staging and prod schemes -->
-        <data android:scheme="tinyrobotStaging" />
+        <data android:scheme="@string/app_deeplink_scheme" />
       </intent-filter>
 
     </activity>

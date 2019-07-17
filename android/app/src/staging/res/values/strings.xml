@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">tinyrobot Staging</string>
+    <string name="app_deeplink_scheme">tinyrobotstaging</string>
 </resources>

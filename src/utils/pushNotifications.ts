@@ -21,12 +21,11 @@ export default (
         if (url) {
           try {
             analytics.track('push_notification_try', {notification})
-            if (await Linking.canOpenURL(url)) {
-              await Linking.openURL(url)
-              analytics.track('push_notification_success', {notification})
-            } else {
-              analytics.track('push_notification_bad_url', {notification})
-            }
+
+            // NOTE: Linking.canOpenURL doesn't work well with Android staging/prod setup
+            // if (await Linking.canOpenURL(url)) {
+            await Linking.openURL(url)
+            analytics.track('push_notification_success', {notification})
           } catch (err) {
             analytics.track('push_notification_fail', {notification, error: err})
           }
