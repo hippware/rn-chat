@@ -30,7 +30,7 @@ class AttachButton extends React.Component<Props> {
 
   onAttach = async () => {
     const {chat} = this.props
-    const image = await showImagePicker()
+    const image = await showImagePicker(false)
     if (image) {
       chat.sendMessage(image)
     }
