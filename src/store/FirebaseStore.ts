@@ -127,10 +127,9 @@ const FirebaseStore = types
             token: await auth!.currentUser!.getIdToken(true),
           })
 
-          analytics.track('firebase_auth_change', {
-            isUserTrue: true,
-            user: JSON.stringify(user),
-            token: !!self.token,
+          analytics.track('firebase_auth_change_user', {
+            firebaseUser: JSON.stringify(user),
+            hasFirebaseToken: !!self.token,
           })
 
           if (disposer) disposer()
@@ -144,8 +143,7 @@ const FirebaseStore = types
           }
         }
       } else {
-        analytics.track('firebase_auth_change', {isUserTrue: false})
-
+        analytics.track('firebase_auth_change_null')
         if (wocky && wocky.profile && wocky.connected) {
           wocky.logout()
         }
