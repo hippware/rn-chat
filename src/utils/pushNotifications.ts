@@ -10,16 +10,25 @@ export default (
     onRegister({token}) {
       onRegistered(token, Platform.OS === 'android' ? 'FCM' : 'APNS')
     },
-    onNotification(notification) {
+    onNotification: async notification => {
       log('Push Notification:', notification)
       analytics.track('push_notification_received', {notification})
-      if (!notification.foreground && notification.data && notification.data.uri) {
-        try {
-          analytics.track('push_notification_try', {notification})
-          Linking.openURL(notification.data.uri)
-          analytics.track('push_notification_success', {notification})
-        } catch (err) {
-          analytics.track('push_notification_fail', {notification, error: err})
+      if (!notification.foreground) {
+        const url = Platform.select({
+          ios: notification.data && notification.data.uri,
+          android: notification.url,
+        })
+        if (url) {
+          try {
+            analytics.track('push_notification_try', {notification})
+
+            // NOTE: Linking.canOpenURL doesn't work well with Android staging/prod setup
+            // if (await Linking.canOpenURL(url)) {
+            await Linking.openURL(url)
+            analytics.track('push_notification_success', {notification})
+          } catch (err) {
+            analytics.track('push_notification_fail', {notification, error: err})
+          }
         }
       }
     },

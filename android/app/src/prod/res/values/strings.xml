@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">tinyrobot</string>
+  <string name="app_deeplink_scheme">tinyrobot</string>
+</resources>
