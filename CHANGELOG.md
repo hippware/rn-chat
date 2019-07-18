@@ -9,7 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Revert back to single APK. (PR #3912)
 * Codepush brick update (PR #3913)
 * [android] Firebase dynamic links/invitations (#3567)
-* Add mixpanel debugging to processFirebaseAuthChange(). (PR #3919)
+* Some more logging and debugging (PR #3919, PR #3922, PR #3923)
+* Messages: Allow the sharing of non-square images (#3814)
 
 # 4.17.0 - 2019 Jul 11
 
