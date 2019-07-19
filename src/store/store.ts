@@ -14,6 +14,7 @@ import firebase, {RNFirebase, Firebase} from 'react-native-firebase'
 import DeviceInfo from 'react-native-device-info'
 import {Transport, Wocky} from 'wocky-client'
 import analytics from '../utils/analytics'
+import {bugsnagIdentify} from '../utils/bugsnagConfig'
 import FirebaseStore from './FirebaseStore'
 import AuthStore from './AuthStore'
 import fileService from './fileService'
@@ -100,6 +101,7 @@ const Store = types
   .actions(self => ({
     afterCreate() {
       analytics.identify(self.wocky)
+      bugsnagIdentify(self.wocky)
     },
     resetCache: flow(function*() {
       const data = yield AsyncStorage.getItem(STORE_NAME)
