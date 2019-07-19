@@ -15,7 +15,7 @@ import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
 import {observer, inject} from 'mobx-react/native'
-import {observable, computed, autorun} from 'mobx'
+import {observable, computed, reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconStore from '../../store/IconStore'
@@ -49,6 +49,7 @@ export function backAction(iconStore: IconStore) {
 
 type Props = {
   botId: string
+  title?: string
   edit?: boolean
   titleBlurred?: boolean
   wocky?: IWocky
@@ -87,10 +88,12 @@ export class BotCompose extends React.Component<Props> {
 
   componentWillMount() {
     this.bot = this.props.wocky!.getBot({id: this.props.botId})
-    // all bots now are geofence
     if (this.props.homeStore!.mapCenterLocation) {
       this.bot!.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
     }
+
+    this.text = this.props.title || ''
+
     if (this.bot) {
       if (this.bot.title) {
         this.text = this.bot.title
@@ -100,14 +103,17 @@ export class BotCompose extends React.Component<Props> {
       this.props.iconStore!.setEmoji(this.bot.icon)
     }
 
-    this.disposer = autorun(
-      () => {
+    this.disposer = reaction(
+      () => ({
+        location: this.props.homeStore!.mapCenterLocation,
+      }),
+      ({location}) => {
         try {
-          const {creationMode, mapCenterLocation} = this.props.homeStore!
+          const {creationMode} = this.props.homeStore!
           if (creationMode) {
-            this.bot!.load({location: {...mapCenterLocation}})
+            this.bot!.load({location: {...location}})
             if (this.textReactsToLocation) {
-              this.props.geocodingStore!.reverse(mapCenterLocation).then(data => {
+              this.props.geocodingStore!.reverse(location).then(data => {
                 this.text = data.address
               })
             }
@@ -116,7 +122,8 @@ export class BotCompose extends React.Component<Props> {
           warn('autorun error', err)
         }
       },
-      {name: 'Update location on map move'}
+      // NOTE: if we already have a title from the AddressBar then we shouldn't update the title (fireImmediately) with the address
+      {name: 'Update location on map move', fireImmediately: !this.props.title}
     )
   }
 
