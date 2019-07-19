@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.18.0 - 2019 Jul 18
+
 * Firebase testing number was previously logged account (#3873)
 * Tweak to location creation - Auto populate the location name (#3094)
 * [android] Revert back to single APK. (PR #3912)
@@ -11,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [android] Firebase dynamic links/invitations (#3567)
 * Some more logging and debugging (PR #3919, PR #3922, PR #3923)
 * Messages: Allow the sharing of non-square images (#3814)
+* [android] Push Notifications & Deep Linking (#3830)
 
 # 4.17.0 - 2019 Jul 11
 
