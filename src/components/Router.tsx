@@ -2,7 +2,7 @@ import React from 'react'
 import {when, autorun, reaction} from 'mobx'
 import {observer, inject} from 'mobx-react/native'
 import {settings} from '../globals'
-import {Keyboard} from 'react-native'
+import {Keyboard, Platform} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../store/LocationStore'
@@ -92,9 +92,10 @@ class TinyRobotRouter extends React.Component<Props> {
 
   render() {
     const {iconStore, wocky, navStore, authStore} = this.props
+    const uriPrefix = Platform.select({ios: settings.uriPrefix, android: settings.uriPrefix.toLowerCase()})
 
     return (
-      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={settings.uriPrefix} onDeepLink={this.onDeepLink}>
+      <Router onStateChange={() => navStore!.setScene(Actions.currentScene)} {...navBarStyle} uriPrefix={uriPrefix} onDeepLink={this.onDeepLink}>
         <Tabs hideNavBar hideTabBar>
           <Lightbox hideNavBar type="replace">
             <Scene key="checkCredentials" component={Launch} on={() => authStore!.canLogin} success="checkProfile" failure="preConnection" />
@@ -138,8 +139,12 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Scene key="geofenceShare" component={peopleLists.GeofenceShare} title="Invite Friends" back />
                   <Scene key="liveLocationSelectFriends" component={LiveLocationShare} title="Select Friends" />
                   <Scene key="myAccount" component={MyAccount} editMode back />
+
+                  {/* currently unused
                   <Scene key="followers" path="followers" component={peopleLists.FollowersList} title="Followers" back />
                   <Scene key="followed" component={peopleLists.FollowedList} title="Following" back />
+                  */}
+                  
                   <Scene key="blocked" component={peopleLists.BlockedList} title="Blocked Users" back />
                   <Scene key="attribution" component={Attribution} leftButtonImage={iconClose} onLeft={() => Actions.pop()} />
                   <Scene key="selectChatUser" component={SelectChatUser} title="Message" />

@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "4.17.0",
+  "version": "4.18.0",
   "private": true,
   "scripts": {
     "start": "ENVFILE=.env.staging node node_modules/react-native/local-cli/cli.js start",
@@ -10,7 +10,7 @@
     "androidShake": "adb shell input keyevent 82",
     "androidReload": "adb shell input text RR",
     "androidNetwork": "adb reverse tcp:8081 tcp:8081",
-    "androidInstall": "cd android && ./gradlew assembleStagingDebug && ./gradlew installStagingDebug && cd .. && yarn androidNetwork",
+    "androidInstall": "cd android && ./gradlew clean && ./gradlew assembleStagingDebug && ./gradlew installStagingDebug && cd .. && yarn androidNetwork",
     "test": "npm run testLocal && npm run jestWockyCI",
     "testLocal": "npm run lint && npm run lintWocky && npm run tsc:all && npm run jestCI",
     "tsc": "node node_modules/.bin/tsc -p tsconfig.build.json",
@@ -32,7 +32,9 @@
     "findUnusedExports": "./node_modules/.bin/ts-unused-exports ./tsconfig.json",
     "storybook": "storybook start",
     "postinstall": "patch-package",
-    "logcat": "adb logcat -e com.hippware"
+    "logcat": "adb logcat -e com.hippware",
+    "deeplink:android": "adb shell am start -W -a android.intent.action.VIEW -d \"tinyrobotStaging://conversation/2575d406-18ec-11e8-8e4b-0a580a020223/\"",
+    "deeplink:ios": "xcrun simctl openurl booted \"tinyrobotStaging://conversation/2575d406-18ec-11e8-8e4b-0a580a020223/\""
   },
   "dependencies": {
     "@absinthe/socket-apollo-link": "^0.2.0",

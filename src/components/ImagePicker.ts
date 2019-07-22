@@ -47,8 +47,8 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
         cropping,
         mediaType: 'photo',
         // cropperCircleOverlay: false,
-        // compressImageMaxWidth: 640,
-        // compressImageMaxHeight: 480,
+        compressImageMaxWidth: IMG_DEFAULT_SIZE,
+        compressImageMaxHeight: IMG_DEFAULT_SIZE,
         // compressImageQuality: 0.5,
       })
       const image: Image = result[0] || result
@@ -68,13 +68,13 @@ async function launchImageLibrary(cropping: boolean): Promise<PickerImage | void
   }
 }
 
-async function launchCamera(): Promise<PickerImage | void> {
+async function launchCamera(cropping: boolean): Promise<PickerImage | void> {
   Keyboard.dismiss()
   try {
     const image: any = await ImagePicker.openCamera({
       width: IMG_DEFAULT_SIZE,
       height: IMG_DEFAULT_SIZE,
-      cropping: true,
+      cropping,
       cropperToolbarTitle: 'Crop Image',
     })
     return {
@@ -99,16 +99,10 @@ const photoActions = [
   },
 ]
 
-export async function showImagePicker(
-  title?: string,
-  cropping: boolean = true
-): Promise<PickerImage | void> {
+export async function showImagePicker(cropping: boolean = true): Promise<PickerImage | void> {
   const options = {
     options: [...photoActions.map(a => a.title), 'Cancel'],
     cancelButtonIndex: photoActions.length,
-  }
-  if (title) {
-    ;(options as any).title = title
   }
   return new Promise(resolve => {
     ActionSheet.showActionSheetWithOptions(options, index => {
