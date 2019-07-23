@@ -46,12 +46,14 @@ export const Chat = types
     readAll: flow(function*() {
       const ids: number[] = []
       self.messages.list.forEach(msg => {
-        if (msg.unread) {
+        if (msg.unread && msg.sid) {
           msg.setUnread(false)
-          ids.push(parseInt(msg.id)) // server accepts only numbers
+          ids.push(msg.sid)
         }
       })
-      yield self.transport.messageMarkRead(ids)
+      if (ids.length) {
+        yield self.transport.messageMarkRead(ids)
+      }
     }),
     _loadMessages: flow(function*(lastId?: string, max: number = 20) {
       const {list, count, cursor} = yield self.transport.loadChatMessages(self.id, lastId, max)

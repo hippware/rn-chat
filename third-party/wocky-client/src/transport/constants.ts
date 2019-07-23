@@ -112,6 +112,7 @@ export const MESSAGE_PROPS = `
   createdAt
   direction
   clientData
+  read
   ${MEDIA_PROPS}
   otherUser {
     ${PROFILE_PROPS}

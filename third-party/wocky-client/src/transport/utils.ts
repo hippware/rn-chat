@@ -473,11 +473,15 @@ export function convertMessage({
   createdAt,
   media,
   clientData,
+  read,
 }): IMessageIn {
   const data = clientData ? JSON.parse(clientData) : {}
+  const isOutgoing = direction === 'OUTGOING'
   return {
     id: data.id || id.toString(),
+    sid: id,
     otherUser,
+    unread: isOutgoing ? false : !read,
     time: iso8601toDate(createdAt).getTime(),
     media: convertImage(media) as any,
     content: content || undefined,
