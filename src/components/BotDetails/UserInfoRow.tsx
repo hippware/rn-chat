@@ -17,16 +17,9 @@ type Props = {
   locationStore?: ILocationStore
 }
 
-@inject('locationStore')
-@observer
-class UserInfoRow extends React.Component<Props> {
-  button: any
-
-  render() {
-    const {profile, style /*, locationStore*/} = this.props
-    if (!profile) return null
-    // const {distanceToString, distance, location} = locationStore!
-    return (
+const UserInfoRow = inject('locationStore')(
+  observer(({profile, style, copyAddress, locationStore}: Props) => {
+    return profile ? (
       <View style={[styles.container, style]}>
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40} fontFamily="regular" />
@@ -38,9 +31,9 @@ class UserInfoRow extends React.Component<Props> {
           />
         </View>
       </View>
-    )
-  }
-}
+    ) : null
+  })
+)
 
 export default UserInfoRow
 
