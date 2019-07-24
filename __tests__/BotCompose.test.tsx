@@ -7,7 +7,7 @@ import './utils/mockMap'
 import mockStore from './utils/mockStore'
 import './utils/mockTextInput'
 
-import {BotCompose} from '../src/components/BotCompose/BotCompose'
+import BotCompose from '../src/components/BotCompose/BotCompose'
 
 describe('BotCompose', () => {
   it('renders with no data', async () => {
