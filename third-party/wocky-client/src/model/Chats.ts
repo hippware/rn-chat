@@ -57,12 +57,16 @@ export const Chats = types
       const msg = createMessage(message, self.service)
       if (existingChat) {
         existingChat.messages.addToTop(msg)
+        if (!existingChat.active) {
+          msg!.setUnread(unread)
+        }
       } else {
         existingChat = self.createChat(otherUserId)
-        existingChat.messages.addToTop({...message, otherUser: otherUserId})
-      }
-      if (!existingChat.active) {
-        msg!.setUnread(unread)
+        existingChat.messages.addToTop({
+          ...message,
+          otherUser: otherUserId,
+          unread: !existingChat.active ? unread : false,
+        })
       }
     },
     loadChats: flow(function*(max: number = 50) {

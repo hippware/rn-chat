@@ -18,6 +18,7 @@ const MessageBase = types.compose(
   Base,
   types.model('MessageBase', {
     id: types.identifier,
+    sid: types.maybe(types.number),
     otherUser: types.reference(Profile),
     content: '',
     media: FileRef,

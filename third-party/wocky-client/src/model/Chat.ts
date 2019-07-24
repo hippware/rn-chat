@@ -43,7 +43,18 @@ export const Chat = types
   }))
   .actions(self => ({
     setActive: (active: boolean) => (self.active = active),
-    readAll: () => self.messages.list.forEach(msg => msg.setUnread(false)),
+    readAll: flow(function*() {
+      const ids: number[] = []
+      self.messages.list.forEach(msg => {
+        if (msg.unread && msg.sid) {
+          msg.setUnread(false)
+          ids.push(msg.sid)
+        }
+      })
+      if (ids.length) {
+        yield self.transport.messageMarkRead(ids)
+      }
+    }),
     _loadMessages: flow(function*(lastId?: string, max: number = 20) {
       const {list, count, cursor} = yield self.transport.loadChatMessages(self.id, lastId, max)
       return {
