@@ -48,16 +48,28 @@ class FriendSearch extends React.Component<Props> {
 
   render() {
     const {searchStore} = this.props
+    const listData = searchStore!.globalResult.filteredList.map(p => p.profile)
     return (
       <KeyboardAwareDraggablePopupList
         ref={r => (this.list = r)}
         headerInner={this.renderHeader()}
         renderItem={this.renderItem}
         keyExtractor={item => item.id}
-        data={searchStore!.globalResult.filteredList.map(p => p.profile)}
+        data={listData}
         keyboardShouldPersistTaps="handled"
         isActive={this.props.isActive}
         // keyboardDismissMode="interactive"
+        ListFooterComponent={
+          listData.length < 5 ? (
+            <View
+              style={{
+                flex: 1,
+                height: 250,
+                backgroundColor: 'white',
+              }}
+            />
+          ) : null
+        }
       />
     )
   }
