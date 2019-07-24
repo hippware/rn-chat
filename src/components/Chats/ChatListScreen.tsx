@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Actions} from 'react-native-router-flux'
 import ChatCard from './ChatCard'
 import {RText} from '../common'
@@ -15,31 +16,12 @@ type Props = {
   isActive: boolean
 }
 
-@inject('wocky')
-@observer
-class ChatListScreen extends React.Component<Props> {
-  static navigationOptions = {
-    fadeNavConfig: {
-      back: true,
-      title: (
-        <RText size={16} color={colors.DARK_PURPLE}>
-          Messages
-        </RText>
-      ),
-    },
-  }
+const ChatListScreen = inject('wocky')(
+  observer(({wocky, isActive}: Props) => {
+    useEffect(() => {
+      wocky!.chats.loadChats()
+    }, [])
 
-  // todo: convert to functional component with hooks, but mobx-react 6+ required
-  componentDidMount() {
-    this.props.wocky!.chats.loadChats()
-  }
-
-  renderItem = ({item}) => <ChatCard chat={item} onPress={i => Actions.chat({item: i.id})} />
-
-  keyExtractor = item => `${item.id}`
-
-  render() {
-    const {wocky, isActive} = this.props
     const {chats} = wocky!
     return (
       <DraggablePopupList
@@ -98,7 +80,17 @@ class ChatListScreen extends React.Component<Props> {
         isActive={isActive}
       />
     )
-  }
+  })
+)
+;(ChatListScreen as any).navigationOptions = {
+  fadeNavConfig: {
+    back: true,
+    title: (
+      <RText size={16} color={colors.DARK_PURPLE}>
+        Messages
+      </RText>
+    ),
+  },
 }
 
 export default ChatListScreen
