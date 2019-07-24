@@ -3,7 +3,7 @@ import {Animated, View, Image, TouchableOpacity} from 'react-native'
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {ILocationStore} from '../../store/LocationStore'
 
 type Props = {

@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 
 type Props = {
   section: any

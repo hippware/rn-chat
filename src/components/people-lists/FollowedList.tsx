@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import PeopleList from './PeopleList'
 import SectionHeader from './SectionHeader'

@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, StyleSheet, TouchableOpacity} from 'react-native'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {AutoExpandingTextInput, RText} from '../common'
 import {colors} from '../../constants'
 import {IChat} from 'wocky-client'

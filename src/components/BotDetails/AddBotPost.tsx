@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Spinner, RText} from '../common'
 import {colors} from '../../constants'

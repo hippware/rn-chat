@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, TouchableOpacity} from 'react-native'
 
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 
 import BotBubble from '../map/BotBubble'
 import {IBot, IWocky} from 'wocky-client'

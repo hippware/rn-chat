@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, View, ViewStyle} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import {Actions} from 'react-native-router-flux'

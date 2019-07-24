@@ -1,6 +1,6 @@
 import React from 'react'
 import Screen from '../Screen'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import _ from 'lodash'
 import PeopleList from './PeopleList'
 import {BlockableProfileItem} from './customProfileItems'

@@ -2,7 +2,7 @@ import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import t from 'tcomb-form-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import moment from 'moment'
 
 import {

@@ -4,7 +4,7 @@ import {RText, Avatar} from '../common'
 import {colors} from '../../constants'
 import {k} from '../Global'
 import Card from './Card'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 

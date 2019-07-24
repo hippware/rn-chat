@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {k, width} from './Global'
 import {colors} from '../constants'

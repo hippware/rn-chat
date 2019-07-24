@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native'
 import {k} from './Global'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {colors} from '../constants'
 
 type Props = {
@@ -20,9 +20,8 @@ const Card = observer((props: Props) => {
   const inner = (
     <View {...rest} style={[styles.container, style]}>
       <View style={[styles.inner, {backgroundColor}, innerStyle]}>
-        {React.Children.map(
-          children,
-          child => (child && props ? React.cloneElement(child as any, rest) : child)
+        {React.Children.map(children, child =>
+          child && props ? React.cloneElement(child as any, rest) : child
         )}
       </View>
       {footer}

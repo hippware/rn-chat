@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native'
 import {observable, runInAction} from 'mobx'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {k, avatarScale, minHeight, height} from './Global'

@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import HackMarker from '../../map/HackMarker'
 import Bubble from '../../map/Bubble'
 import {isAlive} from 'mobx-state-tree'

@@ -1,6 +1,6 @@
 import React from 'react'
 import {when, autorun, reaction} from 'mobx'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {settings} from '../globals'
 import {Keyboard, Platform} from 'react-native'
 import {Actions, Router, Scene, Stack, Modal, Lightbox, Tabs} from 'react-native-router-flux'

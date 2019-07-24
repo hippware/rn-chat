@@ -1,6 +1,6 @@
 import React from 'react'
 import {isAlive} from 'mobx-state-tree'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {IWocky, IEvent} from 'wocky-client'
 import {RText} from './common'
 import DraggablePopupList from './common/DraggablePopupList'

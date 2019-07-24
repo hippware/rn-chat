@@ -6,7 +6,7 @@ import {minHeight} from '../Global'
 import {colors} from '../../constants'
 import {IActiveBannerItem} from './ActiveGeoBotBanner'
 import LocationAvatar from './LocationAvatar'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import {IHomeStore} from 'src/store/HomeStore'
 
 interface IProps extends IActiveBannerItem {

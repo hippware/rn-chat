@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {RText} from './common'
 import {colors} from '../constants'
 

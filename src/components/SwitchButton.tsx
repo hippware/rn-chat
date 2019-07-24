@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, StyleSheet, Animated} from 'react-native'
 import RText from '../components/common/RText'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 
 type Props = {
   value?: 1 | 2

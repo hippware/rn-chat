@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import {showImagePicker} from '../ImagePicker'
 import {IChat} from 'wocky-client'
 import {observable} from 'mobx'

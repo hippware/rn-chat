@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react'
 import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'

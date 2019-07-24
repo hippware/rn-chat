@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 import {IHomeStore} from 'src/store/HomeStore'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 
 type Props = {
   children: any

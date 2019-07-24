@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import Report, {afterReport} from './Report'
 import {k} from '../Global'

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Keyboard, Animated} from 'react-native'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {observable, when} from 'mobx'
 import GradientButton from './GradientButton'
 import {minHeight} from '../Global'

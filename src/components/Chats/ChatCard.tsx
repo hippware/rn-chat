@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {Avatar, ProfileHandle, RText} from '../common'
 import {isAlive} from 'mobx-state-tree'
 import {IChat} from 'wocky-client'

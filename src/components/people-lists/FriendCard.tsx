@@ -4,7 +4,7 @@ import {backgroundColorCardDay} from '../../constants/colors'
 import assert from 'assert'
 import ProfileItem from './ProfileItem'
 import {Actions} from 'react-native-router-flux'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {k} from '../Global'
 
 type Props = {

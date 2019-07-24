@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import ChatCard from './ChatCard'
 import {RText} from '../common'

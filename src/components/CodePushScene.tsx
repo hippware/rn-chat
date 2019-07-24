@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import {colors} from '../constants'
 import {IAppInfo} from '../store/AppInfo'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {ICodePushStore} from '../store/CodePushStore'
 import {settings} from '../globals'
 

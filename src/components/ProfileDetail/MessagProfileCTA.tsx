@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {IProfile} from 'wocky-client'
 import {Actions} from 'react-native-router-flux'
 import {TouchableOpacity, Image, StyleSheet} from 'react-native'

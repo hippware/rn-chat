@@ -4,7 +4,7 @@ import {colors} from '../../constants'
 import {k} from '../Global'
 import {RText} from '../common'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import ModalContainer from './ModalContainer'
 import {IWocky} from 'wocky-client'
 

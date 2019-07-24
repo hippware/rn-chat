@@ -1,7 +1,7 @@
 import React from 'react'
 import {Image, View, Text, TouchableOpacity} from 'react-native'
 import Screen from '../Screen'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import SearchBar from './SearchBar'
 import ProfileList from './ProfileList'
 import {Actions} from 'react-native-router-flux'

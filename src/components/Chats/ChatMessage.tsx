@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, StyleSheet, Image, ImageSourcePropType, TouchableOpacity} from 'react-native'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {IMessage, IWocky, IProfile, IFile, MessageStatus} from 'wocky-client'
 import {RText, Avatar, Spinner} from '../common'
 import Triangle from '../map/Triangle'

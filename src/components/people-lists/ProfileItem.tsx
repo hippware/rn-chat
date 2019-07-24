@@ -1,6 +1,6 @@
 import React from 'react'
 import Avatar from '../common/Avatar'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {ProfileHandle} from '../common'
 import {IProfile} from 'wocky-client'
 import PersonRow from './PersonRow'

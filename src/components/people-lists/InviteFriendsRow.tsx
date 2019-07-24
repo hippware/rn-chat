@@ -4,7 +4,7 @@ import {StyleSheet, View, Image, TouchableOpacity, Share, Platform} from 'react-
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {RText} from '../common'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import {IWocky} from 'wocky-client'
 
 type Props = {

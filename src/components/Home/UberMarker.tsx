@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import Bubble from '../map/Bubble'
 import IconStore from 'src/store/IconStore'
 import {BotIcon} from '../common'
