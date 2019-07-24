@@ -25,7 +25,6 @@ const InputArea = observer(({chat}: InputProps) => {
         onChangeText={t => chat.message!.setBody(t)}
         value={chat.message.content}
         blurOnSubmit={false}
-        maxHeight={100}
         maxLength={500}
       />
       {chat.message.content.trim().length > 0 && (
@@ -63,13 +62,12 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingHorizontal: 20,
     paddingRight: 55,
-    paddingTop: 12,
-    paddingBottom: 11,
     fontSize: 15,
     color: colors.DARK_PURPLE,
     borderWidth: 1,
     borderRadius: 22,
     borderColor: colors.GREY,
     alignItems: 'center',
+    maxHeight: 100,
   },
 })
