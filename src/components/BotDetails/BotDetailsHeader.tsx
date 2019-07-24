@@ -1,12 +1,11 @@
 import React, {ReactElement} from 'react'
-import {View, Animated, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
+import {View, Alert, Image, StyleSheet, Clipboard, TouchableOpacity} from 'react-native'
 import {observer, inject} from 'mobx-react'
 import {k, width, minHeight} from '../Global'
 import {colors} from '../../constants'
 import {isAlive} from 'mobx-state-tree'
 import {when} from 'mobx'
 import ActionButton from './ActionButton'
-// import UserInfoRow from './UserInfoRow'
 import {RText, Spinner, ProfileHandle, ProfileStack, LazyImage} from '../common'
 import {IBot, IProfile} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'
@@ -24,52 +23,31 @@ type Props = {
   analytics?: any // TODO proper type
 }
 
-type State = {
-  fadeAnim: any
-}
-
 const shareIcon = require('../../../images/shareIcon.png')
 const followIcon = require('../../../images/shoesPink.png')
 
-@inject('notificationStore', 'analytics', 'locationStore')
-@observer
-class BotDetailsHeader extends React.Component<Props, State> {
-  lastImagePress?: number
-  userInfo: any
-
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      fadeAnim: new Animated.Value(0),
+const BotDetailsHeader = inject('notificationStore', 'analytics', 'locationStore')(
+  observer(({bot, locationStore, notificationStore, analytics}: Props) => {
+    function unsubscribe() {
+      Alert.alert('', 'Are you sure you want to remove this from your saved locations?', [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: () => bot.unsubscribe(),
+        },
+      ])
     }
-  }
 
-  unsubscribe = () => {
-    Alert.alert('', 'Are you sure you want to remove this from your saved locations?', [
-      {text: 'Cancel', style: 'cancel'},
-      {
-        text: 'Remove',
-        style: 'destructive',
-        onPress: () => this.props.bot.unsubscribe(),
-      },
-    ])
-  }
+    function copyAddress() {
+      Clipboard.setString(bot.address)
+      notificationStore.flash('Address copied to clipboard 👍')
+    }
 
-  copyAddress = () => {
-    Clipboard.setString(this.props.bot.address)
-    this.props.notificationStore.flash('Address copied to clipboard 👍')
-  }
-
-  acceptInvitation = () => {
-    // avoid null locationStore.location here
-    when(
-      () => !!this.props.locationStore!.location,
-      () => this.props.bot.acceptInvitation(this.props.locationStore!.location!)
-    )
-  }
-
-  render() {
-    const {bot, locationStore} = this.props
+    function acceptInvitation() {
+      // avoid null locationStore.location here
+      when(() => !!locationStore!.location, () => bot.acceptInvitation(locationStore!.location!))
+    }
     if (!bot || !isAlive(bot))
       return (
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -92,9 +70,9 @@ class BotDetailsHeader extends React.Component<Props, State> {
           <ActionButton
             bot={bot}
             style={{position: 'absolute', right: 0}}
-            unsubscribe={this.unsubscribe}
+            unsubscribe={unsubscribe}
             isSubscribed={bot.isSubscribed}
-            copyAddress={this.copyAddress}
+            copyAddress={copyAddress}
           />
         </View>
 
@@ -104,7 +82,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
         </View>
 
         {!bot.isSubscribed ? (
-          <FollowLocationView onFollow={this.acceptInvitation} />
+          <FollowLocationView onFollow={acceptInvitation} />
         ) : (
           <View>
             <VisitorsArea bot={bot} />
@@ -144,8 +122,8 @@ class BotDetailsHeader extends React.Component<Props, State> {
         )}
       </View>
     )
-  }
-}
+  })
+)
 
 const VisitorsArea = observer(({bot}: {bot: IBot}) => {
   let list: IProfile[] | undefined, text: string, count: number, onPress
