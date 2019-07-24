@@ -21,21 +21,23 @@ type Props = {
 @inject('wocky')
 @observer
 class Notifications extends React.Component<Props> {
-  static navigationOptions = ({navigation}) => {
-    const {wocky} = navigation.state.params
-    return {
-      fadeNavConfig: {
-        back: true,
-        title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+  static navigationOptions = ({
+    navigation: {
+      state: {
+        params: {wocky},
       },
-    }
-  }
+    },
+  }) => ({
+    fadeNavConfig: {
+      back: true,
+      title: wocky && <RText style={navBarStyle.titleStyle}>{wocky.notifications.title}</RText>,
+    },
+  })
 
-  componentWillMount() {
+  async componentWillMount() {
     // send all injected props + bot "up" to static context
-    this.props.navigation.setParams(this.props)
-  }
-  async componentDidMount() {
+    this.props.navigation.setParams({wocky: this.props.wocky})
+
     await this.props.wocky!.notifications.load()
     this.props.wocky!.notifications.readAll()
   }
