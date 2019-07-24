@@ -4,6 +4,22 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Tweak to location creation - Auto populate the location name (#3094)
+* Identify bugsnag user (PR #3932)
+
+# 4.18.0 - 2019 Jul 18
+
+* Firebase testing number was previously logged account (#3873)
+* Tweak to location creation - Auto populate the location name (#3094)
+* [android] Revert back to single APK. (PR #3912)
+* Codepush brick update (PR #3913)
+* [android] Firebase dynamic links/invitations (#3567)
+* Some more logging and debugging (PR #3919, PR #3922, PR #3923)
+* Messages: Allow the sharing of non-square images (#3814)
+* [android] Push Notifications & Deep Linking (#3830)
+
+# 4.17.0 - 2019 Jul 11
+
 * Replace react-native-camera-kit (#3836)
 * [dev] improve absinthe-socket error messages (#3888)
 * Message List: Map visible on user field (#3877)
@@ -11,7 +27,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Auto-follow should work for self (#3766)
 * [android] Loader doesn't spin when adding an image (#3620)
 * Use StyleSheet.absoluteFill and remove redundancy (PR #3898)
-* Upgrade bugsnag (PR #3899)
+* Offline Banner with logout and app froze (#3819)
+* 64-bit android builds (PR #3904)
+* Update: bugsnag (PR #3899)
+  * react-native-background-geolocation, react-native-contacts
+  * react-native-device-info, react-native-localize
+  * react-native-mixpanel, react-native-push-notification (PR #3906)
 
 # 4.16.0 - 2019 Jul 5
 

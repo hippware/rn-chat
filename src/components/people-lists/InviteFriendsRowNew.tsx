@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, Image, TouchableOpacity, Share} from 'react-native'
+import {StyleSheet, View, Image, TouchableOpacity, Share, Platform} from 'react-native'
 
 import {k} from '../Global'
 import {colors} from '../../constants'
@@ -47,9 +47,11 @@ export default class InviteFriendsRowNew extends React.Component<Props> {
   share = async message => {
     this.props.analytics!.track('invite_friends')
     const url = await this.props.firebaseStore!.getFriendInviteLink()
+
+    // https://facebook.github.io/react-native/docs/share
     const {action, activityType} = await (Share as any).share(
       {
-        message: `${message} Download the app at`,
+        message: `${message} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
         // title: 'title',
         url,
       },

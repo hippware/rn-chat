@@ -148,7 +148,7 @@ android {
     versionName name
 
     ndk {
-      abiFilters "armeabi-v7a", "x86"
+      abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
     }
     // because of firestore:
     multiDexEnabled true
@@ -178,10 +178,13 @@ android {
   }
   splits {
     abi {
+      // https://developer.android.com/studio/build/configure-apk-splits.html
+      // https://proandroiddev.com/reducing-apk-size-by-using-abi-filters-and-apk-split-74a68a885f4e
+
       reset()
       enable enableSeparateBuildPerCPUArchitecture
       universalApk false  // If true, also generate a universal APK
-      include "armeabi-v7a", "x86"
+      include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
     }
   }
   buildTypes {
@@ -222,12 +225,13 @@ android {
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
       // For each separate APK per architecture, set a unique version code as described here:
-      // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+      // https://developer.android.com/studio/build/configure-apk-splits.html#configure-APK-versions
+      // Also see https://developer.android.com/google/play/publishing/multiple-apks.html#using-a-version-code-scheme
       def versionCodes = ["armeabi-v7a": 1, "x86": 2]
       def abi = output.getFilter(OutputFile.ABI)
       if (abi != null) {  // null for the universal-debug, universal-release variants
         output.versionCodeOverride =
-          versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+          versionCodes.get(abi) * 1000000 + defaultConfig.versionCode
       }
     }
   }

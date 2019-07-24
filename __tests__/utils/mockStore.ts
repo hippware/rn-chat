@@ -81,6 +81,7 @@ export default {
   } as IFirebaseStore,
   homeStore: {},
   navStore: {},
+  geocodingStore: {},
   locationStore: {
     distanceFromBot: jest.fn(),
   },

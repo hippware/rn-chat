@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, Image, TouchableOpacity, Share} from 'react-native'
+import {StyleSheet, View, Image, TouchableOpacity, Share, Platform} from 'react-native'
 
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
@@ -72,12 +72,15 @@ class InviteFriendsRow extends React.Component<Props> {
 
   share = async message => {
     this.props.analytics!.track('invite_friends')
+    const url =
+      'https://itunes.apple.com/app/apple-store/id1295678402?pt=117841011&ct=Invite%20Friends&mt=8'
+
+    // https://facebook.github.io/react-native/docs/share
     const {action, activityType} = await (Share as any).share(
       {
-        message: `${message} Download the app at`,
+        message: `${message} Download the app at${Platform.OS === 'android' ? ` ${url}` : ''}`,
         // title: 'title',
-        url:
-          'https://itunes.apple.com/app/apple-store/id1295678402?pt=117841011&ct=Invite%20Friends&mt=8',
+        url,
       },
       {
         subject: 'Check out tinyrobot',

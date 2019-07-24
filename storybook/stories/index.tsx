@@ -63,9 +63,7 @@ storiesOf('Chat', module)
   .add('2 - Chat user search screen', () => <ChatUserSearchScreen />)
   .add('3 - Chat', () => <ChatViewStory />)
 
-storiesOf('Codepush Brick', module)
-  .add('Update', () => <UpdateBrick />)
-  .add('Waiting', () => <UpdateBrick waiting />)
+storiesOf('Codepush Brick', module).add('Update', () => <UpdateBrick />)
 
 storiesOf('Android Spinner', module).add('Default', () => (
   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

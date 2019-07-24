@@ -72,15 +72,18 @@ class AddressBar extends React.Component<Props> {
     this.onLocationSelect({...data, isCurrent: false})
   }
 
-  onLocationSelect = async data => {
-    const {location} = data
+  onLocationSelect = async ({location, address, placeName}) => {
     const {analytics, bot, homeStore} = this.props
     this.searchEnabled = false
-    this.text = data.address
+    this.text = address
     this.input.blur()
     homeStore!.setFocusedLocation(location)
-    Actions.botCompose({botId: bot.id})
-    analytics.track('botcreate_chooselocation', getSnapshot(bot))
+
+    // leave time for the map animate to the location
+    setTimeout(() => {
+      Actions.botCompose({botId: bot.id, title: placeName})
+      analytics.track('botcreate_chooselocation', getSnapshot(bot))
+    }, 1000)
   }
 
   suggestion = ({item}) => {
