@@ -6,6 +6,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Tweak to location creation - Auto populate the location name (#3094)
 * Identify bugsnag user (PR #3932)
+* Fix setParams race condition on Android. (PR #3936)
+  * [android] Back Caret and/or tapping on map does not function (#3587)
+* Conditional footer on friendSearch (PR #3937)
+  * [android] Friends Screen: (#3520)
+* Mark messages as read (#3866)
 
 # 4.18.0 - 2019 Jul 18
 
