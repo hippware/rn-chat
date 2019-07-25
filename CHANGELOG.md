@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.18.1 - 2019 Jul 25
+
 * Tweak to location creation - Auto populate the location name (#3094)
 * Identify bugsnag user (PR #3932)
 * Fix setParams race condition on Android. (PR #3936)
