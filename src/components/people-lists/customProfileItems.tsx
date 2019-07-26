@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, StyleSheet, Image, View} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {colors} from '../../constants'
 import {Actions} from 'react-native-router-flux'
 import ProfileItem from './ProfileItem'

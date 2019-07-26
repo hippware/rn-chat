@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity, View, StyleSheet, Image, Linking} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import HeaderOverlay from './HeaderOverlay'
 
 import {k} from '../Global'

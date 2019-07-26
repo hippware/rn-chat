@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable, when} from 'mobx'
 import {k} from './Global'
 import {colors} from '../constants'

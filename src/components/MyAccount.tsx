@@ -7,7 +7,7 @@ import {
   Alert,
   TouchableOpacityProps,
 } from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import {minHeight} from './Global'
 import SignUpAvatar from './SignUpAvatar'

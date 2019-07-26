@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import HackMarker from '../../map/HackMarker'
 import {IWocky} from 'wocky-client'
 import {ILocationStore} from '../../../store/LocationStore'

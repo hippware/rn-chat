@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import Avatar from './common/Avatar'
 import {IProfile} from 'wocky-client'
 import MessageButton from './ProfileDetail/MessagProfileCTA'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 
 type Props = {
   profile: IProfile

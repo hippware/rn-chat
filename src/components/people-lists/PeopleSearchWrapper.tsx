@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableOpacity} from 'react-native'
 import {Actions} from 'react-native-router-flux'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import Screen from '../Screen'
 import SearchBar from './SearchBar'
 import ProfileList from './ProfileList'

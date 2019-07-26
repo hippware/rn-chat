@@ -2,7 +2,7 @@ import React from 'react'
 import {View, SectionList} from 'react-native'
 import {k} from '../Global'
 import {colors} from '../../constants'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {RText} from '../common'
 
 type Props = {

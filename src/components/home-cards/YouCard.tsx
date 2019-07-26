@@ -1,6 +1,6 @@
 import React from 'react'
 import {Pill} from '../common'
-import {inject, observer} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react'
 import {IWocky} from 'wocky-client'
 import ProfileCard from './ProfileCard'
 

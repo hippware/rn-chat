@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   StyleSheet,
   Keyboard,
@@ -14,8 +14,8 @@ import withKeyboard from '../common/withKeyboardHOC'
 import {colors} from '../../constants'
 import {k, height, minHeight} from '../Global'
 import {IWocky, IBot} from 'wocky-client'
-import {observer, inject} from 'mobx-react/native'
-import {observable, computed, reaction} from 'mobx'
+import {inject} from 'mobx-react'
+import {reaction} from 'mobx'
 import {Actions} from 'react-native-router-flux'
 import {getSnapshot} from 'mobx-state-tree'
 import IconStore from '../../store/IconStore'
@@ -26,6 +26,7 @@ import {IHomeStore} from '../../store/HomeStore'
 import {BlurView} from 'react-native-blur'
 import alert from '../../utils/alert'
 import {log, warn} from '../../utils/logger'
+import {observer} from 'mobx-react-lite'
 
 const noteIcon = require('../../../images/iconAddnote.png')
 const noteIconDone = require('../../../images/noteAdded.png')
@@ -64,7 +65,7 @@ type Props = {
 
 const emojiKeyboardHeight = height / 2
 
-@inject(
+const BotCompose = inject(
   'wocky',
   'homeStore',
   'iconStore',
@@ -72,87 +73,68 @@ const emojiKeyboardHeight = height / 2
   'analytics',
   'locationStore',
   'geocodingStore'
-)
-@observer
-export class BotCompose extends React.Component<Props> {
-  @observable isLoading: boolean = false
-  @observable bot?: IBot
-  @observable uploadingPhoto: boolean = false
-  @observable text: string = ''
-  @observable textReactsToLocation: boolean = true
-  controls: any
-  botTitle: any
-  note: any
-  accessoryText?: any
-  disposer: any
+)(
+  observer((props: Props) => {
+    let botTitle
+    let disposer
 
-  componentWillMount() {
-    this.bot = this.props.wocky!.getBot({id: this.props.botId})
-    if (this.props.homeStore!.mapCenterLocation) {
-      this.bot!.load({geofence: true, location: {...this.props.homeStore!.mapCenterLocation}})
-    }
+    const [bot, setBot] = useState<IBot | undefined>(undefined)
+    const [uploadingPhoto, setUploadingPhoto] = useState(false)
+    const [text, setText] = useState<string>('')
+    const [textReactsToLocation, setTextReacts] = useState(false)
 
-    this.text = this.props.title || ''
-
-    if (this.bot) {
-      if (this.bot.title) {
-        this.text = this.bot.title
-        this.textReactsToLocation = false
+    useEffect(() => {
+      const tempBot = props.wocky!.getBot({id: props.botId})
+      setBot(tempBot)
+      if (props.homeStore!.mapCenterLocation) {
+        tempBot!.load({geofence: true, location: {...props.homeStore!.mapCenterLocation}})
       }
 
-      this.props.iconStore!.setEmoji(this.bot.icon)
-    }
+      setText(props.title || '')
 
-    this.disposer = reaction(
-      () => ({
-        location: this.props.homeStore!.mapCenterLocation,
-      }),
-      ({location}) => {
-        try {
-          const {creationMode} = this.props.homeStore!
-          if (creationMode) {
-            this.bot!.load({location: {...location}})
-            if (this.textReactsToLocation) {
-              this.props.geocodingStore!.reverse(location).then(data => {
-                this.text = data.address
-              })
-            }
-          }
-        } catch (err) {
-          warn('autorun error', err)
+      if (tempBot) {
+        if (tempBot.title) {
+          setText(tempBot.title)
+          setTextReacts(false)
         }
-      },
-      // NOTE: if we already have a title from the AddressBar then we shouldn't update the title (fireImmediately) with the address
-      {name: 'Update location on map move', fireImmediately: !this.props.title}
-    )
-  }
 
-  componentWillUnmount() {
-    this.props.iconStore!.reset()
-    this.disposer()
-  }
+        props.iconStore!.setEmoji(tempBot.icon)
+      }
 
-  @computed
-  get saveable() {
-    return this.text
-  }
+      disposer = reaction(
+        () => ({
+          location: props.homeStore!.mapCenterLocation,
+        }),
+        ({location}) => {
+          try {
+            const {creationMode} = props.homeStore!
+            if (creationMode) {
+              tempBot!.load({location: {...location}})
+              if (textReactsToLocation) {
+                props.geocodingStore!.reverse(location).then(data => {
+                  setText(data.address)
+                })
+              }
+            }
+          } catch (err) {
+            warn('autorun error', err)
+          }
+        },
+        // NOTE: if we already have a title from the AddressBar then we shouldn't update the title (fireImmediately) with the address
+        {name: 'Update location on map move', fireImmediately: !props.title}
+      )
 
-  onEmojiSelected = e => {
-    this.props.iconStore!.setEmoji(e)
-    this.props.iconStore!.toggleEmojiKeyboard()
-  }
+      return () => {
+        props.iconStore!.reset()
+        disposer()
+      }
+    }, [])
 
-  onSnap = () => {
-    if (this.botTitle) {
-      this.botTitle.blur()
-    }
-  }
-
-  render() {
-    const theColors = this.saveable
+    const theColors = !!text
       ? ['rgb(242,68,191)', 'rgb(254,110,98)', 'rgb(254,92,108)']
       : [colors.DARK_GREY, colors.DARK_GREY]
-    return (
+
+    return bot ? (
       <View>
         <View
           style={{
@@ -163,7 +145,7 @@ export class BotCompose extends React.Component<Props> {
             },
             shadowRadius: 12,
             shadowOpacity: 1,
-            height: this.props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
+            height: props.iconStore!.isEmojiKeyboardShown ? emojiKeyboardHeight : 0,
             backgroundColor: Platform.select({
               ios: 'transparent',
               android: 'white',
@@ -188,26 +170,26 @@ export class BotCompose extends React.Component<Props> {
           )}
           <EmojiSelector
             showHistory
-            onEmojiSelected={this.onEmojiSelected}
+            onEmojiSelected={onEmojiSelected}
             showSearchBar={false}
             columns={8}
           />
         </View>
-        {!this.props.iconStore!.isEmojiKeyboardShown && (
+        {!props.iconStore!.isEmojiKeyboardShown && (
           <View>
             <TextInput
               style={styles.textStyle}
               placeholder="Name this place"
-              ref={r => (this.botTitle = r)}
-              onChangeText={text => {
-                this.textReactsToLocation = false
-                this.text = text
+              ref={r => (botTitle = r)}
+              onChangeText={t => {
+                setTextReacts(false)
+                setText(t)
               }}
-              value={this.text}
+              value={text}
               selectionColor={colors.COVER_BLUE}
             />
             <View>
-              {!this.props.keyboardShowing && (
+              {!props.keyboardShowing && (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -218,21 +200,21 @@ export class BotCompose extends React.Component<Props> {
                 >
                   <EditCTA
                     text="Note"
-                    icon={this.bot!.description ? noteIconDone : noteIcon}
-                    onPress={() => Actions.editNote({botId: this.bot!.id})}
+                    icon={bot!.description ? noteIconDone : noteIcon}
+                    onPress={() => Actions.editNote({botId: bot!.id})}
                   />
                   <EditCTA
                     text="Photo"
-                    icon={this.bot!.image ? photoIconDone : photoIcon}
-                    onPress={this.addPhoto}
-                    pending={this.uploadingPhoto}
+                    icon={bot!.image ? photoIconDone : photoIcon}
+                    onPress={addPhoto}
+                    pending={uploadingPhoto}
                   />
                 </View>
               )}
               <TouchableOpacity
                 style={{width: '100%', height: 50 * minHeight}}
-                disabled={!this.saveable}
-                onPress={this.save}
+                disabled={!text}
+                onPress={save}
               >
                 <LinearGradient
                   start={{x: 0, y: 0.5}}
@@ -241,7 +223,7 @@ export class BotCompose extends React.Component<Props> {
                   style={styles.gradient}
                 >
                   <RText color="white" size={15}>
-                    {this.props.edit ? 'Save Changes' : 'Pin Location'}
+                    {props.edit ? 'Save Changes' : 'Pin Location'}
                   </RText>
                 </LinearGradient>
               </TouchableOpacity>
@@ -249,65 +231,60 @@ export class BotCompose extends React.Component<Props> {
           </View>
         )}
       </View>
-    )
-  }
+    ) : null
 
-  addPhoto = async () => {
-    const image = await showImagePicker()
-    if (image) {
+    function onEmojiSelected(e) {
+      props.iconStore!.setEmoji(e)
+      props.iconStore!.toggleEmojiKeyboard()
+    }
+
+    async function addPhoto() {
+      const image = await showImagePicker()
+      if (image) {
+        try {
+          setUploadingPhoto(true)
+          bot!.setFile(image)
+          await bot!.upload()
+        } catch (e) {
+          props.notificationStore.flash(`Upload error: ${e}`)
+        } finally {
+          setUploadingPhoto(false)
+        }
+      }
+    }
+
+    async function save(): Promise<void> {
+      if (!text) {
+        Alert.alert('Title cannot be empty')
+        if (botTitle) botTitle.focus()
+        return
+      }
       try {
-        this.uploadingPhoto = true
-        this.bot!.setFile(image)
-        await this.bot!.upload()
+        const {load, save: saveBot, setUserLocation} = bot!
+        load({title: text, icon: props.iconStore!.emoji})
+        Keyboard.dismiss()
+        setUserLocation(props.locationStore.location)
+        await saveBot()
+
+        if (!props.edit) {
+          // need to add new bot to localBots (to be displayed on MapHome)
+          props.wocky!.localBots.add(bot!)
+
+          setTimeout(() => {
+            Actions.geofenceShare({botId: bot!.id}) // all bots now are 'geofence'
+          })
+        } else {
+          Actions.pop()
+        }
+        props.analytics.track('botcreate_complete', getSnapshot(bot!))
       } catch (e) {
-        this.props.notificationStore.flash(`Upload error: ${e}`)
-      } finally {
-        this.uploadingPhoto = false
+        props.notificationStore.flash('Something went wrong, please try again.')
+        props.analytics.track('botcreate_fail', {bot: getSnapshot(bot!), error: e})
+        log('BotCompose save problem', e)
       }
     }
-  }
-
-  save = async (): Promise<void> => {
-    if (!this.text) {
-      Alert.alert('Title cannot be empty')
-      if (this.botTitle) this.botTitle.focus()
-      return
-    }
-    try {
-      this.isLoading = true
-      const {load, save, setUserLocation} = this.bot!
-      load({title: this.text, icon: this.props.iconStore!.emoji})
-      Keyboard.dismiss()
-      setUserLocation(this.props.locationStore.location)
-      await save()
-
-      if (!this.props.edit) {
-        // need to add new bot to localBots (to be displayed on MapHome)
-        this.props.wocky!.localBots.add(this.bot!)
-
-        setTimeout(() => {
-          Actions.geofenceShare({botId: this.bot!.id}) // all bots now are 'geofence'
-        })
-      } else {
-        Actions.pop()
-      }
-      this.props.analytics.track('botcreate_complete', getSnapshot(this.bot!))
-    } catch (e) {
-      this.props.notificationStore.flash('Something went wrong, please try again.')
-      this.props.analytics.track('botcreate_fail', {bot: getSnapshot(this.bot!), error: e})
-      log('BotCompose save problem', e)
-    } finally {
-      this.isLoading = false
-    }
-  }
-
-  // private setEditRef = (r: any) => (this.controls = r)
-}
-
-// TODO
-// scrollToNote = () => {
-//   if (this.bot!.description === '') this.controls.focus()
-// }
+  })
+)
 
 const EditCTA = ({text, icon, onPress, pending}: any) => (
   <TouchableOpacity

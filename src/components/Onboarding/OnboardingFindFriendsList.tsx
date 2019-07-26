@@ -3,7 +3,7 @@ import {View, Image, FlatList, StyleSheet} from 'react-native'
 import {RText, GradientButton, Separator, Spinner, Avatar} from '../common'
 import {s, minHeight, k} from '../Global'
 import {onboardingSlideStyle as styles} from '../styles'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {inject} from 'mobx-react'
 import ContactStore, {MyContact} from 'src/store/ContactStore'
 import PersonRow from '../people-lists/PersonRow'
@@ -82,7 +82,12 @@ const OnboardingFindFriendsList = inject('contactStore')(
 )
 
 const Friend = observer(({contact}: {contact: MyContact}) => {
-  const {contact: {thumbnailPath}, displayName, phoneNumber, profile} = contact
+  const {
+    contact: {thumbnailPath},
+    displayName,
+    phoneNumber,
+    profile,
+  } = contact
   return (
     <PersonRow
       imageComponent={

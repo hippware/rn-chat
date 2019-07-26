@@ -8,7 +8,7 @@ import {
   Image,
   ViewStyle,
 } from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {colors} from '../../constants'
 import ActiveGeofenceBot from './ActiveGeofenceBot'
 import HeaderLocationOverlay from './HeaderLocationOverlay'

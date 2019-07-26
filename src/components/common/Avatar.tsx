@@ -11,7 +11,7 @@ import {
 import {avatarScale} from '../Global'
 import LinearGradient from 'react-native-linear-gradient'
 import {Actions} from 'react-native-router-flux'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {colors} from '../../constants'
 import {isAlive, isStateTreeNode} from 'mobx-state-tree'
 import {IProfile, IOwnProfile} from 'wocky-client'

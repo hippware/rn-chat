@@ -1,6 +1,6 @@
 import React from 'react'
 import {Animated, StyleSheet} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {autorun} from 'mobx'
 import {k} from './Global'
 import {RText} from './common'

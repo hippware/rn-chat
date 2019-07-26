@@ -1,7 +1,7 @@
 import React from 'react'
 import {Image, View, TouchableOpacity} from 'react-native'
 import {colors} from '../constants'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {RText} from './common'
 
 type Props = {

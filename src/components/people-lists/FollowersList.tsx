@@ -1,6 +1,6 @@
 import React from 'react'
 import {TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import {colors} from '../../constants'
 import {RText} from '../common'

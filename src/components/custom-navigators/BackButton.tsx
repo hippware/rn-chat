@@ -3,7 +3,7 @@ import {TouchableOpacity, Image, Animated} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {navBarStyle} from '../styles'
 import {IHomeStore} from 'src/store/HomeStore'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 
 type Props = {
   scene: any

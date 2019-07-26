@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 import {avatarScale} from '../Global'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {colors} from '../../constants'
 import {IProfile} from 'wocky-client'
 
@@ -18,7 +18,7 @@ type Props = {
 
 const PresenceDot = observer(({profile, size, disableStatus, style}: Props) => {
   const backgroundColor = profile && profile.status === 'ONLINE' ? onlineColor : offlineColor
-  const shift = size * avatarScale * 3 / 4
+  const shift = (size * avatarScale * 3) / 4
   const d = Math.max(10, size / 5) * avatarScale
   const theStyle = {
     borderRadius: d / 2,

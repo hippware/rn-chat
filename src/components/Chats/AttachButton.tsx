@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {TouchableOpacity, Image} from 'react-native'
-import {inject, observer} from 'mobx-react/native'
+import {inject} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {showImagePicker} from '../ImagePicker'
 import {IChat} from 'wocky-client'
-import {observable} from 'mobx'
 import {Spinner} from '../common'
 
 type Props = {
@@ -11,30 +11,28 @@ type Props = {
   notificationStore?: any
 }
 
-@inject('notificationStore')
-@observer
-class AttachButton extends React.Component<Props> {
-  @observable uploading: boolean = false
+const AttachButton = inject('notificationStore')(
+  observer(({chat, notificationStore}: Props) => {
+    const [uploading, setUploading] = useState(false)
 
-  render() {
+    async function onAttach() {
+      setUploading(true)
+      try {
+        const image = await showImagePicker(false)
+        if (image) {
+          chat.sendMessage(image)
+        }
+      } finally {
+        setUploading(false)
+      }
+    }
+
     return (
-      <TouchableOpacity style={{marginHorizontal: 15}} onPress={this.onAttach}>
-        {this.uploading ? (
-          <Spinner />
-        ) : (
-          <Image source={require('../../../images/cameraPink.png')} />
-        )}
+      <TouchableOpacity style={{marginHorizontal: 15}} onPress={onAttach}>
+        {uploading ? <Spinner /> : <Image source={require('../../../images/cameraPink.png')} />}
       </TouchableOpacity>
     )
-  }
-
-  onAttach = async () => {
-    const {chat} = this.props
-    const image = await showImagePicker(false)
-    if (image) {
-      chat.sendMessage(image)
-    }
-  }
-}
+  })
+)
 
 export default AttachButton

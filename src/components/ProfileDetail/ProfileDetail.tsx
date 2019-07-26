@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {IWocky, IProfile} from 'wocky-client'
 import {isAlive} from 'mobx-state-tree'
 import BottomPopup from '../BottomPopup'

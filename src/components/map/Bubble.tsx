@@ -3,7 +3,7 @@ import {View, Image, StyleSheet, ViewStyle, ImageStyle} from 'react-native'
 import Triangle from './Triangle'
 import {RText} from '../common'
 import {colors} from '../../constants'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import LinearGradient from 'react-native-linear-gradient'
 
 type Props = {

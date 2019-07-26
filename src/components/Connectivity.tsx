@@ -1,7 +1,7 @@
 import React from 'react'
 import {AppState, NetInfo} from 'react-native'
 import {reaction, observable} from 'mobx'
-import {inject} from 'mobx-react/native'
+import {inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import {log} from '../utils/logger'
 import {IWocky} from 'wocky-client'

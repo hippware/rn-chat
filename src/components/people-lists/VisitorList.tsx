@@ -1,6 +1,6 @@
 import React from 'react'
 import {observable} from 'mobx'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {RText} from '../common'
 import {IBot, IWocky} from 'wocky-client'
 import {ILocationStore} from '../../store/LocationStore'

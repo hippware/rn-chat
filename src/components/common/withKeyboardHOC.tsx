@@ -1,7 +1,7 @@
 import React from 'react'
 import {Animated, Keyboard} from 'react-native'
 import {observable, action} from 'mobx'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 
 export default (Component): any => {
   @observer

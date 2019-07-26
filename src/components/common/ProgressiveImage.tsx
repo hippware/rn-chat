@@ -1,7 +1,7 @@
 import React from 'react'
 import {ImageProperties} from 'react-native'
 import * as colors from '../../constants/colors'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import LazyImage from './LazyImage'
 
 type Props = {

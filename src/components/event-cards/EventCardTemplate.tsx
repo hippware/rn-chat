@@ -4,7 +4,7 @@ import {ActionAvatar, RText} from '../common'
 import {k} from '../Global'
 import {colors} from '../../constants'
 import {IProfile} from 'wocky-client'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {AvatarIcon} from '../common/ActionAvatar'
 
 type Props = {

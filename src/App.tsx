@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {View} from 'react-native'
-import {Provider} from 'mobx-react/native'
+import {Provider} from 'mobx-react'
 import TinyRobotRouter from './components/Router'
 import analytics from './utils/analytics'
 import {createStore} from './store/store'

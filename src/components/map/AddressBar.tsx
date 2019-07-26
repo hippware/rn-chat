@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {k, minHeight} from '../Global'
 import {colors} from '../../constants'
 import UseCurrentLocation from './UseCurrentLocation'

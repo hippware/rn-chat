@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, TextInput, Image, Platform, Keyboard} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import FriendCard from './FriendCard'
 import {colors} from '../../constants'
 import {RText} from '../common'

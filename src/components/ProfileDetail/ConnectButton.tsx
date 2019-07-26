@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {observable} from 'mobx'
 import alert from '../../utils/alert'
 import {IProfile} from 'wocky-client'

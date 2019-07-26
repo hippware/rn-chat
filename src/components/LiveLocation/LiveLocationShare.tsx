@@ -1,5 +1,5 @@
 import React from 'react'
-import {observer, inject} from 'mobx-react/native'
+import {observer, inject} from 'mobx-react'
 import {Actions} from 'react-native-router-flux'
 import Screen from '../Screen'
 import {RText, BottomButton} from '../common'

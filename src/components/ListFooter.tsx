@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 import {Spinner} from './common'
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react'
 import {k} from './Global'
 
 type Props = {
