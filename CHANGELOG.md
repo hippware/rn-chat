@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* [ios] RNBGL randomly stops uploading location data points (#3926)
+  * [ios] rn-splash-screen triggers background crash (#3943)
+
 # 4.18.1 - 2019 Jul 25
 
 * Tweak to location creation - Auto populate the location name (#3094)
