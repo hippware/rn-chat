@@ -934,6 +934,10 @@ export class Transport {
                   firstName
                   lastName
                   handle
+                  presence {
+                    status
+                    updatedAt
+                  }
                   media {
                     thumbnailUrl
                     trosUrl
@@ -1226,6 +1230,10 @@ export class Transport {
               firstName
               lastName
               handle
+              presence {
+                status
+                updatedAt
+              }
               media {
                 thumbnailUrl
                 trosUrl
