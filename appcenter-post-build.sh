@@ -17,8 +17,7 @@ else
   yarn detox
 
   if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "bt-appcenter-testing" ]; then
-    ls -lR $APPCENTER_OUTPUT_DIRECTORY
-    find $APPCENTER_OUTPUT_DIRECTORY -iname 'DWARF'
+    /usr/bin/env bash scripts/bugsnagDSYMUpload.sh $APPCENTER_SOURCE_DIRECTORY $APPCENTER_OUTPUT_DIRECTORY
   fi
 fi
 
