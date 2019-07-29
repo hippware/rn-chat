@@ -15,6 +15,10 @@ else
 
   echo 'Running detox'
   yarn detox
+
+  if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "bt-appcenter-testing" ]; then
+    ls -lR $APPCENTER_OUTPUT_DIRECTORY
+  fi
 fi
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
