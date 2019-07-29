@@ -87,7 +87,6 @@ class TinyRobotRouter extends React.Component<Props> {
       {delay: 1000}
     )
 
-    SplashScreen.hide()
   }
 
   render() {
