@@ -8,6 +8,6 @@ fi
 DWARF=`find $2 -name DWARF`
 SYM=`echo $DWARF/*`
 
-echo curl https://upload.bugsnag.com -F f108fb997359e5519815d5fc58c79ad3 -F dsym=@$SYM -F projectRoot=$1
-curl https://upload.bugsnag.com -F f108fb997359e5519815d5fc58c79ad3 -F dsym=@$SYM -F projectRoot=$1
+echo curl https://upload.bugsnag.com -F apiKey=f108fb997359e5519815d5fc58c79ad3 -F dsym=@$SYM -F projectRoot=$1
+curl https://upload.bugsnag.com -F apiKey=f108fb997359e5519815d5fc58c79ad3 -F dsym=@$SYM -F projectRoot=$1
 
