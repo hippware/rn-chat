@@ -15,6 +15,10 @@ else
 
   echo 'Running detox'
   yarn detox
+
+  if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "production" ]; then
+    /usr/bin/env bash scripts/bugsnagDSYMUpload.sh $APPCENTER_SOURCE_DIRECTORY $APPCENTER_OUTPUT_DIRECTORY
+  fi
 fi
 
 if [ "$APPCENTER_BRANCH" == "deploy-stage" ]
