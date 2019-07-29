@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Refactor: "Hookify" class-based React components part 2 (PR #3939)
+
 # 4.18.2 - 2019 Jul 26
 
 Speculative experimental release. Not suitable for public use.
