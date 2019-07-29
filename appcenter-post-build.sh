@@ -18,6 +18,7 @@ else
 
   if [ "$APPCENTER_BRANCH" == "deploy-stage" ] || [ "$APPCENTER_BRANCH" == "bt-appcenter-testing" ]; then
     ls -lR $APPCENTER_OUTPUT_DIRECTORY
+    find $APPCENTER_OUTPUT_DIRECTORY -iname 'DWARF'
   fi
 fi
 
