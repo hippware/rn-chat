@@ -6,6 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Refactor: "Hookify" class-based React components part 2 (PR #3939)
 * Presence dot is always 'offline' for self (#3874)
+* [ios] Upload dSYMs to bugsnag (#3929)
 
 # 4.18.2 - 2019 Jul 26
 
