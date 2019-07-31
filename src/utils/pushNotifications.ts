@@ -1,6 +1,6 @@
 import {log} from './logger'
 import PushNotification from 'react-native-push-notification'
-import {Linking, Platform} from 'react-native'
+import {Linking, Platform, PushNotificationIOS} from 'react-native'
 import analytics from './analytics'
 
 export default (
@@ -13,6 +13,8 @@ export default (
     onNotification: async notification => {
       log('Push Notification:', notification)
       analytics.track('push_notification_received', {notification})
+
+      let newData = false
       if (!notification.foreground) {
         const url = Platform.select({
           ios: notification.data && notification.data.uri,
@@ -29,7 +31,15 @@ export default (
           } catch (err) {
             analytics.track('push_notification_fail', {notification, error: err})
           }
+
+          newData = true
         }
+      }
+
+      if (Platform.OS === 'ios' && notification.finish) {
+        notification.finish(
+          newData ? PushNotificationIOS.FetchResult.NewData : PushNotificationIOS.FetchResult.NoData
+        )
       }
     },
     senderID: '548019610697',
