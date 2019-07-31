@@ -3,6 +3,7 @@ import PushNotification from 'react-native-push-notification'
 import {Linking, Platform, PushNotificationIOS} from 'react-native'
 import analytics from './analytics'
 import BackgroundGeolocation from 'react-native-background-geolocation'
+import {RemoteMessage} from 'react-native-firebase/messaging'
 
 export default (
   onRegistered: (token: string, platform: 'FCM' | 'APNS') => void
@@ -17,42 +18,9 @@ export default (
 
       let newData = false
       if (!notification.foreground) {
-        const url = Platform.select({
-          ios: notification.data && notification.data.uri,
-          android: notification.url,
-        })
-        if (url) {
-          try {
-            analytics.track('push_notification_try', {notification})
-
-            // NOTE: Linking.canOpenURL doesn't work well with Android staging/prod setup
-            // if (await Linking.canOpenURL(url)) {
-            await Linking.openURL(url)
-            analytics.track('push_notification_success', {notification})
-          } catch (err) {
-            analytics.track('push_notification_fail', {notification, error: err})
-          }
-
-          newData = true
-        }
+        newData = await tryDeeplinkNotification(notification)
       }
-
-      const locationRequest = Platform.select({
-        ios: notification.data && notification.data['location-request'],
-        android: notification['location-request'],
-      })
-
-      // ToDo: Don't send if user is in invisible mode?
-      if (locationRequest) {
-        await BackgroundGeolocation.ready({reset: false})
-        /* await */ BackgroundGeolocation.getCurrentPosition({
-          timeout: 20,
-          maximumAge: 1000,
-          // ToDo: set accuracy?
-        })
-
-        newData = true
-      }
+      newData = newData || (await tryLocationRequestNotification(notification))
 
       if (Platform.OS === 'ios' && notification.finish) {
         notification.finish(
@@ -77,4 +45,48 @@ export default (
   })
 
   return () => PushNotification.requestPermissions()
+}
+
+async function tryLocationRequestNotification(notification): Promise<boolean> {
+  const locationRequest = Platform.select({
+    ios: notification.data && notification.data['location-request'],
+    android: notification['location-request'],
+  })
+
+  if (locationRequest) {
+    await BackgroundGeolocation.ready({reset: false})
+    await BackgroundGeolocation.getCurrentPosition({
+      timeout: 20,
+      maximumAge: 1000,
+      // ToDo: set accuracy?
+    })
+
+    return true
+  }
+  return false
+}
+
+async function tryDeeplinkNotification(notification): Promise<boolean> {
+  const url = Platform.select({
+    ios: notification.data && notification.data.uri,
+    android: notification.url,
+  })
+  if (url) {
+    try {
+      analytics.track('push_notification_try', {notification})
+
+      // NOTE: Linking.canOpenURL doesn't work well with Android staging/prod setup
+      // if (await Linking.canOpenURL(url)) {
+      await Linking.openURL(url)
+      analytics.track('push_notification_success', {notification})
+      return true
+    } catch (err) {
+      analytics.track('push_notification_fail', {notification, error: err})
+    }
+  }
+  return false
+}
+
+export async function handleFirebaseBackgroundMessage(message: RemoteMessage) {
+  await tryLocationRequestNotification(message.data)
 }
