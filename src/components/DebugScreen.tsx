@@ -6,9 +6,10 @@ import {observer, inject} from 'mobx-react'
 import {RText} from './common'
 import codePush from 'react-native-code-push'
 import {IStore} from '../store/store'
+import {IWocky} from 'wocky-client'
 
-const DebugScreen = inject('store')(
-  observer(({store}: {store: IStore}) => (
+const DebugScreen = inject('store', 'wocky')(
+  observer(({store, wocky}: {store: IStore; wocky?: IWocky}) => (
     <View style={{flex: 1, padding: 40}}>
       <ScreenLink onPress={Actions.codePush}>GO TO CODEPUSH</ScreenLink>
       <ScreenLink onPress={Actions.locationDebug}>GO TO LOCATION DEBUG</ScreenLink>
@@ -21,6 +22,13 @@ const DebugScreen = inject('store')(
         }}
       >
         RESET CACHE
+      </ScreenLink>
+      <ScreenLink
+        onPress={async () => {
+          await wocky!.triggerSilentPush('2575d406-18ec-11e8-8e4b-0a580a020223') // @333
+        }}
+      >
+        SEND SILENT LOCATION UPDATE NOTIFICATION to @333
       </ScreenLink>
     </View>
   ))

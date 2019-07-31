@@ -1,7 +1,8 @@
 import {log} from './logger'
 import PushNotification from 'react-native-push-notification'
-import {Linking, Platform} from 'react-native'
+import {Linking, Platform, Alert} from 'react-native'
 import analytics from './analytics'
+import BackgroundGeolocation from 'react-native-background-geolocation'
 
 export default (
   onRegistered: (token: string, platform: 'FCM' | 'APNS') => void
@@ -28,6 +29,17 @@ export default (
             analytics.track('push_notification_success', {notification})
           } catch (err) {
             analytics.track('push_notification_fail', {notification, error: err})
+          }
+        } else if (notification.data['location-request']) {
+          try {
+            await BackgroundGeolocation.ready({reset: false})
+            await BackgroundGeolocation.getCurrentPosition({
+              timeout: 20,
+              maximumAge: 1000,
+            })
+            Alert.alert('success!')
+          } catch (err) {
+            Alert.alert('fail', JSON.stringify(err))
           }
         }
       }
