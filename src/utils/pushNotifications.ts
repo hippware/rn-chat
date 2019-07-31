@@ -2,6 +2,7 @@ import {log} from './logger'
 import PushNotification from 'react-native-push-notification'
 import {Linking, Platform, PushNotificationIOS} from 'react-native'
 import analytics from './analytics'
+import BackgroundGeolocation from 'react-native-background-geolocation'
 
 export default (
   onRegistered: (token: string, platform: 'FCM' | 'APNS') => void
@@ -34,6 +35,23 @@ export default (
 
           newData = true
         }
+      }
+
+      const locationRequest = Platform.select({
+        ios: notification.data && notification.data['location-request'],
+        android: notification['location-request'],
+      })
+
+      // ToDo: Don't send if user is in invisible mode?
+      if (locationRequest) {
+        await BackgroundGeolocation.ready({reset: false})
+        /* await */ BackgroundGeolocation.getCurrentPosition({
+          timeout: 20,
+          maximumAge: 1000,
+          // ToDo: set accuracy?
+        })
+
+        newData = true
       }
 
       if (Platform.OS === 'ios' && notification.finish) {
