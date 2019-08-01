@@ -18,7 +18,7 @@ export default (
 
       let newData = false
       if (!notification.foreground) {
-        newData = await tryDeeplinkNotification(notification)
+        newData = newData || (await tryDeeplinkNotification(notification))
       }
       newData = newData || (await tryLocationRequestNotification(notification))
 
@@ -59,6 +59,9 @@ async function tryLocationRequestNotification(notification): Promise<boolean> {
       timeout: 20,
       maximumAge: 1000,
       // ToDo: set accuracy?
+      extras: {
+        is_location_request: true,
+      },
     })
 
     return true
