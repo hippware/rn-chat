@@ -21,6 +21,7 @@ import {
   MESSAGE_PROPS,
   AREA_TOO_LARGE,
   USER_LOCATION_PROPS,
+  MEDIA_PROPS,
 } from './constants'
 import {
   convertProfile,
@@ -162,7 +163,7 @@ export class Transport {
                       node {
                         createdAt
                         user {
-                          firstName handle id lastName media { thumbnailUrl fullUrl trosUrl }
+                          firstName handle id lastName ${MEDIA_PROPS}
                         }
                       }
                     }
@@ -635,13 +636,17 @@ export class Transport {
       query: gql`
         query mediaUrls($trosUrl: String!) {
           mediaUrls(timeout: 10000, trosUrl: $trosUrl) {
-            thumbnailUrl
+            urls {
+              type
+              url
+            }
           }
         }
       `,
       variables: {trosUrl},
     })
-    return res.data.mediaUrls.thumbnailUrl
+
+    return res.data.mediaUrls.urls.find(({type}) => type === 'THUMBNAIL').url
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {
@@ -956,10 +961,7 @@ export class Transport {
                     status
                     updatedAt
                   }
-                  media {
-                    thumbnailUrl
-                    trosUrl
-                  }
+                  ${MEDIA_PROPS}
                 }
               }
             }
@@ -1269,10 +1271,7 @@ export class Transport {
                 status
                 updatedAt
               }
-              media {
-                thumbnailUrl
-                trosUrl
-              }
+              ${MEDIA_PROPS}
             }
           }
         }
