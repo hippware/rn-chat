@@ -22,6 +22,13 @@ const DebugScreen = inject('store')(
       >
         RESET CACHE
       </ScreenLink>
+      {/* <ScreenLink
+        onPress={async () => {
+          await wocky!.triggerSilentPush('2575d406-18ec-11e8-8e4b-0a580a020223') // @333
+        }}
+      >
+        SEND SILENT LOCATION UPDATE NOTIFICATION to @333
+      </ScreenLink> */}
     </View>
   ))
 )

@@ -419,6 +419,9 @@ export const Wocky = types
     friendSmsInvite: (phoneNumber: string): Promise<void> => {
       return self.transport.friendSmsInvite(phoneNumber)
     },
+    triggerSilentPush(userId: string): Promise<void> {
+      return self.transport.triggerSilentPush(userId)
+    },
   }))
   .actions(self => {
     function clearCache() {
