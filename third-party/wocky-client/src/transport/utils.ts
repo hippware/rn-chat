@@ -301,10 +301,9 @@ export function convertImage(image) {
 }
 
 export function convertProfile({media, bots, presence, ...data}): IProfilePartial {
-  // console.log('convertProfile', bots, followers, followed, data)
   return {
     avatar: convertImage(media),
-    status: presence.status,
+    status: presence ? presence.status : undefined,
     botsSize: bots ? bots.totalCount : undefined,
     ...data,
   } as IProfilePartial
