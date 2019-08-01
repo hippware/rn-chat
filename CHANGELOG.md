@@ -9,6 +9,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * [ios] Upload dSYMs to bugsnag (#3929)
 * Loading screen missing (#3743)
   * [ios] Prettify .xib launch screen (#3951)
+* Upload location upon receiving push notification with flag (#3066)
 
 # 4.18.2 - 2019 Jul 26
 
