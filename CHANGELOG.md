@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.19.0 - 2019 Aug 1
+
 * Refactor: "Hookify" class-based React components part 2 (PR #3939)
 * Presence dot is always 'offline' for self (#3874)
 * [ios] Upload dSYMs to bugsnag (#3929)
