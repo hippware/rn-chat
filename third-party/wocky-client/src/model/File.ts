@@ -17,6 +17,7 @@ export const File = types
       id: types.identifier,
       source: types.maybeNull(FileSource),
       thumbnail: types.maybeNull(FileSource),
+      aspectThumbnail: types.maybeNull(FileSource),
       url: '',
     })
   )
@@ -85,6 +86,7 @@ export const File = types
           }
         }
       }),
+      // todo: add downloadAspectThumbnail method
     }
   })
   .actions(self => ({
@@ -93,6 +95,8 @@ export const File = types
         if (!self.thumbnail) {
           self.setSource(undefined)
           self.setURL(url)
+
+          // maybe download aspect thumbnail here too (?)
           self.downloadThumbnail()
         }
       } else {

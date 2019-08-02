@@ -297,7 +297,13 @@ export function iso8601toDate(date: string): Date {
 }
 
 export function convertImage(image) {
-  return image && image.trosUrl ? {id: image.trosUrl, url: image.thumbnailUrl} : null
+  return image && image.trosUrl
+    ? {
+        id: image.trosUrl,
+        url: image.urls.find(({type}) => type === 'THUMBNAIL').url,
+        // todo: need aspect thumbnail url here too?
+      }
+    : null
 }
 
 export function convertProfile({media, bots, presence, ...data}): IProfilePartial {

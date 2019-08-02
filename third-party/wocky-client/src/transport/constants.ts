@@ -1,7 +1,17 @@
 export const AREA_TOO_LARGE = 'AREA_TOO_LARGE'
 
+export const MEDIA_PROPS = `
+  media {
+    urls {
+      type
+      url
+    }
+    trosUrl
+}
+`
+
 export const PROFILE_PROPS = `id firstName lastName handle
-  media { thumbnailUrl fullUrl trosUrl }
+  ${MEDIA_PROPS}
   bots(first:0, relationship: OWNED) { totalCount }
   presence {
     status
@@ -10,19 +20,12 @@ export const PROFILE_PROPS = `id firstName lastName handle
 `
 
 export const BOT_PROPS = `id icon title address addressData description radius shortname 
-  media { thumbnailUrl fullUrl trosUrl }
+  ${MEDIA_PROPS}
   type lat lon owner { ${PROFILE_PROPS} } 
   items(first:0) { totalCount }
   visitorCount: subscribers(first:0 type:VISITOR){ totalCount }
   subscriberCount: subscribers(first:0 type:SUBSCRIBER){ totalCount }
   subscribers(first:1 id: $ownUsername) { edges { relationships } }
-`
-export const MEDIA_PROPS = `
-  media {
-    fullUrl
-    thumbnailUrl
-    trosUrl
-}
 `
 
 export const BOT_POST_PROPS = `
