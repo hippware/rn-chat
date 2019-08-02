@@ -645,8 +645,12 @@ export class Transport {
       `,
       variables: {trosUrl},
     })
+    const urls = res.data.mediaUrls.urls
 
-    return res.data.mediaUrls.urls.find(({type}) => type === 'THUMBNAIL').url
+    return {
+      thumbnailUrl: (urls.find(({type}) => type === 'THUMBNAIL') || {}).url,
+      aspectThumbnailUrl: (urls.find(({type}) => type === 'ASPECT_THUMBNAIL') || {}).url,
+    }
   }
 
   async requestUpload({file, size, access}: MediaUploadParams): Promise<any> {

@@ -301,7 +301,7 @@ export function convertImage(image) {
     ? {
         id: image.trosUrl,
         url: image.urls.find(({type}) => type === 'THUMBNAIL').url,
-        // todo: need aspect thumbnail url here too?
+        aspectUrl: image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL').url,
       }
     : null
 }

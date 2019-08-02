@@ -19,6 +19,7 @@ export const File = types
       thumbnail: types.maybeNull(FileSource),
       aspectThumbnail: types.maybeNull(FileSource),
       url: '',
+      aspectUrl: '',
     })
   )
   .named('File')
@@ -67,6 +68,9 @@ export const File = types
       setURL: (url: string) => {
         self.url = url
       },
+      setAspectURL: (url: string) => {
+        self.aspectUrl = url
+      },
       setSource: (source: any) => {
         self.source = source
         self.thumbnail = source
@@ -86,18 +90,36 @@ export const File = types
           }
         }
       }),
-      // todo: add downloadAspectThumbnail method
+      downloadAspectThumbnail: flow(function*() {
+        if (!self.loading && !self.aspectThumbnail && self.aspectUrl) {
+          try {
+            self.error = ''
+            self.loading = true
+            self.aspectThumbnail = yield self.downloadFile(self.id, 'aspect', self.aspectUrl)
+            self.aspectUrl = ''
+            self.loading = false
+          } catch (e) {
+            self.error = e
+            self.url = ''
+            self.loading = false
+          }
+        }
+      }),
     }
   })
   .actions(self => ({
-    load({url, ...data}: any) {
+    load({url, aspectUrl, ...data}: any) {
       if (url) {
         if (!self.thumbnail) {
           self.setSource(undefined)
           self.setURL(url)
-
-          // maybe download aspect thumbnail here too (?)
           self.downloadThumbnail()
+        }
+      } else if (aspectUrl) {
+        if (!self.aspectThumbnail) {
+          self.setSource(undefined)
+          self.setAspectURL(aspectUrl)
+          self.downloadAspectThumbnail()
         }
       } else {
         Object.assign(self, data)
@@ -113,7 +135,9 @@ export const File = types
         }
       }
       if (!self.thumbnail && !self.url) {
-        self.url = yield self.transport.downloadTROS(self.id)
+        const urls = yield self.transport.downloadTROS(self.id)
+        self.url = urls.thumbnail
+        self.aspectThumbnail = urls.aspectThumbnail
         yield self.downloadThumbnail()
       }
     }),
