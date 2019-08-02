@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 4.19.1 - 2019 Aug 1
+
+* [bugsnag] BlockedUser type doesn't have presence (#3963)
+
 # 4.19.0 - 2019 Aug 1
 
 * Refactor: "Hookify" class-based React components part 2 (PR #3939)
