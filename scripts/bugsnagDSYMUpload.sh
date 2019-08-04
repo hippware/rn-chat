@@ -6,6 +6,12 @@ if [ "$2" == "" ]; then
 fi
 
 DWARF=`find $2 -name DWARF`
+
+if [ "$DWARF" == "" ]; then
+  echo DWARF directory not found
+  exit 0
+fi
+
 SYM=`echo $DWARF/*`
 
 echo curl https://upload.bugsnag.com -F apiKey=f108fb997359e5519815d5fc58c79ad3 -F dsym=@$SYM -F projectRoot=$1
