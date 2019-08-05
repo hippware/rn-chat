@@ -4,12 +4,12 @@ import {FileEntity} from '../model/FileEntity'
 import {Bot} from '../model/Bot'
 import _ from 'lodash'
 
-export function createFactory<T>(type: IType<any, any, T>) {
+export function createFactory<T>(type: IType<any, any, T>, name: string = '') {
   return types
     .model({
       storage: types.optional(types.map(type), {}),
     })
-    .named(`Factory${type.name}`)
+    .named(`Factory${name || type.name}`)
     .actions(self => ({
       clear: () => {
         self.storage.clear()
@@ -35,7 +35,7 @@ export function createFactory<T>(type: IType<any, any, T>) {
 }
 
 export const Storages = types.model({
-  files: types.optional(createFactory(FileEntity), {}),
+  files: types.optional(createFactory(FileEntity, 'FileEntity'), {}),
   bots: types.optional(createFactory(Bot), {}),
   profiles: types.optional(createFactory(Profile), {}),
 })
