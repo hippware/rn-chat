@@ -18,8 +18,10 @@ export {
   IEventFriendInviteData,
 } from './model/EventFriendInvite'
 export {EventBotInvite, IEventBotInvite} from './model/EventBotInvite'
-export {File, IFile, FileRef} from './model/File'
+export {File, IFile} from './model/File'
+export {FileEntity, IFileEntity, FileRef} from './model/FileEntity'
 export {IFileService} from './transport/FileService'
+export {FileImage, IFileImage} from './model/FileImage'
 export {Location, ILocationSnapshot, ILocation, createLocation} from './model/Location'
 export {Message, IMessage, Status as MessageStatus} from './model/Message'
 export {OwnProfile, IOwnProfile} from './model/OwnProfile'

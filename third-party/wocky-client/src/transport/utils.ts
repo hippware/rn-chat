@@ -296,14 +296,22 @@ export function iso8601toDate(date: string): Date {
   return new Date(timestamp)
 }
 
-export function convertImage(image) {
-  return image && image.trosUrl
-    ? {
-        id: image.trosUrl,
-        url: image.urls.find(({type}) => type === 'THUMBNAIL').url,
-        aspectUrl: image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL').url,
-      }
-    : null
+export function convertImage(image, preserveAspect: boolean = false) {
+  if (image && image.trosUrl) {
+    return preserveAspect
+      ? {
+          id: image.trosUrl,
+          url: image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL').url,
+          isAspect: true,
+        }
+      : {
+          id: image.trosUrl,
+          url: image.urls.find(({type}) => type === 'THUMBNAIL').url,
+          isSqure: true,
+        }
+  } else {
+    return null
+  }
 }
 
 export function convertProfile({media, bots, presence, ...data}): IProfilePartial {

@@ -1,6 +1,6 @@
 import {types, Instance, SnapshotIn, flow} from 'mobx-state-tree'
 import {Profile} from './Profile'
-import {FileRef} from './File'
+import {FileRef} from './FileEntity'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 import {createPaginable} from './PaginableList'

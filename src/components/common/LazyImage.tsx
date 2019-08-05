@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react'
 import {Image} from 'react-native'
 import {observer} from 'mobx-react'
-import {IFile} from 'wocky-client'
+import {IFileImage} from 'wocky-client'
 
 interface IProps {
-  file?: IFile | null
+  file?: IFileImage | null
   placeholder?: ReactElement<any>
   // imageProps?: ImageProps
   imageProps: any

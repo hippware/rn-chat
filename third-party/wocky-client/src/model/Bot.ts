@@ -9,7 +9,7 @@ import {
   SnapshotIn,
 } from 'mobx-state-tree'
 import {Profile, ProfilePaginableList, IProfilePartial} from './Profile'
-import {FileRef} from './File'
+import {FileRef} from './FileEntity'
 import {Location, ILocation} from './Location'
 import {BotPostPaginableList, BotPost, IBotPost} from './BotPost'
 import {Address} from './Address'

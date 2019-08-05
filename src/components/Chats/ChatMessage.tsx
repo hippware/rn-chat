@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, StyleSheet, Image, ImageSourcePropType, TouchableOpacity} from 'react-native'
 import {observer} from 'mobx-react'
-import {IMessage, IWocky, IProfile, IFile, MessageStatus} from 'wocky-client'
+import {IMessage, IWocky, IProfile, IFileImage, MessageStatus} from 'wocky-client'
 import {RText, Avatar, Spinner} from '../common'
 import Triangle from '../map/Triangle'
 import {width} from '../Global'
@@ -66,7 +66,7 @@ const ChatMessage = ({
   status,
 }: {
   left: boolean
-  media?: IFile
+  media?: IFileImage
   text?: string
   otherUser: IProfile
   status: MessageStatus
@@ -115,7 +115,16 @@ const ChatMessage = ({
 }
 
 const ImageMessage = observer(
-  ({media, color, status}: {media: IFile; left: boolean; color: string; status: MessageStatus}) => {
+  ({
+    media,
+    color,
+    status,
+  }: {
+    media: IFileImage
+    left: boolean
+    color: string
+    status: MessageStatus
+  }) => {
     if (media && !media.thumbnail) {
       return (
         <View

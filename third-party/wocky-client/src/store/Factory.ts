@@ -1,6 +1,6 @@
 import {types, IType, getEnv} from 'mobx-state-tree'
 import {Profile} from '../model/Profile'
-import {File} from '../model/File'
+import {FileEntity} from '../model/FileEntity'
 import {Bot} from '../model/Bot'
 import _ from 'lodash'
 
@@ -35,7 +35,7 @@ export function createFactory<T>(type: IType<any, any, T>) {
 }
 
 export const Storages = types.model({
-  files: types.optional(createFactory(File), {}),
+  files: types.optional(createFactory(FileEntity), {}),
   bots: types.optional(createFactory(Bot), {}),
   profiles: types.optional(createFactory(Profile), {}),
 })
