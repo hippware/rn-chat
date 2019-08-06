@@ -27,7 +27,17 @@ const EditNote = withKeyboardHOC(
       return bot ? (
         <View>
           <TextInput
-            style={[styles.textStyle, {width, height: 150, paddingTop: 15}]}
+            style={[
+              styles.textStyle,
+              {
+                width,
+                height: 150,
+                paddingTop: 15,
+                textAlignVertical: 'top',
+                alignContent: 'flex-start',
+                justifyContent: 'flex-start',
+              },
+            ]}
             placeholder="Tell us about this place!"
             onChangeText={text => bot!.load({description: text})}
             value={bot!.description}
