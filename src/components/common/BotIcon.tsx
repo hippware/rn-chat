@@ -5,24 +5,23 @@ import {oldIcons} from '../../store/IconStore'
 
 type Props = {
   icon: string
-  size: number | 35
+  size?: number
   imageStyle?: ImageStyle
   textStyle?: TextStyle
 }
 
 const defaultIcon = require('../../../images/mapIcons/question.png')
+const setSize = size => (size ? (Platform.OS === 'ios' ? size : size - 5) : 35)
 
 const BotIcon = ({icon, size, imageStyle, textStyle}: Props) =>
   icon && !oldIcons.includes(icon) ? (
-    <Text style={[styles.icon, textStyle, {fontSize: Platform.OS === 'ios' ? size : size - 5}]}>
-      {icon}
-    </Text>
+    <Text style={[styles.icon, textStyle, {fontSize: setSize(size)}]}>{icon}</Text>
   ) : (
     <Image
       style={[
         {
-          width: Platform.OS === 'ios' ? size : size - 5,
-          height: Platform.OS === 'ios' ? size : size - 5,
+          width: setSize(size),
+          height: setSize(size),
           borderRadius: 5,
         },
         imageStyle,
