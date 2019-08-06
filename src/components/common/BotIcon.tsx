@@ -5,7 +5,7 @@ import {oldIcons} from '../../store/IconStore'
 
 type Props = {
   icon: string
-  size?: number
+  size: number | 35
   imageStyle?: ImageStyle
   textStyle?: TextStyle
 }
