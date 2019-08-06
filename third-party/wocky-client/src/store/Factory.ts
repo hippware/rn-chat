@@ -22,7 +22,7 @@ export function createFactory<T>(type: IType<any, any, T>, name: string = '') {
         data = _.cloneDeep(data)
 
         if (!self.storage.get(id)) {
-          self.storage.put(type.create({id}, getEnv(self)))
+          self.storage.put(type.create({id, ...data}, getEnv(self))) // we have to test all functionality for this change
         }
         const entity: any = self.storage.get(id)!
         if (entity.load && data && Object.keys(data).length) {

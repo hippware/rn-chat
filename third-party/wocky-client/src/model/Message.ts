@@ -72,7 +72,7 @@ export const Message = types
         self.setStatus(Status.Sending)
         // check if file is not uploaded
         if (self.file && !self.uploaded) {
-          yield self.upload()
+          yield self.upload(false)
         }
         yield self.transport.sendMessage(
           (self.otherUser!.id || self.otherUser!) as string,

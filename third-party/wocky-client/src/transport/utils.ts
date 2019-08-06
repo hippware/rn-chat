@@ -298,16 +298,18 @@ export function iso8601toDate(date: string): Date {
 
 export function convertImage(image, preserveAspect: boolean = false) {
   if (image && image.trosUrl) {
+    const aspect = image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL')
+    const thumbnail = image.urls.find(({type}) => type === 'THUMBNAIL')
     return preserveAspect
       ? {
           id: image.trosUrl,
-          url: image.urls.find(({type}) => type === 'ASPECT_THUMBNAIL').url,
+          url: (aspect || thumbnail).url,
           isAspect: true,
         }
       : {
           id: image.trosUrl,
-          url: image.urls.find(({type}) => type === 'THUMBNAIL').url,
-          isSqure: true,
+          url: thumbnail.url,
+          isSquare: true,
         }
   } else {
     return null
@@ -496,7 +498,7 @@ export function convertMessage({
     otherUser,
     unread: isOutgoing ? false : !read,
     time: iso8601toDate(createdAt).getTime(),
-    media: convertImage(media) as any,
+    media: convertImage(media, true) as any,
     content: content || undefined,
     isOutgoing: direction === 'OUTGOING',
   }

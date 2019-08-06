@@ -47,7 +47,7 @@ export function createUploadable(property: string, accessParam: string | ((self)
       }
     })
     .actions((self: any) => ({
-      upload: flow(function*() {
+      upload: flow(function*(isSquare: boolean = true) {
         if (!self.file) {
           throw new Error('File is not set')
         }
@@ -63,7 +63,10 @@ export function createUploadable(property: string, accessParam: string | ((self)
               access: typeof accessParam === 'function' ? accessParam(self) : accessParam,
             })
             self.uploaded = true
-            const fileRef = self.service.files.get(url)
+            const fileRef = self.service.files.get(
+              url,
+              isSquare ? {isSquare: true} : {isAspect: true}
+            )
             // set source to local file (or test file)
             fileRef.setSource({uri: file.uri || file.fileName, height, width})
             self[property] = fileRef

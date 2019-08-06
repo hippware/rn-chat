@@ -80,7 +80,7 @@ export const FileImage = types
         }
       }
       if (!self.thumbnail && !self.url) {
-        self.url = self.downloadURL()
+        self.url = yield self.downloadURL()
         yield self.downloadThumbnail()
       }
     }),
