@@ -52,9 +52,11 @@ export class YouCard extends Card {
 }
 export class LocationSharerCard extends Card {
   profile: IProfile
-  constructor(profile: IProfile) {
+  priority: number
+  constructor(profile: IProfile, priority: number) {
     super()
     this.profile = profile
+    this.priority = priority
   }
   get location() {
     return this.profile.location
@@ -94,7 +96,11 @@ const HomeStore = types
         const sharers =
           wocky && wocky.profile
             ? wocky.profile!.locationSharers.list.map(
-                sharer => new LocationSharerCard(sharer.sharedWith)
+                sharer =>
+                  new LocationSharerCard(
+                    sharer.sharedWith,
+                    self.selectedId && self.selectedId === sharer.id ? 10 : 0
+                  )
               )
             : []
         const localBots = wocky.localBots.list.map(bot => new BotCard(bot))
@@ -103,7 +109,6 @@ const HomeStore = types
     }
   })
   .views(self => ({
-    // return the list for current mode
     get list(): Card[] {
       return self.creationMode ? [] : self.cards
     },
